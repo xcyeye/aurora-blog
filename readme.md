@@ -1,343 +1,269 @@
-# 首页配置
+# ccds主题初步使用
 
-当正确设置主题，并且将<a href="https://github.com/qsyyke/vuepress-theme-ccds/blob/main/docs/README.md">readme.md</a>赋值到`docs/readme.md`文件后，首页图展示如下
+## 介绍
 
-![image-20210831140859682](http://ooszy.cco.vin/img/blog-note/image-20210831140859682.png?x-oss-process=style/pictureProcess1)
+[部署](/home/deploy.md)
 
-首页配置会从以下进行介绍
+[目录结构](/home/directory-structure.md)
 
-[toc]
+![npm](https://img.shields.io/npm/v/vuepress-theme-ccds)![GitHub package.json version](https://img.shields.io/github/package-json/v/qsyyke/vuepress-theme-ccds)![npm](https://img.shields.io/npm/dw/vuepress-theme-ccds)![npm bundle size](https://img.shields.io/bundlephobia/min/vuepress-theme-ccds)
 
-## 导航栏
+该ccds主题是基于vuepress，在默认主题的基础上进行修改，但也剔除了一些默认主题特点，该主题是一个应用于博客，并不建议用于文档编写，所以在首页，就不能使用feture.
 
-导航栏配置可以查看vuepress官方配置<a href="https://v2.vuepress.vuejs.org/zh/reference/default-theme/config.html#navbar">入口</a>，可以借鉴一下我的配置
-
-```js
-//docs/.vuepress.config.js
-module.exports = {
-  themeConfig: {
-    navbar: [
-      {
-            text: '数据库',
-            children: [
-                {
-                    text: 'redis',
-                    link: '/redis/'
-                },
-                {
-                    text: 'mysql',
-                    link: '/'
-                }
-            ]
-        },
-        {
-            text: '其他',
-            children: [
-                {
-                    text: '问题',
-                    link: '/issue/'
-                },
-                {
-                    text: '捐款系统整理',
-                    link: '/donationSystem/'
-                },
-                {
-                    text: '自然语言',
-                    link: '/sdk/'
-                },
-            ]
-        },
-        {
-            text: "关于",
-            link: "/about"
-        },
-        {
-            text: '友情链接',
-            link: '/link'
-        },
-        {
-            text: '标签',
-            link: '/tag'
-        },
-        {
-            text: '记录',
-            link: '/mood'
-        }
-    ],
-  },
-}
-```
-
-其中`/about,/link,/tag,/mood`是主题新增的路由，对应关于页面，友情链接，标签，心情页面，所以请在navbar上，添加
+ccds主题是一个动漫类型的博客主题，界面简洁，多色彩，多功能。
 
 
 
-## logo
+### 博客预览
 
-![image-20210831141849241](http://ooszy.cco.vin/img/blog-note/image-20210831141849241.png?x-oss-process=style/pictureProcess1)
+#### **home page**
 
-导航栏logo可以在`config.js`文件中，进行设置
+<a target="-blank" href="https://theme-ccds.cco.vin/">点击预览</a>
 
-```js
-module.exports = {
-  themeConfig: {
-    // Public 文件路径
-    logo: '/images/hero.png',
-    // URL
-    logo: 'https://vuejs.org/images/logo.png',
-  },
-}
-```
-
-如果没有在此`config.js`文件中进行设置，默认使用<a href="https://ooszy.cco.vin/img/blog-public/ccds_64.ico">default</a>
+![image-20210904175030428](https://ooszy.cco.vin/img/blog-note/image-20210904175030428.png?x-oss-process=style/pictureProcess1)
 
 
-
-### logo文字
-
-对于logo旁边文字，需要在`docs/readme.md`的`logoTitle`进行设置，默认值为`ccds`
-
-```yml
-logoTitle: qsyyke
-```
-
-
-
-![image-20210831142236064](http://ooszy.cco.vin/img/blog-note/image-20210831142236064.png?x-oss-process=style/pictureProcess1)
-
-并且支持设置字体颜色，配置项为`logoColor`
-
-```yml
-logoColor: '#2c3e50'
-```
-
-
-
-
-
-## 中间头像
-
-![image-20210831142850834](http://ooszy.cco.vin/img/blog-note/image-20210831142850834.png?x-oss-process=style/pictureProcess1)
-
-此头像通过`heroLogo`进行修改，并不是使用logo图片地址，默认图片使用<a href="https://ooszy.cco.vin/img/blog-public/avatar.jpg">default</a>
-
-```yml
-heroLogo: https://ooszy.cco.vin/img/blog-public/avatar.jpg
-```
-
-
-
-
-
-## 自定义一言
-
-![image-20210831143051671](http://ooszy.cco.vin/img/blog-note/image-20210831143051671.png?x-oss-process=style/pictureProcess1)
-
-```yml
-mood: 青衫烟雨客 #无默认值
-showHomeMood: false #是否显示，默认不显示
-```
-
-
-
-- 默认只在首页进行显示，如果你在其他页面使用`Home.vue`组件，这个不会显示
-
-## 随机一言
-
-![image-20210831143353819](http://ooszy.cco.vin/img/blog-note/image-20210831143353819.png?x-oss-process=style/pictureProcess1)
-
-该随机一言打印效果使用<a href="https://github.com/pengqiangsheng/easy-typer-js">easy-typer-js</a>
-
-随机一言默认使用接口请求随机一言
-
-```yaml
-#随机一言接口
-randomSaw: https://international.v1.hitokoto.cn/?c=b&max_length=45
-
-#设置如何获取值
-randomSawQuery: hitokoto
-
-#请求方法
-method: get
-
-#使用自定义随机一样
-customRandomSay: true #true表示使用自定义随机一样
-customRandomValue: 青衫烟雨客 #只有true时，才生效
-```
 
 ---
 
-如果接口响应数据格式为
+#### **article page**
 
-![image-20210831144952230](http://ooszy.cco.vin/img/blog-note/image-20210831144952230.png?x-oss-process=style/pictureProcess1)
-
-那么`randomSawQuery`就是hitokoto
+![image-20210904175151341](https://ooszy.cco.vin/img/blog-note/image-20210904175151341.png?x-oss-process=style/pictureProcess1)
 
 ---
 
-- 默认只在首页显示
+![image-20210831102455370](http://ooszy.cco.vin/img/blog-note/image-20210831102455370.png?x-oss-process=style/pictureProcess1)
 
-- 文字两边并没有提供设置，如果自定义，请在`Home.vue`中进行修改
+----
 
-    ```vue
-    <div v-if="isHome"><span>「 {{obj.output}}」</span></div>
+
+
+除此以外，主题还提供了毛玻璃效果，全局字体，颜色，背景设置，对于文章图片，加入了懒加载，提升页面打开速度
+
+
+
+##### 字体，字体颜色多样
+
+![image-20210831104744133](http://ooszy.cco.vin/img/blog-note/image-20210831104744133.png?x-oss-process=style/pictureProcess1)
+
+![image-20210831104804688](http://ooszy.cco.vin/img/blog-note/image-20210831104804688.png?x-oss-process=style/pictureProcess1)
+
+![image-20210831104842307](http://ooszy.cco.vin/img/blog-note/image-20210831104842307.png?x-oss-process=style/pictureProcess1)
+
+
+
+
+
+#### **about page**
+
+![image-20210831102825225](http://ooszy.cco.vin/img/blog-note/image-20210831102825225.png?x-oss-process=style/pictureProcess1)
+
+---
+
+![image-20210831103010376](http://ooszy.cco.vin/img/blog-note/image-20210831103010376.png?x-oss-process=style/pictureProcess1)
+
+----
+
+
+
+#### **friend link page**
+
+![](http://ooszy.cco.vin/img/blog-note/friend%20link.png?x-oss-process=style/pictureProcess1)
+
+----
+
+
+
+#### tag page
+
+![](http://ooszy.cco.vin/img/blog-note/tag-page.png?x-oss-process=style/pictureProcess1)
+
+
+
+#### **comment age**
+
+![image-20210904163031318](https://ooszy.cco.vin/img/blog-note/image-20210904163031318.png?x-oss-process=style/pictureProcess1)
+
+
+
+### **theme feature**
+
+主题特点
+
+- 多彩
+- 高度自定义设置，大多数页面都提供了大量选项进行自定义设置
+- 开箱即用
+- 圆角，字体，颜色，背景图片等自定义
+- 毛玻璃效果
+- 图片懒加载
+
+
+
+## 安装
+
+运行环境需要依赖`node`，所以在安装之前，请确保操作系统已经安装了node
+
+
+
+### 初始化
+
+1. 创建一个文件夹
+
+2. 进入此文件夹内，使用`npm init`初始化
+
+    ```sh
+    npm init
     ```
 
-- 打印间隔时间，并未在`readme.md`中提供设置，默认设置为1500，如需修改，请在`Home.vue`中修改`intervalTime: 1500`对象值
+3. 将下面代码加入到`package.json`对应位置
 
-    ```js
-    intervalTime: 1500
+    ```json
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "dev": "vuepress dev docs",
+        "build": "vuepress build docs",
+        "deploy": "bash deploy.sh"
+      }
     ```
 
 
 
-## 社交
+### 安装
 
-组件位置`docs/.vuepress/theme/lib/client/components/child/HomeSocial.vue`
+安装vuepress(`一定要保证vurepss版本为2以上`)
 
-![image-20210831150058756](http://ooszy.cco.vin/img/blog-note/image-20210831150058756.png?x-oss-process=style/pictureProcess1)
+```sh
+npm i vuepress@2.0.0-beta.22
+```
 
-```yaml
-socialMaxLength: 7 #设置最多展示多少个
+```sh
+npm i vuepress-theme-ccds
+```
 
-socials: [
- {	#连接
-    aHref: tencent://message/?uin=2291308094,
-    #展示图片
-    imgSrc: https://ooszy.cco.vin/img/ico/qq.svg,
-    #是否在首页展示
-    isHome: true,
-    #是否展示，如果此值为false，那么不会再首页和关于页面展示
-    show: true
+因为在主题部分组件中，使用到了`jquery`,`vuex`,`axios`,`easy-typer-js`，所以还需要安装这三个依赖
+
+```sh
+npm i jquery
+npm i vuex@4.0.0
+npm i axios@0.21.1
+npm i easy-typer-js@2.1.0
+```
+
+
+
+所有package.json文件的内容为
+
+```json
+{
+  "name": "blog",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "vuepress dev docs",
+    "build": "vuepress build docs",
+    "deploy": "bash deploy.sh"
   },
- {
-    aHref: javascript:;,
-    //imgSrc: /assets/img/ico/wechat.svg,
-    imgSrc: https://ooszy.cco.vin/img/ico/wechat.svg,
-    #如果需要点击不跳转，显示图片，如二维码，则加上下面图片地址
-    showImgSrc: https://ooszy.cco.vin/img/blog-public/wechat.jpg,
-    isHome: true,
-    show: true
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/jquery": "^3.5.6",
+    "jquery": "^3.2.1",
+    "prettier": "^2.3.2",
+    "vuepress": "^2.0.0-beta.22"
+  },
+  "dependencies": {
+    "@vuepress/plugin-search": "^2.0.0-beta.24",
+    "axios": "^0.21.1",
+    "easy-typer-js": "^2.1.0",
+    "stylus-loader": "^6.1.0",
+    "vue-lazyload": "^1.3.3",
+    "vuex": "^4.0.0-0"
   }
-]
+}
 ```
 
 
 
+## 使用主题
 
+安装完上述依赖之后，就可以直接使用ccds主题
 
-### 全部代码
+### 1.新建readme.md文件
 
-```yaml
-socialMaxLength: 7 #设置最多展示多少个
-socials: [
- {
-    aHref: tencent://message/?uin=2291308094,
-    imgSrc: https://ooszy.cco.vin/img/ico/qq.svg,
-    isHome: true,
-    show: true
-  },
- {
-    aHref: javascript:;,
-    //imgSrc: /assets/img/ico/wechat.svg,
-    imgSrc: https://ooszy.cco.vin/img/ico/wechat.svg,
-    showImgSrc: https://ooszy.cco.vin/img/blog-public/wechat.jpg,
-    isHome: true,
-    show: true
-  },
- {
-    aHref: https://github.com/qsyyke/,
-    imgSrc: https://ooszy.cco.vin/img/ico/github.svg,
-    isHome: true,
-    show: true
-  },
- {
-    aHref: https://stackoverflow.com/,
-    imgSrc: https://ooszy.cco.vin/img/ico/stack.svg,
-    isHome: false,
-    show: true
-  },
- {
-    aHref: "https://space.bilibili.com/483962286",
-    imgSrc: https://ooszy.cco.vin/img/ico/bilibili-.svg,
-    isHome: true,
-    show: true
-  },
- {
-    aHref: https://music.163.com/#/user/home?id=1411050784,
-    imgSrc: https://ooszy.cco.vin/img/ico/wangyiyunyinle1.svg,
-    isHome: true,
-    show: true
-  },
- {
-    aHref: mailto:2291308094@qq.com,
-    imgSrc: https://ooszy.cco.vin/img/ico/email.svg,
-    isHome: false,
-    show: false
-  }
-]
-```
+在`docs/`下，新建`readme.md`主题配置文件，此文件用于配置主题的所有信息，包括首页logo，head标签中的`description`和`keyword`(虽然vuepress在config.js中，可以对description和keyword进行配置，但是不推荐在这里进行配置，因为ccds主题，对所有页面的description和keyword进行过配置，如果在config.js中，再次配置的话，可能会出现意想不到的结果)
 
+**在readme.md**中，对主题配置进行修改之后，需要重新启动，需要重新启动，需要重新启动才能生效，因为在部分页面中，获取readme.md中的配置，是通过启动生成的文件获取的，所以主题配置修改之后，需要重新启动
 
+因为此主题还没有将所有的配置信息设置默认值，所以不能开箱即用，需要你将所有配置复制到`docs/readme.md`中，否则会报错，此文件可以在仓库中，进行复制<a href="https://github.com/qsyyke/vuepress-theme-ccds/blob/main/docs/README.md">readme.md</a>
 
+粘贴的时候，请确保格式没有变，否则会启动报错，配置使用的语法为`yaml`
 
-
-## 页脚
-
-页脚组件位置`docs/.vuepress/theme/lib/client/components/global/Footer.vue`
-
-页脚有两种展示效果
-
-- 首页
-
-    ![image-20210831151756160](http://ooszy.cco.vin/img/blog-note/image-20210831151756160.png?x-oss-process=style/pictureProcess1)
-
-- 其他页面
-
-    ![image-20210831151827669](http://ooszy.cco.vin/img/blog-note/image-20210831151827669.png?x-oss-process=style/pictureProcess1)
-
-
-
-
-
-```yaml
-isShowFooter: true #是否展示页脚，如果你自己使用Footer.vue组件，此项没用
-
-#页脚显示，以HTML的形式显示 并且首页只显示此数组中的两项，只显示两项
-footer: 
-  - Copyright © by qsyyke All Rights Reserved.
-  - Theme <a href="https://www.cco.vin">ccds</a> by qsyyke
-  - "<a target='_blank' href='http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=53060202000142' style='display:inline-block;text-decoration:none;height:20px;line-height:20px;'><img src='' style='float:left;'/><p style='float:left;height:20px;line-height:20px;margin: 0px 0px 0px 5px;'>滇公网安备 53060202000142号</p></a>"
-
-#是否展示运行时间 默认为true
-isShowRunTime: true 
-
-#开始时间
-startRunTime: 8/7/2021 12:22:00
-#运行时间前缀
-prefixRuntime: 小破站已运行
-```
-
-
-
-### 组件设置
-
-因为Footer.vue是一个全局组件，可以直接使用
-
-```vue
-<Footer :theme-property="themeProperty"
-        :is-home="frontmatter.home"
-        :is-show-footer="isShowFooter">
-</Footer>
-```
-
-- theme-property主题配置
-- is-home是否为首页，决定页脚展示效果
-- is-show-footer 是否展示页脚
-
-如果需要修改运行多少天等等，需要修改代码，在`Footer.vue`中
+### 2.设置主题
 
 ```js
-this.runTime = this.prefixRuntime + A + "天" + B + "小时" + C + "分" + D + "秒";
+module.exports = {
+    theme: 'vuepress-theme-ccds',
+    onPrepared: async (app) => {
+        const myData = app.pages.map((page) => {
+            return page
+        })
+        await app.writeTemp('my-data.js', `export default ${JSON.stringify(myData)}`)
+    },
+    themeConfig: {
+        darkMode: false,
+        navbar: [
+            {
+                text: '主题使用',
+                children: [
+                    {
+                        text: '主题使用',
+                        link: '/issue/'
+                    },
+                ]
+            },
+            {
+                text: "关于",
+                link: "/about"
+            },
+            {
+                text: '友情链接',
+                link: '/link'
+            },
+            {
+                text: '标签',
+                link: '/tag'
+            },
+            {
+                text: '心情',
+                link: '/mood'
+            }
+        ]
+    }
+}
 ```
+
+> 一定要在`config.js`文件中，加上下面代码，否则会报错
+>
+> ```js
+> onPrepared: async (app) => {
+>     const myData = app.pages.map((page) => {
+>         return page
+>     })
+>     await app.writeTemp('my-data.js', `export default ${JSON.stringify(myData)}`)
+> },
+> ```
+
+
+
+现在运行`npm run dev`，那么你在浏览器中，看到的页面是下面这样
+
+![image-20210829151710110](http://ooszy.cco.vin/img/blog-noteimage-20210829151710110.png?x-oss-process=style/pictureProcess1)
+
+如果页面和上图差不多，表示已经切换到ccsd主题，如果出现白页，请`f12`查看错误，很大可能是因为某些依赖没有安装
+
+
+
+
 

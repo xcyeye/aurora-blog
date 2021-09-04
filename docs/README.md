@@ -64,7 +64,7 @@ logoTitle: qsyyke
 description: qsyyke的个人博客，记录生活琐事，学习笔记
 keyword: vuepress主题,vuepress theme,生活琐事,二次元博客,简约博客,博客主题,静态主题
 socialMaxLength: 7
-slideTime: 450000
+slideTime: 3000
 #随机一言接口
 
 randomSaw: https://international.v1.hitokoto.cn/?c=b&max_length=45
