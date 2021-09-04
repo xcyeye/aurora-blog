@@ -1,0 +1,12 @@
+{
+  "name": "vuepress-theme-ccds",
+  "version": "1.1.2",
+  "keywords": [
+    "vuepress-theme,qsyyke,vuepress-theme-ccds"
+  ],
+  "description": "这是一个基于vuepress默认主题的二次元主题",
+  "main": "./lib/node/index.js",
+  "files": [
+    "lib"
+  ]
+}

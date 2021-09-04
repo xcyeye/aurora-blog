@@ -1,0 +1,132 @@
+<template>
+  <common :is-show-side-bar="false" :is-show-top-img="true" :is-show-head-line="false">
+    <template #center1>
+      <div class="link">
+        <div :style="$store.state.borderRadiusStyle + $store.state.opacityStyle"
+             class="c-link" id="c-link">
+          <h2 class="link-center center-common">我的站点</h2>
+          <div class="link-self">
+            <a target="_blank" class="link-self-item" :href="siteInformation.url">
+              <div :style="setSpanStyle(99)" class="link-item"  id="link-item">
+                <div class="link-top">
+                  <div class="link-img">
+                    <img id="link-img" :src="siteInformation.logo" :alt="siteInformation.title">
+                  </div>
+                </div>
+                <div class="link-bottom" :style="setBottomStyle(99)" >
+                  <div class="link-bottom-title link-bottom-common">
+                    <span>{{siteInformation.title}}</span>
+                  </div>
+                  <div class="link-bottom-describe link-bottom-common">
+                    <span id="link-bottom-describe">{{siteInformation.describe}}</span>
+                  </div>
+                </div>
+              </div>
+            </a>
+          </div>
+
+          <h2 class="link-center center-common">我的朋友</h2>
+
+          <LinkItem
+              :color="color"
+              :link-top-style="setSpanStyle(index)"
+              :link-bottom-style="setBottomStyle(index)"
+              v-for="(item,index) in friendLinks" :item="item"/>
+        </div>
+      </div>
+      <BCenter>
+        <template #page-center1>
+          <h2>我的站点信息</h2>
+          <div class="self-site">
+            <ul>
+              <li>title: {{siteInformation.title}}</li>
+              <li>url: {{siteInformation.url}}</li>
+              <li >logo: {{siteInformation.logo}}</li>
+              <li>describe: {{siteInformation.describe}}</li>
+            </ul>
+          </div>
+        </template>
+      </BCenter>
+      <!--<message v-if="showMessage"></message>-->
+      <comment/>
+    </template>
+  </common>
+</template>
+
+<script lang="ts">
+import {
+  defineComponent,
+  Transition,
+} from 'vue'
+
+import LinkItem from './child/LinkItem'
+import {usePageFrontmatter} from "@vuepress/client";
+import {DefaultThemeHomePageFrontmatter} from "../../shared";
+import myData from '@temp/my-data'
+
+//导入配置属性
+
+const network = require('../public/js/network.js')
+export default defineComponent({
+  name: 'About',
+
+  components: {
+    Transition,
+    LinkItem
+  },
+  data() {
+    return {
+      windowHeight:0,
+      aboutOption: null,
+      //这是一个数组对象
+      friendLinks: null,
+      siteInformation: null,
+      color: null,
+      ico: null,
+      showMessage: null,
+      themeProperty: null
+    }
+  },
+  computed: {
+    setSpanStyle() {
+      return (index) => {
+        let background_color = this.themeProperty.randomColor[
+            this.getRandomInt(0,this.themeProperty.randomColor.length -1)]
+        // this.color = background_color
+        return "background-color: "+background_color + ";"
+        // return "background-color: "+ this.color + ";"
+      }
+    },
+    setBottomStyle() {
+      return (index) => {
+        return "color: "+this.color + ";"
+      }
+    },
+    setIco() {
+      return 'background-image: url('+this.ico+');'
+    }
+  },
+  methods: {
+    getRandomInt(min, max) {
+      min = Math.ceil(min);
+      max = Math.floor(max);
+      return Math.floor(Math.random() * (max - min)) + min; //不含最大值，含最小值
+    }
+  },
+
+  created() {
+    new Promise((resolve,reject) => {
+      for (let i = 0; i < myData.length; i++) {
+        if (myData[i].path === '/') {
+          this.themeProperty = myData[i].frontmatter
+        }
+      }
+      resolve()
+    })
+    this.friendLinks = this.themeProperty.friendLinks
+    this.siteInformation = this.themeProperty.siteInformation
+    this.ico = this.themeProperty.ico.linkIco
+    this.showMessage = this.themeProperty.isShowMessage
+  },
+})
+</script>

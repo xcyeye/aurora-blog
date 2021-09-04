@@ -1,0 +1,23 @@
+module.exports = {
+    heroImage: "/img/head.jpg",
+    animeImg: 'https://api.iro.tw/webp_pc.php',
+    tagArr: '',
+    categories: [],
+    allPageMap: '',
+    setTatStatus: false,
+    fontColorStyle: '--fontColor: #2c3e50;',
+    fontFamilyStyle: '--fontFamily: -apple-system;',
+    pageNum: 100,
+    //isFitter: themeProperty.isFitter,
+    isFitter: false,
+    varFilterBlur: 5,
+    varBorderRadius: 20,
+    varOpacity: 0.5,
+    filterBlurStyle: '--fitter-blue: 5px;',
+    borderRadiusStyle: '--borderRadius: 20px;',
+    opacityStyle: '--opacity: 0.5;',
+    welcomeOpenTime: 0,
+    welcomeOpenStatus: false,
+    readCount: '...',
+    commentCount: '...'
+}
