@@ -114,11 +114,22 @@
 
 // plugin-search
 .search-box {
-  --search-bg-color: var(--c-bg);
+  /*--search-bg-color: var(--c-bg);
   --search-accent-color: var(--c-brand);
   --search-text-color: var(--c-text);
   --search-border-color: var(--c-border);
 
   --search-item-text-color: var(--c-text-lighter);
-  --search-item-focus-bg-color: var(--c-bg-light);
+  --search-item-focus-bg-color: var(--c-bg-light);*/
+
+  --search-bg-color: rgba(255,255,255,var(--opacity));
+  --search-accent-color: #3eaf7c;
+  --search-text-color: #2c3e50;
+  --search-border-color: #eaecef;
+
+  --search-item-text-color: #5d81a5;
+  --search-item-focus-bg-color: #f3f4f5;
+
+  --search-input-width: 8rem;
+  --search-result-width: 20rem;
 }

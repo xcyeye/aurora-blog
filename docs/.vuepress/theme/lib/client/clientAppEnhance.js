@@ -19,6 +19,23 @@ import About from './components/About';
 import Tag from './components/Tag';
 import store from './public/js/store'
 import Link from './components/Link';
+
+//搜索组件
+import { SearchBox } from '../plugin-search/lib/client/components/SearchBox';
+import '../plugin-search/lib/client/styles/vars.css';
+import '../plugin-search/lib/client/styles/search.css';
+
+const searchOptions = {
+    locales: {
+        '/': {
+            placeholder: 'Search',
+        },
+        '/zh/': {
+            placeholder: '搜索',
+        },
+    },
+}
+
 import './styles/index.scss';
 export default defineClientAppEnhance(({ app, router }) => {
     app.component('Badge', Badge);
@@ -33,6 +50,18 @@ export default defineClientAppEnhance(({ app, router }) => {
     app.component('Donate', Donate);
     app.component('Comment', Comment);
 
+    //app.component('SearchBox', (props) => h(SearchBox, {
+    //    locales,
+    //    hotKeys,
+    //    maxSuggestions,
+    //    ...props,
+    //}));
+
+    //app.component('SearchBox',SearchBox);
+
+    app.component('SearchBox', (props) => h(SearchBox, searchOptions));
+
+    //app.component('Docsearch', () => h(Docsearch, { options }));
     //路由
     // @ts-ignore
     app.use(store)

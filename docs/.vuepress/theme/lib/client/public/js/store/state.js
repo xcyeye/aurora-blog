@@ -19,5 +19,6 @@ module.exports = {
     welcomeOpenTime: 0,
     welcomeOpenStatus: false,
     readCount: '...',
-    commentCount: '...'
+    commentCount: '...',
+    version: '1.0.4',
 }

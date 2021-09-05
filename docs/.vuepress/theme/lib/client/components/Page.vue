@@ -56,7 +56,8 @@ export default defineComponent({
       adsenseArr: null,
       insertAdsenseRule: '',
       adsenseLength: 3,
-      lazyLoadingImg: null
+      lazyLoadingImg: null,
+      originPageData: ''
     }
   },
   props: {
@@ -65,6 +66,7 @@ export default defineComponent({
   created() {
     //console.log("-------------create-----------")
     const page = usePageData()
+    this.originPageData = page
     this.$emit('getHeadLine',page.value.title)
     this.adsenseArr = this.themeProperty.adsenseArr
     this.insertAdsenseRule = this.themeProperty.insertAdsenseRule
@@ -103,82 +105,246 @@ export default defineComponent({
       let originSrc = img.getAttribute("data-origin")
       //console.log("data-origin: " + originSrc)
       img.setAttribute("src",originSrc)
+    },
+    getContent(allH2,length) {
+      return new Promise((resolve,reject) => {
+        let h2Content = ''
+        let h2KeyContent = ''
+        for (let i = 0; i < length; i++) {
+          //console.log(allH2[i].innerText)
+          let h2Text = allH2[i].innerText.replace("#\n","")
+          h2Content = h2Content + "," + (i + 1) +"、" + h2Text
+          h2KeyContent = h2KeyContent + "," + h2Text
+        }
+
+        h2Content = h2Content.substr(1,h2Content.length)
+        h2KeyContent = h2KeyContent.substr(1,h2KeyContent.length)
+
+        resolve({h2Content,h2KeyContent})
+      })
+    },
+    getPContent(pContents) {
+      return  new Promise((resolve,reject) => {
+        let pText = ''
+        for (let i = 0; i < 3; i++) {
+          pText = pText + pContents[i].innerText
+        }
+        resolve(pText)
+      })
+    },
+    setDesc(desc) {
+
+      /*let frontmatterDesc = this.originPageData.frontmatter.description
+      if (frontmatterDesc === undefined || frontmatterDesc === null) {
+        let isExist = false
+
+        new Promise((resolve,reject) => {
+          let childmete = $("head").get(0).children;
+          for (let i = 0; i < childmete.length; i++) {
+            let name = childmete[i].getAttribute("name");
+
+            if (name === "description") {
+              console.log(childmete[i])
+              //childmete[i].setAttribute("cont",desc);
+              $("head").get(0).removeChild(childmete[i])
+              isExist = true
+            }
+          }
+          resolve()
+        }).then(() => {
+          /!*console.log(isExist)
+          if (!isExist) {
+            let metaKey = $('<meta name="description" content="'+desc+'">')
+            //console.log(metaKey.get(0))
+            $("head").get(0).appendChild(metaKey.get(0))
+          }*!/
+
+          let metaKey = $('<meta name="description" content="'+desc+'">')
+          //console.log(metaKey.get(0))
+          $("head").get(0).appendChild(metaKey.get(0))
+        })
+      }*/
+
+      let isExist = false
+
+      new Promise((resolve,reject) => {
+        let childmete = $("head").get(0).children;
+        for (let i = 0; i < childmete.length; i++) {
+          let name = childmete[i].getAttribute("name");
+
+          if (name === "description") {
+            console.log(childmete[i])
+            /*setTimeout(() => {
+
+            },500)*/
+            childmete[i].setAttribute("content",desc);
+            //$("head").get(0).removeChild(childmete[i])
+            isExist = true
+          }
+        }
+        resolve()
+      }).then(() => {
+        if (!isExist) {
+          let metaKey = $('<meta name="description" content="'+desc+'">')
+          //console.log(metaKey.get(0))
+          $("head").get(0).appendChild(metaKey.get(0))
+        }
+      })
+
+
+
+    },
+    setKeyword(keyword) {
+      let isExist = false
+
+      new Promise((resolve,reject) => {
+        let childmete = $("head").get(0).children;
+        for (let i = 0; i < childmete.length; i++) {
+          let name = childmete[i].getAttribute("name");
+
+          if (name === "keyword") {
+            childmete[i].setAttribute("content",keyword);
+
+            isExist = true
+          }
+        }
+        resolve()
+      }).then(() => {
+        if (!isExist) {
+          let metaKey = $('<meta name="keyword" content="'+keyword+'">')
+          $("head").get(0).appendChild(metaKey.get(0))
+        }
+      })
+    },
+    setMeta() {
+      //设置meta标签的keyword和description
+      //获取tip类名的内容 theme-default-content
+
+      let frontmatterDesc = this.originPageData.frontmatter.description
+      let frontmatterKeyword = this.originPageData.frontmatter.keyword
+
+      let h2Content = ''
+      let h2KeyContent = ""
+
+      let allH2 = $(".pageContent h2")
+      let allContents = $(".pageContent p")
+
+      if (frontmatterKeyword === undefined
+          || frontmatterKeyword === null
+          || frontmatterKeyword.length === 0) {
+        //frontmatterKeyword中，不存在keyword
+
+        if (allH2.length < 13) {
+          this.getContent(allH2,allH2.length).then((content) => {
+            h2KeyContent = content.h2KeyContent
+            h2Content = content.h2Content
+
+            this.getPContent(allContents).then((pText) => {
+              if (h2KeyContent.length < 80) {
+                h2KeyContent = h2KeyContent + pText.substr(0,80 - h2KeyContent.length)
+                this.setKeyword(h2KeyContent)
+              }else {
+                this.setKeyword(h2KeyContent)
+              }
+            })
+          });
+        }else {
+          this.getContent(allH2,13).then((content) => {
+            h2KeyContent = content.h2KeyContent
+            h2Content = content.h2Content
+
+            this.getContent(allH2,allH2.length).then((content) => {
+              h2KeyContent = content.h2KeyContent
+              h2Content = content.h2Content
+
+              this.getPContent(allContents).then((pText) => {
+                if (h2KeyContent.length < 80) {
+                  h2KeyContent = h2Content + pText.substr(0,80 - h2KeyContent.length)
+                  this.setKeyword(h2KeyContent)
+                }else {
+                  this.setKeyword(h2KeyContent)
+                }
+              })
+            });
+          });
+        }
+      }else {
+        let keyword = ''
+        new Promise((resolve,reject) => {
+          for (let i = 0; i < frontmatterKeyword.length; i++) {
+            keyword = keyword + "," + frontmatterKeyword[i]
+          }
+          keyword = keyword.substr(1,keyword.length)
+          resolve()
+        }).then(() => {
+          this.setKeyword(keyword)
+        })
+      }
+
+      setTimeout(() => {
+        if (frontmatterDesc === undefined || frontmatterDesc === null) {
+          /*
+          * 如果页面中，没有进行frontmatter的配置，则自动生成desc
+          * 获取页面中，4个h2标签中的内容，并且获取第一段的内容作为描述
+          * */
+
+
+          if (allH2.length < 13) {
+            this.getContent(allH2,allH2.length).then((content) => {
+              h2KeyContent = content.h2KeyContent
+              h2Content = content.h2Content
+
+              this.getPContent(allContents).then((pText) => {
+                if (h2Content.length < 140) {
+                  h2Content = h2Content + pText.substr(0,140 - h2Content.length)
+                  this.setDesc(h2Content)
+                }else {
+                  this.setDesc(h2Content)
+                }
+              })
+            });
+          }else {
+            this.getContent(allH2,13).then((content) => {
+              h2KeyContent = content.h2KeyContent
+              h2Content = content.h2Content
+
+              this.getContent(allH2,allH2.length).then((content) => {
+                h2KeyContent = content.h2KeyContent
+                h2Content = content.h2Content
+
+                this.getPContent(allContents).then((pText) => {
+                  if (h2Content.length < 140) {
+                    h2Content = h2Content + pText.substr(0,140 - h2Content.length)
+                    this.setDesc(h2Content)
+                  }else {
+                    this.setDesc(h2Content)
+                  }
+                })
+              });
+            });
+          }
+        }
+      },500)
+
+
     }
   },
   mounted() {
-
-    //console.log("-----------mounted--------")
     let imgs = $(".pageContent img")
-    //console.log(imgs)
     for (let i = 0; i < imgs.length; i++) {
       let originSrc = imgs[i].src
       imgs[i].setAttribute("data-origin",originSrc)
       imgs[i].src = this.lazyLoadingImg
     }
 
-    //设置meta标签的keyword和description
-    //获取tip类名的内容 theme-default-content
-    let tips = $(".tip")
-    let pContent = ''
-    let keyContent = ""
-    if (tips.length === 0) {
-      //没有设置tip，则描述选取第一二个p标签内容
-      let pContents = $(".pageContent h2")
-      if (pContents.length < 2) {
-        //截取全文80个字符作为描述
-        pContent = $(".pageContent").get(0)
-            .innerText.substr(0,80)
-      }else {
-        //使用所有的h2标签作为描述
-        for (let i = 0; i < pContents.length; i++) {
-          let originText =  pContents[i].innerText
-          .replace("#","")
-          .replace("\n","")
-          let h2Text = (i+1) + "、" + pContents[i].innerText
-          .replace("#","")
-          .replace("\n","") + "\t"
-          pContent = pContent + h2Text
-
-          keyContent = keyContent + "," + originText
-        }
-      }
-    }else {
-      let childrenArr = tips.get(0).children
-      for (let i = 1; i < childrenArr.length; i++) {
-        pContent = pContent + childrenArr[i].innerText
-      }
-    }
-
-    let childmete = $("head").get(0).children;
-    for (let i = 0; i < childmete.length; i++) {
-      let name = childmete[i].getAttribute("name");
-
-      if (name === "description") {
-        childmete[i].setAttribute("content",pContent);
-      }
-    }
-
-    //设置关键词keyword
-    let keys = $(".key")
-    let kContent = ''
-    if (keys.length === 0) {
-      let keyRuleNum = this.themeProperty.keyRule
-
-      kContent = keyContent.substr(1, keyRuleNum)
-    }else {
-      kContent = keys.get(0).innerText
-    }
-    let metaKey = $('<meta name="keyword" content="'+kContent+'">')
-    $("head").get(0).appendChild(metaKey.get(0))
-
     let h1s = $("#c-page h1")
     if (h1s.length > 0) {
       $(h1s[0]).css('display','none')
     }
 
+    console.log("--------------m-------------")
+    this.setMeta()
     //下面就是自动添加广告
-
-    let allContents = $(".pageContent p")
 
     new Promise((resolve,reject) => {
       let adsenseNodes = []

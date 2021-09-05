@@ -123,11 +123,6 @@
 }
 
 
-body {
-
-}
-
-
 
 #app {
     --backgroundImageUrl: url(https://api.iro.tw/webp_pc.php);
@@ -137,6 +132,7 @@ body {
     --fontFamily: -apple-system;
     --fontColor: #2c3e50;
 
+    /*搜索*/
 
 
 
@@ -2150,3 +2146,22 @@ body::-webkit-scrollbar-thumb {
 .npm {
     display: inline-block;height: 2rem;width: 8rem;background-image: url("https://img.shields.io/npm/v/vuepress-theme-ccds?style=for-the-badge");background-repeat: no-repeat;background-size: auto;border: 1px solid red;
 }
+
+.my-version {
+    display: inline-block;
+    width: 5rem;
+    height: 3rem;
+    border: 1px solid red;
+    /*background-image: url(https://img.shields.io/npm/v/vuepress-theme-ccds);*/
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+.version{
+    background-size: contain;background-repeat: no-repeat;background-image: url(https://img.shields.io/npm/v/vuepress-theme-ccds);font-weight: bold;color: white;display: inline-block;text-align: center;width: 10rem;height: 1.5rem;line-height: 1.5rem;padding: 10px;border-bottom-left-radius: 13px;border-top-left-radius: 13px;
+    /*font-weight: bold;color: white;display: inline-block;text-align: center;height: 1.5rem;line-height: 1.5rem;background-image: url("https://img.shields.io/npm/v/vuepress-theme-ccds");background-repeat: ;padding: 10px;border-bottom-left-radius: 13px;border-top-left-radius: 13px;*/
+}
+
+/*.my-version {*/
+/*    display: inline-block;width: 100%;height: 3rem;background-image: url(https://img.shields.io/npm/v/vuepress-theme-ccds);background-repeat: no-repeat;background-size: contain;*/
+/*}*/

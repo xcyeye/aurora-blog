@@ -1,3 +1,8 @@
+---
+description: 这是部署项的描述
+keyword: [chuchen,java,vue,test]
+---
+
 # 部署
 
 对于如何部署，可以到<a href="https://vuepress.vuejs.org/zh/guide/deploy.html">vuepress官网</a>查看更详细说明，以下是使用GitHub Pages进行部署

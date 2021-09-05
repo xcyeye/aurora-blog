@@ -7,7 +7,7 @@
       @touchend="onTouchEnd"
       :style="colorFontStyle"
   >
-    <Navbar v-if="shouldShowNavbar" @toggle-sidebar="toggleSidebar">
+    <Navbar :style="$store.state.opacityStyle" v-if="shouldShowNavbar" @toggle-sidebar="toggleSidebar">
       <template #before>
         <slot name="navbar-before" />
       </template>
@@ -341,7 +341,7 @@ export default defineComponent({
   created() {
     //控制台打印
     console.log("%c vuepress-theme-ccds %c by qsyyke","font-weight: bold;color: white;display: inline-block;text-align: center;height: 1.5rem;line-height: 1.5rem;background-color: rgba(255,202,212,.8);padding: 10px;border-bottom-left-radius: 13px;border-top-left-radius: 13px;","font-weight: bold;color: white;display: inline-block;text-align: center;height: 1.5rem;line-height: 1.5rem;background-color: rgba(178,247,239,.85);padding: 10px;border-bottom-right-radius: 13px;border-top-right-radius: 13px;")
-    console.log("%c Version %c 1.5.7","font-weight: bold;color: white;display: inline-block;text-align: center;height: 1.5rem;line-height: 1.5rem;background-color: rgba(255,202,212,.8);padding: 10px;border-bottom-left-radius: 13px;border-top-left-radius: 13px;","font-weight: bold;color: white;display: inline-block;text-align: center;height: 1.5rem;line-height: 1.5rem;background-color: rgba(178,247,239,.85);padding: 10px;border-bottom-right-radius: 13px;border-top-right-radius: 13px;")
+    console.log("%c Version %c "+this.$store.state.version+"","font-weight: bold;color: white;display: inline-block;text-align: center;height: 1.5rem;line-height: 1.5rem;background-color: rgba(255,202,212,.8);padding: 10px;border-bottom-left-radius: 13px;border-top-left-radius: 13px;","font-weight: bold;color: white;display: inline-block;text-align: center;height: 1.5rem;line-height: 1.5rem;background-color: rgba(178,247,239,.85);padding: 10px;border-bottom-right-radius: 13px;border-top-right-radius: 13px;")
     // console.log(myData)
     new Promise((resolve,reject) => {
       for (let i = 0; i < myData.length; i++) {
