@@ -2,8 +2,12 @@
   <div :style="setBackgroundStyle(888)" id="tag-page" class="tag-page">
     <div class="tag-page-top">
       <div class="tag-page-title tag-common">
-        <a style="color: #2c3e50;text-decoration: none;"
-           :href="getHref"><span>{{getTitle(pageMap.title)}}</span></a>
+        <!--<a :data="getHref" style="color: #2c3e50;text-decoration: none;"
+           :href="getHref"><span>{{getTitle(pageMap.title)}}</span>
+        </a>-->
+        <a href="javasrcipt: ;" style="color: #2c3e50;text-decoration: none;"
+           @click="goPage"><span>{{getTitle(pageMap.title)}}</span>
+        </a>
       </div>
     </div>
     <div class="tag-page-bottom">
@@ -56,11 +60,12 @@ export default {
       }
     },
     getHref() {
-      let localhost = this.themeProperty.localhost
-      let articleUrl = this.pageMap.articleUrl
+      /*let articleUrl = this.pageMap.articleUrl
       let base = useSiteLocaleData().value.base;
+      console.log(base)
       base = base === '/' ? "" : base
-      return  window.location.origin + base + articleUrl;
+      return  window.location.origin + base + articleUrl;*/
+      return this.pageMap.articleUrl
     },
     getContent() {
       let content = this.pageMap.content
@@ -78,6 +83,10 @@ export default {
       min = Math.ceil(min);
       max = Math.floor(max);
       return Math.floor(Math.random() * (max - min)) + min; //不含最大值，含最小值
+    },
+    goPage() {
+      //console.log("-----------------------")
+      this.$router.push(this.pageMap.articleUrl)
     }
   }
 }

@@ -98,7 +98,7 @@ export default {
       return this.length
     },
     getSugTime() {
-      return  Math.floor(this.length / 400) === 0 ? 1 : Math.floor(this.length / 400);
+      return  Math.floor(this.length / 330) === 0 ? 1 : Math.floor(this.length / 330);
     },
     getRandom() {
       return this.getRandomInt(0,99999)

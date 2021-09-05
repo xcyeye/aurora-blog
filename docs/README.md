@@ -470,7 +470,7 @@ donate: {
 comment: {
   showComment: true,
   #占位符
-  placeholder: 这是配置placeholder,
+  placeholder: 在这里留下你的脚印吧...,
   appId: LwdW7EDeTGFUjTfUToF9WjEh-gzGzoHsz,
   appKey: yGiWpb4TbwSz5ihpfloV1gDX,
   #头像显示
@@ -478,7 +478,7 @@ comment: {
   # 每页评论数量
   pageSize: 3,
   #是否开启访问量
-  visitor: false,
+  visitor: true,
   # 是否记录评论者ip
   recordIP: true,
   # 是否自动获取用户qq头像，需根据qq号码

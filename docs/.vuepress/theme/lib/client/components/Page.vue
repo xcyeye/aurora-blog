@@ -63,6 +63,7 @@ export default defineComponent({
     themeProperty: null
   },
   created() {
+    //console.log("-------------create-----------")
     const page = usePageData()
     this.$emit('getHeadLine',page.value.title)
     this.adsenseArr = this.themeProperty.adsenseArr
@@ -79,13 +80,19 @@ export default defineComponent({
 
   methods: {
     start() {
+      //console.log("----------start-----------")
       let imgs = $(".pageContent img")
       for (let i = 0; i < imgs.length; i++) {
+        let clientWidth = document.body.clientWidth
         let img = imgs[i]
         let top = img.offsetTop
         let scrollTop = $(window).scrollTop();
-        let scrollCz = top - (scrollTop + 100)
-
+        let scrollCz = ''
+        if (clientWidth < 600) {
+          scrollCz = top - scrollTop - 350
+        }else {
+          scrollCz = top - (scrollTop + 50)
+        }
         if (scrollCz < 0) {
           this.loadImg(img)
         }
@@ -100,8 +107,9 @@ export default defineComponent({
   },
   mounted() {
 
+    //console.log("-----------mounted--------")
     let imgs = $(".pageContent img")
-    console.log(imgs)
+    //console.log(imgs)
     for (let i = 0; i < imgs.length; i++) {
       let originSrc = imgs[i].src
       imgs[i].setAttribute("data-origin",originSrc)

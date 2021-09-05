@@ -2,23 +2,9 @@ const {path} = require("@vuepress/utils");
 const {sidebar} = require("./theme/lib/client/public/js/hrefs");
 const {navbar} = require("./theme/lib/client/public/js/navbar");
 module.exports = {
-    /*plugins: [
-        [
-            'vuepress-plugin-comment',
-            {
-                choosen: 'valine',
-                options: {
-                    el: '.vcomments',
-                    appId: 'LwdW7EDeTGFUjTfUToF9WjEh-gzGzoHsz',
-                    appKey: 'yGiWpb4TbwSz5ihpfloV1gDX',
-                    //path: '<%- frontmatter.commentid || frontmatter.permalink %>'
-                }
-            }
-        ]
-    ],*/
 
     plugins: [
-            //'@vuepress/plugin-search'
+            //'@vuepress/plugin-docsearch'
     ],    //base: '/chu',
     onPrepared: async (app) => {
         const myData = app.pages.map((page) => {
@@ -26,7 +12,7 @@ module.exports = {
         })
         await app.writeTemp('my-data.js', `export default ${JSON.stringify(myData)}`)
     },
-
+    //theme: 'ccds',
     theme: path.resolve(__dirname, "theme/lib/node/index.js"),
     //theme: 'vuepress-theme-ccds',
     title: "qsyyke",

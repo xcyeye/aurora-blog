@@ -13,7 +13,6 @@
   "license": "ISC",
   "devDependencies": {
     "@types/jquery": "^3.5.6",
-    "@vuepress/plugin-docsearch": "^2.0.0-beta.25",
     "jquery": "^3.2.1",
     "prettier": "^2.3.2",
     "vuepress": "^2.0.0-beta.22"
@@ -24,6 +23,7 @@
     "easy-typer-js": "^2.1.0",
     "stylus-loader": "^6.1.0",
     "valine": "^1.4.14",
+    "vuepress-theme-ccds": "^1.0.3",
     "vuex": "^4.0.0-0"
   }
 }

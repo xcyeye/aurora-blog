@@ -2,9 +2,9 @@
 
 ## 介绍
 
-[部署](/home/deploy.md)
+[部署](https://theme-ccds.cco.vin/home/deploy.html#github-pages)
 
-[目录结构](/home/directory-structure.md)
+[目录结构](https://theme-ccds.cco.vin/home/directory-structure.html#%E7%BB%93%E6%9E%84)
 
 ![npm](https://img.shields.io/npm/v/vuepress-theme-ccds)![GitHub package.json version](https://img.shields.io/github/package-json/v/qsyyke/vuepress-theme-ccds)![npm](https://img.shields.io/npm/dw/vuepress-theme-ccds)![npm bundle size](https://img.shields.io/bundlephobia/min/vuepress-theme-ccds)
 
