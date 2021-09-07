@@ -1,14 +1,15 @@
 <template>
 
+  <!--<PosterImg/>-->
   <!--点击生成海报-->
-  <div class="poster-share">
+  <div class="poster-share" style="z-index: 99">
     <div class="poster-button" id="poster-button">
       <span class="icon-share" @click="createPoster">生成海报</span>
     </div>
   </div>
 
-  <div class="hide-poster-top" id="hide-poster-top">
-    <!--模板-->
+  <!--<div class="hide-poster-top" id="hide-poster-top">
+    &lt;!&ndash;模板&ndash;&gt;
     <div id="hide-poster" class="hide-poster">
       <div  class="poster" id="poster">
         <div class="poster-top">
@@ -39,10 +40,10 @@
           </div>
 
           <div class="poster-social-qr">
-            <!--<div class="poster-social-desc">
-            </div>-->
+            &lt;!&ndash;<div class="poster-social-desc">
+            </div>&ndash;&gt;
             <div class="poster-qr">
-              <!--https://ooszy.cco.vin/img/blog-public/wxpay.png-->
+              &lt;!&ndash;https://ooszy.cco.vin/img/blog-public/wxpay.png&ndash;&gt;
               <img id="poster-qrimg" :src="qrImgHref" alt="">
             </div>
           </div>
@@ -50,8 +51,8 @@
       </div>
     </div>
 
-    <!--生成的截图-->
-    <!--<div class="poster-qrimg-center" style="display: none">
+    &lt;!&ndash;生成的截图&ndash;&gt;
+    &lt;!&ndash;<div class="poster-qrimg-center" style="display: none">
       <div class="poster-img" id="poster-img">
         <div class="poster-cancel">
           <span @click="cancelShade" class="icon-close"></span>
@@ -76,8 +77,8 @@
           </a>
         </div>
       </div>
-    </div>-->
-  </div>
+    </div>&ndash;&gt;
+  </div>-->
 </template>
 
 <script>
@@ -95,10 +96,6 @@ export default {
     return {
       showPoster: false,
       href: '',
-      day: '',
-      month: '',
-      year: '',
-      qrImgHref: '',
       clickCreateNum: 0
     }
   },
@@ -166,15 +163,10 @@ export default {
       return "--poster-back-img: url(" + this.backgroundImgHref + ");"
     }
   },
-  created() {
-    let date = new Date()
-    this.day = date.getDate()
-    this.month = date.getMonth() + 1
-    this.year = date.getFullYear()
 
-  },
   methods: {
     cancelShade() {
+
       this.$store.commit("setShowPosterShadow", {
         showPosterShadow: false
       })
@@ -182,15 +174,28 @@ export default {
       $(".poster-qrimg-center").slideUp(500)
     },
     async createPoster() {
-
       this.$store.commit("setShowPosterShadow", {
         showPosterShadow: true
       })
+
+      this.$store.commit("setAuthor", {
+        author: this.author
+      })
+
       this.$store.commit("setShowShadeLoad",{
         showShadeLoad: true
       })
-      let hide = document.querySelector("#hide-poster-top")
-      hide.style.display = "block"
+
+      this.$store.commit("setDownloadImgTitle",{
+        downloadImgTitle: this.title
+      })
+
+      this.$store.commit("setPosterContent",{
+        posterContent: this.content
+      })
+
+      /*let hide = document.querySelector("#hide-poster-top")
+      hide.style.display = "block"*/
       let qrHref = this.qrHref
       if (qrHref === undefined || qrHref === "") {
         qrHref = window.location.href
@@ -202,9 +207,14 @@ export default {
       //console.log("次数: " + this.clickCreateNum)
       if (this.clickCreateNum !== 0) {
         //第二次点击
+        $(".poster-append").css("z-index",21)
         $(".poster-qrimg-center").slideDown(500)
         this.$store.commit("setShowPosterShadow", {
           showPosterShadow: true
+        })
+
+        this.$store.commit("setShowShadeLoad",{
+          showShadeLoad: false
         })
         return;
       }
@@ -215,18 +225,20 @@ export default {
           await html2canvas(document.querySelector("#poster"), {
             onclone: () => {
 
+              $(".poster-append").css("z-index",21)
               console.log("-------clone完成-------")
               this.$store.commit("setShowPostImg",{
                 showPostImg: true
               })
 
-              this.$store.commit("setDownloadImgTitle",{
-                downloadImgTitle: this.title
-              })
               setTimeout(() => {
                 //$(".poster-qrimg-center").slideDown(500)
                 $(".poster-qrimg-center").slideDown(400)
-              },100)
+              },200)
+
+              this.$store.commit("setShowShadeLoad",{
+                showShadeLoad: false
+              })
 
             },
             logging: false,
@@ -239,8 +251,10 @@ export default {
             useCORS: true,
           }).then(canvas => {
             console.log("----------最终完成---------")
+
             //document.body.appendChild(canvas)
             this.href = this.convertCanvasToImage(canvas).src
+
             this.$store.commit("setPostImgHref",{
               postImgHref: this.href
             })
@@ -249,14 +263,11 @@ export default {
               showShadeLoad: false
             })
 
-            this.$store.commit("setPosterContent",{
-              posterContent: this.content
-            })
 
 
             //console.log("------poster------------")
             //console.log(this.href)
-            /*setTimeout(() => {
+           /* setTimeout(() => {
                 //$(".poster-qrimg-center").slideDown(500)
                 $(".poster-qrimg-center").slideDown(500)
               },100)*/
@@ -281,7 +292,9 @@ export default {
       a.dispatchEvent(event);
     },
     saveQrimg(url) {
-      this.qrImgHref = url
+      this.$store.commit("setQrImgHref",{
+        qrImgHref: url
+      })
       return new Promise((resolve,reject) => {
         resolve()
       })

@@ -81,6 +81,18 @@ module.exports = {
         console.log("------site------")
         console.log(posterShareSite)
         this.state.posterShareSite = posterShareSite.posterShareSite
+    },
+    setScaleTransform(state,scaleTransform) {
+        this.state.scaleTransform = scaleTransform.scaleTransform
+    },
+    setAuthor(state,author) {
+        this.state.author = author.author
+    },
+    setQrImgHref(state,qrImgHref) {
+        this.state.qrImgHref = qrImgHref.qrImgHref
+    },
+    setPosterStyle(state,posterStyle) {
+        this.state.posterStyle = posterStyle.posterStyle
     }
 
 }

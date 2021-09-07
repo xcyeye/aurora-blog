@@ -485,7 +485,7 @@ comment: {
   adminUsername: qsyyke 
 }
 poster: {
-
+    description: 初尘博客呀
 }
 
 ---

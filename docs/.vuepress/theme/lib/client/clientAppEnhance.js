@@ -92,6 +92,12 @@ export default defineClientAppEnhance(({ app, router }) => {
         component: Mood
     })
 
+    router.addRoute({
+        path: '/post',
+        name: 'c-post',
+        component: Poster
+    })
+
     // unregister the built-in `<OutboundLink>` to avoid warning
     delete app._context.components.OutboundLink;
     // override the built-in `<OutboundLink>`

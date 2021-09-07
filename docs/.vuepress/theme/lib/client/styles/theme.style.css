@@ -10,6 +10,11 @@
     font-display: block;
 }
 
+/*google font*/
+@font-face {
+    font-family: Lobster-Regular;
+    src: url(../public/fonts/Lobster-Regular.ttf);
+}
 .record-mark {
     margin-right: .4rem;
     font-family: icomoon;
@@ -126,7 +131,7 @@
 
 #app {
     --backgroundImageUrl: url(https://api.iro.tw/webp_pc.php);
-    --poster-back-img: url(https://api.paugram.com/bing);
+    --poster-back-img: url(http://h2.ioliu.cn/bing/GiantManta_ZH-CN0594951444_640x480.jpg?imageslim);
     --fitter-blue: 5px;
     --borderRadius: 20px;
     --opacity: 0.5;
@@ -1249,7 +1254,7 @@
 
 #app {
     /*font-family: '手书体';*/
-    position: relative;
+    /*position: relative;*/
     color: #2c3e50;
 
     /*width: 100%;*/
@@ -2190,24 +2195,45 @@ body::-webkit-scrollbar-thumb {
     }
 }
 @media screen and (max-width: 719px) {
-    #poster {
-        width: 80%;
+    #poster-append {
+        /*width: 100%;*/
+        /*width: 42rem;*/
         margin: 0 auto;
+    }
+    #poster {
+        transform: scale(1);
+        /*width: 80%;*/
+    }
+    #share-bottom {
+        position: relative;
+        bottom: 0;
+        margin-bottom: 1rem;
     }
     #poster-button {
         width: 96%;
     }
     #poster-img {
-        margin: 0 auto;
-        width: 82%;
+        height: max-content;
+    }
+    #poster-qrimg-center {
+        width: 100%;
+        height: 95%;
+        transform: scale(calc(var(--scale-transform) - 0.1));
     }
     #hide-poster {
         /*position: fixed;
         right: 0;*/
         width: 100%;
     }
+    #poster-time-year {
+        font-size: 2rem;
+    }
+    #poster-time-day {
+        font-size: 3.5rem;
+    }
     #poster-qrimg-center {
-        align-items: center;
+        /*align-items: center;*/
+        width: 100%;
     }
 
 }
@@ -2216,24 +2242,47 @@ body::-webkit-scrollbar-thumb {
 }
 /*background: rgba(0, 0, 0, 0.5);*/
 .poster {
-    /*z-index: -766;*/
-    margin-top: 2rem;
-    width: 17rem;
-    height: max-content;
+    position: absolute;
+    right: 1000rem;
     /*border: 1px solid red;*/
+    max-width: 40rem;
+    width: 40rem;
+    height: max-content;
+    max-height: 71rem;
+    transform: scale(.5);
     border-radius: 10px;
     padding: 1rem;
-    /*background-color: rgba(255, 202, 212,.6);*/
-    background-color: rgba(255,255,255,.8);
+    background-color: rgba(255,255,255,.9);
     box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 }
 
+.share-div {
+    /*border: 1px solid red;*/
+    /*height: 25rem;*/
+    height: available;
+    /*height: max-content;*/
+    width: 100%;
+    overflow: hidden;
+    margin-bottom: 1rem;
+}
+#share-img {
+    /*transform: scale(.5);*/
+    /*height: 10rem;*/
+}
 .poster-img {
-    z-index: 40;
+    /*position: relative;*/
+    position: fixed;
+    top: 0;
+    right: 0;
+    z-index: 20;
     margin-top: 2rem;
-    width: 19rem;
+    width: 100%;
+    /*max-width: 40rem;*/
     /*height: 19rem;*/
-    height: max-content;
+    /*height: max-content;*/
+    /*max-height: 25rem;*/
+    /*height: 31rem;*/
+    height: calc(100vh);
     /*border: 1px solid red;*/
     border-radius: 10px;
     /*padding: 1rem;*/
@@ -2242,6 +2291,13 @@ body::-webkit-scrollbar-thumb {
     box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 }
 .poster-img img {
+    width: 100%;
+}
+.share-bottom {
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    /*border: 1px solid blue;*/
+    position: absolute;
+    bottom: 2%;
     width: 100%;
 }
 .poster-share {
@@ -2276,36 +2332,52 @@ body::-webkit-scrollbar-thumb {
 .poster-top {
 
     position: relative;
-    height: 10rem;
+    /*height: max-content;*/
+    max-height: 23rem;
+    height: 23rem;
+    /*border: 1px solid blue;*/
     /*border: 1px solid blue;*/
     background-image: var(--poster-back-img);
     background-repeat: no-repeat;
-    background-size: contain;
+    background-size: cover;
+    background-position: 50% 100%;
+    z-index: -2;
     /*border-radius: 5px;*/
-    margin-bottom: .7rem;
+    /*margin-bottom: .7rem;*/
+}
+#poster-top-img {
+    max-width: 40rem;;
+    height: max-content;
+    max-height: 23rem;
+    border-radius: 20px;
+
 }
 .poster-time {
+    /*width: 20%;*/
+    /*border: 1px solid red;*/
     position: absolute;
     bottom: 13%;
     left: 5%;
 }
 .poster-time-day {
     text-align: center;
-    font-size: 25px;
+    font-size: 5.5rem;
     font-weight: bold;
     color: white;
 }
 .poster-time-year {
     color: white;
     margin-top: .1rem;
-    font-size: 20px;
+    font-size: 3rem;
 }
 .poster-center {
+    font-size: 1.5rem;
+    /*border: 1px seagreen solid;*/
     margin-top: .5rem;
     margin-bottom: 1.5rem;
     overflow: hidden;
-    --poster-content-title: 2rem;
-    --poster-heiht: 6.6rem;
+    --poster-content-title: 5rem;
+    --poster-heiht: 26rem;
 
     width: 100%;
     /*height: var(--poster-heiht);*/
@@ -2313,33 +2385,88 @@ body::-webkit-scrollbar-thumb {
     /*border: 1px solid red;*/
 }
 .poster-title {
-
     font-size: 22px;
     font-weight: 650;
     text-align: left;
     padding-left: 15px;
     /*border: 1px solid palevioletred;*/
-    height: var(--poster-content-title);
-    line-height: var(--poster-content-title);
+    max-height: var(--poster-content-title);
+    /*max-height: var(--poster-content-title);*/
+    /*line-height: var(--poster-content-title);*/
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 2.5rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    margin-top: 1.5rem;
+    margin-bottom: 1rem;
+
 }
 .poster-content {
-    font-family: sst;
+    padding-left: 5px;
+    padding-right: 5px;
+    font-size: 1rem;
     font-weight: 300;
     overflow: hidden;
-    /*white-space: nowrap;*/
-
     text-overflow: ellipsis;
-    padding: 5px 5px 0px 5px;
+    display: -webkit-box;
+    -webkit-line-clamp: 5;
+    -webkit-box-orient: vertical;
     /*border: 1px solid blue;*/
+    line-height: 1.5rem;
     /*height: calc(var(--poster-heiht) - var(--poster-content-title));*/
-    max-height: calc(var(--poster-heiht) - var(--poster-content-title));;
+    max-height: calc(13rem - var(--poster-content-title));;
+}
+.poster-content span {
+    padding: 5px 5px 5px 5px;
+}
+.poster-page {
+    margin-top: 1.5rem;
+    /*margin-bottom: 1rem;*/
+    width: 100%;
+    max-height: 13rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /*border: 1px solid seagreen;*/
+}
+.poster-page-left,.poster-page-right {
+    flex: 1;
+}
+.poster-page-left {
+    position: relative;
+    /*border: 1px solid palevioletred;*/
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.poster-page-avatar {
+    display: flex;
+    justify-content: center;
+    /*border: 1px solid red;*/
+    flex: 1;
+}
+.poster-page-desc {
+    padding-left: 10px;
+    position: relative;
+    flex: 2;
+    height: 100%;
+}
+.poster-desc-top {
+    margin-bottom: .5rem;
+}
+#poster-page-avatar {
+    max-width: 5rem;
+    padding: .5rem;
+    border-radius: 30rem;
 }
 .poster-bottom {
     /*max-width: 15rem;*/
     width: 100%;
     margin-bottom: 1rem;
     position: relative;
-    height: max-content;
+    height: 9rem;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -2350,33 +2477,46 @@ body::-webkit-scrollbar-thumb {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 5.5rem;
+    /*border: 1px solid palevioletred;*/
+    /*height: 5.5rem;*/
+    /*height: 20%;*/
 }
 .poster-say {
-    overflow: hidden;
-    /*width: 100%;*/
-    flex: 6;
+    width: 100%;
+    height: 9rem;
+    flex: 3;
     text-align: center;
-    /*border: 1px solid red;*/
-    height: 4.5rem;
 }
-.transform {
-    transform: rotate(-2deg);
-}
-.poster-author {
+.blog-name {
     height: 50%;
-    font-weight: 600;
-    font-size: 20px;
-    line-height: 2.25rem;
-    /*border: 1px solid blue;*/
-    color: #03a9f4;
-    font-family: lf;
+    line-height: 4.5rem;
+    color: #2c3e50;
+    font-size: 2rem;
+    margin-bottom: .5rem;
 }
+.blog-name span:first-child {
+
+}
+.blog-name span:nth-child(2) {
+    /*color: red;*/
+    font-family: Lobster-Regular;
+}
+.blog-desc {
+    width: max-content;
+    max-width: 20rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    height: 50%;
+    font-size: 1.2rem;
+}
+.blog-desc span {
+    padding: 10px;
+}
+
 .poster-author-say {
-    /*font-family: tzt;*/
-    overflow: hidden;/*超出部分隐藏*/
-    text-overflow:ellipsis;/* 超出部分显示省略号 */
-    /*white-space: nowrap;!*规定段落中的文本不进行换行 *!*/
+    overflow: hidden;
+    text-overflow:ellipsis;
     height: 50%;
     padding-left: 5px;
     padding-right: 5px;
@@ -2384,7 +2524,7 @@ body::-webkit-scrollbar-thumb {
     color: #2c3e50;
     font-weight: 300;
     line-height: 2.25rem;
-    /*border: 1px solid palevioletred;*/
+
 }
 .poster-social-desc {
     flex: 5;
@@ -2402,11 +2542,12 @@ body::-webkit-scrollbar-thumb {
     width: 100%;
     position: relative;
     flex: 5;
-
     display: flex;
     justify-content: center;
     align-items: center;
     height: 2rem;
+    /*height: 10%;*/
+    /*border: 1px solid red;*/
 }
 
 
@@ -2420,10 +2561,13 @@ body::-webkit-scrollbar-thumb {
     /*padding: 2px;*/
     padding-left: 7px;
     padding-right: 7px;
+    padding-top: 2px;
+    font-size: 20px;
+    padding-bottom: 2px;
     border-radius: 4px;
     display: inline-block;
     width: max-content;
-    height: 1.4rem;
+    height: 1.7rem;
     /*background-color: #f5365c;*/
 }
 .qq {
@@ -2448,23 +2592,21 @@ body::-webkit-scrollbar-thumb {
 
 #poster-qrimg {
     border-radius: 20px;
-    width: 5rem;
-    height: 5rem;
+    width: 8rem;
+    height: 8rem;
 }
 
 .poster-qrimg-center {
-    /*display: none;*/
-    z-index: 38;
+    position: fixed;
     top: 0;
     right: 0;
-    position: fixed;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    /*align-items: center;*/
+    width: 30%;
+    --scale-transform: .5;
+    transform: scale(var(--scale-transform));
+    z-index: 21;
 }
 .poster-cancel {
+    /*height: 5%;*/
     text-align: right;
     padding-top: 5px;
     padding-right: 1rem;
@@ -2477,8 +2619,39 @@ body::-webkit-scrollbar-thumb {
     font-family: icomoon;
 }
 .poster-share-desc {
+    font-size: 15px;
     margin-left: 10px;
     margin-bottom: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /*height: 5%;*/
+}
+.poster-share-desc span {
+    padding-top: 2px;
+    padding-bottom: 2px;
+    font-size: 20px;
+    vertical-align: middle;
+    display: inline-block;
+    flex: 1;
+}
+.poster-scalc {
+    text-align: right;
+    flex: 2;
+}
+.poster-scale span {
+    color: #ffffff;
+    /* padding: 2px; */
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 4px;
+    display: inline-block;
+    width: max-content;
+    height: 1.4rem;
+    cursor: pointer;
+    background-color: #8186d5;
+    margin-left: .5rem;
+    margin-right: .5rem;
 }
 .page-top-share {
     /*padding-right: 2.5rem;*/
@@ -2520,15 +2693,8 @@ body::-webkit-scrollbar-thumb {
 }*/
 
 .hide-poster {
-
-    /*margin: 0 auto;*/
-    /*position: fixed;*/
-    /*left: 0rem;*/
-    /* position: fixed;
-    right: 1000rem; */
-    /*margin: 0 auto;*/
-    /*z-index: -10;*/
-    /*right: 99rem;*/
+    /*opacity: 0;*/
+    /*z-index: -5;*/
 }
 .top-image {
     /*position: relative;*/
@@ -2555,4 +2721,18 @@ body::-webkit-scrollbar-thumb {
     position: fixed;
     top: 0;
     right: 0;
+}
+.poster-append {
+    z-index: 1;
+    /*position: fixed;*/
+    /*position: absolute;*/
+    position: relative;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    right: 0;
+    /*border: 1px solid red;*/
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

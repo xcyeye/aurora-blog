@@ -24,8 +24,12 @@ module.exports = {
     showPosterShadow: false,
     showPostImg: false,
     postImgHref: '',
-    downloadImgTitle: '',
+    downloadImgTitle: 'ccds',
     showShadeLoad: false,
-    posterContent: '',
-    posterShareSite: ''
+    posterContent: '青衫烟雨客',
+    posterShareSite: '',
+    scaleTransform: 0.9,
+    author: 'qsyyke',
+    qrImgHref: '',
+    posterStyle: 'height: 400px;'
 }

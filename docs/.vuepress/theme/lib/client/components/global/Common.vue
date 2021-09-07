@@ -1,5 +1,7 @@
 <template>
-  <poster-img></poster-img>
+  <div class="poster-append" id="poster-append">
+    <poster-img></poster-img>
+  </div>
   <div
       @click="cancelWelcome"
       class="theme-container"
@@ -78,6 +80,12 @@
   <div :class="{posterShade: $store.state.showPosterShadow}">
     <span :class="{iconSpinner6: $store.state.showShadeLoad}"></span>
   </div>
+
+  <!--$store.state.showPosterShadow-->
+  <!--<div :class="{posterShade: true}">
+    <span :class="{iconSpinner6: true}"></span>
+  </div>-->
+
 
 </template>
 <script lang="ts">
