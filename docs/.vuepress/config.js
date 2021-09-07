@@ -13,7 +13,7 @@ module.exports = {
     //theme: 'vuepress-theme-ccds',
     title: "qsyyke",
 
-    port: 8082,
+    port: 8080,
 
     themeConfig: {
         logo: "https://ooszy.cco.vin/img/blog-public/ccds_64.ico",

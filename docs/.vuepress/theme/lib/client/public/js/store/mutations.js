@@ -56,4 +56,31 @@ module.exports = {
     setCommentCount(state,commentCount) {
         this.state.commentCount = commentCount.commentCount
     },
+    setShowPosterShadow(state,showPosterShadow) {
+        this.state.showPosterShadow = showPosterShadow.showPosterShadow
+    },
+    setShowPostImg(state,showPostImg) {
+        this.state.showPostImg = showPostImg.showPostImg
+    },
+    setPostImgHref(state,postImgHref) {
+        this.state.postImgHref = postImgHref.postImgHref
+    },
+    setDownloadImgTitle(state,downloadImgTitle) {
+        this.state.downloadImgTitle = downloadImgTitle.downloadImgTitle
+    },
+    setShowShadeLoad(state,showShadeLoad) {
+        console.log(showShadeLoad)
+        this.state.showShadeLoad = showShadeLoad.showShadeLoad
+    },
+    setPosterContent(state,posterContent) {
+        console.log("------content------")
+        console.log(posterContent)
+        this.state.posterContent = posterContent.posterContent
+    },
+    setPosterShareSite(state,posterShareSite) {
+        console.log("------site------")
+        console.log(posterShareSite)
+        this.state.posterShareSite = posterShareSite.posterShareSite
+    }
+
 }

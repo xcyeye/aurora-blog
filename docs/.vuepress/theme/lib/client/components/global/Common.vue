@@ -1,4 +1,5 @@
 <template>
+  <poster-img></poster-img>
   <div
       @click="cancelWelcome"
       class="theme-container"
@@ -20,7 +21,11 @@
     <div class="page-sidebar" @wheel="handleScroll">
       <top-image :is-show-top-img="isShowTopImg"
                  :is-show-head-line="isShowHeadLine"
-                 :head-line="headLine"/>
+                 :head-line="headLine">
+        <!--<div class="top-show">
+          <poster/>
+        </div>-->
+      </top-image>
       <div class="common-test" id="content">
         <Sidebar>
           <template #top>
@@ -69,6 +74,10 @@
        :class="{'set-bg-fitter': $store.state.isFitter}"
        :style="setVarCommonStyle"
   ></div>
+  <!--$store.state.showPosterShadow-->
+  <div :class="{posterShade: $store.state.showPosterShadow}">
+    <span :class="{iconSpinner6: $store.state.showShadeLoad}"></span>
+  </div>
 
 </template>
 <script lang="ts">
@@ -84,6 +93,7 @@ import HomeWelcome from '../../components/child/HomeWelcome'
 import EasyTyper from "easy-typer-js";
 import $ from 'jquery'
 import Sidebar from '../Sidebar'
+import PosterImg from '../child/PosterImg'
 // import filterPostsByType from '../../public/js/post'
 //导入配置属性
 let themeProperty = null
@@ -101,6 +111,7 @@ export default defineComponent({
     HomeWelcome,
     Home,
     Sidebar,
+    PosterImg
   },
   data() {
     return {

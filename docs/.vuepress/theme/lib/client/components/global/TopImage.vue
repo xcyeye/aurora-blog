@@ -1,6 +1,6 @@
 <template>
   <div v-if="isShowTopImg" :style="setBackgroundUrl" id="page-top">
-    <div v-if="isShowHeadLine" style="color: #42a5f5">
+    <div class="top-image" v-if="isShowHeadLine" style="color: #42a5f5">
       <h1>{{headLine}}</h1>
 
       <!--<h1>{{pageMap.title === null ? "sdf" : pageMap.title}}</h1>-->
@@ -43,6 +43,11 @@
         </div>
       </div>
     </div>
+    <slot name="top1"></slot>
+    <slot name="top2"></slot>
+    <slot name="top3"></slot>
+    <slot name="top4"></slot>
+    <slot name="top5"></slot>
   </div>
 </template>
 

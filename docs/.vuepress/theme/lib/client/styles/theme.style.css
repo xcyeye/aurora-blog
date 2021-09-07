@@ -126,6 +126,7 @@
 
 #app {
     --backgroundImageUrl: url(https://api.iro.tw/webp_pc.php);
+    --poster-back-img: url(https://api.paugram.com/bing);
     --fitter-blue: 5px;
     --borderRadius: 20px;
     --opacity: 0.5;
@@ -554,6 +555,7 @@
 #set-bg {
     width: 100%;
     height: 100%;
+    /*background: rgba(0, 0, 0, 0.5);*/
     background-image: var(--backgroundImageUrl);
     background-repeat: no-repeat;
     background-size: cover;
@@ -563,6 +565,18 @@
     z-index: -2;
     opacity:0.4;
     filter: alpha(opacity=60);
+}
+.posterShade {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 20;
 }
 .set-bg-fitter:before {
 
@@ -2165,3 +2179,380 @@ body::-webkit-scrollbar-thumb {
 /*.my-version {*/
 /*    display: inline-block;width: 100%;height: 3rem;background-image: url(https://img.shields.io/npm/v/vuepress-theme-ccds);background-repeat: no-repeat;background-size: contain;*/
 /*}*/
+
+/*海报*/
+@media screen and (min-width: 719px) {
+    #poster-qrimg-center {
+        top: -5%;
+    }
+    #poster-img {
+        transform: scale(.9);
+    }
+}
+@media screen and (max-width: 719px) {
+    #poster {
+        width: 80%;
+        margin: 0 auto;
+    }
+    #poster-button {
+        width: 96%;
+    }
+    #poster-img {
+        margin: 0 auto;
+        width: 82%;
+    }
+    #hide-poster {
+        /*position: fixed;
+        right: 0;*/
+        width: 100%;
+    }
+    #poster-qrimg-center {
+        align-items: center;
+    }
+
+}
+.showPoster {
+    display: none;
+}
+/*background: rgba(0, 0, 0, 0.5);*/
+.poster {
+    /*z-index: -766;*/
+    margin-top: 2rem;
+    width: 17rem;
+    height: max-content;
+    /*border: 1px solid red;*/
+    border-radius: 10px;
+    padding: 1rem;
+    /*background-color: rgba(255, 202, 212,.6);*/
+    background-color: rgba(255,255,255,.8);
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+
+.poster-img {
+    z-index: 40;
+    margin-top: 2rem;
+    width: 19rem;
+    /*height: 19rem;*/
+    height: max-content;
+    /*border: 1px solid red;*/
+    border-radius: 10px;
+    /*padding: 1rem;*/
+    /*background-color: rgba(255, 202, 212,.6);*/
+    background-color: rgba(255,255,255,.8);
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+.poster-img img {
+    width: 100%;
+}
+.poster-share {
+    width: 100%;
+    /*position: absolute;*/
+    /*left: 0;*/
+}
+.poster-button {
+    position: relative;
+    /*border: 1px solid red;*/
+    text-align: right;
+    /*width: 70%;*/
+    margin: 0 auto;
+    position: relative;
+    /*z-index: 50;*/
+}
+.poster-button span {
+    display: inline-block;
+    background: linear-gradient(
+            40deg
+            , rgb(224, 195, 252), rgb(142, 197, 252));
+    position: relative;
+    right: 5%;
+    color: white;
+    line-height: initial;
+    padding-left: 7px;
+    padding-right: 7px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.poster-top {
+
+    position: relative;
+    height: 10rem;
+    /*border: 1px solid blue;*/
+    background-image: var(--poster-back-img);
+    background-repeat: no-repeat;
+    background-size: contain;
+    /*border-radius: 5px;*/
+    margin-bottom: .7rem;
+}
+.poster-time {
+    position: absolute;
+    bottom: 13%;
+    left: 5%;
+}
+.poster-time-day {
+    text-align: center;
+    font-size: 25px;
+    font-weight: bold;
+    color: white;
+}
+.poster-time-year {
+    color: white;
+    margin-top: .1rem;
+    font-size: 20px;
+}
+.poster-center {
+    margin-top: .5rem;
+    margin-bottom: 1.5rem;
+    overflow: hidden;
+    --poster-content-title: 2rem;
+    --poster-heiht: 6.6rem;
+
+    width: 100%;
+    /*height: var(--poster-heiht);*/
+    max-height: var(--poster-heiht);
+    /*border: 1px solid red;*/
+}
+.poster-title {
+
+    font-size: 22px;
+    font-weight: 650;
+    text-align: left;
+    padding-left: 15px;
+    /*border: 1px solid palevioletred;*/
+    height: var(--poster-content-title);
+    line-height: var(--poster-content-title);
+}
+.poster-content {
+    font-family: sst;
+    font-weight: 300;
+    overflow: hidden;
+    /*white-space: nowrap;*/
+
+    text-overflow: ellipsis;
+    padding: 5px 5px 0px 5px;
+    /*border: 1px solid blue;*/
+    /*height: calc(var(--poster-heiht) - var(--poster-content-title));*/
+    max-height: calc(var(--poster-heiht) - var(--poster-content-title));;
+}
+.poster-bottom {
+    /*max-width: 15rem;*/
+    width: 100%;
+    margin-bottom: 1rem;
+    position: relative;
+    height: max-content;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.poster-social-qr {
+    flex: 3;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 5.5rem;
+}
+.poster-say {
+    overflow: hidden;
+    /*width: 100%;*/
+    flex: 6;
+    text-align: center;
+    /*border: 1px solid red;*/
+    height: 4.5rem;
+}
+.transform {
+    transform: rotate(-2deg);
+}
+.poster-author {
+    height: 50%;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 2.25rem;
+    /*border: 1px solid blue;*/
+    color: #03a9f4;
+    font-family: lf;
+}
+.poster-author-say {
+    /*font-family: tzt;*/
+    overflow: hidden;/*超出部分隐藏*/
+    text-overflow:ellipsis;/* 超出部分显示省略号 */
+    /*white-space: nowrap;!*规定段落中的文本不进行换行 *!*/
+    height: 50%;
+    padding-left: 5px;
+    padding-right: 5px;
+    font-size: 15px;
+    color: #2c3e50;
+    font-weight: 300;
+    line-height: 2.25rem;
+    /*border: 1px solid palevioletred;*/
+}
+.poster-social-desc {
+    flex: 5;
+    height: 5.5rem;
+    position: relative;
+}
+.poster-social-desc div {
+    position: absolute;
+    bottom: 0;
+    padding-bottom: 10px;
+    padding-left: 10px;
+}
+
+.poster-social {
+    width: 100%;
+    position: relative;
+    flex: 5;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 2rem;
+}
+
+
+.poster-social a {
+    text-align: center;
+    flex: 1;
+}
+.poster-social a span {
+
+    color: #ffffff;
+    /*padding: 2px;*/
+    padding-left: 7px;
+    padding-right: 7px;
+    border-radius: 4px;
+    display: inline-block;
+    width: max-content;
+    height: 1.4rem;
+    /*background-color: #f5365c;*/
+}
+.qq {
+    background-color: #64b5f6;
+}
+.qzone {
+    background-color: #ffd180;
+}
+.weibo {
+    background-color: #ff7043;
+}
+.save {
+    background-color: #37474f;
+}
+.poster-qr {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 3;
+    /*padding: 1rem;*/
+}
+
+#poster-qrimg {
+    border-radius: 20px;
+    width: 5rem;
+    height: 5rem;
+}
+
+.poster-qrimg-center {
+    /*display: none;*/
+    z-index: 38;
+    top: 0;
+    right: 0;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    /*align-items: center;*/
+}
+.poster-cancel {
+    text-align: right;
+    padding-top: 5px;
+    padding-right: 1rem;
+    /*clear: both;*/
+}
+.icon-close:after {
+    font-size: 20px;
+    cursor: pointer;
+    content: "\e91a";
+    font-family: icomoon;
+}
+.poster-share-desc {
+    margin-left: 10px;
+    margin-bottom: 10px;
+}
+.page-top-share {
+    /*padding-right: 2.5rem;*/
+    position: absolute;
+    right: 1rem;
+    width: 9rem;
+    margin-top: .5rem;
+}
+.icon-share:before {
+    padding-right: 5px;
+    content: "\f064";
+    font-family: icomoon;
+}
+.iconSpinner6 {
+    display: inline-block;
+    background-image: url("https://ooszy.cco.vin/img/ico/loading.png");
+    width: 3rem;
+    height: 3rem;
+    background-repeat: no-repeat;
+    background-size: contain;
+    text-align: center;
+    animation: load_animate 1s linear infinite;
+}
+@keyframes load_animate {
+    to {
+        transform: rotate(1turn);
+    }
+}
+/*.icon-share:after {
+    display: inline-block;
+    content: "\e97f";
+    font-family: icomoon;
+    width: 1rem;
+    height: 1rem;
+    background-color: red;
+    position: absolute;
+    top: 2rem;
+    right: 0;
+}*/
+
+.hide-poster {
+
+    /*margin: 0 auto;*/
+    /*position: fixed;*/
+    /*left: 0rem;*/
+    /* position: fixed;
+    right: 1000rem; */
+    /*margin: 0 auto;*/
+    /*z-index: -10;*/
+    /*right: 99rem;*/
+}
+.top-image {
+    /*position: relative;*/
+}
+.top-show {
+    position: absolute;
+    right: 0;
+    bottom: 2%;
+    width: 9rem;
+}
+.hide-poster-top {
+    /* display: none; */
+}
+.mood-poster {
+    text-align: right;
+    margin-top: .5rem;
+    margin-bottom: .5rem;
+}
+
+.append-test {
+    width: 4rem;
+    height: 10rem;
+    background-color: red;
+    position: fixed;
+    top: 0;
+    right: 0;
+}

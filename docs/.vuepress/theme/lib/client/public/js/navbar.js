@@ -55,6 +55,10 @@ module.exports = {
         {
             text: '心情',
             link: '/mood'
+        },
+        {
+            text: "post",
+            link: '/post'
         }
     ],
 }

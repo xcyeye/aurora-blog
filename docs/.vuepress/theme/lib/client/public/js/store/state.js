@@ -21,4 +21,11 @@ module.exports = {
     readCount: '...',
     commentCount: '...',
     version: '1.0.4',
+    showPosterShadow: false,
+    showPostImg: false,
+    postImgHref: '',
+    downloadImgTitle: '',
+    showShadeLoad: false,
+    posterContent: '',
+    posterShareSite: ''
 }

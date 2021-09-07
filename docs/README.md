@@ -484,6 +484,8 @@ comment: {
   # 是否自动获取用户qq头像，需根据qq号码
   adminUsername: qsyyke 
 }
+poster: {
 
+}
 
 ---

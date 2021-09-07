@@ -19,7 +19,8 @@ import About from './components/About';
 import Tag from './components/Tag';
 import store from './public/js/store'
 import Link from './components/Link';
-
+import Poster from "./components/global/Poster";
+import TestAppend from "./components/TestAppend";
 //搜索组件
 import { SearchBox } from '../plugin-search/lib/client/components/SearchBox';
 import '../plugin-search/lib/client/styles/vars.css';
@@ -49,6 +50,8 @@ export default defineClientAppEnhance(({ app, router }) => {
     app.component('Profile', Profile);
     app.component('Donate', Donate);
     app.component('Comment', Comment);
+    app.component('Poster', Poster);
+    //app.component('TestAppend', TestAppend);
 
     //app.component('SearchBox', (props) => h(SearchBox, {
     //    locales,

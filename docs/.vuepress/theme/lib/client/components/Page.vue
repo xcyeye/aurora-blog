@@ -1,16 +1,25 @@
 <template>
+
   <div class="c-page-parent">
+    <!--<div class="page-top-share">
+        <poster/>
+      </div>-->
     <main :style="$store.state.borderRadiusStyle + $store.state.opacityStyle" class="page" id="c-page">
       <slot name="top" />
-
       <!--:adsense-script="adsenseArr[0].script"-->
+      <div class="page-top-share">
+        <poster :content="posterContent"
+                :title="originPageData.title"
+                author="青衫烟雨客" />
+        <!--<h3>sdfsdf</h3>-->
+
+      </div>
       <div class="theme-default-content pageContent">
         <AdSense adsense-position="right"
                  :adsense-background-img="adsenseArr[0].adsenseBackgroundImg"
                  :adsense-message="adsenseArr[0].adsenseMessage"
         >
           <div v-html="adsenseArr[0].script">
-
           </div>
         </AdSense>
         <Content />
@@ -23,13 +32,14 @@
   </div>
   <div>
     <donate v-if="themeProperty.donate.articlePage" />
+    <!--<Poster/>-->
   </div>
   <div class="recommend-page">
     <RecommendPage :theme-property="themeProperty"/>
   </div>
 
+  <!--<poster/>-->
   <comment></comment>
-
 </template>
 
 <script>
@@ -57,7 +67,8 @@ export default defineComponent({
       insertAdsenseRule: '',
       adsenseLength: 3,
       lazyLoadingImg: null,
-      originPageData: ''
+      originPageData: '',
+      posterContent: ''
     }
   },
   props: {
@@ -65,8 +76,15 @@ export default defineComponent({
   },
   created() {
     //console.log("-------------create-----------")
+    setTimeout(() => {
+      this.getPosterText().then((res) => {
+        this.posterContent = res
+      })
+    },1000)
     const page = usePageData()
     this.originPageData = page
+    console.log("---------page--")
+    console.log(this.originPageData)
     this.$emit('getHeadLine',page.value.title)
     this.adsenseArr = this.themeProperty.adsenseArr
     this.insertAdsenseRule = this.themeProperty.insertAdsenseRule
@@ -78,9 +96,33 @@ export default defineComponent({
       //console.log("scroll")
       this.start()
     })
+
   },
 
   methods: {
+    getPosterText() {
+      return new Promise((resolve,reject) => {
+        let allP = $(".pageContent").get(0).children
+        let content = ''
+        if (allP.length > 15) {
+          for (let i = 0; i < 15; i++) {
+            content = content + allP[i].innerText
+          }
+        }else {
+          for (let i = 0; i < allP.length; i++) {
+            content = content + allP[i].innerText
+          }
+        }
+        content = content.replace(/\r\n/g,"")
+        content = content.replace(/\n/g,"");
+        content = content.replace(/\s/g,"")
+        content = content.replace("#","")
+        content = content.replace("#\n","")
+        content = content.replace("##\n","")
+        content = content.replace("##","")
+        resolve(content)
+      })
+    },
     start() {
       //console.log("----------start-----------")
       let imgs = $(".pageContent img")

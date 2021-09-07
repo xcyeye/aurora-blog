@@ -18,7 +18,9 @@
     </div>
     <div class="mood-img">
       <!--<li><img id="mood-bottom-img" src="https://ooszy.cco.vin/img/blog-public/btg2.jpg" alt=""></li>-->
-      <div class="mood-img-left"></div>
+      <div class="mood-img-left">
+        <!--<poster/>-->
+      </div>
       <div class="mood-img-right" id="mood-img-right">
         <div class="mood-li-control">
           <li v-for="(item,index) in imgs" id="mood-img-li">
@@ -26,6 +28,9 @@
           </li>
         </div>
       </div>
+    </div>
+    <div class="mood-poster">
+      <poster :title="title" :content="content" />
     </div>
   </div>
 </template>
