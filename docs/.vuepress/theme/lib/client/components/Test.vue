@@ -6,12 +6,13 @@
     <br>
     <br>
     <button @click="append">点击添加</button>
-    <div class="div1" :style="height">
+    <div class="div1">
     </div>
   </div>
 </template>
 
 <script>
+import $ from 'jquery'
 export default {
   name: "Test",
   data() {
@@ -22,10 +23,7 @@ export default {
   },
   methods: {
     append() {
-      this.length += 1
-      setTimeout(() => {
-        this.height = 'height: ' + this.length + "rem;"
-      },1500)
+      $(".div1").css("height",'10rem')
     }
   }
 }
@@ -36,5 +34,6 @@ export default {
     width: 7rem;
     background-color: red;
     display: inline-block;
+    height: 2rem;
   }
 </style>

@@ -234,76 +234,69 @@ export default {
 
           await html2canvas(document.querySelector("#poster"), {
             onclone: () => {
-              console.log("------------开始执行clone---------")
-
               $(".poster-append").css("z-index",21)
               this.$store.commit("setShowPostImg",{
                 showPostImg: true
               })
-              setTimeout(() => {
+
+              new Promise((resolve,reject) => {
+                let czHeight = 0
                 //$(".poster-qrimg-center").slideDown(500)
-                $(".poster-img").slideDown(400)
-                console.log("图片高度: " + this.imgHeight)
+                //$(".poster-share-div").slideDown(400)
                 let shareBottomHeight = document.querySelector(".share-bottom").offsetHeight
                 let posterCancelHeight = document.querySelector(".poster-cancel").offsetHeight
                 let viewHeight = document.documentElement.clientHeight
-                console.log("可视区域: " + viewHeight)
-                console.log("取消: " + posterCancelHeight)
-                console.log("底部: " + shareBottomHeight)
+                console.log("bottom： " + shareBottomHeight)
+                console.log("cancel： " + posterCancelHeight)
+                console.log("view： " + viewHeight)
+
                 if (this.imgHeight > viewHeight) {
-                  console.log("图片高度大于可视化")
-                  let czHeight = viewHeight - shareBottomHeight - posterCancelHeight - 106
+                  console.log("图片大于视图")
+                  czHeight = viewHeight - shareBottomHeight - posterCancelHeight - 48
+                  console.log("差值: " + czHeight)
+                  console.log("-----------------")
                   //分享图片的高度大于可见区域的高度，则使用计算之后的高度
-                  console.log("-------差值---------")
-                  console.log(czHeight)
-                  this.$store.commit("setPosterImgHeight",{
-                    posterHeight: czHeight
-                  })
-                  console.log("------------------------")
-                  this.posterImgHeight = czHeight
-                  console.log(this.posterImgHeight)
                 }else {
-                  console.log("图片高度小于可视化")
+                  console.log("图片小于视图")
                   //图片高度小于可视化高度，则图片高度，直接使用图片高度
-                  let czHeight = viewHeight - shareBottomHeight - posterCancelHeight
+                  czHeight = viewHeight - shareBottomHeight - posterCancelHeight - 48
 
                   console.log("差值: " + czHeight)
-                  if (czHeight < this.imgHeight) {
-                    this.$store.commit("setPosterImgHeight",{
-                      posterHeight: czHeight
-                    })
-                    console.log("高度设置了")
-                  }else {
-                    //图片小于可视化时，并且差值大图片高度
-                    if (czHeight > viewHeight) {
-                      //差值大于可视化高度，高度为之差
-                      this.$store.commit("setPosterImgHeight",{
-                        posterHeight: viewHeight
-                      })
-                      console.log("高度设置了")
-                    }else {
-                      //差值小于可视化高度
-                      this.$store.commit("setPosterImgHeight",{
-                        posterHeight: viewHeight
-                      })
-                      console.log("高度设置了")
-                    }
+                  if (czHeight > this.imgHeight) {
+                    czHeight = this.imgHeight
                   }
+                  console.log("---------------")
+                  console.log("最终执行")
                 }
-                console.log("--------setTime执行完毕------------")
-              },20000)
+                console.log("cc: " + czHeight)
+                resolve(czHeight)
+              })/*.then((lastHeight) => {
+                //poster-img
+                lastHeight = lastHeight + 'px'
+                console.log("最终差值: " + lastHeight)
+                /!*new Promise((resolve,reject) => {
+                  setTimeout(() => {
+                  $(".share-div").css("height",lastHeight)
+                    console.log($(".share-div").css("height"))
+                  },2000)
+                  resolve()
+                }).then(() => {
+                  $("#app").click(function () {
+                    console.log("---------------")
+                    $(".share-div").css('height',lastHeight)
+                  })
+                })*!/
+              })*/
 
               this.$store.commit("setShowShadeLoad",{
                 showShadeLoad: false
               })
-              console.log("------------clone执行完毕---------")
             },
             logging: false,
             removeContainer: false,
             allowTaint: true,
             useCORS: true,
           }).then(canvas => {
-            console.log("--------开始执行then-----------")
             this.imgHeight = canvas.height
             this.href = this.convertCanvasToImage(canvas).src
 
@@ -315,7 +308,6 @@ export default {
               showShadeLoad: false
             })
             this.clickCreateNum = this.clickCreateNum + 1
-            console.log("------------执行到then")
           });
         })
       })

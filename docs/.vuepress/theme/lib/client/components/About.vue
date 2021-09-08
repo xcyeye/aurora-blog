@@ -1,4 +1,10 @@
 <template>
+  <br>
+  <br>
+  <br>
+  <br>
+  <test/>
+
   <common
       :is-show-side-bar="false"
       :is-show-top-img="false"
@@ -48,6 +54,7 @@ import {
 import Home from './Home'
 import TagItem from './child/TagItem'
 import myData from '@temp/my-data'
+import Test from "./Test.vue";
 //导入配置属性
 
 const network = require('../public/js/network.js')
@@ -55,6 +62,7 @@ export default defineComponent({
   name: 'About',
 
   components: {
+    Test,
     Transition,
     Home,
     TagItem,

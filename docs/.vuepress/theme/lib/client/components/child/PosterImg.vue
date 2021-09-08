@@ -56,22 +56,16 @@
     </div>
   </div>
 
-  <!--<div :data="height" class="poster-img" style="display: none" id="poster-img">
+  <div class="poster-img" style="display: block" id="poster-img">
+
     <div class="poster-cancel">
       <span @click="cancelShade" class="icon-close"></span>
     </div>
-    <div class="share-div" :style="getHeight">
+    <div class="share-div">
       <img id="share-img" class="medium-zoom-image"  @click="openImg" :src="app.$store.state.postImgHref" alt="">
     </div>
     <div class="share-bottom" id="share-bottom">
-      &lt;!&ndash;<div class="poster-share-desc">
-        <span>分享到</span>
-        &lt;!&ndash;<div class="poster-scale">
-          <i>缩放&nbsp;</i>
-          <span @click="scaleAdd">+</span>
-          <span @click="scaleDown">-</span>
-        </div>&ndash;&gt;
-      </div>&ndash;&gt;
+
       <div class="poster-social">
         <a :href="qqShare">
           <span class="qq">好友</span>
@@ -88,7 +82,7 @@
         </a>
       </div>
     </div>
-  </div>-->
+  </div>
 </template>
 
 <script>
@@ -123,7 +117,11 @@ export default {
     height: ''
   },
   computed: {
-
+    getHeight() {
+      let style = "height: " + this.app.$store.state.posterImgHeight + "px;"
+      console.log(style)
+      return style
+    },
     getHei() {
       return this.app.$store.posterImgHeight
     },

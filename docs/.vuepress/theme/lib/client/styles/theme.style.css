@@ -2343,8 +2343,8 @@ body::-webkit-scrollbar-thumb {
     /*top: 0;
     left: 0;*/
     z-index: 20;
-    margin-top: 2rem;
-    margin-bottom: 1.5rem;
+   /* margin-top: 2rem;
+    margin-bottom: 1.5rem;*/
     width: 30%;
 
     /*max-width: 40rem;*/
