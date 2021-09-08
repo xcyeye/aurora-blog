@@ -83,8 +83,6 @@ export default defineComponent({
     },1000)
     const page = usePageData()
     this.originPageData = page
-    console.log("---------page--")
-    console.log(this.originPageData)
     this.$emit('getHeadLine',page.value.title)
     this.adsenseArr = this.themeProperty.adsenseArr
     this.insertAdsenseRule = this.themeProperty.insertAdsenseRule

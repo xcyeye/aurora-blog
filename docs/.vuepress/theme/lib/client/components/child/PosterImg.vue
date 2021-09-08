@@ -10,10 +10,10 @@
     </div>
     <div class="poster-center" id="poster-center">
       <div class="poster-title" id="poster-title">
-        <span>{{$store.state.downloadImgTitle}}</span>
+        <span>{{app.$store.state.downloadImgTitle}}</span>
       </div>
       <div class="poster-content" id="poster-content">
-            <span>{{$store.state.posterContent}}</span>
+            <span>{{app.$store.state.posterContent}}</span>
       </div>
       <div class="poster-page" id="poster-page">
         <div class="poster-page-left">
@@ -22,7 +22,7 @@
           </div>
           <div class="poster-page-desc" id="poster-page-desc">
             <div class="poster-desc-top">
-              <span>@{{$store.state.author}}</span>
+              <span>@{{getAuthor}}</span>
             </div>
             <div class="poster-desc-bottom">
               <span>Time {{getLastUpdate}}</span>
@@ -37,7 +37,7 @@
       <div class="poster-say" id="poster-say">
         <div class="blog-name" id="blog-name">
           <span>{{getLogoTitle}}</span>
-          <span>&nbsp;  Blog</span>
+          <span>&nbsp;  {{getLogoSuffixTitle}}</span>
         </div>
         <div class="blog-desc" id="blog-desc">
           <!--技术记录生活|分享技术记录生活|分享技术记录生活|分享技术记录生活|分享技术-->
@@ -50,35 +50,28 @@
         </div>-->
         <div class="poster-qr">
           <!--https://ooszy.cco.vin/img/blog-public/wxpay.png-->
-          <img id="poster-qrimg" :src="$store.state.qrImgHref" alt="">
+          <img id="poster-qrimg" :src="app.$store.state.qrImgHref" alt="">
         </div>
       </div>
     </div>
   </div>
-<!--
-  &lt;!&ndash;生成的截图&ndash;&gt;
-  <div id="poster-qrimg-center"
-       style="display: block"
-       :style="getScale" class="poster-qrimg-center">
 
-  </div>-->
-
-  <div class="poster-img" style="display: none" id="poster-img">
+  <!--<div :data="height" class="poster-img" style="display: none" id="poster-img">
     <div class="poster-cancel">
       <span @click="cancelShade" class="icon-close"></span>
     </div>
-    <div class="share-div" :style="$store.state.posterStyle">
-      <img id="share-img" :src="$store.state.postImgHref" alt="">
+    <div class="share-div" :style="getHeight">
+      <img id="share-img" class="medium-zoom-image"  @click="openImg" :src="app.$store.state.postImgHref" alt="">
     </div>
     <div class="share-bottom" id="share-bottom">
-      <div class="poster-share-desc">
+      &lt;!&ndash;<div class="poster-share-desc">
         <span>分享到</span>
-        <!--<div class="poster-scale">
+        &lt;!&ndash;<div class="poster-scale">
           <i>缩放&nbsp;</i>
           <span @click="scaleAdd">+</span>
           <span @click="scaleDown">-</span>
-        </div>-->
-      </div>
+        </div>&ndash;&gt;
+      </div>&ndash;&gt;
       <div class="poster-social">
         <a :href="qqShare">
           <span class="qq">好友</span>
@@ -95,47 +88,15 @@
         </a>
       </div>
     </div>
-  </div>
-
-  <!--生成的截图-->
-  <!--<div id="poster-qrimg-center" v-if="$store.state.showPostImg" class="poster-qrimg-center" style="display: none">
-    <div class="poster-img" id="poster-img">
-      <div class="poster-cancel">
-        <span @click="cancelShade" class="icon-close"></span>
-      </div>
-      <img :src="$store.state.postImgHref" alt="">
-      <div class="poster-share-desc">
-        <span>分享到</span>
-      </div>
-      <div class="poster-social">
-        <a :href="qqShare">
-          <span class="qq">好友</span>
-        </a>
-        &lt;!&ndash;<a :href="qZone">
-          <span class="qzone">空间</span>
-        </a>&ndash;&gt;
-        <a href="javascript:;">
-          <span @click="qZone" class="qzone">空间</span>
-        </a>
-        <a :href="weiboShare">
-          <span class="weibo">微博</span>
-        </a>
-
-        <a :href="href">
-          <span class="save" @click="saveImg">保存</span>
-        </a>
-      </div>
-    </div>
   </div>-->
 </template>
 
 <script>
-
 import $ from "jquery";
-import {usePageData, useSiteLocaleData} from "@vuepress/client";
+import {usePageData} from "@vuepress/client";
 import myData from '@temp/my-data'
 import {useThemeLocaleData} from "../../composables";
-
+import mediumZoom from "medium-zoom";
 export default {
   name: "PosterImg",
   data() {
@@ -147,28 +108,27 @@ export default {
       month: '',
       year: '',
       themeConfig: '',
+      poster: '',
+      imgHeight: 'height: 90%;'
     }
   },
   props: {
-    /*href: {
-      type: String,
-      default() {
-        return 'https://i.pinimg.com/564x/56/a9/ad/56a9ad70fb92a77b8eed47ced71a495e.jpg'
-      }
-    },*/
     title: {
       type: String,
       default() {
         return "ccds";
       }
     },
+    app: '',
+    height: ''
   },
   computed: {
-    getHeight() {
-      return this.$store.state.scaleTransform
+
+    getHei() {
+      return this.app.$store.posterImgHeight
     },
     getScale() {
-      return "--scale-transform: " + this.$store.state.scaleTransform + ";"
+      return "--scale-transform: " + this.app.$store.state.scaleTransform + ";"
     },
     getLastUpdate() {
       const page = usePageData()
@@ -179,16 +139,36 @@ export default {
       return this.getLocalTime(time)
     },
     getLogoTitle() {
-      return useSiteLocaleData().value.title
-    },
-    getLogoImg() {
-      const themeLocale = useThemeLocaleData()
-      let src = themeLocale.value.logo
-      if (src === undefined || src === null) {
-        console.log("you need to set the logo field value,the default is: \nhttps://ooszy.cco.vin/img/blog-public/ccds_64.ico")
-        return "https://ooszy.cco.vin/img/blog-public/ccds_64.ico"
+      if(this.poster === undefined || this.poster == null) {
+        return 'qsyyke'
       }else {
-        return  src
+        if(this.poster.preBlog === undefined || this.poster.preBlog == null) {
+          return 'qsyyke'
+        }else {
+          return this.poster.preBlog
+        }
+      }
+    },
+    getLogoSuffixTitle() {
+      if(this.poster === undefined || this.poster == null) {
+        return 'blog'
+      }else {
+        if(this.poster.suffixBlog === undefined || this.poster.suffixBlog == null) {
+          return 'blog'
+        }else {
+          return this.poster.suffixBlog
+        }
+      }
+    },
+    getAuthor() {
+      if(this.poster === undefined || this.poster == null) {
+        return 'qsyyke'
+      }else {
+        if(this.poster.author === undefined || this.poster.author == null) {
+          return 'qsyyke'
+        }else {
+          return this.poster.author
+        }
       }
     },
     getBlogDesc() {
@@ -214,6 +194,10 @@ export default {
     }
   },
   methods: {
+    openImg(e) {
+      const zoom = mediumZoom(e.target)
+      zoom.open()
+    },
     getLocalTime(time) {
       let date = new Date(time);
       let day = date.getDate()
@@ -225,20 +209,20 @@ export default {
       return year + "-" + month + "-" + day + " "
     },
     scaleAdd() {
-      let scale = this.$store.state.scaleTransform + 0.1
-      this.$store.commit("setScaleTransform",{
+      let scale = this.app.$store.state.scaleTransform + 0.1
+      this.app.$store.commit("setScaleTransform",{
         scaleTransform: scale
       })
     },
     scaleDown() {
-      let scale = this.$store.state.scaleTransform - 0.1
-      this.$store.commit("setScaleTransform",{
+      let scale = this.app.$store.state.scaleTransform - 0.1
+      this.app.$store.commit("setScaleTransform",{
         scaleTransform: scale
       })
       console.log(scale)
     },
     cancelShade() {
-      this.$store.commit("setShowPosterShadow", {
+      this.app.$store.commit("setShowPosterShadow", {
         showPosterShadow: false
       })
 
@@ -247,12 +231,12 @@ export default {
     },
     saveImg() {
       console.log("--------save-----------")
-      console.log(this.$store.state.postImgHref)
+      console.log(this.app.$store.state.postImgHref)
       var a = document.createElement('a');
       var event = new MouseEvent('click')
-      console.log(this.$store.state.downloadImgTitle)
-      a.download = this.$store.state.downloadImgTitle
-      a.href = this.$store.state.postImgHref;
+      console.log(this.app.$store.state.downloadImgTitle)
+      a.download = this.app.$store.state.downloadImgTitle
+      a.href = this.app.$store.state.postImgHref;
       a.dispatchEvent(event);
     },
     qqShare() {
@@ -279,11 +263,11 @@ export default {
           "&pics=https://api.paugram.com/bing" +
           "&summary=内容"*/
       let href = "http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?" +
-          "url="+this.$store.state.posterShareSite +
-          "&title="+this.$store.state.downloadImgTitle+
-          "&desc="+this.$store.state.posterContent.substr(1,this.$store.state.posterContent.length /4) +
-          "&summary="+this.$store.state.posterContent.substr(1,this.$store.state.posterContent.length /4) +
-          "&site="+this.$store.state.posterShareSite+"&pics=https://api.paugram.com/bing"
+          "url="+this.app.$store.state.posterShareSite +
+          "&title="+this.app.$store.state.downloadImgTitle+
+          "&desc="+this.app.$store.state.posterContent.substr(1,this.app.$store.state.posterContent.length /4) +
+          "&summary="+this.app.$store.state.posterContent.substr(1,this.app.$store.state.posterContent.length /4) +
+          "&site="+this.app.$store.state.posterShareSite+"&pics=https://api.paugram.com/bing"
       console.log(href)
       return "javascript:;"
       window.location.href = href
@@ -293,51 +277,48 @@ export default {
     }
   },
   created() {
+    console.log("-----------create执行-----------")
     let date = new Date()
     this.day = date.getDate()
     this.month = date.getMonth() + 1
     this.year = date.getFullYear()
 
+    for (let i = 0; i < myData.length; i++) {
+        if (myData[i].path === "/") {
+          this.themeConfig = myData[i].frontmatter
+          this.poster = this.themeConfig.poster
+        }
+      }
+
   },
   mounted() {
     if (document.body.clientWidth < 600) {
-      this.$store.commit("setPosterStyle",{
-        posterStyle: "max-height: 26.6rem;height: max-content;"
-      })
-    }else {
-      let shareBottomHeight = document.querySelector(".share-bottom").offsetHeight
-      let posterCancelHeight = document.querySelector(".poster-cancel").offsetHeight
-      let posterImgHeight = document.querySelector(".poster-img").offsetHeight
-      console.log(posterCancelHeight)
-      console.log(shareBottomHeight)
-      console.log(posterImgHeight)
-      let czHeight = posterImgHeight - shareBottomHeight - posterCancelHeight - 30
-      let height = czHeight + "px"
-      console.log(height)
-      this.$store.commit("setPosterStyle",{
-        posterStyle: "height: " + height
+      this.app.$store.commit("setPosterImgHeight",{
+        posterImgHeight: "max-height: 26.6rem;height: max-content;"
       })
     }
-
   },
-  watch: {
-    getHeight(newValue,oleValue) {
-      let shareBottomHeight = document.querySelector(".share-bottom").offsetHeight
-      let posterCancelHeight = document.querySelector(".poster-cancel").offsetHeight
-      let posterImgHeight = document.querySelector(".poster-img").offsetHeight
-      console.log(posterCancelHeight)
-      console.log(shareBottomHeight)
-      console.log(posterImgHeight)
-      let czHeight = posterImgHeight - shareBottomHeight - posterCancelHeight - 30
-      let height = czHeight + "px"
-      console.log(height)
-
-      $(".share-div").css("height",height)
-    }
-  }
+   /*watch: {
+     getHei(newValue,oleValue) {
+       console.log("高度变化了")
+       console.log(newValue)
+       /!*let shareBottomHeight = document.querySelector(".share-bottom").offsetHeight
+       let posterCancelHeight = document.querySelector(".poster-cancel").offsetHeight
+       let posterImgHeight = document.querySelector(".poster-img").offsetHeight
+       let czHeight = posterImgHeight - shareBottomHeight - posterCancelHeight - 30
+       let height = czHeight + "px"
+       $(".share-div").css("height",height)*!/
+       //this.imgHeight = "height: " + newValue + "px;"
+       console.log("新数据: " + newValue)
+       console.log("旧数据: " + oleValue)
+       console.log(this)
+       console.log("-------watch-------")
+     }
+   }*/
 }
 </script>
 
 <style scoped>
 
 </style>
+

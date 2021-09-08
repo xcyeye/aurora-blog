@@ -31,5 +31,5 @@ module.exports = {
     scaleTransform: 0.9,
     author: 'qsyyke',
     qrImgHref: '',
-    posterStyle: 'height: 400px;'
+    posterImgHeight: 500
 }

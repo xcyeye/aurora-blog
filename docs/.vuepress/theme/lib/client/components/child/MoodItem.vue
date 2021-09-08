@@ -110,7 +110,6 @@ export default {
       } : null;
     },
     openImg(e) {
-      console.log("---------------")
       const zoom = mediumZoom(e.target)
       zoom.open()
     }

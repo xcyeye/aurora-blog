@@ -2331,7 +2331,7 @@ body::-webkit-scrollbar-thumb {
     /*height: max-content;*/
     width: 100%;
     overflow: hidden;
-    margin-bottom: 1rem;
+    /*margin-bottom: 1rem;*/
 }
 #share-img {
     /*transform: scale(.5);*/
@@ -2344,6 +2344,7 @@ body::-webkit-scrollbar-thumb {
     left: 0;*/
     z-index: 20;
     margin-top: 2rem;
+    margin-bottom: 1.5rem;
     width: 30%;
 
     /*max-width: 40rem;*/
@@ -2351,7 +2352,8 @@ body::-webkit-scrollbar-thumb {
     /*height: max-content;*/
     /*max-height: 25rem;*/
     /*height: 31rem;*/
-    height: calc(100vh);
+    /*height: calc(100vh);*/
+    max-height: calc(100vh);
     /*border: 1px solid red;*/
     border-radius: 10px;
     /*padding: 1rem;*/
@@ -2363,10 +2365,15 @@ body::-webkit-scrollbar-thumb {
     width: 100%;
 }
 .share-bottom {
-    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    /*box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;*/
+    background-color: rgba(198,203,239,.6);
+    border-radius: 15px;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
     /*border: 1px solid blue;*/
-    position: absolute;
-    bottom: 2%;
+    /*position: absolute;
+    bottom: 0;*/
     width: 100%;
 }
 .poster-share {

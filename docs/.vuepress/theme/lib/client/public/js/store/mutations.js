@@ -91,8 +91,10 @@ module.exports = {
     setQrImgHref(state,qrImgHref) {
         this.state.qrImgHref = qrImgHref.qrImgHref
     },
-    setPosterStyle(state,posterStyle) {
-        this.state.posterStyle = posterStyle.posterStyle
+    setPosterImgHeight(state,posterHeight) {
+        console.log("执行setHeight: ")
+        console.log(posterHeight)
+        this.state.posterImgHeight = posterHeight.posterImgHeight
     }
 
 }

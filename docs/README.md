@@ -485,7 +485,10 @@ comment: {
   adminUsername: qsyyke 
 }
 poster: {
-    description: 初尘博客呀
+    description: 初尘博客呀,
+    author: 'qsyyke',
+    preBlog: 'chuchen',
+    suffixBlog: 'blog',
 }
 
 ---

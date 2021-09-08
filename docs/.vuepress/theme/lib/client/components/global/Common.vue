@@ -96,7 +96,7 @@ import {usePageData, usePageFrontmatter} from '@vuepress/client'
 import type {DefaultThemePageFrontmatter} from '../../../shared'
 import Navbar from '../../components/Navbar.vue'
 import Home from '../Home'
-import {useScrollPromise, useSidebarItems, useThemeLocaleData,} from '../../composables'
+import {useScrollPromise, useSidebarItems, useThemeLocaleData} from '../../composables'
 import HomeWelcome from '../../components/child/HomeWelcome'
 import EasyTyper from "easy-typer-js";
 import $ from 'jquery'

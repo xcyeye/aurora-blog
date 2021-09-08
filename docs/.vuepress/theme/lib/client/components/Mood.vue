@@ -1,4 +1,5 @@
 <template>
+  <test/>
   <common :is-show-side-bar="false" :is-show-top-img="true" :is-show-head-line="false">
     <!--<template #center1>
       <div class="mood-top-set">
@@ -76,6 +77,7 @@ import {
 
 import MoodItem from './child/MoodItem'
 import myData from '@temp/my-data'
+import Test from "./Test.vue";
 
 //导入配置属性
 
@@ -84,6 +86,7 @@ export default defineComponent({
   name: 'Mood',
 
   components: {
+    Test,
     Transition,
     MoodItem
   },

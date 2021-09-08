@@ -97,7 +97,9 @@ export default {
     return {
       showPoster: false,
       href: '',
-      clickCreateNum: 0
+      clickCreateNum: 0,
+      imgHeight: '',
+      posterImgHeight: 500
     }
   },
   props: {
@@ -175,12 +177,16 @@ export default {
       $(".poster-img").slideUp(500)
     },
     async createPoster() {
-      let posterAppend = $("<div class=\"poster-append\" id=\"poster-append\">").get(0)
-      $("#app").get(0).appendChild(posterAppend)
-      const app = createApp(PosterImg).mount("#poster-append")
+      if (this.clickCreateNum === 0) {
+        let posterAppend = $("<div class=\"poster-append\" id=\"poster-append\">").get(0)
+        $("#app").get(0).appendChild(posterAppend)
+        const app = createApp(PosterImg,{
+          app: this,
+          height: this.posterImgHeight
+        }).mount("#poster-append")
+        //return
+      }
 
-
-      return 0;
 
       this.$store.commit("setShowPosterShadow", {
         showPosterShadow: true
@@ -201,9 +207,6 @@ export default {
       this.$store.commit("setPosterContent",{
         posterContent: this.content
       })
-
-      /*let hide = document.querySelector("#hide-poster-top")
-      hide.style.display = "block"*/
       let qrHref = this.qrHref
       if (qrHref === undefined || qrHref === "") {
         qrHref = window.location.href
@@ -228,39 +231,80 @@ export default {
       }
       QRCode.toDataURL(qrHref, (err,url) => {
         this.saveQrimg(url).then(async () => {
-          console.log("-----二维码转换完成------")
 
           await html2canvas(document.querySelector("#poster"), {
             onclone: () => {
+              console.log("------------开始执行clone---------")
 
               $(".poster-append").css("z-index",21)
-              console.log("-------clone完成-------")
               this.$store.commit("setShowPostImg",{
                 showPostImg: true
               })
-
               setTimeout(() => {
                 //$(".poster-qrimg-center").slideDown(500)
                 $(".poster-img").slideDown(400)
-              },200)
+                console.log("图片高度: " + this.imgHeight)
+                let shareBottomHeight = document.querySelector(".share-bottom").offsetHeight
+                let posterCancelHeight = document.querySelector(".poster-cancel").offsetHeight
+                let viewHeight = document.documentElement.clientHeight
+                console.log("可视区域: " + viewHeight)
+                console.log("取消: " + posterCancelHeight)
+                console.log("底部: " + shareBottomHeight)
+                if (this.imgHeight > viewHeight) {
+                  console.log("图片高度大于可视化")
+                  let czHeight = viewHeight - shareBottomHeight - posterCancelHeight - 106
+                  //分享图片的高度大于可见区域的高度，则使用计算之后的高度
+                  console.log("-------差值---------")
+                  console.log(czHeight)
+                  this.$store.commit("setPosterImgHeight",{
+                    posterHeight: czHeight
+                  })
+                  console.log("------------------------")
+                  this.posterImgHeight = czHeight
+                  console.log(this.posterImgHeight)
+                }else {
+                  console.log("图片高度小于可视化")
+                  //图片高度小于可视化高度，则图片高度，直接使用图片高度
+                  let czHeight = viewHeight - shareBottomHeight - posterCancelHeight
+
+                  console.log("差值: " + czHeight)
+                  if (czHeight < this.imgHeight) {
+                    this.$store.commit("setPosterImgHeight",{
+                      posterHeight: czHeight
+                    })
+                    console.log("高度设置了")
+                  }else {
+                    //图片小于可视化时，并且差值大图片高度
+                    if (czHeight > viewHeight) {
+                      //差值大于可视化高度，高度为之差
+                      this.$store.commit("setPosterImgHeight",{
+                        posterHeight: viewHeight
+                      })
+                      console.log("高度设置了")
+                    }else {
+                      //差值小于可视化高度
+                      this.$store.commit("setPosterImgHeight",{
+                        posterHeight: viewHeight
+                      })
+                      console.log("高度设置了")
+                    }
+                  }
+                }
+                console.log("--------setTime执行完毕------------")
+              },20000)
 
               this.$store.commit("setShowShadeLoad",{
                 showShadeLoad: false
               })
-
+              console.log("------------clone执行完毕---------")
             },
             logging: false,
             removeContainer: false,
             allowTaint: true,
-            /*width: 400,
-            height: 400,
-            backgroundColor: 'red',*/
-            //proxy: this._proxyURL,
             useCORS: true,
           }).then(canvas => {
-            console.log("----------最终完成---------")
-
-            //document.body.appendChild(canvas)
+            console.log("--------开始执行then-----------")
+            this.imgHeight = canvas.height
             this.href = this.convertCanvasToImage(canvas).src
 
             this.$store.commit("setPostImgHref",{
@@ -270,17 +314,8 @@ export default {
             this.$store.commit("setShowShadeLoad",{
               showShadeLoad: false
             })
-
-
-
-            //console.log("------poster------------")
-            //console.log(this.href)
-           /* setTimeout(() => {
-                //$(".poster-qrimg-center").slideDown(500)
-                $(".poster-qrimg-center").slideDown(500)
-              },100)*/
-
             this.clickCreateNum = this.clickCreateNum + 1
+            console.log("------------执行到then")
           });
         })
       })
