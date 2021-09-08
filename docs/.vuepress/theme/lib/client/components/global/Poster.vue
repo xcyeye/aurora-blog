@@ -87,6 +87,7 @@ import PosterImg from "../child/PosterImg";
 import $ from 'jquery'
 import html2canvas from 'html2canvas'
 var QRCode = require('qrcode')
+import {createApp} from 'vue'
 export default {
   name: "Poster",
   components: {
@@ -171,9 +172,16 @@ export default {
         showPosterShadow: false
       })
 
-      $(".poster-qrimg-center").slideUp(500)
+      $(".poster-img").slideUp(500)
     },
     async createPoster() {
+      let posterAppend = $("<div class=\"poster-append\" id=\"poster-append\">").get(0)
+      $("#app").get(0).appendChild(posterAppend)
+      const app = createApp(PosterImg).mount("#poster-append")
+
+
+      return 0;
+
       this.$store.commit("setShowPosterShadow", {
         showPosterShadow: true
       })
@@ -208,7 +216,7 @@ export default {
       if (this.clickCreateNum !== 0) {
         //第二次点击
         $(".poster-append").css("z-index",21)
-        $(".poster-qrimg-center").slideDown(500)
+        $(".poster-img").slideDown(500)
         this.$store.commit("setShowPosterShadow", {
           showPosterShadow: true
         })
@@ -233,7 +241,7 @@ export default {
 
               setTimeout(() => {
                 //$(".poster-qrimg-center").slideDown(500)
-                $(".poster-qrimg-center").slideDown(400)
+                $(".poster-img").slideDown(400)
               },200)
 
               this.$store.commit("setShowShadeLoad",{

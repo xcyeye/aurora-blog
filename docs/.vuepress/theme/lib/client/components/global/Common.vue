@@ -1,7 +1,7 @@
 <template>
-  <div class="poster-append" id="poster-append">
+  <!--<div class="poster-append" id="poster-append">
     <poster-img></poster-img>
-  </div>
+  </div>-->
   <div
       @click="cancelWelcome"
       class="theme-container"

@@ -8,11 +8,11 @@
       </div>
       <!--<img src="http://h2.ioliu.cn/bing/HowgillFells_ZH-CN1134328886_640x480.jpg?imageslim" id="poster-top-img" alt="">-->
     </div>
-    <div class="poster-center">
-      <div class="poster-title">
+    <div class="poster-center" id="poster-center">
+      <div class="poster-title" id="poster-title">
         <span>{{$store.state.downloadImgTitle}}</span>
       </div>
-      <div class="poster-content">
+      <div class="poster-content" id="poster-content">
             <span>{{$store.state.posterContent}}</span>
       </div>
       <div class="poster-page" id="poster-page">
@@ -20,7 +20,7 @@
           <div class="poster-page-avatar">
             <img id="poster-page-avatar" src="/avatar.jpg" alt="">
           </div>
-          <div class="poster-page-desc">
+          <div class="poster-page-desc" id="poster-page-desc">
             <div class="poster-desc-top">
               <span>@{{$store.state.author}}</span>
             </div>
@@ -29,17 +29,17 @@
             </div>
           </div>
         </div>
-        <div class="poster-page-right"></div>
+        <div class="poster-page-right" id="poster-page-right"></div>
       </div>
     </div>
-    <div class="poster-bottom">
+    <div class="poster-bottom" id="poster-bottom">
 
-      <div class="poster-say">
-        <div class="blog-name">
+      <div class="poster-say" id="poster-say">
+        <div class="blog-name" id="blog-name">
           <span>{{getLogoTitle}}</span>
           <span>&nbsp;  Blog</span>
         </div>
-        <div class="blog-desc">
+        <div class="blog-desc" id="blog-desc">
           <!--技术记录生活|分享技术记录生活|分享技术记录生活|分享技术记录生活|分享技术-->
           <span>{{getBlogDesc}}</span>
         </div>
@@ -55,42 +55,44 @@
       </div>
     </div>
   </div>
-
-  <!--生成的截图-->
+<!--
+  &lt;!&ndash;生成的截图&ndash;&gt;
   <div id="poster-qrimg-center"
        style="display: block"
        :style="getScale" class="poster-qrimg-center">
-    <div class="poster-img" id="poster-img">
-      <div class="poster-cancel">
-        <span @click="cancelShade" class="icon-close"></span>
-      </div>
-      <div class="share-div" :style="$store.state.posterStyle">
-        <img id="share-img" :src="$store.state.postImgHref" alt="">
-      </div>
-      <div class="share-bottom" id="share-bottom">
-        <div class="poster-share-desc">
-          <span>分享到</span>
-          <!--<div class="poster-scale">
-            <i>缩放&nbsp;</i>
-            <span @click="scaleAdd">+</span>
-            <span @click="scaleDown">-</span>
-          </div>-->
-        </div>
-        <div class="poster-social">
-          <a :href="qqShare">
-            <span class="qq">好友</span>
-          </a>
-          <a :href="qZone">
-            <span class="qzone">空间</span>
-          </a>
-          <a :href="weiboShare">
-            <span class="weibo">微博</span>
-          </a>
 
-          <a :href="href">
-            <span class="save" @click="saveImg">保存</span>
-          </a>
-        </div>
+  </div>-->
+
+  <div class="poster-img" style="display: none" id="poster-img">
+    <div class="poster-cancel">
+      <span @click="cancelShade" class="icon-close"></span>
+    </div>
+    <div class="share-div" :style="$store.state.posterStyle">
+      <img id="share-img" :src="$store.state.postImgHref" alt="">
+    </div>
+    <div class="share-bottom" id="share-bottom">
+      <div class="poster-share-desc">
+        <span>分享到</span>
+        <!--<div class="poster-scale">
+          <i>缩放&nbsp;</i>
+          <span @click="scaleAdd">+</span>
+          <span @click="scaleDown">-</span>
+        </div>-->
+      </div>
+      <div class="poster-social">
+        <a :href="qqShare">
+          <span class="qq">好友</span>
+        </a>
+        <a :href="qZone">
+          <span class="qzone">空间</span>
+        </a>
+        <a :href="weiboShare">
+          <span class="weibo">微博</span>
+        </a>
+
+        <a :href="href">
+          <span class="save" @click="saveImg">保存</span>
+        </a>
       </div>
     </div>
   </div>
@@ -170,7 +172,7 @@ export default {
     },
     getLastUpdate() {
       const page = usePageData()
-      let time = page.value.git.pdatedTime;
+      let time = page.value.git.updatedTime;
       if (time === undefined) {
         time = +new Date()
       }
@@ -240,7 +242,7 @@ export default {
         showPosterShadow: false
       })
 
-      $(".poster-qrimg-center").slideUp(500)
+      $(".poster-img").slideUp(500)
       $(".poster-append").css("z-index",1)
     },
     saveImg() {

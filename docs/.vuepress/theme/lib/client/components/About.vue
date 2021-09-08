@@ -1,9 +1,4 @@
 <template>
-  <!--<br>
-  <br>
-  <br>
-  <br>
-  <Test/>-->
   <common
       :is-show-side-bar="false"
       :is-show-top-img="false"
@@ -44,9 +39,6 @@
     </template>
 
   </common>
-  <!--<poster/>-->
-  <poster-img/>
-
 </template>
 <script lang="ts">
 import {
@@ -56,8 +48,6 @@ import {
 import Home from './Home'
 import TagItem from './child/TagItem'
 import myData from '@temp/my-data'
-import PosterImg from './child/PosterImg'
-import Test from './Test'
 //导入配置属性
 
 const network = require('../public/js/network.js')
@@ -68,8 +58,6 @@ export default defineComponent({
     Transition,
     Home,
     TagItem,
-    PosterImg,
-    Test
   },
   data() {
     return {

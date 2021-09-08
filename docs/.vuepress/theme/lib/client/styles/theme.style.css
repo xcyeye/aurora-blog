@@ -2187,14 +2187,77 @@ body::-webkit-scrollbar-thumb {
 
 /*海报*/
 @media screen and (min-width: 719px) {
+
     #poster-qrimg-center {
         top: -5%;
     }
     #poster-img {
-        transform: scale(.9);
+        transform: scale(1);
+    }
+
+    #poster-title {
+        font-size: 2.5rem;
+    }
+
+    #poster-content {
+        font-size: 1.5rem;
+        line-height: 2rem;
+        -webkit-line-clamp: 4;
+    }
+
+    #poster-qrimg {
+        width: 8rem;
+        height: 8rem;
+    }
+    #poster-page-avatar {
+        max-width: 5rem;
+        padding: .5rem;
+        border-radius: 30rem;
     }
 }
 @media screen and (max-width: 719px) {
+    #poster-page-avatar {
+        max-width: 5rem;
+        padding: .5rem;
+        border-radius: 100rem;
+    }
+    #poster-say {
+        height: 6rem;
+    }
+    #poster-qrimg {
+        width: 6rem;
+        height: 6rem;
+    }
+
+    #poster-bottom {
+        height: 6rem;
+    }
+    #poster-center {
+        margin-bottom: .5rem;
+    }
+
+    #poster-page {
+        margin-top: .5rem;
+    }
+
+    #poster-page-desc {
+        text-align: center;
+    }
+
+    #poster-page-right {
+        display: none;
+    }
+    #blog-name {
+        font-size: 22px;
+    }
+    #blog-desc {
+        font-size: 19px;
+    }
+
+    #poster-top {
+        width: 100%;
+        height: 15rem;
+    }
     #poster-append {
         /*width: 100%;*/
         /*width: 42rem;*/
@@ -2213,7 +2276,10 @@ body::-webkit-scrollbar-thumb {
         width: 96%;
     }
     #poster-img {
+        display: none;
         height: max-content;
+        width: 86%;
+        /*width: 40rem;*/
     }
     #poster-qrimg-center {
         width: 100%;
@@ -2242,7 +2308,9 @@ body::-webkit-scrollbar-thumb {
 }
 /*background: rgba(0, 0, 0, 0.5);*/
 .poster {
-    position: absolute;
+   /* position: absolute;
+    right: 1000rem;*/
+    position: relative;
     right: 1000rem;
     /*border: 1px solid red;*/
     max-width: 40rem;
@@ -2272,11 +2340,12 @@ body::-webkit-scrollbar-thumb {
 .poster-img {
     /*position: relative;*/
     position: fixed;
-    top: 0;
-    right: 0;
+    /*top: 0;
+    left: 0;*/
     z-index: 20;
     margin-top: 2rem;
-    width: 100%;
+    width: 30%;
+
     /*max-width: 40rem;*/
     /*height: 19rem;*/
     /*height: max-content;*/
@@ -2451,10 +2520,12 @@ body::-webkit-scrollbar-thumb {
     padding-left: 10px;
     position: relative;
     flex: 2;
+    font-weight: 700;
     height: 100%;
 }
 .poster-desc-top {
     margin-bottom: .5rem;
+    font-style: oblique;
 }
 #poster-page-avatar {
     max-width: 5rem;
@@ -2492,7 +2563,9 @@ body::-webkit-scrollbar-thumb {
     line-height: 4.5rem;
     color: #2c3e50;
     font-size: 2rem;
+    font-weight: 800;
     margin-bottom: .5rem;
+    font-style: oblique;
 }
 .blog-name span:first-child {
 
@@ -2505,9 +2578,11 @@ body::-webkit-scrollbar-thumb {
     width: max-content;
     max-width: 20rem;
     white-space: nowrap;
+    font-weight: 600;
     overflow: hidden;
     text-overflow: ellipsis;
     height: 50%;
+    color: #29b6f6;
     font-size: 1.2rem;
 }
 .blog-desc span {
@@ -2592,14 +2667,13 @@ body::-webkit-scrollbar-thumb {
 
 #poster-qrimg {
     border-radius: 20px;
-    width: 8rem;
-    height: 8rem;
 }
 
 .poster-qrimg-center {
-    position: fixed;
+    position: relative;
     top: 0;
     right: 0;
+    /*width: 40rem;*/
     width: 30%;
     --scale-transform: .5;
     transform: scale(var(--scale-transform));
@@ -2726,7 +2800,7 @@ body::-webkit-scrollbar-thumb {
     z-index: 1;
     /*position: fixed;*/
     /*position: absolute;*/
-    position: relative;
+    position: absolute;
     height: 100%;
     width: 100%;
     top: 0;
