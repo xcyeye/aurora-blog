@@ -118,13 +118,6 @@ export default defineComponent({
         content = content.replace("#\n","")
         content = content.replace("##\n","")
         content = content.replace("##","")
-
-        this.$store.commit("setPosterContent",{
-          posterContent: content
-        })
-        this.$store.commit("setPosterStatus",{
-          posterStatus: 1
-        })
         resolve(content)
       })
     },

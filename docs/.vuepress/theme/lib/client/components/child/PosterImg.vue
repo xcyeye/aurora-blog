@@ -9,12 +9,6 @@
       <!--<img src="http://h2.ioliu.cn/bing/HowgillFells_ZH-CN1134328886_640x480.jpg?imageslim" id="poster-top-img" alt="">-->
     </div>
     <div class="poster-center" id="poster-center">
-      <!--<div class="poster-title" id="poster-title">
-        <span>{{app.$store.state.downloadImgTitle}}</span>
-      </div>
-      <div class="poster-content" id="poster-content">
-          <span>{{app.$store.state.posterCon}}</span>
-      </div>-->
 
       <div class="poster-title" id="poster-title">
         <span>{{title}}</span>
@@ -144,7 +138,7 @@ export default {
     },
     getLastUpdate() {
       const page = usePageData()
-      console.log(page)
+      //console.log(page)
       let time = 0
       //let time = page.value.git.updatedTime
       let git = page.value.git
@@ -245,12 +239,20 @@ export default {
       //console.log(scale)
     },
     cancelShade() {
-      this.app.$store.commit("setShowPosterShadow", {
-        showPosterShadow: false
+      let stopStatus = 0
+      $(".poster-img").slideUp(500,function () {
+        stopStatus = 1
       })
 
-      $(".poster-img").slideUp(500)
-      $(".poster-append").css("z-index",1)
+      let stop = setInterval(() => {
+        if (stopStatus === 1) {
+          this.$store.commit("setShowPosterShadow", {
+            showPosterShadow: false
+          })
+          clearInterval(stop)
+          $(".poster-append").css("z-index",1)
+        }
+      },70)
     },
     saveImg() {
       var a = document.createElement('a');

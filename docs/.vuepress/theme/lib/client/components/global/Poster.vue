@@ -76,40 +76,31 @@ export default {
 
   methods: {
     cancelShade() {
-
       this.$store.commit("setShowPosterShadow", {
         showPosterShadow: false
       })
-
       $(".poster-img").slideUp(500)
     },
     async createPoster() {
-      console.log(this.title)
-      console.log(this.content)
-      let status = this.$store.state.posterStatus
-      console.log(status)
-      if (status !== 1) {
-        let getContentStatus = setInterval(() => {
-          status = this.$store.state.posterStatus
-          if (status === 1) {
-            //console.log("加载完成")
-            clearInterval(getContentStatus)
-            this.loadPosterImg()
-            //setTimeout(() => {
-              this.handlePoster()
-            //},300)
-          }
-        },200)
-      }else {
-        //setTimeout(() => {
-          //this.handlePoster()
+      this.$store.commit("setShowPosterShadow", {
+        showPosterShadow: true
+      })
+
+      this.$store.commit("setShowShadeLoad",{
+        showShadeLoad: true
+      })
+
+      if (this.clickCreateNum === 0) {
+        //第一次
+        setTimeout(() => {
           this.loadPosterImg()
-        //},200)
+          this.handlePoster()
+        },500)
+      }else {
+        this.handlePoster()
       }
-      this.handlePoster()
     },
     loadPosterImg() {
-      console.log("----click: " + this.clickCreateNum)
       if (this.clickCreateNum === 0) {
         //document.body.remo
         let append = document.querySelector("#poster-append")
@@ -133,27 +124,22 @@ export default {
             title: this.title
           }).use(storeIndex).mount("#poster-append")
         }
-
-        //return
       }
     },
     handlePoster() {
       $(".poster-append").css("z-index",21)
-      this.$store.commit("setShowPosterShadow", {
-        showPosterShadow: true
-      })
 
-      this.$store.commit("setAuthor", {
+      /*this.$store.commit("setAuthor", {
         author: this.author
-      })
+      })*/
 
-      this.$store.commit("setShowShadeLoad",{
+      /*this.$store.commit("setShowShadeLoad",{
         showShadeLoad: true
-      })
+      })*/
 
-      this.$store.commit("setDownloadImgTitle",{
+      /*this.$store.commit("setDownloadImgTitle",{
         downloadImgTitle: this.title
-      })
+      })*/
 
       /*this.$store.commit("setPosterContent",{
         posterContent: this.content
@@ -163,9 +149,10 @@ export default {
         qrHref = window.location.href
       }
 
-      this.$store.commit("setPosterShareSite",{
+      /*this.$store.commit("setPosterShareSite",{
         posterShareSite: qrHref
-      })
+      })*/
+
       if (this.clickCreateNum !== 0) {
         //第二次点击
         $(".poster-append").css("z-index",21)
@@ -193,7 +180,6 @@ export default {
             allowTaint: true,
             useCORS: true,
           }).then(canvas => {
-            console.log("--------开始执行then--------------")
             $(".poster-append").css("z-index",21)
             this.imgHeight = canvas.height
             this.href = this.convertCanvasToImage(canvas).src
@@ -214,26 +200,16 @@ export default {
             let posterCancelHeight = document.querySelector(".poster-cancel").offsetHeight
             let viewHeight = document.documentElement.clientHeight
 
-            console.log("view: " + viewHeight)
-            console.log("bottom: " + shareBottomHeight)
-            console.log("cancel: " + posterCancelHeight)
-            console.log("img: " + this.imgHeight)
-
             if (this.imgHeight > viewHeight) {
-              console.log("图片大于视图")
               let czHeight = viewHeight - shareBottomHeight - posterCancelHeight - 48
               this.setHeight(czHeight)
               //分享图片的高度大于可见区域的高度，则使用计算之后的高度
             }else {
-              console.log("图片小于视图")
               //图片高度小于可视化高度，则图片高度，直接使用图片高度
               let czHeight = viewHeight - shareBottomHeight - posterCancelHeight - 48
               if (czHeight > this.imgHeight) {
-                console.log("图片小于视图，并且差值大于图片，使用图片高度")
-                //czHeight = this.imgHeight
                 this.setHeight(this.imgHeight)
               }else {
-                console.log("图片小于视图，并且差值小于图片，使用擦差值高度")
                 this.setHeight(czHeight)
               }
             }
@@ -276,7 +252,7 @@ export default {
         resolve()
       })
     }
-  }
+  },
 }
 </script>
 

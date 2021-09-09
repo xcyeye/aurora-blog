@@ -74,7 +74,7 @@
        :style="setVarCommonStyle"
   ></div>
   <!--$store.state.showPosterShadow-->
-  <div :class="{posterShade: $store.state.showPosterShadow}">
+  <div id="posterShade" :class="{posterShade: $store.state.showPosterShadow}">
     <span :class="{iconSpinner6: $store.state.showShadeLoad}"></span>
   </div>
 
@@ -209,6 +209,12 @@ export default defineComponent({
     }
   },
   methods: {
+    cancelPoster() {
+      console.log("---------dl")
+
+    //  showPosterShadow
+
+    },
     initTyped(input, fn, hooks) {
       const obj = this.obj
       return new EasyTyper(obj, input, fn, hooks)
