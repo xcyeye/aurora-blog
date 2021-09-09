@@ -67,13 +67,13 @@
       <div class="share-bottom" id="share-bottom">
 
         <div class="poster-social">
-          <a :href="qqShare">
+          <a :href="qqHref">
             <span class="qq">好友</span>
           </a>
           <a :href="qzoneHref">
-            <span @click="qZone" class="qzone">空间</span>
+            <span class="qzone">空间</span>
           </a>
-          <a :href="weiboShare">
+          <a :href="weiboHref">
             <span class="weibo">微博</span>
           </a>
 
@@ -131,11 +131,22 @@ export default {
     },
     getLastUpdate() {
       const page = usePageData()
-      let time = page.value.git.updatedTime;
-      if (time === undefined) {
-        time = +new Date()
+      console.log(page)
+      let time = 0
+      //let time = page.value.git.updatedTime
+      let git = page.value.git
+      if (git === undefined || git == null) {
+        git = + new Date()
+        return this.getLocalTime(time)
       }
-      return this.getLocalTime(time)
+
+      let update = page.value.git.updatedTime
+
+      if (update === undefined) {
+        update = +new Date()
+      }
+
+      return this.getLocalTime(update)
     },
     getLogoTitle() {
       if(this.poster === undefined || this.poster == null) {
@@ -228,47 +239,6 @@ export default {
       $(".poster-img").slideUp(500)
       $(".poster-append").css("z-index",1)
     },
-    saveImg() {
-      //console.log("--------save-----------")
-      //console.log(this.app.$store.state.postImgHref)
-      var a = document.createElement('a');
-      var event = new MouseEvent('click')
-      //console.log(this.app.$store.state.downloadImgTitle)
-      a.download = this.app.$store.state.downloadImgTitle
-      a.href = this.app.$store.state.postImgHref;
-      a.dispatchEvent(event);
-    },
-    qqShare() {
-      let href = "http://connect.qq.com/widget/shareqq/index.html?" +
-          "url=https://blog.cco.vin" +
-          "&sharesource=qzone" +
-          "&title=你的分享标题" +
-          "&pics=https://ooszy.cco.vin/img/blog-note/image-20210831130544863.png?x-oss-process=style/pictureProcess1" +
-          "&summary=你的分享描述&desc=你的分享简述"
-      return href
-    },
-    qZone() {
-      /*let href = "https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?" +
-          "url="+this.qrHref+"" +
-          "&sharesource=qzone" +
-          "&title="+this.title+"" +
-          "&pics=https://api.paugram.com/bing" +
-          "&summary="+this.content+""*/
-
-      /*let href = "https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?" +
-          "url=https//blog.cco.vin " +
-          "&sharesource=qzone" +
-          "&title=标题" +
-          "&pics=https://api.paugram.com/bing" +
-          "&summary=内容"*/
-
-      //return "javascript:;"
-      window.location.href = href
-
-    },
-    weiboShare() {
-      let href = "http://service.weibo.com/share/share.php?url=你的分享网址&sharesource=weibo&title=你的分享标题&pic=你的分享图片&appkey=你的key，需要在新浪微博开放平台中申请"
-    }
   },
   created() {
     let date = new Date()
@@ -299,6 +269,9 @@ export default {
       let title = $(".poster-title").get(0).innerText
       let href = window.location.href
       this.qzoneHref = "https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url="+href+"&title="+title+"&desc="+content+"&pics=https://api.paugram.com/bing"
+
+      this.qqHref ="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.cco.vin&sharesource=qzone&title=你的分享标题&pics=你的分享图片地址&summary=你的分享描述&desc=你的分享简述"
+      this.weiboHref = "https://service.weibo.com/share/share.php?url=https://blog.cco.vin&pichttps://ooszy.cco.vin/img/blog-note/image-20210904175030428.png?x-oss-process=style/pictureProcess1=&appkey="
     },1000)
   },
 

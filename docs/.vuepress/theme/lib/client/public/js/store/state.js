@@ -27,7 +27,7 @@ module.exports = {
     downloadImgTitle: 'ccds',
     showShadeLoad: false,
     posterCon: 'sdlfjsaf;lihsdf',
-    posterStatus: 10000000000,
+    posterStatus: 0,
     posterShareSite: '',
     scaleTransform: 0.9,
     author: 'qsyyke',

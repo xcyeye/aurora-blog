@@ -99,10 +99,8 @@ export default {
       $(".poster-img").slideUp(500)
     },
     async createPoster() {
-      //console.log("-----------执行-------cre-----")
-      //console.log(this.$store.state.posterStatus)
-      //console.log("-----------------------------")
       let status = this.$store.state.posterStatus
+      console.log(status)
       if (status !== 1) {
         let getContentStatus = setInterval(() => {
           status = this.$store.state.posterStatus
@@ -192,6 +190,7 @@ export default {
             allowTaint: true,
             useCORS: true,
           }).then(canvas => {
+            console.log("--------开始执行then--------------")
             $(".poster-append").css("z-index",21)
             this.imgHeight = canvas.height
             this.href = this.convertCanvasToImage(canvas).src
@@ -212,17 +211,26 @@ export default {
             let posterCancelHeight = document.querySelector(".poster-cancel").offsetHeight
             let viewHeight = document.documentElement.clientHeight
 
+            console.log("view: " + viewHeight)
+            console.log("bottom: " + shareBottomHeight)
+            console.log("cancel: " + posterCancelHeight)
+            console.log("img: " + this.imgHeight)
+
             if (this.imgHeight > viewHeight) {
+              console.log("图片大于视图")
               let czHeight = viewHeight - shareBottomHeight - posterCancelHeight - 48
               this.setHeight(czHeight)
               //分享图片的高度大于可见区域的高度，则使用计算之后的高度
             }else {
+              console.log("图片小于视图")
               //图片高度小于可视化高度，则图片高度，直接使用图片高度
               let czHeight = viewHeight - shareBottomHeight - posterCancelHeight - 48
               if (czHeight > this.imgHeight) {
+                console.log("图片小于视图，并且差值大于图片，使用图片高度")
                 //czHeight = this.imgHeight
                 this.setHeight(this.imgHeight)
               }else {
+                console.log("图片小于视图，并且差值小于图片，使用擦差值高度")
                 this.setHeight(czHeight)
               }
             }
@@ -231,11 +239,16 @@ export default {
       })
     },
     setHeight(height) {
+      console.log("最终使用高度: " + height)
       height = height + "px"
-      //$(".share-div").css('height',height)
-      $(".share-div").animate({
-        height: height
+      if (document.body.clientWidth < 600) {
+        //是手机
+        $(".share-div").css("maxHeight",height)
+      }else {
+        $(".share-div").animate({
+        height: 'auto'
       },500)
+      }
 
     },
     convertCanvasToImage(canvas) {

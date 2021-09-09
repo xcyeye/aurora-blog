@@ -2588,6 +2588,7 @@ body::-webkit-scrollbar-thumb {
 }
 .qq {
     background-color: #64b5f6;
+    /*height: ;*/
 }
 .qzone {
     background-color: #ffd180;
@@ -2597,6 +2598,10 @@ body::-webkit-scrollbar-thumb {
 }
 .save {
     background-color: #37474f;
+}
+
+#share-img {
+    /*transform: scale(1);*/
 }
 .poster-qr {
     display: flex;
