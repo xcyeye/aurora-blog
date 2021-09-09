@@ -54,29 +54,7 @@ module.exports = {
     },
     cors: function (option) {
         return new Promise((resolve, reject) => {
-            let timeout = option.timeout
-            let method = option.method
-            let baseURL = option.baseURL
-
-            if (timeout === undefined) {
-                timeout = 5000
-            }
-
-            if (method === undefined) {
-                method = "get"
-            }
-
-            if (baseURL === undefined) {
-                baseURL = 'https://international.v1.hitokoto.cn/?c=k&max_length=45'
-            }
-
-            const instance = axios.create({
-                baseURL,
-                timeout,
-                method,
-
-            })
-
+            const instance = axios.create(option)
             //拦截器
             instance.interceptors.request.use(config => {
                 return config

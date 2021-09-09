@@ -64,7 +64,7 @@ export default defineComponent({
       adsenseLength: 3,
       lazyLoadingImg: null,
       originPageData: '',
-      posterContent: 'sdfsdf',
+      posterContent: '',
       title: ''
     }
   },

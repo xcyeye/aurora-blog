@@ -133,7 +133,8 @@ export default defineComponent({
       colorFontStyle: '',
       isFitter: false,
       backgroundUrl: 'url(https://api.iro.tw/webp_pc.php)',
-      themeProperty: null
+      themeProperty: null,
+      picture: ''
     }
   },
   props: {
@@ -354,6 +355,24 @@ export default defineComponent({
     }
   },
   created() {
+    network.cors({
+      baseURL: 'http://localhost:8099',
+      url: '/pic/rp',
+      method: 'GET',
+      timeout: 3000,
+      params: {
+        appId: '123',
+        appKey: '456'
+      },
+      responseType: 'json'
+    }).then((res) => {
+      this.picture = res.data.entity
+      console.log(res)
+      this.$store.commit("setPicture",{
+        picture: this.picture
+      })
+    })
+
     //控制台打印
     console.log("%c vuepress-theme-ccds %c by qsyyke","font-weight: bold;color: white;display: inline-block;text-align: center;height: 1.5rem;line-height: 1.5rem;background-color: rgba(255,202,212,.8);padding: 10px;border-bottom-left-radius: 13px;border-top-left-radius: 13px;","font-weight: bold;color: white;display: inline-block;text-align: center;height: 1.5rem;line-height: 1.5rem;background-color: rgba(178,247,239,.85);padding: 10px;border-bottom-right-radius: 13px;border-top-right-radius: 13px;")
     console.log("%c Version %c "+this.$store.state.version+"","font-weight: bold;color: white;display: inline-block;text-align: center;height: 1.5rem;line-height: 1.5rem;background-color: rgba(255,202,212,.8);padding: 10px;border-bottom-left-radius: 13px;border-top-left-radius: 13px;","font-weight: bold;color: white;display: inline-block;text-align: center;height: 1.5rem;line-height: 1.5rem;background-color: rgba(178,247,239,.85);padding: 10px;border-bottom-right-radius: 13px;border-top-right-radius: 13px;")

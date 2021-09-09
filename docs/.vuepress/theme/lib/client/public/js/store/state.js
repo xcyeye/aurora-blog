@@ -26,10 +26,7 @@ module.exports = {
     postImgHref: '',
     downloadImgTitle: 'ccds',
     showShadeLoad: false,
-    posterCon: 'sdlfjsaf;lihsdf',
-    posterStatus: 0,
     posterShareSite: '',
-    scaleTransform: 0.9,
-    author: 'qsyyke',
     qrImgHref: '',
+    picture: ''
 }

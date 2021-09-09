@@ -51,10 +51,10 @@ export default {
   },
   props: {
     themeProperty: null,
-    moodItem: null
+    moodItem: null,
+    moods: ''
   },
   created() {
-
     let background_color = this.themeProperty.randomColor[
         this.getRandomInt(0,this.themeProperty.randomColor.length -1)]
     this.hexToRgbColor = this.hexToRgb(background_color)

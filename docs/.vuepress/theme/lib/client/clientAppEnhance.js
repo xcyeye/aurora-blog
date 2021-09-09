@@ -20,7 +20,7 @@ import Tag from './components/Tag';
 import store from './public/js/store'
 import Link from './components/Link';
 import Poster from "./components/global/Poster";
-import TestAppend from "./components/TestAppend";
+import Photo from "./components/Photo";
 //搜索组件
 import { SearchBox } from '../plugin-search/lib/client/components/SearchBox';
 import '../plugin-search/lib/client/styles/vars.css';
@@ -98,6 +98,11 @@ export default defineClientAppEnhance(({ app, router }) => {
         component: Poster
     })
 
+    router.addRoute({
+        path: '/photo',
+        name: 'c-photo',
+        component: Photo
+    })
     // unregister the built-in `<OutboundLink>` to avoid warning
     delete app._context.components.OutboundLink;
     // override the built-in `<OutboundLink>`

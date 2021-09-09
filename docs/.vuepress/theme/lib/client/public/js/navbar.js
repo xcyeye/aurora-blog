@@ -57,8 +57,8 @@ module.exports = {
             link: '/mood'
         },
         {
-            text: "post",
-            link: '/post'
+            text: "相册",
+            link: '/photo'
         }
     ],
 }

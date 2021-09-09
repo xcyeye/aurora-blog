@@ -2,7 +2,7 @@
   <!--点击生成海报-->
   <div class="poster-share" style="z-index: 99">
     <div class="poster-button" id="poster-button">
-      <span class="icon-share" @click="createPoster">生成海报</span>
+      <span class="icon-share" @click="createPoster">生成海报 {{clickSecond}}</span>
     </div>
   </div>
 </template>
@@ -22,12 +22,14 @@ export default {
   },
   data() {
     return {
-      showPoster: false,
       href: '',
       clickCreateNum: 0,
       imgHeight: '',
       posterImgHeight: 500,
-      //content: ''
+      setTopBackStyle: '',
+      picture: '',
+      clickSecond: 3,
+      clickStatus: false
     }
   },
   props: {
@@ -43,18 +45,7 @@ export default {
         return '...'
       }
     },
-    author: {
-      type: String,
-      default() {
-        return 'qsyyke'
-      }
-    },
-    sayContent: {
-      type: String,
-      default() {
-        return '记录成长|分享快乐'
-      }
-    },
+
     qrHref: {
       type: String,
       default() {
@@ -68,13 +59,12 @@ export default {
       }
     }
   },
-  computed: {
-    getPosterStyle() {
-      return "--poster-back-img: url(" + this.backgroundImgHref + ");"
-    }
-  },
-
   methods: {
+    test() {
+      $.get("http://localhost:8099/pic/rp?appId=123&appKey=456",function () {
+
+      })
+    },
     cancelShade() {
       this.$store.commit("setShowPosterShadow", {
         showPosterShadow: false
@@ -82,6 +72,11 @@ export default {
       $(".poster-img").slideUp(500)
     },
     async createPoster() {
+
+      if (this.clickStatus === false) {
+        return
+      }
+
       this.$store.commit("setShowPosterShadow", {
         showPosterShadow: true
       })
@@ -102,7 +97,6 @@ export default {
     },
     loadPosterImg() {
       if (this.clickCreateNum === 0) {
-        //document.body.remo
         let append = document.querySelector("#poster-append")
         if (append === null) {
           let posterAppend = $("<div class=\"poster-append\" id=\"poster-append\">").get(0)
@@ -111,7 +105,8 @@ export default {
             app: this,
             content: this.content,
             height: this.posterImgHeight,
-            title: this.title
+            title: this.title,
+            setTopBackStyle: this.setTopBackStyle
           }).use(storeIndex).mount("#poster-append")
         }else {
           append.remove()
@@ -121,38 +116,18 @@ export default {
             app: this,
             content: this.content,
             height: this.posterImgHeight,
-            title: this.title
+            title: this.title,
+            setTopBackStyle: this.setTopBackStyle,
           }).use(storeIndex).mount("#poster-append")
         }
       }
     },
     handlePoster() {
       $(".poster-append").css("z-index",21)
-
-      /*this.$store.commit("setAuthor", {
-        author: this.author
-      })*/
-
-      /*this.$store.commit("setShowShadeLoad",{
-        showShadeLoad: true
-      })*/
-
-      /*this.$store.commit("setDownloadImgTitle",{
-        downloadImgTitle: this.title
-      })*/
-
-      /*this.$store.commit("setPosterContent",{
-        posterContent: this.content
-      })*/
       let qrHref = this.qrHref
       if (qrHref === undefined || qrHref === "") {
         qrHref = window.location.href
       }
-
-      /*this.$store.commit("setPosterShareSite",{
-        posterShareSite: qrHref
-      })*/
-
       if (this.clickCreateNum !== 0) {
         //第二次点击
         $(".poster-append").css("z-index",21)
@@ -228,7 +203,6 @@ export default {
         height: 'auto'
       },500)
       }
-
     },
     convertCanvasToImage(canvas) {
       var image = new Image();
@@ -236,13 +210,6 @@ export default {
       //image.crossOrigin="anonymous"
       image.src = canvas.toDataURL("image/png");
       return image;
-    },
-    saveImg() {
-      var a = document.createElement('a');
-      var event = new MouseEvent('click')
-      a.download = this.title
-      a.href = this.href;
-      a.dispatchEvent(event);
     },
     saveQrimg(url) {
       this.$store.commit("setQrImgHref",{
@@ -253,6 +220,24 @@ export default {
       })
     }
   },
+  mounted() {
+    setTimeout(() => {
+      this.picture = this.$store.state.picture
+      this.setTopBackStyle = "--poster-back-img: url(" + this.picture.src + ")"
+      console.log(this.setTopBackStyle)
+    })
+
+    let clickSecond = setInterval(() => {
+      this.clickSecond = this.clickSecond - 1
+
+      if (this.clickSecond === 0) {
+        clearInterval(clickSecond)
+        this.clickStatus = true
+        this.clickSecond = ""
+      }
+    },1000)
+  },
+
 }
 </script>
 

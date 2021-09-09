@@ -1,7 +1,7 @@
 <template>
   <!--模板-->
   <div style="display: block" class="poster" id="poster">
-    <div class="poster-top" id="poster-top">
+    <div class="poster-top" :style="getTopBackStyle" id="poster-top">
       <div class="poster-time">
         <div class="poster-time-day" id="poster-time-day">{{day}}</div>
         <div class="poster-time-year" id="poster-time-year">{{month}}/{{year}}</div>
@@ -57,7 +57,7 @@
     </div>
   </div>
 
-  <div class="poster-img" style="display: block" id="poster-img">
+  <div :sd="getPicture" class="poster-img" style="display: block" id="poster-img">
     <div class="poster-img-child" style="display: block">
       <div class="poster-cancel">
         <span @click="cancelShade" class="icon-close"></span>
@@ -68,13 +68,13 @@
       <div class="share-bottom" id="share-bottom">
 
         <div class="poster-social">
-          <a :href="qqHref">
+          <a target="_blank" :href="qqHref">
             <span class="qq">好友</span>
           </a>
-          <a :href="qzoneHref">
+          <a target="_blank" :href="qzoneHref">
             <span class="qzone">空间</span>
           </a>
-          <a :href="weiboHref">
+          <a target="_blank" :href="weiboHref">
             <span class="weibo">微博</span>
           </a>
 
@@ -105,7 +105,9 @@ export default {
       year: '',
       themeConfig: '',
       poster: '',
-      imgHeight: 'height: 90%;'
+      imgHeight: 'height: 90%;',
+      picture: "",
+      pictureSrc: 'https://h2.ioliu.cn/bing/Knuthojdsmossen_EN-CA12064544039_640x480.jpg?imageslim'
     }
   },
   props: {
@@ -113,6 +115,12 @@ export default {
       type: String,
       default() {
         return "ccds";
+      }
+    },
+    setTopBackStyle: {
+      type: String,
+      default() {
+        return '--poster-back-img: url(https://h2.ioliu.cn/bing/GiantManta_ZH-CN0594951444_640x480.jpg?imageslim);'
       }
     },
     title: {
@@ -125,26 +133,25 @@ export default {
     height: ''
   },
   computed: {
-    getHeight() {
-      let style = "height: " + this.app.$store.state.posterImgHeight + "px;"
-      //console.log(style)
-      return style
+    getPicture() {
+      this.picture = this.app.$store.state.picture
+      return this.app.$store.state.picture.src
     },
-    getHei() {
-      return this.app.$store.posterImgHeight
-    },
-    getScale() {
-      return "--scale-transform: " + this.app.$store.state.scaleTransform + ";"
+    getTopBackStyle() {
+      if (this.app.$store.state.picture.src === undefined) {
+        return "--poster-back-img: url( " + this.pictureSrc + ");"
+      }else {
+        return "--poster-back-img: url( " + this.app.$store.state.picture.src + ");"
+      }
+
     },
     getLastUpdate() {
       const page = usePageData()
-      //console.log(page)
       let time = 0
-      //let time = page.value.git.updatedTime
       let git = page.value.git
       if (git === undefined || git == null) {
         git = + new Date()
-        return this.getLocalTime(time)
+        return this.getLocalTime(git)
       }
 
       let update = page.value.git.updatedTime
@@ -225,19 +232,6 @@ export default {
       let sec = date.getSeconds()
       return year + "-" + month + "-" + day + " "
     },
-    scaleAdd() {
-      let scale = this.app.$store.state.scaleTransform + 0.1
-      this.app.$store.commit("setScaleTransform",{
-        scaleTransform: scale
-      })
-    },
-    scaleDown() {
-      let scale = this.app.$store.state.scaleTransform - 0.1
-      this.app.$store.commit("setScaleTransform",{
-        scaleTransform: scale
-      })
-      //console.log(scale)
-    },
     cancelShade() {
       let stopStatus = 0
       $(".poster-img").slideUp(500,function () {
@@ -286,17 +280,24 @@ export default {
     setTimeout(() => {
       let content = $(".poster-content").get(0).innerText
       if (content.length > 120) {
-        content = content.substr(1,120)
+        content = content.substr(0,120)
       }
       let title = $(".poster-title").get(0).innerText
       let href = window.location.href
       this.qzoneHref = "https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url="+href+"&title="+title+"&desc="+content+"&pics=https://api.paugram.com/bing"
 
-      this.qqHref ="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.cco.vin&sharesource=qzone&title=你的分享标题&pics=你的分享图片地址&summary=你的分享描述&desc=你的分享简述"
-      this.weiboHref = "https://service.weibo.com/share/share.php?url=https://blog.cco.vin&pichttps://ooszy.cco.vin/img/blog-note/image-20210904175030428.png?x-oss-process=style/pictureProcess1=&appkey="
+      this.qqHref ="http://connect.qq.com/widget/shareqq/index.html?url="+href+"&sharesource=qzone&title="+title+"&pics="+content+"&summary=你的分享描述&desc=你的分享简述"
+      this.weiboHref = "https://service.weibo.com/share/share.php?url"+href+"&pichttps://ooszy.cco.vin/img/blog-note/image-20210904175030428.png?x-oss-process=style/pictureProcess1=&appkey="
     },1000)
   },
-
+  watch: {
+    getPicture(nV,oV) {
+      console.log("变化了")
+      console.log(oV)
+      console.log(nV)
+      //this.picture = nV
+    }
+  }
 }
 </script>
 

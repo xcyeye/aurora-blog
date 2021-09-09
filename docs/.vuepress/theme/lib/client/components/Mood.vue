@@ -55,7 +55,7 @@
                class="c-page"  id="c-page">
             <!--<h2>df</h2>-->
             <div class="moods-page" id="moods-page">
-              <mood-item :mood-item="item" :theme-property="themeProperty"
+              <mood-item :moods="moods" :mood-item="item" :theme-property="themeProperty"
               />
             </div>
           </div>
@@ -99,9 +99,6 @@ export default defineComponent({
     }
   },
   created() {
-
-
-
     new Promise((resolve,reject) => {
       for (let i = 0; i < myData.length; i++) {
         if (myData[i].path === '/') {

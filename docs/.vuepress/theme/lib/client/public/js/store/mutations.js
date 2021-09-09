@@ -65,30 +65,14 @@ module.exports = {
     setPostImgHref(state,postImgHref) {
         this.state.postImgHref = postImgHref.postImgHref
     },
-    /*setDownloadImgTitle(state,downloadImgTitle) {
-        this.state.downloadImgTitle = downloadImgTitle.downloadImgTitle
-    },*/
     setShowShadeLoad(state,showShadeLoad) {
         this.state.showShadeLoad = showShadeLoad.showShadeLoad
     },
-    /*setPosterContent(state,posterContent) {
-        //this.state.posterContent = posterContent.posterContent
-        this.state.posterCon = posterContent.posterContent
-    },*/
-    /*setPosterShareSite(state,posterShareSite) {
-        this.state.posterShareSite = posterShareSite.posterShareSite
-    },*/
-    /*setScaleTransform(state,scaleTransform) {
-        this.state.scaleTransform = scaleTransform.scaleTransform
-    }*//*,
-    setAuthor(state,author) {
-        this.state.author = author.author
-    },*/
     setQrImgHref(state,qrImgHref) {
         this.state.qrImgHref = qrImgHref.qrImgHref
     },
-    /*setPosterStatus(state,posterStatus) {
-        this.state.posterStatus = posterStatus.posterStatus
-    }*/
-
+    setPicture(state,picture) {
+        console.log(picture)
+        this.state.picture = picture.picture
+    }
 }
