@@ -1,84 +1,10 @@
 <template>
-
-  <!--<PosterImg/>-->
   <!--点击生成海报-->
   <div class="poster-share" style="z-index: 99">
     <div class="poster-button" id="poster-button">
       <span class="icon-share" @click="createPoster">生成海报</span>
     </div>
   </div>
-
-  <!--<div class="hide-poster-top" id="hide-poster-top">
-    &lt;!&ndash;模板&ndash;&gt;
-    <div id="hide-poster" class="hide-poster">
-      <div  class="poster" id="poster">
-        <div class="poster-top">
-          <div class="poster-time">
-            <div class="poster-time-day">{{day}}</div>
-            <div class="poster-time-year">{{month}}/{{year}}</div>
-          </div>
-        </div>
-        <div class="poster-center">
-          <div class="poster-title">
-            <span>{{title}}</span>
-          </div>
-          <div class="poster-content">
-            <span>{{content}}</span>
-          </div>
-        </div>
-        <div class="poster-bottom">
-
-          <div class="poster-say">
-            <div class="transform">
-              <div class="poster-author">
-                <span>{{author}}</span>
-              </div>
-              <div class="poster-author-say">
-                <span>{{sayContent}}</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="poster-social-qr">
-            &lt;!&ndash;<div class="poster-social-desc">
-            </div>&ndash;&gt;
-            <div class="poster-qr">
-              &lt;!&ndash;https://ooszy.cco.vin/img/blog-public/wxpay.png&ndash;&gt;
-              <img id="poster-qrimg" :src="qrImgHref" alt="">
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    &lt;!&ndash;生成的截图&ndash;&gt;
-    &lt;!&ndash;<div class="poster-qrimg-center" style="display: none">
-      <div class="poster-img" id="poster-img">
-        <div class="poster-cancel">
-          <span @click="cancelShade" class="icon-close"></span>
-        </div>
-        <img :src="href" alt="">
-        <div class="poster-share-desc">
-          <span>分享到</span>
-        </div>
-        <div class="poster-social">
-          <a :href="qqShare">
-            <span class="qq">好友</span>
-          </a>
-          <a :href="qZone">
-            <span class="qzone">空间</span>
-          </a>
-          <a :href="weiboShare">
-            <span class="weibo">微博</span>
-          </a>
-
-          <a :href="href">
-            <span class="save" @click="saveImg">保存</span>
-          </a>
-        </div>
-      </div>
-    </div>&ndash;&gt;
-  </div>-->
 </template>
 
 <script>
@@ -88,6 +14,7 @@ import $ from 'jquery'
 import html2canvas from 'html2canvas'
 var QRCode = require('qrcode')
 import {createApp} from 'vue'
+import storeIndex from '../../public/js/store'
 export default {
   name: "Poster",
   components: {
@@ -99,7 +26,8 @@ export default {
       href: '',
       clickCreateNum: 0,
       imgHeight: '',
-      posterImgHeight: 500
+      posterImgHeight: 500,
+      content: ''
     }
   },
   props: {
@@ -107,12 +35,6 @@ export default {
       type: String,
       default() {
         return '青衫烟雨客'
-      }
-    },
-    content: {
-      type: String,
-      default() {
-        return "...";
       }
     },
     author: {
@@ -177,16 +99,44 @@ export default {
       $(".poster-img").slideUp(500)
     },
     async createPoster() {
+      //console.log("-----------执行-------cre-----")
+      //console.log(this.$store.state.posterStatus)
+      //console.log("-----------------------------")
+      let status = this.$store.state.posterStatus
+      if (status !== 1) {
+        let getContentStatus = setInterval(() => {
+          status = this.$store.state.posterStatus
+          if (status === 1) {
+            //console.log("加载完成")
+            clearInterval(getContentStatus)
+            this.loadPosterImg()
+            //setTimeout(() => {
+              this.handlePoster()
+            //},300)
+          }
+        },200)
+      }else {
+        //setTimeout(() => {
+          //this.handlePoster()
+          this.loadPosterImg()
+        //},200)
+      }
+      this.handlePoster()
+    },
+    loadPosterImg() {
+      this.content = this.$store.state.posterCon
       if (this.clickCreateNum === 0) {
         let posterAppend = $("<div class=\"poster-append\" id=\"poster-append\">").get(0)
         $("#app").get(0).appendChild(posterAppend)
         const app = createApp(PosterImg,{
           app: this,
           height: this.posterImgHeight
-        }).mount("#poster-append")
+        }).use(storeIndex).mount("#poster-append")
         //return
       }
-
+    },
+    handlePoster() {
+      $(".poster-append").css("z-index",21)
 
       this.$store.commit("setShowPosterShadow", {
         showPosterShadow: true
@@ -215,7 +165,6 @@ export default {
       this.$store.commit("setPosterShareSite",{
         posterShareSite: qrHref
       })
-      //console.log("次数: " + this.clickCreateNum)
       if (this.clickCreateNum !== 0) {
         //第二次点击
         $(".poster-append").css("z-index",21)
@@ -234,8 +183,6 @@ export default {
 
           await html2canvas(document.querySelector("#poster"), {
             onclone: () => {
-
-
               this.$store.commit("setShowShadeLoad",{
                 showShadeLoad: false
               })
@@ -245,7 +192,7 @@ export default {
             allowTaint: true,
             useCORS: true,
           }).then(canvas => {
-            console.log("-----------then------------")
+            $(".poster-append").css("z-index",21)
             this.imgHeight = canvas.height
             this.href = this.convertCanvasToImage(canvas).src
 
@@ -257,9 +204,6 @@ export default {
               showShadeLoad: false
             })
             this.clickCreateNum = this.clickCreateNum + 1
-
-            console.log("-----------clone----------")
-            $(".poster-append").css("z-index",21)
             this.$store.commit("setShowPostImg",{
               showPostImg: true
             })
@@ -267,29 +211,18 @@ export default {
             let shareBottomHeight = document.querySelector(".share-bottom").offsetHeight
             let posterCancelHeight = document.querySelector(".poster-cancel").offsetHeight
             let viewHeight = document.documentElement.clientHeight
-            console.log("bottom： " + shareBottomHeight)
-            console.log("cancel： " + posterCancelHeight)
-            console.log("view： " + viewHeight)
 
             if (this.imgHeight > viewHeight) {
-              console.log("图片大于视图")
               let czHeight = viewHeight - shareBottomHeight - posterCancelHeight - 48
               this.setHeight(czHeight)
               //分享图片的高度大于可见区域的高度，则使用计算之后的高度
             }else {
-              console.log("图片小于视图")
               //图片高度小于可视化高度，则图片高度，直接使用图片高度
               let czHeight = viewHeight - shareBottomHeight - posterCancelHeight - 48
-
-              console.log("差值: " + czHeight)
               if (czHeight > this.imgHeight) {
-                console.log("me")
-                console.log(czHeight)
-                console.log(this.imgHeight)
                 //czHeight = this.imgHeight
                 this.setHeight(this.imgHeight)
               }else {
-                console.log("he")
                 this.setHeight(czHeight)
               }
             }
@@ -299,8 +232,11 @@ export default {
     },
     setHeight(height) {
       height = height + "px"
-      console.log("执行set" + height)
-      $(".share-div").css('height',height)
+      //$(".share-div").css('height',height)
+      $(".share-div").animate({
+        height: height
+      },500)
+
     },
     convertCanvasToImage(canvas) {
       var image = new Image();

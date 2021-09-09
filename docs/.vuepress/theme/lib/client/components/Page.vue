@@ -8,11 +8,7 @@
       <slot name="top" />
       <!--:adsense-script="adsenseArr[0].script"-->
       <div class="page-top-share">
-        <poster :content="posterContent"
-                :title="originPageData.title"
-                author="青衫烟雨客" />
-        <!--<h3>sdfsdf</h3>-->
-
+        <poster/>
       </div>
       <div class="theme-default-content pageContent">
         <AdSense adsense-position="right"
@@ -100,10 +96,10 @@ export default defineComponent({
   methods: {
     getPosterText() {
       return new Promise((resolve,reject) => {
-        let allP = $(".pageContent").get(0).children
+        let allP = $(".pageContent p")
         let content = ''
-        if (allP.length > 15) {
-          for (let i = 0; i < 15; i++) {
+        if (allP.length > 30) {
+          for (let i = 0; i < 30; i++) {
             content = content + allP[i].innerText
           }
         }else {
@@ -118,6 +114,13 @@ export default defineComponent({
         content = content.replace("#\n","")
         content = content.replace("##\n","")
         content = content.replace("##","")
+
+        this.$store.commit("setPosterContent",{
+          posterContent: content
+        })
+        this.$store.commit("setPosterStatus",{
+          posterStatus: 1
+        })
         resolve(content)
       })
     },
@@ -382,7 +385,7 @@ export default defineComponent({
       $(h1s[0]).css('display','none')
     }
 
-    console.log("--------------m-------------")
+    //console.log("--------------m-------------")
     this.setMeta()
     //下面就是自动添加广告
 

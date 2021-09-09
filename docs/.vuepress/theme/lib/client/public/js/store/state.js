@@ -26,10 +26,10 @@ module.exports = {
     postImgHref: '',
     downloadImgTitle: 'ccds',
     showShadeLoad: false,
-    posterContent: '青衫烟雨客',
+    posterCon: 'sdlfjsaf;lihsdf',
+    posterStatus: 10000000000,
     posterShareSite: '',
     scaleTransform: 0.9,
     author: 'qsyyke',
     qrImgHref: '',
-    posterImgHeight: 'calc(100vh)'
 }

@@ -13,7 +13,7 @@
         <span>{{app.$store.state.downloadImgTitle}}</span>
       </div>
       <div class="poster-content" id="poster-content">
-            <span>{{app.$store.state.posterContent}}</span>
+          <span>{{app.$store.state.posterCon}}</span>
       </div>
       <div class="poster-page" id="poster-page">
         <div class="poster-page-left">
@@ -57,29 +57,30 @@
   </div>
 
   <div class="poster-img" style="display: block" id="poster-img">
+    <div class="poster-img-child" style="display: block">
+      <div class="poster-cancel">
+        <span @click="cancelShade" class="icon-close"></span>
+      </div>
+      <div class="share-div">
+        <img id="share-img" class="medium-zoom-image"  @click="openImg" :src="app.$store.state.postImgHref" alt="">
+      </div>
+      <div class="share-bottom" id="share-bottom">
 
-    <div class="poster-cancel">
-      <span @click="cancelShade" class="icon-close"></span>
-    </div>
-    <div class="share-div">
-      <img id="share-img" class="medium-zoom-image"  @click="openImg" :src="app.$store.state.postImgHref" alt="">
-    </div>
-    <div class="share-bottom" id="share-bottom">
+        <div class="poster-social">
+          <a :href="qqShare">
+            <span class="qq">好友</span>
+          </a>
+          <a :href="qzoneHref">
+            <span @click="qZone" class="qzone">空间</span>
+          </a>
+          <a :href="weiboShare">
+            <span class="weibo">微博</span>
+          </a>
 
-      <div class="poster-social">
-        <a :href="qqShare">
-          <span class="qq">好友</span>
-        </a>
-        <a :href="qZone">
-          <span class="qzone">空间</span>
-        </a>
-        <a :href="weiboShare">
-          <span class="weibo">微博</span>
-        </a>
-
-        <a :href="href">
-          <span class="save" @click="saveImg">保存</span>
-        </a>
+          <a :href="href">
+            <span class="save" @click="saveImg">保存</span>
+          </a>
+        </div>
       </div>
     </div>
   </div>
@@ -119,7 +120,7 @@ export default {
   computed: {
     getHeight() {
       let style = "height: " + this.app.$store.state.posterImgHeight + "px;"
-      console.log(style)
+      //console.log(style)
       return style
     },
     getHei() {
@@ -170,7 +171,7 @@ export default {
       }
     },
     getBlogDesc() {
-      console.log(myData)
+      //console.log(myData)
       for (let i = 0; i < myData.length; i++) {
         if (myData[i].path === "/") {
           this.themeConfig = myData[i].frontmatter
@@ -217,7 +218,7 @@ export default {
       this.app.$store.commit("setScaleTransform",{
         scaleTransform: scale
       })
-      console.log(scale)
+      //console.log(scale)
     },
     cancelShade() {
       this.app.$store.commit("setShowPosterShadow", {
@@ -228,11 +229,11 @@ export default {
       $(".poster-append").css("z-index",1)
     },
     saveImg() {
-      console.log("--------save-----------")
-      console.log(this.app.$store.state.postImgHref)
+      //console.log("--------save-----------")
+      //console.log(this.app.$store.state.postImgHref)
       var a = document.createElement('a');
       var event = new MouseEvent('click')
-      console.log(this.app.$store.state.downloadImgTitle)
+      //console.log(this.app.$store.state.downloadImgTitle)
       a.download = this.app.$store.state.downloadImgTitle
       a.href = this.app.$store.state.postImgHref;
       a.dispatchEvent(event);
@@ -260,22 +261,16 @@ export default {
           "&title=标题" +
           "&pics=https://api.paugram.com/bing" +
           "&summary=内容"*/
-      let href = "http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?" +
-          "url="+this.app.$store.state.posterShareSite +
-          "&title="+this.app.$store.state.downloadImgTitle+
-          "&desc="+this.app.$store.state.posterContent.substr(1,this.app.$store.state.posterContent.length /4) +
-          "&summary="+this.app.$store.state.posterContent.substr(1,this.app.$store.state.posterContent.length /4) +
-          "&site="+this.app.$store.state.posterShareSite+"&pics=https://api.paugram.com/bing"
-      console.log(href)
-      return "javascript:;"
+
+      //return "javascript:;"
       window.location.href = href
+
     },
     weiboShare() {
       let href = "http://service.weibo.com/share/share.php?url=你的分享网址&sharesource=weibo&title=你的分享标题&pic=你的分享图片&appkey=你的key，需要在新浪微博开放平台中申请"
     }
   },
   created() {
-    console.log("-----------create执行-----------")
     let date = new Date()
     this.day = date.getDate()
     this.month = date.getMonth() + 1
@@ -295,24 +290,18 @@ export default {
         posterImgHeight: "max-height: 26.6rem;height: max-content;"
       })
     }
+
+    setTimeout(() => {
+      let content = $(".poster-content").get(0).innerText
+      if (content.length > 120) {
+        content = content.substr(1,120)
+      }
+      let title = $(".poster-title").get(0).innerText
+      let href = window.location.href
+      this.qzoneHref = "https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url="+href+"&title="+title+"&desc="+content+"&pics=https://api.paugram.com/bing"
+    },1000)
   },
-   /*watch: {
-     getHei(newValue,oleValue) {
-       console.log("高度变化了")
-       console.log(newValue)
-       /!*let shareBottomHeight = document.querySelector(".share-bottom").offsetHeight
-       let posterCancelHeight = document.querySelector(".poster-cancel").offsetHeight
-       let posterImgHeight = document.querySelector(".poster-img").offsetHeight
-       let czHeight = posterImgHeight - shareBottomHeight - posterCancelHeight - 30
-       let height = czHeight + "px"
-       $(".share-div").css("height",height)*!/
-       //this.imgHeight = "height: " + newValue + "px;"
-       console.log("新数据: " + newValue)
-       console.log("旧数据: " + oleValue)
-       console.log(this)
-       console.log("-------watch-------")
-     }
-   }*/
+
 }
 </script>
 

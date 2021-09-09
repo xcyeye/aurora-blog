@@ -2259,13 +2259,10 @@ body::-webkit-scrollbar-thumb {
         height: 15rem;
     }
     #poster-append {
-        /*width: 100%;*/
-        /*width: 42rem;*/
         margin: 0 auto;
     }
     #poster {
         transform: scale(1);
-        /*width: 80%;*/
     }
     #share-bottom {
         position: relative;
@@ -2287,8 +2284,6 @@ body::-webkit-scrollbar-thumb {
         transform: scale(calc(var(--scale-transform) - 0.1));
     }
     #hide-poster {
-        /*position: fixed;
-        right: 0;*/
         width: 100%;
     }
     #poster-time-year {
@@ -2298,7 +2293,6 @@ body::-webkit-scrollbar-thumb {
         font-size: 3.5rem;
     }
     #poster-qrimg-center {
-        /*align-items: center;*/
         width: 100%;
     }
 
@@ -2306,13 +2300,9 @@ body::-webkit-scrollbar-thumb {
 .showPoster {
     display: none;
 }
-/*background: rgba(0, 0, 0, 0.5);*/
 .poster {
-   /* position: absolute;
-    right: 1000rem;*/
     position: relative;
     right: 1000rem;
-    /*border: 1px solid red;*/
     max-width: 40rem;
     width: 40rem;
     height: max-content;
@@ -2325,39 +2315,17 @@ body::-webkit-scrollbar-thumb {
 }
 
 .share-div {
-    /*border: 1px solid red;*/
-    /*height: 25rem;*/
     height: available;
-    /*height: max-content;*/
     width: 100%;
     overflow: hidden;
-    /*margin-bottom: 1rem;*/
-}
-#share-img {
-    /*transform: scale(.5);*/
-    /*height: 10rem;*/
 }
 .poster-img {
-    /*position: relative;*/
     position: fixed;
-    /*top: 0;
-    left: 0;*/
-    z-index: 20;
-   /* margin-top: 2rem;
-    margin-bottom: 1.5rem;*/
-    width: 30%;
 
-    /*max-width: 40rem;*/
-    /*height: 19rem;*/
-    /*height: max-content;*/
-    /*max-height: 25rem;*/
-    /*height: 31rem;*/
-    /*height: calc(100vh);*/
+    z-index: 20;
+    width: 30%;
     max-height: calc(100vh);
-    /*border: 1px solid red;*/
     border-radius: 10px;
-    /*padding: 1rem;*/
-    /*background-color: rgba(255, 202, 212,.6);*/
     background-color: rgba(255,255,255,.8);
     box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 }
@@ -2367,28 +2335,19 @@ body::-webkit-scrollbar-thumb {
 .share-bottom {
     padding-top: 10px;
     padding-bottom: 10px;
-    /*box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;*/
     background-color: rgba(198,203,239,.6);
     border-radius: 15px;
     box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
-    /*border: 1px solid blue;*/
-    /*position: absolute;
-    bottom: 0;*/
     width: 100%;
 }
 .poster-share {
     width: 100%;
-    /*position: absolute;*/
-    /*left: 0;*/
 }
 .poster-button {
     position: relative;
-    /*border: 1px solid red;*/
     text-align: right;
-    /*width: 70%;*/
     margin: 0 auto;
     position: relative;
-    /*z-index: 50;*/
 }
 .poster-button span {
     display: inline-block;
@@ -2408,18 +2367,13 @@ body::-webkit-scrollbar-thumb {
 .poster-top {
 
     position: relative;
-    /*height: max-content;*/
     max-height: 23rem;
     height: 23rem;
-    /*border: 1px solid blue;*/
-    /*border: 1px solid blue;*/
     background-image: var(--poster-back-img);
     background-repeat: no-repeat;
     background-size: cover;
     background-position: 50% 100%;
     z-index: -2;
-    /*border-radius: 5px;*/
-    /*margin-bottom: .7rem;*/
 }
 #poster-top-img {
     max-width: 40rem;;
@@ -2429,8 +2383,6 @@ body::-webkit-scrollbar-thumb {
 
 }
 .poster-time {
-    /*width: 20%;*/
-    /*border: 1px solid red;*/
     position: absolute;
     bottom: 13%;
     left: 5%;
@@ -2448,7 +2400,6 @@ body::-webkit-scrollbar-thumb {
 }
 .poster-center {
     font-size: 1.5rem;
-    /*border: 1px seagreen solid;*/
     margin-top: .5rem;
     margin-bottom: 1.5rem;
     overflow: hidden;
@@ -2456,19 +2407,14 @@ body::-webkit-scrollbar-thumb {
     --poster-heiht: 26rem;
 
     width: 100%;
-    /*height: var(--poster-heiht);*/
     max-height: var(--poster-heiht);
-    /*border: 1px solid red;*/
 }
 .poster-title {
     font-size: 22px;
     font-weight: 650;
     text-align: left;
     padding-left: 15px;
-    /*border: 1px solid palevioletred;*/
     max-height: var(--poster-content-title);
-    /*max-height: var(--poster-content-title);*/
-    /*line-height: var(--poster-content-title);*/
     overflow: hidden;
     text-overflow: ellipsis;
     line-height: 2.5rem;
@@ -2489,9 +2435,7 @@ body::-webkit-scrollbar-thumb {
     display: -webkit-box;
     -webkit-line-clamp: 5;
     -webkit-box-orient: vertical;
-    /*border: 1px solid blue;*/
     line-height: 1.5rem;
-    /*height: calc(var(--poster-heiht) - var(--poster-content-title));*/
     max-height: calc(13rem - var(--poster-content-title));;
 }
 .poster-content span {
@@ -2505,14 +2449,12 @@ body::-webkit-scrollbar-thumb {
     display: flex;
     justify-content: center;
     align-items: center;
-    /*border: 1px solid seagreen;*/
 }
 .poster-page-left,.poster-page-right {
     flex: 1;
 }
 .poster-page-left {
     position: relative;
-    /*border: 1px solid palevioletred;*/
     display: flex;
     justify-content: center;
     align-items: center;
@@ -2520,7 +2462,6 @@ body::-webkit-scrollbar-thumb {
 .poster-page-avatar {
     display: flex;
     justify-content: center;
-    /*border: 1px solid red;*/
     flex: 1;
 }
 .poster-page-desc {
@@ -2555,9 +2496,6 @@ body::-webkit-scrollbar-thumb {
     display: flex;
     justify-content: center;
     align-items: center;
-    /*border: 1px solid palevioletred;*/
-    /*height: 5.5rem;*/
-    /*height: 20%;*/
 }
 .poster-say {
     width: 100%;
@@ -2578,7 +2516,6 @@ body::-webkit-scrollbar-thumb {
 
 }
 .blog-name span:nth-child(2) {
-    /*color: red;*/
     font-family: Lobster-Regular;
 }
 .blog-desc {
@@ -2628,8 +2565,6 @@ body::-webkit-scrollbar-thumb {
     justify-content: center;
     align-items: center;
     height: 2rem;
-    /*height: 10%;*/
-    /*border: 1px solid red;*/
 }
 
 
@@ -2650,7 +2585,6 @@ body::-webkit-scrollbar-thumb {
     display: inline-block;
     width: max-content;
     height: 1.7rem;
-    /*background-color: #f5365c;*/
 }
 .qq {
     background-color: #64b5f6;
@@ -2761,33 +2695,12 @@ body::-webkit-scrollbar-thumb {
         transform: rotate(1turn);
     }
 }
-/*.icon-share:after {
-    display: inline-block;
-    content: "\e97f";
-    font-family: icomoon;
-    width: 1rem;
-    height: 1rem;
-    background-color: red;
-    position: absolute;
-    top: 2rem;
-    right: 0;
-}*/
 
-.hide-poster {
-    /*opacity: 0;*/
-    /*z-index: -5;*/
-}
-.top-image {
-    /*position: relative;*/
-}
 .top-show {
     position: absolute;
     right: 0;
     bottom: 2%;
     width: 9rem;
-}
-.hide-poster-top {
-    /* display: none; */
 }
 .mood-poster {
     text-align: right;
@@ -2805,14 +2718,11 @@ body::-webkit-scrollbar-thumb {
 }
 .poster-append {
     z-index: 1;
-    /*position: fixed;*/
-    /*position: absolute;*/
     position: absolute;
     height: 100%;
     width: 100%;
     top: 0;
     right: 0;
-    /*border: 1px solid red;*/
     display: flex;
     justify-content: center;
     align-items: center;

@@ -69,17 +69,13 @@ module.exports = {
         this.state.downloadImgTitle = downloadImgTitle.downloadImgTitle
     },
     setShowShadeLoad(state,showShadeLoad) {
-        console.log(showShadeLoad)
         this.state.showShadeLoad = showShadeLoad.showShadeLoad
     },
     setPosterContent(state,posterContent) {
-        console.log("------content------")
-        console.log(posterContent)
-        this.state.posterContent = posterContent.posterContent
+        //this.state.posterContent = posterContent.posterContent
+        this.state.posterCon = posterContent.posterContent
     },
     setPosterShareSite(state,posterShareSite) {
-        console.log("------site------")
-        console.log(posterShareSite)
         this.state.posterShareSite = posterShareSite.posterShareSite
     },
     setScaleTransform(state,scaleTransform) {
@@ -91,10 +87,8 @@ module.exports = {
     setQrImgHref(state,qrImgHref) {
         this.state.qrImgHref = qrImgHref.qrImgHref
     },
-    setPosterImgHeight(state,posterHeight) {
-        console.log("执行setHeight: ")
-        console.log(posterHeight)
-        this.state.posterImgHeight = posterHeight.posterImgHeight
+    setPosterStatus(state,posterStatus) {
+        this.state.posterStatus = posterStatus.posterStatus
     }
 
 }

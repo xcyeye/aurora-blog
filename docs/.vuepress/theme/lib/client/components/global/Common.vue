@@ -24,9 +24,6 @@
       <top-image :is-show-top-img="isShowTopImg"
                  :is-show-head-line="isShowHeadLine"
                  :head-line="headLine">
-        <!--<div class="top-show">
-          <poster/>
-        </div>-->
       </top-image>
       <div class="common-test" id="content">
         <Sidebar>
@@ -81,11 +78,6 @@
     <span :class="{iconSpinner6: $store.state.showShadeLoad}"></span>
   </div>
 
-  <!--$store.state.showPosterShadow-->
-  <!--<div :class="{posterShade: true}">
-    <span :class="{iconSpinner6: true}"></span>
-  </div>-->
-
 
 </template>
 <script lang="ts">
@@ -101,7 +93,6 @@ import HomeWelcome from '../../components/child/HomeWelcome'
 import EasyTyper from "easy-typer-js";
 import $ from 'jquery'
 import Sidebar from '../Sidebar'
-import PosterImg from '../child/PosterImg'
 // import filterPostsByType from '../../public/js/post'
 //导入配置属性
 let themeProperty = null
@@ -118,8 +109,7 @@ export default defineComponent({
     Transition,
     HomeWelcome,
     Home,
-    Sidebar,
-    PosterImg
+    Sidebar
   },
   data() {
     return {
