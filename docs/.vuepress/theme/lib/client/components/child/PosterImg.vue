@@ -9,11 +9,18 @@
       <!--<img src="http://h2.ioliu.cn/bing/HowgillFells_ZH-CN1134328886_640x480.jpg?imageslim" id="poster-top-img" alt="">-->
     </div>
     <div class="poster-center" id="poster-center">
-      <div class="poster-title" id="poster-title">
+      <!--<div class="poster-title" id="poster-title">
         <span>{{app.$store.state.downloadImgTitle}}</span>
       </div>
       <div class="poster-content" id="poster-content">
           <span>{{app.$store.state.posterCon}}</span>
+      </div>-->
+
+      <div class="poster-title" id="poster-title">
+        <span>{{title}}</span>
+      </div>
+      <div class="poster-content" id="poster-content">
+          <span>{{content}}</span>
       </div>
       <div class="poster-page" id="poster-page">
         <div class="poster-page-left">
@@ -108,6 +115,12 @@ export default {
     }
   },
   props: {
+    content: {
+      type: String,
+      default() {
+        return "ccds";
+      }
+    },
     title: {
       type: String,
       default() {
@@ -239,6 +252,13 @@ export default {
       $(".poster-img").slideUp(500)
       $(".poster-append").css("z-index",1)
     },
+    saveImg() {
+      var a = document.createElement('a');
+      var event = new MouseEvent('click')
+      a.download = this.app.$store.state.downloadImgTitle + (+new Date())
+      a.href = this.app.$store.state.postImgHref;
+      a.dispatchEvent(event);
+    }
   },
   created() {
     let date = new Date()

@@ -27,7 +27,7 @@ export default {
       clickCreateNum: 0,
       imgHeight: '',
       posterImgHeight: 500,
-      content: ''
+      //content: ''
     }
   },
   props: {
@@ -35,6 +35,12 @@ export default {
       type: String,
       default() {
         return '青衫烟雨客'
+      }
+    },
+    content: {
+      type: String,
+      default() {
+        return '...'
       }
     },
     author: {
@@ -63,27 +69,6 @@ export default {
     }
   },
   computed: {
-    qqShare() {
-      let href = "http://connect.qq.com/widget/shareqq/index.html?" +
-          "url=https://blog.cco.vin" +
-          "&sharesource=qzone" +
-          "&title=你的分享标题" +
-          "&pics=https://ooszy.cco.vin/img/blog-note/image-20210831130544863.png?x-oss-process=style/pictureProcess1" +
-          "&summary=你的分享描述&desc=你的分享简述"
-      return href
-    },
-    qZone() {
-      let href = "https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?" +
-          "url="+this.qrHref+"" +
-          "&sharesource=qzone" +
-          "&title="+this.title+"" +
-          "&pics=sdf" +
-          "&summary="+this.content+""
-      return href
-    },
-    weiboShare() {
-      let href = "http://service.weibo.com/share/share.php?url=你的分享网址&sharesource=weibo&title=你的分享标题&pic=你的分享图片&appkey=你的key，需要在新浪微博开放平台中申请"
-    },
     getPosterStyle() {
       return "--poster-back-img: url(" + this.backgroundImgHref + ");"
     }
@@ -99,6 +84,8 @@ export default {
       $(".poster-img").slideUp(500)
     },
     async createPoster() {
+      console.log(this.title)
+      console.log(this.content)
       let status = this.$store.state.posterStatus
       console.log(status)
       if (status !== 1) {
@@ -122,20 +109,36 @@ export default {
       this.handlePoster()
     },
     loadPosterImg() {
-      this.content = this.$store.state.posterCon
+      console.log("----click: " + this.clickCreateNum)
       if (this.clickCreateNum === 0) {
-        let posterAppend = $("<div class=\"poster-append\" id=\"poster-append\">").get(0)
-        $("#app").get(0).appendChild(posterAppend)
-        const app = createApp(PosterImg,{
-          app: this,
-          height: this.posterImgHeight
-        }).use(storeIndex).mount("#poster-append")
+        //document.body.remo
+        let append = document.querySelector("#poster-append")
+        if (append === null) {
+          let posterAppend = $("<div class=\"poster-append\" id=\"poster-append\">").get(0)
+          $("#app").get(0).appendChild(posterAppend)
+          const app = createApp(PosterImg,{
+            app: this,
+            content: this.content,
+            height: this.posterImgHeight,
+            title: this.title
+          }).use(storeIndex).mount("#poster-append")
+        }else {
+          append.remove()
+          let posterAppend = $("<div class=\"poster-append\" id=\"poster-append\">").get(0)
+          $("#app").get(0).appendChild(posterAppend)
+          const app = createApp(PosterImg,{
+            app: this,
+            content: this.content,
+            height: this.posterImgHeight,
+            title: this.title
+          }).use(storeIndex).mount("#poster-append")
+        }
+
         //return
       }
     },
     handlePoster() {
       $(".poster-append").css("z-index",21)
-
       this.$store.commit("setShowPosterShadow", {
         showPosterShadow: true
       })
@@ -152,9 +155,9 @@ export default {
         downloadImgTitle: this.title
       })
 
-      this.$store.commit("setPosterContent",{
+      /*this.$store.commit("setPosterContent",{
         posterContent: this.content
-      })
+      })*/
       let qrHref = this.qrHref
       if (qrHref === undefined || qrHref === "") {
         qrHref = window.location.href

@@ -8,7 +8,7 @@
       <slot name="top" />
       <!--:adsense-script="adsenseArr[0].script"-->
       <div class="page-top-share">
-        <poster/>
+        <poster :key="+new Date()" :title="originPageData.title" :content="posterContent"/>
       </div>
       <div class="theme-default-content pageContent">
         <AdSense adsense-position="right"
@@ -64,7 +64,8 @@ export default defineComponent({
       adsenseLength: 3,
       lazyLoadingImg: null,
       originPageData: '',
-      posterContent: ''
+      posterContent: 'sdfsdf',
+      title: ''
     }
   },
   props: {
@@ -75,10 +76,13 @@ export default defineComponent({
     setTimeout(() => {
       this.getPosterText().then((res) => {
         this.posterContent = res
+        //console.log(this.posterContent)
       })
     },1000)
     const page = usePageData()
     this.originPageData = page
+    //console.log(this.originPageData.title)
+    //this.title = this.originPageData.value.
     this.$emit('getHeadLine',page.value.title)
     this.adsenseArr = this.themeProperty.adsenseArr
     this.insertAdsenseRule = this.themeProperty.insertAdsenseRule
@@ -216,7 +220,7 @@ export default defineComponent({
           let name = childmete[i].getAttribute("name");
 
           if (name === "description") {
-            console.log(childmete[i])
+            //console.log(childmete[i])
             /*setTimeout(() => {
 
             },500)*/
