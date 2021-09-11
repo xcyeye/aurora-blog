@@ -4,10 +4,10 @@ module.exports = {
             text: '快速开始',
             link: '/home/'
         },
-        {
+        /*{
             text: '主题配置',
             link: '/config/'
-        },
+        },*/
         {
             text: '主题特征配置',
             children: [

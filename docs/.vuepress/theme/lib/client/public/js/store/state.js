@@ -28,5 +28,7 @@ module.exports = {
     showShadeLoad: false,
     posterShareSite: '',
     qrImgHref: '',
-    picture: ''
+    picture: '',
+    photos: [],
+    loadingFinish: false
 }

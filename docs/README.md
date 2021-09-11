@@ -489,6 +489,7 @@ poster: {
     author: 'qsyyke',
     preBlog: 'chuchen',
     suffixBlog: 'blog',
+    avatar: /avatar.png
 }
 
 ---

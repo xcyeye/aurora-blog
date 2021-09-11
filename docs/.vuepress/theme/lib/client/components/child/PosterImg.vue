@@ -19,7 +19,7 @@
       <div class="poster-page" id="poster-page">
         <div class="poster-page-left">
           <div class="poster-page-avatar">
-            <img id="poster-page-avatar" src="/avatar.jpg" alt="">
+            <img id="poster-page-avatar" :src="getAvatar" alt="">
           </div>
           <div class="poster-page-desc" id="poster-page-desc">
             <div class="poster-desc-top">
@@ -91,7 +91,6 @@
 import $ from "jquery";
 import {usePageData} from "@vuepress/client";
 import myData from '@temp/my-data'
-import {useThemeLocaleData} from "../../composables";
 import mediumZoom from "medium-zoom";
 export default {
   name: "PosterImg",
@@ -133,6 +132,19 @@ export default {
     height: ''
   },
   computed: {
+    getAvatar() {
+      console.log(this.themeConfig)
+      let poster = this.themeConfig.poster
+      if (poster === undefined || poster == null) {
+        return "https://ooszy.cco.vin/img/blog-public/ccds_64.ico"
+      }
+      let avatar = poster.avatar
+      if (avatar === undefined || avatar == null) {
+        return "https://ooszy.cco.vin/img/blog-public/ccds_64.ico"
+      }
+
+      return avatar
+    },
     getPicture() {
       this.picture = this.app.$store.state.picture
       return this.app.$store.state.picture.src

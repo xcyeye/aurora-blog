@@ -72,7 +72,17 @@ module.exports = {
         this.state.qrImgHref = qrImgHref.qrImgHref
     },
     setPicture(state,picture) {
-        console.log(picture)
         this.state.picture = picture.picture
+    },
+    setPhotos(state,photo) {
+        this.commit("setLoadingFinish",{
+            loadingFinish: true
+        })
+        if (this.state.photos.length === 0) {
+            this.state.photos = photo.photos
+        }
+    },
+    setLoadingFinish(state,loadingFinish) {
+        this.state.loadingFinish = loadingFinish.loadingFinish
     }
 }

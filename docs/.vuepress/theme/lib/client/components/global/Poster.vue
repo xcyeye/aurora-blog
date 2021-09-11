@@ -61,7 +61,7 @@ export default {
   },
   methods: {
     test() {
-      $.get("http://localhost:8099/pic/rp?appId=123&appKey=456",function () {
+      $.get("https://pciture.cco.vin/pic/rp?appId=lnZxmObbJSp3o8Zea2KXxPwat&appKey=6TleVWdLeVwpOKv9eXtTQUam7",function () {
 
       })
     },
@@ -221,6 +221,7 @@ export default {
     }
   },
   mounted() {
+
     setTimeout(() => {
       this.picture = this.$store.state.picture
       this.setTopBackStyle = "--poster-back-img: url(" + this.picture.src + ")"

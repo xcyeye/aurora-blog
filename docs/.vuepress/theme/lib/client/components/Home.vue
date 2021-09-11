@@ -1,6 +1,6 @@
 <template>
   <div :class="{heroHome: isHome}">
-    <main  class="home" id="home" :aria-labelledby="heroText ? 'main-title' : undefined">
+    <main :style="navbarStyle" class="home" id="home" :aria-labelledby="heroText ? 'main-title' : undefined">
       <header class="hero" >
         <div class="hero-div">
           <img id="hero-img" :src="getHeroImage" :alt="heroAlt" />
@@ -78,6 +78,12 @@ export default defineComponent({
     }
   },
   props: {
+    navbarStyle: {
+      type: String,
+      default() {
+        return ""
+      }
+    },
     globalColor: {
       type: String,
       default() {

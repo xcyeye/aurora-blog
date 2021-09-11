@@ -122,7 +122,6 @@ export default defineComponent({
       })
     },
     start() {
-      //console.log("----------start-----------")
       let imgs = $(".pageContent img")
       for (let i = 0; i < imgs.length; i++) {
         let clientWidth = document.body.clientWidth

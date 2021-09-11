@@ -356,13 +356,13 @@ export default defineComponent({
   },
   created() {
     network.cors({
-      baseURL: 'http://localhost:8099',
+      baseURL: 'https://picture.cco.vin',
       url: '/pic/rp',
       method: 'GET',
       timeout: 3000,
       params: {
-        appId: '123',
-        appKey: '456'
+        appId: 'lnZxmObbJSp3o8Zea2KXxPwat',
+        appKey: '6TleVWdLeVwpOKv9eXtTQUam7'
       },
       responseType: 'json'
     }).then((res) => {

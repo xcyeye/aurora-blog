@@ -4,7 +4,7 @@
       :is-show-top-img="false"
       :is-show-head-line="false">
     <template #center1>
-      <Home :theme-property="themeProperty" />
+      <Home :navbar-style="'margin-top: 0;'" :theme-property="themeProperty" />
     </template>
     <template #center2>
       <div class="about">

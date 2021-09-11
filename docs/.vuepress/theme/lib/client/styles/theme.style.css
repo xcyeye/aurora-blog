@@ -2732,3 +2732,211 @@ body::-webkit-scrollbar-thumb {
     justify-content: center;
     align-items: center;
 }
+
+.loadingAnimate {
+    position: fixed;
+    height: calc(100vh);
+    width: 100%;
+    z-index: 19;
+    /*background-image: linear-gradient(to top, #feada6 0%, #f5efef 100%);*/
+    background-image: linear-gradient(to top, #fff1eb 0%, #ace0f9 100%);
+
+}
+
+.photo-waterfull {
+    /*position: absolute;*/
+    /*top: 0;*/
+    /*z-index: -1;*/
+    width: 97%;
+    margin: 0 auto;
+    /*background-image: linear-gradient(to top, #fff1eb 0%, #ace0f9 100%);*/
+}
+.photo-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: -33;
+    width: 100%;
+    height: calc(100vh);
+    background-image: linear-gradient(to top, #fff1eb 0%, #ace0f9 100%);
+}
+.waterfull{
+    width: 100%;
+}
+.v-waterfall-content {
+    /* 主要 */
+    width: 100%;
+    height: calc(100vh);
+    position: relative;
+    /* 次要：设置滚动条，要求固定高度 */
+    overflow-y: auto;
+}
+
+.v-waterfall-content::-webkit-scrollbar {
+    display: none;
+}
+.v-waterfall-item {
+    /* 主要 */
+    float: left;
+    position: absolute;
+}
+
+.v-waterfall-item img {
+    /* 主要 */
+    /* width: auto;height: auto; */
+    width: 90%;
+    height: auto;
+    /* 次要 */
+    border-radius: 6px;
+}
+.photo-desc {
+    position: absolute;
+    border: 1px solid red;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: -1;
+    /*height: max-content;*/
+}
+
+.fall-title {
+    margin-top: 0;
+    font-size: small;
+    color: #666;
+    margin-bottom: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+}
+.fall-desc {
+    overflow: hidden;
+    height: max-content;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    font-size: x-small;
+    color: #9e9e9e;
+    margin: 2px;
+}
+
+/*html {
+    height: 100%;
+}*/
+
+/*body {
+    background-image: radial-gradient(circle farthest-corner at center, #3C4B57 0%, #1C262B 100%);
+}*/
+
+.loader {
+    position: absolute;
+    top: calc(50% - 32px);
+    left: calc(50% - 32px);
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    perspective: 800px;
+}
+
+.inner {
+    position: absolute;
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+}
+
+.inner.one {
+    left: 0%;
+    top: 0%;
+    animation: rotate-one 1s linear infinite;
+    border-bottom: 5px solid rgba(109,213,250,.5);
+    /*background-image: linear-gradient(to top, #fff1eb 0%, #ace0f9 100%);*/
+}
+
+.inner.two {
+    right: 0%;
+    top: 0%;
+    animation: rotate-two 1s linear infinite;
+    border-right: 5px solid rgba(109,213,250,.5);
+}
+
+.inner.three {
+    right: 0%;
+    bottom: 0%;
+    animation: rotate-three 1s linear infinite;
+    border-top: 5px solid rgba(109,213,250,.5);
+}
+
+@keyframes rotate-one {
+    0% {
+        transform: rotateX(35deg) rotateY(-45deg) rotateZ(0deg);
+    }
+    100% {
+        transform: rotateX(35deg) rotateY(-45deg) rotateZ(360deg);
+    }
+}
+
+@keyframes rotate-two {
+    0% {
+        transform: rotateX(50deg) rotateY(10deg) rotateZ(0deg);
+    }
+    100% {
+        transform: rotateX(50deg) rotateY(10deg) rotateZ(360deg);
+    }
+}
+
+@keyframes rotate-three {
+    0% {
+        transform: rotateX(35deg) rotateY(55deg) rotateZ(0deg);
+    }
+    100% {
+        transform: rotateX(35deg) rotateY(55deg) rotateZ(360deg);
+    }
+}
+.photo {
+    top: 0;
+    right: 0;
+    position: absolute;
+    height: var(--navbar-height);
+    text-align: center;
+    width: 100%;
+}
+.photo-center {
+    margin: 0 auto;
+    position: fixed;
+    top: 0;
+    z-index: 20;
+    width: 100%;
+    height: 3.6rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.photo-center div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.photo li {
+    list-style: none;
+    /*float: left;*/
+    margin-left: 2rem;
+    margin-right: 2rem;
+    background-color: rgba(109,213,250,.45);
+    border-radius: 7px;
+
+}
+.photo li a {
+    color: #ffffff;
+    padding-left: 10px;
+    padding-right: 10px;
+    /*color: rgba(109,213,250,1);*/
+}
+.photo li a:hover {
+    color: rgba(109,213,250,1)
+}

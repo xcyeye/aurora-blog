@@ -21,6 +21,9 @@ import store from './public/js/store'
 import Link from './components/Link';
 import Poster from "./components/global/Poster";
 import Photo from "./components/Photo";
+import PhotoAnimate from "./components/PhotoAnimate";
+import PhotoFall from "./components/PhotoFall";
+
 //搜索组件
 import { SearchBox } from '../plugin-search/lib/client/components/SearchBox';
 import '../plugin-search/lib/client/styles/vars.css';
@@ -101,8 +104,21 @@ export default defineClientAppEnhance(({ app, router }) => {
     router.addRoute({
         path: '/photo',
         name: 'c-photo',
-        component: Photo
+        component: Photo,
+        redirect: '/photo/animate',
+        children: [
+            {
+                path: 'fall',
+                component: PhotoFall,
+                name: 'fall'
+            },
+            {
+                path: 'animate',
+                component: PhotoAnimate
+            }
+        ]
     })
+
     // unregister the built-in `<OutboundLink>` to avoid warning
     delete app._context.components.OutboundLink;
     // override the built-in `<OutboundLink>`
