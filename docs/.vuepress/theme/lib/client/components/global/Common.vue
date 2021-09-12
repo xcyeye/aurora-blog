@@ -211,7 +211,7 @@ export default defineComponent({
   },
   methods: {
     cancelPoster() {
-      console.log("---------dl")
+      // console.log("---------dl")
 
     //  showPosterShadow
 
@@ -367,7 +367,7 @@ export default defineComponent({
       responseType: 'json'
     }).then((res) => {
       this.picture = res.data.entity
-      console.log(res)
+      // console.log(res)
       this.$store.commit("setPicture",{
         picture: this.picture
       })

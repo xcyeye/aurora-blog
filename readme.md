@@ -1,115 +1,70 @@
-# ccds主题初步使用
+# vuepress-theme-ccds
 
-## 介绍
-
-[部署](https://theme-ccds.cco.vin/home/deploy.html#github-pages)
-
-[目录结构](https://theme-ccds.cco.vin/home/directory-structure.html#%E7%BB%93%E6%9E%84)
+>  一款功能强大的vuepress主题，能满足你写博客的所有需要
 
 ![npm](https://img.shields.io/npm/v/vuepress-theme-ccds)![GitHub package.json version](https://img.shields.io/github/package-json/v/qsyyke/vuepress-theme-ccds)![npm](https://img.shields.io/npm/dw/vuepress-theme-ccds)![npm bundle size](https://img.shields.io/bundlephobia/min/vuepress-theme-ccds)
 
-该ccds主题是基于vuepress，在默认主题的基础上进行修改，但也剔除了一些默认主题特点，该主题是一个应用于博客，并不建议用于文档编写，所以在首页，就不能使用feture.
 
-ccds主题是一个动漫类型的博客主题，界面简洁，多色彩，多功能。
-
-
-
-### 博客预览
-
-#### **home page**
-
-<a target="-blank" href="https://theme-ccds.cco.vin/">点击预览</a>
-
-![image-20210904175030428](https://ooszy.cco.vin/img/blog-note/image-20210904175030428.png?x-oss-process=style/pictureProcess1)
-
-
-
----
-
-#### **article page**
-
-![image-20210904175151341](https://ooszy.cco.vin/img/blog-note/image-20210904175151341.png?x-oss-process=style/pictureProcess1)
-
----
-
-![image-20210831102455370](http://ooszy.cco.vin/img/blog-note/image-20210831102455370.png?x-oss-process=style/pictureProcess1)
-
-----
-
-
-
-除此以外，主题还提供了毛玻璃效果，全局字体，颜色，背景设置，对于文章图片，加入了懒加载，提升页面打开速度
-
-
-
-##### 字体，字体颜色多样
-
-![image-20210831104744133](http://ooszy.cco.vin/img/blog-note/image-20210831104744133.png?x-oss-process=style/pictureProcess1)
-
-![image-20210831104804688](http://ooszy.cco.vin/img/blog-note/image-20210831104804688.png?x-oss-process=style/pictureProcess1)
-
-![image-20210831104842307](http://ooszy.cco.vin/img/blog-note/image-20210831104842307.png?x-oss-process=style/pictureProcess1)
+![](https://ooszy.cco.vin/img/theme/%E4%B8%BB%E9%A2%98.jpg)
 
 
 
 
+## Feature
 
-#### **about page**
+- **简洁美观** 细节精致，界面漂亮，毛玻璃效果
+- **高度自定义** 提供多个组件和主题配置文件进行自定义
+- **功能繁多** 文章海报分享，打赏，文章分类，友情链接，关于页面，说说，相册，广告，评论，图片懒加载...
+- **阅读体验** 切换背景，修改字体，颜色，毛玻璃效果，圆角，透明度控制
+- **海报分享** 自动为文章生成海报分享功能，支持自定义海报样式
+- **动漫背景** 激活所有页面背景都使用动漫图片，也支持自定义
+- **图片懒加载** 为文章图片加入懒加载效果，支持自定义占位符，大大提升页面加载效果
+- **说说** 每天一个感悟，随时发布，在指定页面进行展示，并且支持生成海报分享，下载
+- **图片** 支持图片动画展示，每日拍一张照，记录生活的美好
+- **搜索** 支持文章搜索功能
+- **SEO** 默认对所有文章设置过SEO，提升搜索引擎优化
+- **广告** 为文章页面加入广告配置，只需传入script便可直接显示，并支持自定义
+- **打赏** 不一样的打赏功能，扫码，在线支付...
+- **随机一言打字机** 首页或者其他位置，通过打字机效果展示随机一言或者自定义语句
+- **评论** 使用Valine无后端评论框架，让你在使用vuepress的同时，也能为博客加入评论功能
+- **自适应** 为手机端和PC端都做了适配
+- **vuepress** 依赖于vuepress，一个静态博客框架，支持几乎所有的vuepress特性
 
-![image-20210831102825225](http://ooszy.cco.vin/img/blog-note/image-20210831102825225.png?x-oss-process=style/pictureProcess1)
-
----
-
-![image-20210831103010376](http://ooszy.cco.vin/img/blog-note/image-20210831103010376.png?x-oss-process=style/pictureProcess1)
-
-----
-
-
-
-#### **friend link page**
-
-![](http://ooszy.cco.vin/img/blog-note/friend%20link.png?x-oss-process=style/pictureProcess1)
-
-----
-
-
-
-#### tag page
-
-![](http://ooszy.cco.vin/img/blog-note/tag-page.png?x-oss-process=style/pictureProcess1)
+**....**
 
 
 
-#### **comment age**
+## Demo
 
-![image-20210904163031318](https://ooszy.cco.vin/img/blog-note/image-20210904163031318.png?x-oss-process=style/pictureProcess1)
+更多的体验效果，可以查看<a href="https://theme-ccds.cco.vin/">演示站点</a>
+
+![](https://ooszy.cco.vin/img/theme/article.jpg)
+![](https://ooszy.cco.vin/img/theme/about.jpg)
+![](https://ooszy.cco.vin/img/theme/comment-theme.jpg)
+![](https://ooszy.cco.vin/img/theme/link.jpg)
+![](https://ooszy.cco.vin/img/theme/mood.jpg)
+![](https://ooszy.cco.vin/img/theme/phoone.jpg)
+![](https://ooszy.cco.vin/img/theme/photo-theme.jpg)
+![](https://ooszy.cco.vin/img/theme/tag.jpg)
 
 
-
-### **theme feature**
-
-主题特点
-
-- 多彩
-- 高度自定义设置，大多数页面都提供了大量选项进行自定义设置
-- 开箱即用
-- 圆角，字体，颜色，背景图片等自定义
-- 毛玻璃效果
-- 图片懒加载
+或者我的<a href="https://blog.cco.vin">博客站点</a>
 
 
 
 ## 安装
 
-运行环境需要依赖`node`，所以在安装之前，请确保操作系统已经安装了node
+详细安装可查看<a href="https://theme-ccds.cco.vin/home/#%E5%AE%89%E8%A3%85-1">文档</a>
 
 
+
+运行环境需要依赖`node`，所以在安装之前，请确保操作系统已经安装了node，我运行时的版本为`v14.17.3`
 
 ### 初始化
 
-1. 创建一个文件夹
+1. 创建一个文件夹`blog-demo`
 
-2. 进入此文件夹内，使用`npm init`初始化
+2. 进入此`blog-demo`文件夹内，使用`npm init`初始化
 
     ```sh
     npm init
@@ -126,81 +81,38 @@ ccds主题是一个动漫类型的博客主题，界面简洁，多色彩，多�
       }
     ```
 
+### 依赖安装
 
 
-### 安装
 
-安装vuepress(`一定要保证vurepss版本为2以上`)
-
-```sh
+```shell
 npm i vuepress@2.0.0-beta.22
-```
-
-```sh
 npm i vuepress-theme-ccds
-```
-
-因为在主题部分组件中，使用到了`jquery`,`vuex`,`axios`,`easy-typer-js`，所以还需要安装这三个依赖
-
-```sh
 npm i jquery
 npm i vuex@4.0.0
 npm i axios@0.21.1
 npm i easy-typer-js@2.1.0
+npm install valine --save
+npm i html2canvas@1.3.2
+npm i qrcode@1.4.4
+npm i vue-fucking-gallery
+npm i @vuepress/plugin-search@2.0.0-beta.25
 ```
 
 
 
-所有package.json文件的内容为
+### 使用
 
-```json
-{
-  "name": "blog",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "vuepress dev docs",
-    "build": "vuepress build docs",
-    "deploy": "bash deploy.sh"
-  },
-  "author": "",
-  "license": "ISC",
-  "devDependencies": {
-    "@types/jquery": "^3.5.6",
-    "jquery": "^3.2.1",
-    "prettier": "^2.3.2",
-    "vuepress": "^2.0.0-beta.22"
-  },
-  "dependencies": {
-    "@vuepress/plugin-search": "^2.0.0-beta.24",
-    "axios": "^0.21.1",
-    "easy-typer-js": "^2.1.0",
-    "stylus-loader": "^6.1.0",
-    "vue-lazyload": "^1.3.3",
-    "vuex": "^4.0.0-0"
-  }
-}
-```
-
-
-
-## 使用主题
 
 安装完上述依赖之后，就可以直接使用ccds主题
 
-### 1.新建readme.md文件
+#### 1.新建readme.md文件
 
-在`docs/`下，新建`readme.md`主题配置文件，此文件用于配置主题的所有信息，包括首页logo，head标签中的`description`和`keyword`(虽然vuepress在config.js中，可以对description和keyword进行配置，但是不推荐在这里进行配置，因为ccds主题，对所有页面的description和keyword进行过配置，如果在config.js中，再次配置的话，可能会出现意想不到的结果)
+在`docs/`下，新建`readme.md`主题配置文件，将<a href="https://github.com/qsyyke/vuepress-theme-ccds/blob/v1.2.0/docs/README.md">readme.md</a>中所有内容复制到`docs/readme.md`文件中，请全部复制
 
-**在readme.md**中，对主题配置进行修改之后，需要重新启动，需要重新启动，需要重新启动才能生效，因为在部分页面中，获取readme.md中的配置，是通过启动生成的文件获取的，所以主题配置修改之后，需要重新启动
+#### 2.配置config.js
 
-因为此主题还没有将所有的配置信息设置默认值，所以不能开箱即用，需要你将所有配置复制到`docs/readme.md`中，否则会报错，此文件可以在仓库中，进行复制<a href="https://github.com/qsyyke/vuepress-theme-ccds/blob/main/docs/README.md">readme.md</a>
-
-粘贴的时候，请确保格式没有变，否则会启动报错，配置使用的语法为`yaml`
-
-### 2.设置主题
+进入`docs/.vuepress/config.js`中，加入下面代码
 
 ```js
 module.exports = {
@@ -224,8 +136,8 @@ module.exports = {
                 ]
             },
             {
-                text: "关于",
-                link: "/about"
+            text: "关于",
+            link: "/about"
             },
             {
                 text: '友情链接',
@@ -238,32 +150,27 @@ module.exports = {
             {
                 text: '心情',
                 link: '/mood'
+            },
+            {
+                text: "相册",
+                link: '/photo'
             }
         ]
     }
 }
 ```
 
-> 一定要在`config.js`文件中，加上下面代码，否则会报错
->
-> ```js
-> onPrepared: async (app) => {
->     const myData = app.pages.map((page) => {
->         return page
->     })
->     await app.writeTemp('my-data.js', `export default ${JSON.stringify(myData)}`)
-> },
-> ```
+
+
+#### 3使用
+
+在cmd中，进入创建的`blog-demo`文件夹内，运行`npm run dev`便可使用该主题
+
+如果在使用或者安装过程中，遇到任何问题，可以在<a href="https://theme-ccds.cco.vin/about">此站点</a>下留言
 
 
 
-现在运行`npm run dev`，那么你在浏览器中，看到的页面是下面这样
+## 文档
 
-![image-20210829151710110](http://ooszy.cco.vin/img/blog-noteimage-20210829151710110.png?x-oss-process=style/pictureProcess1)
-
-如果页面和上图差不多，表示已经切换到ccsd主题，如果出现白页，请`f12`查看错误，很大可能是因为某些依赖没有安装
-
-
-
-
+theme-ccds主题已提供完整文档供使用，点击进入<a href="https://theme-ccds.cco.vin/home/#%E4%BB%8B%E7%BB%8D">文档页面</a>
 

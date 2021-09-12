@@ -8,7 +8,7 @@
       <slot name="top" />
       <!--:adsense-script="adsenseArr[0].script"-->
       <div class="page-top-share">
-        <poster :key="+new Date()" :title="originPageData.title" :content="posterContent"/>
+        <poster :title="originPageData.title" :content="posterContent"/>
       </div>
       <div class="theme-default-content pageContent">
         <AdSense adsense-position="right"

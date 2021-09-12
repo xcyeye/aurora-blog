@@ -62,7 +62,6 @@ export default {
   methods: {
     test() {
       $.get("https://pciture.cco.vin/pic/rp?appId=lnZxmObbJSp3o8Zea2KXxPwat&appKey=6TleVWdLeVwpOKv9eXtTQUam7",function () {
-
       })
     },
     cancelShade() {
@@ -72,6 +71,9 @@ export default {
       $(".poster-img").slideUp(500)
     },
     async createPoster() {
+      // console.log("-----------poster------------")
+      // console.log(this.clickStatus)
+      // console.log(this.clickSecond)
 
       if (this.clickStatus === false) {
         return
@@ -155,6 +157,7 @@ export default {
             allowTaint: true,
             useCORS: true,
           }).then(canvas => {
+            // console.log("---------poster-----最终生成--------------")
             $(".poster-append").css("z-index",21)
             this.imgHeight = canvas.height
             this.href = this.convertCanvasToImage(canvas).src
@@ -170,6 +173,10 @@ export default {
             this.$store.commit("setShowPostImg",{
               showPostImg: true
             })
+
+            // console.log("----------------------------")
+            // console.log(this.clickSecond)
+            // console.log(this.clickStatus)
 
             let shareBottomHeight = document.querySelector(".share-bottom").offsetHeight
             let posterCancelHeight = document.querySelector(".poster-cancel").offsetHeight
@@ -193,7 +200,7 @@ export default {
       })
     },
     setHeight(height) {
-      console.log("最终使用高度: " + height)
+      // console.log("最终使用高度: " + height)
       height = height + "px"
       if (document.body.clientWidth < 600) {
         //是手机
@@ -221,11 +228,12 @@ export default {
     }
   },
   mounted() {
+    // console.log("-----------mounted----------------")
 
     setTimeout(() => {
       this.picture = this.$store.state.picture
       this.setTopBackStyle = "--poster-back-img: url(" + this.picture.src + ")"
-      console.log(this.setTopBackStyle)
+      // console.log(this.setTopBackStyle)
     })
 
     let clickSecond = setInterval(() => {
@@ -238,7 +246,6 @@ export default {
       }
     },1000)
   },
-
 }
 </script>
 

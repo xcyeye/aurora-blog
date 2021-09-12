@@ -25,9 +25,9 @@ import PhotoAnimate from "./components/PhotoAnimate";
 import PhotoFall from "./components/PhotoFall";
 
 //搜索组件
-import { SearchBox } from '../plugin-search/lib/client/components/SearchBox';
+/*import { SearchBox } from '../plugin-search/lib/client/components/SearchBox';
 import '../plugin-search/lib/client/styles/vars.css';
-import '../plugin-search/lib/client/styles/search.css';
+import '../plugin-search/lib/client/styles/search.css';*/
 
 const searchOptions = {
     locales: {
@@ -65,7 +65,7 @@ export default defineClientAppEnhance(({ app, router }) => {
 
     //app.component('SearchBox',SearchBox);
 
-    app.component('SearchBox', (props) => h(SearchBox, searchOptions));
+    // app.component('SearchBox', (props) => h(SearchBox, searchOptions));
 
     //app.component('Docsearch', () => h(Docsearch, { options }));
     //路由

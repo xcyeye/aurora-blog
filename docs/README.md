@@ -398,70 +398,31 @@ donate: {
     {
       name: 奶茶,
       img: https://ooszy.cco.vin/img/blog-public/nc.jpeg,
-      price: 10,
-      prefix: $
-    },
-    {
-      name: 奶茶,
-      img: https://ooszy.cco.vin/img/blog-public/nc.jpeg,
-      price: 10,
-      prefix: $
-    },
-    {
-      name: 奶茶,
-      img: https://ooszy.cco.vin/img/blog-public/nc.jpeg,
-      price: 10,
-      prefix: $
-    },
-    {
-      name: 奶茶,
-      img: https://ooszy.cco.vin/img/blog-public/nc.jpeg,
       price: 18,
       prefix: $
     },
     {
-      name: 康奶昔,
-      img: https://ooszy.cco.vin/img/blog-public/nc.jpeg,
+      name: 全味奶茶,
+      img: https://ooszy.cco.vin/img/blog-note/image-20210911233612031.png?,
       price: 11,
       prefix: ￥
     },
   ],
-  onlineList: true,
+  onlineList: false,
   donateList: [
     {
-      name: sdf,
-      msg: 奶阿萨德茶,
-      img: https://ooszy.cco.vin/img/blog-public/nc.jpeg,
-      price: 10,
-      prefix: $
-    },
-    {
-      name: sdfsdfs,
-      msg: 奶基金会茶,
-      img: https://ooszy.cco.vin/img/blog-public/nc.jpeg,
-      price: 10,
-      prefix: $
-    },
-    {
-      name: 三等分,
-      msg: 奶请问茶,
-      img: https://ooszy.cco.vin/img/blog-public/nc.jpeg,
-      price: 10,
-      prefix: $
-    },
-    {
-      name: sdf撒旦法,
-      msg: 奶三等分茶,
-      img: https://ooszy.cco.vin/img/blog-public/nc.jpeg,
-      price: 18,
-      prefix: $
-    },
-    {
-      name: AE,
-      msg: 康斯蒂芬斯蒂芬奶昔,
+      name: qsyyke,
+      msg: 文章写的非常好,
       img: https://ooszy.cco.vin/img/blog-public/nc.jpeg,
       price: 11,
       prefix: ￥
+    },
+    {
+    name: 初尘,
+    msg: 主题太棒了,
+    img: https://ooszy.cco.vin/img/blog-public/nc.jpeg,
+    price: 7,
+    prefix: ￥
     },
   ],
 }

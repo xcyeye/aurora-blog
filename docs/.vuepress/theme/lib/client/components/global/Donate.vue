@@ -25,7 +25,8 @@
           </div>
         </div>
       </div>
-      <form action="https://pay.cco.vin/pay/" method="post">
+      <!--下面是在线支付的设置-->
+      <form v-if="setOnline" action="https://pay.cco.vin/pay/" method="post">
         <div class="donate-pay" id="donate-pay">
           <div class="pro-common pro-message">
             <div class="donate-bottom-input pro-common">
@@ -61,7 +62,9 @@
             <span>{{item.prefix}}&nbsp;{{item.price}}</span>
           </div>
         </div>
-        <div :key="index" v-for="(item,index) in donateList"
+
+        <!--下面时从网络中请求回来的数据-->
+        <div v-if="setOnline" :key="index" v-for="(item,index) in donateList"
              class="donate-bottom-common donate-pro-single">
           <div class="pro-img pro-common" id="pro-img-list">
             <span>{{item.username}}</span>
@@ -91,7 +94,8 @@ export default {
       themeProperty: null,
       donateListActive: true,
       window: "",
-      donateList: null
+      donateList: null,
+      donate: null
     }
   },
   created() {
@@ -99,6 +103,8 @@ export default {
       for (let i = 0; i < myData.length; i++) {
         if (myData[i].path === '/') {
           this.themeProperty = myData[i].frontmatter
+          this.donate = myData[i].frontmatter.donate
+          // console.log(this.donate)
         }
       }
       resolve()
@@ -120,6 +126,16 @@ export default {
     this.window = window
   },
   computed: {
+    setOnline() {
+      let isOnline = this.donate.onlineList
+      // console.log("isOnline:" + isOnline)
+
+      if (isOnline === null || isOnline === undefined) {
+        return true
+      }else {
+        return  isOnline
+      }
+    },
     setSpanStyle() {
       return "background-color: rgba(" + this.hexToRgbColor.r + "," +
           this.hexToRgbColor.g + "," + this.hexToRgbColor.b + "," +

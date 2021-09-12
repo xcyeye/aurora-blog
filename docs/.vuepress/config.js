@@ -2,6 +2,21 @@ const {path} = require("@vuepress/utils");
 const {sidebar} = require("./theme/lib/client/public/js/hrefs");
 const {navbar} = require("./theme/lib/client/public/js/navbar");
 module.exports = {
+    plugins: [
+        [
+            '@vuepress/plugin-search',
+            {
+                locales: {
+                    '/': {
+                        placeholder: 'Search',
+                    },
+                    '/zh/': {
+                        placeholder: '搜索',
+                    },
+                },
+            },
+        ],
+    ],
     onPrepared: async (app) => {
         const myData = app.pages.map((page) => {
             return page
