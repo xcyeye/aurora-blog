@@ -1,13 +1,7 @@
 <template>
   <div id="photoApp" :class="loadingClass">
-    <div class="loadingAnimate">
-      <div class="loader">
-        <div class="inner one"></div>
-        <div class="inner two"></div>
-        <div class="inner three"></div>
-      </div>
-    </div>
-    <photo-animate-item :element-id="id" :show-canvas="showCanvas"
+    <photo/>
+    <photo-animate-item style="height: calc(100vh)" :element-id="id" :show-canvas="showCanvas"
                          :animation-solution="animationSolution"
                          :grid-max-width="gridMaxWidth" :grid-max-height="gridMaxHeight"
                          :grid-divider-width="gridDividerWidth" :grid-divider-color="gridDividerColor"
@@ -64,25 +58,14 @@ export default {
       currentImageObject: null,
       initLoadFinishCallback: () => {
         $(".loadingAnimate").fadeOut(400)
-        //console.log("------------加载完成----------")
+
         this.loadingClass = 'loaded'
         if (this.isIE()) {
-          /*this.$refs.loaderWrapper.querySelector('.load-title').removeNode(true)
-          setTimeout(() => {
-            this.$refs.loaderWrapper.removeNode(true)
-          }, 3000)*/
           return
         }
-        /*this.$refs.loaderWrapper.querySelector('.load-title').remove()
-        setTimeout(() => {
-          this.$refs.loaderWrapper.remove()
-        }, 3000)*/
       },
       photoLoadSuccessCallback: (e) => {
-        //console.log("----------------")
-        //console.log(e)
         this.currentImageObject = e
-        //console.log("-------成功加载-----------")
       },
       animateBeginCallback: () => {
       },

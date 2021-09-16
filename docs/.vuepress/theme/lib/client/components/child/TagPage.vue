@@ -1,24 +1,19 @@
 <template>
   <div :style="setBackgroundStyle(888)" id="tag-page" class="tag-page">
-    <div class="tag-page-top">
-      <div class="tag-page-title tag-common">
-        <!--<a :data="getHref" style="color: #2c3e50;text-decoration: none;"
-           :href="getHref"><span>{{getTitle(pageMap.title)}}</span>
-        </a>-->
-        <a href="javasrcipt: ;" style="color: #2c3e50;text-decoration: none;"
-           @click="goPage"><span>{{getTitle(pageMap.title)}}</span>
-        </a>
-      </div>
-    </div>
-    <div class="tag-page-bottom">
-      <div class="tag-page-tag tag-common">
-        <span :data="allCategories.length" :style="setBackgroundStyle(index)" v-for="(item,index) in allCategories">{{item}}</span>
-      </div>
-    </div>
-
-    <div class="tag-page-bottom tag-page-content">
-      <div class="tag-content">
-        <span id="tag-content-span">{{getContent}}</span>
+    <div class="tag-page-item">
+      <div id="tag-page-left" :style="setBackgroundImg" class="tag-page-left tag-page-item-common"></div>
+      <div class="tag-page-right tag-page-item-common" id="tag-page-right">
+        <div id="tag-page-right-top" class="tag-page-right-top">
+          <a href="javasrcipt: ;" style="color: #2c3e50;text-decoration: none;"
+             @click="goPage"><span>{{getTitle(pageMap.title)}}</span>
+          </a>
+        </div>
+        <div id="tag-page-right-center" class="tag-page-right-center">
+          <span class="tag-page-content">{{getContent}}</span>
+        </div>
+        <div id="tag-page-right-bottom" class="tag-page-right-bottom">
+          <span class="tag-label"></span><span :data="allCategories.length" :style="setBackgroundStyle(888)" v-for="(item,index) in allCategories">{{item}}</span>
+        </div>
       </div>
     </div>
   </div>
@@ -38,11 +33,20 @@ export default {
     //console.log(this.pageMap.content)
   },
   computed: {
+    setBackgroundImg() {
+      let random = (+new Date()) / this.getRandomInt(0,10000)
+      console.log(random)
+      return "background-image: url(https://api.iro.tw/webp_pc.php?time=" + random + ");"
+    },
     setBackgroundStyle() {
       return (index) => {
-        let background_color = this.themeProperty.randomColor[
+        let color = this.themeProperty.randomColor[
             this.getRandomInt(0,this.themeProperty.randomColor.length -1)]
-        return "background-color: "+ background_color + ";"
+        let hexToRgb = this.hexToRgb(color);
+        let style = "background-color: rgba(" + hexToRgb.r + "," +
+            hexToRgb.g + "," + hexToRgb.b + "," +
+        (this.$store.state.varOpacity * 1.2) + ");"
+        return style
       }
     },
     getTag() {
@@ -87,6 +91,14 @@ export default {
     goPage() {
       //console.log("-----------------------")
       this.$router.push(this.pageMap.articleUrl)
+    },
+    hexToRgb(hex) {
+      var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+      return result ? {
+        r: parseInt(result[1], 16),
+        g: parseInt(result[2], 16),
+        b: parseInt(result[3], 16)
+      } : null;
     }
   }
 }

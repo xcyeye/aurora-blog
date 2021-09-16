@@ -24,23 +24,8 @@ import Photo from "./components/Photo";
 import PhotoAnimate from "./components/PhotoAnimate";
 import PhotoFall from "./components/PhotoFall";
 
-//搜索组件
-/*import { SearchBox } from '../plugin-search/lib/client/components/SearchBox';
-import '../plugin-search/lib/client/styles/vars.css';
-import '../plugin-search/lib/client/styles/search.css';*/
-
-const searchOptions = {
-    locales: {
-        '/': {
-            placeholder: 'Search',
-        },
-        '/zh/': {
-            placeholder: '搜索',
-        },
-    },
-}
-
 import './styles/index.scss';
+import './styles/photo.scss'
 export default defineClientAppEnhance(({ app, router }) => {
     app.component('Badge', Badge);
     app.component('CodeGroup', CodeGroup);
@@ -54,20 +39,8 @@ export default defineClientAppEnhance(({ app, router }) => {
     app.component('Donate', Donate);
     app.component('Comment', Comment);
     app.component('Poster', Poster);
-    //app.component('TestAppend', TestAppend);
+    app.component("Photo",Photo)
 
-    //app.component('SearchBox', (props) => h(SearchBox, {
-    //    locales,
-    //    hotKeys,
-    //    maxSuggestions,
-    //    ...props,
-    //}));
-
-    //app.component('SearchBox',SearchBox);
-
-    // app.component('SearchBox', (props) => h(SearchBox, searchOptions));
-
-    //app.component('Docsearch', () => h(Docsearch, { options }));
     //路由
     // @ts-ignore
     app.use(store)
@@ -102,24 +75,17 @@ export default defineClientAppEnhance(({ app, router }) => {
     })
 
     router.addRoute({
-        path: '/photo',
-        name: 'c-photo',
-        component: Photo,
-        redirect: '/photo/animate',
-        children: [
-            {
-                path: 'fall',
-                component: PhotoFall,
-                name: 'fall'
-            },
-            {
-                path: 'animate',
-                component: PhotoAnimate
-            }
-        ]
+        path: '/fall',
+        component: PhotoFall,
+        name: 'fall'
     })
 
-    // unregister the built-in `<OutboundLink>` to avoid warning
+    router.addRoute({
+        path: '/animate',
+        component: PhotoAnimate,
+        name: 'animate'
+    })
+
     delete app._context.components.OutboundLink;
     // override the built-in `<OutboundLink>`
     app.component('OutboundLink', OutboundLink);

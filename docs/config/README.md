@@ -1,3 +1,9 @@
+---
+categories: [首页配置,一言,头像,社交,页脚]
+---
+
+
+
 # 首页配置
 
 当正确设置主题，并且将<a href="https://github.com/qsyyke/vuepress-theme-ccds/blob/main/docs/README.md">readme.md</a>赋值到`docs/readme.md`文件后，首页图展示如下
@@ -129,12 +135,13 @@ heroLogo: https://ooszy.cco.vin/img/blog-public/avatar.jpg
 
 
 
-## 心情
+## 自定义一言
 
 ![image-20210831143051671](http://ooszy.cco.vin/img/blog-note/image-20210831143051671.png?x-oss-process=style/pictureProcess1)
 
 ```yml
 mood: 青衫烟雨客 #无默认值
+showHomeMood: false #是否显示，默认不显示
 ```
 
 

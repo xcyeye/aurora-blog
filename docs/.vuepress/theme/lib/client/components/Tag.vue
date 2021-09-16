@@ -35,6 +35,7 @@
               <TagPage v-for="(item,index) in allPageMap"
                        :page-map="item"
                        :key="index"
+                       :style="$store.state.opacityStyle"
                        :theme-property="themeProperty"
               />
             </div>
@@ -83,6 +84,8 @@ export default {
       this.tagArr = this.$store.state.tagArr
       //this.allPageMap = this.$store.state.allPageMap
     },100)
+
+
   },
   beforeMount() {
     let content = $("#content")
@@ -134,6 +137,7 @@ export default {
             let pageTag = tagArr[j]
             if (this.tag === pageTag) {
               temPage.push(allPages[i])
+              console.log(temPage)
             }
             continue
           }
@@ -141,6 +145,7 @@ export default {
         resolve(temPage)
       }).then((temPage) => {
         this.allPageMap = temPage
+        console.log(this.allPageMap)
       })
     }
   }

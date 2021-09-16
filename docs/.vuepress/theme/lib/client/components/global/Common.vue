@@ -455,6 +455,27 @@ export default defineComponent({
   },
   mounted() {
     this.initTyped(this.aboutOption[0].describe[0])
+
+    //百度统计
+    let statistics = this.themeProperty.statistics
+    if (statistics !== null || statistics) {
+      let statisticsSrc = statistics.src
+      let statisticsStatus = statistics.status
+
+      if (statisticsStatus === true) {
+        console.log("statisticsSrc: " + statisticsSrc)
+        //用户开启统计
+        if (statisticsSrc === undefined || statisticsSrc == null) {
+          console.log("%c 你已开启网站统计服务，但是未传入值，请在statistics -> src内传入代码","color: red")
+        }else {
+          //有统计代码
+          var hm = document.createElement("script");
+          hm.src = statisticsSrc;
+          var s = document.getElementsByTagName("script")[0];
+          s.parentNode.insertBefore(hm, s);
+        }
+      }
+    }
   },
 })
 </script>

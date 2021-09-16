@@ -1,12 +1,6 @@
  <template>
+   <photo/>
    <div class="photo-bg"></div>
-   <div class="loadingAnimate">
-     <div class="loader">
-       <div class="inner one"></div>
-       <div class="inner two"></div>
-       <div class="inner three"></div>
-     </div>
-   </div>
    <div class="photo-html" style="display: none"></div>
    <div class="photo-waterfull">
      <div class="waterfull">
@@ -22,12 +16,16 @@
  </template>
 
  <script>
+ import Photo from "./Photo";
  import myData from '@temp/my-data'
  import $ from 'jquery'
  import mediumZoom from "medium-zoom";
 
  export default {
    name: "v-waterfall",
+   components: {
+     Photo
+   },
    data() {
      return {
        waterfallList: [],
@@ -192,6 +190,3 @@
    }
  }
  </script>
-
- <style scoped>
- </style>

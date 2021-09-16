@@ -1,11 +1,8 @@
 ---
-categories: 
-    - dubbo
-    - linux
-    - java
-    - vue
-    - sdf
+categories: [页脚配置,footer,广告]
 ---
+
+
 
 # 其他配置
 

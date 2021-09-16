@@ -1,3 +1,9 @@
+---
+categories: [特征配置,打赏,顶部图片,文章推荐,seo,社交,poster,海报]
+---
+
+
+
 # 主题特征配置
 
 [赞助配置](/config/feature/donate.md)

@@ -26,7 +26,7 @@ module.exports = {
     //theme: 'ccds',
     theme: path.resolve(__dirname, "theme/lib/node/index.js"),
     //theme: 'vuepress-theme-ccds',
-    title: "qsyyke",
+    title: "I do not follow,i lives is always all you want",
 
     port: 8080,
 

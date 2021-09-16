@@ -26,7 +26,7 @@
               <span>@{{getAuthor}}</span>
             </div>
             <div class="poster-desc-bottom">
-              <span>Time {{getLastUpdate}}</span>
+              <span>{{getLastUpdate}}</span>
             </div>
           </div>
         </div>

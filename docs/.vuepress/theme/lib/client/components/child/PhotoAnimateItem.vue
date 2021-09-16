@@ -1,10 +1,12 @@
 <template>
-  <div ref="fuckingDiv" :id="elementId" class="vue-fucking-gallery-container">
-    <div :data="getCur" class='vue-fucking-gallery-div' v-show="currentImageObject!==null && showCanvas">
-      <div v-show="animationSolution==='byCanvas'">
-        <canvas ref="fuckingByCanvas"></canvas>
+  <div>
+    <div style="height: calc(100vh)" ref="fuckingDiv" :id="elementId" class="vue-fucking-gallery-container">
+      <div :data="getCur" class='vue-fucking-gallery-div' v-show="currentImageObject!==null && showCanvas">
+        <div v-show="animationSolution==='byCanvas'">
+          <canvas ref="fuckingByCanvas"></canvas>
+        </div>
+        <ul ref="fuckingByCss3" v-show="animationSolution==='byCss3'"></ul>
       </div>
-      <ul ref="fuckingByCss3" v-show="animationSolution==='byCss3'"></ul>
     </div>
   </div>
 </template>
