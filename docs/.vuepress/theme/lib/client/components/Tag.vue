@@ -124,8 +124,6 @@ export default {
       //当前鼠标点击的标签
       let splitTag = e.target.innerText
       this.tag = splitTag.split(this.themeProperty.split)[0]
-      console.log("--------this.tag----------")
-      console.log(this.tag)
 
       let allPages = this.$store.state.allPageMap
       new Promise((resolve,reject) => {
@@ -137,7 +135,6 @@ export default {
             let pageTag = tagArr[j]
             if (this.tag === pageTag) {
               temPage.push(allPages[i])
-              console.log(temPage)
             }
             continue
           }
@@ -145,7 +142,6 @@ export default {
         resolve(temPage)
       }).then((temPage) => {
         this.allPageMap = temPage
-        console.log(this.allPageMap)
       })
     }
   }

@@ -458,12 +458,11 @@ export default defineComponent({
 
     //百度统计
     let statistics = this.themeProperty.statistics
-    if (statistics !== null || statistics) {
+    if (statistics !== null || statistics !== undefined) {
       let statisticsSrc = statistics.src
       let statisticsStatus = statistics.status
 
       if (statisticsStatus === true) {
-        console.log("statisticsSrc: " + statisticsSrc)
         //用户开启统计
         if (statisticsSrc === undefined || statisticsSrc == null) {
           console.log("%c 你已开启网站统计服务，但是未传入值，请在statistics -> src内传入代码","color: red")

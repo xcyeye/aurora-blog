@@ -28,14 +28,10 @@ export default {
     themeProperty: null
   },
   created() {
-    //console.log(this.pageMap)
-    //console.log(this.pageMap.contentRendered)
-    //console.log(this.pageMap.content)
   },
   computed: {
     setBackgroundImg() {
       let random = (+new Date()) / this.getRandomInt(0,10000)
-      console.log(random)
       return "background-image: url(https://api.iro.tw/webp_pc.php?time=" + random + ");"
     },
     setBackgroundStyle() {
@@ -89,7 +85,6 @@ export default {
       return Math.floor(Math.random() * (max - min)) + min; //不含最大值，含最小值
     },
     goPage() {
-      //console.log("-----------------------")
       this.$router.push(this.pageMap.articleUrl)
     },
     hexToRgb(hex) {
