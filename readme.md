@@ -1,3 +1,13 @@
+---
+categories: [安装,使用教程,依赖项,ccds,theme]
+---
+
+
+
+
+
+
+
 # vuepress-theme-ccds
 
 >  一款功能强大的vuepress主题，能满足你写博客的所有需要
@@ -83,28 +93,16 @@
 
 ### 依赖安装
 
-
+运行下面命令安装`vuepress`和`ccds`主题
 
 ```shell
-npm i vuepress@2.0.0-beta.22
+npm i vuepress@2.0.0-beta.25
 npm i vuepress-theme-ccds
-npm i jquery
-npm i vuex@4.0.0
-npm i axios@0.21.1
-npm i easy-typer-js@2.1.0
-npm install valine --save
-npm i html2canvas@1.3.2
-npm i qrcode@1.4.4
-npm i vue-fucking-gallery
-npm i @vuepress/plugin-search@2.0.0-beta.25
 ```
 
 
 
 ### 使用
-
-
-安装完上述依赖之后，就可以直接使用ccds主题
 
 #### 1.新建readme.md文件
 
