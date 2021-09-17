@@ -111,6 +111,18 @@ export default defineComponent({
       min = Math.ceil(min);
       max = Math.floor(max);
       return Math.floor(Math.random() * (max - min)) + min; //不含最大值，含最小值
+    },
+    shuffle(arr){
+      var l = arr.length
+      var index, temp
+      while(l>0){
+        index = Math.floor(Math.random()*l)
+        temp = arr[l-1]
+        arr[l-1] = arr[index]
+        arr[index] = temp
+        l--
+      }
+      return arr
     }
   },
 
@@ -123,7 +135,9 @@ export default defineComponent({
       }
       resolve()
     })
-    this.friendLinks = this.themeProperty.friendLinks
+    // this.friendLinks = this.themeProperty.friendLinks
+    this.friendLinks = this.shuffle(this.themeProperty.friendLinks)
+
     this.siteInformation = this.themeProperty.siteInformation
     this.ico = this.themeProperty.ico.linkIco
     this.showMessage = this.themeProperty.isShowMessage

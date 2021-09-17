@@ -261,6 +261,16 @@ about: [
     ],
     showTag: true
   },
+  {
+    title: '主题后续计划及闲话',
+    bar: false,
+    tag: [],
+    showTag: false,
+    describe: [
+      '为说说页面增加随时发布，随时修改功能',
+      '增加每日计划打卡功能'
+    ]
+  }
 ]
 
 #拿取对象
@@ -292,15 +302,57 @@ fontColor: [
 '#FF7F00','#2F4F4F']
 friendLinks: [
   {
+    title: XI溪,
+    url: http://www.xiaoxuya.top,
+    logo: https://www.xiaoxuya.top/img/logo.png,
+    describe: 人生若只是初见,何事秋风悲画扇
+  },
+  {
+    title: 左眼会陪右眼哭の博客,
+    url: http://qkongtao.cn/,
+    logo: http://qiniu.qkongtao.cn/2020/12/d11-e1628358435552.png,
+    describe: 干嘛这么想不开，要在脸上贴个输字！
+  },
+  {
+      title: '[ Blog We]',
+      url: https://blogwe.com/,
+      logo: https://blogwe.com/favicon.ico,
+      describe: 博客大全-做最好的博客导航！
+  },
+  {
+      title: I Am I,
+      url: https://5ime.cn,
+      logo: https://cdn.jsdelivr.net/gh/5ime/img/avatar.jpg,
+      describe: 永远相信美好的事情即将发生
+  },
+  {
+    title: Davinci的红茶馆,
+    url: https://davincievans.top/,
+    logo: https://cdn.jsdelivr.net/gh/DavinciEvans/Imgs-bed@master/gallery/avatar.jpg,
+    describe: You are all stardust.
+  },
+  {
+    title: 皮皮凛の小窝,
+    url: https://owomoe.net/,
+    logo: https://cdn.jsdelivr.net/gh/AyagawaSeirin/Assets/img/logo.jpg,
+    describe: 永远相信美好的事情即将发生~
+  },
+  {
+    title: 月月月子喵,
+    url: https://haozi.moe,
+    logo: https://haozi.moe/css/images/logo_christmas.png,
+    describe: 可爱的月子酱
+  },
+  {
   title: 疫情在线捐款系统,
   url: http://yq.vipblogs.cn/,
-  logo: http://yq.vipblogs.cn/favicon.ico,
+  logo: https://ooszy.cco.vin/img/blog-public/avatar.jpg,
   describe: 基于echarts的疫情捐款系统
   },
   {
   title: 疫情在线捐款系统后台登录,
   url: http://admin.vipblogs.cn/,
-  logo: /img/head.jpg,
+  logo: https://ooszy.cco.vin/img/blog-public/avatar.jpg,
   describe: 该捐款系统后台登录
   },
   {
@@ -308,12 +360,6 @@ friendLinks: [
   url: https://cco.vin/,
   logo: https://vipblogs.cn/wp-content/uploads/2021/03/bitbug_favicon.ico,
   describe: 以前博客
-  },
-  {
-    title: XI溪,
-    url: http://www.xiaoxuya.top,
-    logo: https://www.xiaoxuya.top/img/logo.png,
-    describe: 人生若只是初见,何事秋风悲画扇
   }
 ]
 #自己的站点信息 我自己的站点描述
@@ -350,6 +396,7 @@ footer:
   - Copyright © by qsyyke All Rights Reserved.
   - Theme <a href="https://www.cco.vin">ccds</a> by qsyyke
   - "<a target='_blank' href='http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=53060202000142' style='display:inline-block;text-decoration:none;height:20px;line-height:20px;'><img src='' style='float:left;'/><p style='float:left;height:20px;line-height:20px;margin: 0px 0px 0px 5px;'>滇公网安备 53060202000142号</p></a>"
+  - "<a href='https://www.upyun.com/?utm_source=lianmeng&utm_medium=referral'>本网站由<img style='height: 24.1px;width: 55.3px;' src='https://ooszy.cco.vin/img/blog-note/%E5%8F%88%E6%8B%8D%E4%BA%91_logo5.png?x-oss-process=style/pictureProcess1'>提供CDN加速服务</a>"
 isShowFooter: true
 #是否展示运行时间
 isShowRunTime: true

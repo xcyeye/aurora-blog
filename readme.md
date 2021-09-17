@@ -151,7 +151,7 @@ module.exports = {
             },
             {
                 text: "相册",
-                link: '/photo'
+                link: '/fall'
             }
         ]
     }
