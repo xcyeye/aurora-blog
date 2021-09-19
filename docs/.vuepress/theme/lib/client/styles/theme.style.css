@@ -1523,6 +1523,9 @@
     line-height: 1.8rem;
 }
 
+.home-footer a {
+    color: var(--fontColor);
+}
 body::-webkit-scrollbar {
     width: .35rem;
     height: 0;
@@ -2076,7 +2079,8 @@ body::-webkit-scrollbar-thumb {
 
 .mood-img-right {
     flex: 5;
-    height: 8rem;
+    max-height: 8rem;
+    height: max-content;
     /*border: 1px solid red;*/
     overflow: scroll;
 }
@@ -3108,4 +3112,127 @@ body::-webkit-scrollbar-thumb {
         margin-left: 1rem;
         margin-right: 1rem;
     }
+}
+.add-mood {
+    padding-bottom: 1rem;
+    padding-top: 1rem;
+    border-radius: calc(var(--borderRadius) /1.7);
+    margin: 0 auto;
+    margin-top: 1rem;
+    width: 34%;
+    height: max-content;
+    box-shadow: rgb(0 0 0 / 25%) 0px 25px 50px -12px;
+    background-color: rgba(255,255,255,.7);
+}
+.edit-content textarea {
+    width: 90%;
+    min-width: 90%;
+    padding-left: 15px;
+    padding-right: 15px;
+    height: max-content;
+    min-height: 10rem;
+    border-radius: 30px;
+
+    border: none;
+    outline: none;
+    text-align: left;
+    box-shadow: rgb(100 100 111 / 20%) 0px 7px 29px 0px
+}
+.edit-content textarea::-webkit-scrollbar {
+    display: none;
+}
+.edit-upload button {
+    width: 16%;
+    height: 2.15rem;
+    background-color: #f5365c;
+    color: #ffffff;
+    border: none;
+    cursor: pointer;
+    border-radius: calc(var(--borderRadius) / 2);
+    box-shadow: rgb(0 0 0 / 16%) 0px 10px 36px 0px, rgb(0 0 0 / 6%) 0px 0px 0px 1px;
+}
+.add-mood-button {
+    position: absolute;
+    bottom: 1%;
+    right: 1%;
+    z-index: 5;
+}
+.add-mood-button span {
+    display: inline-block;
+    background: linear-gradient(
+            40deg , rgb(224, 195, 252), rgb(142, 197, 252));
+    position: relative;
+    /*right: 5%;*/
+    color: white;
+    line-height: initial;
+    padding-left: 7px;
+    padding-right: 7px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+#add-mood-pwd {
+    width: 34%;
+}
+.add-mood-pwd {
+    margin-bottom: .5rem;
+    z-index: 33;
+}
+#textarea-content {
+    font-size: 16px;
+    margin-top: 1.5rem;
+}
+.editMood {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 20;
+}
+@media screen and (max-width: 719px) {
+    #add-mood-pwd,#add-mood {
+        width: 96%;
+    }
+    #upload-file {
+        flex: 6;
+    }
+    #upload-control {
+        display: flex;
+    }
+    #upload-button {
+        flex: 1;
+    }
+}
+/*#upload-button:after {
+    display: inline-block;
+    content: "";
+    width: 20px;
+    height: 20px;
+    margin-left: 10px;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-image: url("https://ooszy.cco.vin/img/blog-note/load3line.png");
+}*/
+#edit-mood-load {
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.editMoodLoad span:first-child {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-image: url("https://ooszy.cco.vin/img/blog-note/load3line.png");
+    animation: round_animate 1.5s linear infinite;
+}
+.editMoodLoad span:nth-child(2) {
+    margin-left: .5rem;
 }

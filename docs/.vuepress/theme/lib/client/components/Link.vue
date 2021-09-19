@@ -36,13 +36,22 @@
       </div>
       <BCenter>
         <template #page-center1>
-          <h2>我的站点信息</h2>
+          <h2>友链申请</h2>
           <div class="self-site">
             <ul>
               <li>title: {{siteInformation.title}}</li>
               <li>url: {{siteInformation.url}}</li>
               <li >logo: {{siteInformation.logo}}</li>
               <li>describe: {{siteInformation.describe}}</li>
+              <li>email: {{siteInformation.email}}</li>
+
+              <div>
+                <span>申请友链请按照下面格式，在此页面留言，我看到就会进行添加</span>
+                <p>博客名称&nbsp;&nbsp;&nbsp;&nbsp;博客地址&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;博客描述&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;博客logo</p>
+                <span>友链申请要求</span>
+                <li>1.拒绝涉政/涉黄/太多广告/盈利性站点</li>
+                <li>2.站点能正常访问</li>
+              </div>
             </ul>
           </div>
         </template>

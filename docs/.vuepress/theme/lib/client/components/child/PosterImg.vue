@@ -133,7 +133,6 @@ export default {
   },
   computed: {
     getAvatar() {
-      console.log(this.themeConfig)
       let poster = this.themeConfig.poster
       if (poster === undefined || poster == null) {
         return "https://ooszy.cco.vin/img/blog-public/ccds_64.ico"
@@ -256,7 +255,7 @@ export default {
             showPosterShadow: false
           })
           clearInterval(stop)
-          $(".poster-append").css("z-index",1)
+          $(".poster-append").css("z-index",-1)
         }
       },70)
     },
@@ -304,9 +303,6 @@ export default {
   },
   watch: {
     getPicture(nV,oV) {
-      console.log("变化了")
-      console.log(oV)
-      console.log(nV)
       //this.picture = nV
     }
   }

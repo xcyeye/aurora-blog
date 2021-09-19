@@ -1,7 +1,4 @@
 <template>
-  <!--<div class="poster-append" id="poster-append">
-    <poster-img></poster-img>
-  </div>-->
   <div
       @click="cancelWelcome"
       class="theme-container"
@@ -19,10 +16,10 @@
       </template>
     </Navbar>
 
-    <!--<div class="sidebar-mask" @click="toggleSidebar(false)" />-->
     <div class="page-sidebar" @wheel="handleScroll">
       <top-image :is-show-top-img="isShowTopImg"
                  :is-show-head-line="isShowHeadLine"
+                 :show-mood-edit="showMoodEdit"
                  :head-line="headLine">
       </top-image>
       <div class="common-test" id="content">
@@ -45,7 +42,6 @@
         <slot name="center9"></slot>
       </div>
     </div>
-    <!--@setBodyStyle="getBodyStyle"-->
     <home-welcome
         :theme-property="themeProperty"
         @setIsFitter="setIsFitter"
@@ -58,22 +54,16 @@
       <slot name="bottom2"></slot>
       <slot name="bottom3"></slot>
       <slot name="bottom4"></slot>
-
-      <!--<comment/>-->
       <Footer :theme-property="themeProperty"
               :is-home="frontmatter.home"
               :is-show-footer="isShowFooter">
       </Footer>
     </div>
-  <!--:style="{'--backgroundImageUrl':setBackgroundImg}"-->
-  <!--style="--backgroundImageUrl:url(https://api.iro.tw/webp_pc.php);--fitter-blue: 29px;"-->
-  <!--:style="{'&#45;&#45;backgroundImageUrl':setBackgroundImg}"-->
   <div id="set-bg"
        :data="$store.state.isFitter"
        :class="{'set-bg-fitter': $store.state.isFitter}"
        :style="setVarCommonStyle"
   ></div>
-  <!--$store.state.showPosterShadow-->
   <div id="posterShade" :class="{posterShade: $store.state.showPosterShadow}">
     <span :class="{iconSpinner6: $store.state.showShadeLoad}"></span>
   </div>
@@ -93,7 +83,8 @@ import HomeWelcome from '../../components/child/HomeWelcome'
 import EasyTyper from "easy-typer-js";
 import $ from 'jquery'
 import Sidebar from '../Sidebar'
-// import filterPostsByType from '../../public/js/post'
+const sakura = require("../../public/js/sakura")
+
 //导入配置属性
 let themeProperty = null
 const network = require('../../public/js/network.js')
@@ -138,6 +129,12 @@ export default defineComponent({
     }
   },
   props: {
+    showMoodEdit: {
+      type: Boolean,
+      default() {
+        return false
+      }
+    },
     isShowTopImg: {
       type: Boolean,
       default() {
@@ -454,6 +451,7 @@ export default defineComponent({
     }
   },
   mounted() {
+    // sakura.sakura()
     this.initTyped(this.aboutOption[0].describe[0])
 
     //百度统计

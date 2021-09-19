@@ -71,10 +71,6 @@ export default {
       $(".poster-img").slideUp(500)
     },
     async createPoster() {
-      // console.log("-----------poster------------")
-      // console.log(this.clickStatus)
-      // console.log(this.clickSecond)
-
       if (this.clickStatus === false) {
         return
       }

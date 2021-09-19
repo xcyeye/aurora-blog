@@ -52,7 +52,8 @@ export default {
   props: {
     themeProperty: null,
     moodItem: null,
-    moods: ''
+    moods: '',
+    showOnlineMood: false
   },
   created() {
     let background_color = this.themeProperty.randomColor[
@@ -62,16 +63,28 @@ export default {
   mounted() {
     //获取图片
     $(".mood-text").get(0).innerHTML = this.moodItem.contentRendered
-    let imgs = $(".mood-text img");
-    for (let i = 0; i < imgs.length; i++) {
-      this.imgs.push(imgs[i].src)
-    }
     //获取标题
-    this.title = this.moodItem.title
+    if (this.showOnlineMood) {
+      //使用网络请求回来的说说内容
+      this.title = this.moodItem.title
+      this.content = this.moodItem.content
+      this.imgs = this.moodItem.pictureList
+      if (this.imgs.length === 1) {
+        if (this.imgs[0] === "") {
+          this.imgs = []
+        }
+      }
+    }else {
+      this.title = this.moodItem.title
+      let contents = $(".mood-text p")
+      for (let i = 0; i < contents.length; i++) {
+        this.content = this.content + contents[i].innerText
+      }
 
-    let contents = $(".mood-text p")
-    for (let i = 0; i < contents.length; i++) {
-      this.content = this.content + contents[i].innerText
+      let imgs = $(".mood-text img");
+      for (let i = 0; i < imgs.length; i++) {
+        this.imgs.push(imgs[i].src)
+      }
     }
 
   },

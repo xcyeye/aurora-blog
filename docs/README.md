@@ -354,20 +354,15 @@ friendLinks: [
   url: http://admin.vipblogs.cn/,
   logo: https://ooszy.cco.vin/img/blog-public/avatar.jpg,
   describe: 该捐款系统后台登录
-  },
-  {
-  title: 另一博客,
-  url: https://cco.vin/,
-  logo: https://vipblogs.cn/wp-content/uploads/2021/03/bitbug_favicon.ico,
-  describe: 以前博客
   }
 ]
 #自己的站点信息 我自己的站点描述
 siteInformation: {
   title: qsyyke,
-  url: https://blog.cco.vin,
+  url: https://www.cco.vin,
   logo: https://ooszy.cco.vin/img/blog-public/avatar.jpg,
-  describe: 'I do not follow,i lives is always all you want'
+  describe: 'I do not follow,i lives is always all you want',
+  email: cqycco@gmail.com
 }
 ico: {
   linkIco: https://ooszy.cco.vin/img/ico/tea.svg,
@@ -394,10 +389,10 @@ fontFamily: [
 ]
 footer: 
   - Copyright © by qsyyke All Rights Reserved.
-  - Theme <a href="https://www.cco.vin">ccds</a> by qsyyke
   - "<a target='_blank' href='http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=53060202000142' style='display:inline-block;text-decoration:none;height:20px;line-height:20px;'><img src='' style='float:left;'/><p style='float:left;height:20px;line-height:20px;margin: 0px 0px 0px 5px;'>滇公网安备 53060202000142号</p></a>"
   - "<a href='https://www.upyun.com/?utm_source=lianmeng&utm_medium=referral'>本网站由<img style='height: 24.1px;width: 55.3px;' src='https://ooszy.cco.vin/img/blog-note/%E5%8F%88%E6%8B%8D%E4%BA%91_logo5.png?x-oss-process=style/pictureProcess1'>提供CDN加速服务</a>"
 isShowFooter: true
+isShowThemeCopyright: true
 #是否展示运行时间
 isShowRunTime: true
 startRunTime: 8/7/2021 12:22:00
@@ -469,7 +464,7 @@ donate: {
       prefix: ￥
     },
   ],
-  onlineList: false,
+  onlineList: true,
   donateList: [
     {
       name: qsyyke,
@@ -518,4 +513,6 @@ statistics: {
     src: 'https://hm.baidu.com/hm.js?c29ae0155f1dcb0cd420b1859260c72a',
     status: true
 }
+#是否展示从网络上请求回来的说说
+showOnlineMood: true
 ---

@@ -23,6 +23,7 @@ import Poster from "./components/global/Poster";
 import Photo from "./components/Photo";
 import PhotoAnimate from "./components/PhotoAnimate";
 import PhotoFall from "./components/PhotoFall";
+import AddMood from "./components/AddMood";
 
 import './styles/index.scss';
 import './styles/photo.scss'
@@ -40,6 +41,7 @@ export default defineClientAppEnhance(({ app, router }) => {
     app.component('Comment', Comment);
     app.component('Poster', Poster);
     app.component("Photo",Photo)
+    app.component("AddMood",AddMood)
 
     //路由
     // @ts-ignore
@@ -84,6 +86,12 @@ export default defineClientAppEnhance(({ app, router }) => {
         path: '/animate',
         component: PhotoAnimate,
         name: 'animate'
+    })
+
+    router.addRoute({
+        path: '/edit',
+        component: AddMood,
+        name: 'addMood'
     })
 
     delete app._context.components.OutboundLink;

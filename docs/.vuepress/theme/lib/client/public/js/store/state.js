@@ -30,5 +30,7 @@ module.exports = {
     qrImgHref: '',
     picture: '',
     photos: [],
-    loadingFinish: false
+    loadingFinish: false,
+    verifyStatus: false,
+    editMoods: []
 }

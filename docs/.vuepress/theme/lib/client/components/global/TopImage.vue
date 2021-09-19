@@ -42,6 +42,9 @@
         </div>
         </div>
       </div>
+    </div>\
+    <div v-if="showMoodEdit" class="edit-mood" id="edit-mood">
+      <add-mood/>
     </div>
     <slot name="top1"></slot>
     <slot name="top2"></slot>
@@ -64,6 +67,12 @@ export default {
     }
   },
   props: {
+    showMoodEdit: {
+      type: Boolean,
+      default() {
+        return false
+      }
+    },
     isShowTopImg: {
       type: Boolean,
       default() {

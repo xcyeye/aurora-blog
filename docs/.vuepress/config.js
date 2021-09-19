@@ -15,7 +15,7 @@ module.exports = {
                     },
                 },
             },
-        ],
+        ]
     ],
     onPrepared: async (app) => {
         const myData = app.pages.map((page) => {

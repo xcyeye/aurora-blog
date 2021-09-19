@@ -1,7 +1,16 @@
 <template>
-  <common :is-show-side-bar="false" :is-show-top-img="true" :is-show-head-line="false">
+  <common :show-mood-edit="true" :is-show-side-bar="false" :is-show-top-img="true" :is-show-head-line="false">
     <template #center1>
       <div>
+        <div class="link mood-control" v-for="(item,index) in onlineMoods">
+          <div :style="$store.state.borderRadiusStyle + $store.state.opacityStyle"
+               class="c-page"  id="c-page">
+            <div class="moods-page" id="moods-page">
+              <mood-item :show-online-mood="true" :moods="onlineMoods" :mood-item="item" :theme-property="themeProperty"
+              />
+            </div>
+          </div>
+        </div>
         <div class="link mood-control" v-for="(item,index) in moods">
           <div :style="$store.state.borderRadiusStyle + $store.state.opacityStyle"
                class="c-page"  id="c-page">
@@ -27,9 +36,9 @@ import {
 
 import MoodItem from './child/MoodItem'
 import myData from '@temp/my-data'
+import $ from 'jquery'
 
 //导入配置属性
-
 const network = require('../public/js/network.js')
 export default defineComponent({
   name: 'Mood',
@@ -47,6 +56,7 @@ export default defineComponent({
       themeProperty: null,
       hexToRgbColor: null,
       moods: [],
+      onlineMoods: []
     }
   },
   created() {
@@ -54,16 +64,34 @@ export default defineComponent({
       for (let i = 0; i < myData.length; i++) {
         if (myData[i].path === '/') {
           this.themeProperty = myData[i].frontmatter
+
+          let showOnlineMood = myData[i].frontmatter.showOnlineMood
+          if (showOnlineMood === undefined || showOnlineMood == null) {
+            showOnlineMood = false
+          }
+          if (showOnlineMood) {
+            //使用在线展示
+            network.cors({
+              baseURL: 'https://picture.cco.vin/',
+              url: '/mood/all',
+              method: 'GET',
+              timeout: 70000,
+              responseType: 'json',
+            }).then((res) => {
+              this.onlineMoods = res.data.entity.moods
+              this.$store.commit("setEditMoods",{
+                editMoods: res.data.entity.moods
+              })
+            })
+          }
         }
         if (myData[i].path.search("/moods/") === 0) {
           //是心情页面
           this.moods.push(myData[i])
         }
-        /*if (myData[i].path === '/moods/') {
-          this.moods = myData[i].frontmatter.mood
-        }*/
       }
     })
+
 
     this.friendLinks = this.themeProperty.friendLinks
     this.siteInformation = this.themeProperty.siteInformation
@@ -87,6 +115,9 @@ export default defineComponent({
           this.hexToRgbColor.g + "," + this.hexToRgbColor.b + "," +
           (this.$store.state.varOpacity * 1.2) + ");"
     },
+    getOnlineMoods() {
+      return this.$store.state.editMoods
+    }
   },
   methods: {
     getRandomInt(min, max) {
@@ -103,6 +134,11 @@ export default defineComponent({
       } : null;
     },
   },
+  watch: {
+    getOnlineMoods(nV,oV) {
+      this.onlineMoods = nV
+    }
+  }
 })
 </script>
 <style>

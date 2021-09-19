@@ -84,5 +84,11 @@ module.exports = {
     },
     setLoadingFinish(state,loadingFinish) {
         this.state.loadingFinish = loadingFinish.loadingFinish
+    },
+    setVerifyStatus(state,verifyStatus) {
+        this.state.verifyStatus = verifyStatus.verifyStatus
+    },
+    setEditMoods(state,editMoods) {
+        this.state.editMoods = editMoods.editMoods
     }
 }

@@ -1,9 +1,6 @@
 <template>
 
   <div class="c-page-parent">
-    <!--<div class="page-top-share">
-        <poster/>
-      </div>-->
     <main :style="$store.state.borderRadiusStyle + $store.state.opacityStyle" class="page" id="c-page">
       <slot name="top" />
       <!--:adsense-script="adsenseArr[0].script"-->

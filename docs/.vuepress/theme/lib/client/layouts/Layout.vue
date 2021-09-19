@@ -4,7 +4,6 @@
       <Home :theme-property="themeProperty" :is-home=frontmatter.home v-if="frontmatter.home" />
     </template>
     <template #center2>
-      <!--v-else-->
       <Transition
           v-if="!frontmatter.home"
           @before-enter="onBeforeEnter"
