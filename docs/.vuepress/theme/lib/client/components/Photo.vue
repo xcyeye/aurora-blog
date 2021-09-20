@@ -3,8 +3,8 @@
     <div class="photo-center">
       <div id="photo-li">
         <li><router-link to="/">首页</router-link></li>
-        <li><router-link to="/animate">欣赏</router-link></li>
-        <li><router-link to="/fall">photo</router-link></li>
+        <li><router-link to="/enjoy">欣赏</router-link></li>
+        <li><router-link to="/photo">photo</router-link></li>
       </div>
     </div>
 

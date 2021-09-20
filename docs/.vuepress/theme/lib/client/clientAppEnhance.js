@@ -77,15 +77,15 @@ export default defineClientAppEnhance(({ app, router }) => {
     })
 
     router.addRoute({
-        path: '/fall',
+        path: '/photo',
         component: PhotoFall,
-        name: 'fall'
+        name: 'photo'
     })
 
     router.addRoute({
-        path: '/animate',
+        path: '/enjoy',
         component: PhotoAnimate,
-        name: 'animate'
+        name: 'enjoy'
     })
 
     router.addRoute({

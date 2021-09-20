@@ -57,12 +57,8 @@ module.exports = {
             link: '/mood'
         },
         {
-            text: "相册",
-            link: '/animate'
-        },
-        {
-            text: "edit",
-            link: "/edit"
+            text: "photo",
+            link: '/photo'
         }
     ],
 }

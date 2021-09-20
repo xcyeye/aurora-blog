@@ -515,4 +515,5 @@ statistics: {
 }
 #是否展示从网络上请求回来的说说
 showOnlineMood: true
+showMoodEdit: true
 ---

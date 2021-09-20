@@ -1,5 +1,5 @@
 <template>
-  <common :show-mood-edit="true" :is-show-side-bar="false" :is-show-top-img="true" :is-show-head-line="false">
+  <common :show-mood-edit="showMoodEdit" :is-show-side-bar="false" :is-show-top-img="true" :is-show-head-line="false">
     <template #center1>
       <div>
         <div class="link mood-control" v-for="(item,index) in onlineMoods">
@@ -56,7 +56,8 @@ export default defineComponent({
       themeProperty: null,
       hexToRgbColor: null,
       moods: [],
-      onlineMoods: []
+      onlineMoods: [],
+      showMoodEdit: false
     }
   },
   created() {
@@ -66,9 +67,15 @@ export default defineComponent({
           this.themeProperty = myData[i].frontmatter
 
           let showOnlineMood = myData[i].frontmatter.showOnlineMood
+          this.showMoodEdit = myData[i].frontmatter.showMoodEdit
           if (showOnlineMood === undefined || showOnlineMood == null) {
             showOnlineMood = false
           }
+
+          if (this.showMoodEdit === undefined || this.showMoodEdit == null) {
+            showOnlineMood = false
+          }
+
           if (showOnlineMood) {
             //使用在线展示
             network.cors({
