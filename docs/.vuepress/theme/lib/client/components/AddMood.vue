@@ -77,7 +77,11 @@ export default {
       resultText: '',
       originTitle: '',
       originContent: '',
-      isOrigin: false
+      isOrigin: false,
+      themeProperty: null,
+      appKey: '',
+      appId: '',
+      siteName: ''
     }
   },
   computed: {
@@ -90,6 +94,20 @@ export default {
     }
   },
   created() {
+    new Promise((resolve,reject) => {
+      for (let i = 0; i < myData.length; i++) {
+        if (myData[i].path === '/') {
+          this.themeProperty = myData[i].frontmatter
+        }
+      }
+      resolve()
+    }).then(() => {
+      if (this.themeProperty.addMood !== undefined && this.themeProperty.addMood != null) {
+        this.appId = this.themeProperty.addMood.appId
+        this.appKey = this.themeProperty.addMood.appKey
+        this.siteName = this.themeProperty.addMood.siteName
+      }
+    })
   },
   methods: {
     cancel() {
@@ -135,8 +153,9 @@ export default {
       }
       formData.append("title",this.title)
       formData.append("content",this.content)
-      formData.append("appId","lnZxmObbJSp3o8Zea2KXxPwat")
-      formData.append("appKey","6TleVWdLeVwpOKv9eXtTQUam7")
+      formData.append("appId",this.appId)
+      formData.append("appKey",this.appKey)
+      formData.append("siteName",this.siteName)
       network.cors({
         baseURL: 'https://picture.cco.vin/',
         url: '/mood/add',
@@ -185,6 +204,7 @@ export default {
     verifyIdentify() {
       network.cors({
         baseURL: 'https://picture.cco.vin/',
+        // baseURL: 'http://localhost:8900/',
         url: '/user/verify',
         method: 'POST',
         timeout: 70000,
@@ -192,7 +212,8 @@ export default {
         params: {
           username: this.username,
           password: this.password,
-          verify: 'pwd'
+          verify: 'pwd',
+          siteName: this.siteName
         }
       }).then((res) => {
         let result = res.data.entity.exist
@@ -201,7 +222,6 @@ export default {
           this.$store.commit("setVerifyStatus",{
             verifyStatus: true
           })
-
           // $("#add-mood-pwd").hide(1)
           $("#add-mood-pwd").css({
             display: 'none'
@@ -216,7 +236,7 @@ export default {
           },3000)
         }
       })
-    }
+    },
   }
 }
 </script>

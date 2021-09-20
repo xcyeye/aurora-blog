@@ -36,7 +36,6 @@ import {
 
 import MoodItem from './child/MoodItem'
 import myData from '@temp/my-data'
-import $ from 'jquery'
 
 //导入配置属性
 const network = require('../public/js/network.js')
@@ -57,7 +56,8 @@ export default defineComponent({
       hexToRgbColor: null,
       moods: [],
       onlineMoods: [],
-      showMoodEdit: false
+      showMoodEdit: false,
+      siteName: ''
     }
   },
   created() {
@@ -76,6 +76,10 @@ export default defineComponent({
             showOnlineMood = false
           }
 
+          if (this.themeProperty.addMood != null && this.themeProperty.addMood !== undefined) {
+            this.siteName = this.themeProperty.addMood.siteName
+          }
+
           if (showOnlineMood) {
             //使用在线展示
             network.cors({
@@ -84,6 +88,9 @@ export default defineComponent({
               method: 'GET',
               timeout: 70000,
               responseType: 'json',
+              params: {
+                siteName: this.siteName
+              }
             }).then((res) => {
               this.onlineMoods = res.data.entity.moods
               this.$store.commit("setEditMoods",{
@@ -108,6 +115,32 @@ export default defineComponent({
         this.getRandomInt(0,this.themeProperty.randomColor.length -1)]
     this.hexToRgbColor = this.hexToRgb(background_color)
   },
+  /*mounted() {
+    let showOnlineMood = this.themeProperty.showOnlineMood
+    if (showOnlineMood === undefined || showOnlineMood == null) {
+      showOnlineMood = false
+    }
+
+    if (showOnlineMood) {
+      //使用在线展示
+      network.cors({
+        // baseURL: 'https://picture.cco.vin/',
+        baseURL: 'http://localhost:8900/',
+        url: '/mood/all',
+        method: 'GET',
+        timeout: 70000,
+        responseType: 'json',
+        params: {
+          siteName: host
+        }
+      }).then((res) => {
+        this.onlineMoods = res.data.entity.moods
+        this.$store.commit("setEditMoods",{
+          editMoods: res.data.entity.moods
+        })
+      })
+    }
+  },*/
   computed: {
     setBottomStyle() {
       return (index) => {

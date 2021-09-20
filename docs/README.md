@@ -516,4 +516,10 @@ statistics: {
 #是否展示从网络上请求回来的说说
 showOnlineMood: true
 showMoodEdit: true
+
+addMood: {
+    siteName: 'localhost:8080',
+    appId: 'q4LlYVTTk2r39sNrJr7BL9A6p',
+    appKey: 'VxezWTppppyX2LTx4TUK8w6e2'
+}
 ---

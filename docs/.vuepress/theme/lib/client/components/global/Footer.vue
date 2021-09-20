@@ -47,7 +47,6 @@ export default {
     }
   },
   created() {
-    console.log("-----------footer被创建-----")
     this.footerArr = this.themeProperty.footer
     let showThemeCopyright = this.themeProperty.isShowThemeCopyright
     if (showThemeCopyright === undefined || showThemeCopyright == null || showThemeCopyright === true) {
