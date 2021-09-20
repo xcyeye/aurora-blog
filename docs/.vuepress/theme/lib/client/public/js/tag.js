@@ -99,14 +99,8 @@ module.exports = {
                 resolve()
             }).then(()=> {
                 let categoriesArr = Array.from(categoriesSet)
-                //console.log("-----------categoriesArr--------")
-                //console.log(categoriesArr)
-                //console.log("-----------categoriesArr--------")
 
                 let setArr = Array.from(set)
-                //console.log("-----------tagArr--------")
-                //console.log(setArr)
-                //console.log("-----------tagArr--------")
 
                 //将标签和文章数组对象放入store中
                 app.$store.commit('setTagArr',{
@@ -116,10 +110,6 @@ module.exports = {
                 app.$store.commit('setCategories',{
                     categories: categoriesArr
                 })
-
-                //console.log("-----------postArr--------")
-                //console.log(mapSet)
-                //console.log("-----------postArr--------")
                 app.$store.commit('setAllPageMap',{
                     allPageMap: mapSet
                 })

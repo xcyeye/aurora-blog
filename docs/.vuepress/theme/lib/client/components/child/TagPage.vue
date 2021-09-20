@@ -1,6 +1,7 @@
 <template>
   <div :style="setBackgroundStyle(888)" id="tag-page" class="tag-page">
     <div class="tag-page-item">
+      <div style="display: none" class="tag-item-content"></div>
       <div id="tag-page-left" :style="setBackgroundImg" class="tag-page-left tag-page-item-common"></div>
       <div class="tag-page-right tag-page-item-common" id="tag-page-right">
         <div id="tag-page-right-top" class="tag-page-right-top">
@@ -9,7 +10,7 @@
           </a>
         </div>
         <div id="tag-page-right-center" class="tag-page-right-center">
-          <span class="tag-page-content">{{getContent}}</span>
+          <span class="tag-page-content">{{tagContent}}</span>
         </div>
         <div id="tag-page-right-bottom" class="tag-page-right-bottom">
           <span class="tag-label"></span><span :data="allCategories.length" :style="setBackgroundStyle(888)" v-for="(item,index) in allCategories">{{item}}</span>
@@ -20,14 +21,16 @@
 </template>
 
 <script>
-import {useSiteLocaleData} from "@vuepress/client";
 export default {
   name: "TagPage",
+  data() {
+    return {
+      tagContent: ''
+    }
+  },
   props: {
     pageMap: null,
     themeProperty: null
-  },
-  created() {
   },
   computed: {
     setBackgroundImg() {
@@ -60,11 +63,6 @@ export default {
       }
     },
     getHref() {
-      /*let articleUrl = this.pageMap.articleUrl
-      let base = useSiteLocaleData().value.base;
-      console.log(base)
-      base = base === '/' ? "" : base
-      return  window.location.origin + base + articleUrl;*/
       return this.pageMap.articleUrl
     },
     getContent() {
@@ -77,6 +75,23 @@ export default {
     allCategories() {
       return  this.pageMap.tag.concat(this.pageMap.categories)
     }
+  },
+  mounted() {
+    let tagContentDom = document.querySelector(".tag-item-content")
+    tagContentDom.innerHTML = this.pageMap.contentRendered
+    new Promise((resolve,reject) => {
+      let tagContent = ""
+      setTimeout(() => {
+        let tagContentPsDom = document.querySelectorAll(".tag-item-content p")
+        for (let i = 0; i < tagContentPsDom.length; i++) {
+          tagContent = tagContent + tagContentPsDom[i].innerText
+        }
+        resolve(tagContent)
+      },100)
+    }).then((tagContent) => {
+      this.tagContent = tagContent
+    })
+
   },
   methods: {
     getRandomInt(min, max) {
