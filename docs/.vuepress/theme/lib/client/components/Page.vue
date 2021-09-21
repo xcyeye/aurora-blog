@@ -69,17 +69,16 @@ export default defineComponent({
     themeProperty: null
   },
   created() {
-    //console.log("-------------create-----------")
+    //设置sidebar的class
+    this.$emit("setPageSidebar",true)
+
     setTimeout(() => {
       this.getPosterText().then((res) => {
         this.posterContent = res
-        //console.log(this.posterContent)
       })
     },1000)
     const page = usePageData()
     this.originPageData = page
-    //console.log(this.originPageData.title)
-    //this.title = this.originPageData.value.
     this.$emit('getHeadLine',page.value.title)
     this.adsenseArr = this.themeProperty.adsenseArr
     this.insertAdsenseRule = this.themeProperty.insertAdsenseRule

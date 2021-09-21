@@ -2,7 +2,7 @@
 home: true
 logoColor: '#2c3e50'
 showFont: 程
-faviconIco: https://ooszy.cco.vin/img/blog-public/ccds_64.ico
+faviconIco: https://ooszy.cco.vin/img/ico/yuan.png
 lazyLoadingImg: https://ooszy.cco.vin/img/blog-public/ljz.gif
 customRandomSay: false
 customRandomValue: 青衫烟雨客

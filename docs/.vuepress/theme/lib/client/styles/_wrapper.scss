@@ -1,7 +1,8 @@
 @import '_variables';
 
 %wrapper {
-  max-width: var(--content-width);
+  //max-width: var(--content-width);
+  max-width: 90%;
   margin: 0 auto;
   padding: 2rem 2.5rem;
 

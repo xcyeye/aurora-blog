@@ -1,6 +1,5 @@
 <template>
   <div
-      @click="cancelWelcome"
       class="theme-container"
       :class="containerClass"
       @touchstart="onTouchStart"
@@ -23,7 +22,7 @@
                  :head-line="headLine">
       </top-image>
       <div class="common-test" id="content">
-        <Sidebar>
+        <Sidebar :is-page="isPage">
           <template #top>
             <slot name="sidebar-top" />
           </template>
@@ -125,10 +124,16 @@ export default defineComponent({
       isFitter: false,
       backgroundUrl: 'url(https://api.iro.tw/webp_pc.php)',
       themeProperty: null,
-      picture: ''
+      picture: '',
     }
   },
   props: {
+    isPage: {
+      type: Boolean,
+      default() {
+        return false
+      }
+    },
     showMoodEdit: {
       type: Boolean,
       default() {
@@ -207,12 +212,6 @@ export default defineComponent({
     }
   },
   methods: {
-    cancelPoster() {
-      // console.log("---------dl")
-
-    //  showPosterShadow
-
-    },
     initTyped(input, fn, hooks) {
       const obj = this.obj
       return new EasyTyper(obj, input, fn, hooks)
@@ -222,9 +221,6 @@ export default defineComponent({
       max = Math.floor(max);
       return Math.floor(Math.random() * (max - min)) + min; //不含最大值，含最小值
     },
-    getHeadLine(title) {
-      this.headLine = title
-    },
     handleScroll(e) {
       if(this.isShowSideBar) {
         let scrollTop = $(document).scrollTop()
@@ -232,13 +228,15 @@ export default defineComponent({
           return
         }
         if (scrollTop >= 300 && !this.isShow) {
-          $("#c-sidebar").show(500)
+          // $("#c-sidebar").show(500)
+          $("#c-sidebar").css("display","block")
           $(".adsense-right").css("display","block")
           this.isShow = true
         }else {
-          if (scrollTop < 300) {
+          if (scrollTop < 420) {
             //小于300，隐藏
-            $("#c-sidebar").hide(500)
+            // $("#c-sidebar").hide(500)
+            $("#c-sidebar").css("display","none")
             $(".adsense-right").css("display","none")
             this.isShow = false
           }
@@ -268,12 +266,6 @@ export default defineComponent({
     setIsFitter(isFitter) {
       this.isFitter = isFitter
     },
-    cancelWelcome() {
-      /*let time = +new Date()
-      this.$store.commit("setWelcomeOpenTime",{
-        time: time
-      })*/
-    }
   },
   setup() {
     const page = usePageData()
@@ -292,7 +284,7 @@ export default defineComponent({
     const toggleSidebar = (to?: boolean): void => {
       isSidebarOpen.value = typeof to === 'boolean' ? to : !isSidebarOpen.value
       if (isSidebarOpen.value) {
-        $("#c-sidebar").css("display","block")
+        $("#c-sidebar").css("display",'block')
       }
     }
     const touchStart = { x: 0, y: 0 }
@@ -334,7 +326,6 @@ export default defineComponent({
       unregisterRouterHook()
     })
 
-    // handle scrollBehavior with transition
     const scrollPromise = useScrollPromise()
     const onBeforeEnter = scrollPromise.resolve
     const onBeforeLeave = scrollPromise.pending
@@ -370,9 +361,24 @@ export default defineComponent({
       })
     })
 
-    //控制台打印
-    console.log("%c vuepress-theme-ccds %c by qsyyke","font-weight: bold;color: white;display: inline-block;text-align: center;height: 1.5rem;line-height: 1.5rem;background-color: rgba(255,202,212,.8);padding: 10px;border-bottom-left-radius: 13px;border-top-left-radius: 13px;","font-weight: bold;color: white;display: inline-block;text-align: center;height: 1.5rem;line-height: 1.5rem;background-color: rgba(178,247,239,.85);padding: 10px;border-bottom-right-radius: 13px;border-top-right-radius: 13px;")
-    console.log("%c Version %c "+this.$store.state.version+"","font-weight: bold;color: white;display: inline-block;text-align: center;height: 1.5rem;line-height: 1.5rem;background-color: rgba(255,202,212,.8);padding: 10px;border-bottom-left-radius: 13px;border-top-left-radius: 13px;","font-weight: bold;color: white;display: inline-block;text-align: center;height: 1.5rem;line-height: 1.5rem;background-color: rgba(178,247,239,.85);padding: 10px;border-bottom-right-radius: 13px;border-top-right-radius: 13px;")
+    //控制台打印 通过接口获取最新version
+    network.cors({
+      baseURL: 'https://api.github.com/repos/qsyyke/vuepress-theme-ccds/releases/latest',
+      method: 'GET',
+      timeout: 10000,
+      responseType: 'json'
+    }).then((res) => {
+      let lastVersion = res.name
+      let tagDesc = res.body + ""
+      tagDesc = tagDesc.replace("# ","")
+      tagDesc = tagDesc.replace("## ","")
+      tagDesc = tagDesc.replace("### ","")
+      tagDesc = tagDesc.replace("- ","")
+      tagDesc = tagDesc.replace("\n","")
+      console.log("%c vuepress-theme-ccds %c by qsyyke","font-weight: bold;color: white;display: inline-block;text-align: center;height: 1.5rem;line-height: 1.5rem;background-color: rgba(255,202,212,.8);padding: 10px;border-bottom-left-radius: 13px;border-top-left-radius: 13px;","font-weight: bold;color: white;display: inline-block;text-align: center;height: 1.5rem;line-height: 1.5rem;background-color: rgba(178,247,239,.85);padding: 10px;border-bottom-right-radius: 13px;border-top-right-radius: 13px;")
+      console.log("%c Version %c "+ lastVersion + "","font-weight: bold;color: white;display: inline-block;text-align: center;height: 1.5rem;line-height: 1.5rem;background-color: rgba(255,202,212,.8);padding: 10px;border-bottom-left-radius: 13px;border-top-left-radius: 13px;","font-weight: bold;color: white;display: inline-block;text-align: center;height: 1.5rem;line-height: 1.5rem;background-color: rgba(178,247,239,.85);padding: 10px;border-bottom-right-radius: 13px;border-top-right-radius: 13px;")
+      console.log("%c tagDescribe: " + tagDesc + "" ,"color: rgba(178,247,239,.85);")
+    })
     // console.log(myData)
     new Promise((resolve,reject) => {
       for (let i = 0; i < myData.length; i++) {

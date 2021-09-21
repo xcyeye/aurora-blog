@@ -1,7 +1,7 @@
 <template>
   <!---->
   <!--<aside :style="setIsShow" id="c-sidebar" class="sidebar c-sidebar">-->
-  <aside :style="isShowStyle" id="c-sidebar" class="sidebar c-sidebar">
+  <aside :style="setSidebarStyle + showSidebar" id="c-sidebar" class="sidebar c-sidebar">
     <profile></profile>
     <NavbarLinks />
 
@@ -34,7 +34,14 @@ export default defineComponent({
     NavbarLinks,
     SidebarChild,
   },
-
+  props: {
+    isPage: {
+      type: Boolean,
+      default() {
+        return false
+      }
+    }
+  },
   setup() {
     const sidebarItems = useSidebarItems()
     return {
@@ -44,10 +51,13 @@ export default defineComponent({
   data() {
     return {
       screenWidth: '',
-      isShowStyle: 'display: none'
+      showSidebar: "display: none;",
+      setSidebarStyle: "",
+      width: 800
     }
   },
   mounted () {
+    this.width = document.body.clientWidth
     window.onresize = () => {
       let width = document.body.clientWidth
       if (width > 719) {
@@ -60,8 +70,18 @@ export default defineComponent({
       this.isShowStyle = "display: none"
     }
   },
+  watch: {
+    isPage(newValue,oldValue) {
+      if (newValue && this.width > 719) {
+        //是文章页面
+        this.setSidebarStyle = "background-color: rgba(255,255,255,0);box-shadow: none;border-right: none;"
+      }
+    },
+    width() {
+      if (this.width < 719) {
+        this.setSidebarStyle = "background-color: rgba(255,255,255,1);box-shadow: none;border-right: none;"
+      }
+    }
+  }
 })
 </script>
-<style>
-@import "../styles/theme.style.css";
-</style>

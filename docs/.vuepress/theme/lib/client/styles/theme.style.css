@@ -518,12 +518,12 @@
     width: 15%;
     z-index: 2;
     background-color: rgba(255,255,255,.76);
-    border-radius: 20px;
+    /*border-radius: 20px;*/
     box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
 }
 
 #c-sidebar::-webkit-scrollbar {
-    width: 4px;
+    display: none;
 }
 
 #c-sidebar::-webkit-scrollbar-thumb {
@@ -2050,8 +2050,7 @@ body::-webkit-scrollbar-thumb {
         /*position: absolute;*/
         /*right: 11%;*/
         width: 14rem;
-        /*height: 100%;*/
-        max-height: 8rem;
+        height: 100%;
         text-align: right;
     }
     #mood-img-li {
@@ -2083,8 +2082,7 @@ body::-webkit-scrollbar-thumb {
     max-height: 8rem;
     height: max-content;
     /*border: 1px solid red;*/
-    /*overflow: scroll;*/
-    overflow-y: scroll;
+    overflow: scroll;
 }
 .mood-img-right::-webkit-scrollbar {
     background-color: #8186d5;

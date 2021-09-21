@@ -31,7 +31,7 @@ module.exports = {
     port: 8080,
 
     themeConfig: {
-        logo: "https://ooszy.cco.vin/img/blog-public/ccds_64.ico",
+        logo: "https://ooszy.cco.vin/img/ico/yuan.png",
         navbar: navbar,
         sidebar: sidebar,
         darkMode: false,

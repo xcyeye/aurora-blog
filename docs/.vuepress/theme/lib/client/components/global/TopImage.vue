@@ -18,7 +18,6 @@
               <span>时长</span>
               <span>{{getSugTime}}</span>
             </div>
-
           </div>
           <div id="page-record-bottom" class="page-record-bottom page-record-common">
             <div class="page-record-bottom-left">
@@ -42,7 +41,7 @@
         </div>
         </div>
       </div>
-    </div>\
+    </div>
     <div v-if="showMoodEdit" class="edit-mood" id="edit-mood">
       <add-mood/>
     </div>

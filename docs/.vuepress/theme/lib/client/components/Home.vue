@@ -13,7 +13,6 @@
         </div>
 
         <div v-if="randomSawRes" class="random-saw">
-          <!--<span >{{randomSawRes}}</span>-->
           <div v-if="isHome"><span>「 {{obj.output}}」</span></div>
         </div>
 

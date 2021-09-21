@@ -87,8 +87,8 @@ const getLogoImg = computed(() => {
   const themeLocale = useThemeLocaleData()
   let src = themeLocale.value.logo
   if (src === undefined || src === null) {
-    console.log("you need to set the logo field value,the default is: \nhttps://ooszy.cco.vin/img/blog-public/ccds_64.ico")
-    return "https://ooszy.cco.vin/img/blog-public/ccds_64.ico"
+    console.log("%c you need to set the logo field value,the default is: https://ooszy.cco.vin/img/ico/yuan.png","color: pink;")
+    return "https://ooszy.cco.vin/img/ico/yuan.png"
   }else {
     return  src
   }

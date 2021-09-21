@@ -38,9 +38,6 @@ export default {
     }
   },
   computed: {
-    activeStyle() {
-      return this.activeStyle
-    },
     isShow() {
       return this.social.showImgSrc !== undefined
     },
