@@ -1,20 +1,14 @@
 <template>
-  <div v-if="getShowComment">
+  <div id="control-comment" v-if="getShowComment">
     <!-- id 将作为查询条件 -->
-    <!--<div>
-      <span class="theme theme-common">vuepress-theme-ccds</span>
-      <span class="author theme-common"> by qsyyke</span>
-      <span class="version theme-common">Version</span>
-      <span class="version-num theme-common">1.5.3</span>
-      <span class="npm"></span>
-    </div>-->
     <div style="display: none">
       <span :id="pathname" class="leancloud_visitors" data-flag-title="Your Article Title">
-      <h2 ref="readDom" style="text-align: center;" id="comment-count" class="leancloud-visitors-count">444</h2>
+      <h2 ref="readDom" style="text-align: center;" id="comment-count"
+          class="leancloud-visitors-count">444</h2>
       </span>
     </div>
     <div class="mobile-record">
-      <div class="c-page page" id="c-page" :style="$store.state.borderRadiusStyle + $store.state.opacityStyle">
+      <div class="page" id="article-page" :style="$store.state.borderRadiusStyle + $store.state.opacityStyle">
         <div class="vcomments vcomment-bottom theme-default-content"></div>
       </div>
     </div>
@@ -45,7 +39,7 @@ export default {
     getAppKey() {
       let appKey = this.themeProperty.comment.appKey
       if (appKey === undefined || appKey == null) {
-        console.log("%c 如需启用评论，请传入appKey值，可查看文档\nhttps://theme-ccds.cco.vin/","color: #9f86c0;")
+        console.log("%c 如需启用评论，请传入appKey值，可查看文档\nhttps://theme-ccds.cco.vin/config/comment/","color: #9f86c0;")
         appKey = ""
       }
       return appKey
@@ -123,8 +117,6 @@ export default {
             let allUser = document.querySelectorAll(".vcards .vnick")
             //console.log(allUser)
             for (let i = 0; i < allUser.length; i++) {
-              //console.log(allUser[i].innerText)
-              //allUser[i].getEle
               if (allUser[i].innerText === adminUsername) {
                 allUser[i].setAttribute("id","comment-admin")
               }else {

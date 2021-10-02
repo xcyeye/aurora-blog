@@ -1,28 +1,26 @@
 <template>
+  <main :style="$store.state.borderRadiusStyle + $store.state.opacityStyle"
+        class="page sidebar-single-enter-animate" id="article-page">
+    <slot name="top" />
+    <!--:adsense-script="adsenseArr[0].script"-->
+    <div class="page-top-share">
+      <poster :title="originPageData.title" :content="posterContent"/>
+    </div>
+    <div id="theme-default-content" class="theme-default-content pageContent">
+      <AdSense adsense-position="right"
+               :adsense-background-img="adsenseArr[0].adsenseBackgroundImg"
+               :adsense-message="adsenseArr[0].adsenseMessage"
+      >
+        <div v-html="adsenseArr[0].script">
+        </div>
+      </AdSense>
+      <Content />
+    </div>
 
-  <div class="c-page-parent">
-    <main :style="$store.state.borderRadiusStyle + $store.state.opacityStyle" class="page" id="c-page">
-      <slot name="top" />
-      <!--:adsense-script="adsenseArr[0].script"-->
-      <div class="page-top-share">
-        <poster :title="originPageData.title" :content="posterContent"/>
-      </div>
-      <div class="theme-default-content pageContent">
-        <AdSense adsense-position="right"
-                 :adsense-background-img="adsenseArr[0].adsenseBackgroundImg"
-                 :adsense-message="adsenseArr[0].adsenseMessage"
-        >
-          <div v-html="adsenseArr[0].script">
-          </div>
-        </AdSense>
-        <Content />
-      </div>
-
-      <PageMeta />
-      <PageNav />
-      <slot name="bottom" />
-    </main>
-  </div>
+    <PageMeta />
+    <PageNav />
+    <slot name="bottom" />
+  </main>
   <div>
     <donate v-if="themeProperty.donate.articlePage" />
     <!--<Poster/>-->
@@ -30,8 +28,6 @@
   <div class="recommend-page">
     <RecommendPage :theme-property="themeProperty"/>
   </div>
-
-  <!--<poster/>-->
   <comment></comment>
 </template>
 
@@ -62,13 +58,20 @@ export default defineComponent({
       lazyLoadingImg: null,
       originPageData: '',
       posterContent: '',
-      title: ''
+      title: '',
+      showMobileCatalog: true
     }
   },
   props: {
     themeProperty: null
   },
   created() {
+    //如果手机端侧边栏打开的，那么就关闭
+    if (this.$store.state.openMobileSidebar) {
+      this.$store.commit("setOpenMobileSidebar",{
+        openMobileSidebar: false
+      })
+    }
     //设置sidebar的class
     this.$emit("setPageSidebar",true)
 

@@ -181,6 +181,13 @@ export default defineComponent({
     }
   },
   created() {
+    //如果手机端侧边栏打开的，那么就关闭
+    if (this.$store.state.openMobileSidebar) {
+      this.$store.commit("setOpenMobileSidebar",{
+        openMobileSidebar: false
+      })
+    }
+
     if (this.themeProperty.randomSaw !== undefined) {
       this.networkOption.baseURL = this.themeProperty.randomSaw
     }

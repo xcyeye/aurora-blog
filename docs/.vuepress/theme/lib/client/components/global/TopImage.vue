@@ -1,9 +1,7 @@
 <template>
-  <div v-if="isShowTopImg" :style="setBackgroundUrl" id="page-top">
+  <div class="sidebar-single-enter-animate" v-if="isShowTopImg" :style="setBackgroundUrl" id="page-top">
     <div class="top-image" v-if="isShowHeadLine" style="color: #42a5f5">
       <h1>{{headLine}}</h1>
-
-      <!--<h1>{{pageMap.title === null ? "sdf" : pageMap.title}}</h1>-->
       <div class="page-record" id="page-record">
         <div class="page-record-item">
           <div class="page-record-top page-record-common">
@@ -62,7 +60,8 @@ export default {
       pathname: '',
       pageMap: '',
       length: 0,
-      tagArr: []
+      tagArr: [],
+      topBackgroundUrl: ''
     }
   },
   props: {
@@ -89,6 +88,9 @@ export default {
       default() {
         return "";
       }
+    },
+    themeProperty: {
+      type: Object
     }
   },
   mounted() {
@@ -99,7 +101,36 @@ export default {
   },
   computed: {
     setBackgroundUrl() {
-      return "background-image: url(" + this.$store.state.animeImg + ");"
+      let path = this.$route.path
+      let customTop = this.themeProperty.customTopImg
+      if (customTop === undefined || customTop == null) {
+        return "background-image: url(" + this.$store.state.animeImg + ");"
+      }else {
+        //用户自定义顶部图片
+        let isCustomTop = customTop.custom
+        if (isCustomTop) {
+          let imgPath = ""
+          //用户自定义 使用用户的图片
+          if (path.search("link") !== -1) {
+            imgPath = this.themeProperty.customTopImg.friend
+          }else if (path.search("tag") !== -1) {
+            imgPath = this.themeProperty.customTopImg.tag
+          }
+          else if (path.search("mood") !== -1) {
+            imgPath = this.themeProperty.customTopImg.mood
+          }else {
+            imgPath = this.themeProperty.customTopImg.page
+          }
+
+          imgPath = imgPath + "?time=" + (+new Date())
+          this.topBackgroundUrl = imgPath
+          return "background-image: url(" + imgPath + ");"
+        }else {
+          //使用随机接口
+          return "background-image: url(" + this.$store.state.animeImg + ");"
+        }
+      }
+
     },
     getWordLength() {
       let content = this.pageMap.content + ""

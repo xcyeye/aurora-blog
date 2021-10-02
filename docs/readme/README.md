@@ -1,4 +1,5 @@
 ---
+stick: true
 categories: [安装,使用教程,依赖项,ccds,theme]
 ---
 

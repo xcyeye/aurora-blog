@@ -1,5 +1,6 @@
 ---
 categories: [主题配置,配置项,配置总览]
+stick: true
 ---
 
 

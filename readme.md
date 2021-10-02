@@ -4,7 +4,7 @@
 >
 > 一款基于vuepress的动漫类博客主题，简洁，漂亮，多色彩，多种自定义功能，提供文章海报分享，说说，相册，评论等特色功能
 
-<a href="https://www.npmjs.com/package/vuepress-theme-ccds"><img src="https://img.shields.io/npm/v/vuepress-theme-ccds" /></a>![GitHub package.json version](https://img.shields.io/github/package-json/v/qsyyke/vuepress-theme-ccds)![npm](https://img.shields.io/npm/dw/vuepress-theme-ccds)![npm bundle size](https://img.shields.io/bundlephobia/min/vuepress-theme-ccds)
+<a href="https://www.npmjs.com/package/vuepress-theme-ccds"><img src="https://img.shields.io/npm/v/vuepress-theme-ccds" /></a>![GitHub package.json version](https://img.shields.io/github/package-json/v/qsyyke/vuepress-theme-ccds)![npm](https://img.shields.io/npm/dw/vuepress-theme-ccds)![npm bundle size](https://img.shields.io/bundlephobia/min/vuepress-theme-ccds)![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/qsyyke/vuepress-theme-ccds)
 
 
 ![](https://ooszy.cco.vin/img/theme/%E4%B8%BB%E9%A2%98.jpg)
@@ -15,6 +15,9 @@
 ## Feature
 
 - **简洁美观** 细节精致，界面漂亮，毛玻璃效果
+- **自动生成文章侧边栏** 该主题能自动根据配置生成侧边栏
+- **文章置顶** 提供文章置顶功能
+- **漂亮的侧边栏功能**
 - **高度自定义** 提供多个组件和主题配置文件进行自定义
 - **功能繁多** 文章海报分享，打赏，文章分类，友情链接，关于页面，说说，相册，广告，评论，图片懒加载...
 - **阅读体验** 切换背景，修改字体，颜色，毛玻璃效果，圆角，透明度控制
@@ -39,6 +42,12 @@
 ## Demo
 
 更多的体验效果，可以查看<a href="https://theme-ccds.cco.vin/">演示站点</a>
+
+![image-20211001235637244](https://ooszy.cco.vin/img/blog-note/image-20211001235637244.png?x-oss-process=style/pictureProcess1)
+
+![image-20211001235712729](https://ooszy.cco.vin/img/blog-note/image-20211001235712729.png?x-oss-process=style/pictureProcess1)
+
+![image-20211001235757587](https://ooszy.cco.vin/img/blog-note/image-20211001235757587.png?x-oss-process=style/pictureProcess1)
 
 ![](https://ooszy.cco.vin/img/theme/article.jpg)
 ![](https://ooszy.cco.vin/img/theme/about.jpg)

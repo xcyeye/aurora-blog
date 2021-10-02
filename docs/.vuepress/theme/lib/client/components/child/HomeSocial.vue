@@ -28,6 +28,12 @@ export default {
     }
   },
   props:{
+    isShowHomeSocialId: {
+      type: Boolean,
+      default() {
+        return true;
+      }
+    },
     isHomePage: {
       type: Boolean,
       default() {

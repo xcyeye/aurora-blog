@@ -43,8 +43,11 @@ module.exports = {
                         content: '',
                         contentRendered: '',
                         categories: [],
-                        frontmatter: []
+                        frontmatter: [],
+                        data: null
                     }
+
+                    articleMap.data = myData.default[i].data
 
                     //获取path
                     let path = myData.default[i].path

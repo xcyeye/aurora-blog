@@ -2,14 +2,13 @@
   <RouterLink
     v-if="isRouterLink"
     class="nav-link"
-    :class="{ 'router-link-active': isActive }"
+    :chuchen="item.text"
+
     :to="item.link"
     :aria-label="linkAriaLabel"
     v-bind="$attrs"
   >
-    <slot name="before" />
     {{ item.text }}
-    <slot name="after" />
   </RouterLink>
   <a
     v-else

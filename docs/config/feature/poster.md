@@ -1,5 +1,7 @@
 ---
 categories: [海报,poster]
+stick: true
+coverUrl: https://img2.baidu.com/it/u=1357720467,2636512316&fm=26&fmt=auto
 ---
 
 

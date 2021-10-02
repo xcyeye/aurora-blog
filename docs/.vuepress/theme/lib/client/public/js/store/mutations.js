@@ -90,5 +90,11 @@ module.exports = {
     },
     setEditMoods(state,editMoods) {
         this.state.editMoods = editMoods.editMoods
+    },
+    setCurrentPageNum(state,currentPageNum) {
+        this.state.currentPageNum = currentPageNum.currentPageNum
+    },
+    setOpenMobileSidebar(state,openMobileSidebar) {
+        this.state.openMobileSidebar = openMobileSidebar.openMobileSidebar
     }
 }

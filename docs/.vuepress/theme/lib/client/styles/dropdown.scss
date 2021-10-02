@@ -80,23 +80,25 @@
         padding: 0 1.5rem 0 1.25rem;
 
         &:hover {
-          color: var(--c-text-accent);
+          color: #8186d5;
         }
 
         &.router-link-active {
-          color: var(--c-text-accent);
+          color: #8186d5;
+          font-weight: 550;
 
-          &::after {
-            content: '';
+          /*&::before {
+            content: '\e905';
             width: 0;
             height: 0;
-            border-left: 5px solid var(--c-text-accent);
+            !*border-left: 5px solid var(--c-text-accent);
             border-top: 3px solid transparent;
             border-bottom: 3px solid transparent;
             position: absolute;
             top: calc(50% - 2px);
-            left: 9px;
-          }
+            left: 9px;*!
+            font-family: aurora-icomoon;
+          }*/
         }
       }
 

@@ -24,6 +24,9 @@ import Photo from "./components/Photo";
 import PhotoAnimate from "./components/PhotoAnimate";
 import PhotoFall from "./components/PhotoFall";
 import AddMood from "./components/AddMood";
+import HomeSidebar from "./components/child/HomeSidebar";
+import HomeBottom from "./components/HomeBottom";
+import Sidebar from "./components/MobileSidebar";
 
 import './styles/index.scss';
 import './styles/photo.scss'
@@ -42,6 +45,8 @@ export default defineClientAppEnhance(({ app, router }) => {
     app.component('Poster', Poster);
     app.component("Photo",Photo)
     app.component("AddMood",AddMood)
+    app.component("HomeSidebar",HomeSidebar)
+    app.component("HomeBottom",HomeBottom)
 
     //路由
     // @ts-ignore

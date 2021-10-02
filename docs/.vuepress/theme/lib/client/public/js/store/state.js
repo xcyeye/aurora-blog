@@ -32,5 +32,7 @@ module.exports = {
     photos: [],
     loadingFinish: false,
     verifyStatus: false,
-    editMoods: []
+    editMoods: [],
+    currentPageNum: 1,
+    openMobileSidebar: false
 }

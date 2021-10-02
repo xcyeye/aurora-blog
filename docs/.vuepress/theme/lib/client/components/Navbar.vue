@@ -1,6 +1,6 @@
 <template>
   <header ref="navbar" :style="$store.state.borderRadiusStyle" id="c-navbar" class="navbar">
-    <ToggleSidebarButton @toggle="$emit('toggle-sidebar')" />
+    <ToggleSidebarButton />
 
     <span ref="siteBrand">
       <RouterLink :to="siteBrandLink">
@@ -12,9 +12,6 @@
           :src="getLogoImg"
           :alt="siteBrandTitle"
         />
-
-        <!--:class="{ 'can-hide': siteBrandLogo }"-->
-        <!--v-if="siteBrandTitle"-->
         <span
 
           class="site-name"

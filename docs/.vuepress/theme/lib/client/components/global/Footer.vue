@@ -1,17 +1,13 @@
 <template>
-  <div class="c-page-parent" v-if="!isHome">
-    <div v-if="isShowFooter" :style="$store.state.borderRadiusStyle + $store.state.opacityStyle" class="footer" id="c-page">
+  <div class="sidebar-single-enter-animate footer-layout-center" v-if="!isHome">
+    <div v-if="isShowFooter"
+         :style="$store.state.borderRadiusStyle + $store.state.opacityStyle"
+         class="footer" id="article-page">
       <FooterItem v-for="item in footerArr" :item="item"></FooterItem>
       <div class="footer-item" v-if="isShowRunTime" id="footer-item">
         <span >{{runTime}}</span>
       </div>
     </div>
-  </div>
-
-  <div v-if="isHome" class="home-footer" id="home-footer">
-    <span v-html="footerArr[0]"></span>
-    <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-    <span v-html="footerArr[1]"></span>
   </div>
 </template>
 

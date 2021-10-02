@@ -1,5 +1,5 @@
 <template>
-  <main :style="$store.state.borderRadiusStyle + $store.state.opacityStyle" class="page" id="c-page">
+  <main :style="$store.state.borderRadiusStyle + $store.state.opacityStyle" class="page" id="article-page">
     <div class="theme-default-content">
       <slot name="page-center1"></slot>
       <slot name="page-center2"></slot>

@@ -1,3 +1,7 @@
+---
+coverUrl: https://img1.baidu.com/it/u=1500793427,64593373&fm=26&fmt=auto 
+---
+
 # 赞赏
 
 该组件是一个全局组件，位置`docs/.vuepress/theme/lib/client/components/global/Donate.vue`

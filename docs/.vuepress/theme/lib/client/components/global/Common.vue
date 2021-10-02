@@ -1,53 +1,67 @@
 <template>
+  <!--class="sidebar-single-enter-animate"-->
+  <Navbar class="sidebar-single-enter-animate" :style="$store.state.opacityStyle" v-if="shouldShowNavbar">
+    <template #before>
+      <slot name="navbar-before" />
+    </template>
+    <template #after>
+      <slot name="navbar-after" />
+    </template>
+  </Navbar>
+  <mobile-sidebar :show-navbar="frontmatter.home"/>
+  <home-welcome
+      :theme-property="themeProperty"
+      @setIsFitter="setIsFitter"
+      @setBodyStyle="getBodyStyle"
+      @setBodyWallpaper="setBodyWallpaper"
+      :is-show-ico="true"
+      custom-class="custom-about"/>
   <div
-      class="theme-container"
+      class="theme-container sidebar-single-enter-animate"
       :class="containerClass"
       @touchstart="onTouchStart"
       @touchend="onTouchEnd"
       :style="colorFontStyle"
   >
-    <Navbar :style="$store.state.opacityStyle" v-if="shouldShowNavbar" @toggle-sidebar="toggleSidebar">
-      <template #before>
-        <slot name="navbar-before" />
-      </template>
-      <template #after>
-        <slot name="navbar-after" />
-      </template>
-    </Navbar>
 
     <div class="page-sidebar" @wheel="handleScroll">
       <top-image :is-show-top-img="isShowTopImg"
+                 :theme-property="themeProperty"
                  :is-show-head-line="isShowHeadLine"
                  :show-mood-edit="showMoodEdit"
                  :head-line="headLine">
       </top-image>
-      <div class="common-test" id="content">
-        <Sidebar :is-page="isPage">
-          <template #top>
-            <slot name="sidebar-top" />
-          </template>
-          <template #bottom>
-            <slot name="sidebar-bottom" />
-          </template>
-        </Sidebar>
-        <slot name="center1"></slot>
-        <slot name="center2"></slot>
-        <slot name="center3"></slot>
-        <slot name="center4"></slot>
-        <slot name="center5"></slot>
-        <slot name="center6"></slot>
-        <slot name="center7"></slot>
-        <slot name="center8"></slot>
-        <slot name="center9"></slot>
+      <div id="content">
+
+        <div id="article-page-parent" class="article-page-parent">
+          <div :class="{noShowSidebar: showSidebar}" id="page-sidebar-left" class="page-sidebar-left">
+            <slot name="center1"></slot>
+            <slot name="center2"></slot>
+            <slot name="center3"></slot>
+            <slot name="center4"></slot>
+            <slot name="center5"></slot>
+            <slot name="center6"></slot>
+            <slot name="center7"></slot>
+            <slot name="center8"></slot>
+            <slot name="center9"></slot>
+          </div>
+          <div id="page-sidebar-right" v-if="!frontmatter.home" v-show="showSidebar" class="page-sidebar-right">
+            <HomeSidebar :show-navbar="false"
+                         :is-sticky-sidebar="isStickySidebar"
+                         :show-tag-cloud="showTagCloud"
+                         :is-show-catalog="isShowCatalog"></HomeSidebar>
+          </div>
+        </div>
+
       </div>
     </div>
-    <home-welcome
+    <!--<home-welcome
         :theme-property="themeProperty"
         @setIsFitter="setIsFitter"
         @setBodyStyle="getBodyStyle"
         @setBodyWallpaper="setBodyWallpaper"
         :is-show-ico="true"
-        custom-class="custom-about"/>
+        custom-class="custom-about"/>-->
 
       <slot name="bottom1"></slot>
       <slot name="bottom2"></slot>
@@ -66,8 +80,6 @@
   <div id="posterShade" :class="{posterShade: $store.state.showPosterShadow}">
     <span :class="{iconSpinner6: $store.state.showShadeLoad}"></span>
   </div>
-
-
 </template>
 <script lang="ts">
 
@@ -81,7 +93,6 @@ import {useScrollPromise, useSidebarItems, useThemeLocaleData} from '../../compo
 import HomeWelcome from '../../components/child/HomeWelcome'
 import EasyTyper from "easy-typer-js";
 import $ from 'jquery'
-import Sidebar from '../Sidebar'
 const sakura = require("../../public/js/sakura")
 
 //导入配置属性
@@ -90,6 +101,7 @@ const network = require('../../public/js/network.js')
 const tag = require('../../public/js/tag')
 // some-client-component.vue
 import myData from '@temp/my-data'
+import MobileSidebar from "../MobileSidebar.vue";
 
 export default defineComponent({
   name: 'Common',
@@ -99,7 +111,7 @@ export default defineComponent({
     Transition,
     HomeWelcome,
     Home,
-    Sidebar
+    MobileSidebar,
   },
   data() {
     return {
@@ -122,12 +134,36 @@ export default defineComponent({
       isShowFooter: '',
       colorFontStyle: '',
       isFitter: false,
-      backgroundUrl: 'url(https://api.iro.tw/webp_pc.php)',
+      backgroundUrl: 'url(https://api.ixiaowai.cn/api/api.php)',
       themeProperty: null,
       picture: '',
     }
   },
   props: {
+    isStickySidebar: {
+      type: Boolean,
+      default() {
+        return false;
+      }
+    },
+    isShowCatalog: {
+      type: Boolean,
+      default() {
+        return false
+      }
+    },
+    showTagCloud: {
+      type: Boolean,
+      default() {
+        return true
+      }
+    },
+    showSidebar: {
+      type: Boolean,
+      default() {
+        return true
+      }
+    },
     isPage: {
       type: Boolean,
       default() {
@@ -345,17 +381,13 @@ export default defineComponent({
   created() {
     network.cors({
       baseURL: 'https://picture.cco.vin',
-      url: '/pic/rp',
+      url: '/pic/rp/bing/2',
       method: 'GET',
       timeout: 3000,
-      params: {
-        appId: 'lnZxmObbJSp3o8Zea2KXxPwat',
-        appKey: '6TleVWdLeVwpOKv9eXtTQUam7'
-      },
       responseType: 'json'
     }).then((res) => {
-      this.picture = res.data.entity
-      // console.log(res)
+      this.picture = res.data.entity.pictures[0].src
+
       this.$store.commit("setPicture",{
         picture: this.picture
       })
@@ -379,7 +411,6 @@ export default defineComponent({
       console.log("%c Version %c "+ lastVersion + "","font-weight: bold;color: white;display: inline-block;text-align: center;height: 1.5rem;line-height: 1.5rem;background-color: rgba(255,202,212,.8);padding: 10px;border-bottom-left-radius: 13px;border-top-left-radius: 13px;","font-weight: bold;color: white;display: inline-block;text-align: center;height: 1.5rem;line-height: 1.5rem;background-color: rgba(178,247,239,.85);padding: 10px;border-bottom-right-radius: 13px;border-top-right-radius: 13px;")
       console.log("%c tagDescribe: " + tagDesc + "" ,"color: rgba(178,247,239,.85);")
     })
-    // console.log(myData)
     new Promise((resolve,reject) => {
       for (let i = 0; i < myData.length; i++) {
         if (myData[i].path === '/') {

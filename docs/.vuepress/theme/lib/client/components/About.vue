@@ -1,5 +1,6 @@
 <template>
   <common
+      :show-sidebar="false"
       :is-show-side-bar="false"
       :is-show-top-img="false"
       :is-show-head-line="false">
@@ -9,7 +10,7 @@
     <template #center2>
       <div class="about">
         <div :style="$store.state.borderRadiusStyle + $store.state.opacityStyle"
-             v-for="(item) in themeProperty.about" id="c-page" class="introduce">
+             v-for="(item) in themeProperty.about" id="article-page" class="introduce">
           <h2 class="center-common about-center" id="about-title">{{item.title}}</h2>
           <div v-if="item.showTag" id="about-tag" class="about-tag">
             <div class="tag-div" id="tag-div" :key="tagIndex" v-for="(tag,tagIndex) in item.tag">
@@ -30,7 +31,6 @@
         </div>
       </div>
     </template>
-
     <template #center4>
       <Donate v-if="themeProperty.donate.aboutPage"/>
     </template>
@@ -98,6 +98,12 @@ export default defineComponent({
   },
 
   created() {
+    //如果手机端侧边栏打开的，那么就关闭
+    if (this.$store.state.openMobileSidebar) {
+      this.$store.commit("setOpenMobileSidebar",{
+        openMobileSidebar: false
+      })
+    }
     new Promise((resolve,reject) => {
       for (let i = 0; i < myData.length; i++) {
         if (myData[i].path === '/') {

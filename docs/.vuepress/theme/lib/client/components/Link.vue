@@ -1,9 +1,9 @@
 <template>
-  <common :is-show-side-bar="false" :is-show-top-img="true" :is-show-head-line="false">
+  <common :is-sticky-sidebar="true" :is-show-side-bar="false" :is-show-top-img="true" :is-show-head-line="false">
     <template #center1>
       <div class="link">
         <div :style="$store.state.borderRadiusStyle + $store.state.opacityStyle"
-             class="c-link" id="c-link">
+             class="article-page link-common" id="c-link">
           <h2 class="link-center center-common">我的站点</h2>
           <div class="link-self">
             <a target="_blank" class="link-self-item" :href="siteInformation.url">
@@ -136,6 +136,12 @@ export default defineComponent({
   },
 
   created() {
+    //如果手机端侧边栏打开的，那么就关闭
+    if (this.$store.state.openMobileSidebar) {
+      this.$store.commit("setOpenMobileSidebar",{
+        openMobileSidebar: false
+      })
+    }
     new Promise((resolve,reject) => {
       for (let i = 0; i < myData.length; i++) {
         if (myData[i].path === '/') {

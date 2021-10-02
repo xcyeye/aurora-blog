@@ -1,10 +1,10 @@
 <template>
-  <common :show-mood-edit="showMoodEdit" :is-show-side-bar="false" :is-show-top-img="true" :is-show-head-line="false">
+  <common :is-sticky-sidebar="true" :show-mood-edit="showMoodEdit" :is-show-side-bar="false" :is-show-top-img="true" :is-show-head-line="false">
     <template #center1>
-      <div>
+      <div class="mood-first">
         <div class="link mood-control" v-for="(item,index) in onlineMoods">
           <div :style="$store.state.borderRadiusStyle + $store.state.opacityStyle"
-               class="c-page"  id="c-page">
+               class="mood-page"  id="article-page">
             <div class="moods-page" id="moods-page">
               <mood-item :show-online-mood="true" :moods="onlineMoods" :mood-item="item" :theme-property="themeProperty"
               />
@@ -61,6 +61,12 @@ export default defineComponent({
     }
   },
   created() {
+    //如果手机端侧边栏打开的，那么就关闭
+    if (this.$store.state.openMobileSidebar) {
+      this.$store.commit("setOpenMobileSidebar",{
+        openMobileSidebar: false
+      })
+    }
     new Promise((resolve,reject) => {
       for (let i = 0; i < myData.length; i++) {
         if (myData[i].path === '/') {

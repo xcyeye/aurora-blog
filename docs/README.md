@@ -16,7 +16,8 @@ socials: [
     aHref: tencent://message/?uin=2291308094,
     imgSrc: https://ooszy.cco.vin/img/ico/qq.svg,
     isHome: true,
-    show: true
+    show: true,
+    sidebar: true
   },
  {
     aHref: javascript:;,
@@ -30,7 +31,8 @@ socials: [
     aHref: https://github.com/qsyyke/,
     imgSrc: https://ooszy.cco.vin/img/ico/github.svg,
     isHome: true,
-    show: true
+    show: true,
+    sidebar: true
   },
  {
     aHref: https://stackoverflow.com/,
@@ -42,7 +44,8 @@ socials: [
     aHref: "https://space.bilibili.com/483962286",
     imgSrc: https://ooszy.cco.vin/img/ico/bilibili-.svg,
     isHome: true,
-    show: true
+    show: true,
+    sidebar: true
   },
  {
     aHref: https://music.163.com/#/user/home?id=1411050784,
@@ -54,7 +57,8 @@ socials: [
     aHref: mailto:2291308094@qq.com,
     imgSrc: https://ooszy.cco.vin/img/ico/email.svg,
     isHome: false,
-    show: false
+    show: false,
+    sidebar: true
   }
 ]
 heroLogo: https://ooszy.cco.vin/img/blog-public/avatar.jpg
@@ -400,7 +404,11 @@ prefixRuntime: 小破站已运行
 #如果没有设置key值，那么就截取描述作为key，keyRule就是截取多少个字
 keyRule: 40
 #通知
-message: 目前博客还没开发评论，如需添加友情链接，请到我旧博客添加评论评论我都会看，看到会添加到此处<a target="_blank" href="https://www.cco.vin/%e5%8f%8b%e6%83%85%e9%93%be%e6%8e%a5/">点击进入</a>
+message:
+    - 目前博客还没开发评论，如需添加友情链接，请到我旧博客添加评论评论我都会看，看到会添加到此处<a target="_blank" href="https://www.cco.vin/%e5%8f%8b%e6%83%85%e9%93%be%e6%8e%a5/">点击进入</a>
+    - 这是一个测试
+    - 再次测试
+    - 这是一张图片的测试<img src="https://ooszy.cco.vin/img/blog-public/wxpay.png" />
 
 isShowMessage: true
 
@@ -522,4 +530,26 @@ addMood: {
     appId: 'q4LlYVTTk2r39sNrJr7BL9A6p',
     appKey: 'VxezWTppppyX2LTx4TUK8w6e2'
 }
+
+#自定义顶部图片
+#customTopImg: {
+    # custom: true,
+    # page: 'https://ooszy.cco.vin/img/mood/blog.cco.vin_illust_92786671_20210919_001829.jpg',
+    # friend: 'https://ooszy.cco.vin/img/mood/blog.cco.vin_illust_87746715_20210920_231648.jpg',
+    # tag: 'http://ooszy.cco.vin/img/blog-note/image-20210901183045860.png',
+    # mood: 'http://ooszy.cco.vin/img/blog-note/image-20210901183204994.png'
+#}
+
+#首页文章分页条数
+pageSize: 4
+
+# 侧边栏配置
+githubUrl: https://github.com/qsyyke
+latestPageSize: 6
+
+#首页是否显示文章图片，默认关闭，如果显示的话，首页加载会非常慢
+showHomePageImg: false
+
+# 文章侧边栏自动获取的层次 默认为1，也就是http://localhost:8080/config/feature/donate.html,只会自动生成feature目录下的文件
+sidebarCatalogLevel: 1
 ---

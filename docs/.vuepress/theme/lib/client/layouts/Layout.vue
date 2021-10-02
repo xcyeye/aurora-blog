@@ -1,5 +1,8 @@
 <template>
-  <common :is-page="isPage" :head-line="headLine" :is-show-head-line="!frontmatter.home" :is-show-top-img="getIsHome">
+  <common :is-sticky-sidebar="!frontmatter.home" :is-page="isPage" :head-line="headLine"
+          :is-show-head-line="!frontmatter.home"
+          :is-show-catalog="!frontmatter.home"
+          :is-show-top-img="getIsHome">
     <template #center1>
       <Home :theme-property="themeProperty" :is-home=frontmatter.home v-if="frontmatter.home" />
     </template>
@@ -9,7 +12,7 @@
           @before-enter="onBeforeEnter"
           @before-leave="onBeforeLeave"
       >
-        <Page @set-page-sidebar="setPageSidebar" @getHeadLine="getHeadLine" :theme-property="themeProperty" :key="page.path">
+        <Page @set-mobile-catalog-status="setMobileCatalogStatus" @set-page-sidebar="setPageSidebar" @getHeadLine="getHeadLine" :theme-property="themeProperty" :key="page.path">
           <template #top>
             <slot name="page-top" />
           </template>
@@ -20,6 +23,14 @@
       </Transition>
     </template>
   </common>
+  <home-bottom v-if="frontmatter.home">
+    <template #home-footer>
+      <Footer :theme-property="themeProperty"
+              :is-home="!frontmatter.home"
+              :is-show-footer="true">
+      </Footer>
+    </template>
+  </home-bottom>
 </template>
 
 <script lang="ts">
