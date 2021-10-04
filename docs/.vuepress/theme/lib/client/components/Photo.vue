@@ -3,11 +3,9 @@
     <div class="photo-center">
       <div id="photo-li">
         <li><router-link to="/">首页</router-link></li>
-        <li><router-link to="/enjoy">欣赏</router-link></li>
         <li><router-link to="/photo">photo</router-link></li>
       </div>
     </div>
-
     <div class="loadingAnimate">
       <div class="loader">
         <div class="inner one"></div>
@@ -19,8 +17,6 @@
 </template>
 
 <script>
-import myData from '@temp/my-data'
-import $ from "jquery";
 export default {
   name: "Photo",
   data() {
@@ -28,7 +24,6 @@ export default {
       photoData: '',
       photos: [],
       finishLoadImg: false
-
     }
   }
 }

@@ -4,33 +4,38 @@
       <div class="link">
         <div :style="$store.state.borderRadiusStyle + $store.state.opacityStyle"
              class="article-page link-common" id="c-link">
-          <h2 class="link-center center-common">我的站点</h2>
-          <div class="link-self">
-            <a target="_blank" class="link-self-item" :href="siteInformation.url">
-              <div :style="setSpanStyle(99)" class="link-item"  id="link-item">
-                <div class="link-top">
-                  <div class="link-img">
-                    <img id="link-img" :src="siteInformation.logo" :alt="siteInformation.title">
-                  </div>
-                </div>
-                <div class="link-bottom" :style="setBottomStyle(99)" >
-                  <div class="link-bottom-title link-bottom-common">
-                    <span>{{siteInformation.title}}</span>
-                  </div>
-                  <div class="link-bottom-describe link-bottom-common">
-                    <span id="link-bottom-describe">{{siteInformation.describe}}</span>
-                  </div>
-                </div>
-              </div>
-            </a>
-          </div>
+          <!--<h2 class="link-center center-common">我的站点</h2>-->
+          <!--<div class="link-self">-->
+          <!--  <a target="_blank" class="link-self-item" :href="siteInformation.url">-->
+          <!--    <div :style="setSpanStyle(99)" class="link-item"  id="link-item">-->
+          <!--      <div class="link-top">-->
+          <!--        <div class="link-img">-->
+          <!--          <img id="link-img" :src="siteInformation.logo" :alt="siteInformation.title">-->
+          <!--        </div>-->
+          <!--      </div>-->
+          <!--      <div class="link-bottom" :style="setBottomStyle(99)" >-->
+          <!--        <div class="link-bottom-title link-bottom-common">-->
+          <!--          <span>{{siteInformation.title}}</span>-->
+          <!--        </div>-->
+          <!--        <div class="link-bottom-describe link-bottom-common">-->
+          <!--          <span id="link-bottom-describe">{{siteInformation.describe}}</span>-->
+          <!--        </div>-->
+          <!--      </div>-->
+          <!--    </div>-->
+          <!--  </a>-->
+          <!--</div>-->
+
 
           <h2 class="link-center center-common">我的朋友</h2>
 
-          <LinkItem
+          <!--<LinkItem
+              :theme-property="themeProperty"
               :color="color"
               :link-top-style="setSpanStyle(index)"
               :link-bottom-style="setBottomStyle(index)"
+              v-for="(item,index) in friendLinks" :item="item"/>-->
+          <LinkItem
+              :theme-property="themeProperty"
               v-for="(item,index) in friendLinks" :item="item"/>
         </div>
       </div>
@@ -56,7 +61,6 @@
           </div>
         </template>
       </BCenter>
-      <!--<message v-if="showMessage"></message>-->
       <comment/>
     </template>
   </common>
@@ -64,21 +68,18 @@
 
 <script lang="ts">
 import {
-  defineComponent,
+  computed,
+  defineComponent, ref,
   Transition,
 } from 'vue'
 
 import LinkItem from './child/LinkItem'
-import {usePageFrontmatter} from "@vuepress/client";
-import {DefaultThemeHomePageFrontmatter} from "../../shared";
 import myData from '@temp/my-data'
-
 //导入配置属性
 
 const network = require('../public/js/network.js')
 export default defineComponent({
   name: 'About',
-
   components: {
     Transition,
     LinkItem
@@ -134,7 +135,6 @@ export default defineComponent({
       return arr
     }
   },
-
   created() {
     //如果手机端侧边栏打开的，那么就关闭
     if (this.$store.state.openMobileSidebar) {

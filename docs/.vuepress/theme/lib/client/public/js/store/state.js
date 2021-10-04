@@ -1,6 +1,6 @@
 module.exports = {
     heroImage: "/img/head.jpg",
-    animeImg: 'https://api.iro.tw/webp_pc.php',
+    animeImg: 'https://picture.cco.vin/pic/rmimg',
     tagArr: '',
     categories: [],
     allPageMap: '',
@@ -28,11 +28,12 @@ module.exports = {
     showShadeLoad: false,
     posterShareSite: '',
     qrImgHref: '',
-    picture: '',
+    picture: 'https://picture.cco.vin/pic/rmimg?type=bing',
     photos: [],
     loadingFinish: false,
     verifyStatus: false,
     editMoods: [],
     currentPageNum: 1,
-    openMobileSidebar: false
+    openMobileSidebar: false,
+    posterData: -2
 }

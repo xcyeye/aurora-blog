@@ -1,8 +1,10 @@
 <template>
 <!--  这是博客首页的下面的模板-->
-  <div :style="$store.state.borderRadiusStyle + $store.state.opacityStyle" class="home-bottom" id="home-bottom">
+  <div :style="$store.state.borderRadiusStyle +
+       $store.state.opacityStyle + $store.state.fontColorStyle +
+       $store.state.fontFamilyStyle + $store.state.filterBlurStyle" class="home-bottom" id="home-bottom">
     <div class="home-page-tag" id="home-page-tag">
-      <home-page-item :key="index" :show-home-page-img="showHomePageImg" v-for="(item,index) in showPageArr" :page-item="item"/>
+      <home-page-item :theme-property="themeProperty" :key="index" :show-home-page-img="showHomePageImg" v-for="(item,index) in showPageArr" :page-item="item"/>
       <!--分页条-->
       <cute-page :show-home-page-img="showHomePageImg" @changePage="changePage" :name="'chuchen'"
                  :total="allPageArr.length"
@@ -16,9 +18,9 @@
 </template>
 
 <script>
-import HomePageItem from "./child/HomePageItem";
+import HomePageItem from "./child/home/HomePageItem";
 import myData from '@temp/my-data'
-import CutePage from "./child/CutePage";
+import CutePage from "./child/side/CutePage";
 export default {
   name: "HomeBottom",
   components: {

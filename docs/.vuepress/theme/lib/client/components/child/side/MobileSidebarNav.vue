@@ -117,9 +117,9 @@ import type { ComputedRef } from 'vue'
 import { useRouter } from 'vue-router'
 import {usePageFrontmatter, useRouteLocale, useSiteLocaleData} from '@vuepress/client'
 import { isLinkHttp, isString } from '@vuepress/shared'
-import type { NavbarItem, NavbarGroup, ResolvedNavbarItem } from '../../../shared'
-import { useNavLink, useThemeLocaleData } from '../../composables'
-import { resolveRepoType } from '../../utils'
+import type { NavbarItem, NavbarGroup, ResolvedNavbarItem } from '../../../../shared'
+import { useNavLink, useThemeLocaleData } from '../../../composables'
+import { resolveRepoType } from '../../../utils'
 
 /**
  * Get navbar config of select language dropdown
@@ -245,8 +245,8 @@ const useNavbarConfig = (): ComputedRef<ResolvedNavbarItem[]> => {
   return computed(() => (themeLocale.value.navbar || []).map(resolveNavbarItem))
 }
 import myData from '@temp/my-data'
-import Catalog from "./Catalog.vue";
-import {DefaultThemePageFrontmatter} from "../../../shared";
+import Catalog from "../Catalog.vue";
+import {DefaultThemePageFrontmatter} from "../../../../shared";
 export default {
   name: "MobileSidebarNav",
   components: {Catalog},

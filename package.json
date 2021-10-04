@@ -26,6 +26,10 @@
     "stylus-loader": "^6.1.0",
     "valine": "^1.4.14",
     "vue-fucking-gallery": "^1.0.1",
+    "vue-meta": "^3.0.0-alpha.9",
+    "vuepress-plugin-autometa": "^0.1.13",
+    "vuepress-plugin-seo": "^0.1.4",
+    "vuepress-plugin-sitemap": "^2.3.1",
     "vuepress-theme-ccds": "^1.0.3",
     "vuex": "^4.0.0-0"
   }

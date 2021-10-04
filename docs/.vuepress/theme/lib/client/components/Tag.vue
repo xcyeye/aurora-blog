@@ -75,9 +75,9 @@
 </template>
 
 <script>
-import TagCloud from "./child/TagCloud";
-import TagItem from "./child/TagItem";
-import TagPage from "./child/TagPage";
+import TagCloud from "./child/tag/TagCloud";
+import TagItem from "./child/tag/TagItem";
+import TagPage from "./child/tag/TagPage";
 import $ from "jquery";
 import myData from '@temp/my-data'
 

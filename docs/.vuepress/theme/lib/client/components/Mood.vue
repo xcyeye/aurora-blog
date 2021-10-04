@@ -2,21 +2,23 @@
   <common :is-sticky-sidebar="true" :show-mood-edit="showMoodEdit" :is-show-side-bar="false" :is-show-top-img="true" :is-show-head-line="false">
     <template #center1>
       <div class="mood-first">
+
+        <!--在线编写的心情文件-->
         <div class="link mood-control" v-for="(item,index) in onlineMoods">
           <div :style="$store.state.borderRadiusStyle + $store.state.opacityStyle"
-               class="mood-page"  id="article-page">
+               class="c-page online-mood"  id="article-page">
             <div class="moods-page" id="moods-page">
-              <mood-item :show-online-mood="true" :moods="onlineMoods" :mood-item="item" :theme-property="themeProperty"
-              />
+              <mood-item :show-online-mood="true" :moods="onlineMoods" :mood-item="item" :theme-property="themeProperty"/>
             </div>
           </div>
         </div>
+
+        <!--下面是在本地存放于docs/mood中的md文件-->
         <div class="link mood-control" v-for="(item,index) in moods">
           <div :style="$store.state.borderRadiusStyle + $store.state.opacityStyle"
-               class="c-page"  id="c-page">
+               class="c-page"  id="article-page">
             <div class="moods-page" id="moods-page">
-              <mood-item :moods="moods" :mood-item="item" :theme-property="themeProperty"
-              />
+              <mood-item :moods="moods" :mood-item="item" :theme-property="themeProperty"/>
             </div>
           </div>
         </div>
@@ -111,7 +113,6 @@ export default defineComponent({
         }
       }
     })
-
 
     this.friendLinks = this.themeProperty.friendLinks
     this.siteInformation = this.themeProperty.siteInformation

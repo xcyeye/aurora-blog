@@ -80,5 +80,5 @@ export default {
 </script>
 
 <style scoped>
-  @import "../../styles/theme.style.css";
+  @import "../../../styles/theme.style.css";
 </style>

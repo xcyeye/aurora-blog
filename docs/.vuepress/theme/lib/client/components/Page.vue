@@ -7,13 +7,13 @@
       <poster :title="originPageData.title" :content="posterContent"/>
     </div>
     <div id="theme-default-content" class="theme-default-content pageContent">
-      <AdSense adsense-position="right"
-               :adsense-background-img="adsenseArr[0].adsenseBackgroundImg"
-               :adsense-message="adsenseArr[0].adsenseMessage"
-      >
-        <div v-html="adsenseArr[0].script">
-        </div>
-      </AdSense>
+      <!--<AdSense adsense-position="right"-->
+      <!--         :adsense-background-img="adsenseArr[0].adsenseBackgroundImg"-->
+      <!--         :adsense-message="adsenseArr[0].adsenseMessage"-->
+      <!--&gt;-->
+      <!--  <div v-html="adsenseArr[0].script">-->
+      <!--  </div>-->
+      <!--</AdSense>-->
       <Content />
     </div>
 
@@ -95,7 +95,6 @@ export default defineComponent({
     })
 
   },
-
   methods: {
     getPosterText() {
       return new Promise((resolve,reject) => {
@@ -171,7 +170,6 @@ export default defineComponent({
       })
     },
     setDesc(desc) {
-
       /*let frontmatterDesc = this.originPageData.frontmatter.description
       if (frontmatterDesc === undefined || frontmatterDesc === null) {
         let isExist = false
@@ -380,14 +378,12 @@ export default defineComponent({
       $(h1s[0]).css('display','none')
     }
 
-    //console.log("--------------m-------------")
     this.setMeta()
     //下面就是自动添加广告
 
     new Promise((resolve,reject) => {
       let adsenseNodes = []
       for (let i = 0; i < this.adsenseArr.length; i++) {
-
         if (this.adsenseArr[i].position === 'center') {
           let node = $("<AdSense adsense-position=\""+this.adsenseArr[i].position+"\"\n" +
               "                 :adsense-background-img=\""+this.adsenseArr[i].adsenseBackgroundImg+"\"\n" +

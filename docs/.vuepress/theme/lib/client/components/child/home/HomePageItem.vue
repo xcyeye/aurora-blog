@@ -7,9 +7,9 @@
 
     <div class="home-page-tag-con">
       <div class="home-page-tag-title">
-        <a href="">
+        <router-link :to="pageItem.articleUrl">
           <span>{{pageItem.title}}</span>
-        </a>
+        </router-link>
       </div>
       <div class="home-page-tag-content">
         <div class="home-page-tag-content-rendered" style="display: block" v-html="pageItem.contentRendered"></div>
@@ -45,6 +45,7 @@
 export default {
   name: "HomePageItem",
   props: {
+    themeProperty: '',
     pageItem: {
       type: Object,
       default() {
@@ -70,7 +71,12 @@ export default {
         let num2 = this.getRandomInt(0,300)
         let num3 = this.getRandomInt(0,30)
         let num = num2 / num3 * num1 + num2
-        let path = "https://api.ixiaowai.cn/api/api.php?time=" + num
+
+        let homePageImgApi = this.themeProperty.homePageImgApi
+        if (homePageImgApi === undefined || homePageImgApi == null) {
+          homePageImgApi = "https://api.ixiaowai.cn/api/api.php"
+        }
+        let path = homePageImgApi + "?time=" + num
         return item.frontmatter.coverUrl === undefined ? path : item.frontmatter.coverUrl
       }
     },

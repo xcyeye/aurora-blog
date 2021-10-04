@@ -69,7 +69,7 @@ headTitle: 'I do not follow,i lives is always all you want'
 description: qsyyke的个人博客，记录生活琐事，学习笔记
 keyword: vuepress主题,vuepress theme,生活琐事,二次元博客,简约博客,博客主题,静态主题
 socialMaxLength: 7
-slideTime: 3000
+slideTime: 3000000
 #随机一言接口
 
 randomSaw: https://international.v1.hitokoto.cn/?c=b&max_length=45
@@ -287,8 +287,8 @@ animeOption: {
   query: imgurl
 }
 #随机图片地址，设置背景用
-randomWallpaper: https://api.iro.tw/webp_pc.php
-randomWallpaperMb: https://api.iro.tw/webp_mb.php
+randomWallpaper: https://api.mtyqx.cn/api/random.php
+randomWallpaperMb: https://api.mtyqx.cn/api/random.php
 #这是配置随机背景；颜色
 randomColor: ['#ffcad4','#d8e2dc','#8d99ae','#b8f2e6','#84c7d0',
 '#aed9e0','#00b4d8','#caf0f8','#fbc4ab','#fdc5f5',
@@ -405,10 +405,8 @@ prefixRuntime: 小破站已运行
 keyRule: 40
 #通知
 message:
-    - 目前博客还没开发评论，如需添加友情链接，请到我旧博客添加评论评论我都会看，看到会添加到此处<a target="_blank" href="https://www.cco.vin/%e5%8f%8b%e6%83%85%e9%93%be%e6%8e%a5/">点击进入</a>
-    - 这是一个测试
-    - 再次测试
-    - 这是一张图片的测试<img src="https://ooszy.cco.vin/img/blog-public/wxpay.png" />
+    - 该博客主题为Aurora,<a href="https://github.com/qsyyke/vuepress-theme-aurora">vuepress-theme-Aurora</a>
+    - '主题交流群: 681602026，欢迎各位大佬进群交流'
 
 isShowMessage: true
 
@@ -517,10 +515,6 @@ poster: {
     avatar: /avatar.png
 }
 
-statistics: {
-    src: 'https://hm.baidu.com/hm.js?c29ae0155f1dcb0cd420b1859260c72a',
-    status: true
-}
 #是否展示从网络上请求回来的说说
 showOnlineMood: true
 showMoodEdit: true
@@ -552,4 +546,27 @@ showHomePageImg: false
 
 # 文章侧边栏自动获取的层次 默认为1，也就是http://localhost:8080/config/feature/donate.html,只会自动生成feature目录下的文件
 sidebarCatalogLevel: 1
+
+#旋转链接
+spinLink: [
+    {
+        href: https://github.com/qsyyke/vuepress-theme-aurora,
+        svg: https://ooszy.cco.vin/img/blog-note/github-fill.svg
+    },
+    {
+        href: https://github.com/qsyyke/vuepress-theme-aurora,
+        svg: https://ooszy.cco.vin/img/blog-note/github-fill.svg
+    },
+    {
+        href: https://github.com/qsyyke/vuepress-theme-aurora,
+        svg: https://ooszy.cco.vin/img/blog-note/github-fill.svg
+    },
+    {
+        href: https://github.com/qsyyke/vuepress-theme-aurora,
+        svg: https://ooszy.cco.vin/img/blog-note/github-fill.svg
+    }
+]
+
+# 首页文章列表封面图api接口
+homePageImgApi: https://api.ixiaowai.cn/api/api.php
 ---

@@ -32,7 +32,14 @@
         </a>
 
         <div class="home-sidebar-info-social">
-          <div class="sidebar-social-single">
+          <div class="home-sidebar-social-single" v-for="item in themeProperty.socials">
+            <div v-if="item.sidebar" class="home-social-item">
+              <a target="_blank" :href="item.aHref" data-v-84deb35e="">
+                <img :src="item.imgSrc" alt="" data-v-84deb35e="">
+              </a>
+            </div>
+          </div>
+          <!--<div class="sidebar-social-single">
             <div class="home-sidebar-social-single" v-for="item in themeProperty.socials">
               <div v-if="item.sidebar" class="home-social-item">
                 <a target="_blank" :href="item.aHref" data-v-84deb35e="">
@@ -40,7 +47,7 @@
                 </a>
               </div>
             </div>
-          </div>
+          </div>-->
         </div>
         <slot name="sidebar-son1"/>
       </div>
@@ -78,7 +85,7 @@
           <div v-for="item in getLatestPage" class="sidebar-page-item sidebar-hover-bg-common">
             <div class="sidebar-page-title">
               <a :href="item.articleUrl">
-                <span>{{item.title}}</span>
+                <span>{{item.title === "" ? themeProperty.recommendNoTitle : item.title}}</span>
               </a>
             </div>
             <div class="sidebar-page-time">
@@ -159,7 +166,7 @@
 </template>
 
 <script>
-import Catalog from "./Catalog";
+import Catalog from "../Catalog";
 import MobileSidebarNav from "./MobileSidebarNav";
 import myData from '@temp/my-data'
 export default {
@@ -199,7 +206,7 @@ export default {
     showSearch: {
       type: Boolean,
       default() {
-        return true
+        return false
       }
     },
     showArticle: {

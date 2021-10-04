@@ -21,12 +21,11 @@ import store from './public/js/store'
 import Link from './components/Link';
 import Poster from "./components/global/Poster";
 import Photo from "./components/Photo";
-import PhotoAnimate from "./components/PhotoAnimate";
 import PhotoFall from "./components/PhotoFall";
-import AddMood from "./components/AddMood";
-import HomeSidebar from "./components/child/HomeSidebar";
+import AddMood from "./components/child/AddMood";
+import HomeSidebar from "./components/child/side/HomeSidebar";
 import HomeBottom from "./components/HomeBottom";
-import Sidebar from "./components/MobileSidebar";
+import Sidebar from "./components/child/side/MobileSidebar"
 
 import './styles/index.scss';
 import './styles/photo.scss'
@@ -85,18 +84,6 @@ export default defineClientAppEnhance(({ app, router }) => {
         path: '/photo',
         component: PhotoFall,
         name: 'photo'
-    })
-
-    router.addRoute({
-        path: '/enjoy',
-        component: PhotoAnimate,
-        name: 'enjoy'
-    })
-
-    router.addRoute({
-        path: '/edit',
-        component: AddMood,
-        name: 'addMood'
     })
 
     delete app._context.components.OutboundLink;

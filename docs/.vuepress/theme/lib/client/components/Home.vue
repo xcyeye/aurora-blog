@@ -39,13 +39,11 @@ import {
 import { isArray } from '@vuepress/shared'
 import type { DefaultThemeHomePageFrontmatter } from '../../shared'
 import NavLink from './NavLink.vue'
-import HomeSocial from './child/HomeSocial'
+import HomeSocial from './child/home/HomeSocial.vue'
 import $ from 'jquery'
 import EasyTyper from "easy-typer-js";
-// some-client-component.vue
 
 //导入配置属性
-
 const network = require('../public/js/network.js')
 
 export default defineComponent({

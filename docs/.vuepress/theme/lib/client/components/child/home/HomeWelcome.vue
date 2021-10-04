@@ -1,14 +1,14 @@
 <template>
-  <div class="setColor">
+  <div class="setColor" :style="$store.state.borderRadiusStyle + $store.state.fontFamilyStyle + $store.state.fontColorStyle">
     <div v-if="isShowIco"
          @click="clickSetColor"
-         id="setIco" class="setIco">
-      <img src="https://ooszy.cco.vin/img/ico/secai.svg" alt="">
+         id="setIco" class="setIco bg_color">
+      <!--<img src="https://ooszy.cco.vin/img/ico/secai.svg" alt="">-->
     </div>
 
     <div class="welcome-parent" id="welcome-parent">
       <div @click="clickSet" :class="customClass" :style="getColorStyle" class="m-4 p-4 f4 color-shadow-small bg-gray-800-mktg rounded-2 signup-content-container welcome" id="welcome">
-        <span @click="clickSetColor" class="cancel" :style="setCancelIco" id="cancel"></span>
+        <span @click="clickSetColor" class="cancel home-menu-ico" style="--homeIcoCode: '\e932'"  id="cancel"></span>
         <h1 class="common-style" id="sr-only-h2">Welcome to my blog! <br>Let's begin the adventure</h1>
         <div class="custom-top custom-common">
           <!--<div  class="custom-top-span custom-common-span">
@@ -236,8 +236,6 @@ export default {
       this.$emit('setBodyStyle')
     },
     setImg() {
-      //url(https://api.iro.tw/webp_pc.php)
-      //if ()
       let url = ''
       let width = document.body.clientWidth
       if (width < 500) {

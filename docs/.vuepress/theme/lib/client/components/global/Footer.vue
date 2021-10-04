@@ -1,7 +1,8 @@
 <template>
-  <div class="sidebar-single-enter-animate footer-layout-center" v-if="!isHome">
+  <div :style="$store.state.borderRadiusStyle +
+       $store.state.opacityStyle + $store.state.fontColorStyle +
+       $store.state.fontFamilyStyle + $store.state.filterBlurStyle" class="sidebar-single-enter-animate footer-layout-center" v-if="!isHome">
     <div v-if="isShowFooter"
-         :style="$store.state.borderRadiusStyle + $store.state.opacityStyle"
          class="footer" id="article-page">
       <FooterItem v-for="item in footerArr" :item="item"></FooterItem>
       <div class="footer-item" v-if="isShowRunTime" id="footer-item">

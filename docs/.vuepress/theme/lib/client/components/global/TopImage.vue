@@ -33,15 +33,12 @@
             <div class="page-record-bottom-right page-record-tag">
               <span class="record-mark icon-price-tags"></span>
               <div>
-                <li v-for="(item,index) in tagArr"><a href="/tag">{{item}}</a></li>
+                <li v-for="(item,index) in tagArr"><router-link :to="goTag(item)">{{item}}</router-link></li>
               </div>
             </div>
         </div>
         </div>
       </div>
-    </div>
-    <div v-if="showMoodEdit" class="edit-mood" id="edit-mood">
-      <add-mood/>
     </div>
     <slot name="top1"></slot>
     <slot name="top2"></slot>
@@ -52,6 +49,7 @@
 </template>
 
 <script>
+const network = require('../../public/js/network.js')
 export default {
   name: "TopImage",
   data() {
@@ -61,7 +59,7 @@ export default {
       pageMap: '',
       length: 0,
       tagArr: [],
-      topBackgroundUrl: ''
+      topBackgroundUrl: 'https://picture.cco.vin/pic/rmimg'
     }
   },
   props: {
@@ -100,11 +98,16 @@ export default {
     },500)
   },
   computed: {
+    goTag() {
+      return (item) => {
+        return '/tag?tag=' + item
+      }
+    },
     setBackgroundUrl() {
       let path = this.$route.path
       let customTop = this.themeProperty.customTopImg
       if (customTop === undefined || customTop == null) {
-        return "background-image: url(" + this.$store.state.animeImg + ");"
+        return "background-image: url(" + this.topBackgroundUrl + "?time=" + (+new Date()) + ");"
       }else {
         //用户自定义顶部图片
         let isCustomTop = customTop.custom
@@ -123,11 +126,10 @@ export default {
           }
 
           imgPath = imgPath + "?time=" + (+new Date())
-          this.topBackgroundUrl = imgPath
           return "background-image: url(" + imgPath + ");"
         }else {
           //使用随机接口
-          return "background-image: url(" + this.$store.state.animeImg + ");"
+          return "background-image: url(" + this.topBackgroundUrl + ");"
         }
       }
 

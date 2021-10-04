@@ -3,7 +3,7 @@
        :class="{tagItem: isTagItem}"
        :style="setBackgroundStyle"
        class="tag-item" id="tag-item">
-    <span>{{tag}}{{itemSplit(tagPageLength)}}{{tagPageLength}}</span>
+    <span style="color: rgba(255,255,255,.8)">{{tag}}{{itemSplit(tagPageLength)}}{{tagPageLength}}</span>
   </div>
 </template>
 

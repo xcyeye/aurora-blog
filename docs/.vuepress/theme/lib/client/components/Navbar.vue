@@ -1,5 +1,7 @@
 <template>
-  <header ref="navbar" :style="$store.state.borderRadiusStyle" id="c-navbar" class="navbar">
+  <header ref="navbar" :style="$store.state.borderRadiusStyle +
+       $store.state.opacityStyle + $store.state.fontColorStyle +
+       $store.state.fontFamilyStyle + $store.state.filterBlurStyle" id="c-navbar" class="navbar">
     <ToggleSidebarButton />
 
     <span ref="siteBrand">

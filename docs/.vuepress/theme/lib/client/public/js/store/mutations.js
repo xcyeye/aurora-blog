@@ -96,5 +96,8 @@ module.exports = {
     },
     setOpenMobileSidebar(state,openMobileSidebar) {
         this.state.openMobileSidebar = openMobileSidebar.openMobileSidebar
+    },
+    setPosterData(state,posterData) {
+        this.state.posterData = posterData.posterData
     }
 }

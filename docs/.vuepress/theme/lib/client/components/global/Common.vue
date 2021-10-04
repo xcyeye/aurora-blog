@@ -1,68 +1,63 @@
 <template>
-  <!--class="sidebar-single-enter-animate"-->
-  <Navbar class="sidebar-single-enter-animate" :style="$store.state.opacityStyle" v-if="shouldShowNavbar">
-    <template #before>
-      <slot name="navbar-before" />
-    </template>
-    <template #after>
-      <slot name="navbar-after" />
-    </template>
-  </Navbar>
-  <mobile-sidebar :show-navbar="frontmatter.home"/>
-  <home-welcome
-      :theme-property="themeProperty"
-      @setIsFitter="setIsFitter"
-      @setBodyStyle="getBodyStyle"
-      @setBodyWallpaper="setBodyWallpaper"
-      :is-show-ico="true"
-      custom-class="custom-about"/>
-  <div
-      class="theme-container sidebar-single-enter-animate"
-      :class="containerClass"
-      @touchstart="onTouchStart"
-      @touchend="onTouchEnd"
-      :style="colorFontStyle"
-  >
-
-    <div class="page-sidebar" @wheel="handleScroll">
-      <top-image :is-show-top-img="isShowTopImg"
-                 :theme-property="themeProperty"
-                 :is-show-head-line="isShowHeadLine"
-                 :show-mood-edit="showMoodEdit"
-                 :head-line="headLine">
-      </top-image>
-      <div id="content">
-
-        <div id="article-page-parent" class="article-page-parent">
-          <div :class="{noShowSidebar: showSidebar}" id="page-sidebar-left" class="page-sidebar-left">
-            <slot name="center1"></slot>
-            <slot name="center2"></slot>
-            <slot name="center3"></slot>
-            <slot name="center4"></slot>
-            <slot name="center5"></slot>
-            <slot name="center6"></slot>
-            <slot name="center7"></slot>
-            <slot name="center8"></slot>
-            <slot name="center9"></slot>
-          </div>
-          <div id="page-sidebar-right" v-if="!frontmatter.home" v-show="showSidebar" class="page-sidebar-right">
-            <HomeSidebar :show-navbar="false"
-                         :is-sticky-sidebar="isStickySidebar"
-                         :show-tag-cloud="showTagCloud"
-                         :is-show-catalog="isShowCatalog"></HomeSidebar>
-          </div>
-        </div>
-
-      </div>
-    </div>
-    <!--<home-welcome
+  <div class="common"
+       :style="$store.state.borderRadiusStyle +
+       $store.state.opacityStyle + $store.state.fontColorStyle +
+       $store.state.fontFamilyStyle + $store.state.filterBlurStyle">
+    <Navbar class="sidebar-single-enter-animate" :style="$store.state.opacityStyle" v-if="shouldShowNavbar">
+      <template #before>
+        <slot name="navbar-before" />
+      </template>
+      <template #after>
+        <slot name="navbar-after" />
+      </template>
+    </Navbar>
+    <mobile-sidebar :show-navbar="frontmatter.home"/>
+    <social-spin/>
+    <home-welcome
         :theme-property="themeProperty"
         @setIsFitter="setIsFitter"
         @setBodyStyle="getBodyStyle"
         @setBodyWallpaper="setBodyWallpaper"
         :is-show-ico="true"
-        custom-class="custom-about"/>-->
+        custom-class="custom-about"/>
+    <div
+        class="theme-container sidebar-single-enter-animate"
+        :class="containerClass"
+        @touchstart="onTouchStart"
+        @touchend="onTouchEnd"
+        :style="colorFontStyle"
+    >
+      <div class="page-sidebar" @wheel="handleScroll">
+        <top-image :is-show-top-img="isShowTopImg"
+                   :theme-property="themeProperty"
+                   :is-show-head-line="isShowHeadLine"
+                   :show-mood-edit="showMoodEdit"
+                   :head-line="headLine">
+        </top-image>
 
+        <div id="content">
+          <div id="article-page-parent" class="article-page-parent">
+            <div :class="{noShowSidebar: showSidebar}" id="page-sidebar-left" class="page-sidebar-left">
+              <slot name="center1"></slot>
+              <slot name="center2"></slot>
+              <slot name="center3"></slot>
+              <slot name="center4"></slot>
+              <slot name="center5"></slot>
+              <slot name="center6"></slot>
+              <slot name="center7"></slot>
+              <slot name="center8"></slot>
+              <slot name="center9"></slot>
+            </div>
+            <div id="page-sidebar-right" v-if="!frontmatter.home" v-show="showSidebar" class="page-sidebar-right">
+              <HomeSidebar :show-navbar="false"
+                           :is-sticky-sidebar="isStickySidebar"
+                           :show-tag-cloud="showTagCloud"
+                           :is-show-catalog="isShowCatalog"></HomeSidebar>
+            </div>
+          </div>
+
+        </div>
+      </div>
       <slot name="bottom1"></slot>
       <slot name="bottom2"></slot>
       <slot name="bottom3"></slot>
@@ -72,41 +67,44 @@
               :is-show-footer="isShowFooter">
       </Footer>
     </div>
-  <div id="set-bg"
-       :data="$store.state.isFitter"
-       :class="{'set-bg-fitter': $store.state.isFitter}"
-       :style="setVarCommonStyle"
-  ></div>
-  <div id="posterShade" :class="{posterShade: $store.state.showPosterShadow}">
-    <span :class="{iconSpinner6: $store.state.showShadeLoad}"></span>
+    <div id="set-bg"
+         :data="$store.state.isFitter"
+         :class="{'set-bg-fitter': $store.state.isFitter}"
+         :style="setVarCommonStyle"
+    ></div>
+    <div id="posterShade" :class="{posterShade: $store.state.showPosterShadow}">
+      <span :class="{iconSpinner6: $store.state.showShadeLoad}"></span>
+    </div>
   </div>
+
 </template>
 <script lang="ts">
 
+//组件导入
+import HomeWelcome from '../child/home/HomeWelcome.vue'
+import Navbar from '../../components/Navbar.vue'
+import Home from '../Home'
+import MobileSidebar from "../child/side/MobileSidebar.vue";
+import SocialSpin from "../SocialSpin.vue";
+import SocialSpin from '../SocialSpin'
+
+//配置导入
+import myData from '@temp/my-data'
+const network = require('../../public/js/network.js')
+const tag = require('../../public/js/tag')
 import {computed, defineComponent, onMounted, onUnmounted, ref, Transition,} from 'vue'
 import {useRouter} from 'vue-router'
 import {usePageData, usePageFrontmatter} from '@vuepress/client'
 import type {DefaultThemePageFrontmatter} from '../../../shared'
-import Navbar from '../../components/Navbar.vue'
-import Home from '../Home'
 import {useScrollPromise, useSidebarItems, useThemeLocaleData} from '../../composables'
-import HomeWelcome from '../../components/child/HomeWelcome'
 import EasyTyper from "easy-typer-js";
 import $ from 'jquery'
 const sakura = require("../../public/js/sakura")
 
-//导入配置属性
-let themeProperty = null
-const network = require('../../public/js/network.js')
-const tag = require('../../public/js/tag')
-// some-client-component.vue
-import myData from '@temp/my-data'
-import MobileSidebar from "../MobileSidebar.vue";
-
 export default defineComponent({
   name: 'Common',
-
   components: {
+    SocialSpin,
     Navbar,
     Transition,
     HomeWelcome,
@@ -134,7 +132,7 @@ export default defineComponent({
       isShowFooter: '',
       colorFontStyle: '',
       isFitter: false,
-      backgroundUrl: 'url(https://api.ixiaowai.cn/api/api.php)',
+      backgroundUrl: 'url(https://picture.cco.vin/pic/rmimg)',
       themeProperty: null,
       picture: '',
     }
@@ -207,7 +205,6 @@ export default defineComponent({
         if (index === 0) {
           //是需要打印的页面
           return this.obj.output
-          // return "sdfsdffdgsfg"
         }
         return desc
       }
@@ -223,8 +220,8 @@ export default defineComponent({
     setSpanStyle() {
       return (score) => {
         let newScore = score * 0.8
-        let background_color = themeProperty.randomColor[
-            this.getRandomInt(0,themeProperty.randomColor.length -1)]
+        let background_color = this.themeProperty.randomColor[
+            this.getRandomInt(0,this.themeProperty.randomColor.length -1)]
         return 'width: '+ newScore + "%;" + "background-color: "+background_color + ";"
       }
     },
@@ -379,7 +376,7 @@ export default defineComponent({
     }
   },
   created() {
-    network.cors({
+    /*network.cors({
       baseURL: 'https://picture.cco.vin',
       url: '/pic/rp/bing/2',
       method: 'GET',
@@ -387,11 +384,23 @@ export default defineComponent({
       responseType: 'json'
     }).then((res) => {
       this.picture = res.data.entity.pictures[0].src
-
       this.$store.commit("setPicture",{
         picture: this.picture
       })
-    })
+    })*/
+
+    /*network.cors({
+      baseURL: 'https://picture.cco.vin',
+      url: '/pic/rp/animate/2',
+      method: 'GET',
+      timeout: 3000,
+      responseType: 'json'
+    }).then((res) => {
+      // this.$store.commit('setAnimeImg',{
+      //   imgUrl: res.data.entity.pictures[0].src
+      // })
+      this.backgroundUrl = "url("+res.data.entity.pictures[0].src+")"
+    })*/
 
     //控制台打印 通过接口获取最新version
     network.cors({
@@ -491,7 +500,7 @@ export default defineComponent({
     // sakura.sakura()
     this.initTyped(this.aboutOption[0].describe[0])
 
-    //百度统计
+    /*//百度统计
     let statistics = this.themeProperty.statistics
     if (statistics !== null || statistics !== undefined) {
       let statisticsSrc = statistics.src
@@ -509,10 +518,8 @@ export default defineComponent({
           s.parentNode.insertBefore(hm, s);
         }
       }
-    }
-  },
+    }*/
+  }
+
 })
 </script>
-<style>
-/*@import "../../styles/theme.style.css";*/
-</style>

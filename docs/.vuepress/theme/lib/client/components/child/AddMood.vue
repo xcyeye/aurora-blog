@@ -1,12 +1,13 @@
 <template>
-  <div class="add-mood-button">
+  <!--<div class="add-mood-button">
     <span @click="openEdit" class="">添加说说</span>
-  </div>
-
+  </div>-->
   <div :class="{editMood: openEditStatus}">
-    <div style="display: none" class="add-mood-pwd donate-pay" id="add-mood-pwd">
-      <div class="poster-cancel"><span class="icon-close" @click="cancel"></span></div>
-      <div class="pro-single pro-message">
+    <div v-if="!$store.state.verifyStatus" style="display: none" class="add-mood-pwd donate-pay" id="add-mood-pwd">
+      <div class="poster-cancel">
+        <span class="icon-close" @click="cancel"></span>
+      </div>
+      <div id="pro-single-mood" class="pro-single pro-message">
         <div class="add-mood-pwd">
           <span>请验证身份</span>
         </div>
@@ -59,7 +60,7 @@
 <script>
 import $ from 'jquery'
 import myData from '@temp/my-data'
-const network = require('../public/js/network.js')
+const network = require('../../public/js/network.js')
 export default {
   name: "AddMood",
   data() {
@@ -72,7 +73,7 @@ export default {
       userVerify: false,
       username: '',
       setVerifyStyle: '',
-      openEditStatus: false,
+      // openEditStatus: false,
       fileLoadStatus: false,
       resultText: '',
       originTitle: '',
@@ -82,6 +83,14 @@ export default {
       appKey: '',
       appId: '',
       siteName: ''
+    }
+  },
+  props: {
+    openEditStatus: {
+      type: Boolean,
+      default() {
+        return false
+      }
     }
   },
   computed: {
@@ -111,12 +120,23 @@ export default {
   },
   methods: {
     cancel() {
-      $("#add-mood-pwd").slideUp(200)
-      this.openEditStatus = !this.openEditStatus
+      this.$emit("cancel",{
+        openEditStatus: !this.openEditStatus
+      })
+
+      $("#add-mood-pwd").css({
+        display: 'none'
+      })
     },
     cancelEdit() {
-      $("#add-mood").slideUp(200)
-      this.openEditStatus = !this.openEditStatus
+      this.$emit("cancel",{
+        openEditStatus: !this.openEditStatus
+      })
+      $("#add-mood").css({
+        display: 'none'
+      })
+      // $("#add-mood").slideUp(200)
+      // this.openEditStatus = !this.openEditStatus
     },
     getFile(e) {
       this.formData = new FormData()
@@ -204,7 +224,6 @@ export default {
     verifyIdentify() {
       network.cors({
         baseURL: 'https://picture.cco.vin/',
-        // baseURL: 'http://localhost:8900/',
         url: '/user/verify',
         method: 'POST',
         timeout: 70000,
@@ -242,5 +261,5 @@ export default {
 </script>
 
 <style scoped>
-  @import "../styles/theme.style.css";
+  @import "../../styles/theme.style.css";
 </style>

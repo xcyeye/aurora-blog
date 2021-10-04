@@ -2,7 +2,7 @@
   <!--点击生成海报-->
   <div class="poster-share" style="z-index: 99">
     <div class="poster-button" id="poster-button">
-      <span class="icon-share" @click="createPoster">生成海报 {{clickSecond}}</span>
+      <span class="icon-share" :data="getRandomInt(0,10)" @click="createPoster">生成海报 {{clickSecond}}</span>
     </div>
   </div>
 </template>
@@ -29,7 +29,8 @@ export default {
       setTopBackStyle: '',
       picture: '',
       clickSecond: 3,
-      clickStatus: false
+      clickStatus: false,
+      spanData: -2
     }
   },
   props: {
@@ -60,9 +61,10 @@ export default {
     }
   },
   methods: {
-    test() {
-      $.get("https://pciture.cco.vin/pic/rp?appId=lnZxmObbJSp3o8Zea2KXxPwat&appKey=6TleVWdLeVwpOKv9eXtTQUam7",function () {
-      })
+    getRandomInt(min, max) {
+      min = Math.ceil(min);
+      max = Math.floor(max);
+      return Math.floor(Math.random() * (max - min)) + min; //不含最大值，含最小值
     },
     cancelShade() {
       this.$store.commit("setShowPosterShadow", {
@@ -70,7 +72,7 @@ export default {
       })
       $(".poster-img").slideUp(500)
     },
-    async createPoster() {
+    async createPoster(e) {
       if (this.clickStatus === false) {
         return
       }
@@ -83,18 +85,22 @@ export default {
         showShadeLoad: true
       })
 
-      if (this.clickCreateNum === 0) {
+      let spanData = e.target.getAttribute("data")
+
+      if (this.$store.state.posterData !== spanData) {
         //第一次
         setTimeout(() => {
-          this.loadPosterImg()
-          this.handlePoster()
+          this.loadPosterImg(spanData)
+          setTimeout(() =>{
+            this.handlePoster(spanData)
+          },500)
         },500)
       }else {
-        this.handlePoster()
+        this.handlePoster(spanData)
       }
     },
-    loadPosterImg() {
-      if (this.clickCreateNum === 0) {
+    loadPosterImg(spanData) {
+      if (this.$store.state.posterData !== spanData) {
         let append = document.querySelector("#poster-append")
         if (append === null) {
           let posterAppend = $("<div class=\"poster-append\" id=\"poster-append\">").get(0)
@@ -120,13 +126,15 @@ export default {
         }
       }
     },
-    handlePoster() {
+    handlePoster(spanData) {
+
       $(".poster-append").css("z-index",21)
       let qrHref = this.qrHref
       if (qrHref === undefined || qrHref === "") {
         qrHref = window.location.href
       }
-      if (this.clickCreateNum !== 0) {
+
+      if (this.$store.state.posterData === spanData) {
         //第二次点击
         $(".poster-append").css("z-index",21)
         $(".poster-img").slideDown(500)
@@ -139,10 +147,14 @@ export default {
         })
         return;
       }
+
+      this.$store.commit("setPosterData",{
+        posterData: spanData
+      })
+
       QRCode.toDataURL(qrHref, (err,url) => {
         this.saveQrimg(url).then(async () => {
-
-          await html2canvas(document.querySelector("#poster"), {
+          await html2canvas(document.querySelector("#create-poster"), {
             onclone: () => {
               this.$store.commit("setShowShadeLoad",{
                 showShadeLoad: false
@@ -153,7 +165,7 @@ export default {
             allowTaint: true,
             useCORS: true,
           }).then(canvas => {
-            // console.log("---------poster-----最终生成--------------")
+            // document.body.appendChild(canvas)
             $(".poster-append").css("z-index",21)
             this.imgHeight = canvas.height
             this.href = this.convertCanvasToImage(canvas).src
@@ -169,10 +181,6 @@ export default {
             this.$store.commit("setShowPostImg",{
               showPostImg: true
             })
-
-            // console.log("----------------------------")
-            // console.log(this.clickSecond)
-            // console.log(this.clickStatus)
 
             let shareBottomHeight = document.querySelector(".share-bottom").offsetHeight
             let posterCancelHeight = document.querySelector(".poster-cancel").offsetHeight
@@ -224,8 +232,6 @@ export default {
     }
   },
   mounted() {
-    // console.log("-----------mounted----------------")
-
     setTimeout(() => {
       this.picture = this.$store.state.picture
       this.setTopBackStyle = "--poster-back-img: url(" + this.picture.src + ")"

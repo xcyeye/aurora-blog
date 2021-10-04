@@ -1,6 +1,6 @@
 <template>
   <!--模板-->
-  <div style="display: block" class="poster" id="poster">
+  <div style="display: block" class="poster" id="create-poster">
     <div class="poster-top" :style="getTopBackStyle" id="poster-top">
       <div class="poster-time">
         <div class="poster-time-day" id="poster-time-day">{{day}}</div>
@@ -149,11 +149,13 @@ export default {
       return this.app.$store.state.picture.src
     },
     getTopBackStyle() {
-      if (this.app.$store.state.picture.src === undefined) {
+      /*if (this.app.$store.state.picture === undefined) {
         return "--poster-back-img: url( " + this.pictureSrc + ");"
       }else {
         return "--poster-back-img: url( " + this.app.$store.state.picture.src + ");"
-      }
+      }*/
+      // return '--poster-back-img: url(https://picture.cco.vin/pic/rmimg?type=bing);'
+      return '--poster-back-img: url(https://h2.ioliu.cn/bing/GiantManta_ZH-CN0594951444_640x480.jpg?imageslim);'
 
     },
     getLastUpdate() {

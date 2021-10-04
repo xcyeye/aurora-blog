@@ -1,10 +1,10 @@
 <template>
   <div v-if="isShowItem" id="home-social-item">
     <a target="_blank" :href="social.aHref">
-      <img :src="social.imgSrc" @mouseenter="mouseEnter" @mouseleave="mouseLeave" alt="">
+      <img :src="social.imgSrc" @mouseleave="mouseLeave" alt="">
     </a>
-    <div v-if="isShow"
-         :style="activeStyle" id="show-img">
+    <div class="show-social-common" v-if="isShow"
+         id="show-img">
       <slot name="show-img" ></slot>
     </div>
   </div>
@@ -38,6 +38,13 @@ export default {
     }
   },
   computed: {
+    getActiveClass() {
+      if (this.isActive) {
+        return 'social-active'
+      }else {
+        return 'social-no-active'
+      }
+    },
     isShow() {
       return this.social.showImgSrc !== undefined
     },
@@ -57,6 +64,7 @@ export default {
   },
   methods: {
     mouseEnter() {
+      console.log("-----------------")
       if (!this.isShow) return ""
 
       if (!this.isActive) {
@@ -81,5 +89,5 @@ export default {
 </script>
 
 <style scoped>
-@import "../../styles/theme.style.css";
+@import "../../../styles/theme.style.css";
 </style>

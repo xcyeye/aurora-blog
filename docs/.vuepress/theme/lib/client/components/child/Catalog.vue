@@ -174,6 +174,12 @@ export default {
 
           new Promise((resolve,reject) => {
             let isLevel2 = false
+
+            try {
+              let length = childrenHeaders.length
+            }catch (e) {
+              return
+            }
             for (let j = 0; j < childrenHeaders.length; j++) {
               if (activeHeader === childrenHeaders[j].slug) {
                 this.catalogChildrenActive = j

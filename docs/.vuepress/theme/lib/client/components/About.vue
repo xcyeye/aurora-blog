@@ -46,7 +46,7 @@ import {
   Transition,
 } from 'vue'
 import Home from './Home'
-import TagItem from './child/TagItem'
+import TagItem from './child/tag/TagItem.vue'
 import myData from '@temp/my-data'
 //导入配置属性
 
