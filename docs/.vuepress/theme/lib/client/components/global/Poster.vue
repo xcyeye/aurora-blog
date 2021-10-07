@@ -2,7 +2,7 @@
   <!--点击生成海报-->
   <div class="poster-share" style="z-index: 99">
     <div class="poster-button" id="poster-button">
-      <span class="icon-share" :data="getRandomInt(0,10)" @click="createPoster">生成海报 {{clickSecond}}</span>
+      <span class="home-menu-ico" style="--homeIcoCode: '\e93c'" :data="getRandomInt(0,10)" @click="createPoster">生成海报 {{clickSecond}}</span>&nbsp;
     </div>
   </div>
 </template>
@@ -70,12 +70,12 @@ export default {
       this.$store.commit("setShowPosterShadow", {
         showPosterShadow: false
       })
+      this.$store.commit("setShowShadeLoad",{
+        showShadeLoad: false
+      })
       $(".poster-img").slideUp(500)
     },
     async createPoster(e) {
-      if (this.clickStatus === false) {
-        return
-      }
 
       this.$store.commit("setShowPosterShadow", {
         showPosterShadow: true
@@ -85,21 +85,47 @@ export default {
         showShadeLoad: true
       })
 
-      let spanData = e.target.getAttribute("data")
+      //发送请求，获取海报文章图片
+      network.req({
+        baseURL: 'https://picture.cco.vin/pic/rp/bing/2',
+        method: 'GET',
+        timeout: 10000
+      }).then((res) => {
+        new Promise((resolve,reject) => {
+          this.$store.commit("setPicture", {
+            picture: res.data.entity.pictures[0].src
+          })
+          this.setTopBackStyle = "--poster-back-img: url(" + res.data.entity.pictures[0].src + ")"
+          resolve()
+        }).then(() => {
+          if (this.clickStatus === false) {
+            return
+          }
 
-      if (this.$store.state.posterData !== spanData) {
-        //第一次
-        setTimeout(() => {
-          this.loadPosterImg(spanData)
-          setTimeout(() =>{
+          let spanData = e.target.getAttribute("data")
+
+          if (this.$store.state.posterData !== spanData) {
+            //第一次
+            setTimeout(() => {
+              this.loadPosterImg(spanData)
+              setTimeout(() =>{
+                this.handlePoster(spanData)
+              },500)
+            },500)
+          }else {
             this.handlePoster(spanData)
-          },500)
-        },500)
-      }else {
-        this.handlePoster(spanData)
-      }
+          }
+        })
+      })
     },
     loadPosterImg(spanData) {
+      new Promise((resolve,reject) =>{
+
+        resolve()
+      }).then(() => {
+
+      })
+
       if (this.$store.state.posterData !== spanData) {
         let append = document.querySelector("#poster-append")
         if (append === null) {
@@ -147,6 +173,7 @@ export default {
         })
         return;
       }
+      //第一次点击
 
       this.$store.commit("setPosterData",{
         posterData: spanData
@@ -232,11 +259,10 @@ export default {
     }
   },
   mounted() {
-    setTimeout(() => {
+    /*setTimeout(() => {
       this.picture = this.$store.state.picture
-      this.setTopBackStyle = "--poster-back-img: url(" + this.picture.src + ")"
-      // console.log(this.setTopBackStyle)
-    })
+      this.setTopBackStyle = "--poster-back-img: url(" + this.picture + ")"
+    },50)*/
 
     let clickSecond = setInterval(() => {
       this.clickSecond = this.clickSecond - 1

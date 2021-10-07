@@ -23,21 +23,26 @@ export default {
   name: "RecommendItem",
   data() {
     return {
-      recommendNoTitle: null
+      recommendNoTitle: '`╮(￣▽￣)╭`'
     }
   },
   props: {
     item: null,
     index: null,
-    themeProperty: null
+    themeProperty: ''
   },
   computed: {
     setSpanStyle() {
 
       return (index) => {
-        let background_color = this.themeProperty.randomColor[
-            this.getRandomInt(0,this.themeProperty.randomColor.length -1)]
-        // this.color = background_color
+        let background_color = ''
+        if (this.themeProperty.randomColor !== undefined) {
+          background_color = this.themeProperty.randomColor[
+              this.getRandomInt(0,this.themeProperty.randomColor.length -1)]
+        }else {
+          background_color = this.$store.state.defaultRandomColors[
+              this.getRandomInt(0,this.$store.state.defaultRandomColors.length -1)]
+        }
         return "background-color: "+background_color + ";"
       }
     },
@@ -49,7 +54,9 @@ export default {
     }
   },
   created() {
-    this.recommendNoTitle = this.themeProperty.recommendNoTitle
+    if (this.themeProperty.recommendNoTitle !== undefined) {
+      this.recommendNoTitle = this.themeProperty.recommendNoTitle
+    }
   },
   methods: {
     getRandomInt(min, max) {

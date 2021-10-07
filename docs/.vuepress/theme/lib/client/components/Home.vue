@@ -1,47 +1,42 @@
 <template>
-  <div :class="{heroHome: isHome}">
-    <main :style="navbarStyle" class="home" id="home" :aria-labelledby="heroText ? 'main-title' : undefined">
-      <header class="hero" >
-        <div class="hero-div">
-          <img id="hero-img" :src="getHeroImage" :alt="heroAlt" />
-        </div>
-
-        <div :data="themeProperty.showHomeMood" v-if="themeProperty.showHomeMood">
-          <div v-if="isHome" class="mood" >
-            <span>{{themeProperty.mood}}</span>
-          </div>
-        </div>
-
-        <div v-if="randomSawRes" class="random-saw">
-          <div v-if="isHome"><span>「 {{obj.output}}」</span></div>
-        </div>
-
-        <home-social :theme-property="themeProperty" :is-home-page="isHome"/>
-      </header>
-
-
-      <div v-if="isHome" class="theme-default-content custom">
-        <Content />
+  <div class="home" :style="getHomeHeight">
+    <div class="home-hero-img" id="home-hero-img">
+      <img :src="getHeroImg" alt="">
+    </div>
+    <slot name="home1"></slot>
+    <div v-if="randomSawRes" class="home-random-say">
+      <div v-if="isHome">
+        <span>「 {{obj.output}}」</span>
       </div>
-    </main>
+    </div>
+    <slot name="home2"></slot>
+    <div class="home-social">
+      <HomeSidebarSocialItem :sidebar-row-pc-var="socialsIsHomeNum + 1"
+                             :sidebar-width-pc-var="'65vw'"
+                             :sidebar-row-var="socialsIsHomeNum + 1"
+                             :show-social-img="true"
+                             :sidebar-cut-width="1"
+                             :sidebar-width-var="sidebarWidthVar"
+                             :social-item="item" v-for="item in socialsArrTemp"/>
+    </div>
+    <slot name="home3"></slot>
+  </div>
+  <div v-if="isHome" class="theme-default-content custom">
+    <Content />
   </div>
 </template>
 
 <script lang="ts">
 
 import { computed, defineComponent } from 'vue'
-import {
-  usePageData,
-  usePageFrontmatter, useRouteLocale, useSiteData,
-  useSiteLocaleData,
-  withBase,
-} from '@vuepress/client'
+import { usePageFrontmatter, useSiteLocaleData, withBase} from '@vuepress/client'
 import { isArray } from '@vuepress/shared'
 import type { DefaultThemeHomePageFrontmatter } from '../../shared'
 import NavLink from './NavLink.vue'
 import HomeSocial from './child/home/HomeSocial.vue'
-import $ from 'jquery'
 import EasyTyper from "easy-typer-js";
+import HomeSidebarSocialItem from './child/side/HomeSidebarSocialItem'
+import {useThemeLocaleData} from "../composables";
 
 //导入配置属性
 const network = require('../public/js/network.js')
@@ -51,14 +46,16 @@ export default defineComponent({
   components: {
     NavLink,
     HomeSocial,
+    HomeSidebarSocialItem
   },
   data() {
     return {
+      socialsArrTemp: [],
       networkOption: {
         baseURL: '',
         timeout: 5000,
         method: 'get',
-        query: ''
+        query: '',
       },
       randomSawRes: '',
       obj: {
@@ -72,20 +69,30 @@ export default defineComponent({
         sentencePause: false
       },
       intervalTime: 1500,
+      socialsIsHomeNum: 0,
+      sidebarWidthVar: 0,
+      sidebarRowVar: 0
     }
   },
   props: {
+    //电脑端最大社交长度为19 手机端首页最大为7个
+    socialsArr: {
+      type: Array,
+      default() {
+        return []
+      }
+    },
+    homeHeightVar: {
+      type: String,
+      default() {
+        return "100vh"
+      }
+    },
     navbarStyle: {
       type: String,
       default() {
         return ""
       }
-    },
-    globalColor: {
-      type: String,
-      default() {
-        return ''
-      },
     },
     isHome: {
       type: Boolean,
@@ -96,7 +103,7 @@ export default defineComponent({
     themeProperty: {
       type: Object,
       default() {
-        return null
+        return ''
       }
     },
   },
@@ -118,14 +125,6 @@ export default defineComponent({
       }
       return frontmatter.value.heroText || siteLocale.value.title || 'Hello'
     })
-
-    const randomSaw = computed(() => {
-      if (frontmatter.value.randomSaw === null) {
-        return null
-      }
-      return frontmatter.value.randomSaw
-    })
-
     const heroAlt = computed(
         () => frontmatter.value.heroAlt || heroText.value || 'hero'
     )
@@ -170,7 +169,6 @@ export default defineComponent({
       heroImage,
       heroAlt,
       heroText,
-      randomSaw,
       tagline,
       actions,
       features,
@@ -179,6 +177,28 @@ export default defineComponent({
     }
   },
   created() {
+
+    // 如果没有传入，或者传入的是一个空数组，那么就会使用新数组进行显示
+    if (this.socialsArr.length === 0) {
+      let socials = this.themeProperty.socials
+      if (socials !== undefined) {
+        new Promise((resolve,reject) => {
+          for (let i = 0; i < socials.length; i++) {
+            if (socials[i].isHome && socials[i].show) {
+              this.socialsArr.push(socials[i])
+              // this.socialsIsHomeNum ++
+            }
+          }
+          resolve()
+        }).then(() => {
+
+        })
+      }
+    }else {
+      //传入的是一个数组
+      this.socialsIsHomeNum = this.socialsArr.length
+    }
+
     //如果手机端侧边栏打开的，那么就关闭
     if (this.$store.state.openMobileSidebar) {
       this.$store.commit("setOpenMobileSidebar",{
@@ -188,13 +208,21 @@ export default defineComponent({
 
     if (this.themeProperty.randomSaw !== undefined) {
       this.networkOption.baseURL = this.themeProperty.randomSaw
+    }else {
+      this.networkOption.baseURL = 'https://international.v1.hitokoto.cn/?c=b&max_length=45'
     }
     if (this.themeProperty.randomSawQuery !== undefined) {
       this.networkOption.query = this.themeProperty.randomSawQuery
+    }else {
+      this.networkOption.query = "hitokoto"
     }
+
     if (this.themeProperty.method !== undefined) {
       this.networkOption.method = this.themeProperty.method
+    }else {
+      this.networkOption.method = "GET"
     }
+
     this.fetchData()
     this.$store.commit('setHeroImg',{
       heroImg: this.heroImage
@@ -202,15 +230,44 @@ export default defineComponent({
     // console.log(this.themeProperty)
   },
   mounted() {
-    if (document.body.clientWidth > 500) {
-      $("#c-sidebar").css("display","none")
-    }
+    this.socialsArrTemp = []
+    new Promise((resolve,reject) => {
+      if (document.body.clientWidth < 719) {
+        this.sidebarWidthVar = 0.96
+        this.sidebarRowVar = this.socialsIsHomeNum + 1
 
+        if (this.socialsArr.length > 7) {
+          for (let i = 0; i < 7; i++) {
+            this.socialsArrTemp.push(this.socialsArr[i])
+          }
+        }else {
+          this.socialsArrTemp = this.socialsArr
+        }
+      }else {
+        //可视区域宽度大于719
+        if (this.socialsArr.length > 19) {
+          for (let i = 0; i < 19; i++) {
+            this.socialsArrTemp.push(this.socialsArr[i])
+          }
+        }else {
+          this.socialsArrTemp = this.socialsArr
+        }
+      }
+      resolve()
+    }).then(() => {
+      this.socialsIsHomeNum = this.socialsArrTemp.length
+    })
   },
   methods: {
+    getRandomInt(min, max) {
+      min = Math.ceil(min);
+      max = Math.floor(max);
+      return Math.floor(Math.random() * (max - min)) + min; //不含最大值，含最小值
+    },
     fetchData() {
       if (this.themeProperty.customRandomSay) {
-        this.randomSawRes = this.themeProperty.customRandomValue
+        this.randomSawRes = this.themeProperty.customRandomValue === undefined ||
+        this.themeProperty.customRandomValue == null ? "Aurora theme" : this.themeProperty.customRandomValue
         this.initTyped(this.randomSawRes,() => {
           setTimeout(() => {
             this.fetchData()
@@ -218,13 +275,21 @@ export default defineComponent({
         })
       }else {
         network.req(this.networkOption).then(res => {
-          const dataQuery = this.networkOption.query
-          this.randomSawRes = res[dataQuery];
-          this.initTyped(this.randomSawRes,() => {
-            setTimeout(() => {
-              this.fetchData()
-            },this.intervalTime)
-          })
+          try {
+            const dataQuery = this.networkOption.query
+            this.randomSawRes = res[dataQuery];
+            this.initTyped(this.randomSawRes,() => {
+              setTimeout(() => {
+                this.fetchData()
+              },this.intervalTime)
+            })
+          }catch (e) {
+            this.initTyped('Aurora',() => {
+              setTimeout(() => {
+                this.fetchData()
+              },this.intervalTime)
+            })
+          }
         })
       }
     },
@@ -234,6 +299,19 @@ export default defineComponent({
     }
   },
   computed: {
+    getHeroImg() {
+      const themeLocale = useThemeLocaleData()
+      let src = themeLocale.value.heroImg
+      if (src === undefined) {
+        console.log("%c you need to set the logo field value,the default is: https://ooszy.cco.vin/img/blog-public/avatar.jpg","color: pink;")
+        return "https://ooszy.cco.vin/img/blog-public/avatar.jpg"
+      }else {
+        return  src
+      }
+    },
+    getHomeHeight() {
+      return '--homeHeight: ' + this.homeHeightVar + ";"
+    },
     getHeroImage() {
       let src = this.themeProperty.heroLogo
       if (src === undefined) {

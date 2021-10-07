@@ -1,7 +1,8 @@
 <template>
   <!--这是页面右侧的侧边栏，和默认主题的侧边栏不同-->
   <div ref="sidebar-top" class="sidebar-cqy"></div>
-  <div :style="$store.state.borderRadiusStyle + $store.state.opacityStyle" id="stickSidebar" class="sidebar-single-enter-animate" :class="{stickSidebar: stickSidebar}">
+  <div :style="$store.state.borderRadiusStyle + $store.state.opacityStyle" id="stickSidebar"
+       class="sidebar-single-enter-animate">
     <!---->
     <div :class="{sidebarScroll: isShowCatalog}" class="home-sidebar" id="home-sidebar">
 
@@ -30,51 +31,43 @@
         <a target="_blank" :href="getGithubUrl">
           <div class="sidebar-github">Github</div>
         </a>
-
-        <div class="home-sidebar-info-social">
-          <div class="home-sidebar-social-single" v-for="item in themeProperty.socials">
-            <div v-if="item.sidebar" class="home-social-item">
-              <a target="_blank" :href="item.aHref" data-v-84deb35e="">
-                <img :src="item.imgSrc" alt="" data-v-84deb35e="">
-              </a>
-            </div>
-          </div>
-          <!--<div class="sidebar-social-single">
-            <div class="home-sidebar-social-single" v-for="item in themeProperty.socials">
-              <div v-if="item.sidebar" class="home-social-item">
-                <a target="_blank" :href="item.aHref" data-v-84deb35e="">
-                  <img :src="item.imgSrc" alt="" data-v-84deb35e="">
-                </a>
-              </div>
-            </div>
-          </div>-->
-        </div>
         <slot name="sidebar-son1"/>
       </div>
       <slot name="sidebar1"></slot>
 
-      <!--顶部导航-->
-      <div :id="customId" v-if="showNavbar" class="sidebar-single-enter-animate sidebar-single-common">
-        <mobile-sidebar-nav />
-        <slot name="sidebar-son2"/>
+      <!--社交-->
+      <div :id="customId" v-if="showSidebarSocial" class="sidebar-single-common">
+        <div class="sidebar-social">
+          <HomeSidebarSocialItem :sidebar-row-var="sidebarRowVar"
+                                 :sidebar-width-var="sidebarWidthVar"
+                                 :social-item="item" v-for="item in socialsArr"/>
+          <slot name="sidebar-son2"/>
+        </div>
       </div>
       <slot name="sidebar2"></slot>
 
-      <!--搜索-->
-      <div :id="customId" v-if="showSearch" class="sidebar-single-enter-animate sidebar-single-common">
-        <SearchBox/>
+      <!--顶部导航-->
+      <div :id="customId" v-if="showNavbar" class="sidebar-single-enter-animate sidebar-single-common">
+        <mobile-sidebar-nav />
         <slot name="sidebar-son3"/>
       </div>
       <slot name="sidebar3"></slot>
 
+      <!--搜索-->
+      <div :id="customId" v-if="showSearch" class="sidebar-single-enter-animate sidebar-single-common">
+        <SearchBox/>
+        <slot name="sidebar-son4"/>
+      </div>
+      <slot name="sidebar4"></slot>
+
       <!--文章-->
-      <div :id="customId" v-if="showArticle" class="sidebar-single-enter-animate sidebar-single-common">
+      <div :id="customId" v-if="showArticle" class="sidebar-single-page sidebar-single-enter-animate sidebar-single-common">
         <div class="change-page">
           <div v-if="isShowCatalog" class="catalog-page change-page-common">
             <span :class="{changePageActive: changePageIndex === '1'}" index="1" @click="changePage">文章目录</span>
           </div>
           <div :style="getSinglePageStyle" class="latest-page change-page-common">
-            <span v-if="!isShowCatalog" class="icon-history"></span>
+            <span v-if="!isShowCatalog" class="home-menu-ico" style="--homeIcoCode: '\e636'"></span>
             <span :style="setChangePageStyle" :class="{changePageActive: changePageIndex === '2'}" @click="changePage" index="2">最新文章</span>
           </div>
         </div>
@@ -85,7 +78,7 @@
           <div v-for="item in getLatestPage" class="sidebar-page-item sidebar-hover-bg-common">
             <div class="sidebar-page-title">
               <a :href="item.articleUrl">
-                <span>{{item.title === "" ? themeProperty.recommendNoTitle : item.title}}</span>
+                <span>{{item.title === "" ? getRecommendNoTitle : item.title}}</span>
               </a>
             </div>
             <div class="sidebar-page-time">
@@ -93,14 +86,14 @@
             </div>
           </div>
         </div>
-        <slot name="sidebar-son4"/>
+        <slot name="sidebar-son5"/>
       </div>
-      <slot name="sidebar4"></slot>
+      <slot name="sidebar5"></slot>
 
       <!--公告-->
       <div :id="customId" v-if="showMessage" class="sidebar-single-enter-animate sidebar-single-common">
         <div class="sidebar-page">
-          <span class="home-menu-ico home-menu-message-ico" style="--homeIcoCode: '\e9a9'"></span>&nbsp;
+          <span class="home-menu-ico home-menu-message-ico" style="--homeIcoCode: '\e61c'"></span>
           <span>公告</span>
         </div>
         <div class="sidebar-message">
@@ -108,20 +101,20 @@
             <span v-html="item"></span>
           </li>
         </div>
-        <slot name="sidebar-son5"/>
+        <slot name="sidebar-son6"/>
       </div>
-      <slot name="sidebar5"></slot>
+      <slot name="sidebar6"></slot>
 
       <!--标签-->
       <div :id="customId" v-if="showTagCloud" class="sidebar-single-enter-animate sidebar-single-common">
         <div v-if="!isMobileSidebar" id="home-tag-sidebar" class="sidebar-page">
-          <span class="tag-label sidebar-tag"></span>
+          <span class="home-menu-ico" style="--homeIcoCode: '\e7b5'"></span>
           <span>标签</span>
         </div>
 
         <div v-if="isMobileSidebar" class="change-page">
           <div class="catalog-page change-page-common">
-            <span class="tag-label sidebar-tag"></span>
+            <span class="home-menu-ico" style="--homeIcoCode: '\e7b5'"></span>
             <span>标签</span>
           </div>
           <div class="latest-page change-page-common">
@@ -131,19 +124,19 @@
         </div>
 
         <div class="sidebar-tag-item">
-          <router-link v-for="(item,index) in $store.state.categories" :to="'/tag?tag=' + item">
+          <router-link v-for="(item,index) in getSidebarTagArr" :to="'/tag?tag=' + item">
             <div class="sidebar-tag-single">
               <span class="home-sidebar-tag-hover" :key="index" :style="setTagItemStyle(index)">{{item}}</span>
             </div>
           </router-link>
         </div>
-        <slot name="sidebar-son6"/>
+        <slot name="sidebar-son7"/>
       </div>
-      <slot name="sidebar6"></slot>
+      <slot name="sidebar7"></slot>
       <!--站点-->
       <div :id="customId" v-if="showSite" id="sidebar-single-common" class="sidebar-single-enter-animate sidebar-single-common">
         <div class="sidebar-page">
-          <span class="home-menu-ico" style="--homeIcoCode: '\e99c'"></span>&nbsp;
+          <span class="home-menu-ico" style="--homeIcoCode: '\e6f1'"></span>
           <span>site</span>
         </div>
 
@@ -157,34 +150,56 @@
             </div>
           </div>
         </div>
-        <slot name="sidebar-son7"/>
+        <slot name="sidebar-son8"/>
       </div>
-      <slot name="sidebar7"></slot>
+      <slot name="sidebar8"></slot>
     </div>
   </div>
+
 
 </template>
 
 <script>
 import Catalog from "../Catalog";
 import MobileSidebarNav from "./MobileSidebarNav";
-import myData from '@temp/my-data'
+import HomeSidebarSocialItem from "./HomeSidebarSocialItem";
+import {useThemeData} from "../../../composables";
 export default {
   name: "HomeSidebar",
   components: {
     MobileSidebarNav,
-    Catalog
+    Catalog,
+    HomeSidebarSocialItem
   },
   data() {
     return {
-      themeProperty: null,
+      themeProperty: '',
       allSortPageArr: [],
       latestPageSize: 6,
       changePageIndex: '2',
-      stickSidebar: false
+      stickSidebar: false,
+      socialsArr: []
     }
   },
   props: {
+    sidebarWidthVar: {
+      type: Number,
+      default() {
+        return 0.8
+      }
+    },
+    sidebarRowVar: {
+      type: Number,
+      default() {
+        return 5
+      }
+    },
+    showSidebarSocial: {
+      type: Boolean,
+      default() {
+        return true
+      }
+    },
     customId: {
       type: String,
       default() {
@@ -262,20 +277,47 @@ export default {
         this.setShowAllPage(this.$store.state.allPageMap)
       }
     },50)
-    new Promise((resolve,reject) => {
-      for (let i = 0; i < myData.length; i++) {
-        if (myData[i].path === '/') {
-          this.themeProperty = myData[i].frontmatter
 
-          if (myData[i].frontmatter.latestPageSize !== undefined || myData[i].frontmatter.latestPageSize !== null) {
-            this.latestPageSize = myData[i].frontmatter.latestPageSize
+    this.themeProperty = useThemeData().value
+    if (this.themeProperty.latestPageSize !== undefined) {
+      this.latestPageSize = this.themeProperty.latestPageSize
+    }
+
+    let socials = this.themeProperty.socials
+    let setArr = new Set()
+    if (socials !== undefined) {
+      new Promise((resolve,reject) => {
+        for (let i = 0; i < socials.length; i++) {
+          if (socials[i].sidebar) {
+            setArr.add(socials[i])
           }
         }
-      }
-      resolve()
-    })
+        resolve()
+      }).then(() => {
+        this.socialsArr = Array.from(setArr)
+      })
+    }
   },
   computed: {
+    getSidebarTagArr() {
+      let sidebarTag = this.themeProperty.sidebarTag
+      if (sidebarTag === undefined || sidebarTag == null) {
+        return this.$store.state.tagArr
+      }
+
+      if (sidebarTag === "tag") {
+        return this.$store.state.tagArr
+      }else {
+        return this.$store.state.categories
+      }
+    },
+    getRecommendNoTitle() {
+      let recommendNoTitle = '`╮(￣▽￣)╭`'
+      if (this.themeProperty.recommendNoTitle !== undefined && this.themeProperty.recommendNoTitle != null) {
+        recommendNoTitle = this.themeProperty.recommendNoTitle
+      }
+      return recommendNoTitle
+    },
     setChangePageStyle() {
       if (!this.isShowCatalog) {
         return 'cursor: auto;color: var(--fontColor);'
@@ -315,9 +357,16 @@ export default {
     },
     setTagItemStyle() {
       return (index) => {
-        let color = this.themeProperty.randomColor[
-            this.getRandomInt(0,this.themeProperty.randomColor.length -1)]
-        let fontSize = this.getRandomInt(12,30)
+        let color = ''
+        if (this.themeProperty.randomColor !== undefined || this.themeProperty.randomColor != null) {
+          color = this.themeProperty.randomColor[
+              this.getRandomInt(0,this.themeProperty.randomColor.length -1)]
+        }else {
+          color = this.$store.state.defaultRandomColors[
+              this.getRandomInt(0,this.$store.state.defaultRandomColors.length -1)]
+        }
+
+        let fontSize = this.getRandomInt(10,35)
         return "color: " + color + "; font-size: " + fontSize + "px;";
       }
     }
@@ -378,7 +427,7 @@ export default {
     }
   },
   mounted() {
-    window.addEventListener('scroll', this.handleScroll, true)
+    // window.addEventListener('scroll', this.handleScroll, true)
   }
 
 }

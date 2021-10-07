@@ -39,7 +39,7 @@
               v-for="(item,index) in friendLinks" :item="item"/>
         </div>
       </div>
-      <BCenter>
+      <BCenter v-if="siteInformation !== ''">
         <template #page-center1>
           <h2>友链申请</h2>
           <div class="self-site">
@@ -68,13 +68,12 @@
 
 <script lang="ts">
 import {
-  computed,
   defineComponent, ref,
   Transition,
 } from 'vue'
 
 import LinkItem from './child/LinkItem'
-import myData from '@temp/my-data'
+import {useThemeData} from "../composables";
 //导入配置属性
 
 const network = require('../public/js/network.js')
@@ -86,15 +85,12 @@ export default defineComponent({
   },
   data() {
     return {
-      windowHeight:0,
-      aboutOption: null,
       //这是一个数组对象
-      friendLinks: null,
-      siteInformation: null,
-      color: null,
-      ico: null,
-      showMessage: null,
-      themeProperty: null
+      friendLinks: [],
+      siteInformation: '',
+      color: '',
+      ico: '',
+      themeProperty: ''
     }
   },
   computed: {
@@ -142,20 +138,21 @@ export default defineComponent({
         openMobileSidebar: false
       })
     }
-    new Promise((resolve,reject) => {
-      for (let i = 0; i < myData.length; i++) {
-        if (myData[i].path === '/') {
-          this.themeProperty = myData[i].frontmatter
-        }
-      }
-      resolve()
-    })
-    // this.friendLinks = this.themeProperty.friendLinks
-    this.friendLinks = this.shuffle(this.themeProperty.friendLinks)
 
-    this.siteInformation = this.themeProperty.siteInformation
-    this.ico = this.themeProperty.ico.linkIco
-    this.showMessage = this.themeProperty.isShowMessage
+    this.themeProperty = useThemeData().value
+    // this.friendLinks = this.themeProperty.friendLinks
+    if (this.themeProperty.friendLinks !== undefined && this.themeProperty.friendLinks != null) {
+      this.friendLinks = this.shuffle(this.themeProperty.friendLinks)
+    }
+
+    if (this.themeProperty.siteInformation !== undefined) {
+      this.siteInformation = this.themeProperty.siteInformation
+    }
+    try {
+      this.ico = this.themeProperty.ico.linkIco
+    }catch (e) {
+      this.ico = "https://ooszy.cco.vin/img/ico/tea.svg"
+    }
   },
 })
 </script>

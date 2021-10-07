@@ -4,9 +4,10 @@
        $store.state.opacityStyle + $store.state.fontColorStyle +
        $store.state.fontFamilyStyle + $store.state.filterBlurStyle" class="home-bottom" id="home-bottom">
     <div class="home-page-tag" id="home-page-tag">
-      <home-page-item :theme-property="themeProperty" :key="index" :show-home-page-img="showHomePageImg" v-for="(item,index) in showPageArr" :page-item="item"/>
+      <home-page-item :index="index" :theme-property="themeProperty" :key="index" v-for="(item,index) in showPageArr" :page-item="item"/>
       <!--分页条-->
-      <cute-page :show-home-page-img="showHomePageImg" @changePage="changePage" :name="'chuchen'"
+      <cute-page @changePage="changePage"
+                 :page="$store.state.currentPageNum"
                  :total="allPageArr.length"
                  :page-size="pageSize"/>
     </div>
@@ -19,8 +20,8 @@
 
 <script>
 import HomePageItem from "./child/home/HomePageItem";
-import myData from '@temp/my-data'
 import CutePage from "./child/side/CutePage";
+import {useThemeData} from "../composables";
 export default {
   name: "HomeBottom",
   components: {
@@ -29,13 +30,12 @@ export default {
   },
   data() {
     return {
-      themeProperty: null,
+      themeProperty: '',
       allPageMaps: [],
       allPageArr: [],
       showPageArr: [],
       pageSize: 3,
       currentPage: 1,
-      showHomePageImg: false
     }
   },
   computed: {
@@ -53,28 +53,14 @@ export default {
         this.setShowAllPage(this.$store.state.allPageMap)
       }
     },100)
-    // this.setShowAllPage()
-    new Promise((resolve,reject) => {
-      for (let i = 0; i < myData.length; i++) {
-        if (myData[i].path === '/') {
-          this.themeProperty = myData[i].frontmatter
-          if (myData[i].frontmatter.pageSize === undefined || myData[i].frontmatter.pageSize == null) {
-            // 默认的分页数
-            this.pageSize = 3
-          }else {
-            this.pageSize = myData[i].frontmatter.pageSize
-          }
+    this.themeProperty = useThemeData().value
 
-          if (myData[i].frontmatter.showHomePageImg === undefined || myData[i].frontmatter.showHomePageImg == null) {
-            // 默认的分页数
-            this.showHomePageImg = false
-          }else {
-            this.showHomePageImg = true
-          }
-        }
-      }
-      resolve()
-    })
+    if (this.themeProperty.pageSize === undefined) {
+      // 默认的分页数
+      this.pageSize = 3
+    }else {
+      this.pageSize = this.themeProperty.pageSize
+    }
   },
   methods: {
     cutPageActive(e,index) {
@@ -93,8 +79,26 @@ export default {
         }
       }
     },
+    setImgDom() {
+      setTimeout(() => {
+        let contentHtmlImg = document.querySelectorAll(".home-page-tag-content img")
+        new Promise((resolve,rejcet) => {
+        for (let i = 0; i < contentHtmlImg.length; i++) {
+          contentHtmlImg[i].setAttribute("src","")
+        }
+        resolve()
+      }).then(() => {
+        let contentHtmlImgs = document.querySelectorAll(".home-page-tag-content img")
+        for (let i = 0; i < contentHtmlImgs.length; i++) {
+          let nodeParent = contentHtmlImgs[i].parentNode
+          nodeParent.removeChild(contentHtmlImgs[i])
+
+        }
+      })
+      },5)
+    },
     changePage(currentPage) {
-      // this.currentPage = currentPage
+      this.setImgDom()
       let start = (this.$store.state.currentPageNum -1) * this.pageSize
       let end = start + this.pageSize
       this.showPageArr = this.allPageArr.slice(start, end)
@@ -140,7 +144,3 @@ export default {
   },
 }
 </script>
-
-<style scoped>
-
-</style>

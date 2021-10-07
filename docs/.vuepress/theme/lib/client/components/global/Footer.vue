@@ -21,11 +21,11 @@ export default {
   },
   data() {
     return {
-      footerArr: null,
+      footerArr: [],
       isShowRunTime: true,
       startRunTime: '8/7/2021 12:22:00',
       runTime: '',
-      prefixRuntime: ''
+      prefixRuntime: '小破站已运行'
     }
   },
   props: {
@@ -35,7 +35,7 @@ export default {
         return true
       }
     },
-    themeProperty: null,
+    themeProperty: '',
     isHome: {
       type: Boolean,
       default() {
@@ -44,7 +44,13 @@ export default {
     }
   },
   created() {
-    this.footerArr = this.themeProperty.footer
+    if (this.themeProperty.footer !== undefined) {
+      this.footerArr = this.themeProperty.footer
+    }else {
+      this.footerArr = [
+          'Copyright © by qsyyke All Rights Reserved'
+      ]
+    }
     let showThemeCopyright = this.themeProperty.isShowThemeCopyright
     if (showThemeCopyright === undefined || showThemeCopyright == null || showThemeCopyright === true) {
       //默认为TRUE，显示页脚主题版权
@@ -60,9 +66,17 @@ export default {
       this.footerArr = setArr
 
     }
-    this.isShowRunTime = this.themeProperty.isShowRunTime
-    this.startRunTime = this.themeProperty.startRunTime
-    this.prefixRuntime = this.themeProperty.prefixRuntime
+
+
+    if (this.themeProperty.isShowRunTime !== undefined) {
+      this.isShowRunTime = this.themeProperty.isShowRunTime
+    }
+    if (this.themeProperty.startRunTime !== undefined) {
+      this.startRunTime = this.themeProperty.startRunTime
+    }
+    if (this.themeProperty.prefixRuntime !== undefined) {
+      this.prefixRuntime = this.themeProperty.prefixRuntime
+    }
     this.showRuntime()
   },
   methods: {

@@ -4,9 +4,16 @@ const axios = require('axios')
 module.exports = {
     req: function (option) {
         return new Promise((resolve, reject) => {
-            let timeout = option.timeout
-            let method = option.method
-            let baseURL = option.baseURL
+            let timeout = 0;
+            let method = "GET"
+            let baseURL = ""
+            try {
+                timeout = option.timeout
+                method = option.method
+                baseURL = option.baseURL
+            }catch (e) {
+
+            }
 
             if (timeout === undefined) {
                 timeout = 5000
@@ -16,7 +23,7 @@ module.exports = {
                 method = "get"
             }
 
-            if (baseURL === undefined) {
+            if (baseURL === '') {
                 baseURL = 'https://international.v1.hitokoto.cn/?c=k&max_length=45'
             }
 

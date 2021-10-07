@@ -255,8 +255,10 @@ div[class*='language-'] {
 @media (max-width: $MQMobileNarrow) {
   .theme-default-content {
     div[class*='language-'] {
-      margin: 0.85rem -1.5rem;
-      border-radius: 5px;
+      //width: 96%;
+      margin: 0 auto;
+      //margin: 0.85rem -1.5rem;
+      border-radius: 15px;
     }
   }
 }

@@ -31,23 +31,17 @@
 
 <script>
 import myData from '@temp/my-data'
+import {useThemeData} from "../../composables";
 
 export default {
   name: "Profile",
   data() {
     return {
-      themeProperty: null
+      themeProperty: ''
     }
   },
   created() {
-    new Promise((resolve,reject) => {
-      for (let i = 0; i < myData.length; i++) {
-        if (myData[i].path === '/') {
-          this.themeProperty = myData[i].frontmatter
-        }
-      }
-      resolve()
-    })
+    this.themeProperty = useThemeData().value
   },
   computed: {
     getHeroImage() {
@@ -62,7 +56,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-  /*@import "../../styles/theme.style.css";*/
-</style>

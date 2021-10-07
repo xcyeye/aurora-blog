@@ -17,6 +17,7 @@
 import AddMood from "./child/AddMood";
 import myData from '@temp/my-data'
 import $ from "jquery";
+import {useThemeData} from "../composables";
 export default {
   name: "SocialSpin",
   components: {
@@ -24,19 +25,12 @@ export default {
   },
   data() {
     return {
-      themeProperty: null,
+      themeProperty: '',
       openEditStatus: false
     }
   },
   created() {
-    new Promise((resolve,reject) => {
-      for (let i = 0; i < myData.length; i++) {
-        if (myData[i].path === '/') {
-          this.themeProperty = myData[i].frontmatter
-        }
-      }
-      resolve()
-    })
+    this.themeProperty = useThemeData().value
   },
   methods:{
     cancel(openEditStatus) {

@@ -2,28 +2,18 @@
   <main :style="$store.state.borderRadiusStyle + $store.state.opacityStyle"
         class="page sidebar-single-enter-animate" id="article-page">
     <slot name="top" />
-    <!--:adsense-script="adsenseArr[0].script"-->
     <div class="page-top-share">
       <poster :title="originPageData.title" :content="posterContent"/>
     </div>
     <div id="theme-default-content" class="theme-default-content pageContent">
-      <!--<AdSense adsense-position="right"-->
-      <!--         :adsense-background-img="adsenseArr[0].adsenseBackgroundImg"-->
-      <!--         :adsense-message="adsenseArr[0].adsenseMessage"-->
-      <!--&gt;-->
-      <!--  <div v-html="adsenseArr[0].script">-->
-      <!--  </div>-->
-      <!--</AdSense>-->
       <Content />
     </div>
-
     <PageMeta />
     <PageNav />
     <slot name="bottom" />
   </main>
   <div>
-    <donate v-if="themeProperty.donate.articlePage" />
-    <!--<Poster/>-->
+    <donate v-if="showDonate" />
   </div>
   <div class="recommend-page">
     <RecommendPage :theme-property="themeProperty"/>
@@ -52,7 +42,7 @@ export default defineComponent({
   },
   data() {
     return {
-      adsenseArr: null,
+      adsenseArr: [],
       insertAdsenseRule: '',
       adsenseLength: 3,
       lazyLoadingImg: null,
@@ -63,8 +53,20 @@ export default defineComponent({
     }
   },
   props: {
-    themeProperty: null
+    themeProperty: ''
   },
+  computed: {
+    showDonate() {
+      let showArticleDonate = true
+      try {
+        showArticleDonate = this.themeProperty.donate.articlePage
+      }catch (e) {
+
+      }
+      return showArticleDonate
+    }
+  },
+  emits: ['getHeadLine'],
   created() {
     //如果手机端侧边栏打开的，那么就关闭
     if (this.$store.state.openMobileSidebar) {
@@ -73,7 +75,6 @@ export default defineComponent({
       })
     }
     //设置sidebar的class
-    this.$emit("setPageSidebar",true)
 
     setTimeout(() => {
       this.getPosterText().then((res) => {
@@ -82,10 +83,19 @@ export default defineComponent({
     },1000)
     const page = usePageData()
     this.originPageData = page
+
     this.$emit('getHeadLine',page.value.title)
-    this.adsenseArr = this.themeProperty.adsenseArr
-    this.insertAdsenseRule = this.themeProperty.insertAdsenseRule
-    this.adsenseLength = this.themeProperty.adsenseLength
+    if (this.themeProperty.adsenseArr !== undefined && this.themeProperty.adsenseArr != null) {
+      this.adsenseArr = this.themeProperty.adsenseArr
+    }
+
+    if (this.themeProperty.insertAdsenseRule !== undefined && this.themeProperty.insertAdsenseRule != null) {
+      this.insertAdsenseRule = this.themeProperty.insertAdsenseRule
+    }
+
+    if (this.themeProperty.adsenseLength !== undefined && this.themeProperty.adsenseLength != null) {
+      this.adsenseLength = this.themeProperty.adsenseLength
+    }
     let lazyLoadingImg = this.themeProperty.lazyLoadingImg
     this.lazyLoadingImg = lazyLoadingImg === undefined ? "https://ooszy.cco.vin/img/blog-public/ljz.gif" : lazyLoadingImg
 
@@ -161,10 +171,13 @@ export default defineComponent({
       })
     },
     getPContent(pContents) {
+
       return  new Promise((resolve,reject) => {
         let pText = ''
-        for (let i = 0; i < 3; i++) {
-          pText = pText + pContents[i].innerText
+        if (pContents.length !== 0) {
+          for (let i = 0; i < 3; i++) {
+            pText = pText + pContents[i].innerText
+          }
         }
         resolve(pText)
       })
@@ -255,7 +268,6 @@ export default defineComponent({
     setMeta() {
       //设置meta标签的keyword和description
       //获取tip类名的内容 theme-default-content
-
       let frontmatterDesc = this.originPageData.frontmatter.description
       let frontmatterKeyword = this.originPageData.frontmatter.keyword
 
@@ -383,6 +395,7 @@ export default defineComponent({
 
     new Promise((resolve,reject) => {
       let adsenseNodes = []
+
       for (let i = 0; i < this.adsenseArr.length; i++) {
         if (this.adsenseArr[i].position === 'center') {
           let node = $("<AdSense adsense-position=\""+this.adsenseArr[i].position+"\"\n" +

@@ -1,8 +1,8 @@
 <template>
-  <div class="home-page-tag-item sidebar-single-enter-animate" id="home-page-tag-item">
+  <div ref="pageItemTop" class="home-page-scroll home-page-tag-item sidebar-single-enter-animate" id="home-page-tag-item">
     <div class="home-page-tag-img">
       <div class="home-page-img-gradual"></div>
-      <img id="home-page-img" :src="getPageUrl(pageItem)" alt="">
+      <img id="home-page-img" :data-src="getPageUrl(pageItem)" src="https://ooszy.cco.vin/img/blog-note/aurora-loading.gif" alt="">
     </div>
 
     <div class="home-page-tag-con">
@@ -11,29 +11,30 @@
           <span>{{pageItem.title}}</span>
         </router-link>
       </div>
-      <div class="home-page-tag-content">
+      <div ref="homePageDom" :class="getPageClass" class="home-page-tag-content">
         <div class="home-page-tag-content-rendered" style="display: block" v-html="pageItem.contentRendered"></div>
       </div>
       <div class="home-page-tag-bottom">
         <div v-if="pageItem.frontmatter.stick" class="home-page-stick">
-          <span class="icon-thumb-tack"></span>
+          <span class="home-menu-ico" style="--homeIcoCode: '\e657';color:red;"></span>
+          <span style="color:red;">置顶</span>
         </div>
         <div class="home-page-info">
           <div class="home-page-info-time">
-            <span class="icon-clock2"></span>
+            <span class="home-menu-ico" style="--homeIcoCode: '\e662';"></span>
             <span>{{getTime(pageItem)}}</span>
           </div>
         </div>
         <div class="home-page-tag-tag-desc" id="home-page-tag-tag-desc">
           <div>
-            <span class="tag-label"></span>
+            <span class="home-menu-ico" style="--homeIcoCode: '\e7b5';"></span>
             <span class="home-page-tag-span" v-for="item in getPageTag(pageItem)">{{item}}</span>
           </div>
         </div>
         <div class="home-page-tag-enter">
-          <div>
-            <span class="icon-redo2"></span>
-            <span class="home-page-read" @click="goRead(event,pageItem.articleUrl)">阅读</span>
+          <div @click="goRead(event,pageItem.articleUrl)">
+            <span class="home-menu-ico" style="--homeIcoCode: '\e62e';"></span>
+            <span class="home-page-read">阅读</span>
           </div>
         </div>
       </div>
@@ -42,6 +43,7 @@
 </template>
 
 <script>
+import {useThemeLocaleData} from '../../../composables'
 export default {
   name: "HomePageItem",
   props: {
@@ -57,9 +59,13 @@ export default {
       default() {
         return false;
       }
-    }
+    },
+    index: 0
   },
   computed: {
+    getPageClass() {
+      return 'homePageConImg' + this.index
+    },
     getTime() {
       return (item) => {
         return this.getLocalTime(item.data.git.updatedTime)
@@ -72,8 +78,11 @@ export default {
         let num3 = this.getRandomInt(0,30)
         let num = num2 / num3 * num1 + num2
 
-        let homePageImgApi = this.themeProperty.homePageImgApi
-        if (homePageImgApi === undefined || homePageImgApi == null) {
+        const themeLocale = useThemeLocaleData()
+
+        let homePageImgApi = themeLocale.value.homePageImgApi
+
+        if (homePageImgApi === undefined) {
           homePageImgApi = "https://api.ixiaowai.cn/api/api.php"
         }
         let path = homePageImgApi + "?time=" + num
@@ -96,13 +105,6 @@ export default {
       max = Math.floor(max);
       return Math.floor(Math.random() * (max - min)) + min; //不含最大值，含最小值
     },
-    setHomePageImg() {
-      let contentHtmlImg = document.querySelectorAll(".home-page-tag-content img")
-      for (let i = 0; i < contentHtmlImg.length; i++) {
-        contentHtmlImg[i].setAttribute("src","https://ooszy.cco.vin/img/ico/loading.png")
-        contentHtmlImg[i].setAttribute("style","transform: scale(.2);")
-      }
-    },
     goRead(e,url) {
       this.$router.push(url)
     },
@@ -119,13 +121,51 @@ export default {
       let sec = date.getSeconds()
       return year + "-" + month + "-" + day + " "
     },
+    handleScroll() {
+      let clientHeight = document.documentElement.clientHeight
+      let homePageScrolls = document.querySelectorAll(".home-page-scroll")
+      for (let i = 0; i < homePageScrolls.length; i++) {
+        let distance_top = homePageScrolls[i].getBoundingClientRect().top
+        if (distance_top < clientHeight) {
+          //加载图片
+          let elementsByTagName = homePageScrolls[i].getElementsByTagName("img");
+          let dataSrc = elementsByTagName[0].getAttribute("data-src");
+          elementsByTagName[0].setAttribute("src",dataSrc)
+        }
+      }
+    },
+    setImgDom() {
+      let contentHtmlImg = document.querySelectorAll(".home-page-tag-content img")
+      new Promise((resolve,rejcet) => {
+        for (let i = 0; i < contentHtmlImg.length; i++) {
+          contentHtmlImg[i].setAttribute("src","")
+        }
+        resolve()
+      }).then(() => {
+        let contentHtmlImgs = document.querySelectorAll(".home-page-tag-content img")
+        for (let i = 0; i < contentHtmlImgs.length; i++) {
+          let nodeParent = contentHtmlImgs[i].parentNode
+          nodeParent.removeChild(contentHtmlImgs[i])
+        }
+      })
+    }
   },
   mounted() {
     let contentHtmlImg = document.querySelectorAll(".home-page-tag-content img")
-    for (let i = 0; i < contentHtmlImg.length; i++) {
-      contentHtmlImg[i].setAttribute("src","https://ooszy.cco.vin/img/ico/loading.png")
-      contentHtmlImg[i].setAttribute("style","transform: scale(.2);")
-    }
+    new Promise((resolve,rejcet) => {
+      for (let i = 0; i < contentHtmlImg.length; i++) {
+        contentHtmlImg[i].setAttribute("src","")
+      }
+      resolve()
+    }).then(() => {
+      let contentHtmlImgs = document.querySelectorAll(".home-page-tag-content img")
+      for (let i = 0; i < contentHtmlImgs.length; i++) {
+        let nodeParent = contentHtmlImgs[i].parentNode
+        nodeParent.removeChild(contentHtmlImgs[i])
+
+      }
+    })
+    window.addEventListener('scroll', this.handleScroll, true)
   }
 }
 </script>

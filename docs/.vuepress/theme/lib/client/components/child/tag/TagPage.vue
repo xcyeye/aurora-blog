@@ -13,7 +13,7 @@
           <span class="tag-page-content">{{tagContent}}</span>
         </div>
         <div id="tag-page-right-bottom" class="tag-page-right-bottom">
-          <span class="tag-label"></span><span :data="allCategories.length" :style="setBackgroundStyle(888)" v-for="(item,index) in allCategories">{{item}}</span>
+          <span class="home-menu-ico" style="--homeIcoCode: '\e7b5';color: rgba(98, 182, 203, 0.48);"></span>&nbsp;<span :data="allCategories.length" :style="setBackgroundStyle(888)" v-for="(item,index) in allCategories">{{item}}</span>
         </div>
       </div>
     </div>
@@ -29,8 +29,8 @@ export default {
     }
   },
   props: {
-    pageMap: null,
-    themeProperty: null
+    pageMap: '',
+    themeProperty: ''
   },
   computed: {
     setBackgroundImg() {
@@ -39,8 +39,15 @@ export default {
     },
     setBackgroundStyle() {
       return (index) => {
-        let color = this.themeProperty.randomColor[
-            this.getRandomInt(0,this.themeProperty.randomColor.length -1)]
+        let color = ''
+        if (this.themeProperty.randomColor !== undefined && this.themeProperty.randomColor != null) {
+          color = this.themeProperty.randomColor[
+              this.getRandomInt(0,this.themeProperty.randomColor.length -1)]
+        }else {
+          color = this.$store.state.defaultRandomColors[
+              this.getRandomInt(0,this.$store.state.defaultRandomColors.length -1)]
+        }
+
         let hexToRgb = this.hexToRgb(color);
         let style = "background-color: rgba(" + hexToRgb.r + "," +
             hexToRgb.g + "," + hexToRgb.b + "," +

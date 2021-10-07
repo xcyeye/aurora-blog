@@ -13,14 +13,26 @@
 export default {
   name: "TagCloud",
   props: {
-    themeProperty: null,
-    tagArr: []
+    themeProperty: '',
+    tagArr: {
+      type: Array,
+      default() {
+        return []
+      }
+    }
   },
   computed: {
     setTagItemStyle() {
       return (index) => {
-        let color = this.themeProperty.randomColor[
-            this.getRandomInt(0,this.themeProperty.randomColor.length -1)]
+        let color = ''
+        if (this.themeProperty.randomColor !== undefined && this.themeProperty.randomColor != null) {
+          color = this.themeProperty.randomColor[
+              this.getRandomInt(0,this.themeProperty.randomColor.length -1)]
+        }else {
+          color = this.$store.state.defaultRandomColors[
+              this.getRandomInt(0,this.$store.state.defaultRandomColors.length -1)]
+        }
+
         let fontSize = this.getRandomInt(12,30)
         return "color: " + color + "; font-size: " + fontSize + "px;";
       }

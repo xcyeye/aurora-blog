@@ -14,6 +14,7 @@
 
 <script>
 import HomeSocialItem from "./HomeSocialItem";
+import {useThemeData} from "../../../composables";
 
 export default {
   name: "HomeSocial",
@@ -40,10 +41,7 @@ export default {
         return true
       }
     },
-    themeProperty: null
-  },
-  mounted() {
-    this.setWidth()
+    themeProperty: ''
   },
   computed: {
     isImgSrc(item) {
@@ -51,12 +49,19 @@ export default {
     }
   },
   created() {
-    this.socials = this.themeProperty.socials
+    if (this.themeProperty.socials !== undefined && this.themeProperty.socials != null) {
+      this.socials = this.themeProperty.socials
+    }
 
     new Promise((resolve,reject) => {
       let socialArr = []
-      if (this.socials.length > this.themeProperty.socialMaxLength) {
-        for (let i = 0; i < this.themeProperty.socialMaxLength; i++) {
+      let socialMaxLength = this.themeProperty.socialMaxLength
+      if (socialMaxLength === undefined || socialMaxLength == null) {
+        socialMaxLength = 7
+      }
+
+      if (this.socials.length > socialMaxLength) {
+        for (let i = 0; i < socialMaxLength; i++) {
           socialArr.push(this.socials[i])
         }
       }else {

@@ -99,5 +99,8 @@ module.exports = {
     },
     setPosterData(state,posterData) {
         this.state.posterData = posterData.posterData
+    },
+    setHomeWps(state,homeWps) {
+        this.state.homeWps = homeWps.homeWps
     }
 }

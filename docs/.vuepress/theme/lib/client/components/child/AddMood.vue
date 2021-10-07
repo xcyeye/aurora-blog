@@ -1,11 +1,8 @@
 <template>
-  <!--<div class="add-mood-button">
-    <span @click="openEdit" class="">添加说说</span>
-  </div>-->
   <div :class="{editMood: openEditStatus}">
     <div v-if="!$store.state.verifyStatus" style="display: none" class="add-mood-pwd donate-pay" id="add-mood-pwd">
       <div class="poster-cancel">
-        <span class="icon-close" @click="cancel"></span>
+        <span class="home-menu-ico" @click="cancel" style="--homeIcoCode: '\e68f'"></span>&nbsp;
       </div>
       <div id="pro-single-mood" class="pro-single pro-message">
         <div class="add-mood-pwd">
@@ -23,7 +20,7 @@
         </div>
         <div class="pro-single pro-message">
           <div class="donate-bottom-input">
-            <input :style="setVerifyStyle" id="pro-input-message" placeholder="请输入密码" v-model="password" name="password" type="password">
+            <input :style="setVerifyStyle" placeholder="请输入密码" v-model="password" name="password" type="password">
           </div>
         </div>
       </div>
@@ -31,7 +28,7 @@
 
     <div class="add-mood" style="display: none" id="add-mood">
       <div class="poster-cancel">
-        <span @click="cancelEdit" class="icon-close"></span>
+        <span class="home-menu-ico" @click="cancelEdit" style="--homeIcoCode: '\e68f'"></span>&nbsp;
       </div>
       <div v-if="$store.state.verifyStatus" class="edit-mood donate-pay" id="donate-pay">
         <div class="pro-single pro-message">
@@ -59,7 +56,7 @@
 
 <script>
 import $ from 'jquery'
-import myData from '@temp/my-data'
+import {useThemeData} from "../../composables";
 const network = require('../../public/js/network.js')
 export default {
   name: "AddMood",
@@ -79,7 +76,7 @@ export default {
       originTitle: '',
       originContent: '',
       isOrigin: false,
-      themeProperty: null,
+      themeProperty: '',
       appKey: '',
       appId: '',
       siteName: ''
@@ -103,20 +100,12 @@ export default {
     }
   },
   created() {
-    new Promise((resolve,reject) => {
-      for (let i = 0; i < myData.length; i++) {
-        if (myData[i].path === '/') {
-          this.themeProperty = myData[i].frontmatter
-        }
-      }
-      resolve()
-    }).then(() => {
-      if (this.themeProperty.addMood !== undefined && this.themeProperty.addMood != null) {
-        this.appId = this.themeProperty.addMood.appId
-        this.appKey = this.themeProperty.addMood.appKey
-        this.siteName = this.themeProperty.addMood.siteName
-      }
-    })
+    this.themeProperty = useThemeData().value
+    if (this.themeProperty.addMood !== undefined) {
+      this.appId = this.themeProperty.addMood.appId
+      this.appKey = this.themeProperty.addMood.appKey
+      this.siteName = this.themeProperty.addMood.siteName
+    }
   },
   methods: {
     cancel() {

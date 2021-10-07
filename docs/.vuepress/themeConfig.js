@@ -1,54 +1,7 @@
-const { path } = require("@vuepress/utils");
-const { themeConfig } = require("./themeConfig");
-
+const { sidebar } = require("./theme/lib/client/public/js/hrefs");
+const { navbar } = require("./theme/lib/client/public/js/navbar");
 module.exports = {
-    plugins: [
-        "@vuepress/plugin-search",
-        {
-            locales: {
-                "/": {
-                    placeholder: "Search",
-                },
-                "/zh/": {
-                    placeholder: "搜索",
-                },
-            },
-        }
-    ],
-    //设置head
-    head: [
-        [
-            "script",
-            {
-                src: "https://at.alicdn.com/t/font_2849934_v6y652peian.js",
-            },
-        ],
-        //https://at.alicdn.com/t/font_2849934_v6y652peian.js
-        [
-            "link",
-            {
-                href: "https://github.githubassets.com/favicons/favicon.svg",
-                type: "image/svg+xml",
-                rel: "icon",
-            },
-        ],
-    ],
-    onPrepared: async (app) => {
-        const myData = app.pages.map((page) => {
-            return page;
-        });
-        await app.writeTemp(
-            "my-data.js",
-            `export default ${JSON.stringify(myData)}`
-        );
-    },
-    theme: path.resolve(__dirname, "theme/lib/node/index.js"),
-    title: "I do not follow,i lives is always all you want",
-
-    port: 8080,
-    // themeConfig
-
-    /*themeConfig: {
+    themeConfig: {
         navbar: navbar,
         sidebar: sidebar,
         darkMode: false,
@@ -375,12 +328,12 @@ module.exports = {
         randomSawQuery: "hitokoto",
         method: "get",
         //animeOption 配置已弃用
-        /!*animeOption: {
+        /*animeOption: {
             baseURL: "https://api.vvhan.com/api/acgimg?type=json",
             method: 'get',
             timeout: 5000,
             query: "imgurl",
-        },*!/
+        },*/
 
         //随机图片地址，设置背景用 已弃用，在v1.3.2以后，改用自己设置的形式
         //randomWallpaper: https://api.mtyqx.cn/api/random.php
@@ -490,14 +443,14 @@ module.exports = {
         },
 
 
-        /!*ico: { 在v1.3.2之后被移除
+        /*ico: { 在v1.3.2之后被移除
             linkIco: "https://ooszy.cco.vin/img/ico/tea.svg",
             aboutIco: "https://ooszy.cco.vin/img/ico/cat.svg",
             homeWelcome: [
                 "https://ooszy.cco.vin/img/ico/love2.svg",
                 "https://ooszy.cco.vin/img/ico/xy.svg",
             ],
-        },*!/
+        },*/
 
         //需要排除的标签，自动生成的标签中，不会有这个标签，这是一个数组
         excludeTag: ["note"],
@@ -539,7 +492,7 @@ module.exports = {
 
         // isShowMessage: true,//已弃用，在v1.3.2之后，改用在侧边栏显示公告
 
-        /!*adsenseArr: [ 弃用
+        /*adsenseArr: [ 弃用
             {
                 position: "right",
                 adsenseMessage: "官网用户专享",
@@ -558,7 +511,7 @@ module.exports = {
                 script: '<a href="https://baidu.com">这是中间2</a>',
                 adsenseBackgroundImg: "/img/33.jpg",
             },
-        ],*!/
+        ],*/
 
         // insertAdsenseRule: 17, 弃用
 
@@ -789,5 +742,5 @@ module.exports = {
         //侧边栏标签处显示还是分类还是标签，只有两个值，默认为分类，如果为tag，那么就显示为分类，否则显示为标签
         sidebarTag: "tag",
         ccName: 'chuchen'
-    },*/
-};
+    }
+}

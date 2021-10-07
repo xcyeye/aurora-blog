@@ -11,8 +11,10 @@
                   <h2 class="tag-scroll">标签</h2>
                 </div>
                 <div class="tag-select-icomoon">
-                  <span :class="{tagCloudControl: tagIndex === 0}" @click="showTagCloud(event,0)" style="--homeIcoCode: '\e92f'" class="home-menu-ico"></span>
-                  <span :class="{tagListControl: tagIndex === 1}" @click="showTagCloud(event,1)" style="--homeIcoCode: '\e9bd'" class="home-menu-ico"></span>
+                  <span :class="{tagCloudControl: tagIndex === 0}" @click="showTagCloud(event,0)"
+                        style="--homeIcoCode: '\e93d'" class="home-menu-ico"></span>
+                  <span :class="{tagListControl: tagIndex === 1}" @click="showTagCloud(event,1)"
+                        style="--homeIcoCode: '\e941'" class="home-menu-ico"></span>
                 </div>
               </div>
 
@@ -57,7 +59,7 @@
             </div>
             <div style="clear: both"></div>
             <div class="tag-bottom">
-              <TagPage v-for="(item,index) in allPageMap"
+              <TagPage v-for="(item,index) in showPageArr"
                        :page-map="item"
                        :key="index"
                        :style="$store.state.opacityStyle"
@@ -65,9 +67,12 @@
               />
             </div>
           </div>
-          <div class="tag-cloud">
-
-          </div>
+          <div class="tag-cloud"></div>
+        </template>
+        <template #page-center2>
+          <cute-page @changePage="changePage"
+                     :total="allPageMap.length"
+                     :page-size="pageSize"/>
         </template>
       </BCenter>
     </template>
@@ -78,15 +83,17 @@
 import TagCloud from "./child/tag/TagCloud";
 import TagItem from "./child/tag/TagItem";
 import TagPage from "./child/tag/TagPage";
+import CutePage from "./child/side/CutePage";
 import $ from "jquery";
-import myData from '@temp/my-data'
+import {useThemeData} from "../composables";
 
 export default {
   name: "Tag",
   components: {
     TagItem,
     TagPage,
-    TagCloud
+    TagCloud,
+    CutePage
   },
   data() {
     return {
@@ -96,51 +103,55 @@ export default {
       isActive: -1,
       isCategoriesActive: -1,
       tag: '',
-      themeProperty: null,
-      tagIndex: 0
+      themeProperty: '',
+      tagIndex: 0,
+      pageSize: 5,
+      showPageArr: []
     }
   },
   created() {
-    // 从其他页面进入此tag页面，查看是否携带分类参数
-    console.log("已进入tag")
-    console.log(this.$route.query);
-    let tag = this.$route.query.tag;
-    if (tag !== undefined || tag !== null) {
-      this.tag = tag
-      let allPages = this.$store.state.allPageMap
-      new Promise((resolve,reject) => {
-        let temPage = []
-        for (let i = 0; i < allPages.length; i++) {
-          let tagArr = allPages[i].categories
-          for (let j = 0; j < tagArr.length; j++) {
-
-            let pageTag = tagArr[j]
-            if (this.tag === pageTag) {
-              temPage.push(allPages[i])
-            }
-            continue
-          }
-        }
-        resolve(temPage)
-      }).then((temPage) => {
-        this.allPageMap = temPage
-      })
-    }
-
     //如果手机端侧边栏打开的，那么就关闭
     if (this.$store.state.openMobileSidebar) {
       this.$store.commit("setOpenMobileSidebar",{
         openMobileSidebar: false
       })
     }
-    new Promise((resolve,reject) => {
-      for (let i = 0; i < myData.length; i++) {
-        if (myData[i].path === '/') {
-          this.themeProperty = myData[i].frontmatter
-        }
-      }
-      resolve()
-    })
+    this.themeProperty = useThemeData().value
+    // 从其他页面进入此tag页面，查看是否携带分类参数
+    let tag = this.$route.query.tag
+    let sidebarTag = this.themeProperty.sidebarTag
+    if (sidebarTag === undefined || sidebarTag == null) {
+      sidebarTag = "tag"
+    }
+
+    if (tag !== undefined && tag !== null && tag !== "") {
+      this.tag = tag
+      setTimeout(() => {
+        let allPages = this.$store.state.allPageMap
+        new Promise((resolve,reject) => {
+          let temPage = []
+          for (let i = 0; i < allPages.length; i++) {
+            let tagArr = []
+            if (sidebarTag === "tag") {
+              tagArr = allPages[i].tag
+            }else {
+              tagArr = allPages[i].categories
+            }
+            for (let j = 0; j < tagArr.length; j++) {
+              let pageTag = tagArr[j]
+              if (this.tag === pageTag) {
+                temPage.push(allPages[i])
+              }
+              continue
+            }
+          }
+          resolve(temPage)
+        }).then((temPage) => {
+          this.allPageMap = temPage
+          this.changePage(1)
+        })
+      },200)
+    }
   },
   mounted() {
     this.autoScroll()
@@ -158,6 +169,12 @@ export default {
     }
   },
   methods: {
+    changePage(currentPageNum) {
+      let currentNum = currentPageNum === "" ? 1 : currentPageNum
+      let start = (currentNum -1) * this.pageSize
+      let end = start + this.pageSize
+      this.showPageArr = this.allPageMap.slice(start,end)
+    },
     autoScroll() {
       let autoScroll = setInterval(() => {
         if (document.querySelectorAll(".tag-bottom .tag-page").length !== 0) {
@@ -167,6 +184,7 @@ export default {
       },30)
     },
     clickCloudTag(tagItem) {
+
       //当前鼠标点击的标签
       this.tag = tagItem.tagItem
       let allPages = this.$store.state.allPageMap
@@ -186,6 +204,7 @@ export default {
         resolve(temPage)
       }).then((temPage) => {
         this.allPageMap = temPage
+        this.changePage(1)
       })
 
       this.autoScroll()
@@ -209,6 +228,7 @@ export default {
         resolve(temPage)
       }).then((temPage) => {
         this.allPageMap = temPage
+        this.changePage(1)
       })
 
       this.autoScroll()
@@ -220,15 +240,17 @@ export default {
       this.isActive = index
       //当前鼠标点击的标签
       let splitTag = e.target.innerText
-      this.tag = splitTag.split(this.themeProperty.split)[0]
-
+      let split = ''
+      if (this.themeProperty.split !== undefined && this.themeProperty.split != null) {
+        split = this.themeProperty.split
+      }
+      this.tag = splitTag.split(split)[0]
       let allPages = this.$store.state.allPageMap
       new Promise((resolve,reject) => {
         let temPage = []
         for (let i = 0; i < allPages.length; i++) {
           let tagArr = allPages[i].tag
           for (let j = 0; j < tagArr.length; j++) {
-
             let pageTag = tagArr[j]
             if (this.tag === pageTag) {
               temPage.push(allPages[i])
@@ -239,6 +261,7 @@ export default {
         resolve(temPage)
       }).then((temPage) => {
         this.allPageMap = temPage
+        this.changePage(1)
       })
       this.autoScroll()
     },
@@ -265,6 +288,7 @@ export default {
         resolve(temPage)
       }).then((temPage) => {
         this.allPageMap = temPage
+        this.changePage(1)
       })
       this.autoScroll()
     }

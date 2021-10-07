@@ -17,73 +17,119 @@
 
 <script>
 import myData from '@temp/my-data'
+import {useThemeData} from "../../composables";
 export default {
   name: "Comment",
   data() {
     return {
       Valine: '',
       pathname: '',
-      themeProperty: null,
+      themeProperty: '',
       adminUsername: null
     }
   },
   computed: {
     getAppId() {
-      let appId = this.themeProperty.comment.appId
-      if (appId === undefined || appId == null) {
-        console.log("%c 如需启用评论，请传入appId值，可查看文档\nhttps://theme-ccds.cco.vin/","color: #9f86c0;")
-        appId = ""
+      let appId = ''
+      try {
+        appId = this.themeProperty.comment.appId
+      }catch (e) {
+        console.log("%c 如需启用评论，请传入appId值，可查看文档\nhttps://aurora.cco.vin/","color: #9f86c0;")
       }
       return appId
     },
     getAppKey() {
-      let appKey = this.themeProperty.comment.appKey
-      if (appKey === undefined || appKey == null) {
-        console.log("%c 如需启用评论，请传入appKey值，可查看文档\nhttps://theme-ccds.cco.vin/config/comment/","color: #9f86c0;")
-        appKey = ""
+      let appKey = ''
+      try {
+        appKey = this.themeProperty.comment.appKey
+      }catch (e) {
+        console.log("%c 如需启用评论，请传入appKey值，可查看文档\nhttps://aurora.cco.vin/config/comment/","color: #9f86c0;")
       }
       return appKey
     },
     getPlaceholder() {
-      let placeholder = this.themeProperty.comment.placeholder
-      placeholder = placeholder === undefined || placeholder == null ? "在此输入评论内容..." : placeholder
+      let placeholder = ''
+      try {
+        placeholder = this.themeProperty.comment.placeholder
+        placeholder = placeholder === undefined || placeholder == null ? "在此输入评论内容..." : placeholder
+      }catch (e) {
+        placeholder = "在此输入评论内容..."
+      }
       return placeholder
     },
     getAvatar() {
-      let avatar = this.themeProperty.comment.avatar
-      return avatar === undefined || avatar == null ? "robohash" : avatar
+
+      let avatar = 'robohash'
+      try {
+        let avatar = this.themeProperty.comment.avatar
+        avatar = avatar === undefined || avatar == null ? "robohash" : avatar
+      }catch (e) {
+
+      }
+      return avatar
     },
     getPageSize() {
-      let pageSize = this.themeProperty.comment.pageSize
-      return pageSize === undefined || pageSize == null ? 10 : pageSize
+      let pageSize = 10
+      try {
+        pageSize = this.themeProperty.comment.pageSize
+        pageSize = pageSize === undefined || pageSize == null ? 10 : pageSize
+      }catch (e) {
+
+      }
+      return pageSize
     },
     getVisitor() {
-      let visitor = this.themeProperty.comment.visitor
-      return visitor === undefined || visitor === true ? true : visitor
+      // let visitor = this.themeProperty.comment.visitor
+      let visitor = true
+      try {
+        visitor = this.themeProperty.comment.visitor
+        visitor = visitor === undefined || visitor == null ? true : visitor
+      }catch (e) {
+
+      }
+      return visitor
     },
     getRecordIP() {
-      let recordIP = this.themeProperty.comment.recordIP
-      return recordIP === undefined || recordIP === false ? 'ccds' : recordIP
+      // let recordIP = this.themeProperty.comment.recordIP
+      let recordIP = false
+      try {
+        recordIP = this.themeProperty.comment.recordIP
+        recordIP = recordIP === undefined || recordIP == null ? false : recordIP
+      }catch (e) {
+
+      }
+      return recordIP
     },
     getAdminUsername() {
-      let adminUsername = this.themeProperty.comment.adminUsername
-      return adminUsername === undefined || adminUsername == null ? 'ccds' : adminUsername
+      // let adminUsername = this.themeProperty.comment.adminUsername
+      let adminUsername = 'qsyyke'
+      try {
+        adminUsername = this.themeProperty.comment.adminUsername
+        adminUsername = adminUsername === undefined || adminUsername == null ? 'aurora' : adminUsername
+      }catch (e) {
+
+      }
+      return adminUsername
     },
     getShowComment() {
-      let showComment = this.themeProperty.comment.showComment
-      return showComment === undefined || showComment === true ? 'ccds' : showComment
+      // let showComment = this.themeProperty.comment.showComment
+      let showComment = true
+      try {
+        showComment = this.themeProperty.comment.showComment
+        showComment = showComment === undefined || showComment == null ? true : showComment
+      }catch (e) {
+
+      }
+      return showComment
     }
   },
   created() {
-    new Promise((resolve,reject) => {
-      for (let i = 0; i < myData.length; i++) {
-        if (myData[i].path === '/') {
-          this.themeProperty = myData[i].frontmatter
-          this.adminUsername = myData[i].frontmatter.comment.adminUsername
-        }
-      }
-      resolve()
-    })
+    this.themeProperty = useThemeData().value
+    try {
+      this.adminUsername = this.themeProperty.comment.adminUsername
+    }catch (e) {
+      this.adminUsername = 'Aurora'
+    }
   },
   mounted() {
     new Promise((resolve,reject) => {
@@ -102,8 +148,7 @@ export default {
     setTimeout(() => {
       this.addAdminId()
 
-      document.querySelector(".vrow button").onclick = function (e) {
-        //console.log(e.target)
+      document.querySelector(".vrow .vsubmit").onclick = function (e) {
         setTimeout(() => {
           new Promise((resolve,reject) => {
             let adminUsername = ''

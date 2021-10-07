@@ -29,7 +29,7 @@ export default {
     }
   },
   props: {
-    themeProperty: null
+    themeProperty: ''
   },
   mounted() {
     setTimeout(() => {
@@ -38,8 +38,12 @@ export default {
       new Promise((resolve,reject) => {
         let allPageArr = []
 
-        if (this.themeProperty.recommendPageLength < allPages.length) {
-          for (let i = 0; i < this.themeProperty.recommendPageLength; i++) {
+        let recommendPageLength = 30
+        if (this.themeProperty.recommendPageLength !== undefined && this.themeProperty.recommendPageLength != null) {
+          recommendPageLength = this.themeProperty.recommendPageLength
+        }
+        if (recommendPageLength < allPages.length) {
+          for (let i = 0; i < recommendPageLength; i++) {
             //console.log(allPages[i].articleUrl)
             allPageArr.push(allPages[this.getRandomInt(0,allPages.length -1)])
           }

@@ -8,12 +8,12 @@
          :class="{donateActive: isActive}"
          :style="setSpanStyle" id="donate-bottom">
       <div class="donate-img donate-bottom-common" id="donate-img">
-        <li :key="index" v-for="(item,index) in themeProperty.donate.donateImg">
+        <li :key="index" v-for="(item,index) in donateImg">
           <img :src="item" alt="">
         </li>
       </div>
       <div class="donate-pro" id="donate-pro">
-        <div :key="index" v-for="(item,index) in themeProperty.donate.donateProduct"   class="donate-bottom-common donate-pro-single">
+        <div :key="index" v-for="(item,index) in donateProduct"   class="donate-bottom-common donate-pro-single">
           <div class="pro-img pro-common" id="pro-img">
             <img :src="item.img" alt="">
           </div>
@@ -51,7 +51,7 @@
          :class="{donateListActive: donateListActive}"
          id="donate-bottom2">
       <div class="donate-pro" id="donate-pro-list">
-        <div :key="index" v-for="(item,index) in themeProperty.donate.donateList"   class="donate-bottom-common donate-pro-single">
+        <div :key="index" v-for="(item,index) in localDonateList"   class="donate-bottom-common donate-pro-single">
           <div class="pro-img pro-common" id="pro-img-list">
             <span>{{item.name}}</span>
           </div>
@@ -82,37 +82,49 @@
 </template>
 
 <script>
-import myData from '@temp/my-data'
 import $ from 'jquery'
+import {useThemeData} from "../../composables";
 const network = require('../../public/js/network')
 export default {
   name: "Donate",
   data() {
     return {
-      hexToRgbColor: null,
+      hexToRgbColor: '',
       isActive: true,
-      themeProperty: null,
+      themeProperty: '',
       donateListActive: true,
       window: "",
-      donateList: null,
-      donate: null
+      donateList: [],
+      donate: '',
+      donateImg: [],
+      //打赏金额产品列表
+      donateProduct: []
     }
   },
   created() {
-    new Promise((resolve,reject) => {
-      for (let i = 0; i < myData.length; i++) {
-        if (myData[i].path === '/') {
-          this.themeProperty = myData[i].frontmatter
-          this.donate = myData[i].frontmatter.donate
-          // console.log(this.donate)
-        }
-      }
-      resolve()
-    })
+    this.themeProperty = useThemeData().value
+    this.donate = this.themeProperty.donate
+    try {
+      this.donateImg = this.donate.donateImg
+    }catch (e) {
+      this.donateImg = ['https://ooszy.cco.vin/img/blog-public/wxpay.png','https://ooszy.cco.vin/img/blog-public/zfbpay.jpg']
+    }
+    try {
+      this.donateProduct = this.donate.donateProduct
+    }catch (e) {
 
-    let background_color = this.themeProperty.randomColor[
-        this.getRandomInt(0,this.themeProperty.randomColor.length -1)]
-    this.hexToRgbColor = this.hexToRgb(background_color)
+    }
+
+    if (this.themeProperty.randomColor === undefined || this.themeProperty.randomColor == null) {
+      let background_color = this.$store.state.defaultRandomColors[
+          this.getRandomInt(0,this.$store.state.defaultRandomColors.length -1)]
+
+      this.hexToRgbColor = this.hexToRgb(background_color)
+    }else {
+      let background_color = this.themeProperty.randomColor[
+          this.getRandomInt(0,this.themeProperty.randomColor.length -1)]
+      this.hexToRgbColor = this.hexToRgb(background_color)
+    }
 
     network.req({
       baseURL: 'https://pay.cco.vin/pay/info'
@@ -126,15 +138,23 @@ export default {
     this.window = window
   },
   computed: {
-    setOnline() {
-      let isOnline = this.donate.onlineList
-      // console.log("isOnline:" + isOnline)
-
-      if (isOnline === null || isOnline === undefined) {
-        return true
+    localDonateList() {
+      if (this.themeProperty.donateList !== undefined && this.themeProperty.donateList != null) {
+        return this.themeProperty.donateList
       }else {
-        return  isOnline
+        return []
       }
+    },
+    setOnline() {
+      if (this.donate === undefined) {
+        return false
+      }
+
+      if (this.donate.onlineList === undefined) {
+        return false
+      }
+
+      return this.donate.onlineList
     },
     setSpanStyle() {
       return "background-color: rgba(" + this.hexToRgbColor.r + "," +

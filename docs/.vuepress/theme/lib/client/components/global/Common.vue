@@ -22,12 +22,11 @@
         custom-class="custom-about"/>
     <div
         class="theme-container sidebar-single-enter-animate"
-        :class="containerClass"
         @touchstart="onTouchStart"
         @touchend="onTouchEnd"
         :style="colorFontStyle"
     >
-      <div class="page-sidebar" @wheel="handleScroll">
+      <div class="page-sidebar">
         <top-image :is-show-top-img="isShowTopImg"
                    :theme-property="themeProperty"
                    :is-show-head-line="isShowHeadLine"
@@ -37,7 +36,8 @@
 
         <div id="content">
           <div id="article-page-parent" class="article-page-parent">
-            <div :class="{noShowSidebar: showSidebar}" id="page-sidebar-left" class="page-sidebar-left">
+            <div :class="{noShowSidebar: showSidebar}" id="page-sidebar-left"
+                 class="page-sidebar-left">
               <slot name="center1"></slot>
               <slot name="center2"></slot>
               <slot name="center3"></slot>
@@ -49,13 +49,18 @@
               <slot name="center9"></slot>
             </div>
             <div id="page-sidebar-right" v-if="!frontmatter.home" v-show="showSidebar" class="page-sidebar-right">
-              <HomeSidebar :show-navbar="false"
-                           :is-sticky-sidebar="isStickySidebar"
-                           :show-tag-cloud="showTagCloud"
-                           :is-show-catalog="isShowCatalog"></HomeSidebar>
+              <div class="stickSidebar">
+                <HomeSidebar :show-navbar="false"
+                             :sidebar-width-var="0.96"
+                             :show-sidebar-social="true"
+                             :sidebar-row-var="sidebarRowVar"
+                             :is-sticky-sidebar="isStickySidebar"
+                             :show-tag-cloud="showTagCloud"
+                             :is-show-catalog="isShowCatalog">
+                </HomeSidebar>
+              </div>
             </div>
           </div>
-
         </div>
       </div>
       <slot name="bottom1"></slot>
@@ -68,9 +73,12 @@
       </Footer>
     </div>
     <div id="set-bg"
-         :data="$store.state.isFitter"
+         :chu="$store.state.homeWps"
          :class="{'set-bg-fitter': $store.state.isFitter}"
-         :style="setVarCommonStyle"
+         :style="'--opacity: ' + $store.state.varOpacity +
+         '; --fitter-blue: ' + $store.state.varFilterBlur +
+         'px; --borderRadius: ' + $store.state.varBorderRadius +
+         'px; --backgroundImageUrl: url(' + $store.state.homeWps + ')'"
     ></div>
     <div id="posterShade" :class="{posterShade: $store.state.showPosterShadow}">
       <span :class="{iconSpinner6: $store.state.showShadeLoad}"></span>
@@ -85,21 +93,18 @@ import HomeWelcome from '../child/home/HomeWelcome.vue'
 import Navbar from '../../components/Navbar.vue'
 import Home from '../Home'
 import MobileSidebar from "../child/side/MobileSidebar.vue";
-import SocialSpin from "../SocialSpin.vue";
 import SocialSpin from '../SocialSpin'
 
 //配置导入
-import myData from '@temp/my-data'
 const network = require('../../public/js/network.js')
 const tag = require('../../public/js/tag')
-import {computed, defineComponent, onMounted, onUnmounted, ref, Transition,} from 'vue'
-import {useRouter} from 'vue-router'
+import {computed, defineComponent, Transition,} from 'vue'
 import {usePageData, usePageFrontmatter} from '@vuepress/client'
 import type {DefaultThemePageFrontmatter} from '../../../shared'
-import {useScrollPromise, useSidebarItems, useThemeLocaleData} from '../../composables'
+import {useThemeData, useThemeLocaleData} from '../../composables'
 import EasyTyper from "easy-typer-js";
 import $ from 'jquery'
-const sakura = require("../../public/js/sakura")
+
 
 export default defineComponent({
   name: 'Common',
@@ -113,8 +118,8 @@ export default defineComponent({
   },
   data() {
     return {
-      windowHeight:0,
-      aboutOption: null,
+      aboutOption: [],
+      sidebarRowVar: 5,
       obj: {
         output: '',
         isEnd: false,
@@ -127,14 +132,13 @@ export default defineComponent({
       },
       ico: null,
       colorStyle: '',
-      backgroundStyle: 'background-image: url(https://api.iro.tw/webp_pc.php);',
       fontStyle: '',
       isShowFooter: '',
       colorFontStyle: '',
       isFitter: false,
-      backgroundUrl: 'url(https://picture.cco.vin/pic/rmimg)',
-      themeProperty: null,
-      picture: '',
+      themeProperty: '',
+      //首页壁纸数组
+      homeWps: [],
     }
   },
   props: {
@@ -160,12 +164,6 @@ export default defineComponent({
       type: Boolean,
       default() {
         return true
-      }
-    },
-    isPage: {
-      type: Boolean,
-      default() {
-        return false
       }
     },
     showMoodEdit: {
@@ -233,15 +231,6 @@ export default defineComponent({
         return ""
       }
       return this.$store.state.fontColorStyle + ";"+ this.$store.state.fontFamilyStyle
-    },
-    setBackgroundImg() {
-      return this.backgroundUrl
-    },
-    setVarCommonStyle() {
-      return "--opacity: " + this.$store.state.varOpacity +
-          "; --fitter-blue: " + this.$store.state.varFilterBlur +
-          "px; --borderRadius: " + this.$store.state.varBorderRadius + "px;" +
-          " --backgroundImageUrl: " + this.backgroundUrl + ";"
     }
   },
   methods: {
@@ -253,28 +242,6 @@ export default defineComponent({
       min = Math.ceil(min);
       max = Math.floor(max);
       return Math.floor(Math.random() * (max - min)) + min; //不含最大值，含最小值
-    },
-    handleScroll(e) {
-      if(this.isShowSideBar) {
-        let scrollTop = $(document).scrollTop()
-        if (document.body.clientWidth < 500) {
-          return
-        }
-        if (scrollTop >= 300 && !this.isShow) {
-          // $("#c-sidebar").show(500)
-          $("#c-sidebar").css("display","block")
-          $(".adsense-right").css("display","block")
-          this.isShow = true
-        }else {
-          if (scrollTop < 420) {
-            //小于300，隐藏
-            // $("#c-sidebar").hide(500)
-            $("#c-sidebar").css("display","none")
-            $(".adsense-right").css("display","none")
-            this.isShow = false
-          }
-        }
-      }
     },
     getBodyStyle() {
       let fontColorStyle = this.$store.state.fontColorStyle
@@ -293,8 +260,30 @@ export default defineComponent({
 
       this.colorFontStyle = this.colorStyle + " "+ this.fontStyle
     },
-    setBodyWallpaper(url) {
-      this.backgroundUrl = url
+    setBodyWallpaper() {
+      //切换首页壁纸
+      if (this.homeWps.length === 1) {
+        this.$store.commit("setHomeWps",{
+          homeWps: this.homeWps[0]
+        })
+        return
+      }
+
+      for (let i = 0; i < this.homeWps.length; i++) {
+        if (this.$store.state.homeWps.search(this.homeWps[i]) !== -1) {
+          if (i === this.homeWps.length -1) {
+            this.$store.commit("setHomeWps",{
+              homeWps: this.homeWps[0]
+            })
+            return;
+          }else {
+            this.$store.commit("setHomeWps",{
+              homeWps: this.homeWps[i + 1]
+            })
+            return;
+          }
+        }
+      }
     },
     setIsFitter(isFitter) {
       this.isFitter = isFitter
@@ -311,97 +300,14 @@ export default defineComponent({
             frontmatter.value.navbar !== false && themeLocale.value.navbar !== false
     )
 
-    // sidebar
-    const sidebarItems = useSidebarItems()
-    const isSidebarOpen = ref(false)
-    const toggleSidebar = (to?: boolean): void => {
-      isSidebarOpen.value = typeof to === 'boolean' ? to : !isSidebarOpen.value
-      if (isSidebarOpen.value) {
-        $("#c-sidebar").css("display",'block')
-      }
-    }
-    const touchStart = { x: 0, y: 0 }
-    const onTouchStart = (e): void => {
-      touchStart.x = e.changedTouches[0].clientX
-      touchStart.y = e.changedTouches[0].clientY
-    }
-    const onTouchEnd = (e): void => {
-      const dx = e.changedTouches[0].clientX - touchStart.x
-      const dy = e.changedTouches[0].clientY - touchStart.y
-      if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 40) {
-        if (dx > 0 && touchStart.x <= 80) {
-          toggleSidebar(true)
-        } else {
-          toggleSidebar(false)
-        }
-      }
-    }
-
-    // classes
-    const containerClass = computed(() => [
-      {
-        'no-navbar': !shouldShowNavbar.value,
-        'no-sidebar': !sidebarItems.value.length,
-        'sidebar-open': isSidebarOpen.value,
-      },
-      frontmatter.value.pageClass,
-    ])
-
-    // close sidebar after navigation
-    let unregisterRouterHook
-    onMounted(() => {
-      const router = useRouter()
-      unregisterRouterHook = router.afterEach(() => {
-        toggleSidebar(false)
-      })
-    })
-    onUnmounted(() => {
-      unregisterRouterHook()
-    })
-
-    const scrollPromise = useScrollPromise()
-    const onBeforeEnter = scrollPromise.resolve
-    const onBeforeLeave = scrollPromise.pending
-
     return {
+      themeLocale,
       frontmatter,
       page,
-      containerClass,
       shouldShowNavbar,
-      toggleSidebar,
-      onTouchStart,
-      onTouchEnd,
-      onBeforeEnter,
-      onBeforeLeave,
     }
   },
   created() {
-    /*network.cors({
-      baseURL: 'https://picture.cco.vin',
-      url: '/pic/rp/bing/2',
-      method: 'GET',
-      timeout: 3000,
-      responseType: 'json'
-    }).then((res) => {
-      this.picture = res.data.entity.pictures[0].src
-      this.$store.commit("setPicture",{
-        picture: this.picture
-      })
-    })*/
-
-    /*network.cors({
-      baseURL: 'https://picture.cco.vin',
-      url: '/pic/rp/animate/2',
-      method: 'GET',
-      timeout: 3000,
-      responseType: 'json'
-    }).then((res) => {
-      // this.$store.commit('setAnimeImg',{
-      //   imgUrl: res.data.entity.pictures[0].src
-      // })
-      this.backgroundUrl = "url("+res.data.entity.pictures[0].src+")"
-    })*/
-
     //控制台打印 通过接口获取最新version
     network.cors({
       baseURL: 'https://api.github.com/repos/qsyyke/vuepress-theme-ccds/releases/latest',
@@ -420,20 +326,36 @@ export default defineComponent({
       console.log("%c Version %c "+ lastVersion + "","font-weight: bold;color: white;display: inline-block;text-align: center;height: 1.5rem;line-height: 1.5rem;background-color: rgba(255,202,212,.8);padding: 10px;border-bottom-left-radius: 13px;border-top-left-radius: 13px;","font-weight: bold;color: white;display: inline-block;text-align: center;height: 1.5rem;line-height: 1.5rem;background-color: rgba(178,247,239,.85);padding: 10px;border-bottom-right-radius: 13px;border-top-right-radius: 13px;")
       console.log("%c tagDescribe: " + tagDesc + "" ,"color: rgba(178,247,239,.85);")
     })
-    new Promise((resolve,reject) => {
-      for (let i = 0; i < myData.length; i++) {
-        if (myData[i].path === '/') {
-          this.themeProperty = myData[i].frontmatter
-        }
-      }
-      resolve()
-    }).then(() => {
-      let metaKey = $('<link rel="shortcut icon" href=\"'+this.themeProperty.faviconIco+'\">')
-      $("head").get(0).appendChild(metaKey.get(0))
-    })
-    // console.log(filterPostsByType)
-    this.aboutOption = this.themeProperty.about
-    this.ico = this.themeProperty.ico.aboutIco
+
+    this.themeProperty = useThemeData().value
+    //在v1.3.2之后，就已经移除通过docs/readme.md中配置favicon，转为在config中进行配置
+    // let metaKey = $('<link rel="shortcut icon" href=\"'+this.themeProperty.faviconIco+'\">')
+    // $("head").get(0).appendChild(metaKey.get(0))
+
+    //从配置文件中，获取首页壁纸
+    let homeWps = []
+    if (this.themeProperty.homeWps === undefined || this.themeProperty.homeWps == null) {
+      homeWps.push("https://picoss.cco.vin/animate/wall/404901.png")
+    }else {
+      homeWps = this.themeProperty.homeWps
+    }
+
+    if (homeWps.length === 0) {
+      homeWps.push("https://picoss.cco.vin/animate/wall/404901.png")
+    }
+
+    this.homeWps = homeWps
+
+    if (this.aboutOption !== undefined || this.aboutOption != null) {
+      this.aboutOption = this.themeProperty.about
+    }
+
+    try {
+      this.ico = this.themeProperty.ico.aboutIco
+    }catch (e) {
+      this.ico = "https://ooszy.cco.vin/img/ico/cat.svg"
+    }
+
     this.$store.commit("setIsFitter",{
       isFitter: this.themeProperty.isFitter
     })
@@ -458,6 +380,44 @@ export default defineComponent({
     }
 
     this.colorFontStyle = this.colorStyle + " "+ this.fontStyle
+  },
+  mounted() {
+    if (document.documentElement.clientWidth < 719) {
+      this.sidebarRowVar = 6
+    }
+
+    try {
+      this.initTyped(this.aboutOption[0].describe[0])
+    }catch (e) {
+      this.initTyped('默认设置 Aurora')
+    }
+
+    //手机端壁纸
+    let screen = document.body.clientWidth
+    if (screen < 500) {
+      if (this.themeProperty.homeWpsMobile !== undefined &&
+          this.themeProperty.homeWpsMobile != null) {
+        try {
+          if (this.themeProperty.homeWpsMobile.length !== 0) {
+            this.homeWps = this.themeProperty.homeWpsMobile
+          }
+        }catch (e) {
+        }
+      }
+    }
+
+    let backgroundUrl = ''
+    if (this.$store.state.homeWps === "") {
+      //将首页壁纸设置为配置文件数组中的第一张图片
+      backgroundUrl = this.homeWps[0]
+    }else {
+      //将首页壁纸设置为配置文件数组中的第一张图片
+      backgroundUrl = this.$store.state.homeWps
+    }
+    this.$store.commit("setHomeWps",{
+      homeWps: backgroundUrl
+    })
+
 
     const frontmatter = usePageFrontmatter<DefaultThemePageFrontmatter>()
     if (frontmatter.value.home) {
@@ -495,31 +455,6 @@ export default defineComponent({
         }
       })
     }
-  },
-  mounted() {
-    // sakura.sakura()
-    this.initTyped(this.aboutOption[0].describe[0])
-
-    /*//百度统计
-    let statistics = this.themeProperty.statistics
-    if (statistics !== null || statistics !== undefined) {
-      let statisticsSrc = statistics.src
-      let statisticsStatus = statistics.status
-
-      if (statisticsStatus === true) {
-        //用户开启统计
-        if (statisticsSrc === undefined || statisticsSrc == null) {
-          console.log("%c 你已开启网站统计服务，但是未传入值，请在statistics -> src内传入代码","color: red")
-        }else {
-          //有统计代码
-          var hm = document.createElement("script");
-          hm.src = statisticsSrc;
-          var s = document.getElementsByTagName("script")[0];
-          s.parentNode.insertBefore(hm, s);
-        }
-      }
-    }*/
   }
-
 })
 </script>

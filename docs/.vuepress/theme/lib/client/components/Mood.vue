@@ -38,6 +38,7 @@ import {
 
 import MoodItem from './child/MoodItem'
 import myData from '@temp/my-data'
+import {useThemeData} from "../composables";
 
 //导入配置属性
 const network = require('../public/js/network.js')
@@ -51,11 +52,11 @@ export default defineComponent({
   data() {
     return {
       //这是一个数组对象
-      color: null,
-      ico: null,
-      showMessage: null,
-      themeProperty: null,
-      hexToRgbColor: null,
+      color: '',
+      ico: '',
+      showMessage: '',
+      themeProperty: '',
+      hexToRgbColor: '',
       moods: [],
       onlineMoods: [],
       showMoodEdit: false,
@@ -69,57 +70,67 @@ export default defineComponent({
         openMobileSidebar: false
       })
     }
+
+    this.themeProperty = useThemeData().value
+
+    let showOnlineMood = this.themeProperty.showOnlineMood
+    this.showMoodEdit = this.themeProperty.showMoodEdit
+    if (showOnlineMood === undefined) {
+      showOnlineMood = false
+    }
+
+    if (this.showMoodEdit === undefined) {
+      showOnlineMood = false
+    }
+
+    if (this.themeProperty.addMood !== undefined) {
+      this.siteName = this.themeProperty.addMood.siteName
+    }
+
+    if (showOnlineMood) {
+      //使用在线展示
+      network.cors({
+        baseURL: 'https://picture.cco.vin/',
+        url: '/mood/all',
+        method: 'GET',
+        timeout: 70000,
+        responseType: 'json',
+        params: {
+          siteName: this.siteName
+        }
+      }).then((res) => {
+        this.onlineMoods = res.data.entity.moods
+        this.$store.commit("setEditMoods",{
+          editMoods: res.data.entity.moods
+        })
+      })
+    }
+
     new Promise((resolve,reject) => {
       for (let i = 0; i < myData.length; i++) {
-        if (myData[i].path === '/') {
-          this.themeProperty = myData[i].frontmatter
-
-          let showOnlineMood = myData[i].frontmatter.showOnlineMood
-          this.showMoodEdit = myData[i].frontmatter.showMoodEdit
-          if (showOnlineMood === undefined || showOnlineMood == null) {
-            showOnlineMood = false
-          }
-
-          if (this.showMoodEdit === undefined || this.showMoodEdit == null) {
-            showOnlineMood = false
-          }
-
-          if (this.themeProperty.addMood != null && this.themeProperty.addMood !== undefined) {
-            this.siteName = this.themeProperty.addMood.siteName
-          }
-
-          if (showOnlineMood) {
-            //使用在线展示
-            network.cors({
-              baseURL: 'https://picture.cco.vin/',
-              url: '/mood/all',
-              method: 'GET',
-              timeout: 70000,
-              responseType: 'json',
-              params: {
-                siteName: this.siteName
-              }
-            }).then((res) => {
-              this.onlineMoods = res.data.entity.moods
-              this.$store.commit("setEditMoods",{
-                editMoods: res.data.entity.moods
-              })
-            })
-          }
-        }
         if (myData[i].path.search("/moods/") === 0) {
           //是心情页面
           this.moods.push(myData[i])
         }
       }
+      resolve()
     })
 
-    this.friendLinks = this.themeProperty.friendLinks
-    this.siteInformation = this.themeProperty.siteInformation
-    this.ico = this.themeProperty.ico.linkIco
-    this.showMessage = this.themeProperty.isShowMessage
-    let background_color = this.themeProperty.randomColor[
-        this.getRandomInt(0,this.themeProperty.randomColor.length -1)]
+    if (this.themeProperty.ico !== undefined) {
+      this.ico = this.themeProperty.ico.linkIco
+    }
+    if (this.themeProperty.isShowMessage !== undefined) {
+      this.showMessage = this.themeProperty.isShowMessage
+    }
+
+    let background_color = ''
+    if (this.themeProperty.randomColor !== undefined) {
+      background_color = this.themeProperty.randomColor[
+          this.getRandomInt(0,this.themeProperty.randomColor.length -1)]
+    }else {
+      background_color = this.$store.state.defaultRandomColors[
+          this.getRandomInt(0,this.$store.state.defaultRandomColors.length -1)]
+    }
     this.hexToRgbColor = this.hexToRgb(background_color)
   },
   /*mounted() {

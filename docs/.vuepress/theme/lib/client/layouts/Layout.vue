@@ -1,5 +1,5 @@
 <template>
-  <common :is-sticky-sidebar="!frontmatter.home" :is-page="isPage" :head-line="headLine"
+  <common :is-sticky-sidebar="!frontmatter.home" :head-line="headLine"
           :is-show-head-line="!frontmatter.home"
           :is-show-catalog="!frontmatter.home"
           :is-show-top-img="getIsHome">
@@ -7,20 +7,14 @@
       <Home :theme-property="themeProperty" :is-home=frontmatter.home v-if="frontmatter.home" />
     </template>
     <template #center2>
-      <Transition
-          v-if="!frontmatter.home"
-          @before-enter="onBeforeEnter"
-          @before-leave="onBeforeLeave"
-      >
-        <Page @set-mobile-catalog-status="setMobileCatalogStatus" @set-page-sidebar="setPageSidebar" @getHeadLine="getHeadLine" :theme-property="themeProperty" :key="page.path">
-          <template #top>
-            <slot name="page-top" />
-          </template>
-          <template #bottom>
-            <slot name="page-bottom" />
-          </template>
-        </Page>
-      </Transition>
+      <Page v-if="!frontmatter.home" @getHeadLine="getHeadLine" :theme-property="themeProperty" :key="page.path">
+        <template #top>
+          <slot name="page-top" />
+        </template>
+        <template #bottom>
+          <slot name="page-bottom" />
+        </template>
+      </Page>
     </template>
   </common>
   <home-bottom v-if="frontmatter.home">
@@ -47,7 +41,7 @@ import { usePageData, usePageFrontmatter } from '@vuepress/client'
 import type { DefaultThemePageFrontmatter } from '../../shared'
 import {
   useScrollPromise,
-  useSidebarItems,
+  useSidebarItems, useThemeData,
   useThemeLocaleData,
 } from '../composables'
 import $ from 'jquery'
@@ -55,12 +49,10 @@ import $ from 'jquery'
 //导入组件
 import Home from '../components/Home.vue'
 import Page from '../components/Page.vue'
-import myData from '@temp/my-data'
 
 
 export default defineComponent({
   name: 'Layout',
-
   components: {
     Home,
     Page,
@@ -105,14 +97,6 @@ export default defineComponent({
     }
 
     // classes
-    const containerClass = computed(() => [
-      {
-        'no-navbar': !shouldShowNavbar.value,
-        'no-sidebar': !sidebarItems.value.length,
-        'sidebar-open': isSidebarOpen.value,
-      },
-      frontmatter.value.pageClass,
-    ])
 
     // close sidebar after navigation
     let unregisterRouterHook
@@ -134,7 +118,6 @@ export default defineComponent({
     return {
       frontmatter,
       page,
-      containerClass,
       shouldShowNavbar,
       toggleSidebar,
       onTouchStart,
@@ -144,17 +127,7 @@ export default defineComponent({
     }
   },
   created() {
-    new Promise((resolve,reject) => {
-      for (let i = 0; i < myData.length; i++) {
-        if (myData[i].path === '/') {
-          this.themeProperty = myData[i].frontmatter
-        }
-      }
-      resolve()
-    })
-    this.$store.dispatch('getAnimeImg').then(() => {
-      this.animeImg = this.$store.state.animeImg
-    })
+    this.themeProperty = useThemeData().value
   },
   mounted() {
     this.$router.beforeEach((to,from,next) => {
@@ -169,13 +142,9 @@ export default defineComponent({
       headLine: '',
       isShowSideBar: '',
       themeProperty: null,
-      isPage: false
     }
   },
   methods: {
-    setPageSidebar(isPage) {
-      this.isPage = isPage
-    },
     /*handleScroll(e) {
       let scrollTop = $(document).scrollTop()
       if (document.body.clientWidth < 500) {

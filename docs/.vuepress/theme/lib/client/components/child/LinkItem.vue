@@ -24,11 +24,11 @@ export default {
   name: "LinkItem",
   data() {
     return {
-      hexRgb: null
+      hexRgb: ''
     }
   },
   props: {
-    themeProperty: null,
+    themeProperty: '',
     item: null,
     /*linkTopStyle: {
       type: String,
@@ -50,7 +50,12 @@ export default {
     }*/
   },
   created() {
-    let bgColor = this.themeProperty.randomColor[this.getRandomInt(0,this.themeProperty.randomColor.length -1)]
+    let bgColor = ''
+    if (this.themeProperty.randomColor !== undefined) {
+      bgColor = this.themeProperty.randomColor[this.getRandomInt(0,this.themeProperty.randomColor.length -1)]
+    }else {
+      bgColor = this.$store.state.defaultRandomColors[this.getRandomInt(0,this.$store.state.defaultRandomColors.length -1)]
+    }
     this.hexRgb = this.hexToRgb(bgColor)
   },
   methods:{

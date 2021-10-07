@@ -1,7 +1,7 @@
 <template>
   <!--模板-->
   <div style="display: block" class="poster" id="create-poster">
-    <div class="poster-top" :style="getTopBackStyle" id="poster-top">
+    <div class="poster-top" :style="setTopBackStyle" id="poster-top">
       <div class="poster-time">
         <div class="poster-time-day" id="poster-time-day">{{day}}</div>
         <div class="poster-time-year" id="poster-time-year">{{month}}/{{year}}</div>
@@ -60,7 +60,7 @@
   <div :sd="getPicture" class="poster-img" style="display: block" id="poster-img">
     <div class="poster-img-child" style="display: block">
       <div class="poster-cancel">
-        <span @click="cancelShade" class="icon-close"></span>
+        <span class="home-menu-ico" style="--homeIcoCode: '\e68f';cursor: pointer" @click="cancelShade"></span>&nbsp;
       </div>
       <div class="share-div">
         <img id="share-img" class="medium-zoom-image"  @click="openImg" :src="app.$store.state.postImgHref" alt="">
@@ -78,7 +78,7 @@
             <span class="weibo">微博</span>
           </a>
 
-          <a :href="href">
+          <a>
             <span class="save" @click="saveImg">保存</span>
           </a>
         </div>
@@ -92,6 +92,7 @@ import $ from "jquery";
 import {usePageData} from "@vuepress/client";
 import myData from '@temp/my-data'
 import mediumZoom from "medium-zoom";
+import {useThemeData} from "../../composables";
 export default {
   name: "PosterImg",
   data() {
@@ -116,12 +117,6 @@ export default {
         return "ccds";
       }
     },
-    setTopBackStyle: {
-      type: String,
-      default() {
-        return '--poster-back-img: url(https://h2.ioliu.cn/bing/GiantManta_ZH-CN0594951444_640x480.jpg?imageslim);'
-      }
-    },
     title: {
       type: String,
       default() {
@@ -129,19 +124,25 @@ export default {
       }
     },
     app: '',
-    height: ''
+    height: '',
+    setTopBackStyle: {
+      type: String,
+      default() {
+        return '--poster-back-img: url(https://h2.ioliu.cn/bing/Knuthojdsmossen_EN-CA12064544039_640x480.jpg?imageslim);'
+      }
+    }
   },
   computed: {
     getAvatar() {
       let poster = this.themeConfig.poster
-      if (poster === undefined || poster == null) {
-        return "https://ooszy.cco.vin/img/blog-public/ccds_64.ico"
+      if (poster === undefined) {
+        return "请设置海报avatar项"
       }
       let avatar = poster.avatar
-      if (avatar === undefined || avatar == null) {
-        return "https://ooszy.cco.vin/img/blog-public/ccds_64.ico"
-      }
 
+      if (avatar === undefined || avatar == null) {
+        return "请设置海报avatar项"
+      }
       return avatar
     },
     getPicture() {
@@ -149,13 +150,14 @@ export default {
       return this.app.$store.state.picture.src
     },
     getTopBackStyle() {
-      /*if (this.app.$store.state.picture === undefined) {
+      console.log("---------getTop-----------")
+      if (this.app.$store.state.picture === "") {
         return "--poster-back-img: url( " + this.pictureSrc + ");"
       }else {
         return "--poster-back-img: url( " + this.app.$store.state.picture.src + ");"
-      }*/
+      }
       // return '--poster-back-img: url(https://picture.cco.vin/pic/rmimg?type=bing);'
-      return '--poster-back-img: url(https://h2.ioliu.cn/bing/GiantManta_ZH-CN0594951444_640x480.jpg?imageslim);'
+      // return '--poster-back-img: url(https://h2.ioliu.cn/bing/GiantManta_ZH-CN0594951444_640x480.jpg?imageslim);'
 
     },
     getLastUpdate() {
@@ -188,44 +190,35 @@ export default {
     },
     getLogoSuffixTitle() {
       if(this.poster === undefined || this.poster == null) {
-        return 'blog'
+        return 'のblog'
       }else {
         if(this.poster.suffixBlog === undefined || this.poster.suffixBlog == null) {
-          return 'blog'
+          return 'のblog'
         }else {
           return this.poster.suffixBlog
         }
       }
     },
     getAuthor() {
-      if(this.poster === undefined || this.poster == null) {
-        return 'qsyyke'
+      if(this.poster === undefined) {
+        return 'Aurora'
       }else {
-        if(this.poster.author === undefined || this.poster.author == null) {
-          return 'qsyyke'
+        if(this.poster.author === undefined) {
+          return 'Aurora'
         }else {
           return this.poster.author
         }
       }
     },
     getBlogDesc() {
-      //console.log(myData)
-      for (let i = 0; i < myData.length; i++) {
-        if (myData[i].path === "/") {
-          this.themeConfig = myData[i].frontmatter
-          if (this.themeConfig.poster === undefined
-              || this.themeConfig.poster == null
-              ) {
-            return "Theme by ccds"
-          }else {
-            if (this.themeConfig.poster.description === undefined
-                || this.themeConfig.poster.description == null
-                || this.themeConfig.poster.description === "" ) {
-              return "Theme by ccds"
-            }else {
-              return this.themeConfig.poster.description
-            }
-          }
+      if (this.themeConfig.poster === undefined) {
+        return "从别以后,几回梦缥缈,执手若无,泪溅花上"
+      }else {
+        if (this.themeConfig.poster.description === undefined
+            || this.themeConfig.poster.description === "" ) {
+          return "从别以后,几回梦缥缈,执手若无,泪溅花上"
+        }else {
+          return this.themeConfig.poster.description
         }
       }
     }
@@ -275,13 +268,8 @@ export default {
     this.month = date.getMonth() + 1
     this.year = date.getFullYear()
 
-    for (let i = 0; i < myData.length; i++) {
-        if (myData[i].path === "/") {
-          this.themeConfig = myData[i].frontmatter
-          this.poster = this.themeConfig.poster
-        }
-      }
-
+    this.themeConfig = useThemeData().value
+    this.poster = this.themeConfig.poster
   },
   mounted() {
     if (document.body.clientWidth < 600) {

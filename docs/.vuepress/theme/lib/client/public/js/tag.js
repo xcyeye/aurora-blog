@@ -62,11 +62,21 @@ module.exports = {
                                 }
                                 let tag = strings[j+1]
 
-                                for (let k = 0; k < themeProperty.excludeTag.length; k++) {
-                                    if (!(tag === themeProperty.excludeTag[k])) {
-                                        set.add(tag)
-                                        temTag.push(tag)
+                                let excludeTag = []
+                                if (themeProperty.excludeTag != undefined) {
+                                    excludeTag = themeProperty.excludeTag
+                                }
+
+                                if (excludeTag.length != 0) {
+                                    for (let k = 0; k < excludeTag.length; k++) {
+                                        if (!(tag === excludeTag[k])) {
+                                            set.add(tag)
+                                            temTag.push(tag)
+                                        }
                                     }
+                                }else {
+                                    set.add(tag)
+                                    temTag.push(tag)
                                 }
                             }
                             resolve()
@@ -113,6 +123,7 @@ module.exports = {
                 app.$store.commit('setCategories',{
                     categories: categoriesArr
                 })
+
                 app.$store.commit('setAllPageMap',{
                     allPageMap: mapSet
                 })

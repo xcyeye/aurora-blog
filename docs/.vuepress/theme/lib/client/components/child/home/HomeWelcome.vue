@@ -3,31 +3,23 @@
     <div v-if="isShowIco"
          @click="clickSetColor"
          id="setIco" class="setIco bg_color">
-      <!--<img src="https://ooszy.cco.vin/img/ico/secai.svg" alt="">-->
     </div>
 
     <div class="welcome-parent" id="welcome-parent">
       <div @click="clickSet" :class="customClass" :style="getColorStyle" class="m-4 p-4 f4 color-shadow-small bg-gray-800-mktg rounded-2 signup-content-container welcome" id="welcome">
-        <span @click="clickSetColor" class="cancel home-menu-ico" style="--homeIcoCode: '\e932'"  id="cancel"></span>
+        <span @click="clickSetColor" class="cancel home-menu-ico" style="--homeIcoCode: '\e68f'"  id="cancel"></span>
         <h1 class="common-style" id="sr-only-h2">Welcome to my blog! <br>Let's begin the adventure</h1>
         <div class="custom-top custom-common">
-          <!--<div  class="custom-top-span custom-common-span">
-            <span @click="setFont" :style="setBackgroundImg(1)"></span>
-          </div>-->
-          <!--<div  class="custom-top-span custom-common-span">
-            <span @click="setColor" :style="setBackgroundImg(2)"></span>
-          </div>-->
           <div class="custom-top-span custom-common-span">
-            <span @click="setImg" :style="setBackgroundImg(1)"></span>
+            <span @click="setImg" class="home-menu-ico home-welcome-custom-icon" style="--homeIcoCode: '\e61b'"></span>&nbsp;
           </div>
           <div class="custom-top-span custom-common-span">
-            <span @click="setIsFitter" :style="setBackgroundImg(2)"></span>
+            <span @click="setIsFitter" class="home-menu-ico home-welcome-custom-icon" style="--homeIcoCode: '\e617'"></span>&nbsp;
           </div>
         </div>
 
         <div class="custom-bottom custom-common">
           <div style="flex: 1" class="custom-bottom-span custom-common-span">
-            <!--fontColor-->
             <li class="custom-li" v-for="(item,index) in fontColorArr">
               <span :style="setColorBack(item)" :data-color="item" @click="setColor($event,item)"></span>
             </li>
@@ -96,7 +88,6 @@
 
 <script>
 import $ from 'jquery'
-
 export default {
   name: "HomeWelcome",
   data() {
@@ -107,11 +98,11 @@ export default {
       colorArr: [],
       fontIndex: 0,
       colorIndex: 0,
-      isFitter: false,
+      isFitter: true,
       opacity: 0.4,
       blur: 5,
       borderRadius: 30,
-      maxFontColorArr: 7,
+      maxFontColorArr: 8,
       fontColorArr: [],
       fontFamilyArr: [],
       currentColor: '',
@@ -120,10 +111,23 @@ export default {
     }
   },
   created() {
-    this.maxFontColorArr = this.themeProperty.maxFontColorArr
-    this.fontArr = this.themeProperty.fontFamily
-    this.colorArr = this.themeProperty.fontColor
-    this.isFitter = this.themeProperty.isFitter
+    if (this.themeProperty.maxFontColorArr !== undefined) {
+      this.maxFontColorArr = this.themeProperty.maxFontColorArr
+    }
+
+    if (this.themeProperty.fontFamily !== undefined && this.themeProperty.fontFamily != null) {
+      this.fontArr = this.themeProperty.fontFamily
+    }else {
+      this.fontArr = this.$store.state.defaultFont
+    }
+
+    if (this.themeProperty.fontColor !== undefined && this.themeProperty.fontColor != null) {
+      this.colorArr = this.themeProperty.fontColor
+    }else {
+      this.colorArr = this.$store.state.defaultFontColor
+    }
+
+    this.isFitter = this.themeProperty.isFitter === undefined ? true : this.themeProperty.isFitter
 
     if (this.colorArr.length < this.maxFontColorArr) {
       this.fontColorArr = this.colorArr
@@ -150,8 +154,9 @@ export default {
   },
   computed: {
     getShowFont() {
-      //console.log(this.themeProperty.showFont)
-      return this.themeProperty.showFont
+      let showFont = this.themeProperty.showFont === undefined ? "程" : this.themeProperty.showFont
+
+      return showFont
     },
     getColorStyle() {
       return this.setColorStyle
@@ -168,7 +173,12 @@ export default {
     },
     setBackgroundImg() {
       return (item) => {
-        let colorArr = this.themeProperty.ico.homeWelcome
+        let colorArr = []
+        try {
+          colorArr = this.themeProperty.ico.homeWelcome
+        }catch (e) {
+          colorArr = ['https://ooszy.cco.vin/img/ico/love2.svg','https://ooszy.cco.vin/img/ico/xy.svg']
+        }
         let url = ''
         switch  (item){
           case  1:
@@ -205,8 +215,12 @@ export default {
       setInterval(() => {
         let intervalTime = +new Date()
         let lastTime = intervalTime - this.$store.state.welcomeOpenTime
+        let slideTime = this.themeProperty.slideTime
+        if (slideTime === undefined || slideTime == null) {
+          slideTime = 3000
+        }
         if ($("#welcome").css("display") === 'block') {
-          if (lastTime > this.themeProperty.slideTime) {
+          if (lastTime > slideTime) {
             $("#welcome").slideUp(350)
           }
         }
@@ -236,15 +250,7 @@ export default {
       this.$emit('setBodyStyle')
     },
     setImg() {
-      let url = ''
-      let width = document.body.clientWidth
-      if (width < 500) {
-        url = this.themeProperty.randomWallpaperMb
-      }else {
-        url = this.themeProperty.randomWallpaper
-      }
-      let style = "url(" + url+"?time="+(+new Date()) + ")"
-      this.$emit('setBodyWallpaper',style)
+      this.$emit('setBodyWallpaper')
     },
     setIsFitter() {
       //isFitter
@@ -266,7 +272,7 @@ export default {
         return true
       }
     },
-    themeProperty: null,
+    themeProperty: '',
     customClass: {
       type: String,
       default() {

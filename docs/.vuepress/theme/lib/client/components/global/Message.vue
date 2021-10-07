@@ -6,31 +6,20 @@
 
 <script>
 import myData from '@temp/my-data'
+import {useThemeData} from "../../composables";
 
 export default {
   name: "Message",
   data() {
     return {
       message: '',
-      themeProperty: null
+      themeProperty: ''
     }
   },
 
   created() {
-    new Promise((resolve,reject) => {
-      for (let i = 0; i < myData.length; i++) {
-        if (myData[i].path === '/') {
-          this.themeProperty = myData[i].frontmatter
-        }
-      }
-      resolve()
-    }).then(() => {
-      this.message = this.themeProperty.message
-    })
+    this.themeProperty = useThemeData().value
+    this.message = this.themeProperty.message
   }
 }
 </script>
-
-<style scoped>
-
-</style>

@@ -2,15 +2,15 @@
   <div class="">
     <div class="change-page">
       <div class="catalog-page change-page-common">
-        <span style="--homeIcoCode:'\e924'" class="home-menu-ico"></span>&nbsp;
+        <span style="--homeIcoCode:'\e60f'" class="home-menu-ico"></span>
         <span :class="{changePageActive: changePageIndex === 1}" @click="changePage(event,1)">Menu</span>
       </div>
       <div class="latest-page change-page-common">
-        <span style="--homeIcoCode:'\e9ca'" class="home-menu-ico"></span>&nbsp;
+        <span style="--homeIcoCode:'\e60b'" class="home-menu-ico"></span>
         <span :class="{changePageActive: changePageIndex === 2}" @click="changePage(event,2)">导航</span>
       </div>
       <div v-if="showMobileCatalogStatus && !frontmatter.home" class="latest-page change-page-common">
-        <span style="--homeIcoCode:'\e9bb'" class="home-menu-ico"></span>&nbsp;
+        <span style="--homeIcoCode:'\e941'" class="home-menu-ico"></span>
         <span :class="{changePageActive: changePageIndex === 3}" @click="changePage(event,3)">目录</span>
       </div>
     </div>
@@ -30,15 +30,16 @@
           </div>
         </div>
       </div>
+
       <div v-for="(menuItem,index) in navbarLinks">
         <div v-if="menuItem.link" class="sidebar-menu-item">
           <div class="menu-item-left">
             <span :style="setHomeIco(menuItem.link)" class="home-menu-ico"></span>
           </div>
           <div class="menu-item-right">
-            <router-link :to="menuItem.link">
+            <a :key="index" :href="menuItem.link">
               <span>{{menuItem.text}}</span>
-            </router-link>
+            </a>
           </div>
         </div>
       </div>
@@ -66,7 +67,7 @@
               <!--<span v-if="!itemLevel1.link">{{itemLevel1.text}}</span>-->
             </div>
             <div v-if="itemLevel1.children" @click="changeCurrentLevel1Active(event,itemLevel1Index)" class="catalog-page-spread">
-              <span :class="getSpreadClass(itemLevel1Index)"></span>
+              <span class="home-menu-ico" :style="getSpreadClass(itemLevel1Index)"></span>
             </div>
           </div>
 
@@ -244,7 +245,6 @@ const useNavbarConfig = (): ComputedRef<ResolvedNavbarItem[]> => {
   const themeLocale = useThemeLocaleData()
   return computed(() => (themeLocale.value.navbar || []).map(resolveNavbarItem))
 }
-import myData from '@temp/my-data'
 import Catalog from "../Catalog.vue";
 import {DefaultThemePageFrontmatter} from "../../../../shared";
 export default {
@@ -280,29 +280,29 @@ export default {
       return (href) => {
         let fontIcoCode = "--homeIcoCode: '\\"
         if ("/aurora".search(href) !== -1) {
-          return fontIcoCode + 'e920' + "'"
+          return fontIcoCode + 'e68d' + "'"
         }
         if ("/link".search(href) !== -1) {
-          return fontIcoCode + 'e9cb' + "'"
+          return fontIcoCode + 'e63d' + "'"
         }
         if ("/tag".search(href) !== -1) {
-          return fontIcoCode + 'e92c' + "'"
+          return fontIcoCode + 'e7b6' + "'"
         }
         if ("/mood".search(href) !== -1) {
-          return fontIcoCode + 'e970' + "'"
+          return fontIcoCode + 'e63b' + "'"
         }
         if ("/photo".search(href) !== -1) {
-          return fontIcoCode + 'e91f' + "'"
+          return fontIcoCode + 'e875' + "'"
         }
         if ("/about".search(href) !== -1) {
-          return fontIcoCode + 'e91a' + "'"
+          return fontIcoCode + 'e618' + "'"
         }
         if (href !== undefined && href.search("github") !== -1) {
-          return fontIcoCode + 'e922' + "'"
+          return fontIcoCode + 'e885' + "'"
         }
 
         // 如果没有，那么使用默认的
-        let icoArr = ['e924','e926','e927','e929','e92a','e90f','e910','e99b','e995']
+        let icoArr = ['e62e','e848','e9f7','e8e4','e701','e7ad','e635','e60a','e618','e65c','e675','e615','e616','e617','e684','e7b9','e93d','e60c','e66f']
         return "--homeIcoCode: '\\" + icoArr[this.getRandomInt(0,icoArr.length)] + "'"
       }
     },
@@ -383,12 +383,12 @@ export default {
       return (index) => {
         if (this.catalogOpenStatus.index === index) {
           if (this.catalogOpenStatus.openStatus) {
-            return "chevron-down"
+            return "--homeIcoCode: '\\e631'"
           }else {
-            return "icon-cheveron-right"
+            return "--homeIcoCode: '\\e630'"
           }
         }else {
-          return "icon-cheveron-right"
+          return "--homeIcoCode: '\\e630'"
         }
       }
     }
@@ -404,6 +404,7 @@ export default {
       ...navbarSelectLanguage.value,
       ...navbarRepo.value,
     ])
+
     return {
       frontmatter,
       navbarLinks,

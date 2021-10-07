@@ -12,7 +12,7 @@
           </router-link>
         </div>
         <div @click="changeCurrentLevel1Active(event,itemLevel1Index)" class="catalog-page-spread">
-          <span :class="getSpreadClass(itemLevel1Index)"></span>
+          <span :style="getSpreadClass(itemLevel1Index)" class="home-menu-ico"></span>
         </div>
       </div>
 
@@ -24,7 +24,7 @@
                class="catalog-page-children-item">
             <div class="catalog-page-children-title">
               <router-link :to="itemLevel1.path + '#' + itemLevel2.title">
-                <span :slug="itemLevel2.slug">{{itemLevel2.title}}</span>
+                <span @click="clickCatalogTitle" :slug="itemLevel2.slug">{{itemLevel2.title}}</span>
               </router-link>
             </div>
 
@@ -33,8 +33,8 @@
               <div :style="setLevel3Style(itemLevel2Index)" class="page-catalog-children-level3">
                 <div v-for="item in itemLevel2.children"
                      class="page-catalog-children-level3-title">
-                  <router-link :to="itemLevel1.path + '#' + itemLevel2.title">
-                    <span :slug="item.slug">{{item.title}}</span>
+                  <router-link :to="itemLevel1.path + '#' + item.title">
+                    <span @click="clickCatalogTitle" :slug="item.slug">{{item.title}}</span>
                   </router-link>
                 </div>
               </div>
@@ -47,9 +47,8 @@
 </template>
 
 <script lang="ts">
-import {computed} from "vue";
 import myData from '@temp/my-data'
-import {logger} from "html2canvas/dist/types/core/__mocks__/logger";
+import {useThemeData} from "../../composables";
 export default {
   name: "Catalog",
   data() {
@@ -67,7 +66,7 @@ export default {
       },
       currentCatalogObject: {},
       currentHeaderIndex: 0,
-      themeProperty: null,
+      themeProperty: '',
       sidebarCatalogLevel: 1
     }
   },
@@ -122,25 +121,18 @@ export default {
       return (index) => {
         if (this.catalogOpenStatus.index === index) {
           if (this.catalogOpenStatus.openStatus) {
-            return "chevron-down"
+            return "--homeIcoCode: '\\e631'"
           }else {
-            return "icon-cheveron-right"
+            return "--homeIcoCode: '\\e630'"
           }
         }else {
-          return "icon-cheveron-right"
+          return "--homeIcoCode: '\\e630'"
         }
       }
     }
   },
   created() {
-    new Promise((resolve,reject) => {
-      for (let i = 0; i < myData.length; i++) {
-        if (myData[i].path === '/') {
-          this.themeProperty = myData[i].frontmatter
-        }
-      }
-      resolve()
-    })
+    this.themeProperty = useThemeData().value
     this.$router.beforeEach((to,from,next) => {
       this.pathname = to.path
       this.getCurrentCatalogArr(this.pathname)
@@ -155,6 +147,15 @@ export default {
     window.addEventListener('scroll', this.handleScroll, true)
   },
   methods: {
+    clickCatalogTitle() {
+      //如果手机端侧边栏打开的，那么就关闭
+      if (this.$store.state.openMobileSidebar) {
+        this.$store.commit("setOpenMobileSidebar",{
+          openMobileSidebar: false
+        })
+      }
+    },
+
     //处理滚动，标题激活状态的改变
     handleScroll() {
       if (!this.isShowCatalog) {

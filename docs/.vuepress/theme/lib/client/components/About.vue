@@ -5,7 +5,7 @@
       :is-show-top-img="false"
       :is-show-head-line="false">
     <template #center1>
-      <Home :navbar-style="'margin-top: 0;'" :theme-property="themeProperty" />
+      <Home :home-height-var="'max-content'" :socials-arr="socialsArr" :navbar-style="'margin-top: 0;'" :theme-property="themeProperty" />
     </template>
     <template #center2>
       <div class="about">
@@ -32,7 +32,7 @@
       </div>
     </template>
     <template #center4>
-      <Donate v-if="themeProperty.donate.aboutPage"/>
+      <Donate v-if="getDonateAbout"/>
     </template>
     <template #center5>
       <comment/>
@@ -47,7 +47,7 @@ import {
 } from 'vue'
 import Home from './Home'
 import TagItem from './child/tag/TagItem.vue'
-import myData from '@temp/my-data'
+import {useThemeData} from "../composables";
 //导入配置属性
 
 const network = require('../public/js/network.js')
@@ -62,10 +62,19 @@ export default defineComponent({
   data() {
     return {
       windowHeight:0,
-      themeProperty: null
+      themeProperty: '',
+      socialsArr: []
     }
   },
   computed: {
+    getDonateAbout() {
+
+      try {
+        return this.themeProperty.donate.aboutPage
+      }catch (e) {
+        return true
+      }
+    },
     getIndex() {
       return (index,length)=> {
         if (index === 0 && length === 1) {
@@ -75,10 +84,18 @@ export default defineComponent({
       }
     },
     setSpanStyle() {
+
       return (score) => {
         let newScore = score * 0.8
-        let background_color = this.themeProperty.randomColor[
-            this.getRandomInt(0,this.themeProperty.randomColor.length -1)]
+        let background_color = ''
+        if (this.themeProperty.randomColor !== undefined) {
+          background_color = this.themeProperty.randomColor[
+              this.getRandomInt(0,this.themeProperty.randomColor.length -1)]
+        }else {
+          background_color = this.$store.state.defaultRandomColors[
+              this.getRandomInt(0,this.$store.state.defaultRandomColors.length -1)]
+        }
+
         let style = 'width: '+ newScore + "%;" + "background-color: "+background_color + ";"
         // console.log(style)
         // return 'width: '+ newScore + "%;"
@@ -86,7 +103,13 @@ export default defineComponent({
       }
     },
     setIco() {
-      return 'background-image: url('+this.themeProperty.ico.aboutIco+');'
+      let aboutIco = ''
+      try {
+        aboutIco = this.themeProperty.ico.aboutIco
+      }catch (e) {
+        aboutIco = "https://ooszy.cco.vin/img/ico/cat.svg"
+      }
+      return 'background-image: url('+ aboutIco +');'
     }
   },
   methods: {
@@ -104,13 +127,21 @@ export default defineComponent({
         openMobileSidebar: false
       })
     }
-    new Promise((resolve,reject) => {
-      for (let i = 0; i < myData.length; i++) {
-        if (myData[i].path === '/') {
-          this.themeProperty = myData[i].frontmatter
+    this.themeProperty = useThemeData().value
+
+    let socials = this.themeProperty.socials
+    if (socials !== undefined) {
+      new Promise((resolve, reject) => {
+        for (let i = 0; i < socials.length; i++) {
+          if (socials[i].show) {
+            this.socialsArr.push(socials[i])
+          }
         }
-      }
-    })
+        resolve()
+      }).then(() => {
+
+      })
+    }
   },
 })
 </script>

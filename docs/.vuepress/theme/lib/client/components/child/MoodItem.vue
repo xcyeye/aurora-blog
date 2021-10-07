@@ -50,14 +50,21 @@ export default {
     }
   },
   props: {
-    themeProperty: null,
+    themeProperty: '',
     moodItem: null,
     moods: '',
     showOnlineMood: false
   },
   created() {
-    let background_color = this.themeProperty.randomColor[
-        this.getRandomInt(0,this.themeProperty.randomColor.length -1)]
+    let background_color = ''
+    if (this.themeProperty.randomColor !== undefined) {
+      background_color = this.themeProperty.randomColor[
+          this.getRandomInt(0,this.themeProperty.randomColor.length -1)]
+    }else {
+      background_color = this.$store.state.defaultRandomColors[
+          this.getRandomInt(0,this.$store.state.defaultRandomColors.length -1)]
+    }
+
     this.hexToRgbColor = this.hexToRgb(background_color)
   },
   mounted() {

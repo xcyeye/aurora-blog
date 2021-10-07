@@ -40,19 +40,9 @@
 </template>
 
 <script setup lang="ts">
-let themeProperty = null
-import myData from '@temp/my-data'
-new Promise((resolve,reject) => {
-  for (let i = 0; i < myData.length; i++) {
-    if (myData[i].path === '/') {
-      themeProperty = myData[i].frontmatter
-    }
-  }
-  resolve()
-})
 import { computed, onMounted, ref } from 'vue'
 import { useRouteLocale, useSiteLocaleData, withBase } from '@vuepress/client'
-import { useThemeLocaleData } from '../composables'
+import {useThemeData, useThemeLocaleData} from '../composables'
 import NavbarLinks from './NavbarLinks.vue'
 import ToggleDarkModeButton from './ToggleDarkModeButton.vue'
 import ToggleSidebarButton from './ToggleSidebarButton.vue'
@@ -65,19 +55,21 @@ const themeLocale = useThemeLocaleData()
 
 const navbar = ref<HTMLElement | null>(null)
 const siteBrand = ref<HTMLElement | null>(null)
+
 const siteBrandLink = computed(
   () => themeLocale.value.home || routeLocale.value
 )
 
 //设置logo颜色
 const setLogoColor = computed(() => {
-  return "color: "+ themeProperty.logoColor + ";"
+  let logoColor = useThemeData().value.logoColor === undefined || useThemeData().value.logoColor == null ? "#2c3e50" : useThemeData().value.logoColor
+  return "color: "+ logoColor + ";"
 })
 
 const getLogoTitle = computed(() => {
-  let logoTitle = themeProperty.logoTitle
-  if (logoTitle === undefined || logoTitle === null) {
-    logoTitle = "ccds"
+  let logoTitle = useThemeData().value.logoTitle
+  if (logoTitle === undefined) {
+    logoTitle = "Aurora"
   }
   return logoTitle
 })
@@ -112,7 +104,7 @@ const enableDarkMode = computed(() => themeLocale.value.darkMode)
 onMounted(() => {
   // TODO: migrate to css var
   // refer to _variables.scss
-  const MOBILE_DESKTOP_BREAKPOINT = 719
+  /*const MOBILE_DESKTOP_BREAKPOINT = 719
   const navbarHorizontalPadding =
     getCssValue(navbar.value, 'paddingLeft') +
     getCssValue(navbar.value, 'paddingRight')
@@ -128,7 +120,7 @@ onMounted(() => {
   }
   handleLinksWrapWidth()
   window.addEventListener('resize', handleLinksWrapWidth, false)
-  window.addEventListener('orientationchange', handleLinksWrapWidth, false)
+  window.addEventListener('orientationchange', handleLinksWrapWidth, false)*/
 })
 
 function getCssValue(el: HTMLElement | null, property: string): number {

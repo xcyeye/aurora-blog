@@ -1,18 +1,18 @@
 <template>
   <div class="home-cut-page">
-    <div class="home-cut-page-change" :class="{'disabled': currentPage<=1}">
-      <span @click="prev" class="icon-chevron-left"></span>
+    <div @click="prev" v-if="total !== 0" class="home-cut-page-change" :class="{'disabled': currentPage<=1}">
+      <span class="home-menu-ico cute-page-icon-common" style="--homeIcoCode: '\e6aa'"></span>
     </div>
 
     <div class="home-cut-page-num">
-      <li v-for="i in pageList" :id="getActiveId(i)"
+      <li v-for="i in pageList" @click="changePage(i)" :id="getActiveId(i)"
           :key="i" :class="{'cutPageActive': getCurrentPage == i}">
-        <span  @click="changePage(i)">{{i}}</span>
+        <span>{{i}}</span>
       </li>
     </div>
 
-    <div class="home-cut-page-change" :class="{'disabled': currentPage>=pageTotal}">
-      <span @click="next" class="icon-cheveron-right"></span>
+    <div @click="next" v-if="total !== 0" id="cute-page-right" class="home-cut-page-change" :class="{'disabled': currentPage>=pageTotal}">
+      <span class="home-menu-ico cute-page-icon-common" style="--homeIcoCode: '\e6ac'"></span>
     </div>
   </div>
 </template>
@@ -75,24 +75,14 @@ export default {
     }
   },
   methods: {
-    setHomePageImg() {
-      if (!this.showHomePageImg) {
-        setTimeout(() => {
-          let contentHtmlImg = document.querySelectorAll(".home-page-tag-content img")
-          for (let i = 0; i < contentHtmlImg.length; i++) {
-            contentHtmlImg[i].setAttribute("src","https://ooszy.cco.vin/img/ico/loading.png")
-            contentHtmlImg[i].setAttribute("style","transform: scale(.2);")
-          }
-        },10)
-      }
-    },
+
     render(beginPage) {
       // 当总记录数小于显示页码数时, 将调整显示页码数为总记录数
       if (this.pageTotal <= this.pageListCount_) {
         this.pageListCount_ = this.pageTotal
         this.pageList = []
       }
-      for(var index = beginPage, i = 0; i < this.pageListCount_; index++, i++) {
+      for(let index = beginPage, i = 0; i < this.pageListCount_; index++, i++) {
         this.pageList[i] = index
       }
     },
@@ -140,11 +130,13 @@ export default {
       this.otherPage = this.pageListCount % 2 == 0 ? 1 : 0
     },
     totalInit() {
-      // 当total有值时将开始计算页码数
-      this.pageTotal = Math.ceil(this.total / this.pageSize_)
-      this.getBreakPageNum()
-      let beginPage = this.currentPage - this.breakPageNum < 1 ? 1 : this.currentPage - this.breakPageNum
-      this.render(beginPage)
+      setTimeout(() => {
+        // 当total有值时将开始计算页码数
+        this.pageTotal = Math.ceil(this.total / this.pageSize_)
+        this.getBreakPageNum()
+        let beginPage = this.currentPage - this.breakPageNum < 1 ? 1 : this.currentPage - this.breakPageNum
+        this.render(beginPage)
+      },200)
     }
   },
   computed: {
@@ -162,14 +154,13 @@ export default {
       this.currentPage = this.page
     },
     currentPage(nv) {
-      this.setHomePageImg()
       // 当前页修改时触发
-      this.currentPageInput = this.currentPage
-      if (this.currentPage > this.breakPageNum) {
-        if (((this.pageTotal + this.otherPage) - this.breakPageNum) >= this.currentPage) {
-          let beginPage = this.currentPage - this.breakPageNum
+      this.currentPageInput = this.$store.state.currentPageNum
+      if (this.$store.state.currentPageNum > this.breakPageNum) {
+        if (((this.pageTotal + this.otherPage) - this.breakPageNum) >= this.$store.state.currentPageNum) {
+          let beginPage = this.$store.state.currentPageNum - this.breakPageNum
           this.render(beginPage)
-        } else if ((this.currentPage + this.breakPageNum) >= this.pageTotal && this.currentPage <= this.pageTotal) {
+        } else if ((this.$store.state.currentPageNum + this.breakPageNum) >= this.pageTotal && this.$store.state.currentPageNum <= this.pageTotal) {
           let beginPage = this.pageTotal - (this.pageListCount_ - 1)
           this.render(beginPage)
         }
@@ -183,23 +174,26 @@ export default {
       this.pageSize_ = this.pageSize
     },
     pageSize_() {
-      // 显示页码数修改时触发
-      this.pageTotal = Math.ceil(this.total / this.pageSize_)
-      this.pageListCount_ = this.pageTotal <= this.pageListCount_ ? this.pageTotal : this.pageListCount
-      let beginPage = 1
-      if (this.currentPage + this.breakPageNum >= this.pageTotal) {
-        beginPage = this.pageTotal - (this.pageListCount_ - 1)
-        beginPage = beginPage <= 1 ? 1 : beginPage
-      } else if (this.currentPage - this.breakPageNum <= 1) {
-        beginPage = 1
-      } else {
-        beginPage = this.currentPage - this.breakPageNum
-        beginPage = beginPage <= 1 ? 1 : beginPage
-      }
+      setTimeout(() => {
+// 显示页码数修改时触发
+        this.pageTotal = Math.ceil(this.total / this.pageSize_)
+        this.pageListCount_ = this.pageTotal <= this.pageListCount_ ? this.pageTotal : this.pageListCount
+        let beginPage = 1
+        if (this.currentPage + this.breakPageNum >= this.pageTotal) {
+          beginPage = this.pageTotal - (this.pageListCount_ - 1)
+          beginPage = beginPage <= 1 ? 1 : beginPage
+        } else if (this.currentPage - this.breakPageNum <= 1) {
+          beginPage = 1
+        } else {
+          beginPage = this.currentPage - this.breakPageNum
+          beginPage = beginPage <= 1 ? 1 : beginPage
+        }
 
-      if (this.currentPage >= this.pageTotal) this.currentPage = this.pageTotal
-      this.render(beginPage)
-      this.$emit('changePageSize', this.pageSize_)
+        if (this.currentPage >= this.pageTotal) this.currentPage = this.pageTotal
+        this.render(beginPage)
+
+        this.$emit('changePageSize', this.pageSize_)
+      },200)
     },
     total(newValue) {
       // 重置每页显示页码数
@@ -208,7 +202,7 @@ export default {
     }
   },
   created() {
-    this.currentPage = this.page
+    this.currentPage = this.$store.state.currentPageNum
     this.total && this.totalInit()
     this.pageSize_ = this.pageSize
   }
