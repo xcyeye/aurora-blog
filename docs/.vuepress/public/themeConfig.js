@@ -1,9 +1,10 @@
-const { sidebar } = require("./public/hrefs");
-const { navbar } = require("./public/navbar");
+/*
+* 此文件是该版本主题的所有配置项，使用的时候，请在docs/.vuepress/config.js的themeConfig处使用，
+* 详细主题配置请查看主题文档(https://aurora.cco.vin)和vuepress官网文档(https://v2.vuepress.vuejs.org/reference/default-theme/config.html#basic-config)
+* */
 module.exports = {
     themeConfig: {
-        navbar: navbar,
-        sidebar: sidebar,
+        //navbar: navbar,
         darkMode: false,
         repo: "https://github.com/qsyyke/note",
         repoLabel: "Aurora-theme",

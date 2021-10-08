@@ -4,36 +4,29 @@
       <div class="link">
         <div :style="$store.state.borderRadiusStyle + $store.state.opacityStyle"
              class="article-page link-common" id="c-link">
-          <!--<h2 class="link-center center-common">我的站点</h2>-->
-          <!--<div class="link-self">-->
-          <!--  <a target="_blank" class="link-self-item" :href="siteInformation.url">-->
-          <!--    <div :style="setSpanStyle(99)" class="link-item"  id="link-item">-->
-          <!--      <div class="link-top">-->
-          <!--        <div class="link-img">-->
-          <!--          <img id="link-img" :src="siteInformation.logo" :alt="siteInformation.title">-->
-          <!--        </div>-->
-          <!--      </div>-->
-          <!--      <div class="link-bottom" :style="setBottomStyle(99)" >-->
-          <!--        <div class="link-bottom-title link-bottom-common">-->
-          <!--          <span>{{siteInformation.title}}</span>-->
-          <!--        </div>-->
-          <!--        <div class="link-bottom-describe link-bottom-common">-->
-          <!--          <span id="link-bottom-describe">{{siteInformation.describe}}</span>-->
-          <!--        </div>-->
-          <!--      </div>-->
-          <!--    </div>-->
-          <!--  </a>-->
-          <!--</div>-->
+<!--          <h2 class="link-center center-common">我的站点</h2>
+          <div class="link-self">
+            <a target="_blank" class="link-self-item" :href="siteInformation.url">
+              <div :style="setSpanStyle(99)" class="link-item"  id="link-item">
+                <div class="link-top">
+                  <div class="link-img">
+                    <img id="link-img" :src="siteInformation.logo" :alt="siteInformation.title">
+                  </div>
+                </div>
+                <div class="link-bottom" :style="setBottomStyle(99)" >
+                  <div class="link-bottom-title link-bottom-common">
+                    <span>{{siteInformation.title}}</span>
+                  </div>
+                  <div class="link-bottom-describe link-bottom-common">
+                    <span id="link-bottom-describe">{{siteInformation.describe}}</span>
+                  </div>
+                </div>
+              </div>
+            </a>
+          </div>-->
 
 
           <h2 class="link-center center-common">我的朋友</h2>
-
-          <!--<LinkItem
-              :theme-property="themeProperty"
-              :color="color"
-              :link-top-style="setSpanStyle(index)"
-              :link-bottom-style="setBottomStyle(index)"
-              v-for="(item,index) in friendLinks" :item="item"/>-->
           <LinkItem
               :theme-property="themeProperty"
               v-for="(item,index) in friendLinks" :item="item"/>
@@ -98,9 +91,7 @@ export default defineComponent({
       return (index) => {
         let background_color = this.themeProperty.randomColor[
             this.getRandomInt(0,this.themeProperty.randomColor.length -1)]
-        // this.color = background_color
         return "background-color: "+background_color + ";"
-        // return "background-color: "+ this.color + ";"
       }
     },
     setBottomStyle() {
@@ -119,8 +110,8 @@ export default defineComponent({
       return Math.floor(Math.random() * (max - min)) + min; //不含最大值，含最小值
     },
     shuffle(arr){
-      var l = arr.length
-      var index, temp
+      let l = arr.length
+      let index, temp
       while(l>0){
         index = Math.floor(Math.random()*l)
         temp = arr[l-1]
@@ -140,7 +131,6 @@ export default defineComponent({
     }
 
     this.themeProperty = useThemeData().value
-    // this.friendLinks = this.themeProperty.friendLinks
     if (this.themeProperty.friendLinks !== undefined && this.themeProperty.friendLinks != null) {
       this.friendLinks = this.shuffle(this.themeProperty.friendLinks)
     }

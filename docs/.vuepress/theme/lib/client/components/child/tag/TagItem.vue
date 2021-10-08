@@ -12,7 +12,7 @@ export default {
   name: "TagItem",
   data() {
     return {
-      tagPageLength: null
+      tagPageLength: 0
     }
   },
   props: {
@@ -51,10 +51,15 @@ export default {
     },
     itemSplit() {
       return (tagPageLength) => {
-        if (tagPageLength === 0 || tagPageLength === undefined || tagPageLength === null) {
-          return ""
+
+        if (tagPageLength === 0 || tagPageLength === undefined) {
+          return " "
         }else {
-          return this.themeProperty.split
+          if (this.themeProperty.split !== undefined) {
+            return this.themeProperty.split
+          }else {
+            return ' '
+          }
         }
       }
     }
@@ -79,7 +84,6 @@ export default {
           tagArr = allPages[i].categories
         }
         for (let j = 0; j < tagArr.length; j++) {
-
           let pageTag = tagArr[j]
           if (this.tag === pageTag) {
             temPage.push(allPages[i])

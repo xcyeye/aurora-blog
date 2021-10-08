@@ -1,6 +1,6 @@
 <template>
   <add-mood @cancel="cancel" :open-edit-status="openEditStatus"/>
-  <div id="social_spin_po" class="fail_about social_spin_po">
+  <div v-if="showAddMood" id="social_spin_po" class="fail_about social_spin_po">
     <span class="bg_links social portfolio" >
       <span @click="openEdit" class="icon"></span>
     </span>
@@ -15,7 +15,6 @@
 
 <script>
 import AddMood from "./child/AddMood";
-import myData from '@temp/my-data'
 import $ from "jquery";
 import {useThemeData} from "../composables";
 export default {
@@ -26,11 +25,16 @@ export default {
   data() {
     return {
       themeProperty: '',
-      openEditStatus: false
+      openEditStatus: false,
+      showAddMood: false
     }
   },
   created() {
     this.themeProperty = useThemeData().value
+
+    if (this.themeProperty.showAddMood !== undefined) {
+      this.showAddMood = this.themeProperty.showAddMood
+    }
   },
   methods:{
     cancel(openEditStatus) {

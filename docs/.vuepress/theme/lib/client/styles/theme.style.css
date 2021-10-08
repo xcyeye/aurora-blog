@@ -118,6 +118,9 @@
     --homeHeight: 100vh;
     --sidebarCutWidth: 0.9;
 
+    /*首页文章列表随机图片api*/
+    --homePageImgApi: url('https://api.ixiaowai.cn/api/api.php');
+
     /*伪元素测试*/
     --homeIcoCode: '\e924'
 }
@@ -3616,9 +3619,6 @@ body::-webkit-scrollbar-thumb {
 
 /*手机侧边栏*/
 @media screen and (max-width: 719px) {
-    #home-tag-sidebar {
-        text-align: center;
-    }
     #mobile-sidebar-control {
         display: block;
         animation: mobileSidebarControlEnter 1000ms;
@@ -4071,4 +4071,102 @@ body::-webkit-scrollbar-thumb {
 }
 #page-top h1 {
     font-weight: 750;
+}
+.sidebar-link {
+    overflow-x: scroll;
+    white-space: nowrap;
+    width: 90%;
+    margin: 0 auto;
+    height: max-content;
+}
+
+.sidebar-link::-webkit-scrollbar-button{
+    width: 0;
+}
+.sidebar-link::-webkit-scrollbar{
+    width: 5px;
+    height: 7px;
+    background: rgba(255,255,255,0);
+}
+.sidebar-link::-webkit-scrollbar-thumb {
+    width: 10px;
+    height: 5px;
+    background-color: rgba(184, 242, 230, 0.5);
+    border-radius: 5px;
+}
+.sidebar-link-single {
+    margin-left: .5rem;
+    margin-right: .5rem;
+    display: inline-block;
+    max-width: 5rem;
+    height: 100%;
+}
+.sidebar-link-avatar {
+    background: rgba(255,255,255,.2);
+    padding: 1px;
+    width: 5rem;
+    border-radius: 100px;
+    height: 5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.sidebar-link-avatar img {
+    width: 4.5rem;
+    height: 4.5rem;
+    border-radius: 100px;
+}
+.sidebar-link-title {
+    height: 1.5rem;
+    line-height: 1.5rem;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    margin-top: 2px;
+    margin-bottom: 2px;
+}
+.sidebar-link-title span {
+    padding-left: 5px;
+}
+
+.page-bottom-next {
+    margin-bottom: -1rem;
+    margin-top: 1rem;
+    height: 7rem;
+    width: 100%;
+    display: flex;
+}
+.page-next-item {
+    flex: 1;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.page-bottom-next:before {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    filter: blur(1.7px);
+    z-index: -1;
+    content: "";
+    background-image: var(--homePageImgApi);
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+}
+.page-next-left {
+    border-bottom-left-radius: var(--borderRadius);
+    border-top-left-radius: var(--borderRadius);
+}
+.page-next-right {
+    border-bottom-right-radius: var(--borderRadius);
+    border-top-right-radius: var(--borderRadius);
+}
+.page-next-item span {
+    color: whitesmoke;
+    font-weight: 650;
+    font-size: 19px;
 }

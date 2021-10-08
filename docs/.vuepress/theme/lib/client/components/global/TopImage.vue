@@ -48,6 +48,8 @@
 </template>
 
 <script>
+import {useThemeLocaleData} from "../../composables";
+
 const network = require('../../public/js/network.js')
 export default {
   name: "TopImage",
@@ -102,19 +104,12 @@ export default {
 
       let imgPath = ""
       if (customTop === undefined) {
-        //用户没有自定义图片，使用随机图片
-        let random1 = this.getRandomInt(0,99999999)
-        let time = +new Date()
-        let result = time + random1 + "-Aurora"
-        return "background-image: url(" + this.topBackgroundUrl + "?time=" + result + ");"
+        return this.getRandomBg()
       }
 
       if (customTop.custom === undefined || !customTop.custom) {
         //用户自定义
-        let random1 = this.getRandomInt(0,99999999)
-        let time = +new Date()
-        let result = time + random1 + "-Aurora"
-        return "background-image: url(" + this.topBackgroundUrl + "?time=" + result + ");"
+        return this.getRandomBg()
       }
 
       //用户自定义 使用用户的图片
@@ -153,6 +148,24 @@ export default {
     }
   },
   methods: {
+    getRandomBg() {
+      //用户没有自定义图片，使用随机图片
+      let num1 = this.getRandomInt(-9999,999)
+      let num2 = this.getRandomInt(0,300)
+      let num3 = this.getRandomInt(0,30)
+      let num = num2 / num3 * num1 + num2
+
+      const themeLocale = useThemeLocaleData()
+
+      let homePageImgApi = themeLocale.value.homePageImgApi
+
+      if (homePageImgApi === undefined) {
+        homePageImgApi = "https://api.ixiaowai.cn/api/api.php"
+      }
+
+      let path = homePageImgApi + "?time=" + num
+      return "background-image: url(" + path + ");"
+    },
     getCustomTopImgPath(pathArr) {
       if (pathArr.length === 0) {
         try {

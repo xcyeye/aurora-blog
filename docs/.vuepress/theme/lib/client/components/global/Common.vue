@@ -13,7 +13,7 @@
     </Navbar>
     <mobile-sidebar :show-navbar="frontmatter.home"/>
     <social-spin/>
-    <home-welcome
+    <style-menu
         :theme-property="themeProperty"
         @setIsFitter="setIsFitter"
         @setBodyStyle="getBodyStyle"
@@ -89,7 +89,7 @@
 <script lang="ts">
 
 //组件导入
-import HomeWelcome from '../child/home/HomeWelcome.vue'
+import StyleMenu from '../child/home/StyleMenu.vue'
 import Navbar from '../../components/Navbar.vue'
 import Home from '../Home'
 import MobileSidebar from "../child/side/MobileSidebar.vue";
@@ -112,7 +112,7 @@ export default defineComponent({
     SocialSpin,
     Navbar,
     Transition,
-    HomeWelcome,
+    StyleMenu,
     Home,
     MobileSidebar,
   },

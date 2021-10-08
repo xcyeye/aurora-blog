@@ -1,3 +1,4 @@
+//此文件最初是想添加樱花飘落效果
 module.exports = {
   sakura: function () {
     var stop, staticx;

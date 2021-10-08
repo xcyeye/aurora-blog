@@ -9,9 +9,14 @@
       <Content />
     </div>
     <PageMeta />
-    <PageNav />
+    <!--<PageNav />-->
     <slot name="bottom" />
   </main>
+  <b-center>
+    <template #page-center1>
+      <page-next/>
+    </template>
+  </b-center>
   <div>
     <donate v-if="showDonate" />
   </div>
@@ -28,7 +33,8 @@ import PageMeta from './PageMeta.vue'
 import PageNav from './PageNav.vue'
 import AdSense from './AdSense'
 import RecommendPage from "./RecommendPage";
-import {usePageData, useRouteLocale, useSiteData} from "@vuepress/client";
+import {usePageData} from "@vuepress/client";
+import PageNext from "./child/page/PageNext";
 import $ from 'jquery'
 
 export default defineComponent({
@@ -38,7 +44,8 @@ export default defineComponent({
     PageNav,
     AdSense,
     RecommendPage,
-    Mood
+    Mood,
+    PageNext
   },
   data() {
     return {

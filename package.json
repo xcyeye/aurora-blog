@@ -19,6 +19,7 @@
   },
   "dependencies": {
     "@vuepress/plugin-search": "^2.0.0-beta.25",
+    "animate.css": "^4.1.1",
     "axios": "^0.21.1",
     "easy-typer-js": "^2.1.0",
     "html2canvas": "^1.3.2",

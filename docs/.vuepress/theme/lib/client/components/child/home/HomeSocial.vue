@@ -1,3 +1,4 @@
+<!--此组件在v1.3.2之后就不使用了，改用HomeSidebarSocialItem.vue-->
 <template>
   <div :style="style" id="home-social">
     <home-social-item
@@ -14,7 +15,6 @@
 
 <script>
 import HomeSocialItem from "./HomeSocialItem";
-import {useThemeData} from "../../../composables";
 
 export default {
   name: "HomeSocial",

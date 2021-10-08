@@ -1,3 +1,4 @@
+<!--此组件是样式控制面板-->
 <template>
   <div class="setColor" :style="$store.state.borderRadiusStyle + $store.state.fontFamilyStyle + $store.state.fontColorStyle">
     <div v-if="isShowIco"
@@ -88,16 +89,14 @@
 
 <script>
 import $ from 'jquery'
+
 export default {
   name: "HomeWelcome",
   data() {
     return {
-      isActive: false,
       setColorStyle: "display: none;",
       fontArr: [],
       colorArr: [],
-      fontIndex: 0,
-      colorIndex: 0,
       isFitter: true,
       opacity: 0.4,
       blur: 5,
@@ -106,8 +105,7 @@ export default {
       fontColorArr: [],
       fontFamilyArr: [],
       currentColor: '',
-      currentFont: '',
-
+      currentFont: ''
     }
   },
   created() {
@@ -141,22 +139,20 @@ export default {
       this.fontFamilyArr = this.fontArr.slice(0,this.maxFontColorArr)
     }
 
-
     this.$store.commit('setVarFilterBlur',{
       varFilterBlur: this.blur
     })
     this.$store.commit('setVarBorderRadius',{
       varBorderRadius: this.borderRadius
     })
+
     this.$store.commit('setVarOpacity',{
       varOpacity: this.opacity
     })
   },
   computed: {
     getShowFont() {
-      let showFont = this.themeProperty.showFont === undefined ? "程" : this.themeProperty.showFont
-
-      return showFont
+      return this.themeProperty.showFont === undefined ? "程" : this.themeProperty.showFont
     },
     getColorStyle() {
       return this.setColorStyle
@@ -170,38 +166,6 @@ export default {
       return (item) => {
         return "font-family: " + item + ";";
       }
-    },
-    setBackgroundImg() {
-      return (item) => {
-        let colorArr = []
-        try {
-          colorArr = this.themeProperty.ico.homeWelcome
-        }catch (e) {
-          colorArr = ['https://ooszy.cco.vin/img/ico/love2.svg','https://ooszy.cco.vin/img/ico/xy.svg']
-        }
-        let url = ''
-        switch  (item){
-          case  1:
-            url = colorArr[0];
-            break
-          case  2:
-            url = colorArr[1];
-            break
-          case  3:
-            url = colorArr[2];
-            break
-          case 4:
-            url = colorArr[3]
-        }
-        return 'background-image: url("'+url+'");'
-      }
-    },
-    setCancelIco() {
-      let cancelIcoHref = this.themeProperty.cancelIcoHref
-      if (cancelIcoHref === undefined || cancelIcoHref === null) {
-        cancelIcoHref = "https://ooszy.cco.vin/img/ico/quxiao.svg"
-      }
-      return "background-image: url(" + cancelIcoHref + ");"
     }
   },
   methods: {
@@ -219,12 +183,12 @@ export default {
         if (slideTime === undefined || slideTime == null) {
           slideTime = 3000
         }
+
         if ($("#welcome").css("display") === 'block') {
           if (lastTime > slideTime) {
             $("#welcome").slideUp(350)
           }
         }
-
       },1500)
     },
     clickSet() {
@@ -260,9 +224,6 @@ export default {
       this.$store.commit('setIsFitter',{
         isFitter: this.isFitter
       })
-    },
-    setBlur() {
-
     }
   },
   props: {

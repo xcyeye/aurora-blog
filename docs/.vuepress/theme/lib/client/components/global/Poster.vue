@@ -77,6 +77,9 @@ export default {
     },
     async createPoster(e) {
 
+      if (!this.clickStatus) {
+        return
+      }
       this.$store.commit("setShowPosterShadow", {
         showPosterShadow: true
       })

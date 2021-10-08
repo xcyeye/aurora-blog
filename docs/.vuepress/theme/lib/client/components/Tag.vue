@@ -23,7 +23,7 @@
                 <TagItem
                     :class="isCategoriesActive === index ? 'active' : ''"
                     v-for="(item,index) in $store.state.categories"
-                    @click="setIsCategoriesActive($event,index)"
+                    @click="setIsCategoriesActive($event,index,item)"
                     :theme-property="themeProperty"
                     :is-categories="true"
                     :key="index" :tag="item"/>
@@ -46,7 +46,7 @@
                 <TagItem
                     :class="isActive === index ? 'active' : ''"
                     v-for="(item,index) in tagArr"
-                    @click="setIsActive($event,index)"
+                    @click="setIsActive($event,index,item)"
                     :theme-property="themeProperty"
                     :key="index" :tag="item"/>
               </div>
@@ -84,7 +84,6 @@ import TagCloud from "./child/tag/TagCloud";
 import TagItem from "./child/tag/TagItem";
 import TagPage from "./child/tag/TagPage";
 import CutePage from "./child/side/CutePage";
-import $ from "jquery";
 import {useThemeData} from "../composables";
 
 export default {
@@ -116,38 +115,38 @@ export default {
         openMobileSidebar: false
       })
     }
+
     this.themeProperty = useThemeData().value
+
     // 从其他页面进入此tag页面，查看是否携带分类参数
     let tag = this.$route.query.tag
-    let sidebarTag = this.themeProperty.sidebarTag
-    if (sidebarTag === undefined || sidebarTag == null) {
-      sidebarTag = "tag"
-    }
 
     if (tag !== undefined && tag !== null && tag !== "") {
       this.tag = tag
       setTimeout(() => {
         let allPages = this.$store.state.allPageMap
         new Promise((resolve,reject) => {
-          let temPage = []
+          let temPage = new Set()
           for (let i = 0; i < allPages.length; i++) {
-            let tagArr = []
-            if (sidebarTag === "tag") {
-              tagArr = allPages[i].tag
-            }else {
-              tagArr = allPages[i].categories
-            }
+            let tagArr = allPages[i].tag
+            let categoriesArr = allPages[i].categories
             for (let j = 0; j < tagArr.length; j++) {
               let pageTag = tagArr[j]
               if (this.tag === pageTag) {
-                temPage.push(allPages[i])
+                temPage.add(allPages[i])
               }
-              continue
+            }
+
+            for (let j = 0; j < categoriesArr.length; j++) {
+              let pageTag = categoriesArr[j]
+              if (this.tag === pageTag) {
+                temPage.add(allPages[i])
+              }
             }
           }
           resolve(temPage)
         }).then((temPage) => {
-          this.allPageMap = temPage
+          this.allPageMap = Array.from(temPage)
           this.changePage(1)
         })
       },200)
@@ -159,14 +158,6 @@ export default {
       this.tagArr = this.$store.state.tagArr
       //this.allPageMap = this.$store.state.allPageMap
     },100)
-
-
-  },
-  beforeMount() {
-    let content = $("#content")
-    if (content.length > 1) {
-      $(content[0]).css("display",'none')
-    }
   },
   methods: {
     changePage(currentPageNum) {
@@ -236,15 +227,10 @@ export default {
     showTagCloud(e,index) {
       this.tagIndex = index
     },
-    setIsActive(e,index) {
+    setIsActive(e,index,item) {
       this.isActive = index
       //当前鼠标点击的标签
-      let splitTag = e.target.innerText
-      let split = ''
-      if (this.themeProperty.split !== undefined && this.themeProperty.split != null) {
-        split = this.themeProperty.split
-      }
-      this.tag = splitTag.split(split)[0]
+      this.tag = item
       let allPages = this.$store.state.allPageMap
       new Promise((resolve,reject) => {
         let temPage = []
@@ -265,12 +251,10 @@ export default {
       })
       this.autoScroll()
     },
-    setIsCategoriesActive(e,index) {
+    setIsCategoriesActive(e,index,item) {
       this.isCategoriesActive = index
       //当前鼠标点击的标签
-      let splitTag = e.target.innerText
-      this.tag = splitTag.split(this.themeProperty.split)[0]
-
+      this.tag = item
       let allPages = this.$store.state.allPageMap
       new Promise((resolve,reject) => {
         let temPage = []
@@ -295,9 +279,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-  .active {
-    font-size: 21px;
-  }
-</style>

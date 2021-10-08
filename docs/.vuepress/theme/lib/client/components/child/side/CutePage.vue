@@ -1,3 +1,4 @@
+<!--此组件是一个分页组件-->
 <template>
   <div class="home-cut-page">
     <div @click="prev" v-if="total !== 0" class="home-cut-page-change" :class="{'disabled': currentPage<=1}">

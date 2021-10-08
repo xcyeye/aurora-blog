@@ -1,3 +1,4 @@
+<!--侧边栏组件，手机端菜单组件为MobileSidebar.vue-->
 <template>
   <!--这是页面右侧的侧边栏，和默认主题的侧边栏不同-->
   <div ref="sidebar-top" class="sidebar-cqy"></div>
@@ -36,7 +37,7 @@
       <slot name="sidebar1"></slot>
 
       <!--社交-->
-      <div :id="customId" v-if="showSidebarSocial" class="sidebar-single-common">
+      <div :id="customId" v-if="getShowSidebarSocial" class="sidebar-single-common">
         <div class="sidebar-social">
           <HomeSidebarSocialItem :sidebar-row-var="sidebarRowVar"
                                  :sidebar-width-var="sidebarWidthVar"
@@ -45,6 +46,22 @@
         </div>
       </div>
       <slot name="sidebar2"></slot>
+
+      <!--侧边栏友情链接-->
+      <div :id="customId" v-if="getShowSidebarLink" class="sidebar-single-common">
+        <div class="sidebar-link">
+          <a :href="item.url" target="_blank" v-for="item in friendLinks">
+            <div class="sidebar-link-single">
+              <div class="sidebar-link-avatar">
+                <img :src="item.logo" alt="">
+              </div>
+              <div class="sidebar-link-title">
+                <span>{{item.title}}</span>
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
 
       <!--顶部导航-->
       <div :id="customId" v-if="showNavbar" class="sidebar-single-enter-animate sidebar-single-common">
@@ -91,7 +108,7 @@
       <slot name="sidebar5"></slot>
 
       <!--公告-->
-      <div :id="customId" v-if="showMessage" class="sidebar-single-enter-animate sidebar-single-common">
+      <div :id="customId" v-if="getShowMessage" class="sidebar-single-enter-animate sidebar-single-common">
         <div class="sidebar-page">
           <span class="home-menu-ico home-menu-message-ico" style="--homeIcoCode: '\e61c'"></span>
           <span>公告</span>
@@ -178,7 +195,8 @@ export default {
       latestPageSize: 6,
       changePageIndex: '2',
       stickSidebar: false,
-      socialsArr: []
+      socialsArr: [],
+      friendLinks: []
     }
   },
   props: {
@@ -207,6 +225,12 @@ export default {
       }
     },
     showPersonInfo: {
+      type: Boolean,
+      default() {
+        return true
+      }
+    },
+    showSidebarLink: {
       type: Boolean,
       default() {
         return true
@@ -283,6 +307,10 @@ export default {
       this.latestPageSize = this.themeProperty.latestPageSize
     }
 
+    if (this.themeProperty.friendLinks !== undefined && this.themeProperty.friendLinks != null) {
+      this.friendLinks = this.shuffle(this.themeProperty.friendLinks)
+    }
+
     let socials = this.themeProperty.socials
     let setArr = new Set()
     if (socials !== undefined) {
@@ -299,6 +327,35 @@ export default {
     }
   },
   computed: {
+    getShowSidebarLink() {
+      if (!this.showSidebarLink) {
+        return false
+      }
+
+      if (this.themeProperty.friendLinks === undefined) return false
+
+      return this.themeProperty.friendLinks.length !== 0;
+    },
+    getShowSidebarSocial() {
+      if (!this.showSidebarSocial) {
+        return false
+      }
+
+      return this.socialsArr.length !== 0;
+
+    },
+    getShowMessage() {
+      if (!this.showMessage) {
+        return false
+      }
+
+      if (this.themeProperty.message === undefined) {
+        return false
+      }
+
+      return this.themeProperty.message.length !== 0;
+
+    },
     getSidebarTagArr() {
       let sidebarTag = this.themeProperty.sidebarTag
       if (sidebarTag === undefined || sidebarTag == null) {
@@ -372,6 +429,18 @@ export default {
     }
   },
   methods: {
+    shuffle(arr){
+      let l = arr.length
+      let index, temp
+      while(l>0){
+        index = Math.floor(Math.random()*l)
+        temp = arr[l-1]
+        arr[l-1] = arr[index]
+        arr[index] = temp
+        l--
+      }
+      return arr
+    },
     changePage(e) {
       this.changePageIndex = e.target.getAttribute("index")
     },

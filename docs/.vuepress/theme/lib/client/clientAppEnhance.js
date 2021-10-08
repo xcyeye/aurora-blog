@@ -25,7 +25,6 @@ import PhotoFall from "./components/PhotoFall";
 import AddMood from "./components/child/AddMood";
 import HomeSidebar from "./components/child/side/HomeSidebar";
 import HomeBottom from "./components/HomeBottom";
-import Sidebar from "./components/child/side/MobileSidebar"
 
 import './styles/index.scss';
 import './styles/photo.scss'

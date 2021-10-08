@@ -309,6 +309,9 @@ export default {
           this.$emit("getCurrentCatalogObject",{
             currentCatalog: Array.from(catalogSet)
           })
+          this.$store.commit("setCurrentCatalogObjectArr",{
+            currentCatalogObjectArr: this.currentCatalog
+          })
         })
       })
     }

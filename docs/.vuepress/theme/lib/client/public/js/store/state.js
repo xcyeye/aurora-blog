@@ -38,6 +38,7 @@ module.exports = {
     posterData: -2,
     //首页壁纸
     homeWps: '',
+    currentCatalogObjectArr: [],
 
     //顶部默认图片地址
     defaultPageImg: 'https://picoss.cco.vin/animate/wall/555260.png',

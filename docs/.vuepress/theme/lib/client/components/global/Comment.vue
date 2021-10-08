@@ -112,8 +112,7 @@ export default {
       return adminUsername
     },
     getShowComment() {
-      // let showComment = this.themeProperty.comment.showComment
-      let showComment = true
+      let showComment = false
       try {
         showComment = this.themeProperty.comment.showComment
         showComment = showComment === undefined || showComment == null ? true : showComment

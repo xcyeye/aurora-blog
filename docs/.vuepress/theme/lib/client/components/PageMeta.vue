@@ -134,8 +134,6 @@ export default defineComponent({
 
   setup() {
     const themeLocale = useThemeLocaleData()
-    // console.log("--------pagemet--------")
-    // console.log(themeLocale)
     const editNavLink = useEditNavLink()
     const lastUpdated = useLastUpdated()
     const contributors = useContributors()

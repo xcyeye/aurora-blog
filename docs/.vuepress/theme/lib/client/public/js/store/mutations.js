@@ -102,5 +102,8 @@ module.exports = {
     },
     setHomeWps(state,homeWps) {
         this.state.homeWps = homeWps.homeWps
+    },
+    setCurrentCatalogObjectArr(state,currentCatalogObjectArr) {
+        this.state.currentCatalogObjectArr = currentCatalogObjectArr.currentCatalogObjectArr
     }
 }
