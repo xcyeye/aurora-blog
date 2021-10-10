@@ -29,25 +29,7 @@ export default {
   },
   props: {
     themeProperty: '',
-    item: null,
-    /*linkTopStyle: {
-      type: String,
-      default() {
-        return 'background-color: pink'
-      }
-    },
-    linkBottomStyle: {
-      type: String,
-      default() {
-        return 'background-color: #a9def9'
-      }
-    },
-    color: {
-      type: String,
-      default() {
-        return '#2c3e50'
-      }
-    }*/
+    item: null
   },
   created() {
     let bgColor = ''
@@ -83,7 +65,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-
-</style>

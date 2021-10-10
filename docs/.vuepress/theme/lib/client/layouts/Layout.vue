@@ -7,7 +7,7 @@
       <Home :theme-property="themeProperty" :is-home=frontmatter.home v-if="frontmatter.home" />
     </template>
     <template #center2>
-      <Page v-if="!frontmatter.home" @getHeadLine="getHeadLine" :theme-property="themeProperty" :key="page.path">
+      <Page :path-name="page.path" v-if="!frontmatter.home" @getHeadLine="getHeadLine" :theme-property="themeProperty" :key="page.path">
         <template #top>
           <slot name="page-top" />
         </template>

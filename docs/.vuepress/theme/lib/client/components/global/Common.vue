@@ -53,6 +53,7 @@
                 <HomeSidebar :show-navbar="false"
                              :sidebar-width-var="0.96"
                              :show-sidebar-social="true"
+                             :show-sidebar-link="showSidebarLink"
                              :sidebar-row-var="sidebarRowVar"
                              :is-sticky-sidebar="isStickySidebar"
                              :show-tag-cloud="showTagCloud"
@@ -142,6 +143,12 @@ export default defineComponent({
     }
   },
   props: {
+    showSidebarLink: {
+      type: Boolean,
+      default() {
+        return true
+      }
+    },
     isStickySidebar: {
       type: Boolean,
       default() {
@@ -308,24 +315,12 @@ export default defineComponent({
     }
   },
   created() {
-    //控制台打印 通过接口获取最新version
-    network.cors({
-      baseURL: 'https://api.github.com/repos/qsyyke/vuepress-theme-ccds/releases/latest',
-      method: 'GET',
-      timeout: 10000,
-      responseType: 'json'
-    }).then((res) => {
-      let lastVersion = res.name
-      let tagDesc = res.body + ""
-      tagDesc = tagDesc.replace("# ","")
-      tagDesc = tagDesc.replace("## ","")
-      tagDesc = tagDesc.replace("### ","")
-      tagDesc = tagDesc.replace("- ","")
-      tagDesc = tagDesc.replace("\n","")
-      console.log("%c vuepress-theme-ccds %c by qsyyke","font-weight: bold;color: white;display: inline-block;text-align: center;height: 1.5rem;line-height: 1.5rem;background-color: rgba(255,202,212,.8);padding: 10px;border-bottom-left-radius: 13px;border-top-left-radius: 13px;","font-weight: bold;color: white;display: inline-block;text-align: center;height: 1.5rem;line-height: 1.5rem;background-color: rgba(178,247,239,.85);padding: 10px;border-bottom-right-radius: 13px;border-top-right-radius: 13px;")
-      console.log("%c Version %c "+ lastVersion + "","font-weight: bold;color: white;display: inline-block;text-align: center;height: 1.5rem;line-height: 1.5rem;background-color: rgba(255,202,212,.8);padding: 10px;border-bottom-left-radius: 13px;border-top-left-radius: 13px;","font-weight: bold;color: white;display: inline-block;text-align: center;height: 1.5rem;line-height: 1.5rem;background-color: rgba(178,247,239,.85);padding: 10px;border-bottom-right-radius: 13px;border-top-right-radius: 13px;")
-      console.log("%c tagDescribe: " + tagDesc + "" ,"color: rgba(178,247,239,.85);")
-    })
+    if (this.$store.state.printRightIndex === 0) {
+      console.log("%c vuepress-theme-Aurora %c by qsyyke","font-weight: bold;color: white;display: inline-block;text-align: center;height: 1.5rem;line-height: 1.5rem;background-color: rgba(255,202,212,.8);padding: 10px;border-bottom-left-radius: 13px;border-top-left-radius: 13px;","font-weight: bold;color: white;display: inline-block;text-align: center;height: 1.5rem;line-height: 1.5rem;background-color: rgba(178,247,239,.85);padding: 10px;border-bottom-right-radius: 13px;border-top-right-radius: 13px;")
+      console.log("%c Version %c "+ this.$store.state.latestVersion + "","font-weight: bold;color: white;display: inline-block;text-align: center;height: 1.5rem;line-height: 1.5rem;background-color: rgba(255,202,212,.8);padding: 10px;border-bottom-left-radius: 13px;border-top-left-radius: 13px;","font-weight: bold;color: white;display: inline-block;text-align: center;height: 1.5rem;line-height: 1.5rem;background-color: rgba(178,247,239,.85);padding: 10px;border-bottom-right-radius: 13px;border-top-right-radius: 13px;")
+    }
+
+    this.$store.state.printRightIndex = 1
 
     this.themeProperty = useThemeData().value
     //在v1.3.2之后，就已经移除通过docs/readme.md中配置favicon，转为在config中进行配置
@@ -420,40 +415,46 @@ export default defineComponent({
 
 
     const frontmatter = usePageFrontmatter<DefaultThemePageFrontmatter>()
+    let keywordValue = this.themeProperty.keyword
+    let descriptionValue = this.themeProperty.description
+
+    if (keywordValue === undefined) {
+      keywordValue = "vuepress,vuepress-theme-aurora,blog-theme"
+    }
+
+    if (descriptionValue === undefined) {
+      descriptionValue = "个人博客"
+    }
+
     if (frontmatter.value.home) {
       //如果是首页的话，就将key和description设置为配置中的
-      let heads = $("head").get(0).children
-      new Promise((resolve,reject) => {
-        let isDescription = false
-        let isKeyword = false
-        for (let i = 0; i < heads.length; i++) {
-          let name = heads[i].getAttribute("name")
-          if (name === 'description') {
-            heads[i].setAttribute("content",this.themeProperty.description)
-            isDescription = true
-          }
+      let descriptionDom = document.querySelectorAll('meta[name="description"]')
+      let keywordDom= document.querySelector('meta[name="keyword"]')
 
-          if (name === 'keyword') {
-            heads[i].setAttribute("content",this.themeProperty.keyword)
-            isKeyword = true
+      //设置关键词
+      if (keywordDom === null) {
+        //head中没有keyword 添加一个
+        let keywordMeta = $('<meta name="keyword" content="'+ keywordValue +'">').get(0)
+        document.querySelector("head").appendChild(keywordMeta)
+      }else {
+        //已经存在keyword属性的dom 设置其content
+        keywordDom.setAttribute("content",keywordValue)
+      }
+
+      if (descriptionDom.length !== 0) {
+        new Promise((resolve,reject) => {
+          for (let i = 0; i < descriptionDom.length; i++) {
+            document.querySelector("head").removeChild(descriptionDom[i])
           }
-        }
-        resolve({
-          isKeyword,isDescription
+          resolve()
+        }).then(() => {
+          let descriptionMeta = $('<meta name="description" content="'+ descriptionValue +'">').get(0)
+          document.querySelector("head").appendChild(descriptionMeta)
         })
-      }).then((option) => {
-        if (!option.isKeyword) {
-          //不存在keyword
-          let metaKey = $('<meta name="keyword" content="'+this.themeProperty.keyword+'">')
-          $("head").get(0).appendChild(metaKey.get(0))
-        }
-
-        if (!option.isDescription) {
-          //不存在description
-          let metaKey = $('<meta name="description" content="'+this.themeProperty.description+'">')
-          $("head").get(0).appendChild(metaKey.get(0))
-        }
-      })
+      }else {
+        let descriptionMeta = $('<meta name="description" content="'+ descriptionValue +'">').get(0)
+        document.querySelector("head").appendChild(descriptionMeta)
+      }
     }
   }
 })

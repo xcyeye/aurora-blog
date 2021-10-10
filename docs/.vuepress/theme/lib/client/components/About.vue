@@ -16,6 +16,7 @@
             <div class="tag-div" id="tag-div" :key="tagIndex" v-for="(tag,tagIndex) in item.tag">
               <TagItem
                   :theme-property="themeProperty"
+                  :show-tag-length="false"
                   :is-tag-item="false"
                   :tag="tag"
                   :padding="5"
@@ -35,9 +36,8 @@
       <Donate v-if="getDonateAbout"/>
     </template>
     <template #center5>
-      <comment/>
+      <comment :path-name="$route.path"/>
     </template>
-
   </common>
 </template>
 <script lang="ts">

@@ -303,6 +303,7 @@ export default {
     },50)
 
     this.themeProperty = useThemeData().value
+
     if (this.themeProperty.latestPageSize !== undefined) {
       this.latestPageSize = this.themeProperty.latestPageSize
     }
@@ -393,9 +394,9 @@ export default {
       return logoTitle
     },
     getAvatar() {
-      let src = this.themeProperty.heroLogo
+      let src = this.themeProperty.heroImg
       if (src === undefined) {
-        console.log("you need to set the logo field value,the default is: \nhttps://ooszy.cco.vin/img/blog-public/avatar.jpg")
+        console.warn("you need to set the heroImg field value,the default is: https://ooszy.cco.vin/img/blog-public/avatar.jpg")
         return "https://ooszy.cco.vin/img/blog-public/avatar.jpg"
       }else {
         return src
@@ -501,7 +502,3 @@ export default {
 
 }
 </script>
-
-<style scoped>
-
-</style>

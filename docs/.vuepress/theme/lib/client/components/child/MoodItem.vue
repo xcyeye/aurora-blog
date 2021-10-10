@@ -106,9 +106,9 @@ export default {
       //return this.moodItem.avatar === undefined ? this.getHeroImage : this.moodItem.avatar
     },
     getHeroImage() {
-      let src = this.themeProperty.heroLogo
+      let src = this.themeProperty.heroImg
       if (src === undefined) {
-        console.log("you need to set the logo field value,the default is: \nhttps://ooszy.cco.vin/img/blog-public/avatar.jpg")
+        console.log("you need to set the heroImg field value,the default is: https://ooszy.cco.vin/img/blog-public/avatar.jpg")
         return "https://ooszy.cco.vin/img/blog-public/avatar.jpg"
       }else {
         return src

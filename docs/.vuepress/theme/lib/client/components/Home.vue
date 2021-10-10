@@ -227,7 +227,6 @@ export default defineComponent({
     this.$store.commit('setHeroImg',{
       heroImg: this.heroImage
     })
-    // console.log(this.themeProperty)
   },
   mounted() {
     this.socialsArrTemp = []
@@ -303,7 +302,7 @@ export default defineComponent({
       const themeLocale = useThemeLocaleData()
       let src = themeLocale.value.heroImg
       if (src === undefined) {
-        console.log("%c you need to set the logo field value,the default is: https://ooszy.cco.vin/img/blog-public/avatar.jpg","color: pink;")
+        console.warn("%c you need to set the heroImg field value,the default is: https://ooszy.cco.vin/img/blog-public/avatar.jpg","color: pink;")
         return "https://ooszy.cco.vin/img/blog-public/avatar.jpg"
       }else {
         return  src

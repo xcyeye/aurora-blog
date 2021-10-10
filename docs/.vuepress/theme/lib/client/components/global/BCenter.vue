@@ -7,7 +7,6 @@
       <slot name="page-center4"></slot>
       <slot name="page-center5"></slot>
     </div>
-
   </main>
 </template>
 

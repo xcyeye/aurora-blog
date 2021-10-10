@@ -46,43 +46,45 @@ export default defineClientAppEnhance(({ app, router }) => {
     app.component("HomeSidebar",HomeSidebar)
     app.component("HomeBottom",HomeBottom)
 
+
+
     //路由
     // @ts-ignore
     app.use(store)
 
     router.addRoute({
         path: '/about',
-        name: 'c-about',
+        name: 'aurora-about',
         component: About
     })
 
     router.addRoute({
         path: '/link',
-        name: 'c-link',
+        name: 'aurora-link',
         component: Link
     })
 
     router.addRoute({
         path: '/tag',
-        name: 'c-tag',
+        name: 'aurora-tag',
         component: Tag
     })
     router.addRoute({
         path: '/mood',
-        name: 'c-time',
+        name: 'aurora-time',
         component: Mood
     })
 
     router.addRoute({
         path: '/post',
-        name: 'c-post',
+        name: 'aurora-post',
         component: Poster
     })
 
     router.addRoute({
         path: '/photo',
         component: PhotoFall,
-        name: 'photo'
+        name: 'aurora-photo'
     })
 
     delete app._context.components.OutboundLink;

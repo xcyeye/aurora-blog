@@ -18,8 +18,6 @@ module.exports = {
     opacityStyle: '--opacity: 0.5;',
     welcomeOpenTime: 0,
     welcomeOpenStatus: false,
-    readCount: '...',
-    commentCount: '...',
     version: '1.0.4',
     showPosterShadow: false,
     showPostImg: false,
@@ -62,5 +60,10 @@ module.exports = {
     ],
     defaultFont: [
         "-apple-system", "hlt", "tzt", "sst", "lf", "xsf", "lsf", "cgt",
-    ]
+    ],
+
+    //版权信息
+    latestVersion: 'V1.3.2',
+    printRightIndex: 0
+
 }

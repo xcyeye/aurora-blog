@@ -13,7 +13,11 @@ module.exports = {
                     placeholder: "搜索",
                 },
             },
-        }
+        },
+        '@vuepress/plugin-google-analytics',
+        {
+            id: 'G-2MH1NBN9ER',
+        },
     ],
     //设置head 一定要加入<script src="https://at.alicdn.com/t/font_2849934_v6y652peian.js"></script>项配置，否则一些图标不能正常显示
     head: [
@@ -22,6 +26,13 @@ module.exports = {
             {
                 src: "https://at.alicdn.com/t/font_2849934_v6y652peian.js",
             },
+        ],
+        [
+            "script",
+            {
+                src: 'https://www.googletagmanager.com/gtag/js?id=G-2MH1NBN9ER',
+                async: 'async'
+            }
         ],
         [
             "link",

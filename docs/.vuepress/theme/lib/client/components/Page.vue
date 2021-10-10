@@ -9,7 +9,6 @@
       <Content />
     </div>
     <PageMeta />
-    <!--<PageNav />-->
     <slot name="bottom" />
   </main>
   <b-center>
@@ -23,7 +22,7 @@
   <div class="recommend-page">
     <RecommendPage :theme-property="themeProperty"/>
   </div>
-  <comment></comment>
+  <comment :path-name="pathName"/>
 </template>
 
 <script>
@@ -36,7 +35,6 @@ import RecommendPage from "./RecommendPage";
 import {usePageData} from "@vuepress/client";
 import PageNext from "./child/page/PageNext";
 import $ from 'jquery'
-
 export default defineComponent({
   name: 'Page',
   components: {
@@ -49,17 +47,15 @@ export default defineComponent({
   },
   data() {
     return {
-      adsenseArr: [],
-      insertAdsenseRule: '',
-      adsenseLength: 3,
       lazyLoadingImg: null,
       originPageData: '',
       posterContent: '',
       title: '',
-      showMobileCatalog: true
+      showMobileCatalog: true,
     }
   },
   props: {
+    pathName: '',
     themeProperty: ''
   },
   computed: {
@@ -75,6 +71,7 @@ export default defineComponent({
   },
   emits: ['getHeadLine'],
   created() {
+
     //如果手机端侧边栏打开的，那么就关闭
     if (this.$store.state.openMobileSidebar) {
       this.$store.commit("setOpenMobileSidebar",{
@@ -82,34 +79,12 @@ export default defineComponent({
       })
     }
     //设置sidebar的class
-
-    setTimeout(() => {
-      this.getPosterText().then((res) => {
-        this.posterContent = res
-      })
-    },1000)
     const page = usePageData()
     this.originPageData = page
 
     this.$emit('getHeadLine',page.value.title)
-    if (this.themeProperty.adsenseArr !== undefined && this.themeProperty.adsenseArr != null) {
-      this.adsenseArr = this.themeProperty.adsenseArr
-    }
-
-    if (this.themeProperty.insertAdsenseRule !== undefined && this.themeProperty.insertAdsenseRule != null) {
-      this.insertAdsenseRule = this.themeProperty.insertAdsenseRule
-    }
-
-    if (this.themeProperty.adsenseLength !== undefined && this.themeProperty.adsenseLength != null) {
-      this.adsenseLength = this.themeProperty.adsenseLength
-    }
     let lazyLoadingImg = this.themeProperty.lazyLoadingImg
     this.lazyLoadingImg = lazyLoadingImg === undefined ? "https://ooszy.cco.vin/img/blog-public/ljz.gif" : lazyLoadingImg
-
-    $(window).on("scroll",() => {
-      //console.log("scroll")
-      this.start()
-    })
 
   },
   methods: {
@@ -155,236 +130,111 @@ export default defineComponent({
       }
     },
     loadImg(img) {
-      //console.log(img)
       let originSrc = img.getAttribute("data-origin")
-      //console.log("data-origin: " + originSrc)
       img.setAttribute("src",originSrc)
     },
-    getContent(allH2,length) {
-      return new Promise((resolve,reject) => {
-        let h2Content = ''
-        let h2KeyContent = ''
-        for (let i = 0; i < length; i++) {
-          //console.log(allH2[i].innerText)
-          let h2Text = allH2[i].innerText.replace("#\n","")
-          h2Content = h2Content + "," + (i + 1) +"、" + h2Text
-          h2KeyContent = h2KeyContent + "," + h2Text
-        }
+    setOtherProperty(keyword,description) {
+      /*const page = usePageData()
+      let title = document.querySelector('meta[property="og:title"]')
+      let descriptionDom = document.querySelector('meta[property="og:description"]')
+      if (descriptionDom === null) {
+        //head中没有keyword 添加一个
+        let keywordMeta = $('<meta property="og:description" content="'+description+'">').get(0)
+        document.querySelector("head").appendChild(keywordMeta)
+      }else {
+        //已经存在keyword属性的dom 设置其content
+        descriptionDom.setAttribute("content",description)
+      }
 
-        h2Content = h2Content.substr(1,h2Content.length)
-        h2KeyContent = h2KeyContent.substr(1,h2KeyContent.length)
+      if (title === null) {
+        //head中没有keyword 添加一个
+        let keywordMeta = $('<meta property="og:title" content="'+page.value.title+'">').get(0)
+        document.querySelector("head").appendChild(keywordMeta)
+      }else {
+        //已经存在keyword属性的dom 设置其content
+        descriptionDom.setAttribute("content",page.value.title)
+      }*/
 
-        resolve({h2Content,h2KeyContent})
-      })
     },
-    getPContent(pContents) {
-
-      return  new Promise((resolve,reject) => {
-        let pText = ''
-        if (pContents.length !== 0) {
-          for (let i = 0; i < 3; i++) {
-            pText = pText + pContents[i].innerText
-          }
-        }
-        resolve(pText)
-      })
-    },
-    setDesc(desc) {
-      /*let frontmatterDesc = this.originPageData.frontmatter.description
-      if (frontmatterDesc === undefined || frontmatterDesc === null) {
-        let isExist = false
-
+    setDesc(description) {
+      let descriptionDom = document.querySelectorAll('meta[name="description"]')
+      if (descriptionDom.length !== 0) {
         new Promise((resolve,reject) => {
-          let childmete = $("head").get(0).children;
-          for (let i = 0; i < childmete.length; i++) {
-            let name = childmete[i].getAttribute("name");
-
-            if (name === "description") {
-              console.log(childmete[i])
-              //childmete[i].setAttribute("cont",desc);
-              $("head").get(0).removeChild(childmete[i])
-              isExist = true
-            }
+          for (let i = 0; i < descriptionDom.length; i++) {
+            document.querySelector("head").removeChild(descriptionDom[i])
           }
           resolve()
         }).then(() => {
-          /!*console.log(isExist)
-          if (!isExist) {
-            let metaKey = $('<meta name="description" content="'+desc+'">')
-            //console.log(metaKey.get(0))
-            $("head").get(0).appendChild(metaKey.get(0))
-          }*!/
-
-          let metaKey = $('<meta name="description" content="'+desc+'">')
-          //console.log(metaKey.get(0))
-          $("head").get(0).appendChild(metaKey.get(0))
+          let descriptionMeta = $('<meta name="description" content="'+ description +'">').get(0)
+          document.querySelector("head").appendChild(descriptionMeta)
         })
-      }*/
-
-      let isExist = false
-
-      new Promise((resolve,reject) => {
-        let childmete = $("head").get(0).children;
-        for (let i = 0; i < childmete.length; i++) {
-          let name = childmete[i].getAttribute("name");
-
-          if (name === "description") {
-            //console.log(childmete[i])
-            /*setTimeout(() => {
-
-            },500)*/
-            childmete[i].setAttribute("content",desc);
-            //$("head").get(0).removeChild(childmete[i])
-            isExist = true
-          }
-        }
-        resolve()
-      }).then(() => {
-        if (!isExist) {
-          let metaKey = $('<meta name="description" content="'+desc+'">')
-          //console.log(metaKey.get(0))
-          $("head").get(0).appendChild(metaKey.get(0))
-        }
-      })
-
-
-
+      }else {
+        let descriptionMeta = $('<meta name="description" content="'+ description +'">').get(0)
+        document.querySelector("head").appendChild(descriptionMeta)
+      }
     },
     setKeyword(keyword) {
-      let isExist = false
-
-      new Promise((resolve,reject) => {
-        let childmete = $("head").get(0).children;
-        for (let i = 0; i < childmete.length; i++) {
-          let name = childmete[i].getAttribute("name");
-
-          if (name === "keyword") {
-            childmete[i].setAttribute("content",keyword);
-
-            isExist = true
-          }
-        }
-        resolve()
-      }).then(() => {
-        if (!isExist) {
-          let metaKey = $('<meta name="keyword" content="'+keyword+'">')
-          $("head").get(0).appendChild(metaKey.get(0))
-        }
-      })
+      let keywordDom= document.querySelector('meta[name="keyword"]')
+      if (keywordDom === null) {
+        //head中没有keyword 添加一个
+        let keywordMeta = $('<meta name="keyword" content="'+keyword+'">').get(0)
+        document.querySelector("head").appendChild(keywordMeta)
+      }else {
+        //已经存在keyword属性的dom 设置其content
+        keywordDom.setAttribute("content",keyword)
+      }
     },
     setMeta() {
       //设置meta标签的keyword和description
-      //获取tip类名的内容 theme-default-content
       let frontmatterDesc = this.originPageData.frontmatter.description
       let frontmatterKeyword = this.originPageData.frontmatter.keyword
 
-      let h2Content = ''
-      let h2KeyContent = ""
+      let keyword = ''
+      let description = ''
 
-      let allH2 = $(".pageContent h2")
-      let allContents = $(".pageContent p")
+      let content = document.querySelector("#theme-default-content").innerText
+      //截取220个字符作为描述和关键字信息
+      content = content.replace(/[\r\n]/g,"");
+      content = content.replace(" ","")
 
-      if (frontmatterKeyword === undefined
-          || frontmatterKeyword === null
-          || frontmatterKeyword.length === 0) {
-        //frontmatterKeyword中，不存在keyword
-
-        if (allH2.length < 13) {
-          this.getContent(allH2,allH2.length).then((content) => {
-            h2KeyContent = content.h2KeyContent
-            h2Content = content.h2Content
-
-            this.getPContent(allContents).then((pText) => {
-              if (h2KeyContent.length < 80) {
-                h2KeyContent = h2KeyContent + pText.substr(0,80 - h2KeyContent.length)
-                this.setKeyword(h2KeyContent)
-              }else {
-                this.setKeyword(h2KeyContent)
-              }
-            })
-          });
-        }else {
-          this.getContent(allH2,13).then((content) => {
-            h2KeyContent = content.h2KeyContent
-            h2Content = content.h2Content
-
-            this.getContent(allH2,allH2.length).then((content) => {
-              h2KeyContent = content.h2KeyContent
-              h2Content = content.h2Content
-
-              this.getPContent(allContents).then((pText) => {
-                if (h2KeyContent.length < 80) {
-                  h2KeyContent = h2Content + pText.substr(0,80 - h2KeyContent.length)
-                  this.setKeyword(h2KeyContent)
-                }else {
-                  this.setKeyword(h2KeyContent)
-                }
-              })
-            });
-          });
-        }
-      }else {
-        let keyword = ''
-        new Promise((resolve,reject) => {
-          for (let i = 0; i < frontmatterKeyword.length; i++) {
-            keyword = keyword + "," + frontmatterKeyword[i]
-          }
-          keyword = keyword.substr(1,keyword.length)
-          resolve()
-        }).then(() => {
-          this.setKeyword(keyword)
-        })
+      if (content.length > 220) {
+        content = content.substr(0,220)
       }
 
-      setTimeout(() => {
-        if (frontmatterDesc === undefined || frontmatterDesc === null) {
-          /*
-          * 如果页面中，没有进行frontmatter的配置，则自动生成desc
-          * 获取页面中，4个h2标签中的内容，并且获取第一段的内容作为描述
-          * */
+      if (frontmatterDesc === undefined || frontmatterDesc == null) {
+        description = content
+      }else {
+        description = frontmatterDesc
+      }
 
-
-          if (allH2.length < 13) {
-            this.getContent(allH2,allH2.length).then((content) => {
-              h2KeyContent = content.h2KeyContent
-              h2Content = content.h2Content
-
-              this.getPContent(allContents).then((pText) => {
-                if (h2Content.length < 140) {
-                  h2Content = h2Content + pText.substr(0,140 - h2Content.length)
-                  this.setDesc(h2Content)
-                }else {
-                  this.setDesc(h2Content)
-                }
-              })
-            });
-          }else {
-            this.getContent(allH2,13).then((content) => {
-              h2KeyContent = content.h2KeyContent
-              h2Content = content.h2Content
-
-              this.getContent(allH2,allH2.length).then((content) => {
-                h2KeyContent = content.h2KeyContent
-                h2Content = content.h2Content
-
-                this.getPContent(allContents).then((pText) => {
-                  if (h2Content.length < 140) {
-                    h2Content = h2Content + pText.substr(0,140 - h2Content.length)
-                    this.setDesc(h2Content)
-                  }else {
-                    this.setDesc(h2Content)
-                  }
-                })
-              });
-            });
-          }
+      if (frontmatterKeyword === undefined || frontmatterKeyword == null) {
+        if (content.length > 90) {
+          keyword = content.substr(0,90)
+        }else {
+          keyword = content
         }
-      },500)
+      }else {
+        keyword = frontmatterKeyword
+      }
 
-
+      this.setKeyword(keyword)
+      this.setDesc(description)
+      this.setOtherProperty(keyword,description)
     }
   },
   mounted() {
+
+    $(window).on("scroll",() => {
+      this.start()
+    })
+
+    this.$nextTick(() => {
+      this.getPosterText().then((res) => {
+        this.posterContent = res
+      })
+      this.setMeta()
+    })
+
     let imgs = $(".pageContent img")
     for (let i = 0; i < imgs.length; i++) {
       let originSrc = imgs[i].src
@@ -396,69 +246,6 @@ export default defineComponent({
     if (h1s.length > 0) {
       $(h1s[0]).css('display','none')
     }
-
-    this.setMeta()
-    //下面就是自动添加广告
-
-    new Promise((resolve,reject) => {
-      let adsenseNodes = []
-
-      for (let i = 0; i < this.adsenseArr.length; i++) {
-        if (this.adsenseArr[i].position === 'center') {
-          let node = $("<AdSense adsense-position=\""+this.adsenseArr[i].position+"\"\n" +
-              "                 :adsense-background-img=\""+this.adsenseArr[i].adsenseBackgroundImg+"\"\n" +
-              "                 :adsense-message=\""+this.adsenseArr[i].adsenseMessage+"\"\n" +
-              "\n" +
-              "        >\n" +
-              "          <div v-html=\""+this.adsenseArr[i].script+"\">\n" +
-              "\n" +
-              "          </div>\n" +
-              "        </AdSense>").get(0)
-
-          adsenseNodes.push(node)
-        }
-      }
-      resolve(adsenseNodes)
-    }).then((adsenseNodes) => {
-      /*console.log(adsenseNodes)
-      console.log("allContents.length: "+ allContents.length)
-      console.log("allContents.length / this.insertAdsenseRule: "+ allContents.length / this.insertAdsenseRule)
-
-      let div = $("<h2>插入测试</h2>").get(0)
-      $(".theme-default-content").get(0).insertBefore(div,allContents[6])
-      if (allContents.length < this.insertAdsenseRule) {
-        //所有p标签的长度不够，则直接插入在最后
-        console.log(allContents[allContents.length -5])
-        $(".theme-default-content").get(0).insertBefore(adsenseNodes[0],allContents[allContents.length -5])
-      }
-
-      if (allContents.length > this.insertAdsenseRule *2) {
-        for (let i = 1; i < allContents.length / this.insertAdsenseRule; i++) {
-          if (adsenseNodes.length >= allContents.length / this.insertAdsenseRule) {
-            //文章中间的长度大于所有p标签除以广告规则的长度
-            if (this.adsenseLength >= allContents.length / this.insertAdsenseRule) {
-              for (let j = 0; j < allContents.length / this.insertAdsenseRule; j++) {
-                $(".theme-default-content").get(0).insertBefore(adsenseNodes[j],allContents[this.insertAdsenseRule * i])
-              }
-            }else {
-              //小于广告规则长度
-              for (let j = 0; j < this.adsenseLength; j++) {
-                $(".theme-default-content").get(0).insertBefore(adsenseNodes[j],allContents[this.insertAdsenseRule * i])
-              }
-            }
-          }else {
-            //所有符合的广告小于
-            for (let j = 0; j < adsenseNodes.length; j++) {
-              $(".theme-default-content").get(0).insertBefore(adsenseNodes[j],allContents[this.insertAdsenseRule * i])
-            }
-          }
-          //$(".theme-default-content").get(0).insertBefore(adsenseNodes[j],allContents[this.insertAdsenseRule * i])
-        }
-      }else {
-        console.log(allContents[this.insertAdsenseRule])
-        $(".theme-default-content").get(0).insertBefore(adsenseNodes[0],allContents[this.insertAdsenseRule])
-      }*/
-    })
   }
 })
 </script>

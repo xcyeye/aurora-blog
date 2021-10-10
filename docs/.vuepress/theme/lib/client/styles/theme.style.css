@@ -1,3 +1,47 @@
+#waline {
+    /* 常规颜色 */
+    --waline-white: #fff;
+    --waline-light-grey: #999;
+    --waline-dark-grey: #666;
+
+    /* 主题色 */
+    --waline-theme-color: #00cfc8;
+    --waline-active-color: #00cfc8;
+
+    /* 布局颜色 */
+    --waline-text-color: #444;
+    --waline-bgcolor: rgba(255,255,255,.35);
+    --waline-bgcolor-light: #f8f8f8;
+    --waline-bgcolor-hover: #f0f0f0;
+    --waline-border-color: #ddd;
+    --waline-disable-bgcolor: #f8f8f8;
+    --waline-disable-color: #bbb;
+    --waline-code-bgcolor: #282c34;
+
+    /* 特殊颜色 */
+    --waline-bq-color: #f0f0f0;
+
+    /* 头像 */
+    --waline-avatar-size: 3.25rem;
+    --waline-mobile-avatar-size: calc(var(--waline-avatar-size) * 9 / 13);
+
+    /* 徽章 */
+    --waline-badge-color: #3498db;
+    --waline-badge-font-size: 0.775em;
+
+    /* 信息 */
+    --waline-info-bgcolor: #f8f8f8;
+    --waline-info-color: #999;
+    --waline-info-font-size: 0.625em;
+
+    /* 渲染选择 */
+    --waline-border: 1px solid var(--waline-border-color);
+    --waline-avatar-radius: 50%;
+    --waline-box-shadow: none;
+    /* 字体大小 */
+    --waline-font-size: 16px;
+}
+
 @font-face {
     font-family: "aurora-font"; /* Project id 2849934 */
     src: url('../public/fonts/aurora-iconfont.woff2?t=1633527892146') format('woff2'),
@@ -103,27 +147,6 @@
     font-weight: normal;
 }
 
-#app {
-    --backgroundImageUrl: url(https://picoss.co.vin/animate/wall/6500.png);
-    --poster-back-img: url(http://h2.ioliu.cn/bing/GiantManta_ZH-CN0594951444_640x480.jpg?imageslim);
-    --fitter-blue: 5px;
-    --borderRadius: 20px;
-    --opacity: 0.5;
-    --fontFamily: -apple-system;
-    --fontColor: #2c3e50;
-    --sidebarWidth: 80%;
-    --sidebarRow: 5;
-    --sidebarWidthPc: 20vw;
-    --sidebarRowPC: 5;
-    --homeHeight: 100vh;
-    --sidebarCutWidth: 0.9;
-
-    /*首页文章列表随机图片api*/
-    --homePageImgApi: url('https://api.ixiaowai.cn/api/api.php');
-
-    /*伪元素测试*/
-    --homeIcoCode: '\e924'
-}
 #app a {
     text-decoration: none;
 }
@@ -2914,7 +2937,7 @@ body::-webkit-scrollbar-thumb {
     margin-top: 0;
 }
 .home-page-tag-item {
-    background-color: rgba(255,255,255,.9);
+    background-color: rgba(255,255,255,var(--opacity));
     overflow: hidden;
     height: max-content;
     margin: 0 auto;
@@ -2965,7 +2988,7 @@ body::-webkit-scrollbar-thumb {
 .home-page-tag-con {
     border-bottom-left-radius: var(--borderRadius);
     border-bottom-right-radius: var(--borderRadius);
-    background-color: rgb(255,255,255);
+    background-color: rgba(255,255,255,var(--opacity));
 }
 .home-page-tag-title {
     margin: 0 auto;
@@ -3239,16 +3262,17 @@ body::-webkit-scrollbar-thumb {
     width: 90%;
     margin: 0 auto;
 }
-
 .sidebar-single-common {
     margin: 0 auto;
     margin-top: 1rem;
-    background-color: whitesmoke;
+    /*background-color: whitesmoke;*/
+    background: rgba(255,255,255,var(--opacity));
     height: max-content;
     border-radius: var(--borderRadius);
-    box-shadow: rgb(100 100 111 / 20%) 0px 7px 29px 0px;
+    /*box-shadow: rgb(100 100 111 / 20%) 0px 7px 29px 0px;*/
     padding-bottom: 1rem;
     padding-top: 1rem;
+    filter: blur(0.1px);
 }
 .sidebar-page {
     padding-left: 5px;

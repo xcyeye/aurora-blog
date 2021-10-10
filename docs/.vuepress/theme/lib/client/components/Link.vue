@@ -1,5 +1,7 @@
 <template>
-  <common :is-sticky-sidebar="true" :is-show-side-bar="false" :is-show-top-img="true" :is-show-head-line="false">
+  <common :is-sticky-sidebar="true" :is-show-side-bar="false"
+          :show-sidebar-link="false"
+          :is-show-top-img="true" :is-show-head-line="false">
     <template #center1>
       <div class="link">
         <div :style="$store.state.borderRadiusStyle + $store.state.opacityStyle"
@@ -54,7 +56,7 @@
           </div>
         </template>
       </BCenter>
-      <comment/>
+      <comment :path-name="$route.path" />
     </template>
   </common>
 </template>

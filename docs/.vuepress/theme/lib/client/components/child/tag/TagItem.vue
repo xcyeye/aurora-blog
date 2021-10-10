@@ -12,10 +12,17 @@ export default {
   name: "TagItem",
   data() {
     return {
-      tagPageLength: 0
+      tagPageLength: "",
+      hexRgb: ''
     }
   },
   props: {
+    showTagLength: {
+      type: Boolean,
+      default () {
+        return true
+      }
+    },
     themeProperty: '',
     tag: '',
     padding: {
@@ -39,19 +46,13 @@ export default {
   },
   computed: {
     setBackgroundStyle() {
-      let background_color = ''
-      if (this.themeProperty.randomColor !== undefined && this.themeProperty.randomColor != null) {
-        background_color = this.themeProperty.randomColor[
-            this.getRandomInt(0,this.themeProperty.randomColor.length -1)]
-      }else {
-        background_color = this.$store.state.defaultRandomColors[
-            this.getRandomInt(0,this.$store.state.defaultRandomColors.length -1)]
-      }
-      return "background-color: "+ background_color + "; padding: " + this.padding +"px;"
+      return 'background-color: rgba(' + this.hexRgb.r +"," + this.hexRgb.g + "," + this.hexRgb.b + ",.45); padding: " + this.padding +"px;"
     },
     itemSplit() {
       return (tagPageLength) => {
-
+        if (!this.showTagLength) {
+          return ""
+        }
         if (tagPageLength === 0 || tagPageLength === undefined) {
           return " "
         }else {
@@ -65,6 +66,14 @@ export default {
     }
   },
   methods: {
+    hexToRgb(hex) {
+      let result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+      return result ? {
+        r: parseInt(result[1], 16),
+        g: parseInt(result[2], 16),
+        b: parseInt(result[3], 16)
+      } : null;
+    },
     getRandomInt(min, max) {
       min = Math.ceil(min);
       max = Math.floor(max);
@@ -73,6 +82,14 @@ export default {
   },
 
   created() {
+    let bgColor = ''
+    if (this.themeProperty.randomColor !== undefined) {
+      bgColor = this.themeProperty.randomColor[this.getRandomInt(0,this.themeProperty.randomColor.length -1)]
+    }else {
+      bgColor = this.$store.state.defaultRandomColors[this.getRandomInt(0,this.$store.state.defaultRandomColors.length -1)]
+    }
+    this.hexRgb = this.hexToRgb(bgColor)
+
     let allPages = this.$store.state.allPageMap
     new Promise((resolve,reject) => {
       let temPage = []
@@ -94,13 +111,13 @@ export default {
       resolve(temPage)
     }).then((temPage) => {
       if (temPage.length >0) {
-        this.tagPageLength = temPage.length
+        if (this.showTagLength) {
+          this.tagPageLength = temPage.length
+        }else {
+          this.tagPageLength = ""
+        }
       }
     })
   },
 }
 </script>
-
-<style scoped>
-
-</style>

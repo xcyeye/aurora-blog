@@ -1,4 +1,28 @@
 :root {
+  --backgroundImageUrl: url(https://picoss.co.vin/animate/wall/6500.png);
+  --poster-back-img: url(http://h2.ioliu.cn/bing/GiantManta_ZH-CN0594951444_640x480.jpg?imageslim);
+  --fitter-blue: 5px;
+  --borderRadius: 20px;
+  --opacity: 0.5;
+  --fontFamily: -apple-system;
+  --fontColor: #2c3e50;
+  --sidebarWidth: 80%;
+  --sidebarRow: 5;
+  --sidebarWidthPc: 20vw;
+  --sidebarRowPC: 5;
+  --homeHeight: 100vh;
+  --sidebarCutWidth: 0.9;
+
+  /*首页文章列表随机图片api*/
+  --homePageImgApi: url('https://api.ixiaowai.cn/api/api.php');
+
+  /*伪元素测试*/
+  --homeIcoCode: '\e924';
+
+
+
+
+
   // brand colors
   --c-brand: #42a5f5;
   --c-brand-light: #4abf8a;

@@ -25,7 +25,7 @@
       </div>
     </template>
     <template #center2>
-      <comment/>
+      <comment :path-name="$route.path" />
     </template>
   </common>
 </template>

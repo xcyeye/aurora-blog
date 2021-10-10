@@ -50,12 +50,6 @@ module.exports = {
     setCategories(state,categories) {
         this.state.categories = categories.categories
     },
-    setReadCount(state,readCount) {
-        this.state.readCount = readCount.readCount
-    },
-    setCommentCount(state,commentCount) {
-        this.state.commentCount = commentCount.commentCount
-    },
     setShowPosterShadow(state,showPosterShadow) {
         this.state.showPosterShadow = showPosterShadow.showPosterShadow
     },

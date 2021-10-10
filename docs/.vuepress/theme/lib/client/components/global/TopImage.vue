@@ -26,12 +26,14 @@
           <div class="page-record-center-left page-record-single-common">
             <span class="home-menu-ico" style="--homeIcoCode: '\ecb1'"></span>&nbsp;
             <span class="page-record-single-desc">评论数</span>
-            <span>{{$store.state.commentCount}}</span>
+            <span :id="pathName" class="waline-comment-count" />
+            <!--<span>{{$store.state.commentCount}}</span>-->
           </div>
           <div class="page-record-center-right page-record-single-common">
             <span class="home-menu-ico" style="--homeIcoCode: '\e7b9'"></span>&nbsp;
             <span class="page-record-single-desc">总阅读数</span>
-            <span>{{$store.state.readCount}}</span>
+            <span :id="pathName" class="waline-visitor-count" />
+            <!--<span>{{$store.state.readCount}}</span>-->
           </div>
         </div>
         <div class="page-record-bot-common page-record-bot">
@@ -56,11 +58,12 @@ export default {
   data() {
     return {
       animeImg: '',
-      pathname: '',
       pageMap: '',
       length: 0,
       tagArr: [],
-      topBackgroundUrl: 'https://picture.cco.vin/pic/rmimg'
+      topBackgroundUrl: 'https://picture.cco.vin/pic/rmimg',
+      pathName: '',
+      pathname: ''
     }
   },
   props: {
@@ -85,6 +88,13 @@ export default {
     themeProperty: {
       type: Object
     }
+  },
+  created() {
+    this.setPathName(this.$route.path)
+    this.$router.beforeEach((to,from,next) => {
+      this.setPathName(to.path)
+      next()
+    })
   },
   mounted() {
     this.pathname = window.location.pathname
@@ -148,6 +158,9 @@ export default {
     }
   },
   methods: {
+    setPathName(pathName) {
+      this.pathName = pathName
+    },
     getRandomBg() {
       //用户没有自定义图片，使用随机图片
       let num1 = this.getRandomInt(-9999,999)
@@ -181,12 +194,9 @@ export default {
     },
     getPageMap() {
       let allPageMap = this.$store.state.allPageMap
-      //console.log(allPageMap)
-      //console.log(this.pathname)
       for (let i = 0; i < allPageMap.length; i++) {
         if (this.pathname === allPageMap[i].articleUrl) {
           this.pageMap = allPageMap[i]
-          //console.log(this.pageMap)
           if (this.pageMap.categories.length === 0) {
             this.tagArr = this.pageMap.tag
           }else {

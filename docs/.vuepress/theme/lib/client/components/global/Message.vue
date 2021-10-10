@@ -5,7 +5,6 @@
 </template>
 
 <script>
-import myData from '@temp/my-data'
 import {useThemeData} from "../../composables";
 
 export default {

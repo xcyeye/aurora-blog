@@ -1,7 +1,26 @@
-const { navbar } = require("./public/navbar");
 module.exports = {
+    //设置head 一定要加入<script src="https://at.alicdn.com/t/font_2849934_v6y652peian.js"></script>项配置，否则一些图标不能正常显示
+    head: [
+        [
+            "script",
+            {
+                src: "https://at.alicdn.com/t/font_2849934_v6y652peian.js",
+            },
+        ]
+    ],
+    onPrepared: async (app) => {
+        const myData = app.pages.map((page) => {
+            return page;
+        });
+        await app.writeTemp(
+            "my-data.js",
+            `export default ${JSON.stringify(myData)}`
+        );
+    },
+    theme: 'vuepress-theme-aurora',
     themeConfig: {
-        navbar: navbar,
+        navbar: '顶部导航栏',
+        //请禁用黑夜模式，当前版本未加入黑夜模式功能
         darkMode: false,
         repo: "https://github.com/qsyyke/note",
         repoLabel: "Aurora-theme",
@@ -740,4 +759,4 @@ module.exports = {
         // adsenseLength: 3, 每一页文章中，最大广告数 弃用
         // socialMaxLength: 7, 在v1.3.2版本中移除
     }
-}
+};
