@@ -150,6 +150,7 @@
         <slot name="sidebar-son7"/>
       </div>
       <slot name="sidebar7"></slot>
+
       <!--站点-->
       <div :id="customId" v-if="showSite" id="sidebar-single-common" class="sidebar-single-enter-animate sidebar-single-common">
         <div class="sidebar-page">
@@ -269,7 +270,7 @@ export default {
     showSite: {
       type: Boolean,
       default() {
-        return true
+        return false
       }
     },
     isMobileSidebar: {

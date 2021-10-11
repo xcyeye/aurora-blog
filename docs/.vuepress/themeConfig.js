@@ -15,6 +15,9 @@ module.exports = {
         //logo旁文字颜色
         logoColor: "#2c3e50",
 
+        //logo旁文字 默认值为Aurora
+        logoTitle: "Aurora",
+
         //样式控制面板字体占位符，如果是国内用户，请使用中文
         showFont: "程",
 
@@ -103,8 +106,6 @@ module.exports = {
 
         // cancelIcoHref: "https://ooszy.cco.vin/img/ico/quxiao.svg", 在v1.3.2中移除
 
-        //logo旁文字 默认值为Aurora
-        logoTitle: "Aurora",
 
         headTitle: "this is headTitle",
 

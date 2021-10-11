@@ -8,12 +8,12 @@
   </nav>
 </template>
 
-<script lang="ts">
-import { computed, defineComponent } from 'vue'
-import type { ComputedRef } from 'vue'
-import { useRouter } from 'vue-router'
+<script setup lang="ts">
 import { useRouteLocale, useSiteLocaleData } from '@vuepress/client'
 import { isLinkHttp, isString } from '@vuepress/shared'
+import { computed } from 'vue'
+import type { ComputedRef } from 'vue'
+import { useRouter } from 'vue-router'
 import type { NavbarItem, NavbarGroup, ResolvedNavbarItem } from '../../shared'
 import { useNavLink, useThemeLocaleData } from '../composables'
 import { resolveRepoType } from '../utils'
@@ -44,9 +44,9 @@ const useNavbarSelectLanguage = (): ComputedRef<ResolvedNavbarItem[]> => {
       children: localePaths.map((targetLocalePath) => {
         // target locale config of this langauge link
         const targetSiteLocale =
-          siteLocale.value.locales?.[targetLocalePath] ?? {}
+            siteLocale.value.locales?.[targetLocalePath] ?? {}
         const targetThemeLocale =
-          themeLocale.value.locales?.[targetLocalePath] ?? {}
+            themeLocale.value.locales?.[targetLocalePath] ?? {}
         const targetLang = `${targetSiteLocale.lang}`
 
         const text = targetThemeLocale.selectLanguageName ?? targetLang
@@ -61,11 +61,11 @@ const useNavbarSelectLanguage = (): ComputedRef<ResolvedNavbarItem[]> => {
           // try to link to the corresponding page of current page
           // or fallback to homepage
           const targetLocalePage = currentPath.replace(
-            routeLocale.value,
-            targetLocalePath
+              routeLocale.value,
+              targetLocalePath
           )
           if (
-            router.getRoutes().some((item) => item.path === targetLocalePage)
+              router.getRoutes().some((item) => item.path === targetLocalePage)
           ) {
             link = targetLocalePage
           } else {
@@ -92,7 +92,7 @@ const useNavbarRepo = (): ComputedRef<ResolvedNavbarItem[]> => {
 
   const repo = computed(() => themeLocale.value.repo)
   const repoType = computed(() =>
-    repo.value ? resolveRepoType(repo.value) : null
+      repo.value ? resolveRepoType(repo.value) : null
   )
 
   const repoLink = computed(() => {
@@ -125,7 +125,7 @@ const useNavbarRepo = (): ComputedRef<ResolvedNavbarItem[]> => {
 }
 
 const resolveNavbarItem = (
-  item: NavbarItem | NavbarGroup | string
+    item: NavbarItem | NavbarGroup | string
 ): ResolvedNavbarItem => {
   if (isString(item)) {
     return useNavLink(item)
@@ -140,32 +140,20 @@ const resolveNavbarItem = (
 }
 
 const useNavbarConfig = (): ComputedRef<ResolvedNavbarItem[]> => {
-  const themeLocale = useThemeLocaleData()
-  return computed(() => (themeLocale.value.navbar || []).map(resolveNavbarItem))
+  try {
+    const themeLocale = useThemeLocaleData()
+    return computed(() => (themeLocale.value.navbar || []).map(resolveNavbarItem))
+  }catch (e) {
+
+  }
 }
 
-export default defineComponent({
-  name: 'NavbarLinks',
-
-  components: {
-    NavLink,
-    DropdownLink,
-  },
-
-  setup() {
-    const navbarConfig = useNavbarConfig()
-    const navbarSelectLanguage = useNavbarSelectLanguage()
-    const navbarRepo = useNavbarRepo()
-
-    const navbarLinks = computed(() => [
-      ...navbarConfig.value,
-      ...navbarSelectLanguage.value,
-      ...navbarRepo.value,
-    ])
-    return {
-      navbarLinks,
-    }
-  },
-
-})
+const navbarConfig = useNavbarConfig()
+const navbarSelectLanguage = useNavbarSelectLanguage()
+const navbarRepo = useNavbarRepo()
+const navbarLinks = computed(() => [
+  ...navbarConfig.value,
+  ...navbarSelectLanguage.value,
+  ...navbarRepo.value,
+])
 </script>

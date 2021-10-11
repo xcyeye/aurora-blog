@@ -3265,8 +3265,8 @@ body::-webkit-scrollbar-thumb {
 .sidebar-single-common {
     margin: 0 auto;
     margin-top: 1rem;
-    /*background-color: whitesmoke;*/
-    background: rgba(255,255,255,var(--opacity));
+    background-color: whitesmoke;
+    /*background: rgba(255,255,255,var(--opacity));*/
     height: max-content;
     border-radius: var(--borderRadius);
     /*box-shadow: rgb(100 100 111 / 20%) 0px 7px 29px 0px;*/
@@ -3832,6 +3832,7 @@ body::-webkit-scrollbar-thumb {
     box-shadow: none;
     border-radius: 0;
     margin-top: 0;
+    background: whitesmoke;
 }
 .mobile-sidebar-split {
     margin: 0 auto;
