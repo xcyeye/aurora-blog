@@ -6,6 +6,14 @@ categories: [相册,photo]
 
 # 相册功能
 
+::: tip
+
+目前版本存在一个bug
+
+在本地访问相册没有问题，但是部署到github之后，刷新会出现问题，后续版本解决
+
+:::
+
 - 图片欣赏
 
     此图片动画，使用的是大佬开发的<a href="https://github.com/ymback/Vue-Fucking-Gallery">Vue-Fucking-Gallery</a>，主题并没有提供配置修改，如果需要，我可以修改

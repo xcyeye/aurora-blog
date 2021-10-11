@@ -1,42 +1,31 @@
 # 公告栏
 
-此公告栏组件是一个全局组件，设计暂时比较简陋，如需美化，请自定修改，组件位置
+公告栏显示在侧边栏，显示效果如下
 
-`docs/.vuepress/theme/lib/client/components/global/Message.vue`
-
-![image-20210831165655118](http://ooszy.cco.vin/img/blog-note/image-20210831165655118.png?x-oss-process=style/pictureProcess1)
+![image-20211011160422278](https://ooszy.cco.vin/img/blog-note/image-20211011160422278.png?x-oss-process=style/pictureProcess1)
 
 
 
 ## 配置
 
+```js
+module.exports = {
 
-
-```yaml
-# message可以使用HTML
-message: 目前博客还没开发评论，如需添加友情链接，请到我旧博客添加评论评论我都会看，看到会添加到此处<a target="_blank" href="https://www.cco.vin/%e5%8f%8b%e6%83%85%e9%93%be%e6%8e%a5/">点击进入</a>
-
-#是否显示公告 仅在友情链接中有效
-isShowMessage: true
+    themeConfig: {
+        //公告，是一个数组，支持图片，HTML
+        message: [
+            '该博客主题为Aurora,<a href="https://github.com/qsyyke/vuepress-theme-aurora">vuepress-theme-Aurora</a>',
+            "主题交流群: 681602026，欢迎各位大佬进群交流",
+        ],
+    }
+}
 ```
 
 
 
-## 组件代码
+::: tip
 
-```vue
-<template>
-  <div :style="$store.state.borderRadiusStyle + $store.state.opacityStyle" class="c-page" id="c-page" style="text-align: center">
-    <p class="message" v-html="message"></p>
-  </div>
-</template>
-```
+`message`项是一个数组，可以支持HTML，图片等
 
-
-
-## 使用
-
-```vue
-<message/>
-```
+:::
 

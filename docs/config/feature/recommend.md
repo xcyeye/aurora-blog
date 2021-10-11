@@ -8,11 +8,18 @@
 
 ## 配置
 
-```yaml
-recommendPageLength: 30 #最多推荐多少篇文章
-randomColor: ['#ffcad4','#d8e2dc','#8d99ae','#b8f2e6','#84c7d0'] #每个推荐背景颜色，随机
-recommendNoTitle: '`╮(￣▽￣)╭`' #如果文章标题为空时，就会使用这个进行替换
+```js
+module.exports = {
+
+    themeConfig: {
+        recommendPageLength: 30 //最多推荐多少篇文章
+        randomColor: ['#ffcad4','#d8e2dc','#8d99ae','#b8f2e6','#84c7d0'] //每个推荐背景颜色，随机
+    recommendNoTitle: '`╮(￣▽￣)╭`' //文章标题为空时，就会使用这个进行替换
+	}
+}
 ```
+
+
 
 推荐的文章是随机的，并不能指定
 

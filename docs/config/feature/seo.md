@@ -8,12 +8,17 @@
 
 首页的`description`和`keyword`通过以下修改，在`readme.md`文件中，不推荐在`config.js`中进行修改
 
-```yaml
-description: qsyyke的个人博客，记录生活琐事，学习笔记
-keyword: vuepress主题,vuepress theme,生活琐事,二次元博客,简约博客,博客主题,静态主题
+
+
+```js
+module.exports = {
+
+    themeConfig: {
+        description: 'qsyyke的个人博客，记录生活琐事，学习笔记',
+        keyword: 'vuepress主题,vuepress theme,生活琐事,二次元博客,简约博客,博客主题,静态主题'
+    }
+}
 ```
-
-
 
 
 
@@ -28,7 +33,7 @@ keyword: vuepress主题,vuepress theme,生活琐事,二次元博客,简约博客
 ```yaml
 ---
 description: 这是一个测试description项
-keyword: [chuchen,java,vue,test]
+keyword: key1,key2,key3,key4,key5
 ---
 ```
 
@@ -39,9 +44,9 @@ keyword: [chuchen,java,vue,test]
 
 如果你没有在该`.md`文件中，没有对description或者keyword进行修改，那么默认通过获取当前文章的部分h2标签和部分p标签内容进行组合
 
-description字符默认为`140`，暂未在`docs/readme.md`中提供修改
+description字符默认为`1220`，暂未在`config.js`中提供修改
 
-keyword字符默认为80
+keyword字符默认为90
 
 
 

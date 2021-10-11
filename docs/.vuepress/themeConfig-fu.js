@@ -3,9 +3,7 @@ module.exports = {
     themeConfig: {
         navbar: navbar,
         darkMode: false,
-        repo: "https://github.com/qsyyke/vuepress-theme-aurora",
-        docsRepo: 'https://github.com/qsyyke/aurora-docs',
-        docsBranch: 'master',
+        repo: "https://github.com/qsyyke/note",
         repoLabel: "Aurora-theme",
         editLink: true,
         editLinkText: "edit",
@@ -13,14 +11,18 @@ module.exports = {
         lastUpdatedText: "lastTime",
 
         //下面的都是主题自己的配置文件
+
         //logo旁文字颜色
         logoColor: "#2c3e50",
+
+        //logo旁文字 默认值为Aurora
+        logoTitle: "Aurora",
 
         //样式控制面板字体占位符，如果是国内用户，请使用中文
         showFont: "程",
 
         //首页中间hero图片地址，默认为https://ooszy.cco.vin/img/blog-public/avatar.jpg
-        heroImg: 'https://ooszy.cco.vin/img/ico/yuan.png',
+        heroImg: 'https://ooszy.cco.vin/img/blog-public/avatar.jpg',
 
         //logo图片地址，默认为https://ooszy.cco.vin/img/ico/yuan.png
         logo: "https://ooszy.cco.vin/img/ico/yuan.png",
@@ -29,10 +31,10 @@ module.exports = {
         lazyLoadingImg: "https://ooszy.cco.vin/img/blog-public/ljz.gif",
 
         //是否启用定制首页随机一言，默认未开启，使用随机一言 接口为https://international.v1.hitokoto.cn/?c=b&max_length=45
-        customRandomSay: true,
+        customRandomSay: false,
 
         //定制首页随机一言文字
-        customRandomValue: 'Vuepress-theme-Aurora',
+        customRandomValue: '青衫烟雨客',
 
         //社交信息，首页PC端至多显示19个，手机端至多显示7个，侧边栏不影响
         socials: [
@@ -104,19 +106,17 @@ module.exports = {
 
         // cancelIcoHref: "https://ooszy.cco.vin/img/ico/quxiao.svg", 在v1.3.2中移除
 
-        //logo旁文字 默认值为Aurora
-        logoTitle: "Aurora",
 
         headTitle: "this is headTitle",
 
         //站点描述
-        description: "vuepress-theme-Aurora是一款简洁，美观，功能强大的静态主题",
+        description: "qsyyke的个人博客，记录生活琐事，学习笔记",
 
         //站点关键词，在后续版本中，还需优化 请使用英文状态下的逗号','隔开
         keyword: "vuepress主题,vuepress theme,生活琐事,二次元博客,简约博客,博客主题,静态主题",
 
         //样式控制面板打开之后，休眠多长时间自动关闭面板，单位毫秒
-        slideTime: 3000,
+        slideTime: 3000000,
 
         //随机一言接口
         randomSaw: "https://international.v1.hitokoto.cn/?c=b&max_length=45",
@@ -403,16 +403,16 @@ module.exports = {
         //自己的站点信息 我自己的站点描述 会显示在友情链接的底部
         siteInformation: {
             //站点标题
-            title: "Aurora-theme",
+            title: "qsyyke",
 
             //自己站点链接
-            url: "https://aurora.cco.vin",
+            url: "https://www.cco.vin",
 
             //自己站点logo
-            logo: "https://ooszy.cco.vin/img/ico/yuan.png",
+            logo: "https://ooszy.cco.vin/img/blog-public/avatar.jpg",
 
             //自己站点描述
-            describe: "vuepress-theme-Aurora是一款简洁，美观，功能强大的静态主题",
+            describe: "I do not follow,i lives is always all you want",
 
             //自己的头像
             email: "cqycco@gmail.com",
@@ -430,13 +430,14 @@ module.exports = {
         footer: [
             "Copyright © by qsyyke All Rights Reserved.",
             "<a target='_blank' href='http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=53060202000142' style='display:inline-block;text-decoration:none;height:20px;line-height:20px;'><img src='' style='float:left;'/><p style='float:left;height:20px;line-height:20px;margin: 0px 0px 0px 5px;'>滇公网安备 53060202000142号</p></a>",
+            "<a href='https://www.upyun.com/?utm_source=lianmeng&utm_medium=referral'>本网站由<img style='height: 24.1px;width: 55.3px;' src='https://ooszy.cco.vin/img/blog-note/%E5%8F%88%E6%8B%8D%E4%BA%91_logo5.png?x-oss-process=style/pictureProcess1'>提供CDN加速服务</a>",
         ],
 
         //是否显示页脚，控制全局
         isShowFooter: true,
 
         //是否显示主题信息在页脚，为false关闭
-        isShowThemeCopyright: true,
+        isShowThemeCopyright: false,
 
         //是否展示运行时间
         isShowRunTime: true,
@@ -515,6 +516,22 @@ module.exports = {
             //用户赞赏列表数组
             donateList: [
                 {
+                    //用户名
+                    name: "qsyyke",
+
+                    //赞赏信息
+                    msg: "文章写的非常好",
+
+                    //用户头像
+                    img: "https://ooszy.cco.vin/img/blog-public/nc.jpeg",
+
+                    //打赏金额
+                    price: 11,
+
+                    //金额前缀
+                    prefix: "￥",
+                },
+                {
                     name: "初尘",
                     msg: "主题太棒了",
                     img: "https://ooszy.cco.vin/img/blog-public/nc.jpeg",
@@ -528,10 +545,17 @@ module.exports = {
         comment: {
             //是否显示评论
             showComment: true,
-            serverURL: 'https://theme-intr-2j3dgrbzi-qsyyke.vercel.app/',
+            serverURL: 'https://theme-eosin.vercel.app',
             emojis: [
                 'https://cdn.jsdelivr.net/gh/walinejs/emojis@1.0.0/alus',
                 'https://cdn.jsdelivr.net/gh/walinejs/emojis@1.0.0/bilibili',
+                /*'https://cdn.jsdelivr.net/gh/walinejs/emojis@1.0.0/qq',
+                'https://cdn.jsdelivr.net/gh/walinejs/emojis@1.0.0/tieba',
+                'https://cdn.jsdelivr.net/gh/walinejs/emojis@1.0.0/tw-emoji',
+                'https://cdn.jsdelivr.net/gh/walinejs/emojis@1.0.0/weibo',
+                'https://cdn.jsdelivr.net/gh/walinejs/emojis@1.0.0/tw-travel',
+                'https://cdn.jsdelivr.net/gh/walinejs/emojis@1.0.0/tw-weather',
+                'https://cdn.jsdelivr.net/gh/walinejs/emojis@1.0.0/tw-flag',*/
             ],
             avatar: 'monsterid'
         },
@@ -539,26 +563,26 @@ module.exports = {
         //海报分享配置
         poster: {
             //博客描述
-            description: "vuepress-theme-Aurora是一款简洁，美观，功能强大的静态主题",
+            description: "I do not follow,i lives is always all you want",
 
             //作者
             author: "qsyyke",
 
             //博客前缀
-            preBlog: "Aurora",
+            preBlog: "qsyyke",
 
             //海报博客名称后缀
-            suffixBlog: " theme",
+            suffixBlog: "のblog'",
 
             //头像，请放置在docs/public目录下，或者请保证此图片链接能够跨域访问，否则头像不能正常显示
             avatar: "/avatar.png",
         },
 
         //是否展示从网络上请求回来的说说 如果启用，请自己写后台服务，修改源码，目前暂未在主题中加入，期望在将来能够实现，组件位置docs/.vuepress/theme/lib/client/components/Mood.vue
-        showOnlineMood: false,
+        showOnlineMood: true,
 
         //是否开启在线添加说说功能，如果需要，请自己写后台，修改源码，目前在主题内部暂未加入 组件位置docs/.vuepress/theme/lib/client/components/child/AddMood.vue
-        showMoodEdit: false,
+        showMoodEdit: true,
 
         //此项仅限我自己的增加说说请求配置，暂未提供注册服务，目前仅限自己使用，可能在以后完善之后，你们只需要简单配置下，就能使用了，期待
         addMood: {
@@ -570,7 +594,7 @@ module.exports = {
         //自定义顶部图片
         customTopImg: {
             //是否启用定制顶部图片，控制全局，如果关闭，那么将使用随机图片，随机图片接口可以自己设置
-            custom: false,
+            custom: true,
 
             //文章顶部图片，数组，每次从数组中随机选择一张
             page: [
@@ -614,7 +638,7 @@ module.exports = {
 
         //侧边栏配置
         //github地址
-        githubUrl: "https://github.com/qsyyke/vuepress-theme-aurora",
+        githubUrl: "https://github.com/qsyyke",
 
         //最新文章数量，默认为6
         latestPageSize: 6,
@@ -635,7 +659,7 @@ module.exports = {
         sidebarTag: "tag",
 
         //额外的功能，也就是样式控制面板上面那个，默认是关闭的
-        showAddMood: false
+        showAddMood: true
 
 
 

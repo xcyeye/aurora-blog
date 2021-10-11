@@ -68,7 +68,8 @@ export default {
     },
     getTime() {
       return (item) => {
-        return this.getLocalTime(item.data.git.updatedTime)
+        let time = this.getLocalTime(item.data.git.updatedTime)
+        return time
       }
     },
     getPageUrl() {
@@ -111,6 +112,7 @@ export default {
     getLocalTime(time) {
       if (time === undefined) {
         //没有时间戳
+        return ''
       }
       let date = new Date(time);
       let day = date.getDate()

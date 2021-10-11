@@ -51,9 +51,8 @@ categories:
 
 你也可以配置`excludeTag`值，就不会对含有该值的path进行类别选取，数组类型
 
-```yaml
-excludeTag: 
-  - note
+```js
+excludeTag: ['note']
 ```
 
 
@@ -70,7 +69,7 @@ excludeTag:
 
 此分割符可以通过`split`项进行设置
 
-```yaml
+```js
 split: "~"
 ```
 

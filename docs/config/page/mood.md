@@ -44,10 +44,10 @@
 
 ### 头像
 
-头像默认使用的是首页中的头像地址，修改logo需要在`docs/readme.md`文件中
+头像默认使用的是首页中的头像地址，修改需要在`config.js`文件中
 
 ```yaml
-heroLogo: https://ooszy.cco.vin/img/blog-public/avatar.jpg
+heroImg: https://ooszy.cco.vin/img/blog-public/avatar.jpg
 ```
 
 
