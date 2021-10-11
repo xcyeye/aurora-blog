@@ -13,8 +13,17 @@
 
 ![image-20211009083404086](https://ooszy.cco.vin/img/blog-note/image-20211009083404086.png?x-oss-process=style/pictureProcess1)
 
-
-[toc]
+* [vuepress\-theme\-Aurora](#vuepress-theme-aurora)
+  * [Feature](#feature)
+  * [安装](#安装)
+    * [初始化(以windows安装为例)](#初始化以windows安装为例)
+    * [依赖及主题安装](#依赖及主题安装)
+    * [使用主题](#使用主题)
+      * [1\.新建readme\.md文件](#1新建readmemd文件)
+      * [2\.配置config\.js](#2配置configjs)
+      * [3\.使用](#3使用)
+  * [渲染](#渲染)
+  * [文档](#文档)
 
 
 ## Feature
