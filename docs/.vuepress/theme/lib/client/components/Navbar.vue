@@ -1,7 +1,8 @@
 <template>
   <header ref="navbar" :style="$store.state.borderRadiusStyle +
        $store.state.opacityStyle + $store.state.fontColorStyle +
-       $store.state.fontFamilyStyle + $store.state.filterBlurStyle" id="c-navbar" class="navbar">
+       $store.state.fontFamilyStyle + $store.state.filterBlurStyle"
+          id="c-navbar" class="navbar">
     <ToggleSidebarButton />
 
     <span ref="siteBrand">
@@ -91,9 +92,9 @@ const siteBrandLogo = computed(() => {
 const siteBrandTitle = computed(() => siteLocale.value.title)
 const linksWrapperMaxWidth = ref(0)
 const linksWrapperStyle = computed(() => {
-  if (!linksWrapperMaxWidth.value) {
+  /*if (!linksWrapperMaxWidth.value) {
     return {}
-  }
+  }*/
   return {
     maxWidth: linksWrapperMaxWidth.value + 'px',
   }
@@ -104,7 +105,7 @@ const enableDarkMode = computed(() => themeLocale.value.darkMode)
 onMounted(() => {
   // TODO: migrate to css var
   // refer to _variables.scss
-  /*const MOBILE_DESKTOP_BREAKPOINT = 719
+  const MOBILE_DESKTOP_BREAKPOINT = 719
   const navbarHorizontalPadding =
     getCssValue(navbar.value, 'paddingLeft') +
     getCssValue(navbar.value, 'paddingRight')
@@ -120,7 +121,7 @@ onMounted(() => {
   }
   handleLinksWrapWidth()
   window.addEventListener('resize', handleLinksWrapWidth, false)
-  window.addEventListener('orientationchange', handleLinksWrapWidth, false)*/
+  window.addEventListener('orientationchange', handleLinksWrapWidth, false)
 })
 
 function getCssValue(el: HTMLElement | null, property: string): number {

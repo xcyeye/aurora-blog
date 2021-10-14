@@ -44,6 +44,7 @@ export default {
           emoji: this.emojis,
           visitor: true, // 阅读量统计
         });
+
         setTimeout(() => {
           let vtabImgs = document.querySelectorAll(".vtabs .vtab img")
           for (let i = 0; i < vtabImgs.length; i++) {

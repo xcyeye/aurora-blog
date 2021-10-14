@@ -463,8 +463,8 @@ export default {
     },
     compare(updatedTime) {
       return  function( object1, object2) {
-        var value1  = object1.data.git.updatedTime;
-        var value2  = object2.data.git.updatedTime;
+        var value1  = object1.date;
+        var value2  = object2.date;
         if (value2  < value1) {
           return  1;
         }  else  if (value2  > value1) {

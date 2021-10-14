@@ -162,20 +162,24 @@ export default {
     },
     getLastUpdate() {
       const page = usePageData()
-      let time = 0
       let git = page.value.git
-      if (git === undefined || git == null) {
-        git = + new Date()
-        return this.getLocalTime(git)
+      let createDate = page.value.frontmatter.date
+
+      if (createDate !== undefined) {
+        return this.getLocalTime(createDate)
+      }else {
+        if (git === undefined || git == null) {
+          git = + new Date()
+          return this.getLocalTime(git)
+        }
+
+        let update = page.value.git.updatedTime
+
+        if (update === undefined) {
+          update = +new Date()
+        }
+        return this.getLocalTime(update)
       }
-
-      let update = page.value.git.updatedTime
-
-      if (update === undefined) {
-        update = +new Date()
-      }
-
-      return this.getLocalTime(update)
     },
     getLogoTitle() {
       if(this.poster === undefined || this.poster == null) {

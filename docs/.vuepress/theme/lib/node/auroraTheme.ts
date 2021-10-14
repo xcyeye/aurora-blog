@@ -7,4 +7,4 @@ export interface DefaultThemeOptions extends ThemeConfig, DefaultThemeLocaleOpti
      */
     themePlugins?: DefaultThemePluginsOptions;
 }
-export declare const defaultTheme: Theme<DefaultThemeOptions>;
+export declare const auroraTheme: Theme<DefaultThemeOptions>;

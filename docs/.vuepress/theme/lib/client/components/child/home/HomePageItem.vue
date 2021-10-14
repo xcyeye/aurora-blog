@@ -68,8 +68,7 @@ export default {
     },
     getTime() {
       return (item) => {
-        let time = this.getLocalTime(item.data.git.updatedTime)
-        return time
+        return this.getLocalTime(item.date)
       }
     },
     getPageUrl() {
@@ -114,6 +113,12 @@ export default {
         //没有时间戳
         return ''
       }
+
+      if (time === 0) {
+        //没有时间戳
+        return ''
+      }
+
       let date = new Date(time);
       let day = date.getDate()
       let year = date.getFullYear()

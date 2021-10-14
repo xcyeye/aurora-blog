@@ -5,7 +5,7 @@
     <div class="page-top-share">
       <poster :title="originPageData.title" :content="posterContent"/>
     </div>
-    <div id="theme-default-content" class="theme-default-content pageContent">
+    <div id="theme-default-content" class="theme-default-content pageContent medium-zoom-content">
       <Content />
     </div>
     <PageMeta />
@@ -30,7 +30,6 @@ import Mood from "./Mood";
 import { defineComponent } from 'vue'
 import PageMeta from './PageMeta.vue'
 import PageNav from './PageNav.vue'
-import AdSense from './AdSense'
 import RecommendPage from "./RecommendPage";
 import {usePageData} from "@vuepress/client";
 import PageNext from "./child/page/PageNext";
@@ -40,7 +39,6 @@ export default defineComponent({
   components: {
     PageMeta,
     PageNav,
-    AdSense,
     RecommendPage,
     Mood,
     PageNext

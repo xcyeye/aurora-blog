@@ -1,5 +1,5 @@
-import { defaultTheme } from './ccdsTheme';
+import { auroraTheme } from './auroraTheme';
 export * from '../shared';
-export * from './ccdsTheme';
+export * from './auroraTheme';
 export * from './utils';
-export default defaultTheme;
+export default auroraTheme;

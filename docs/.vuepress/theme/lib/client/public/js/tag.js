@@ -33,6 +33,18 @@ module.exports = {
 
             new Promise((resolve,reject) => {
                 for (let i = 0; i < myData.default.length; i++) {
+
+                    if (myData.default[i].path.search("404.html") !== -1) {
+                        continue
+                    }
+
+                    //判断是否为说说页面
+                    if (myData.default[i].filePathRelative.search("moods/") !== -1) {
+                        continue
+                    }
+
+
+
                     const articleMap = {
                         articleUrl: '',
                         title: '',
@@ -44,14 +56,29 @@ module.exports = {
                         contentRendered: '',
                         categories: [],
                         frontmatter: [],
-                        data: null
+                        data: null,
+                        date: 0
                     }
 
                     articleMap.data = myData.default[i].data
 
+                    let createPageDate = myData.default[i].data.frontmatter.date
+                    let commitPageDate = myData.default[i].data.git.updatedTime
+
+                    let time = 0
+                    if (createPageDate !== undefined) {
+                        time = new Date(createPageDate).getTime();
+                    }else {
+                        if (commitPageDate !== undefined) {
+                            time = commitPageDate
+                        }
+                    }
+
+                    articleMap.date = time
+
                     //获取path
                     let path = myData.default[i].path
-                    var strings = path.split("/");
+                    let strings = path.split("/");
                     if (strings.length >2) {
                         //从strings中的第二个开始遍历，到倒数第二个结束
                         let temTag = []

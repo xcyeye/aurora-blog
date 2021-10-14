@@ -9,7 +9,8 @@ const resolveMediumZoomPluginOptions = (themePlugins) => {
         return false;
     }
     return {
-        selector: '.theme-default-content > img, .theme-default-content :not(a) > img',
+        //selector: '.theme-default-content > img, .theme-default-content :not(a) > img',
+        selector: '.medium-zoom-content > img, .medium-zoom-content :not(a) > img, .medium-zoom-content :not(button) > img',
         zoomOptions: {},
         // should greater than page transition duration
         delay: 400,

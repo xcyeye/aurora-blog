@@ -4,11 +4,11 @@ exports.defaultTheme = void 0;
 const { path } = require('@vuepress/utils')
 const utils_1 = require("@vuepress/utils");
 const utils_2 = require("./utils");
-const ccdsTheme = ({ themePlugins = {}, ...localeOptions }) => {
+const auroraTheme = ({ themePlugins = {}, ...localeOptions }) => {
     utils_2.assignDefaultLocaleOptions(localeOptions);
     return {
         //name: '@vuepress/theme-default',
-        name: 'vuepress-theme-ccds',
+        name: '@vuepress-theme-aurora',
         layouts: utils_1.path.resolve(__dirname, '../client/layouts'),
         clientAppEnhanceFiles: utils_1.path.resolve(__dirname, '../client/clientAppEnhance.js'),
         clientAppSetupFiles: utils_1.path.resolve(__dirname, '../client/clientAppSetup.js'),
@@ -53,4 +53,4 @@ const ccdsTheme = ({ themePlugins = {}, ...localeOptions }) => {
         ],
     };
 };
-exports.ccdsTheme = ccdsTheme;
+exports.auroraTheme = auroraTheme;

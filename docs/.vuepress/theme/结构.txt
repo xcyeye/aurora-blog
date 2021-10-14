@@ -11,8 +11,8 @@ E:\vue\vuepress-theme\single-theme\theme
 |  |   ├─page.d.ts
 |  |   └page.js
 |  ├─node
-|  |  ├─ccdsTheme.js
-|  |  ├─ccdsTheme.ts
+|  |  ├─auroraTheme.js
+|  |  ├─auroraTheme.ts
 |  |  ├─index.d.ts
 |  |  ├─index.js
 |  |  ├─utils

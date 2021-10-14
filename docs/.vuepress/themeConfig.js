@@ -528,10 +528,12 @@ module.exports = {
         comment: {
             //是否显示评论
             showComment: true,
-            serverURL: 'https://theme-intr-2j3dgrbzi-qsyyke.vercel.app/',
+            serverURL: 'https://aurora-local-7hrjb6mp8-qsyyke.vercel.app/',
             emojis: [
                 'https://cdn.jsdelivr.net/gh/walinejs/emojis@1.0.0/alus',
                 'https://cdn.jsdelivr.net/gh/walinejs/emojis@1.0.0/bilibili',
+                'https://cdn.jsdelivr.net/gh/walinejs/emojis@1.0.0/tieba',
+                'https://cdn.jsdelivr.net/gh/walinejs/emojis@1.0.0/weibo'
             ],
             avatar: 'monsterid'
         },

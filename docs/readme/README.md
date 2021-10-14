@@ -1,3 +1,7 @@
+---
+time: 2021/10/14
+---
+
 # vuepress-theme-Aurora
 
 <a target="_blank" href="http://aurora.cco.vin/" >Demo</a>

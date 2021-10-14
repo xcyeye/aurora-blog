@@ -456,6 +456,16 @@ export default defineComponent({
         document.querySelector("head").appendChild(descriptionMeta)
       }
     }
+
+  //  监听窗口改变
+    /*let _this = this;
+    window.onresize = function(){ // 定义窗口大小变更通知事件
+      _this.screenWidth = document.documentElement.clientWidth; //窗口宽度
+      if (_this.screenWidth > 719) {
+        console.log("窗口改变: " + _this.screenWidth)
+      }
+    };*/
+
   }
 })
 </script>

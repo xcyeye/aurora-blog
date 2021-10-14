@@ -38,14 +38,6 @@ export default {
       currentPage: 1,
     }
   },
-  computed: {
-    getAllPageMap() {
-      return this.$store.state.allPageMap
-    },
-    getCutePageArr() {
-      return Math.ceil(this.allPageArr.length / this.cutePageNum)
-    }
-  },
   created() {
     const loadAllPageMap = setInterval(() => {
       if (this.$store.state.allPageMap.length !== 0) {
@@ -63,13 +55,27 @@ export default {
     }
   },
   methods: {
+    getLocalTime(time) {
+      if (time === undefined) {
+        //没有时间戳
+        return ''
+      }
+      let date = new Date(time);
+      let day = date.getDate()
+      let year = date.getFullYear()
+      let month = date.getMonth() + 1
+      let hours = date.getHours()
+      let min = date.getMinutes()
+      let sec = date.getSeconds()
+      return year + "-" + month + "-" + day + " " + hours + ":" + min
+    },
     cutPageActive(e,index) {
       this.cutPageIndex = index
     },
     compare(updatedTime) {
       return  function( object1, object2) {
-        var value1  = object1.data.git.updatedTime;
-        var value2  = object2.data.git.updatedTime;
+        let value1  = object1.date;
+        let value2  = object2.date;
         if (value2  < value1) {
           return  1;
         }  else  if (value2  > value1) {
@@ -106,6 +112,8 @@ export default {
     setShowAllPage(allPageMaps) {
       new Promise((resolve,reject) => {
         this.allPageArr = []
+
+        //先判断是否置顶，置顶不参与时间排序
         for (let i = 0; i < allPageMaps.length; i++) {
           let isStick = allPageMaps[i].frontmatter.stick
           if (isStick) {

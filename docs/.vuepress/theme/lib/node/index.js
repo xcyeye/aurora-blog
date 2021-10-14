@@ -10,8 +10,8 @@ var __exportStar = (this && this.__exportStar) || function(m, exports) {
     for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const ccdsTheme = require("./ccdsTheme");
+const auroraTheme = require("./auroraTheme");
 __exportStar(require("../shared"), exports);
-__exportStar(require("./ccdsTheme"), exports);
+__exportStar(require("./auroraTheme"), exports);
 __exportStar(require("./utils"), exports);
-exports.default = ccdsTheme.ccdsTheme;
+exports.default = auroraTheme.auroraTheme;

@@ -9,7 +9,6 @@ import BCenter from './components/global/BCenter';
 import Common from './components/global/Common';
 import Footer from './components/global/Footer';
 import Message from './components/global/Message';
-import Profile from './components/global/Profile';
 import Donate from "./components/global/Donate";
 import Comment from "./components/global/Comment";
 import Mood from "./components/Mood";
@@ -37,7 +36,6 @@ export default defineClientAppEnhance(({ app, router }) => {
     app.component('Common', Common);
     app.component('Footer', Footer);
     app.component('Message', Message);
-    app.component('Profile', Profile);
     app.component('Donate', Donate);
     app.component('Comment', Comment);
     app.component('Poster', Poster);
@@ -45,8 +43,6 @@ export default defineClientAppEnhance(({ app, router }) => {
     app.component("AddMood",AddMood)
     app.component("HomeSidebar",HomeSidebar)
     app.component("HomeBottom",HomeBottom)
-
-
 
     //路由
     // @ts-ignore
