@@ -26,6 +26,10 @@
       </RouterLink>
     </span>
 
+    <div id="mobile-search-show" class="search-common">
+      <NavbarSearch/>
+    </div>
+
     <div class="navbar-links-wrapper" :style="linksWrapperStyle">
       <slot name="before" />
 
@@ -35,7 +39,9 @@
 
       <ToggleDarkModeButton v-if="enableDarkMode" />
 
-      <NavbarSearch />
+      <div id="mobile-search-no-show" class="search-common">
+        <NavbarSearch  />
+      </div>
     </div>
   </header>
 </template>
