@@ -1,6 +1,6 @@
 <template>
   <footer class="page-meta">
-    <div v-if="editNavLink" class="meta-item edit-link">
+    <div v-if="editNavLink" :data="editNavLink" class="meta-item edit-link">
       <NavLink class="meta-item-label" :item="editNavLink" />
     </div>
 
@@ -134,9 +134,25 @@ export default defineComponent({
 
   setup() {
     const themeLocale = useThemeLocaleData()
-    const editNavLink = useEditNavLink()
+    let editNavLink = useEditNavLink()
     const lastUpdated = useLastUpdated()
     const contributors = useContributors()
+    const page = usePageData()
+
+    let githubActions = themeLocale.value.githubActions
+    if (githubActions && themeLocale.value.docsRepo !== undefined) {
+      let filePathRelative = page.value.filePathRelative
+      let docsRepo = themeLocale.value.docsRepo
+      let docsBranch = ''
+
+      if (themeLocale.value.docsBranch !== undefined) {
+        docsBranch = themeLocale.value.docsBranch
+      }else {
+        docsBranch = 'main'
+      }
+
+      editNavLink.value.link = docsRepo + "/edit/" + docsBranch + "/docs/" + filePathRelative
+    }
 
     return {
       themeLocale,
