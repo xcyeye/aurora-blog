@@ -1,4 +1,18 @@
-# [1.0.0](https://github.com/qsyyke/vuepress-theme-aurora/compare/v1.3.3...v1.0.0) (2021-10-14)
+# Aurora
+
+
+
+## [1.3.4](https://github.com/qsyyke/vuepress-theme-aurora/compare/v1.3.3...v1.3.4) (2021-10-15)
+
+
+### Bug Fixes
+
+* **tag:** fix the rule of get allPages ([a73c275](https://github.com/qsyyke/vuepress-theme-aurora/commit/a73c27538a252a991fedbf612488ebb8a2777c2d))
+
+
+### Features
+
+* **pageeditlink:** modify page editLink rule ([64a71cd](https://github.com/qsyyke/vuepress-theme-aurora/commit/64a71cdc2cdade18f462670acbb2544e4c35acb9))
 
 
 

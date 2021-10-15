@@ -53,7 +53,6 @@ import {useThemeData} from "../composables";
 const network = require('../public/js/network.js')
 export default defineComponent({
   name: 'About',
-
   components: {
     Transition,
     Home,

@@ -61,7 +61,7 @@ export default defineComponent({
     goHome() {
       this.$router.push("/")
     }
-  }
+  },
 })
 </script>
 <style lang="scss">
