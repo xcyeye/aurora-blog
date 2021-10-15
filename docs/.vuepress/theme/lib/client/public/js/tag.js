@@ -43,7 +43,10 @@ module.exports = {
                         continue
                     }
 
-
+                    //判断是否为相册页面
+                    if (myData.default[i].filePathRelative.search("photos/") !== -1) {
+                        continue
+                    }
 
                     const articleMap = {
                         articleUrl: '',
