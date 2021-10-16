@@ -12,6 +12,16 @@ module.exports = {
         editLinkText: "edit",
         lastUpdated: true,
         lastUpdatedText: "lastTime",
+        navbarIcon: [
+            {
+                link: '',
+                icon: ''
+            },
+            {
+                link: '',
+                icon: ''
+            },
+        ],
 
         //下面的都是主题自己的配置文件
         //logo旁文字颜色

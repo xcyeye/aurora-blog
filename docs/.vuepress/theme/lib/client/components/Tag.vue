@@ -62,6 +62,7 @@
               <TagPage v-for="(item,index) in showPageArr"
                        :page-map="item"
                        :key="index"
+                       :index="index"
                        :style="$store.state.opacityStyle"
                        :theme-property="themeProperty"
               />

@@ -1,7 +1,7 @@
 <template>
   <div :style="setBackgroundStyle(888)" id="tag-page" class="tag-page">
     <div class="tag-page-item">
-      <div style="display: none" class="tag-item-content"></div>
+      <div style="display: none" v-html="pageMap.contentRendered" :class="'tagItemContent' + index"></div>
       <div id="tag-page-left" :style="setBackgroundImg" class="tag-page-left tag-page-item-common"></div>
       <div class="tag-page-right tag-page-item-common" id="tag-page-right">
         <div id="tag-page-right-top" class="tag-page-right-top">
@@ -30,7 +30,8 @@ export default {
   },
   props: {
     pageMap: '',
-    themeProperty: ''
+    themeProperty: '',
+    index: ''
   },
   computed: {
     setBackgroundImg() {
@@ -84,21 +85,19 @@ export default {
     }
   },
   mounted() {
-    let tagContentDom = document.querySelector(".tag-item-content")
-    tagContentDom.innerHTML = this.pageMap.contentRendered
-    new Promise((resolve,reject) => {
-      let tagContent = ""
-      setTimeout(() => {
-        let tagContentPsDom = document.querySelectorAll(".tag-item-content p")
+    this.$nextTick(() => {
+
+      new Promise((resolve,reject) => {
+        let tagContent = ""
+        let tagContentPsDom = document.querySelectorAll(".tagItemContent" + this.index + " p")
         for (let i = 0; i < tagContentPsDom.length; i++) {
           tagContent = tagContent + tagContentPsDom[i].innerText
         }
         resolve(tagContent)
-      },100)
-    }).then((tagContent) => {
-      this.tagContent = tagContent
+      }).then((tagContent) => {
+        this.tagContent = tagContent
+      })
     })
-
   },
   methods: {
     getRandomInt(min, max) {

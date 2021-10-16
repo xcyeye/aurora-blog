@@ -1,4 +1,4 @@
-# Aurora
+# [1.0.0](https://github.com/qsyyke/vuepress-theme-aurora/compare/v1.3.4...v1.0.0) (2021-10-15)
 
 
 
