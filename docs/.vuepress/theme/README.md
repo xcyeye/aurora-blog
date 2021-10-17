@@ -1,6 +1,6 @@
-# vuepress-theme-Aurora
+# Introduce
 
-<a target="_blank" href="http://aurora.cco.vin/" >Demo</a>
+
 
 > A vuepress-based animation blog theme, simple, beautiful, multi-color, multiple custom functions, providing article poster sharing, talk, photo album, comment and other features
 >
@@ -9,11 +9,16 @@
 <a href="https://www.npmjs.com/package/vuepress-theme-aurora"><img alt="npm" src="https://img.shields.io/npm/v/vuepress-theme-aurora"></a>![npm](https://img.shields.io/npm/dw/vuepress-theme-aurora)<a href="https://github.com/qsyyke/vuepress-theme-aurora"><img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/qsyyke/vuepress-theme-aurora?style=social"></a>
 
 
-![](https://ooszy.cco.vin/img/theme/%E4%B8%BB%E9%A2%98.jpg)
+
+如果你之前没有使用过`vuepress`，那么安装过程，可以查看<a target="_blank" href="https://v2.vuepress.vuejs.org/zh/guide/getting-started.html">官方教程</a>或者本主题<a target="_blank" href="https://aurora.cco.vin/readme/introduce.html">详细安装教程</a>
+
+主题使用文档地址为 <a href="https://aurora.cco.vin/" target="_blank">**click me**</a>
+
+<a href="https://blog.cco.vin/" target="_blank"> **Demo** </a>
 
 ![image-20211009083404086](https://ooszy.cco.vin/img/blog-note/image-20211009083404086.png?x-oss-process=style/pictureProcess1)
 
-[toc]
+![image-20211014230618458](https://ooszy.cco.vin/img/blog-note/image-20211014230618458.png?x-oss-process=style/pictureProcess1)
 
 ## Feature
 
@@ -46,74 +51,43 @@
 
 ## 安装
 
+
+
+
+
 运行环境需要依赖`node`，所以在安装之前，请确保操作系统已经安装了node，我运行时的版本为`v14.17.3`
 
 > 如何安装node，请自行百度解决
 
-### 初始化(以windows安装为例)
-
-1. 创建一个文件夹`blog-demo`
-
-2. 进入此`blog-demo`文件夹内，使用`npm init`命令初始化
-
-    <img src="https://ooszy.cco.vin/img/blog-note/image-20211010210735931.png?x-oss-process=style/pictureProcess1" alt="image-20211010210735931" style="zoom:33%;" />![image-20211010210848054](https://ooszy.cco.vin/img/blog-note/image-20211010210848054.png?x-oss-process=style/pictureProcess1)
-
-    在cmd窗口中，输入`npm init`命令
-
-    ```sh
-npm init
-    ```
-    
-3. 你将得到一个`package.json`文件，将下面代码加入到`package.json`对应位置
-
-    ```json
-    "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1",
-        "dev": "vuepress dev docs",
-        "build": "vuepress build docs",
-        "deploy": "bash deploy.sh"
-      },
-    ```
-
-或者你也可以将下面代码全部复制替换`package.json`内的所有内容
-
-```json
-{
-  "name": "blog-demo",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "vuepress dev docs",
-    "build": "vuepress build docs",
-    "deploy": "bash deploy.sh"
-  },
-  "author": "",
-  "license": "ISC"
-}
-```
-
-自此，便可以开始安装主题及其依赖
 
 
+- 安装依赖
 
-### 依赖及主题安装
-
-在cmd面板中运行下面命令安装`vuepress`和`Aurora`主题
-
-```shell
+```sh
 npm i vuepress@2.0.0-beta.25
 npm i vuepress-theme-aurora
 ```
 
-### 使用主题
 
-#### 1.新建readme.md文件
 
-在`blog-demo`文件夹内，新建一个新文件夹`docs`，以及在`docs`内新建`.vuepress`文件夹
+- 将下面内容添加到`package.json`对应位置
 
-在`docs`文件夹下，新建`README.md`，在此`README.md`文件内添加下面内容
+  ```json
+  "scripts": {
+      "test": "echo \"Error: no test specified\" && exit 1",
+      "dev": "vuepress dev docs",
+      "build": "vuepress build docs",
+      "deploy": "bash deploy.sh"
+    },
+  ```
+
+  
+
+## 使用主题
+
+#### 1.首页配置
+
+在`docs/README.md`文件中，添加下面内容(`只加入下面三行，其余的内容请不要添加`)
 
 ```yaml
 ---
@@ -125,9 +99,7 @@ home: true
 
 #### 2.配置config.js
 
-在`docs/.vuepress/`文件夹内，新建`config.js`
-
-进入`docs/.vuepress/config.js`中，加入下面代码(`请全部复制完`)
+在`docs/.vuepress/config.js`下，添加下面内容
 
 ```js
 module.exports = {
@@ -149,7 +121,13 @@ module.exports = {
             `export default ${JSON.stringify(myData)}`
         );
     },
-    theme: 'vuepress-theme-aurora',
+    //build完成之后，会自动退出,如果你使用GitHub action自动部署，一定要加上onGenerated，该主题的bug，build成功后，不会自动退出，加上下面几行便可以解决
+    onGenerated: (app) => {
+        setTimeout(() => {
+            process.exit(0)
+        },3000)
+    },
+    theme: 'aurora',
     themeConfig: {
         darkMode: false,
     }
@@ -160,11 +138,13 @@ module.exports = {
 
 #### 3.使用
 
-在cmd中，进入创建的`blog-demo`文件夹内，运行`npm run dev`
+运行
 
-待运行成功之后，你便能在面板中看到一个地址，在浏览器中输入此地址，便可看到下面界面
+```sh
+npm run dev
+```
 
-<img src="https://ooszy.cco.vin/img/blog-note/image-20211010232842842.png?x-oss-process=style/pictureProcess1" alt="image-20211010232842842" style="zoom:50%;" />
+你将会看到下图
 
 ![image-20211010232918219](https://ooszy.cco.vin/img/blog-note/image-20211010232918219.png?x-oss-process=style/pictureProcess1)
 
@@ -180,6 +160,8 @@ module.exports = {
 ## 渲染
 
 更多的体验效果，可以查看<a href="https://aurora.cco.vin/">演示站点</a>
+
+![](https://ooszy.cco.vin/img/blog-note/%E4%B8%BB%E9%A2%98.jpg?x-oss-process=style/pictureProcess1)
 
 ![image-20211010162940583](https://ooszy.cco.vin/img/blog-note/image-20211010162940583.png?x-oss-process=style/pictureProcess1)
 
