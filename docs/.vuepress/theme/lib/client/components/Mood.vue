@@ -6,7 +6,7 @@
         <!--在线编写的心情文件-->
         <div class="link mood-control" v-for="(item,index) in onlineMoods">
           <div :style="$store.state.borderRadiusStyle + $store.state.opacityStyle"
-               class="c-page online-mood"  id="article-page">
+               class="c-page online-mood mood-article">
             <div class="moods-page" id="moods-page">
               <mood-item :show-online-mood="true" :moods="onlineMoods" :mood-item="item" :theme-property="themeProperty"/>
             </div>
@@ -16,7 +16,7 @@
         <!--下面是在本地存放于docs/mood中的md文件-->
         <div class="link mood-control" v-for="(item,index) in moods">
           <div :style="$store.state.borderRadiusStyle + $store.state.opacityStyle"
-               class="c-page"  id="article-page">
+               class="c-page mood-article">
             <div class="moods-page" id="moods-page">
               <mood-item :moods="moods" :mood-item="item" :theme-property="themeProperty"/>
             </div>

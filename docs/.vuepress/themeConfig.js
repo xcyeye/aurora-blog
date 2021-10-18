@@ -568,7 +568,7 @@ module.exports = {
         },
 
         //是否展示从网络上请求回来的说说 如果启用，请自己写后台服务，修改源码，目前暂未在主题中加入，期望在将来能够实现，组件位置docs/.vuepress/theme/lib/client/components/Mood.vue
-        showOnlineMood: false,
+        showOnlineMood: true,
 
         //是否开启在线添加说说功能，如果需要，请自己写后台，修改源码，目前在主题内部暂未加入 组件位置docs/.vuepress/theme/lib/client/components/child/AddMood.vue
         showMoodEdit: false,
@@ -648,7 +648,7 @@ module.exports = {
         sidebarTag: "tag",
 
         //额外的功能，也就是样式控制面板上面那个，默认是关闭的
-        showAddMood: false
+        showAddMood: true
 
 
 
