@@ -84,6 +84,20 @@ const auroraTheme = ({ themePlugins = {}, ...localeOptions }) => {
                 content: "",
             })
 
+            if (app.pages.every((page) => page.path !== '/')) {
+                const homepage = await createPage(app, {
+                    path: '/',
+                    // 设置 frontmatter
+                    frontmatter: {
+                        layout: 'Layout',
+                        home: true
+                    },
+                    // 设置 markdown 内容
+                    content: ""
+                })
+                app.pages.push(homepage)
+            }
+
             // 把它添加到 `app.pages`
             app.pages.push(homepage1)
             app.pages.push(homepage2)

@@ -3,12 +3,15 @@
 
 ### Bug Fixes
 
+* **mobile-sidebar:** fix mobile sidebar catalog ([78ff4f3](https://github.com/qsyyke/vuepress-theme-aurora/commit/78ff4f320eb2c46bc5a527c1633d9992f3d6b058))
 * **router:** fix the new page router ([959cf58](https://github.com/qsyyke/vuepress-theme-aurora/commit/959cf58b2cdd4a203eebc4324ebaf0363d15ea22))
+* **tag:** fix tag page ([31a22d8](https://github.com/qsyyke/vuepress-theme-aurora/commit/31a22d85f5a1f18b8690d14ac1ae566a7047055e))
 
 
 ### Features
 
 * **homepage:** add additional options for homepageitem ([e70714f](https://github.com/qsyyke/vuepress-theme-aurora/commit/e70714fe30c1128ad94a9c63e8f708c190617c0e))
+* **mobile-sidebar:** add additional option for mobile-sidebar ([9c9a41d](https://github.com/qsyyke/vuepress-theme-aurora/commit/9c9a41dc2ad685790e7cb40eb0e9cddb4897db23))
 * **style:** add default value of page Style ([83fda79](https://github.com/qsyyke/vuepress-theme-aurora/commit/83fda7908533dced7ee148b625d69b23ce92bccc))
 
 
