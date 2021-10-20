@@ -253,6 +253,15 @@ export default {
     },
     getCurrentCatalogArr(path) {
       this.currentCatalog = []
+
+      //判断是否是友情链接，关于，心情，标签，相册页面
+      if ((path.search("/link") !== -1) || (path.search("/mood") !== -1) || (path.search("/about") !== -1) || (path.search("/tag") !== -1) || (path.search("/photo") !== -1)) {
+        this.$emit("getCurrentCatalogObject",{
+          currentCatalog: []
+        })
+        return
+      }
+
       new Promise((resolve,reject) => {
         let tempCatalogArr = []
         let split = path.split("/");
