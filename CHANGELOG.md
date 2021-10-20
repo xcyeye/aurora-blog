@@ -8,6 +8,7 @@
 
 ### Features
 
+* **homepage:** add additional options for homepageitem ([e70714f](https://github.com/qsyyke/vuepress-theme-aurora/commit/e70714fe30c1128ad94a9c63e8f708c190617c0e))
 * **style:** add default value of page Style ([83fda79](https://github.com/qsyyke/vuepress-theme-aurora/commit/83fda7908533dced7ee148b625d69b23ce92bccc))
 
 

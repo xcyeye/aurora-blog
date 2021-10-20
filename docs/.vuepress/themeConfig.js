@@ -491,6 +491,9 @@ module.exports = {
         //默认模糊度
         defaultBlur: 1,
 
+        //手机端，是否在页面的底部显示侧边栏列表，默认开启，如果需要开启，请将此值设置为FALSE
+        //mobilePageSidebar: false,
+
         //tag页面，标签分割符 请不要传入一个空字符串，默认值就是' ' 一个空格
         split: "~",
 

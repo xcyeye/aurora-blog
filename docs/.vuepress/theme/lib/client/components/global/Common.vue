@@ -49,7 +49,7 @@
               <slot name="center9"></slot>
             </div>
             <div id="page-sidebar-right" v-if="!frontmatter.home" v-show="showSidebar" class="page-sidebar-right">
-              <div class="stickSidebar">
+              <div class="stickSidebar" v-if="mobilePageSidebar">
                 <HomeSidebar :show-navbar="false"
                              :sidebar-width-var="0.96"
                              :show-sidebar-social="true"
@@ -140,6 +140,7 @@ export default defineComponent({
       themeProperty: '',
       //首页壁纸数组
       homeWps: [],
+      mobilePageSidebar: true
     }
   },
   props: {
@@ -455,6 +456,10 @@ export default defineComponent({
         let descriptionMeta = $('<meta name="description" content="'+ descriptionValue +'">').get(0)
         document.querySelector("head").appendChild(descriptionMeta)
       }
+    }
+
+    if (document.body.clientWidth < 550 && this.themeProperty.mobilePageSidebar !== undefined) {
+      this.mobilePageSidebar = this.themeProperty.mobilePageSidebar
     }
 
   //  监听窗口改变
