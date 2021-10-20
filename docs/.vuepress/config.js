@@ -46,26 +46,9 @@ module.exports = {
             },
         ],
     ],
-    /*onPrepared: async (app) => {
-        const myData = app.pages.map((page) => {
-            return page;
-        });
-        await app.writeTemp(
-            "my-data.js",
-            `export default ${JSON.stringify(myData)}`
-        );
-    },*/
-
     theme: path.resolve(__dirname, "theme/lib/node/index.js"),
     title: "I do not follow,i lives is always all you want",
     lang: 'zh-CN',
-
     port: 8080,
     themeConfig,
-    //build完成之后，会自动退出
-    /*onGenerated: (app) => {
-        setTimeout(() => {
-            process.exit(0)
-        },3000)
-    }*/
 };
