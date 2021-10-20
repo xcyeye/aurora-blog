@@ -43,45 +43,15 @@ export default defineClientAppEnhance(({ app, router }) => {
     app.component("AddMood",AddMood)
     app.component("HomeSidebar",HomeSidebar)
     app.component("HomeBottom",HomeBottom)
+    app.component("About",About)
+    app.component("Link",Link)
+    app.component("Mood",Mood)
+    app.component("PhotoFall",PhotoFall)
+    app.component("Tag",Tag)
 
     //路由
     // @ts-ignore
     app.use(store)
-
-    router.addRoute({
-        path: '/about',
-        name: 'aurora-about',
-        component: About
-    })
-
-    router.addRoute({
-        path: '/link',
-        name: 'aurora-link',
-        component: Link
-    })
-
-    router.addRoute({
-        path: '/tag',
-        name: 'aurora-tag',
-        component: Tag
-    })
-    router.addRoute({
-        path: '/mood',
-        name: 'aurora-time',
-        component: Mood
-    })
-
-    router.addRoute({
-        path: '/post',
-        name: 'aurora-post',
-        component: Poster
-    })
-
-    router.addRoute({
-        path: '/photo',
-        component: PhotoFall,
-        name: 'aurora-photo'
-    })
 
     delete app._context.components.OutboundLink;
     // override the built-in `<OutboundLink>`

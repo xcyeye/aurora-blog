@@ -1,4 +1,13 @@
-# [1.0.0](https://github.com/qsyyke/vuepress-theme-aurora/compare/v1.3.5...v1.0.0) (2021-10-16)
+# [1.0.0](https://github.com/qsyyke/vuepress-theme-aurora/compare/v1.3.6...v1.0.0) (2021-10-18)
+
+
+
+## [1.3.6](https://github.com/qsyyke/vuepress-theme-aurora/compare/v1.3.5...v1.3.6) (2021-10-18)
+
+
+### Bug Fixes
+
+* **view:** fix the mobile sidebar and mood ([db07b5e](https://github.com/qsyyke/vuepress-theme-aurora/commit/db07b5efdfa21e65d57845c3e06e648e6e6db8c2))
 
 
 

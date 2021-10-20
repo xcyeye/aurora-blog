@@ -1,4 +1,6 @@
 ---
+stick: true
+coverUrl: 'https://img2.baidu.com/it/u=2192265457,2884791613&fm=26&fmt=auto'
 time: 2021/10/14
 ---
 

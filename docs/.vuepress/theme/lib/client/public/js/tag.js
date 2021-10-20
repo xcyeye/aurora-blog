@@ -39,13 +39,15 @@ module.exports = {
                     }
 
                     //判断是否为说说页面
-                    if (myData.default[i].filePathRelative.search("moods/") !== -1) {
-                        continue
-                    }
+                    if (myData.default[i].filePathRelative !== null) {
+                        if (myData.default[i].filePathRelative.search("moods/") !== -1) {
+                            continue
+                        }
 
-                    //判断是否为相册页面
-                    if (myData.default[i].filePathRelative.search("photos/") !== -1) {
-                        continue
+                        //判断是否为相册页面
+                        if (myData.default[i].filePathRelative.search("photos/") !== -1) {
+                            continue
+                        }
                     }
 
                     const articleMap = {

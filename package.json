@@ -8,6 +8,7 @@
     "dev": "vuepress dev docs",
     "build": "vuepress build docs",
     "deploy": "bash deploy.sh",
+    "deploy:dist": "bash deploy-dist.sh",
     "commit": "git add . && git cz",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0 && git add CHANGELOG.md",
     "push": "git push main master"
