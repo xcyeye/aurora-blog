@@ -127,7 +127,7 @@ module.exports = {
         keyword: "vuepress主题,vuepress theme,生活琐事,二次元博客,简约博客,博客主题,静态主题",
 
         //样式控制面板打开之后，休眠多长时间自动关闭面板，单位毫秒
-        slideTime: 3000,
+        slideTime: 300000,
 
         //随机一言接口
         randomSaw: "https://international.v1.hitokoto.cn/?c=b&max_length=45",
@@ -478,6 +478,15 @@ module.exports = {
 
         //默认打开网站时的毛玻璃状态，TRUE表示默认开启毛玻璃效果
         isFitter: true,
+
+        //默认的圆角，传入数字
+        defaultBorderRadius: 10,
+
+        //默认的透明度，传入0到1之间的小数，0表示全透明
+        defaultOpacity: 0,
+
+        //默认模糊度
+        defaultBlur: 1,
 
         //tag页面，标签分割符 请不要传入一个空字符串，默认值就是' ' 一个空格
         split: "~",

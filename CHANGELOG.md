@@ -1,4 +1,9 @@
-# [1.0.0](https://github.com/qsyyke/vuepress-theme-aurora/compare/v1.3.6...v1.0.0) (2021-10-18)
+# [1.0.0](https://github.com/qsyyke/vuepress-theme-aurora/compare/v1.3.6...v1.0.0) (2021-10-20)
+
+
+### Bug Fixes
+
+* **router:** fix the new page router ([959cf58](https://github.com/qsyyke/vuepress-theme-aurora/commit/959cf58b2cdd4a203eebc4324ebaf0363d15ea22))
 
 
 

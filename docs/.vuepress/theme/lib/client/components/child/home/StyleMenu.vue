@@ -58,7 +58,6 @@
           <div style="flex: 3" class="custom-bottom-span custom-common-span">
             <div class="input-range">
               <div class="input-left">
-
                 <input min="0" max="70" v-model="blur" step="0.1" type="range">
               </div>
               <div class="input-right">
@@ -137,6 +136,21 @@ export default {
       this.fontFamilyArr = this.fontArr
     }else {
       this.fontFamilyArr = this.fontArr.slice(0,this.maxFontColorArr)
+    }
+
+    console.log(this.themeProperty)
+
+    //获取主题配置默认圆角，模糊度，透明度
+    if (this.themeProperty.defaultBorderRadius !== undefined) {
+      this.borderRadius = this.themeProperty.defaultBorderRadius
+    }
+
+    if (this.themeProperty.defaultOpacity !== undefined) {
+      this.opacity = this.themeProperty.defaultOpacity
+    }
+
+    if (this.themeProperty.defaultBlur !== undefined) {
+      this.blur = this.themeProperty.defaultBlur
     }
 
     this.$store.commit('setVarFilterBlur',{
