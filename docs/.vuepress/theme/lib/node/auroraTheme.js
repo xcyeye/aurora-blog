@@ -31,8 +31,10 @@ const auroraTheme = ({ themePlugins = {}, ...localeOptions }) => {
                 path: '/about',
                 // 设置 frontmatter
                 frontmatter: {
-                    layout: 'About'
+                    layout: 'About',
+                    slug: 'aurora-about',
                 },
+                permalink: '/about',
                 // 设置 markdown 内容
                 content: "",
             })
@@ -41,8 +43,10 @@ const auroraTheme = ({ themePlugins = {}, ...localeOptions }) => {
                 path: '/link',
                 // 设置 frontmatter
                 frontmatter: {
-                    layout: 'Link'
+                    layout: 'Link',
+                    slug: 'aurora-link',
                 },
+
                 // 设置 markdown 内容
                 content: "",
             })
@@ -51,7 +55,8 @@ const auroraTheme = ({ themePlugins = {}, ...localeOptions }) => {
                 path: '/mood',
                 // 设置 frontmatter
                 frontmatter: {
-                    layout: 'Mood'
+                    layout: 'Mood',
+                    slug: 'aurora-mood',
                 },
                 // 设置 markdown 内容
                 content: "",
@@ -61,7 +66,8 @@ const auroraTheme = ({ themePlugins = {}, ...localeOptions }) => {
                 path: '/photo',
                 // 设置 frontmatter
                 frontmatter: {
-                    layout: 'PhotoFall'
+                    layout: 'PhotoFall',
+                    slug: 'aurora-photo',
                 },
                 // 设置 markdown 内容
                 content: "",
@@ -71,7 +77,8 @@ const auroraTheme = ({ themePlugins = {}, ...localeOptions }) => {
                 path: '/tag',
                 // 设置 frontmatter
                 frontmatter: {
-                    layout: 'Tag'
+                    layout: 'Tag',
+                    slug: 'aurora-tag',
                 },
                 // 设置 markdown 内容
                 content: "",

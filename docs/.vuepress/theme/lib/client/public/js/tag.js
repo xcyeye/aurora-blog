@@ -8,7 +8,6 @@ function confirmEnding(str, target) {
     return false;
 }
 
-let tags = []
 const myData = require('@temp/my-data')
 let themeProperty = null
 
@@ -48,6 +47,8 @@ module.exports = {
                         if (myData.default[i].filePathRelative.search("photos/") !== -1) {
                             continue
                         }
+                    }else {
+                        continue
                     }
 
                     const articleMap = {

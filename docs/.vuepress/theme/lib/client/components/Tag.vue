@@ -119,38 +119,21 @@ export default {
 
     this.themeProperty = useThemeData().value
 
-    // 从其他页面进入此tag页面，查看是否携带分类参数
-    let tag = this.$route.query.tag
+    const loadAllPageMap = setInterval(() => {
+      if (this.$store.state.allPageMap.length !== 0) {
+        clearInterval(loadAllPageMap)
+        this.allPageMap = Array.from(this.$store.state.allPageMap)
+        this.changePage(1)
+      }
+    },50)
 
-    if (tag !== undefined && tag !== null && tag !== "") {
-      this.tag = tag
-      setTimeout(() => {
-        let allPages = this.$store.state.allPageMap
-        new Promise((resolve,reject) => {
-          let temPage = new Set()
-          for (let i = 0; i < allPages.length; i++) {
-            let tagArr = allPages[i].tag
-            let categoriesArr = allPages[i].categories
-            for (let j = 0; j < tagArr.length; j++) {
-              let pageTag = tagArr[j]
-              if (this.tag === pageTag) {
-                temPage.add(allPages[i])
-              }
-            }
-
-            for (let j = 0; j < categoriesArr.length; j++) {
-              let pageTag = categoriesArr[j]
-              if (this.tag === pageTag) {
-                temPage.add(allPages[i])
-              }
-            }
-          }
-          resolve(temPage)
-        }).then((temPage) => {
-          this.allPageMap = Array.from(temPage)
-          this.changePage(1)
-        })
-      },200)
+    setTimeout(() => {
+      clearInterval(loadAllPageMap)
+    },3000)
+  },
+  computed: {
+    getRouteQuery() {
+      return this.$route.query
     }
   },
   mounted() {
@@ -159,6 +142,48 @@ export default {
       this.tagArr = this.$store.state.tagArr
       //this.allPageMap = this.$store.state.allPageMap
     },100)
+  },
+  watch: {
+    getRouteQuery(nV,oV) {
+      this.allPageMap = []
+      // 从其他页面进入此tag页面，查看是否携带分类参数
+      let tag = this.$route.query.tag
+      this.tag = tag
+      let loadAllPageMap = setInterval(() => {
+        if (this.$store.state.allPageMap.length !== 0) {
+          clearInterval(loadAllPageMap)
+          let allPages = this.$store.state.allPageMap
+          new Promise((resolve,reject) => {
+            let temPage = new Set()
+            for (let i = 0; i < allPages.length; i++) {
+              let tagArr = allPages[i].tag
+              let categoriesArr = allPages[i].categories
+              for (let j = 0; j < tagArr.length; j++) {
+                let pageTag = tagArr[j]
+                if (this.tag === pageTag) {
+                  temPage.add(allPages[i])
+                }
+              }
+
+              for (let j = 0; j < categoriesArr.length; j++) {
+                let pageTag = categoriesArr[j]
+                if (this.tag === pageTag) {
+                  temPage.add(allPages[i])
+                }
+              }
+            }
+            resolve(temPage)
+          }).then((temPage) => {
+            this.allPageMap = Array.from(temPage)
+            this.changePage(1)
+          })
+        }
+      },50)
+
+      setTimeout(() => {
+        clearInterval(loadAllPageMap)
+      },3000)
+    }
   },
   methods: {
     changePage(currentPageNum) {
