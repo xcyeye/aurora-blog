@@ -1,6 +1,6 @@
-# Introduce
+## Introduce
 
-
+<a target="_blank" href="http://aurora.cco.vin/" >Demo</a>
 
 > A vuepress-based animation blog theme, simple, beautiful, multi-color, multiple custom functions, providing article poster sharing, talk, photo album, comment and other features
 >
@@ -10,7 +10,7 @@
 
 
 
-如果你之前没有使用过`vuepress`，那么安装过程，可以查看<a target="_blank" href="https://v2.vuepress.vuejs.org/zh/guide/getting-started.html">官方教程</a>或者本主题<a target="_blank" href="https://aurora.cco.vin/readme/introduce.html">详细安装教程</a>
+如果你之前没有使用过`vuepress`，那么安装过程，可以查看<a target="_blank" href="https://v2.vuepress.vuejs.org/zh/guide/getting-started.html">官方教程</a>或者本主题<a target="_blank" href="/readme/introduce.md">详细安装教程</a>
 
 主题使用文档地址为 <a href="https://aurora.cco.vin/" target="_blank">**click me**</a>
 
@@ -85,19 +85,7 @@ npm i vuepress-theme-aurora
 
 ## 使用主题
 
-#### 1.首页配置
-
-在`docs/README.md`文件中，添加下面内容(`只加入下面三行，其余的内容请不要添加`)
-
-```yaml
----
-home: true
----
-```
-
-
-
-#### 2.配置config.js
+#### 1.配置config.js
 
 在`docs/.vuepress/config.js`下，添加下面内容
 
@@ -112,21 +100,6 @@ module.exports = {
             },
         ]
     ],
-    onPrepared: async (app) => {
-        const myData = app.pages.map((page) => {
-            return page;
-        });
-        await app.writeTemp(
-            "my-data.js",
-            `export default ${JSON.stringify(myData)}`
-        );
-    },
-    //build完成之后，会自动退出,如果你使用GitHub action自动部署，一定要加上onGenerated，该主题的bug，build成功后，不会自动退出，加上下面几行便可以解决
-    onGenerated: (app) => {
-        setTimeout(() => {
-            process.exit(0)
-        },3000)
-    },
     theme: 'aurora',
     themeConfig: {
         darkMode: false,
@@ -136,7 +109,7 @@ module.exports = {
 
 
 
-#### 3.使用
+#### 2.使用
 
 运行
 
