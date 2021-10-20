@@ -6,6 +6,11 @@
 * **router:** fix the new page router ([959cf58](https://github.com/qsyyke/vuepress-theme-aurora/commit/959cf58b2cdd4a203eebc4324ebaf0363d15ea22))
 
 
+### Features
+
+* **style:** add default value of page Style ([83fda79](https://github.com/qsyyke/vuepress-theme-aurora/commit/83fda7908533dced7ee148b625d69b23ce92bccc))
+
+
 
 ## [1.3.6](https://github.com/qsyyke/vuepress-theme-aurora/compare/v1.3.5...v1.3.6) (2021-10-18)
 

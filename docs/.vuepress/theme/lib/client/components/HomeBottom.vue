@@ -1,9 +1,10 @@
 <template>
-<!--  这是博客首页的下面的模板-->
+  <!--这是首页下面的文章模板-->
   <div :style="$store.state.borderRadiusStyle +
        $store.state.opacityStyle + $store.state.fontColorStyle +
        $store.state.fontFamilyStyle + $store.state.filterBlurStyle" class="home-bottom" id="home-bottom">
-    <div class="home-page-tag" id="home-page-tag">
+  <!--<div :style="getHomePageStyle" class="home-bottom" id="home-bottom">-->
+    <div class="home-page-tag" :style="getHomePageStyle" id="home-page-tag">
       <home-page-item :index="index" :theme-property="themeProperty" :key="index" v-for="(item,index) in showPageArr" :page-item="item"/>
       <!--分页条-->
       <cute-page @changePage="changePage"
@@ -36,6 +37,13 @@ export default {
       showPageArr: [],
       pageSize: 3,
       currentPage: 1,
+    }
+  },
+  computed: {
+    getHomePageStyle() {
+      if (!this.themeProperty.isHomePageFollow) {
+        return "--opacity: 1;"
+      }
     }
   },
   created() {

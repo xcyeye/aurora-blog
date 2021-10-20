@@ -138,8 +138,6 @@ export default {
       this.fontFamilyArr = this.fontArr.slice(0,this.maxFontColorArr)
     }
 
-    console.log(this.themeProperty)
-
     //获取主题配置默认圆角，模糊度，透明度
     if (this.themeProperty.defaultBorderRadius !== undefined) {
       this.borderRadius = this.themeProperty.defaultBorderRadius
