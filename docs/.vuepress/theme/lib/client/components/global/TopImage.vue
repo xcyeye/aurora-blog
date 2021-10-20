@@ -12,25 +12,25 @@
       <div class="page-top-record" id="page-top-record">
         <div class="page-record-bot-common page-record-top">
           <div class="page-record-top-left page-record-single-common">
-            <span class="home-menu-ico" style="--homeIcoCode: '\e716'"></span>&nbsp;
+            <span class="aurora-iconfont-common aurora-page-word"></span>&nbsp;
             <span class="page-record-single-desc">总字数</span>
             <span>{{getWordLength}}</span>
           </div>
           <div class="page-record-top-right page-record-single-common">
-            <span class="home-menu-ico" style="--homeIcoCode: '\e682'"></span>&nbsp;
+            <span class="aurora-iconfont-common aurora-page-time"></span>&nbsp;
             <span class="page-record-single-desc">时长</span>
             <span>{{getSugTime}}</span>
           </div>
         </div>
         <div class="page-record-bot-common page-record-center">
           <div class="page-record-center-left page-record-single-common">
-            <span class="home-menu-ico" style="--homeIcoCode: '\ecb1'"></span>&nbsp;
+            <span class="aurora-iconfont-common aurora-page-comment"></span>&nbsp;
             <span class="page-record-single-desc">评论数</span>
             <span :id="pathName" class="waline-comment-count" />
             <!--<span>{{$store.state.commentCount}}</span>-->
           </div>
           <div class="page-record-center-right page-record-single-common">
-            <span class="home-menu-ico" style="--homeIcoCode: '\e7b9'"></span>&nbsp;
+            <span class="aurora-iconfont-common aurora-page-read"></span>&nbsp;
             <span class="page-record-single-desc">总阅读数</span>
             <span :id="pathName" class="waline-visitor-count" />
             <!--<span>{{$store.state.readCount}}</span>-->
@@ -38,7 +38,7 @@
         </div>
         <div class="page-record-bot-common page-record-bot">
           <div class="page-record-bot-tag" id="page-record-bot-tag">
-            <span class="home-menu-ico" style="--homeIcoCode: '\e7b5'"></span>&nbsp;
+            <span class="aurora-iconfont-common aurora-page-tag"></span>&nbsp;
             <router-link v-for="(item,index) in tagArr" :to="goTag(item)">
               <span class="home-page-tag-span page-record-tag-span">{{item}}</span>
             </router-link>

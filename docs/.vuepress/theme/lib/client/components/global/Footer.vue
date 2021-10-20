@@ -3,7 +3,7 @@
        $store.state.opacityStyle + $store.state.fontColorStyle +
        $store.state.fontFamilyStyle + $store.state.filterBlurStyle" class="sidebar-single-enter-animate footer-layout-center" v-if="!isHome">
     <div v-if="isShowFooter"
-         class="footer" id="article-page">
+         class="footer box" id="footer">
       <FooterItem v-for="item in footerArr" :item="item"></FooterItem>
       <div class="footer-item" v-if="isShowRunTime" id="footer-item">
         <span >{{runTime}}</span>

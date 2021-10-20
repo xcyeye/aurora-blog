@@ -8,14 +8,14 @@
 
     <div class="welcome-parent" id="welcome-parent">
       <div @click="clickSet" :class="customClass" :style="getColorStyle" class="m-4 p-4 f4 color-shadow-small bg-gray-800-mktg rounded-2 signup-content-container welcome" id="welcome">
-        <span @click="clickSetColor" class="cancel home-menu-ico" style="--homeIcoCode: '\e68f'"  id="cancel"></span>
+        <span @click="clickSetColor" class="cancel aurora-iconfont-common aurora-style-cancel" id="cancel"></span>
         <h1 class="common-style" id="sr-only-h2">Welcome to my blog! <br>Let's begin the adventure</h1>
         <div class="custom-top custom-common">
           <div class="custom-top-span custom-common-span">
-            <span @click="setImg" class="home-menu-ico home-welcome-custom-icon" style="--homeIcoCode: '\e61b'"></span>&nbsp;
+            <span @click="setImg" class="aurora-iconfont-common aurora-style-img home-welcome-custom-icon"></span>&nbsp;
           </div>
           <div class="custom-top-span custom-common-span">
-            <span @click="setIsFitter" class="home-menu-ico home-welcome-custom-icon" style="--homeIcoCode: '\e617'"></span>&nbsp;
+            <span @click="setIsFitter" class="aurora-iconfont-common aurora-style-blur home-welcome-custom-icon"></span>&nbsp;
           </div>
         </div>
 

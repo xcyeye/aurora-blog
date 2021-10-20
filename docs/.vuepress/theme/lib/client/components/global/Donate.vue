@@ -1,5 +1,5 @@
 <template>
-  <div :style="$store.state.borderRadiusStyle + $store.state.opacityStyle" class="donate" id="donate">
+  <div :style="$store.state.borderRadiusStyle + $store.state.opacityStyle" class="donate box-common" id="donate">
     <div class="donate-top" id="donate-top">
       <button @click="clickDonate">赞赏</button>
       <button @click="clickDonateList" >列表</button>

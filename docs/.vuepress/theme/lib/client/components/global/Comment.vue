@@ -1,7 +1,7 @@
 <template>
   <div id="control-comment" v-if="showComment">
     <div class="mobile-record">
-      <div class="page" id="article-page" :style="$store.state.borderRadiusStyle + $store.state.opacityStyle">
+      <div class="page box" :style="$store.state.borderRadiusStyle + $store.state.opacityStyle">
         <div id="waline" class="vcomment-bottom theme-default-content"></div>
       </div>
     </div>

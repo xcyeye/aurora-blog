@@ -10,8 +10,12 @@
     <template #center2>
       <div class="about">
         <div :style="$store.state.borderRadiusStyle + $store.state.opacityStyle"
-             v-for="(item) in themeProperty.about" id="article-page" class="introduce">
-          <h2 class="center-common about-center" id="about-title">{{item.title}}</h2>
+             v-for="(item) in themeProperty.about" class="introduce box">
+          <div class="about-title">
+            <div class="about-title-single">
+              <span class="about-title-single-value">{{item.title}}</span>
+            </div>
+          </div>
           <div v-if="item.showTag" id="about-tag" class="about-tag">
             <div class="tag-div" id="tag-div" :key="tagIndex" v-for="(tag,tagIndex) in item.tag">
               <TagItem

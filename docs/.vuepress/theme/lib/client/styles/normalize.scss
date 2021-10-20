@@ -35,14 +35,15 @@ kbd {
   padding: 0 0.15em;
 }
 
+//rgba(185, 250, 248, 0.35)
 code {
   font-family: var(--font-family-code);
-  color: #fdc5f5;
+  color: #8186d5;
   padding: 0.25rem 0.5rem;
   margin: 0;
-  font-weight: bold;
+  font-weight: 650;
   font-size: 0.85em;
-  background-color: var(--c-bg-light);
+  background-color: rgba(185, 250, 248, 0.24);
   border-radius: 3px;
   overflow-wrap: break-word;
   //overflow-x: scroll;
@@ -51,7 +52,7 @@ code {
 blockquote {
   font-size: 1rem;
   color: var(--c-text-quote);
-  border-left: 0.2rem solid var(--c-border-dark);
+  border-left: 0.2rem solid rgba(66, 165, 245, 0.57);
   margin: 1rem 0;
   padding: 0.25rem 0 0.25rem 1rem;
 

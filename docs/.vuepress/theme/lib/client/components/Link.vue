@@ -5,7 +5,7 @@
     <template #center1>
       <div class="link">
         <div :style="$store.state.borderRadiusStyle + $store.state.opacityStyle"
-             class="article-page link-common" id="c-link">
+             class="box link-common" id="c-link">
 <!--          <h2 class="link-center center-common">我的站点</h2>
           <div class="link-self">
             <a target="_blank" class="link-self-item" :href="siteInformation.url">
@@ -28,7 +28,12 @@
           </div>-->
 
 
-          <h2 class="link-center center-common">我的朋友</h2>
+          <!--<h2 class="link-center center-common">我的朋友</h2>-->
+          <div class="about-title link-title">
+            <div class="about-title-single">
+              <span class="about-title-single-value">我的朋友</span>
+            </div>
+          </div>
           <LinkItem
               :theme-property="themeProperty"
               v-for="(item,index) in friendLinks" :item="item"/>

@@ -84,7 +84,7 @@
             <span :class="{changePageActive: changePageIndex === '1'}" index="1" @click="changePage">文章目录</span>
           </div>
           <div :style="getSinglePageStyle" class="latest-page change-page-common">
-            <span v-if="!isShowCatalog" class="home-menu-ico" style="--homeIcoCode: '\e636'"></span>
+            <span v-if="!isShowCatalog" class="aurora-iconfont-common aurora-sidebar-newest-page"></span>
             <span :style="setChangePageStyle" :class="{changePageActive: changePageIndex === '2'}" @click="changePage" index="2">最新文章</span>
           </div>
         </div>
@@ -110,7 +110,7 @@
       <!--公告-->
       <div :id="customId" v-if="getShowMessage" class="sidebar-single-enter-animate sidebar-single-common">
         <div class="sidebar-page">
-          <span class="home-menu-ico home-menu-message-ico" style="--homeIcoCode: '\e61c'"></span>
+          <span class="aurora-iconfont-common aurora-sidebar-message"></span>
           <span>公告</span>
         </div>
         <div class="sidebar-message">
@@ -125,7 +125,7 @@
       <!--标签-->
       <div :id="customId" v-if="showTagCloud" class="sidebar-single-enter-animate sidebar-single-common">
         <div v-if="!isMobileSidebar" id="home-tag-sidebar" class="sidebar-page">
-          <span class="home-menu-ico" style="--homeIcoCode: '\e7b5'"></span>
+          <span class="aurora-iconfont-common aurora-sidebar-tag"></span>
           <span>标签</span>
         </div>
 
@@ -154,7 +154,7 @@
       <!--站点-->
       <div :id="customId" v-if="showSite" id="sidebar-single-common" class="sidebar-single-enter-animate sidebar-single-common">
         <div class="sidebar-page">
-          <span class="home-menu-ico" style="--homeIcoCode: '\e6f1'"></span>
+          <span class="aurora-iconfont-common aurora-sidebar-site"></span>
           <span>site</span>
         </div>
 

@@ -60,7 +60,7 @@
   <div :sd="getPicture" class="poster-img" style="display: block" id="poster-img">
     <div class="poster-img-child" style="display: block">
       <div class="poster-cancel">
-        <span class="home-menu-ico" style="--homeIcoCode: '\e68f';cursor: pointer" @click="cancelShade"></span>&nbsp;
+        <span class="aurora-iconfont-common aurora-poster-cancel" style="cursor: pointer" @click="cancelShade"></span>&nbsp;
       </div>
       <div class="share-div">
         <img id="share-img" class="medium-zoom-image"  @click="openImg" :src="app.$store.state.postImgHref" alt="">

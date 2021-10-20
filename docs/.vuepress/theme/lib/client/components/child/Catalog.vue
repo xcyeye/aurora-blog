@@ -12,7 +12,7 @@
           </router-link>
         </div>
         <div @click="changeCurrentLevel1Active(event,itemLevel1Index)" class="catalog-page-spread">
-          <span :style="getSpreadClass(itemLevel1Index)" class="home-menu-ico"></span>
+          <span :class="getSpreadClass(itemLevel1Index)" class="aurora-iconfont-common"></span>
         </div>
       </div>
 
@@ -121,12 +121,12 @@ export default {
       return (index) => {
         if (this.catalogOpenStatus.index === index) {
           if (this.catalogOpenStatus.openStatus) {
-            return "--homeIcoCode: '\\e631'"
+            return "aurora-sidebar-catalog-spread-open"
           }else {
-            return "--homeIcoCode: '\\e630'"
+            return "aurora-sidebar-catalog-spread-off"
           }
         }else {
-          return "--homeIcoCode: '\\e630'"
+          return "aurora-sidebar-catalog-spread-off"
         }
       }
     }

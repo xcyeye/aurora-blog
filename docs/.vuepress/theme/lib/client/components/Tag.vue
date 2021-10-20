@@ -12,9 +12,9 @@
                 </div>
                 <div class="tag-select-icomoon">
                   <span :class="{tagCloudControl: tagIndex === 0}" @click="showTagCloud(event,0)"
-                        style="--homeIcoCode: '\e93d'" class="home-menu-ico"></span>
+                        class="aurora-iconfont-common aurora-tag-left"></span>
                   <span :class="{tagListControl: tagIndex === 1}" @click="showTagCloud(event,1)"
-                        style="--homeIcoCode: '\e941'" class="home-menu-ico"></span>
+                        class="aurora-iconfont-common aurora-tag-right"></span>
                 </div>
               </div>
 

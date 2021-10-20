@@ -2,15 +2,15 @@
   <div class="">
     <div class="change-page">
       <div class="catalog-page change-page-common">
-        <span style="--homeIcoCode:'\e60f'" class="home-menu-ico"></span>
+        <span class="aurora-iconfont-common aurora-sidebar-menu"></span>
         <span :class="{changePageActive: changePageIndex === 1}" @click="changePage(event,1)">Menu</span>
       </div>
       <div class="latest-page change-page-common">
-        <span style="--homeIcoCode:'\e60b'" class="home-menu-ico"></span>
+        <span class="aurora-iconfont-common aurora-sidebar-nav"></span>
         <span :class="{changePageActive: changePageIndex === 2}" @click="changePage(event,2)">导航</span>
       </div>
       <div v-if="showMobileCatalogStatus && !frontmatter.home" class="latest-page change-page-common">
-        <span style="--homeIcoCode:'\e941'" class="home-menu-ico"></span>
+        <span class="aurora-iconfont-common aurora-sidebar-catalog"></span>
         <span :class="{changePageActive: changePageIndex === 3}" @click="changePage(event,3)">目录</span>
       </div>
     </div>
@@ -21,7 +21,7 @@
       <div>
         <div class="sidebar-menu-item">
           <div class="menu-item-left">
-            <span :style="setHomeIco('/aurora')" class="home-menu-ico"></span>
+            <span class="aurora-iconfont-common aurora-sidebar-nav-home"></span>
           </div>
           <div class="menu-item-right">
             <router-link to="/">
@@ -34,7 +34,7 @@
       <div v-for="(menuItem,index) in navbarLinks">
         <div v-if="menuItem.link" class="sidebar-menu-item">
           <div class="menu-item-left">
-            <span :style="setHomeIco(menuItem.link)" class="home-menu-ico"></span>
+            <span :style="setHomeNavIco(menuItem.link)" :class="setHomeClass(menuItem.link)" class="aurora-iconfont-common"></span>
           </div>
           <div class="menu-item-right">
             <a :key="index" :href="menuItem.link">
@@ -276,34 +276,54 @@ export default {
     },
   },
   computed: {
-    setHomeIco() {
+    setHomeNavIco() {
       return (href) => {
-        let fontIcoCode = "--homeIcoCode: '\\"
-        if ("/aurora".search(href) !== -1) {
-          return fontIcoCode + 'e68d' + "'"
-        }
         if ("/link".search(href) !== -1) {
-          return fontIcoCode + 'e63d' + "'"
+          return ""
         }
         if ("/tag".search(href) !== -1) {
-          return fontIcoCode + 'e7b6' + "'"
+          return ""
         }
         if ("/mood".search(href) !== -1) {
-          return fontIcoCode + 'e63b' + "'"
+          return ""
         }
         if ("/photo".search(href) !== -1) {
-          return fontIcoCode + 'e875' + "'"
+          return ""
         }
         if ("/about".search(href) !== -1) {
-          return fontIcoCode + 'e618' + "'"
+          return ""
         }
         if (href !== undefined && href.search("github") !== -1) {
-          return fontIcoCode + 'e885' + "'"
+          return ""
         }
 
         // 如果没有，那么使用默认的
         let icoArr = ['e62e','e848','e9f7','e8e4','e701','e7ad','e635','e60a','e618','e65c','e675','e615','e616','e617','e684','e7b9','e93d','e60c','e66f']
-        return "--homeIcoCode: '\\" + icoArr[this.getRandomInt(0,icoArr.length)] + "'"
+        return "--aurora-sidebar-nav-other-ico: '\\" + icoArr[this.getRandomInt(0,icoArr.length)] + "'"
+      }
+    },
+    setHomeClass() {
+      return (href) => {
+        if ("/link".search(href) !== -1) {
+          return "aurora-sidebar-nav-link"
+        }
+        if ("/tag".search(href) !== -1) {
+          return "aurora-sidebar-nav-tag"
+        }
+        if ("/mood".search(href) !== -1) {
+          return "aurora-sidebar-nav-mood"
+        }
+        if ("/photo".search(href) !== -1) {
+          return "aurora-sidebar-nav-photo"
+        }
+        if ("/about".search(href) !== -1) {
+          return "aurora-sidebar-nav-about"
+        }
+        if (href !== undefined && href.search("github") !== -1) {
+          return "aurora-sidebar-nav-github"
+        }
+
+        return "aurora-sidebar-nav-other"
       }
     },
     getMenuIco() {

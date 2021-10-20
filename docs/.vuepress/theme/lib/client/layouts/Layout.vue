@@ -145,25 +145,6 @@ export default defineComponent({
     }
   },
   methods: {
-    /*handleScroll(e) {
-      let scrollTop = $(document).scrollTop()
-      if (document.body.clientWidth < 500) {
-        return
-      }
-      if (scrollTop >= 300 && !this.isShow) {
-        console.log("等于300")
-        $("#c-sidebar").show(500)
-        // $("#c-sidebar").css("display",'block')
-        this.isShow = true
-      }else {
-        if (scrollTop < 300) {
-          //小于300，隐藏
-          $("#c-sidebar").hide(500)
-          // $("#c-sidebar").css("display",'none')
-          this.isShow = false
-        }
-      }
-    },*/
     getHeadLine(title) {
       this.headLine = title
     }

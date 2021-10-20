@@ -16,24 +16,24 @@
       </div>
       <div class="home-page-tag-bottom">
         <div v-if="pageItem.frontmatter.stick" class="home-page-stick">
-          <span class="home-menu-ico" style="--homeIcoCode: '\e657';color:red;"></span>
-          <span style="color:red;">置顶</span>
+          <span class="aurora-stick aurora-iconfont-common"></span>
+          <span class="aurora-stick-label">置顶</span>
         </div>
         <div class="home-page-info">
           <div class="home-page-info-time">
-            <span class="home-menu-ico" style="--homeIcoCode: '\e662';"></span>
+            <span class="aurora-iconfont-common aurora-home-time"></span>
             <span>{{getTime(pageItem)}}</span>
           </div>
         </div>
         <div class="home-page-tag-tag-desc" id="home-page-tag-tag-desc">
           <div>
-            <span class="home-menu-ico" style="--homeIcoCode: '\e7b5';"></span>
+            <span class="aurora-iconfont-common aurora-home-tag"></span>
             <span class="home-page-tag-span" v-for="item in getPageTag(pageItem)">{{item}}</span>
           </div>
         </div>
         <div class="home-page-tag-enter">
           <div @click="goRead(event,pageItem.articleUrl)">
-            <span class="home-menu-ico" style="--homeIcoCode: '\e62e';"></span>
+            <span class="aurora-iconfont-common aurora-home-read"></span>
             <span class="home-page-read">阅读</span>
           </div>
         </div>
