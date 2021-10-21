@@ -478,15 +478,6 @@ export default defineComponent({
 <style lang="css">
 /* 从调色板中引入变量 */
 @import '@vuepress/plugin-palette/palette';
-
-:root {
-  --test-color: red;
-}
-
-/* 在你的样式中使用变量 */
-.palette-title {
-  color: var(--test-color);
-}
 </style>
 
 <style lang="css" src="@vuepress/plugin-palette/style"></style>

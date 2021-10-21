@@ -143,7 +143,7 @@ const auroraTheme = ({ themePlugins = {}, ...localeOptions }) => {
             ['@vuepress/git', utils_2.resolveGitPluginOptions(themePlugins, localeOptions)],
             ['@vuepress/medium-zoom', utils_2.resolveMediumZoomPluginOptions(themePlugins)],
             ['@vuepress/nprogress', themePlugins.nprogress !== false],
-            ['@vuepress/palette', { preset: 'sass' }],
+            ['@vuepress/palette', { preset: 'css' }],
             ['@vuepress/prismjs', themePlugins.prismjs !== false],
             ['@vuepress/theme-data', { themeData: localeOptions }],
         ],
