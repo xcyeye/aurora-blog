@@ -50,12 +50,12 @@
       <!--侧边栏友情链接-->
       <div :id="customId" v-if="getShowSidebarLink" class="sidebar-single-common">
         <div class="sidebar-link">
-          <a :href="item.url" target="_blank" v-for="item in friendLinks">
+          <a :href="item.url" target="_blank" :key="index" v-for="(item,index) in friendLinks">
             <div class="sidebar-link-single">
               <div class="sidebar-link-avatar">
                 <img :src="item.logo" alt="">
               </div>
-              <div class="sidebar-link-title">
+              <div :dat="item.title" class="sidebar-link-title">
                 <span>{{item.title}}</span>
               </div>
             </div>
@@ -310,7 +310,10 @@ export default {
     }
 
     if (this.themeProperty.friendLinks !== undefined && this.themeProperty.friendLinks != null) {
-      this.friendLinks = this.shuffle(this.themeProperty.friendLinks)
+      this.shuffleArray(this.themeProperty.friendLinks).then((arr) => {
+        this.friendLinks = arr
+      })
+
     }
 
     let socials = this.themeProperty.socials
@@ -417,7 +420,7 @@ export default {
     setTagItemStyle() {
       return (index) => {
         let color = ''
-        if (this.themeProperty.randomColor !== undefined || this.themeProperty.randomColor != null) {
+        if (this.themeProperty.randomColor !== undefined) {
           color = this.themeProperty.randomColor[
               this.getRandomInt(0,this.themeProperty.randomColor.length -1)]
         }else {
@@ -431,17 +434,26 @@ export default {
     }
   },
   methods: {
+    shuffleArray(array) {
+      return new Promise((resolve,reject) => {
+        for (var i = array.length - 1; i > 0; i--) {
+          var j = Math.floor(Math.random() * (i + 1));
+          var temp = array[i];
+          array[i] = array[j];
+          array[j] = temp;
+        }
+        resolve(array)
+      })
+    },
     shuffle(arr){
-      let l = arr.length
-      let index, temp
-      while(l>0){
-        index = Math.floor(Math.random()*l)
-        temp = arr[l-1]
-        arr[l-1] = arr[index]
-        arr[index] = temp
-        l--
+      let _arr = arr.slice()
+      for (let i = 0; i < _arr.length; i++) {
+        let j = this.getRandomInt(0, i)
+        let t = _arr[i]
+        _arr[i] = _arr[j]
+        _arr[j] = t
       }
-      return arr
+      return _arr
     },
     changePage(e) {
       this.changePageIndex = e.target.getAttribute("index")

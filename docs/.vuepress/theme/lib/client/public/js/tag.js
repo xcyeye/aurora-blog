@@ -67,7 +67,6 @@ module.exports = {
                     }
 
                     articleMap.data = myData.default[i].data
-
                     let createPageDate = myData.default[i].data.frontmatter.date
                     let commitPageDate = myData.default[i].data.git.updatedTime
 

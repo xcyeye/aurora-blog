@@ -1,5 +1,5 @@
 <template>
-  <div :style="setBackgroundStyle(888)" id="tag-page" class="tag-page">
+  <div :style="setBackgroundStyle(getRandomIntValue(1,1000))" id="tag-page" class="tag-page">
     <div class="tag-page-item">
       <div style="display: none" v-html="pageMap.contentRendered" :class="'tagItemContent' + index"></div>
       <div id="tag-page-left" :style="setBackgroundImg" class="tag-page-left tag-page-item-common"></div>
@@ -38,6 +38,13 @@ export default {
       let random = (+new Date()) / this.getRandomInt(0,10000)
       return "background-image: url(https://api.iro.tw/webp_pc.php?time=" + random + ");"
     },
+    getRandomIntValue() {
+      return (min, max) => {
+        min = Math.ceil(min);
+        max = Math.floor(max);
+        return Math.floor(Math.random() * (max - min)) + min;
+      }
+    },
     setBackgroundStyle() {
       return (index) => {
         let color = ''
@@ -51,8 +58,7 @@ export default {
 
         let hexToRgb = this.hexToRgb(color);
         let style = "background-color: rgba(" + hexToRgb.r + "," +
-            hexToRgb.g + "," + hexToRgb.b + "," +
-        (this.$store.state.varOpacity * 1.2) + ");"
+            hexToRgb.g + "," + hexToRgb.b + ", .45);"
         return style
       }
     },

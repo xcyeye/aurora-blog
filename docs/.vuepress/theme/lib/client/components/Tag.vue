@@ -61,9 +61,6 @@
             <div class="tag-bottom">
               <TagPage v-for="(item,index) in showPageArr"
                        :page-map="item"
-                       :key="index"
-                       :index="index"
-                       :style="$store.state.opacityStyle"
                        :theme-property="themeProperty"
               />
             </div>
@@ -118,7 +115,6 @@ export default {
     }
 
     this.themeProperty = useThemeData().value
-
     const loadAllPageMap = setInterval(() => {
       if (this.$store.state.allPageMap.length !== 0) {
         clearInterval(loadAllPageMap)
@@ -129,7 +125,7 @@ export default {
 
     setTimeout(() => {
       clearInterval(loadAllPageMap)
-    },3000)
+    },10000)
   },
   computed: {
     getRouteQuery() {
@@ -145,6 +141,9 @@ export default {
   },
   watch: {
     getRouteQuery(nV,oV) {
+      if (this.$route.query.tag === undefined) {
+        return
+      }
       this.allPageMap = []
       // 从其他页面进入此tag页面，查看是否携带分类参数
       let tag = this.$route.query.tag
@@ -201,7 +200,6 @@ export default {
       },30)
     },
     clickCloudTag(tagItem) {
-
       //当前鼠标点击的标签
       this.tag = tagItem.tagItem
       let allPages = this.$store.state.allPageMap

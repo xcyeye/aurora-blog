@@ -24,6 +24,7 @@ import PhotoFall from "./components/PhotoFall";
 import AddMood from "./components/child/AddMood";
 import HomeSidebar from "./components/child/side/HomeSidebar";
 import HomeBottom from "./components/HomeBottom";
+import AuroraGlobal from "./components/global/AuroraGlobal";
 
 import './styles/index.scss';
 import './styles/photo.scss'
@@ -48,6 +49,7 @@ export default defineClientAppEnhance(({ app, router }) => {
     app.component("Mood",Mood)
     app.component("PhotoFall",PhotoFall)
     app.component("Tag",Tag)
+    //app.component("AuroraGlobal",AuroraGlobal)
 
     //路由
     // @ts-ignore

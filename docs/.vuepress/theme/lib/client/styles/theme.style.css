@@ -3926,6 +3926,8 @@ body::-webkit-scrollbar-thumb {
     background-size: cover;
     background-position: center;
 }
+
+
 .top-mask:before {
     position: absolute;
     right: 0;
