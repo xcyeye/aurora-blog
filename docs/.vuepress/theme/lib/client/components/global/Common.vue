@@ -97,7 +97,6 @@ import MobileSidebar from "../child/side/MobileSidebar.vue";
 import SocialSpin from '../SocialSpin'
 
 //配置导入
-const network = require('../../public/js/network.js')
 const tag = require('../../public/js/tag')
 import {computed, defineComponent, Transition,} from 'vue'
 import {usePageData, usePageFrontmatter} from '@vuepress/client'
@@ -206,15 +205,6 @@ export default defineComponent({
     }
   },
   computed: {
-    getDesc() {
-      return (index,desc) => {
-        if (index === 0) {
-          //是需要打印的页面
-          return this.obj.output
-        }
-        return desc
-      }
-    },
     getIndex() {
       return (index,length)=> {
         if (index === 0 && length === 1) {
@@ -242,10 +232,6 @@ export default defineComponent({
     }
   },
   methods: {
-    initTyped(input, fn, hooks) {
-      const obj = this.obj
-      return new EasyTyper(obj, input, fn, hooks)
-    },
     getRandomInt(min, max) {
       min = Math.ceil(min);
       max = Math.floor(max);
@@ -380,12 +366,6 @@ export default defineComponent({
   mounted() {
     if (document.documentElement.clientWidth < 719) {
       this.sidebarRowVar = 6
-    }
-
-    try {
-      this.initTyped(this.aboutOption[0].describe[0])
-    }catch (e) {
-      this.initTyped('默认设置 Aurora')
     }
 
     //手机端壁纸

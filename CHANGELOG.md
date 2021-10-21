@@ -1,4 +1,32 @@
-# [1.0.0](https://github.com/qsyyke/vuepress-theme-aurora/compare/v1.3.6...v1.0.0) (2021-10-20)
+# [1.0.0](https://github.com/qsyyke/vuepress-theme-aurora/compare/v1.4.1...v1.0.0) (2021-10-21)
+
+
+### Bug Fixes
+
+* **custom:** provide a new global component ([d2f743c](https://github.com/qsyyke/vuepress-theme-aurora/commit/d2f743c5c36dbed00df41305c455648213ead02e))
+* **link,tag:** fix home page friend link and tag page ([80db80d](https://github.com/qsyyke/vuepress-theme-aurora/commit/80db80ddd892e65bea351730dcb1d626eca559f6))
+
+
+
+## [1.4.1](https://github.com/qsyyke/vuepress-theme-aurora/compare/v1.4.0...v1.4.1) (2021-10-21)
+
+
+### Bug Fixes
+
+* fix catalog ([d1fba58](https://github.com/qsyyke/vuepress-theme-aurora/commit/d1fba58ae0e4deca8ee0993acecd0bbc2589e6ba))
+
+
+
+# [1.4.0](https://github.com/qsyyke/vuepress-theme-aurora/compare/v1.3.7...v1.4.0) (2021-10-21)
+
+
+### Bug Fixes
+
+* **palette:** fix palette default config ([3bf0df8](https://github.com/qsyyke/vuepress-theme-aurora/commit/3bf0df86008720187100942a4a96e8837c1171bb))
+
+
+
+## [1.3.7](https://github.com/qsyyke/vuepress-theme-aurora/compare/v1.3.6...v1.3.7) (2021-10-20)
 
 
 ### Bug Fixes

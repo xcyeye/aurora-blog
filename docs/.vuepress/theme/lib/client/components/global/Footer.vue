@@ -14,6 +14,7 @@
 
 <script>
 import FooterItem from "../child/FooterItem"
+import {useThemeData} from "../../composables";
 export default {
   name: "Footer",
   components: {
@@ -25,7 +26,8 @@ export default {
       isShowRunTime: true,
       startRunTime: '8/7/2021 12:22:00',
       runTime: '',
-      prefixRuntime: '小破站已运行'
+      prefixRuntime: '小破站已运行',
+      themeProperty: '',
     }
   },
   props: {
@@ -35,7 +37,6 @@ export default {
         return true
       }
     },
-    themeProperty: '',
     isHome: {
       type: Boolean,
       default() {
@@ -44,6 +45,7 @@ export default {
     }
   },
   created() {
+    this.themeProperty = useThemeData().value
     if (this.themeProperty.footer !== undefined) {
       this.footerArr = this.themeProperty.footer
     }else {

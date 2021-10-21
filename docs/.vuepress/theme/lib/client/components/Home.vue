@@ -75,6 +75,12 @@ export default defineComponent({
     }
   },
   props: {
+    showPrintText: {
+      type: Boolean,
+      default() {
+        return false
+      }
+    },
     //电脑端最大社交长度为19 手机端首页最大为7个
     socialsArr: {
       type: Array,

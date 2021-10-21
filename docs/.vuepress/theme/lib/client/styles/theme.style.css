@@ -88,6 +88,10 @@ a[data-v-d8ec41bc] {
     font-weight: 550;
 }
 
+.medium-zoom-content ul li {
+
+}
+
 .medium-zoom-content ul li:before {
     content: "";
     display: inline-block;

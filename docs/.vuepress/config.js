@@ -18,10 +18,12 @@ module.exports = {
         {
             id: 'G-2MH1NBN9ER',
         },
-        [
-            '@vuepress/plugin-palette',
-            { preset: 'css' },
-        ],
+        '@vuepress/register-components',
+        {
+            components: {
+                FooBar: path.resolve(__dirname, './components/chu.vue'),
+            },
+        },
     ],
     //设置head 一定要加入<script src="https://at.alicdn.com/t/font_2849934_v6y652peian.js"></script>项配置，否则一些图标不能正常显示
     head: [

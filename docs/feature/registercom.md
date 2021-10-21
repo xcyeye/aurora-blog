@@ -1,3 +1,158 @@
+# 注册组件
+
+::: tip
+
+在v1.4.2版本中，你可以自己增加新的页面，通过url进行访问，使用方法如下
+
+:::
+
+
+
+## 前言
+
+在v1.4.2版本中，主题新增了一个全局组件，在这个组件中，默认只保留了导航栏，手机端侧边栏，样式菜单，背景图片，并且你可以通过传入`props`属性，不展示他们
+
+默认的内容如下
+
+<img src="https://ooszy.cco.vin/img/blog-note/image-20211021224708201.png?x-oss-process=style/pictureProcess1" alt="image-20211021224708201" style="zoom:50%;" />
+
+
+
+或者你什么都不要，完全按照你想要的进行布局
+
+<img src="https://ooszy.cco.vin/img/blog-note/image-20211021224804290.png?x-oss-process=style/pictureProcess1" alt="image-20211021224804290" style="zoom:50%;" />
+
+
+
+## 使用
+
+使用步骤
+
+- 在`docs/.vuepress`文件夹内，任意位置，创建一个`.vue`文件，推荐创建一个单独文件夹，用来保存这些组件
+
+- 在`docs/.vuepress`目录下，新建`clientAppEnhance.js`文件，文件的内容如下
+
+  ```js
+  import { defineClientAppEnhance } from '@vuepress/client'
+  
+  export default defineClientAppEnhance(({ app, router, siteData }) => {
+    // ...
+  })
+  ```
+
+  ::: tip
+
+  - `app` 是由 [createApp在新窗口打开](https://v3.cn.vuejs.org/api/application-api.html) 创建的 Vue 应用实例。
+  - `router` 是由 [createRouter在新窗口打开](https://next.router.vuejs.org/zh/api/index.html#createrouter) 创建的路由实例。
+  - `siteData` 是一个根据用户配置生成的对象，包含 [base](https://v2.vuepress.vuejs.org/zh/reference/config.html#base), [lang](https://v2.vuepress.vuejs.org/zh/reference/config.html#lang), [title](https://v2.vuepress.vuejs.org/zh/reference/config.html#title), [description](https://v2.vuepress.vuejs.org/zh/reference/config.html#description), [head](https://v2.vuepress.vuejs.org/zh/reference/config.html#head) 和 [locales](https://v2.vuepress.vuejs.org/zh/reference/config.html#locales)。
+
+  Client App Enhance 会在客户端应用创建后被调用，它可以为 Vue 应用添加任意功能。
+
+  详细介绍，可以查看官方说明https://v2.vuepress.vuejs.org/zh/advanced/cookbook/usage-of-client-app-enhance.html
+
+​		:::
+
+- 你现在就可以在此`clientAppEnhance.js`文件中，注册组件，或者是进行其他的操作，在此文件中，如果你在此文件中，注册了一个组件，那么这个组件是一个全局组件，你可以在`.md`文件中，直接使用该组件(`vuepress框架，会先将.md文件解析成.vue文件，然后再是.html`)
+
+- 在`docs/`目录下，新建一个`.md`，在此文件中，写入下面frontmatter
+
+  ```md
+  ---
+  layout: Aurora #你刚才注册的组件 Aurora.vue
+  ---
+  ```
+
+  > 如果你在`.md`文件中，写入上面frontmatter，那么这个md文件，将使用`Aurora`作为布局，尽管此md文件中，还存在其他的内容，都会被清空
+
+- 然后现在你就可以在`Aurora.vue`中，进行任意的布局了
+
+
+
+
+
+## 案例
+
+下面是一个简单的案例
+
+> `创建组件`
+
+```vue
+<template>
+<!--docs/.vuepress/components/Aurora.vue-->
+  <aurora-global :show-bg="true" :show-style-menu="true" :show-navbar="true">
+    <template #top>
+      <h1 style="margin: 0 auto">注册组件测试</h1>
+    </template>
+
+    <template #center>
+      <div style="width: 30rem;height: 30rem;background: plum;margin: 0 auto"></div>
+    </template>
+
+    <template #bottom>
+      <aurora-footer/>
+    </template>
+  </aurora-global>
+</template>
+
+<script>
+export default {
+  name: "Mycom"
+}
+</script>
+
+<style scoped>
+
+</style>
+```
+
+
+
+> 注册全局组件
+
+```js
+//clientAppEnhance.js
+
+import { h } from 'vue';
+import { defineClientAppEnhance } from '@vuepress/client';
+import Aurora from './components/Aurora'
+export default defineClientAppEnhance(({ app, router }) => {
+    app.component("Aurora",Aurora)
+});
+```
+
+
+
+> 新建`docs/register.md`文件，并指定`layout`
+
+```md
+---
+layout: Aurora
+---
+```
+
+
+
+因为`docs/`目录下的md文件，会自动解析成`.html`，你可以直接在浏览器中进行访问，`localhost:8080/register.html`
+
+结果
+
+![image-20211021230635363](https://ooszy.cco.vin/img/blog-note/image-20211021230635363.png?x-oss-process=style/pictureProcess1)
+
+
+
+::: tip
+
+接下来，其他的事情，就交给你进行创造了
+
+::: 
+
+
+
+## AuroraGlobal.vue
+
+此组件是一个全局组件，组件的内容如下
+
+```vue
 <template>
   <div class="common"
        :style="$store.state.borderRadiusStyle +
@@ -310,3 +465,59 @@ export default defineComponent({
 </style>
 
 <style lang="css" src="@vuepress/plugin-palette/style"></style>
+```
+
+
+
+
+
+### props
+
+该组件的`props`有
+
+```ts
+ props: {
+    showBg: {
+      type: Boolean,
+      default() {
+        return true
+      }
+    },
+    showStyleMenu: {
+      type: Boolean,
+      default() {
+        return true
+      }
+    },
+    showNavbar: {
+      type: Boolean,
+      default() {
+        return true
+      }
+    },
+    showMobileSidebar: {
+      type: Boolean,
+      default() {
+        return true
+      }
+    }
+  },
+```
+
+
+
+- showBg
+
+  > 是否显示背景图片
+
+- showStyleMenu
+
+  > 是否显示样式菜单
+
+- showNavbar
+
+  > 是否显示导航
+
+- showMobileSidebar
+
+  > 是否显示手机端侧边栏

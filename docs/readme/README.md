@@ -16,7 +16,6 @@ date: 2021/10/15
 <a href="https://www.npmjs.com/package/vuepress-theme-aurora"><img alt="npm" src="https://img.shields.io/npm/v/vuepress-theme-aurora"></a>![npm](https://img.shields.io/npm/dw/vuepress-theme-aurora)<a href="https://github.com/qsyyke/vuepress-theme-aurora"><img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/qsyyke/vuepress-theme-aurora?style=social"></a>
 
 
-
 如果你之前没有使用过`vuepress`，那么安装过程，可以查看<a target="_blank" href="https://v2.vuepress.vuejs.org/zh/guide/getting-started.html">官方教程</a>或者本主题<a target="_blank" href="/readme/introduce.md">详细安装教程</a>
 
 主题使用文档地址为 <a href="https://aurora.cco.vin/" target="_blank">**click me**</a>

@@ -58,6 +58,14 @@ export default defineComponent({
     Page,
     Transition,
   },
+  props: {
+    showPrintTextValue: {
+      type: Boolean,
+      default() {
+        return false
+      }
+    },
+  },
   setup() {
     const page = usePageData()
     const frontmatter = usePageFrontmatter<DefaultThemePageFrontmatter>()
@@ -145,6 +153,9 @@ export default defineComponent({
     }
   },
   methods: {
+    showPrintText(value) {
+      console.log(value)
+    },
     getHeadLine(title) {
       this.headLine = title
     }

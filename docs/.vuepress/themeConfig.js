@@ -40,7 +40,7 @@ module.exports = {
         lazyLoadingImg: "https://ooszy.cco.vin/img/blog-public/ljz.gif",
 
         //是否启用定制首页随机一言，默认未开启，使用随机一言 接口为https://international.v1.hitokoto.cn/?c=b&max_length=45
-        customRandomSay: true,
+        customRandomSay: false,
 
         //定制首页随机一言文字
         customRandomValue: 'Vuepress-theme-Aurora',

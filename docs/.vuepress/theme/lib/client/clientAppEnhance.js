@@ -36,6 +36,7 @@ export default defineClientAppEnhance(({ app, router }) => {
     app.component('BCenter', BCenter);
     app.component('Common', Common);
     app.component('Footer', Footer);
+    app.component('aurora-footer', Footer);
     app.component('Message', Message);
     app.component('Donate', Donate);
     app.component('Comment', Comment);
