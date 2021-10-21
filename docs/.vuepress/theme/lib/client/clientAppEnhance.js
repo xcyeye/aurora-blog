@@ -49,7 +49,7 @@ export default defineClientAppEnhance(({ app, router }) => {
     app.component("Mood",Mood)
     app.component("PhotoFall",PhotoFall)
     app.component("Tag",Tag)
-    //app.component("AuroraGlobal",AuroraGlobal)
+    app.component("AuroraGlobal",AuroraGlobal)
 
     //路由
     // @ts-ignore
