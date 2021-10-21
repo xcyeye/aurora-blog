@@ -1,59 +1,85 @@
 module.exports = {
     navbar: [
+
         {
             text: '快速开始',
-            link: '/home/'
-        },
-        /*{
-            text: '主题配置',
-            link: '/config/'
-        },*/
-        {
-            text: '主题特征配置',
-            children: [
-                '/config/feature/index.html',
-                '/config/feature/donate.html',
-                '/config/feature/feature-config.html',
-                '/config/feature/image.html',
-                '/config/feature/recommend.html',
-                '/config/feature/seo.html',
-                '/config/feature/social.html',
-            ]
+            link: '/readme/'
         },
         {
-            text: '页面配置',
+            text: "所有配置",
+            link: '/home/config.html'
+        },
+        {
+            text: '问题和bug',
             children: [
-                '/config/page/index.html',
-                '/config/page/about.html',
-                '/config/page/ad.html',
-                '/config/page/friendlink.html',
-                '/config/page/mood.html',
-                '/config/page/tag.html',
-                '/config/page/page.html',
+                {
+                    text: 'CHANGELOG',
+                    children: [
+                        '/issue/CHANGELOG.md'
+                    ]
+                },
+                {
+                    text: '主题详细搭建教程',
+                    children: [
+                        '/readme/introduce.md',
+                        '/use/useTheme.md'
+                    ]
+                },
+                {
+                    text: '问题',
+                    children: [
+                        '/issue/',
+                    ]
+                },
+                {
+                    text: 'bug',
+                    children: [
+                        '/issue/bug.md',
+                    ]
+                }
             ]
         },
         {
             text: '其他配置',
             children: [
-                '/config/other/index.html',
-                '/config/other/footer.html',
-                '/config/other/message.html',
-            ]
+                {
+                    children: [
+                        "/home/README.md",
+                    ],
+                    text: "home",
+                },
+                {
+                    children: [
+                        "/config/comment/README.md",
+                        "/config/feature/README.md",
+                        "/config/other/README.md",
+                        "/config/page/README.md",
+                    ],
+                    text: "其他配置",
+                },
+                {
+                    children: [
+                        "/v1.3.0/README.md",
+
+                    ],
+                    text: "V1.3.2",
+                }
+            ],
         },
         {
-            text: "关于",
+            text: "about",
             link: "/about"
         },
         {
-            text: '友情链接',
+            text: 'link',
             link: '/link'
         },
         {
-            text: '标签',
+            text: 'tag',
             link: '/tag'
         },
         {
-            text: '心情',
+            text: 'chat',
             link: '/mood'
         },
         {

@@ -3915,6 +3915,27 @@ body::-webkit-scrollbar-thumb {
 .search-common {
     display: inline-block;
 }
+.top-mask {
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    background-image: url(https://api.ixiaowai.cn/api/api.php?time=-106792);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+.top-mask:before {
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    display: inline-block;
+    content: "";
+    background: rgba(1,1,1,.35);
+}
 @media screen and (max-width: 500px) {
     #mobile-search-no-show {
         display: none;

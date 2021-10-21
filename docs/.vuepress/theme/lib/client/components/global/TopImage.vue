@@ -1,5 +1,6 @@
 <template>
-  <div class="sidebar-single-enter-animate page-top" v-if="isShowTopImg" :style="setBackgroundUrl" id="page-top">
+  <div class="sidebar-single-enter-animate page-top" v-if="isShowTopImg" id="page-top">
+    <div class="top-mask" :style="setBackgroundUrl"></div>
     <div class="top-image" id="top-image" v-if="isShowHeadLine">
       <h1>{{headLine}}</h1>
     </div>
@@ -36,7 +37,7 @@
             <!--<span>{{$store.state.readCount}}</span>-->
           </div>
         </div>
-        <div class="page-record-bot-common page-record-bot">
+        <div v-if="tagArr.length !== 0" class="page-record-bot-common page-record-bot">
           <div class="page-record-bot-tag" id="page-record-bot-tag">
             <span class="aurora-iconfont-common aurora-page-tag"></span>&nbsp;
             <router-link v-for="(item,index) in tagArr" :to="goTag(item)">

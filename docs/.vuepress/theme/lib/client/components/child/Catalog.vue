@@ -1,7 +1,7 @@
 <template>
   <div class="">
     <!--一级标题-->
-    <div v-for="(itemLevel1,itemLevel1Index) in getCatalogLevel1"
+    <div :date="getCatalogLevel1" v-for="(itemLevel1,itemLevel1Index) in currentCatalog"
          id="catalog-single" :class="getCatalogOpenStatus(itemLevel1Index)"
          class="catalog-single sidebar-catalog-item">
       <!--展示一级标题-->
@@ -56,6 +56,7 @@ export default {
       catalogActive: 0,
       catalogChildrenActive: -1,
       currentCatalog: [],
+      showCurrentCatalog: [],
       pathname: '',
       clickSpreadStatus: false,
       catalogOpen: false,
@@ -113,9 +114,10 @@ export default {
         if (this.currentCatalog[i].path === this.$route.path) {
           this.catalogOpenStatus.index = i
           this.currentCatalogObject = this.currentCatalog[i]
+          this.showCurrentCatalog = this.currentCatalog[i]
         }
       }
-      return this.currentCatalog
+      // return this.currentCatalog
     },
     getSpreadClass() {
       return (index) => {
@@ -129,21 +131,17 @@ export default {
           return "aurora-sidebar-catalog-spread-off"
         }
       }
+    },
+    getCurrentPath() {
+      return this.$route.path
     }
   },
   created() {
+
     this.themeProperty = useThemeData().value
-    this.$router.beforeEach((to,from,next) => {
-      this.pathname = to.path
-      this.getCurrentCatalogArr(this.pathname)
-      next()
-    })
+    this.getCurrentCatalogArr(this.$route.path)
   },
   mounted() {
-    setTimeout(() => {
-      this.pathname = this.$route.path
-      this.getCurrentCatalogArr(this.pathname)
-    },400)
     window.addEventListener('scroll', this.handleScroll, true)
   },
   methods: {
@@ -253,7 +251,8 @@ export default {
     },
     getCurrentCatalogArr(path) {
       this.currentCatalog = []
-
+      let needSplitArr = []
+      let length = 0
       //判断是否是友情链接，关于，心情，标签，相册页面
       if ((path.search("/link") !== -1) || (path.search("/mood") !== -1) || (path.search("/about") !== -1) || (path.search("/tag") !== -1) || (path.search("/photo") !== -1)) {
         this.$emit("getCurrentCatalogObject",{
@@ -267,6 +266,7 @@ export default {
         let split = path.split("/");
 
         if (split.length < 3) {
+          this.setRootPageMap(path)
           return
         }
 
@@ -279,24 +279,32 @@ export default {
             this.sidebarCatalogLevel = split.length -2
           }
         }
-
-        for (let i = split.length - this.sidebarCatalogLevel -1; i > (split.length - this.sidebarCatalogLevel -2); i--) {
+        length = this.sidebarCatalogLevel
+        if (this.sidebarCatalogLevel === 1) {
+          length = 2
+        }
+        for (let i = split.length - 2; i > (split.length - this.sidebarCatalogLevel -2); i--) {
           tempCatalogArr.push(split[i])
         }
+        needSplitArr = split
         resolve(tempCatalogArr)
       }).then((tempCatalogArr) => {
         let catalogSet = new Set()
-
         new Promise((resolve,reject) => {
           for (let i = 0; i < myData.length; i++) {
+            /*if (path.search(myData[i].path) === -1) {
+              continue
+            }*/
+
+            if (myData[i].path.search(needSplitArr[1]) !== 1) {
+              continue
+            }
             for (let j = 0; j < tempCatalogArr.length; j++) {
               new Promise((resolve,reject) => {
                 let pageDataCatalog = []
                 // 获取文件的切割数组
                 let pageDataPathSplit = myData[i].path.split("/")
-
-                for (let f = (pageDataPathSplit.length - this.sidebarCatalogLevel -1); f > (pageDataPathSplit.length - this.sidebarCatalogLevel -2); f--) {
-
+                for (let f = (pageDataPathSplit.length - 2); f > (pageDataPathSplit.length - this.sidebarCatalogLevel -2); f--) {
                   pageDataCatalog.push({
                     path: pageDataPathSplit[f],
                     page: myData[i]
@@ -321,8 +329,50 @@ export default {
           this.$store.commit("setCurrentCatalogObjectArr",{
             currentCatalogObjectArr: this.currentCatalog
           })
+
+          this.setCurrentCatalog(path)
         })
       })
+    },
+    setRootPageMap(path) {
+      let catalogSet = new Set()
+      new Promise((resolve,reject) => {
+        for (let i = 0; i < myData.length; i++) {
+          // 获取文件的切割数组
+          let pageDataPathSplit = myData[i].path.split("/")
+
+          if (pageDataPathSplit.length < 3 && myData[i].path !== "/404.html") {
+            if (myData[i].path !== "/") {
+              catalogSet.add(myData[i])
+            }
+          }
+        }
+        resolve()
+      }).then(() => {
+        this.currentCatalog = Array.from(catalogSet)
+        this.$emit("getCurrentCatalogObject",{
+          currentCatalog: Array.from(catalogSet)
+        })
+        this.$store.commit("setCurrentCatalogObjectArr",{
+          currentCatalogObjectArr: this.currentCatalog
+        })
+
+        this.setCurrentCatalog(path)
+      })
+    },
+    setCurrentCatalog(path) {
+      // 获取一级标题
+      for (let i = 0; i < this.currentCatalog.length; i++) {
+        if (this.currentCatalog[i].path === path) {
+          this.catalogOpenStatus.index = i
+          this.currentCatalogObject = this.currentCatalog[i]
+        }
+      }
+    }
+  },
+  watch: {
+    getCurrentPath(nV,oV) {
+      this.getCurrentCatalogArr(nV)
     }
   }
 }

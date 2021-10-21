@@ -1,15 +1,7 @@
----
-categories: [目录结构,主题结构]
----
-
-
-
-# 主题目录结构
-
-## 结构
-
-```
-├─CHANGELOG.md #更新日志
+D:\theme-aurora\theme-aurora
+├─- 副本.gitignore
+├─.gitignore
+├─CHANGELOG.md
 ├─deploy-dist.sh
 ├─deploy.sh
 ├─package-lock.json
@@ -55,18 +47,3 @@ categories: [目录结构,主题结构]
 |  |     |   ├─avatar.png
 |  |     |   ├─navbar.js
 |  |     |   └themeConfig.js
-```
-
-
-
-## 路由
-
-主题除了vuepress提供的路由之外，还加入了`/tag,/about,/link,/mood`四个路由
-
-| 路由   |               |
-| ------ | :-----------: |
-| /tag   | 分类和标签页面 |
-| /link  | 友情链接页面 |
-| /about | 关于页面  |
-| /mood | 心情页面 |
-
