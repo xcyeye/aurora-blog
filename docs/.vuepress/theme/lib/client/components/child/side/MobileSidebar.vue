@@ -1,11 +1,12 @@
 <template>
   <div :id="setShowMobileSidebar(1)" class="mobile-sidebar-control" @click="showMobileSidebar"></div>
-  <div :id="setShowMobileSidebar(2)" :class="{mobileAnimate: !$store.state.openMobileSidebar}" class="mobile-sidebar animate__animated ">
+  <div :id="setShowMobileSidebar(2)" :class="{mobileAnimate: !$store.state.openMobileSidebar}" class="mobile-sidebar">
     <HomeSidebar :show-article="false" :show-message="false"
                  :is-mobile-sidebar="true"
                  :show-sidebar-social="true"
                  :custom-id="'mobile-sidebar-custom'" :show-site="false"
                  :show-search="false"
+                 :show-enter-animate="false"
                  :show-sidebar-link="false"
                  :is-show-catalog="true">
       <template #sidebar-son2>

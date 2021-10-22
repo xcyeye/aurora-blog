@@ -64,6 +64,7 @@ module.exports = {
 
     //版权信息
     latestVersion: 'V1.3.2',
-    printRightIndex: 0
+    printRightIndex: 0,
+    mobileOpenStatus: false
 
 }

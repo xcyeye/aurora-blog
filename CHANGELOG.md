@@ -1,10 +1,20 @@
-# [1.0.0](https://github.com/qsyyke/vuepress-theme-aurora/compare/v1.4.1...v1.0.0) (2021-10-21)
+# [1.0.0](https://github.com/qsyyke/vuepress-theme-aurora/compare/v1.4.2...v1.0.0) (2021-10-21)
+
+
+
+## [1.4.2](https://github.com/qsyyke/vuepress-theme-aurora/compare/v1.4.1...v1.4.2) (2021-10-21)
 
 
 ### Bug Fixes
 
 * **custom:** provide a new global component ([d2f743c](https://github.com/qsyyke/vuepress-theme-aurora/commit/d2f743c5c36dbed00df41305c455648213ead02e))
 * **link,tag:** fix home page friend link and tag page ([80db80d](https://github.com/qsyyke/vuepress-theme-aurora/commit/80db80ddd892e65bea351730dcb1d626eca559f6))
+* **style:** fix markdown style ([e330b29](https://github.com/qsyyke/vuepress-theme-aurora/commit/e330b2942437b1636ced60febf2294bfbc505ffb))
+
+
+### Features
+
+* add custom component ([4c4d37d](https://github.com/qsyyke/vuepress-theme-aurora/commit/4c4d37d1d8a1ca446d7b9b7dd0a19e0b39a3197f))
 
 
 

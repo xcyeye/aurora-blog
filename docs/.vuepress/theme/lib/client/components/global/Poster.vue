@@ -60,6 +60,8 @@ export default {
       }
     }
   },
+  created() {
+  },
   methods: {
     getRandomInt(min, max) {
       min = Math.ceil(min);

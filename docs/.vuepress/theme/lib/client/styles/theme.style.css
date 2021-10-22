@@ -105,6 +105,7 @@ a[data-v-d8ec41bc] {
     margin-right: 5px;
 }*/
 
+
 .medium-zoom-content ul li ul li {
     /*font-weight: 500;*/
 }
@@ -2135,6 +2136,7 @@ body::-webkit-scrollbar-thumb {
     align-items: center;
 }
 
+
 .donate-img {
     width: 90%;
     height: 7rem;
@@ -3624,15 +3626,66 @@ body::-webkit-scrollbar-thumb {
         -webkit-animation-fill-mode: forwards;
         animation-fill-mode: forwards;
     }
+    #mobileSidebar {
+        /*width: 80%;
+        transition: all .5s ease;*/
+    }
+
+
+    :root {
+        --menu-speed: 0.75s;
+    }
+    .menu-wrap {
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 30;
+    }
+
+    .menu {
+        position: fixed;
+        top: 0;
+        left: 0;
+        background: rgb(77, 58, 58, 0.8);
+        /*background: whitesmoke;*/
+        /*background: rgba(0,0,0,0);*/
+        height: 100vh;
+        width: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        opacity: 0;
+        transition: all var(--menu-speed) ease;
+    }
+
     .mobile-sidebar {
-        -webkit-animation: mobileSidebarAnimateLevel 900ms;
+        opacity: 0;
+        transition: all var(--menu-speed) ease;
+    }
+
+    #mobileSidebar {
+        width: calc(80vw);
+        opacity: 1;
+        transition: all var(--menu-speed) ease;
+    }
+
+    .aurora-mobile-open .menu {
+        opacity: 1;
+        transition: all var(--menu-speed) ease;
+        width: 80vw;
+    }
+
+    .mobile-sidebar {
+        /*-webkit-animation: mobileSidebarAnimateLevel 900ms;
         animation: mobileSidebarAnimateLevel 900ms;
         -webkit-animation-iteration-count: 1;
         animation-iteration-count: 1;
         -webkit-animation-fill-mode: forwards;
         animation-fill-mode: forwards;
-        display: none;
-        width: var(--sidebarWidth);
+        display: none;*/
+        /*width: var(--sidebarWidth);*/
+        width: 0;
 
         max-height: -webkit-calc(100vh);
 
@@ -3708,12 +3761,12 @@ body::-webkit-scrollbar-thumb {
 
     #mobileSidebar {
         display: block;
-        -webkit-animation: mobileSidebarAnimateEnter 900ms;
+        /*-webkit-animation: mobileSidebarAnimateEnter 900ms;
         animation: mobileSidebarAnimateEnter 900ms;
         -webkit-animation-iteration-count: 1;
         animation-iteration-count: 1;
         -webkit-animation-fill-mode: forwards;
-        animation-fill-mode: forwards;
+        animation-fill-mode: forwards;*/
     }
     .mobile-sidebar::-webkit-scrollbar {
         display: none;

@@ -1,7 +1,7 @@
 <template>
   <div :style="setBackgroundStyle(getRandomIntValue(1,1000))" id="tag-page" class="tag-page">
     <div class="tag-page-item">
-      <div style="display: none" v-html="pageMap.contentRendered" :class="'tagItemContent' + index"></div>
+      <div style="display: none" v-html="pageMap.contentRendered" ref="tagContent" :class="'tagItemContent' + index"></div>
       <div id="tag-page-left" :style="setBackgroundImg" class="tag-page-left tag-page-item-common"></div>
       <div class="tag-page-right tag-page-item-common" id="tag-page-right">
         <div id="tag-page-right-top" class="tag-page-right-top">
@@ -92,10 +92,9 @@ export default {
   },
   mounted() {
     this.$nextTick(() => {
-
       new Promise((resolve,reject) => {
         let tagContent = ""
-        let tagContentPsDom = document.querySelectorAll(".tagItemContent" + this.index + " p")
+        let tagContentPsDom = this.$refs.tagContent.getElementsByTagName("p")
         for (let i = 0; i < tagContentPsDom.length; i++) {
           tagContent = tagContent + tagContentPsDom[i].innerText
         }

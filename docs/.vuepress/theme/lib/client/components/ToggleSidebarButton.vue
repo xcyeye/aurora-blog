@@ -1,5 +1,5 @@
 <template>
-  <div class="toggle-sidebar-button" @click="openMobileSidebar">
+  <div class="toggle-sidebar-button" :class="{'aurora-mobile-open': mobileOpenStatus}" @click="openMobileSidebar">
     <svg
       class="icon"
       xmlns="http://www.w3.org/2000/svg"
@@ -22,8 +22,15 @@ export default defineComponent({
   name: 'ToggleSidebarButton',
 
   emits: ['toggle'],
+  data() {
+    return {
+      mobileOpenStatus: false
+    }
+  },
   methods: {
     openMobileSidebar() {
+      this.$store.state.mobileOpenStatus = !this.$store.state.mobileOpenStatus
+      this.mobileOpenStatus = !this.mobileOpenStatus
       this.$store.commit("setOpenMobileSidebar",{
         openMobileSidebar: !this.$store.state.openMobileSidebar
       })

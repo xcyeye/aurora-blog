@@ -3,7 +3,7 @@
   <!--这是页面右侧的侧边栏，和默认主题的侧边栏不同-->
   <div ref="sidebar-top" class="sidebar-cqy"></div>
   <div :style="$store.state.borderRadiusStyle + $store.state.opacityStyle" id="stickSidebar"
-       class="sidebar-single-enter-animate">
+       :class="{'sidebar-single-enter-animate': showEnterAnimate}">
     <!---->
     <div :class="{sidebarScroll: isShowCatalog}" class="home-sidebar" id="home-sidebar">
 
@@ -64,21 +64,21 @@
       </div>
 
       <!--顶部导航-->
-      <div :id="customId" v-if="showNavbar" class="sidebar-single-enter-animate sidebar-single-common">
+      <div :id="customId" v-if="showNavbar" :class="{'sidebar-single-enter-animate': showEnterAnimate}" class="sidebar-single-common">
         <mobile-sidebar-nav />
         <slot name="sidebar-son3"/>
       </div>
       <slot name="sidebar3"></slot>
 
       <!--搜索-->
-      <div :id="customId" v-if="showSearch" class="sidebar-single-enter-animate sidebar-single-common">
+      <div :id="customId" v-if="showSearch" :class="{'sidebar-single-enter-animate': showEnterAnimate}" class="sidebar-single-common">
         <SearchBox/>
         <slot name="sidebar-son4"/>
       </div>
       <slot name="sidebar4"></slot>
 
       <!--文章-->
-      <div :id="customId" v-if="showArticle" class="sidebar-single-page sidebar-single-enter-animate sidebar-single-common">
+      <div :id="customId" v-if="showArticle" :class="{'sidebar-single-enter-animate': showEnterAnimate}" class="sidebar-single-page sidebar-single-common">
         <div class="change-page">
           <div v-if="isShowCatalog" class="catalog-page change-page-common">
             <span :class="{changePageActive: changePageIndex === '1'}" index="1" @click="changePage">文章目录</span>
@@ -108,7 +108,7 @@
       <slot name="sidebar5"></slot>
 
       <!--公告-->
-      <div :id="customId" v-if="getShowMessage" class="sidebar-single-enter-animate sidebar-single-common">
+      <div :id="customId" v-if="getShowMessage" :class="{'sidebar-single-enter-animate': showEnterAnimate}" class="sidebar-single-common">
         <div class="sidebar-page">
           <span class="aurora-iconfont-common aurora-sidebar-message"></span>
           <span>公告</span>
@@ -123,7 +123,7 @@
       <slot name="sidebar6"></slot>
 
       <!--标签-->
-      <div :id="customId" v-if="showTagCloud" class="sidebar-single-enter-animate sidebar-single-common">
+      <div :id="customId" v-if="showTagCloud" :class="{'sidebar-single-enter-animate': showEnterAnimate}" class="sidebar-single-common">
         <div v-if="!isMobileSidebar" id="home-tag-sidebar" class="sidebar-page">
           <span class="aurora-iconfont-common aurora-sidebar-tag"></span>
           <span>标签</span>
@@ -152,7 +152,7 @@
       <slot name="sidebar7"></slot>
 
       <!--站点-->
-      <div :id="customId" v-if="showSite" id="sidebar-single-common" class="sidebar-single-enter-animate sidebar-single-common">
+      <div :id="customId" v-if="showSite" id="sidebar-single-common" :class="{'sidebar-single-enter-animate': showEnterAnimate}" class=" sidebar-single-common">
         <div class="sidebar-page">
           <span class="aurora-iconfont-common aurora-sidebar-site"></span>
           <span>site</span>
@@ -201,6 +201,12 @@ export default {
     }
   },
   props: {
+    showEnterAnimate: {
+      type: Boolean,
+      default() {
+        return true
+      }
+    },
     sidebarWidthVar: {
       type: Number,
       default() {
