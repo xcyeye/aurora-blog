@@ -77,33 +77,6 @@ module.exports = {
                 ]
             },
             {
-                text: '其他配置',
-                children: [
-                    {
-                        children: [
-                            "/home/README.md",
-                        ],
-                        text: "home",
-                    },
-                    {
-                        children: [
-                            "/config/comment/README.md",
-                            "/config/feature/README.md",
-                            "/config/other/README.md",
-                            "/config/page/README.md",
-                        ],
-                        text: "其他配置",
-                    },
-                    {
-                        children: [
-                            "/v1.3.0/README.md",
-
-                        ],
-                        text: "V1.3.2",
-                    }
-                ],
-            },
-            {
                 text: "about",
                 link: "/about"
             },
