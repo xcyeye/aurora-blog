@@ -1,4 +1,9 @@
-# [1.0.0](https://github.com/qsyyke/vuepress-theme-aurora/compare/v1.4.2...v1.0.0) (2021-10-21)
+# [1.0.0](https://github.com/qsyyke/vuepress-theme-aurora/compare/v1.4.2...v1.0.0) (2021-10-22)
+
+
+### Bug Fixes
+
+* **tag:** fix tag content ([be74afe](https://github.com/qsyyke/vuepress-theme-aurora/commit/be74afecc53a7026d75f603b84e494c5afa75824))
 
 
 

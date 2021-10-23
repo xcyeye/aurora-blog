@@ -1,4 +1,20 @@
+const { path } = require("@vuepress/utils");
+const { themeConfig } = require("./themeConfig");
+
 module.exports = {
+    plugins: [
+        "@vuepress/plugin-search",
+        {
+            locales: {
+                "/": {
+                    placeholder: "Search",
+                },
+                "/zh/": {
+                    placeholder: "搜索",
+                },
+            },
+        },
+    ],
     //设置head 一定要加入<script src="https://at.alicdn.com/t/font_2849934_v6y652peian.js"></script>项配置，否则一些图标不能正常显示
     head: [
         [
@@ -6,74 +22,101 @@ module.exports = {
             {
                 src: "https://at.alicdn.com/t/font_2849934_v6y652peian.js",
             },
-        ]
+        ],
+        [
+            "link",
+            {
+                href: "https://ooszy.cco.vin/img/ico/yuan.png",
+                rel: "icon",
+            },
+        ],
     ],
-    onPrepared: async (app) => {
-        const myData = app.pages.map((page) => {
-            return page;
-        });
-        await app.writeTemp(
-            "my-data.js",
-            `export default ${JSON.stringify(myData)}`
-        );
-    },
-    theme: 'vuepress-theme-aurora',
+    theme: path.resolve(__dirname, "theme/lib/node/index.js"),
+    title: "I do not follow,i lives is always all you want",
+    lang: 'zh-CN',
+    port: 8080,
     themeConfig: {
         navbar: [
+
             {
                 text: '快速开始',
-                link: '/home/'
-            },
-            /*{
-                text: '主题配置',
-                link: '/config/'
-            },*/
-            {
-                text: '主题特征配置',
-                children: [
-                    '/config/feature/index.html',
-                    '/config/feature/donate.html',
-                    '/config/feature/feature-config.html',
-                    '/config/feature/image.html',
-                    '/config/feature/recommend.html',
-                    '/config/feature/seo.html',
-                    '/config/feature/social.html',
-                ]
+                link: '/readme/'
             },
             {
-                text: '页面配置',
+                text: "所有配置",
+                link: '/home/config.html'
+            },
+            {
+                text: '问题和bug',
                 children: [
-                    '/config/page/index.html',
-                    '/config/page/about.html',
-                    '/config/page/ad.html',
-                    '/config/page/friendlink.html',
-                    '/config/page/mood.html',
-                    '/config/page/tag.html',
-                    '/config/page/page.html',
+                    {
+                        text: 'CHANGELOG',
+                        children: [
+                            '/issue/CHANGELOG.md'
+                        ]
+                    },
+                    {
+                        text: '主题详细搭建教程',
+                        children: [
+                            '/readme/introduce.md',
+                            '/use/useTheme.md'
+                        ]
+                    },
+                    {
+                        text: '问题',
+                        children: [
+                            '/issue/',
+                        ]
+                    },
+                    {
+                        text: 'bug',
+                        children: [
+                            '/issue/bug.md',
+                        ]
+                    }
                 ]
             },
             {
                 text: '其他配置',
                 children: [
-                    '/config/other/index.html',
-                    '/config/other/footer.html',
-                    '/config/other/message.html',
-                ]
+                    {
+                        children: [
+                            "/home/README.md",
+                        ],
+                        text: "home",
+                    },
+                    {
+                        children: [
+                            "/config/comment/README.md",
+                            "/config/feature/README.md",
+                            "/config/other/README.md",
+                            "/config/page/README.md",
+                        ],
+                        text: "其他配置",
+                    },
+                    {
+                        children: [
+                            "/v1.3.0/README.md",
+
+                        ],
+                        text: "V1.3.2",
+                    }
+                ],
             },
             {
-                text: "关于",
+                text: "about",
                 link: "/about"
             },
             {
-                text: '友情链接',
+                text: 'link',
                 link: '/link'
             },
             {
-                text: '标签',
+                text: 'tag',
                 link: '/tag'
             },
             {
-                text: '心情',
+                text: 'chat',
                 link: '/mood'
             },
             {
@@ -81,17 +124,28 @@ module.exports = {
                 link: '/photo'
             }
         ],
-        //请禁用黑夜模式，当前版本未加入黑夜模式功能
         darkMode: false,
-        repo: "https://github.com/qsyyke/note",
+        repo: "https://github.com/qsyyke/vuepress-theme-aurora",
+        docsRepo: 'https://github.com/qsyyke/aurora-docs',
+        githubActions: true,
+        docsBranch: 'main',
         repoLabel: "Aurora-theme",
         editLink: true,
         editLinkText: "edit",
         lastUpdated: true,
         lastUpdatedText: "lastTime",
+        navbarIcon: [
+            {
+                link: '',
+                icon: ''
+            },
+            {
+                link: '',
+                icon: ''
+            },
+        ],
 
         //下面的都是主题自己的配置文件
-
         //logo旁文字颜色
         logoColor: "#2c3e50",
 
@@ -99,7 +153,7 @@ module.exports = {
         showFont: "程",
 
         //首页中间hero图片地址，默认为https://ooszy.cco.vin/img/blog-public/avatar.jpg
-        heroImg: 'https://ooszy.cco.vin/img/blog-public/avatar.jpg',
+        heroImg: 'https://ooszy.cco.vin/img/ico/yuan.png',
 
         //logo图片地址，默认为https://ooszy.cco.vin/img/ico/yuan.png
         logo: "https://ooszy.cco.vin/img/ico/yuan.png",
@@ -111,7 +165,7 @@ module.exports = {
         customRandomSay: false,
 
         //定制首页随机一言文字
-        customRandomValue: '青衫烟雨客',
+        customRandomValue: 'Vuepress-theme-Aurora',
 
         //社交信息，首页PC端至多显示19个，手机端至多显示7个，侧边栏不影响
         socials: [
@@ -189,13 +243,13 @@ module.exports = {
         headTitle: "this is headTitle",
 
         //站点描述
-        description: "qsyyke的个人博客，记录生活琐事，学习笔记",
+        description: "vuepress-theme-Aurora是一款简洁，美观，功能强大的静态主题",
 
         //站点关键词，在后续版本中，还需优化 请使用英文状态下的逗号','隔开
         keyword: "vuepress主题,vuepress theme,生活琐事,二次元博客,简约博客,博客主题,静态主题",
 
         //样式控制面板打开之后，休眠多长时间自动关闭面板，单位毫秒
-        slideTime: 3000000,
+        slideTime: 300000,
 
         //随机一言接口
         randomSaw: "https://international.v1.hitokoto.cn/?c=b&max_length=45",
@@ -482,16 +536,16 @@ module.exports = {
         //自己的站点信息 我自己的站点描述 会显示在友情链接的底部
         siteInformation: {
             //站点标题
-            title: "qsyyke",
+            title: "Aurora-theme",
 
             //自己站点链接
-            url: "https://www.cco.vin",
+            url: "https://aurora.cco.vin",
 
             //自己站点logo
-            logo: "https://ooszy.cco.vin/img/blog-public/avatar.jpg",
+            logo: "https://ooszy.cco.vin/img/ico/yuan.png",
 
             //自己站点描述
-            describe: "I do not follow,i lives is always all you want",
+            describe: "vuepress-theme-Aurora是一款简洁，美观，功能强大的静态主题",
 
             //自己的头像
             email: "cqycco@gmail.com",
@@ -509,14 +563,13 @@ module.exports = {
         footer: [
             "Copyright © by qsyyke All Rights Reserved.",
             "<a target='_blank' href='http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=53060202000142' style='display:inline-block;text-decoration:none;height:20px;line-height:20px;'><img src='' style='float:left;'/><p style='float:left;height:20px;line-height:20px;margin: 0px 0px 0px 5px;'>滇公网安备 53060202000142号</p></a>",
-            "<a href='https://www.upyun.com/?utm_source=lianmeng&utm_medium=referral'>本网站由<img style='height: 24.1px;width: 55.3px;' src='https://ooszy.cco.vin/img/blog-note/%E5%8F%88%E6%8B%8D%E4%BA%91_logo5.png?x-oss-process=style/pictureProcess1'>提供CDN加速服务</a>",
         ],
 
         //是否显示页脚，控制全局
         isShowFooter: true,
 
         //是否显示主题信息在页脚，为false关闭
-        isShowThemeCopyright: false,
+        isShowThemeCopyright: true,
 
         //是否展示运行时间
         isShowRunTime: true,
@@ -547,6 +600,21 @@ module.exports = {
 
         //默认打开网站时的毛玻璃状态，TRUE表示默认开启毛玻璃效果
         isFitter: true,
+
+        //默认的圆角，传入数字
+        defaultBorderRadius: 10,
+
+        //默认的透明度，传入0到1之间的小数，0表示全透明
+        defaultOpacity: 1,
+
+        //首页文章列表透明度是否跟随样式面板改变，true表示跟随，全白色,false表示不跟随
+        isHomePageFollow: false,
+
+        //默认模糊度
+        defaultBlur: 1,
+
+        //手机端，是否在页面的底部显示侧边栏列表，默认开启，如果需要开启，请将此值设置为FALSE
+        //mobilePageSidebar: false,
 
         //tag页面，标签分割符 请不要传入一个空字符串，默认值就是' ' 一个空格
         split: "~",
@@ -595,22 +663,6 @@ module.exports = {
             //用户赞赏列表数组
             donateList: [
                 {
-                    //用户名
-                    name: "qsyyke",
-
-                    //赞赏信息
-                    msg: "文章写的非常好",
-
-                    //用户头像
-                    img: "https://ooszy.cco.vin/img/blog-public/nc.jpeg",
-
-                    //打赏金额
-                    price: 11,
-
-                    //金额前缀
-                    prefix: "￥",
-                },
-                {
                     name: "初尘",
                     msg: "主题太棒了",
                     img: "https://ooszy.cco.vin/img/blog-public/nc.jpeg",
@@ -624,17 +676,12 @@ module.exports = {
         comment: {
             //是否显示评论
             showComment: true,
-            serverURL: 'https://theme-eosin.vercel.app',
+            serverURL: 'https://aurora-local-7hrjb6mp8-qsyyke.vercel.app/',
             emojis: [
                 'https://cdn.jsdelivr.net/gh/walinejs/emojis@1.0.0/alus',
                 'https://cdn.jsdelivr.net/gh/walinejs/emojis@1.0.0/bilibili',
-                /*'https://cdn.jsdelivr.net/gh/walinejs/emojis@1.0.0/qq',
                 'https://cdn.jsdelivr.net/gh/walinejs/emojis@1.0.0/tieba',
-                'https://cdn.jsdelivr.net/gh/walinejs/emojis@1.0.0/tw-emoji',
-                'https://cdn.jsdelivr.net/gh/walinejs/emojis@1.0.0/weibo',
-                'https://cdn.jsdelivr.net/gh/walinejs/emojis@1.0.0/tw-travel',
-                'https://cdn.jsdelivr.net/gh/walinejs/emojis@1.0.0/tw-weather',
-                'https://cdn.jsdelivr.net/gh/walinejs/emojis@1.0.0/tw-flag',*/
+                'https://cdn.jsdelivr.net/gh/walinejs/emojis@1.0.0/weibo'
             ],
             avatar: 'monsterid'
         },
@@ -642,16 +689,16 @@ module.exports = {
         //海报分享配置
         poster: {
             //博客描述
-            description: "I do not follow,i lives is always all you want",
+            description: "vuepress-theme-Aurora是一款简洁，美观，功能强大的静态主题",
 
             //作者
             author: "qsyyke",
 
             //博客前缀
-            preBlog: "qsyyke",
+            preBlog: "Aurora",
 
             //海报博客名称后缀
-            suffixBlog: "のblog'",
+            suffixBlog: " theme",
 
             //头像，请放置在docs/public目录下，或者请保证此图片链接能够跨域访问，否则头像不能正常显示
             avatar: "/avatar.png",
@@ -661,7 +708,7 @@ module.exports = {
         showOnlineMood: true,
 
         //是否开启在线添加说说功能，如果需要，请自己写后台，修改源码，目前在主题内部暂未加入 组件位置docs/.vuepress/theme/lib/client/components/child/AddMood.vue
-        showMoodEdit: true,
+        showMoodEdit: false,
 
         //此项仅限我自己的增加说说请求配置，暂未提供注册服务，目前仅限自己使用，可能在以后完善之后，你们只需要简单配置下，就能使用了，期待
         addMood: {
@@ -673,7 +720,7 @@ module.exports = {
         //自定义顶部图片
         customTopImg: {
             //是否启用定制顶部图片，控制全局，如果关闭，那么将使用随机图片，随机图片接口可以自己设置
-            custom: true,
+            custom: false,
 
             //文章顶部图片，数组，每次从数组中随机选择一张
             page: [
@@ -717,7 +764,7 @@ module.exports = {
 
         //侧边栏配置
         //github地址
-        githubUrl: "https://github.com/qsyyke",
+        githubUrl: "https://github.com/qsyyke/vuepress-theme-aurora",
 
         //最新文章数量，默认为6
         latestPageSize: 6,
