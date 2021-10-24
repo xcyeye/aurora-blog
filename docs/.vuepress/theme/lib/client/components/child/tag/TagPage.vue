@@ -45,8 +45,9 @@ export default {
       let homePageImgApi = this.themeProperty.homePageImgApi
 
       if (homePageImgApi === undefined) {
-        homePageImgApi = "https://api.ixiaowai.cn/api/api.php"
+        homePageImgApi = this.$store.state.defaultHomePageImgApi
       }
+
       let path = homePageImgApi + "?time=" + num
       return "background-image: url(" + path + ");"
     },

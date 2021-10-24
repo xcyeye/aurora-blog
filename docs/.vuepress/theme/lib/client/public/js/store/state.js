@@ -61,10 +61,11 @@ module.exports = {
     defaultFont: [
         "-apple-system", "hlt", "tzt", "sst", "lf", "xsf", "lsf", "cgt",
     ],
+    defaultHomePageImgApi: 'https://api.ixiaowai.cn/api/api.php',
 
     //版权信息
     latestVersion: 'V1.3.2',
     printRightIndex: 0,
-    mobileOpenStatus: false
+    mobileOpenStatus: false,
 
 }

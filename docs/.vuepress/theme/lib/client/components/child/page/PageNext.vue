@@ -39,7 +39,7 @@ export default {
       let homePageImgApi = themeLocale.value.homePageImgApi
 
       if (homePageImgApi === undefined) {
-        homePageImgApi = "https://api.ixiaowai.cn/api/api.php"
+        homePageImgApi = this.$store.state.defaultHomePageImgApi
       }
       let path = homePageImgApi + "?time=" + num
       return '--homePageImgApi: url('+ path +');'
