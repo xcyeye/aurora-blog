@@ -73,6 +73,9 @@ export default {
     },
     showSizes: {
       default: false
+    },
+    isTagPage: {
+      default: false
     }
   },
   methods: {
@@ -142,7 +145,11 @@ export default {
   },
   computed: {
     getCurrentPage() {
-      return this.$store.state.currentPageNum
+      if (!this.isTagPage) {
+        return this.$store.state.currentPageNum
+      }else {
+        return this.$store.state.currentTagNum
+      }
     },
     getActiveId() {
       return (index) => {

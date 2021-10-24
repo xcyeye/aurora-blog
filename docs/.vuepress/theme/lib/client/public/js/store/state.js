@@ -67,5 +67,6 @@ module.exports = {
     latestVersion: 'V1.3.2',
     printRightIndex: 0,
     mobileOpenStatus: false,
+    currentTagNum: 1
 
 }

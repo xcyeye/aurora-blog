@@ -70,6 +70,8 @@
         <template #page-center2>
           <cute-page @changePage="changePage"
                      :total="allPageMap.length"
+                     :is-tag-page="true"
+                     :key="1"
                      :page-size="pageSize"/>
         </template>
       </BCenter>
@@ -107,6 +109,7 @@ export default {
     }
   },
   created() {
+
     //如果手机端侧边栏打开的，那么就关闭
     if (this.$store.state.openMobileSidebar) {
       this.$store.commit("setOpenMobileSidebar",{
@@ -119,7 +122,12 @@ export default {
       if (this.$store.state.allPageMap.length !== 0) {
         clearInterval(loadAllPageMap)
         this.allPageMap = Array.from(this.$store.state.allPageMap)
-        this.changePage(1)
+        let currentTagNum = this.$store.state.currentTagNum
+        if (currentTagNum === 1) {
+          this.changePage(1)
+        }else {
+          this.changePage(currentTagNum)
+        }
       }
     },50)
 
@@ -186,6 +194,9 @@ export default {
   },
   methods: {
     changePage(currentPageNum) {
+      this.$store.commit("setCurrentTagNum", {
+        currentTagNum: currentPageNum
+      })
       let currentNum = currentPageNum === "" ? 1 : currentPageNum
       let start = (currentNum -1) * this.pageSize
       let end = start + this.pageSize
