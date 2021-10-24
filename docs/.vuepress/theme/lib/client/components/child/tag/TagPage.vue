@@ -21,6 +21,8 @@
 </template>
 
 <script>
+import {useThemeLocaleData} from "../../../composables";
+
 export default {
   name: "TagPage",
   data() {
@@ -35,8 +37,18 @@ export default {
   },
   computed: {
     setBackgroundImg() {
-      let random = (+new Date()) / this.getRandomInt(0,10000)
-      return "background-image: url(https://api.iro.tw/webp_pc.php?time=" + random + ");"
+      let num1 = this.getRandomInt(-9999,999)
+      let num2 = this.getRandomInt(0,300)
+      let num3 = this.getRandomInt(0,30)
+      let num = num2 / num3 * num1 + num2
+
+      let homePageImgApi = this.themeProperty.homePageImgApi
+
+      if (homePageImgApi === undefined) {
+        homePageImgApi = "https://api.ixiaowai.cn/api/api.php"
+      }
+      let path = homePageImgApi + "?time=" + num
+      return "background-image: url(" + path + ");"
     },
     getRandomIntValue() {
       return (min, max) => {

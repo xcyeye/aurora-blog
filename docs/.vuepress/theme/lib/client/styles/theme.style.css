@@ -490,7 +490,7 @@ a[data-v-d8ec41bc] {
     bottom: 4rem;
     right: 2.5rem;
     cursor:pointer;
-    z-index: 999;
+    z-index: 9;
     background-image: url("https://ooszy.cco.vin/img/blog-note/color-filling.svg");
     background-repeat: no-repeat;
     background-size: 70%;
@@ -946,7 +946,7 @@ a[data-v-d8ec41bc] {
     left: 0; right: 0;
     -webkit-filter: blur(var(--fitter-blue));
     filter: blur(var(--fitter-blue));
-    z-index: -1;
+    z-index: -2;
 }
 
 .set-bg-fitter:before {
@@ -3632,60 +3632,30 @@ body::-webkit-scrollbar-thumb {
     }
 
 
-    :root {
-        --menu-speed: 0.75s;
-    }
-    .menu-wrap {
-        position: fixed;
-        top: 0;
-        left: 0;
-        z-index: 30;
-    }
-
-    .menu {
-        position: fixed;
-        top: 0;
-        left: 0;
-        background: rgb(77, 58, 58, 0.8);
-        /*background: whitesmoke;*/
-        /*background: rgba(0,0,0,0);*/
-        height: 100vh;
-        width: 0;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        text-align: center;
-        opacity: 0;
-        transition: all var(--menu-speed) ease;
-    }
-
     .mobile-sidebar {
-        opacity: 0;
-        transition: all var(--menu-speed) ease;
+        /*opacity: 0;*/
+        /*transition: all var(--menu-speed) ease;*/
     }
 
     #mobileSidebar {
+        width: -webkit-calc(80vw);
         width: calc(80vw);
         opacity: 1;
-        transition: all var(--menu-speed) ease;
+        /*transition: all var(--menu-speed) ease;*/
     }
 
     .aurora-mobile-open .menu {
         opacity: 1;
-        transition: all var(--menu-speed) ease;
+        /*transition: all var(--menu-speed) ease;*/
         width: 80vw;
     }
 
     .mobile-sidebar {
-        /*-webkit-animation: mobileSidebarAnimateLevel 900ms;
-        animation: mobileSidebarAnimateLevel 900ms;
-        -webkit-animation-iteration-count: 1;
-        animation-iteration-count: 1;
-        -webkit-animation-fill-mode: forwards;
-        animation-fill-mode: forwards;
-        display: none;*/
-        /*width: var(--sidebarWidth);*/
-        width: 0;
+        width: calc(80vw);
+        transform: translateX(-100%);
+        -webkit-transition: all .5s cubic-bezier(0, 0, 0.37, 0.94);
+        -o-transition: all .5s cubic-bezier(0, 0, 0.37, 0.94);
+        transition: all .5s cubic-bezier(0, 0, 0.37, 0.94);
 
         max-height: -webkit-calc(100vh);
 
@@ -3761,12 +3731,8 @@ body::-webkit-scrollbar-thumb {
 
     #mobileSidebar {
         display: block;
-        /*-webkit-animation: mobileSidebarAnimateEnter 900ms;
-        animation: mobileSidebarAnimateEnter 900ms;
-        -webkit-animation-iteration-count: 1;
-        animation-iteration-count: 1;
-        -webkit-animation-fill-mode: forwards;
-        animation-fill-mode: forwards;*/
+        -webkit-transform: translateX(0);
+        transform: translateX(0);
     }
     .mobile-sidebar::-webkit-scrollbar {
         display: none;

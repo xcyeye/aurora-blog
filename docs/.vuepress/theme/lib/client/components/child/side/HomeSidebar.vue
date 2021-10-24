@@ -2,10 +2,10 @@
 <template>
   <!--这是页面右侧的侧边栏，和默认主题的侧边栏不同-->
   <div ref="sidebar-top" class="sidebar-cqy"></div>
-  <div :style="$store.state.borderRadiusStyle + $store.state.opacityStyle" id="stickSidebar"
+  <div :style="getHomeSidebarStyle" id="stickSidebar"
        :class="{'sidebar-single-enter-animate': showEnterAnimate}">
     <!---->
-    <div :class="{sidebarScroll: isShowCatalog}" class="home-sidebar" id="home-sidebar">
+    <div :class="{sidebarScroll: isShowCatalog}" :style="setHomeSidebarStyle" class="home-sidebar" id="home-sidebar">
 
       <!--头像信息-->
       <div :id="customId" v-if="showPersonInfo" class="sidebar-single-common">
@@ -338,6 +338,17 @@ export default {
     }
   },
   computed: {
+    setHomeSidebarStyle() {
+      if (this.isMobileSidebar) {
+        return "border-radius: 0px;"
+      }
+    },
+    getHomeSidebarStyle() {
+      if (!this.isMobileSidebar) {
+        return this.$store.state.borderRadiusStyle + this.$store.state.opacityStyle
+      }
+      return this.$store.state.opacityStyle
+    },
     getShowSidebarLink() {
       if (!this.showSidebarLink) {
         return false
