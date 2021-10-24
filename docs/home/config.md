@@ -28,6 +28,8 @@ stick: true
 > [主题问题解决](../issue/)
 >
 > [主题写作技巧](../learn/)
+>
+> [主题自定义](../feature/registercom.md)
 
 :::
 

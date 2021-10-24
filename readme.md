@@ -59,7 +59,7 @@
 
 > 如何安装node，请自行百度解决
 
-
+- 创建新文件夹`blog-demo`,使用`npm init`初始化，你会得到一个`package.json`文件
 
 - 安装依赖
 
@@ -70,7 +70,7 @@ npm i vuepress-theme-aurora
 
 
 
-- 将下面内容添加到`package.json`对应位置
+- 将下面内容复制替换`package.json`中的scripts值
 
   ```json
   "scripts": {
@@ -129,6 +129,22 @@ npm run dev
 
 
 
+## 联系我
+
+如果你在使用该主题的过程中，有任何的问题，都可以通过以下方式联系我
+
+<img src="https://ooszy.cco.vin/img/blog-note/image-20211024233620332.png?x-oss-process=style/pictureProcess1" style="zoom:33%;" /><img src="https://ooszy.cco.vin/img/blog-note/image-20211024233827133.png?x-oss-process=style/pictureProcess1" alt="image-20211024233827133" style="zoom:33%;" /><img src="https://ooszy.cco.vin/img/blog-note/image-20211024233735110.png?x-oss-process=style/pictureProcess1" alt="image-20211024233735110" style="zoom: 43%;" />
+
+
+
+> 图一为QQ
+>
+> 图二为aurora主题交流群
+>
+> 图三为微信
+
+
+
 
 ## 渲染
 
@@ -153,9 +169,9 @@ npm run dev
 
 或者我的<a target="_blank" href="https://blog.cco.vin">博客站点</a>
 
+## 首页配置
 
 
-## 文档
 
-Aurora主题已提供完整文档供使用，点击进入<a target="_blank" href="https://aurora.cco.vin/">文档页面</a>
+[首页](../homeconfig.md)
 

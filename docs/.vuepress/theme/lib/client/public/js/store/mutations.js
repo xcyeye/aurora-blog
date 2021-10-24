@@ -101,7 +101,6 @@ module.exports = {
         this.state.currentCatalogObjectArr = currentCatalogObjectArr.currentCatalogObjectArr
     },
     setCurrentTagNum(state,currentTagNum) {
-        console.log(currentTagNum)
         this.state.currentTagNum = currentTagNum.currentTagNum
     }
 }

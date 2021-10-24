@@ -5,7 +5,7 @@ date: 2021/10/15
 
 
 
-# Introduce
+## Introduce
 
 <a target="_blank" href="http://aurora.cco.vin/" >Demo</a>
 
@@ -14,6 +14,7 @@ date: 2021/10/15
 > 一款基于vuepress的动漫类博客主题，简洁，漂亮，多色彩，多种自定义功能，提供文章海报分享，说说，相册，评论，侧边栏，自动生成文章侧边栏等特色功能
 
 <a href="https://www.npmjs.com/package/vuepress-theme-aurora"><img alt="npm" src="https://img.shields.io/npm/v/vuepress-theme-aurora"></a>![npm](https://img.shields.io/npm/dw/vuepress-theme-aurora)<a href="https://github.com/qsyyke/vuepress-theme-aurora"><img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/qsyyke/vuepress-theme-aurora?style=social"></a>
+
 
 
 如果你之前没有使用过`vuepress`，那么安装过程，可以查看<a target="_blank" href="https://v2.vuepress.vuejs.org/zh/guide/getting-started.html">官方教程</a>或者本主题<a target="_blank" href="/readme/introduce.md">详细安装教程</a>
@@ -65,7 +66,7 @@ date: 2021/10/15
 
 > 如何安装node，请自行百度解决
 
-
+- 创建新文件夹`blog-demo`,使用`npm init`初始化，你会得到一个`package.json`文件
 
 - 安装依赖
 
@@ -76,7 +77,7 @@ npm i vuepress-theme-aurora
 
 
 
-- 将下面内容添加到`package.json`对应位置
+- 将下面内容复制替换`package.json`中的scripts值
 
   ```json
   "scripts": {
@@ -132,6 +133,22 @@ npm run dev
 > 恭喜你，到这里，你已经安装成功了，接下来便可以尽情书写博客和修改配置(`上图展示出来的效果是默认配置，你可以更改`)
 >
 > 主题配置修改，请参考此<a href="https://github.com/qsyyke/vuepress-theme-aurora/blob/master/docs/.vuepress/config-fu.js">config.js</a>文件
+
+
+
+## 联系我
+
+如果你在使用该主题的过程中，有任何的问题，都可以通过以下方式联系我
+
+<img src="https://ooszy.cco.vin/img/blog-note/image-20211024233620332.png?x-oss-process=style/pictureProcess1" style="zoom:33%;" /><img src="https://ooszy.cco.vin/img/blog-note/image-20211024233827133.png?x-oss-process=style/pictureProcess1" alt="image-20211024233827133" style="zoom:33%;" /><img src="https://ooszy.cco.vin/img/blog-note/image-20211024233735110.png?x-oss-process=style/pictureProcess1" alt="image-20211024233735110" style="zoom: 43%;" />
+
+
+
+> 图一为QQ
+>
+> 图二为aurora主题交流群
+>
+> 图三为微信
 
 
 
