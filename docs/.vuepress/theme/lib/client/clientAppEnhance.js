@@ -2,8 +2,6 @@ import { h } from 'vue';
 import { defineClientAppEnhance } from '@vuepress/client';
 import { useScrollPromise } from './composables';
 import CodeGroup from './components/global/CodeGroup';
-//导入element-plus
-import ElementPlus from 'element-plus'
 
 import Badge from './components/global/Badge.vue';
 import CodeGroupItem from './components/global/CodeGroupItem.vue';
@@ -31,7 +29,7 @@ import AuroraGlobal from "./components/global/AuroraGlobal";
 import './styles/index.scss';
 import './styles/photo.scss'
 import 'element-plus/dist/index.css'
-require('!style-loader!css-loader!./styles/coverStyle.css');
+import './styles/coverStyle.css'
 export default defineClientAppEnhance(({ app, router }) => {
     app.component('Badge', Badge);
     app.component('CodeGroup', CodeGroup);
@@ -59,7 +57,6 @@ export default defineClientAppEnhance(({ app, router }) => {
     //路由
     // @ts-ignore
     app.use(store)
-    app.use(ElementPlus)
 
     delete app._context.components.OutboundLink;
     // override the built-in `<OutboundLink>`

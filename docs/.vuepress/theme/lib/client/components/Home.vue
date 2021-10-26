@@ -183,7 +183,6 @@ export default defineComponent({
     }
   },
   created() {
-
     // 如果没有传入，或者传入的是一个空数组，那么就会使用新数组进行显示
     if (this.socialsArr.length === 0) {
       let socials = this.themeProperty.socials
@@ -283,7 +282,7 @@ export default defineComponent({
           try {
             const dataQuery = this.networkOption.query
             this.randomSawRes = res[dataQuery];
-            this.initTyped(this.randomSawRes,() => {
+            const typed = this.initTyped(this.randomSawRes,() => {
               setTimeout(() => {
                 this.fetchData()
               },this.intervalTime)
@@ -301,6 +300,7 @@ export default defineComponent({
     initTyped(input, fn, hooks) {
       const obj = this.obj
       const typed = new EasyTyper(obj, input, fn, hooks)
+      return typed
     }
   },
   computed: {

@@ -108,9 +108,12 @@
 
 <script>
 import $ from 'jquery'
-
+import { ElSlider } from 'element-plus'
 export default {
   name: "HomeWelcome",
+  components: {
+    ElSlider
+  },
   data() {
     return {
       setColorStyle: "display: none;",

@@ -92,13 +92,15 @@ import TagCloud from "./child/tag/TagCloud";
 import TagItem from "./child/tag/TagItem";
 import TagPage from "./child/tag/TagPage";
 import {useThemeData} from "../composables";
+import { ElPagination } from 'element-plus'
 
 export default {
   name: "Tag",
   components: {
     TagItem,
     TagPage,
-    TagCloud
+    TagCloud,
+    ElPagination
   },
   data() {
     return {

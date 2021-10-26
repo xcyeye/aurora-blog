@@ -30,11 +30,12 @@
 <script>
 import HomePageItem from "./child/home/HomePageItem";
 import {useThemeData} from "../composables";
+import { ElPagination } from 'element-plus'
 export default {
   name: "HomeBottom",
   components: {
-    HomePageItem
-
+    HomePageItem,
+    ElPagination
   },
   data() {
     return {

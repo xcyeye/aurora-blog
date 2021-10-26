@@ -1,4 +1,22 @@
-# [1.0.0](https://github.com/qsyyke/vuepress-theme-aurora/compare/v1.4.2...v1.0.0) (2021-10-22)
+# [1.0.0](https://github.com/qsyyke/vuepress-theme-aurora/compare/v1.4.3...v1.0.0) (2021-10-26)
+
+
+### Bug Fixes
+
+* fix tag page ([da94d22](https://github.com/qsyyke/vuepress-theme-aurora/commit/da94d221302a39bc259670c69bbaa655aa6e764b))
+* repair only one md, the home page is displayed ([f77ad0a](https://github.com/qsyyke/vuepress-theme-aurora/commit/f77ad0a8b5d268704a028af22d195ae3b824fb43))
+* **sidebar:** change mobile sidebar animation ([342797f](https://github.com/qsyyke/vuepress-theme-aurora/commit/342797fffe72d7805baf066f7d62a2076fc747ca))
+* **style-menu:** use element Slider to control style ([5a844c9](https://github.com/qsyyke/vuepress-theme-aurora/commit/5a844c9ed3b14b2c48fb393fb8015ff539e8124e))
+* **tag:** fix tag and home page Pagination ([84243a2](https://github.com/qsyyke/vuepress-theme-aurora/commit/84243a2c2ea5675f4cc0d0b6e3d5f4269ec18b9d))
+
+
+### Features
+
+* **homepage:** add lazy loadig configuration item for home page ([d02bcc9](https://github.com/qsyyke/vuepress-theme-aurora/commit/d02bcc995d10537efd5f320add1d458d145fd0df))
+
+
+
+## [1.4.3](https://github.com/qsyyke/vuepress-theme-aurora/compare/v1.4.2...v1.4.3) (2021-10-22)
 
 
 ### Bug Fixes

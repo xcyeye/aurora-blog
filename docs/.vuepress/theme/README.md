@@ -57,9 +57,9 @@
 
 运行环境需要依赖`node`，所以在安装之前，请确保操作系统已经安装了node，我运行时的版本为`v14.17.3`
 
-> 如何安装node，请自行百度解决
+> 安装node可查看<a href="https://aurora.cco.vin/use/useTheme.html" target="_blank">node 安装</a>
 
-
+- 创建新文件夹`blog-demo`,在此文件夹进入cmd，使用`npm init`命令初始化，你会得到一个`package.json`文件
 
 - 安装依赖
 
@@ -70,7 +70,7 @@ npm i vuepress-theme-aurora
 
 
 
-- 将下面内容添加到`package.json`对应位置
+- 将下面内容复制替换`package.json`中的scripts项
 
   ```json
   "scripts": {
@@ -125,7 +125,17 @@ npm run dev
 
 > 恭喜你，到这里，你已经安装成功了，接下来便可以尽情书写博客和修改配置(`上图展示出来的效果是默认配置，你可以更改`)
 >
-> 主题配置修改，请参考此<a href="https://github.com/qsyyke/vuepress-theme-aurora/blob/master/docs/.vuepress/config-fu.js">config.js</a>文件
+> 主题配置修改，请参考此<a href="https://github.com/qsyyke/vuepress-theme-aurora/blob/master/docs/.vuepress/config.js">config.js</a>文件
+
+
+
+## 联系我
+
+如果你在使用该主题的过程中，有任何的问题，都可以通过以下方式联系我
+
+| QQ                                                           | 主题交流群                                                   | 微信                                                         |
+| ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
+| <img src="https://ooszy.cco.vin/img/blog-note/image-20211024233620332.png?x-oss-process=style/pictureProcess1" style="zoom:33%;" /> | <img src="https://ooszy.cco.vin/img/blog-note/image-20211024233827133.png?x-oss-process=style/pictureProcess1" alt="image-20211024233827133" style="zoom:33%;" /> | <img src="https://ooszy.cco.vin/img/blog-note/image-20211024233735110.png?x-oss-process=style/pictureProcess1" alt="image-20211024233735110" style="zoom: 39%;" /> |
 
 
 
@@ -153,9 +163,9 @@ npm run dev
 
 或者我的<a target="_blank" href="https://blog.cco.vin">博客站点</a>
 
+## 首页配置
 
 
-## 文档
 
-Aurora主题已提供完整文档供使用，点击进入<a target="_blank" href="https://aurora.cco.vin/">文档页面</a>
+[首页](../homeconfig.md)
 

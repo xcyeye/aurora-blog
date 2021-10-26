@@ -35,6 +35,7 @@
     "postcss": "^8.3.9",
     "qrcode": "^1.4.4",
     "stylus-loader": "^6.1.0",
+    "unplugin-vue-components": "^0.16.0",
     "vue-fucking-gallery": "^1.0.1",
     "vuepress-plugin-autometa": "^0.1.13",
     "vuex": "^4.0.0-0"
