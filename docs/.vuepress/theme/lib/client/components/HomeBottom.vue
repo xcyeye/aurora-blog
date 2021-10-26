@@ -7,10 +7,6 @@
     <div class="home-page-tag" :style="getHomePageStyle" id="home-page-tag">
       <home-page-item :index="index" :theme-property="themeProperty" :key="index" v-for="(item,index) in showPageArr" :page-item="item"/>
       <!--分页条-->
-      <!--<cute-page @changePage="changePage"
-                 :page="$store.state.currentPageNum"
-                 :total="allPageArr.length"
-                 :page-size="pageSize"/>-->
       <el-pagination
           :page-size="pageSize"
           :pager-count="5"

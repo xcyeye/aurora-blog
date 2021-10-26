@@ -98,7 +98,7 @@ module.exports = {
                     {
                         children: [
                             "/comment/README.md",
-    
+
                             "/page/README.md",
                         ],
                         text: "其他配置",
@@ -106,7 +106,7 @@ module.exports = {
                     {
                         children: [
                             "/v1.3.0/README.md",
-    
+
                         ],
                         text: "V1.3.2",
                     }
@@ -179,6 +179,9 @@ module.exports = {
 
         //文章懒加载图片 仅限文章，首页文章占位图片并不是这个
         lazyLoadingImg: "https://ooszy.cco.vin/img/blog-public/ljz.gif",
+
+        //这是首页文章列表懒加载图片
+        homePageLazyLoadingImg: 'https://ooszy.cco.vin/img/blog-note/aurora-loading.gif?name=chuchen',
 
         //是否启用定制首页随机一言，默认未开启，使用随机一言 接口为https://international.v1.hitokoto.cn/?c=b&max_length=45
         customRandomSay: false,

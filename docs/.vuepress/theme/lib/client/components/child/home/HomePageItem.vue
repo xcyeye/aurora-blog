@@ -2,7 +2,7 @@
   <div ref="pageItemTop" class="home-page-scroll home-page-tag-item sidebar-single-enter-animate" id="home-page-tag-item">
     <div class="home-page-tag-img">
       <div class="home-page-img-gradual"></div>
-      <img id="home-page-img" :data-src="getPageUrl(pageItem)" src="https://ooszy.cco.vin/img/blog-note/aurora-loading.gif" alt="">
+      <img id="home-page-img" :data-src="getPageUrl(pageItem)" :src="homePageLazyLoadingImg" alt="">
     </div>
 
     <div class="home-page-tag-con">
@@ -46,6 +46,11 @@
 import {useThemeLocaleData} from '../../../composables'
 export default {
   name: "HomePageItem",
+  data() {
+    return {
+      homePageLazyLoadingImg: 'https://ooszy.cco.vin/img/blog-note/aurora-loading.gif'
+    }
+  },
   props: {
     themeProperty: '',
     pageItem: {
@@ -155,6 +160,11 @@ export default {
           nodeParent.removeChild(contentHtmlImgs[i])
         }
       })
+    }
+  },
+  created() {
+    if (this.themeProperty.homePageLazyLoadingImg !== undefined) {
+      this.homePageLazyLoadingImg = this.themeProperty.homePageLazyLoadingImg
     }
   },
   mounted() {
