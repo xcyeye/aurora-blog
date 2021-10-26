@@ -32,8 +32,7 @@ module.exports = {
 
             new Promise((resolve,reject) => {
                 for (let i = 0; i < myData.default.length; i++) {
-
-                    if (myData.default[i].path.search("404.html") !== -1) {
+                    if (myData.default[i].path === "/404.html") {
                         continue
                     }
 
@@ -95,11 +94,11 @@ module.exports = {
                                 let tag = strings[j+1]
 
                                 let excludeTag = []
-                                if (themeProperty.excludeTag != undefined) {
+                                if (themeProperty.excludeTag !== undefined) {
                                     excludeTag = themeProperty.excludeTag
                                 }
 
-                                if (excludeTag.length != 0) {
+                                if (excludeTag.length !== 0) {
                                     for (let k = 0; k < excludeTag.length; k++) {
                                         if (!(tag === excludeTag[k])) {
                                             set.add(tag)
@@ -136,13 +135,37 @@ module.exports = {
 
                             mapSet.add(articleMap)
                         })
+                    }else {
+                        //获取标签
+                        articleMap.tag = []
+
+                        //获取文章连接
+                        articleMap.articleUrl = path
+
+                        articleMap.frontmatter = myData.default[i].frontmatter
+                        articleMap.contentRendered = myData.default[i].contentRendered
+                        articleMap.content = myData.default[i].content
+                        articleMap.categories = myData.default[i].frontmatter.categories === undefined ? [] : myData.default[i].frontmatter.categories
+
+                        let categories = myData.default[i].frontmatter.categories
+                        categories = categories === undefined ? [] : categories
+                        for (let j = 0; j < categories.length; j++) {
+                            categoriesSet.add(categories[j])
+                        }
+                        //获取标题
+                        let title = myData.default[i].title
+                        articleMap.title = title === undefined ? "" : title
+
+                        mapSet.add(articleMap)
                     }
                 }
-                app.$store.commit('setPageNum',{
-                    page: myData.default.length
-                })
                 resolve()
             }).then(()=> {
+
+                app.$store.commit('setPageNum',{
+                    page: mapSet.size
+                })
+
                 let categoriesArr = Array.from(categoriesSet)
 
                 let setArr = Array.from(set)

@@ -128,12 +128,6 @@ export default {
       })
       },5)
     },
-    changePage(currentPage) {
-      this.setImgDom()
-      let start = (this.$store.state.currentPageNum -1) * this.pageSize
-      let end = start + this.pageSize
-      this.showPageArr = this.allPageArr.slice(start, end)
-    },
     setShowAllPage(allPageMaps) {
       new Promise((resolve,reject) => {
         this.allPageArr = []

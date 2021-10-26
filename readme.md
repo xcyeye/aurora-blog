@@ -53,8 +53,6 @@
 
 
 
-
-
 运行环境需要依赖`node`，所以在安装之前，请确保操作系统已经安装了node，我运行时的版本为`v14.17.3`
 
 > 如何安装node，请自行百度解决
@@ -133,7 +131,11 @@ npm run dev
 
 如果你在使用该主题的过程中，有任何的问题，都可以通过以下方式联系我
 
-<img src="https://ooszy.cco.vin/img/blog-note/image-20211024233620332.png?x-oss-process=style/pictureProcess1" style="zoom:33%;" /><img src="https://ooszy.cco.vin/img/blog-note/image-20211024233827133.png?x-oss-process=style/pictureProcess1" alt="image-20211024233827133" style="zoom:33%;" /><img src="https://ooszy.cco.vin/img/blog-note/image-20211024233735110.png?x-oss-process=style/pictureProcess1" alt="image-20211024233735110" style="zoom: 43%;" />
+| QQ                                                           | 主题交流群                                                   | 微信                                                         |
+| ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
+| <img src="https://ooszy.cco.vin/img/blog-note/image-20211024233620332.png?x-oss-process=style/pictureProcess1" style="zoom:33%;" /> | <img src="https://ooszy.cco.vin/img/blog-note/image-20211024233827133.png?x-oss-process=style/pictureProcess1" alt="image-20211024233827133" style="zoom:33%;" /> | <img src="https://ooszy.cco.vin/img/blog-note/image-20211024233735110.png?x-oss-process=style/pictureProcess1" alt="image-20211024233735110" style="zoom: 40%;" /> |
+
+
 
 
 
@@ -168,10 +170,4 @@ npm run dev
 ![](https://ooszy.cco.vin/img/theme/tag.jpg)
 
 或者我的<a target="_blank" href="https://blog.cco.vin">博客站点</a>
-
-## 首页配置
-
-
-
-[首页](../homeconfig.md)
 

@@ -50,7 +50,6 @@
                     :step="0.5"
                     :show-tooltip="false"
                 ></el-slider>
-                <!--<input min="1" max="40" v-model="borderRadius" step="1" type="range">-->
               </div>
               <div class="input-right">
                 {{borderRadius}}

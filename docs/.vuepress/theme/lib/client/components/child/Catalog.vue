@@ -8,7 +8,7 @@
       <div class="page-catalog-parent">
         <div class="catalog-page-title">
           <router-link :to="itemLevel1.path">
-            <span class="content-single-show">{{itemLevel1.title}}</span>
+            <span class="content-single-show">{{getCatalogLevel1Title(itemLevel1)}}</span>
           </router-link>
         </div>
         <div @click="changeCurrentLevel1Active(event,itemLevel1Index)" class="catalog-page-spread">
@@ -86,6 +86,19 @@ export default {
     }
   },
   computed: {
+    getCatalogLevel1Title() {
+      return (itemLevel1) => {
+        let title = itemLevel1.title
+        if (title === "") {
+          if (this.themeProperty.tagNoTitle !== undefined) {
+            title = this.themeProperty.tagNoTitle
+          }else {
+            title = "暂时还没有标题"
+          }
+        }
+        return title
+      }
+    },
     setLevel3Style() {
       return (level2Index) => {
         try {

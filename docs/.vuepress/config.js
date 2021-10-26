@@ -795,7 +795,7 @@ module.exports = {
         showHomePageImg: false,
 
         //文章侧边栏自动获取的层次 默认为1，也就是http://localhost:8080/config/feature/donate.html,只会自动生成feature目录下的文件
-        sidebarCatalogLevel: 1,
+        sidebarCatalogLevel: 3,
 
         //首页文章列表封面图api接口
         homePageImgApi: "https://api.ixiaowai.cn/api/api.php",

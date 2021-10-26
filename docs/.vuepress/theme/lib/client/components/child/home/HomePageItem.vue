@@ -8,7 +8,7 @@
     <div class="home-page-tag-con">
       <div class="home-page-tag-title">
         <router-link :to="pageItem.articleUrl">
-          <span>{{pageItem.title}}</span>
+          <span>{{getPageItemTitle}}</span>
         </router-link>
       </div>
       <div ref="homePageDom" :class="getPageClass" class="home-page-tag-content">
@@ -68,6 +68,17 @@ export default {
     index: 0
   },
   computed: {
+    getPageItemTitle() {
+      let title = this.pageItem.title
+      if (title === "") {
+        if (this.themeProperty.tagNoTitle !== undefined) {
+          title = this.themeProperty.tagNoTitle
+        }else {
+          title = "暂时还没有标题"
+        }
+      }
+      return title
+    },
     getPageClass() {
       return 'homePageConImg' + this.index
     },
