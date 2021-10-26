@@ -1,7 +1,11 @@
 import { h } from 'vue';
 import { defineClientAppEnhance } from '@vuepress/client';
-import Badge from './components/global/Badge.vue';
+import { useScrollPromise } from './composables';
 import CodeGroup from './components/global/CodeGroup';
+//导入element-plus
+import ElementPlus from 'element-plus'
+
+import Badge from './components/global/Badge.vue';
 import CodeGroupItem from './components/global/CodeGroupItem.vue';
 import OutboundLink from './components/global/OutboundLink.vue';
 import TopImage from './components/global/TopImage';
@@ -12,8 +16,6 @@ import Message from './components/global/Message';
 import Donate from "./components/global/Donate";
 import Comment from "./components/global/Comment";
 import Mood from "./components/Mood";
-import { useScrollPromise } from './composables';
-
 import About from './components/About';
 import Tag from './components/Tag';
 import store from './public/js/store'
@@ -25,9 +27,6 @@ import AddMood from "./components/child/AddMood";
 import HomeSidebar from "./components/child/side/HomeSidebar";
 import HomeBottom from "./components/HomeBottom";
 import AuroraGlobal from "./components/global/AuroraGlobal";
-
-//导入element-plus
-import ElementPlus from 'element-plus'
 
 import './styles/index.scss';
 import './styles/photo.scss'

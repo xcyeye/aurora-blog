@@ -76,3 +76,9 @@ export default {
   },
 }
 </script>
+
+<style>
+.theme-default-content:not(.custom) {
+  max-width: 100%;
+}
+</style>

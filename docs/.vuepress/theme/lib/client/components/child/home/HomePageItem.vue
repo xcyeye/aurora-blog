@@ -25,7 +25,7 @@
             <span>{{getTime(pageItem)}}</span>
           </div>
         </div>
-        <div class="home-page-tag-tag-desc" id="home-page-tag-tag-desc">
+        <div class="home-page-tag-tag-desc" v-if="getPageTag(pageItem).length !== 0" id="home-page-tag-tag-desc">
           <div>
             <span class="aurora-iconfont-common aurora-home-tag"></span>
             <span class="home-page-tag-span" v-for="item in getPageTag(pageItem)">{{item}}</span>

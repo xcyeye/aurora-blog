@@ -27,7 +27,7 @@ const auroraTheme = ({ themePlugins = {}, ...localeOptions }) => {
         },
         onInitialized: async (app) => {
             // 如果主页不存在
-            const homepage1 = await createPage(app, {
+            const aboutPage = await createPage(app, {
                 path: '/about',
                 // 设置 frontmatter
                 frontmatter: {
@@ -39,7 +39,7 @@ const auroraTheme = ({ themePlugins = {}, ...localeOptions }) => {
                 content: "",
             })
 
-            const homepage2 = await createPage(app, {
+            const linkPage = await createPage(app, {
                 path: '/link',
                 // 设置 frontmatter
                 frontmatter: {
@@ -51,7 +51,7 @@ const auroraTheme = ({ themePlugins = {}, ...localeOptions }) => {
                 content: "",
             })
 
-            const homepage3 = await createPage(app, {
+            const moodPage = await createPage(app, {
                 path: '/mood',
                 // 设置 frontmatter
                 frontmatter: {
@@ -62,7 +62,7 @@ const auroraTheme = ({ themePlugins = {}, ...localeOptions }) => {
                 content: "",
             })
 
-            const homepage4 = await createPage(app, {
+            const photoPage = await createPage(app, {
                 path: '/photo',
                 // 设置 frontmatter
                 frontmatter: {
@@ -73,7 +73,7 @@ const auroraTheme = ({ themePlugins = {}, ...localeOptions }) => {
                 content: "",
             })
 
-            const homepage5 = await createPage(app, {
+            const tagPhoto = await createPage(app, {
                 path: '/tag',
                 // 设置 frontmatter
                 frontmatter: {
@@ -99,11 +99,11 @@ const auroraTheme = ({ themePlugins = {}, ...localeOptions }) => {
             }
 
             // 把它添加到 `app.pages`
-            app.pages.push(homepage1)
-            app.pages.push(homepage2)
-            app.pages.push(homepage3)
-            app.pages.push(homepage4)
-            app.pages.push(homepage5)
+            app.pages.push(aboutPage)
+            app.pages.push(moodPage)
+            app.pages.push(linkPage)
+            app.pages.push(photoPage)
+            app.pages.push(tagPhoto)
         },
         onGenerated: (app) => {
             setTimeout(() => {
