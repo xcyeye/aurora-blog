@@ -8,6 +8,8 @@
 </template>
 
 <script>
+import {useThemeData} from "../../composables";
+
 const network = require('../../public/js/network.js')
 import PosterImg from "../child/PosterImg";
 import $ from 'jquery'
@@ -30,7 +32,9 @@ export default {
       picture: '',
       clickSecond: 3,
       clickStatus: false,
-      spanData: -2
+      spanData: -2,
+      themeConfig: '',
+      postImgApi: 'https://unsplash.it/1600/900?random'
     }
   },
   props: {
@@ -52,15 +56,15 @@ export default {
       default() {
         return ''
       }
-    },
-    backgroundImgHref: {
-      type: String,
-      default() {
-        return 'https://api.paugram.com/bing/'
-      }
     }
   },
   created() {
+    this.themeConfig = useThemeData().value
+    if (this.themeConfig.postImgApi !== undefined) {
+      this.postImgApi = this.themeConfig.postImgApi
+    }else {
+      this.postImgApi = this.$store.state.defaultPostImgApi
+    }
   },
   methods: {
     getRandomInt(min, max) {
@@ -90,46 +94,29 @@ export default {
         showShadeLoad: true
       })
 
-      //发送请求，获取海报文章图片
-      network.req({
-        baseURL: 'https://picture.cco.vin/pic/rp/bing/2',
-        method: 'GET',
-        timeout: 10000
-      }).then((res) => {
-        new Promise((resolve,reject) => {
-          this.$store.commit("setPicture", {
-            picture: res.data.entity.pictures[0].src
-          })
-          this.setTopBackStyle = "--poster-back-img: url(" + res.data.entity.pictures[0].src + ")"
-          resolve()
-        }).then(() => {
-          if (this.clickStatus === false) {
-            return
-          }
-
-          let spanData = e.target.getAttribute("data")
-
-          if (this.$store.state.posterData !== spanData) {
-            //第一次
-            setTimeout(() => {
-              this.loadPosterImg(spanData)
-              setTimeout(() =>{
-                this.handlePoster(spanData)
-              },500)
-            },500)
-          }else {
-            this.handlePoster(spanData)
-          }
-        })
+      this.$store.commit("setPicture", {
+        picture: 'https://unsplash.it/1600/900?random'
       })
+      this.setTopBackStyle = "--poster-back-img: url(" + this.postImgApi + ")"
+      if (this.clickStatus === false) {
+        return
+      }
+
+      let spanData = e.target.getAttribute("data")
+
+      if (this.$store.state.posterData !== spanData) {
+        //第一次
+        setTimeout(() => {
+          this.loadPosterImg(spanData)
+          setTimeout(() =>{
+            this.handlePoster(spanData)
+          },500)
+        },500)
+      }else {
+        this.handlePoster(spanData)
+      }
     },
     loadPosterImg(spanData) {
-      new Promise((resolve,reject) =>{
-
-        resolve()
-      }).then(() => {
-
-      })
 
       if (this.$store.state.posterData !== spanData) {
         let append = document.querySelector("#poster-append")

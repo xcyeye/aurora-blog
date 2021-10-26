@@ -62,6 +62,7 @@ module.exports = {
         "-apple-system", "hlt", "tzt", "sst", "lf", "xsf", "lsf", "cgt",
     ],
     defaultHomePageImgApi: 'https://api.ixiaowai.cn/api/api.php',
+    defaultPostImgApi: 'https://unsplash.it/1600/900?random',
 
     //版权信息
     latestVersion: 'V1.3.2',

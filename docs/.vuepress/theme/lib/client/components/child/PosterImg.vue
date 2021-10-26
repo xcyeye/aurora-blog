@@ -2,6 +2,7 @@
   <!--模板-->
   <div style="display: block" class="poster" id="create-poster">
     <div class="poster-top" :style="setTopBackStyle" id="poster-top">
+<!--/*    <div class="poster-top" style="&#45;&#45;poster-back-img: url(https://unsplash.it/1600/900?random);" id="poster-top">*/-->
       <div class="poster-time">
         <div class="poster-time-day" id="poster-time-day">{{day}}</div>
         <div class="poster-time-year" id="poster-time-year">{{month}}/{{year}}</div>
@@ -107,7 +108,8 @@ export default {
       poster: '',
       imgHeight: 'height: 90%;',
       picture: "",
-      pictureSrc: 'https://h2.ioliu.cn/bing/Knuthojdsmossen_EN-CA12064544039_640x480.jpg?imageslim'
+      pictureSrc: 'https://h2.ioliu.cn/bing/Knuthojdsmossen_EN-CA12064544039_640x480.jpg?imageslim',
+      postImgApi: 'https://unsplash.it/1600/900?random'
     }
   },
   props: {

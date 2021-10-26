@@ -807,7 +807,10 @@ module.exports = {
         sidebarTag: "tag",
 
         //额外的功能，也就是样式控制面板上面那个，默认是关闭的
-        showAddMood: true
+        showAddMood: true,
+
+        //生成海报的顶部图片api接口，请注意，该接口需要直接返回图片地址，不能有跨域问题，设置之前，可以先使用ajax看是否存在跨域
+        postImgApi: 'https://bing.ioliu.cn//v1/rand'
 
 
 
