@@ -21,7 +21,6 @@
 </template>
 
 <script>
-import {useThemeLocaleData} from "../../../composables";
 
 export default {
   name: "TagPage",
@@ -133,6 +132,22 @@ export default {
         g: parseInt(result[2], 16),
         b: parseInt(result[3], 16)
       } : null;
+    }
+  },
+  watch: {
+    pageMap(nValue,oValue) {
+      this.$nextTick(() => {
+        new Promise((resolve,reject) => {
+         let tagContent = ""
+         let tagContentPsDom = this.$refs.tagContent.getElementsByTagName("p")
+         for (let i = 0; i < tagContentPsDom.length; i++) {
+           tagContent = tagContent + tagContentPsDom[i].innerText
+         }
+         resolve(tagContent)
+       }).then((tagContent) => {
+         this.tagContent = tagContent
+       })
+      })
     }
   }
 }

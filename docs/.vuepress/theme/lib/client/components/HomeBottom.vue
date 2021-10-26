@@ -7,10 +7,22 @@
     <div class="home-page-tag" :style="getHomePageStyle" id="home-page-tag">
       <home-page-item :index="index" :theme-property="themeProperty" :key="index" v-for="(item,index) in showPageArr" :page-item="item"/>
       <!--分页条-->
-      <cute-page @changePage="changePage"
+      <!--<cute-page @changePage="changePage"
                  :page="$store.state.currentPageNum"
                  :total="allPageArr.length"
-                 :page-size="pageSize"/>
+                 :page-size="pageSize"/>-->
+      <el-pagination
+          :page-size="pageSize"
+          :pager-count="5"
+          layout="prev, pager, next"
+          :total="allPageArr.length"
+          :current-page="$store.state.currentPageNum"
+          hide-on-single-page
+          @current-change="handleCurrentChange"
+          small
+      >
+      </el-pagination>
+
     </div>
     <div class="home-page-fun" id="home-page-fun">
       <HomeSidebar></HomeSidebar>
@@ -27,7 +39,8 @@ export default {
   name: "HomeBottom",
   components: {
     HomePageItem,
-    CutePage
+    CutePage,
+
   },
   data() {
     return {
@@ -63,6 +76,16 @@ export default {
     }
   },
   methods: {
+    handleCurrentChange(currentPageNum) {
+      this.$store.commit("setCurrentPageNum", {
+        currentPageNum: currentPageNum
+      })
+
+      this.setImgDom()
+      let start = (currentPageNum -1) * this.pageSize
+      let end = start + this.pageSize
+      this.showPageArr = this.allPageArr.slice(start, end)
+    },
     getLocalTime(time) {
       if (time === undefined) {
         //没有时间戳

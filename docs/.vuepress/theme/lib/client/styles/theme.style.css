@@ -1,4 +1,4 @@
-
+/*这是主题样式*/
 #app {
     font-family: 'Avenir', Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
@@ -956,6 +956,9 @@ a[data-v-d8ec41bc] {
     background-size: cover;
 }
 
+.el-pager li {
+    /*background: red;*/
+}
 .page-content {
     width: 100%;
 }

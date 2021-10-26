@@ -68,5 +68,4 @@ module.exports = {
     printRightIndex: 0,
     mobileOpenStatus: false,
     currentTagNum: 1
-
 }

@@ -456,6 +456,7 @@ export default defineComponent({
 </script>
 
 <style lang="css">
+@import "../../styles/theme.style.css";
 /* 从调色板中引入变量 */
 @import '@vuepress/plugin-palette/palette';
 </style>

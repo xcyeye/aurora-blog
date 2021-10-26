@@ -1,4 +1,4 @@
-\<!--此组件是一个分页组件-->
+<!--此组件是一个分页组件-->
 <template>
   <div class="home-cut-page">
     <div @click="prev" v-if="total !== 0" class="home-cut-page-change" :class="{'disabled': currentPage<=1}">
@@ -7,7 +7,7 @@
 
     <div class="home-cut-page-num">
       <li v-for="i in pageList" @click="changePage(i)" :id="getActiveId(i)"
-          :key="i" :class="{'cutPageActive': getCurrentPage == i}">
+          :key="i" :class="{'cutPageActive': getCurrentPage === i}">
         <span>{{i}}</span>
       </li>
     </div>

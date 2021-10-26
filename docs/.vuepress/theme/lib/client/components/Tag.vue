@@ -61,6 +61,7 @@
             <div class="tag-bottom">
               <TagPage v-for="(item,index) in showPageArr"
                        :page-map="item"
+                       :key="index"
                        :theme-property="themeProperty"
               />
             </div>
@@ -68,11 +69,18 @@
           <div class="tag-cloud"></div>
         </template>
         <template #page-center2>
-          <cute-page @changePage="changePage"
-                     :total="allPageMap.length"
-                     :is-tag-page="true"
-                     :key="1"
-                     :page-size="pageSize"/>
+          <el-pagination
+              :page-size="pageSize"
+              :pager-count="5"
+              :key="1"
+              layout="prev, pager, next"
+              :total="allPageMap.length"
+              :current-page="$store.state.currentTagNum"
+              hide-on-single-page
+              @current-change="handleCurrentChange"
+              small
+          >
+          </el-pagination>
         </template>
       </BCenter>
     </template>
@@ -118,15 +126,15 @@ export default {
     }
 
     this.themeProperty = useThemeData().value
-    const loadAllPageMap = setInterval(() => {
+    let loadAllPageMap = setInterval(() => {
       if (this.$store.state.allPageMap.length !== 0) {
         clearInterval(loadAllPageMap)
         this.allPageMap = Array.from(this.$store.state.allPageMap)
         let currentTagNum = this.$store.state.currentTagNum
         if (currentTagNum === 1) {
-          this.changePage(1)
+          this.handleCurrentChange(1)
         }else {
-          this.changePage(currentTagNum)
+          this.handleCurrentChange(currentTagNum)
         }
       }
     },50)
@@ -182,7 +190,7 @@ export default {
             resolve(temPage)
           }).then((temPage) => {
             this.allPageMap = Array.from(temPage)
-            this.changePage(1)
+            this.handleCurrentChange(1)
           })
         }
       },50)
@@ -193,7 +201,7 @@ export default {
     }
   },
   methods: {
-    changePage(currentPageNum) {
+    handleCurrentChange(currentPageNum) {
       this.$store.commit("setCurrentTagNum", {
         currentTagNum: currentPageNum
       })
@@ -230,7 +238,7 @@ export default {
         resolve(temPage)
       }).then((temPage) => {
         this.allPageMap = temPage
-        this.changePage(1)
+        this.handleCurrentChange(1)
       })
 
       this.autoScroll()
@@ -254,7 +262,7 @@ export default {
         resolve(temPage)
       }).then((temPage) => {
         this.allPageMap = temPage
-        this.changePage(1)
+        this.handleCurrentChange(1)
       })
 
       this.autoScroll()
@@ -282,7 +290,7 @@ export default {
         resolve(temPage)
       }).then((temPage) => {
         this.allPageMap = temPage
-        this.changePage(1)
+        this.handleCurrentChange(1)
       })
       this.autoScroll()
     },
@@ -307,7 +315,7 @@ export default {
         resolve(temPage)
       }).then((temPage) => {
         this.allPageMap = temPage
-        this.changePage(1)
+        this.handleCurrentChange(1)
       })
       this.autoScroll()
     }

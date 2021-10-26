@@ -26,8 +26,13 @@ import HomeSidebar from "./components/child/side/HomeSidebar";
 import HomeBottom from "./components/HomeBottom";
 import AuroraGlobal from "./components/global/AuroraGlobal";
 
+//导入element-plus
+import ElementPlus from 'element-plus'
+
 import './styles/index.scss';
 import './styles/photo.scss'
+import 'element-plus/dist/index.css'
+require('!style-loader!css-loader!./styles/coverStyle.css');
 export default defineClientAppEnhance(({ app, router }) => {
     app.component('Badge', Badge);
     app.component('CodeGroup', CodeGroup);
@@ -55,6 +60,7 @@ export default defineClientAppEnhance(({ app, router }) => {
     //路由
     // @ts-ignore
     app.use(store)
+    app.use(ElementPlus)
 
     delete app._context.components.OutboundLink;
     // override the built-in `<OutboundLink>`
