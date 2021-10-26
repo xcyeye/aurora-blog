@@ -43,7 +43,14 @@
           <div style="flex: 3" class="custom-bottom-span custom-common-span">
             <div class="input-range">
               <div class="input-left">
-                <input min="1" max="40" v-model="borderRadius" step="1" type="range">
+                <el-slider
+                    v-model="borderRadius"
+                    :min="0"
+                    :max="40"
+                    :step="0.5"
+                    :show-tooltip="false"
+                ></el-slider>
+                <!--<input min="1" max="40" v-model="borderRadius" step="1" type="range">-->
               </div>
               <div class="input-right">
                 {{borderRadius}}
@@ -58,7 +65,14 @@
           <div style="flex: 3" class="custom-bottom-span custom-common-span">
             <div class="input-range">
               <div class="input-left">
-                <input min="0" max="70" v-model="blur" step="0.1" type="range">
+                <el-slider
+                    v-model="blur"
+                    :min="0"
+                    :max="70"
+                    :step="0.1"
+                    :show-tooltip="false"
+                ></el-slider>
+                <!--<input min="0" max="70" v-model="blur" step="0.1" type="range">-->
               </div>
               <div class="input-right">
                 {{blur}}
@@ -73,7 +87,14 @@
           <div style="flex: 3" class="custom-bottom-span custom-common-span">
             <div class="input-range">
               <div class="input-left">
-                <input min="0" max="1" v-model="opacity" step="0.01" type="range">
+                <el-slider
+                    v-model="opacity"
+                    :min="0"
+                    :max="1"
+                    :step="0.01"
+                    :show-tooltip="false"
+                ></el-slider>
+                <!--<input min="0" max="1" v-model="opacity" step="0.01" type="range">-->
               </div>
               <div class="input-right">
                 {{opacity}}

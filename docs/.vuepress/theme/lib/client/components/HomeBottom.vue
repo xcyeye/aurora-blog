@@ -29,13 +29,11 @@
 
 <script>
 import HomePageItem from "./child/home/HomePageItem";
-import CutePage from "./child/side/CutePage";
 import {useThemeData} from "../composables";
 export default {
   name: "HomeBottom",
   components: {
-    HomePageItem,
-    CutePage,
+    HomePageItem
 
   },
   data() {

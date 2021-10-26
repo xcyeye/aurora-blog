@@ -91,7 +91,6 @@
 import TagCloud from "./child/tag/TagCloud";
 import TagItem from "./child/tag/TagItem";
 import TagPage from "./child/tag/TagPage";
-import CutePage from "./child/side/CutePage";
 import {useThemeData} from "../composables";
 
 export default {
@@ -99,8 +98,7 @@ export default {
   components: {
     TagItem,
     TagPage,
-    TagCloud,
-    CutePage
+    TagCloud
   },
   data() {
     return {
