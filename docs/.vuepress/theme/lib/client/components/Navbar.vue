@@ -2,6 +2,7 @@
   <header ref="navbar" :style="$store.state.borderRadiusStyle +
        $store.state.opacityStyle + $store.state.fontColorStyle +
        $store.state.fontFamilyStyle + $store.state.filterBlurStyle"
+          :class="{'header-bg-show': props.showHeaderBg}"
           id="c-navbar" class="navbar">
     <ToggleSidebarButton />
 
@@ -67,10 +68,27 @@ const siteBrandLink = computed(
   () => themeLocale.value.home || routeLocale.value
 )
 
+let props = defineProps({
+  showHeaderBg: {
+    type: Boolean,
+    default() {
+      return false
+    }
+  }
+})
+
 //设置logo颜色
 const setLogoColor = computed(() => {
   let logoColor = useThemeData().value.logoColor === undefined || useThemeData().value.logoColor == null ? "#2c3e50" : useThemeData().value.logoColor
   return "color: "+ logoColor + ";"
+})
+
+let setHeaderStyle = computed(() => {
+  if (props.showHeaderBg) {
+
+  }else {
+
+  }
 })
 
 const getLogoTitle = computed(() => {

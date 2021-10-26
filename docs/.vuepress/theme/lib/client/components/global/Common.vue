@@ -3,7 +3,7 @@
        :style="$store.state.borderRadiusStyle +
        $store.state.opacityStyle + $store.state.fontColorStyle +
        $store.state.fontFamilyStyle + $store.state.filterBlurStyle">
-    <Navbar class="sidebar-single-enter-animate" :style="$store.state.opacityStyle" v-if="shouldShowNavbar">
+    <Navbar :show-header-bg="showHeaderBg" :style="$store.state.opacityStyle" v-if="shouldShowNavbar">
       <template #before>
         <slot name="navbar-before" />
       </template>
@@ -118,6 +118,7 @@ export default defineComponent({
   },
   data() {
     return {
+      showHeaderBg: true,
       aboutOption: [],
       sidebarRowVar: 5,
       obj: {
@@ -139,7 +140,8 @@ export default defineComponent({
       themeProperty: '',
       //首页壁纸数组
       homeWps: [],
-      mobilePageSidebar: true
+      mobilePageSidebar: true,
+      pageYOffset: 0
     }
   },
   props: {
@@ -232,6 +234,14 @@ export default defineComponent({
     }
   },
   methods: {
+    handleScroll() {
+      if (window.pageYOffset > this.pageYOffset) {
+        this.showHeaderBg = false
+      }else {
+        this.showHeaderBg = true
+      }
+      this.pageYOffset = window.pageYOffset
+    },
     getRandomInt(min, max) {
       min = Math.ceil(min);
       max = Math.floor(max);
@@ -367,6 +377,9 @@ export default defineComponent({
     if (document.documentElement.clientWidth < 719) {
       this.sidebarRowVar = 6
     }
+
+    // 滚动条的获取
+    window.addEventListener('scroll', this.handleScroll, true)
 
     //手机端壁纸
     let screen = document.body.clientWidth

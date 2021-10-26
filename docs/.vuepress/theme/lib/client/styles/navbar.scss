@@ -1,6 +1,10 @@
 @import '_variables';
 
 .navbar {
+  background: rgba(255,255,255,0);
+  transition: all .7s cubic-bezier(0, 0, 0.37, 0.94);
+  //transition: transform 0.5s linear, opacity 0.5s linear;
+  opacity: 0;
   --navbar-line-height: calc(
     var(--navbar-height) - 2 * var(--navbar-padding-v)
   );
@@ -38,6 +42,14 @@
       vertical-align: top;
     }
   }
+}
+
+.header-bg-show:hover {
+  background: rgba(255,255,255,.61);
+}
+
+.header-bg-show {
+  opacity: 1;
 }
 
 @media (max-width: $MQMobile) {

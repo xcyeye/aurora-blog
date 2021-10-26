@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>按钮控制div显示和隐藏（动画）</title>
+    <style>
+        .my-transition {
+            margin-top: 200px;
+            width: 100px;
+            height: 100px;
+            background: yellow;
+            transform: scale(0.5, 0.5);
+            opacity: 0;
+            /*
+                    transition-property: width;
+                    transition-duration: 2s;
+                    transition-timing-function: linear;
+                    transition-delay: 1s;
+                    */
+            transition: transform 0.5s linear, opacity 0.5s linear;
+        }
+
+        .my-click-transiton {
+            opacity: 1;
+            transform: scale(1, 1);
+        }
+    </style>
+    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.js"></script>
+</head>
+
+<body>
+<input type="button" id="mybutton" value="click">
+<div class="my-transition"></div>
+<script>
+    //用js触发CSS3-transition过渡动画
+    $('#mybutton').click(function() {
+        var myTransition = $('.my-transition');
+        if (myTransition.hasClass('my-click-transiton')) {
+            myTransition.removeClass('my-click-transiton')
+        } else {
+            $('.my-transition').addClass('my-click-transiton');
+        }
+    });
+</script>
+</body>
+
+</html>
