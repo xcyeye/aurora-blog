@@ -29,7 +29,7 @@ import AuroraGlobal from "./components/global/AuroraGlobal";
 
 import './styles/index.scss';
 import './styles/photo.scss'
-import './styles/coverStyle.css'
+//import './styles/coverStyle.css'
 export default defineClientAppEnhance(({ app, router }) => {
     app.component('Badge', Badge);
     app.component('CodeGroup', CodeGroup);
