@@ -13,7 +13,7 @@
         <form v-on:submit.prevent>
           <div class="pro-common pro-message">
             <div class="donate-bottom-input pro-common">
-              <input :style="setVerifyStyle" type="text" placeholder="请输入用户名" v-model="username" name="username">
+              <input autocomplete :style="setVerifyStyle" type="text" placeholder="请输入用户名" v-model="username" name="username">
             </div>
             <div class="donate-bottom-button pro-common">
               <button @click="verifyIdentify" :disabled="isEmpty">提交</button>
@@ -21,7 +21,7 @@
           </div>
           <div class="pro-single pro-message">
             <div class="donate-bottom-input">
-              <input :style="setVerifyStyle" placeholder="请输入密码" v-model="password" name="password" type="password">
+              <input autocomplete :style="setVerifyStyle" placeholder="请输入密码" v-model="password" name="password" type="password">
             </div>
           </div>
         </form>

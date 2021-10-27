@@ -1,8 +1,9 @@
 import { h } from 'vue';
 import { defineClientAppEnhance } from '@vuepress/client';
 import { useScrollPromise } from './composables';
-import CodeGroup from './components/global/CodeGroup';
+import 'default-passive-events'
 
+import CodeGroup from './components/global/CodeGroup';
 import Badge from './components/global/Badge.vue';
 import CodeGroupItem from './components/global/CodeGroupItem.vue';
 import OutboundLink from './components/global/OutboundLink.vue';
