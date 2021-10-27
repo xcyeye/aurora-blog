@@ -7,8 +7,7 @@
     <ToggleSidebarButton />
 
     <span ref="siteBrand">
-      <RouterLink :to="siteBrandLink">
-        <!-- v-if="siteBrandLogo"-->
+      <RouterLink to="/">
         <img
           style="border-radius: 30px"
 
@@ -63,10 +62,6 @@ const themeLocale = useThemeLocaleData()
 
 const navbar = ref<HTMLElement | null>(null)
 const siteBrand = ref<HTMLElement | null>(null)
-
-const siteBrandLink = computed(
-  () => themeLocale.value.home || routeLocale.value
-)
 
 let props = defineProps({
   showHeaderBg: {

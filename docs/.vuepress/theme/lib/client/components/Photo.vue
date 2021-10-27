@@ -2,8 +2,7 @@
   <div class="photo">
     <div class="photo-center">
       <div id="photo-li">
-        <li><router-link to="/">首页</router-link></li>
-        <li><router-link to="/photo">photo</router-link></li>
+        <!--<li><router-link to="/">首页</router-link></li>-->
       </div>
     </div>
     <div class="loadingAnimate">
