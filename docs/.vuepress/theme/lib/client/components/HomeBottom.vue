@@ -6,18 +6,10 @@
   <!--<div :style="getHomePageStyle" class="home-bottom" id="home-bottom">-->
     <div class="home-page-tag" :style="getHomePageStyle" id="home-page-tag">
       <home-page-item :index="index" :theme-property="themeProperty" :key="index" v-for="(item,index) in showPageArr" :page-item="item"/>
-      <!--分页条-->
-      <el-pagination
-          :page-size="pageSize"
-          :pager-count="5"
-          layout="prev, pager, next"
-          :total="allPageArr.length"
-          :current-page="$store.state.currentPageNum"
-          hide-on-single-page
-          @current-change="handleCurrentChange"
-          small
-      >
-      </el-pagination>
+      <Pagination @changePage="handleCurrentChange"
+                  :total="allPageArr.length"
+                  :current-page="$store.state.currentPageNum"
+                  :page-size="pageSize"/>
 
     </div>
     <div class="home-page-fun" id="home-page-fun">
@@ -30,12 +22,12 @@
 <script>
 import HomePageItem from "./child/home/HomePageItem";
 import {useThemeData} from "../composables";
-import { ElPagination } from 'element-plus'
+import Pagination from "./Pagination";
 export default {
   name: "HomeBottom",
   components: {
     HomePageItem,
-    ElPagination
+    Pagination
   },
   data() {
     return {

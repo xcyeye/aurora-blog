@@ -1,4 +1,17 @@
-# [1.0.0](https://github.com/qsyyke/vuepress-theme-aurora/compare/v1.4.3...v1.0.0) (2021-10-26)
+# [1.0.0](https://github.com/qsyyke/vuepress-theme-aurora/compare/v1.5.1...v1.0.0) (2021-10-26)
+
+
+
+## [1.5.1](https://github.com/qsyyke/vuepress-theme-aurora/compare/v1.5.0...v1.5.1) (2021-10-26)
+
+
+### Features
+
+* **poster:** add custom poster picture interface ([7906594](https://github.com/qsyyke/vuepress-theme-aurora/commit/7906594ee3e01894fc8d90d257af8bca6a0d3c54))
+
+
+
+# [1.5.0](https://github.com/qsyyke/vuepress-theme-aurora/compare/v1.4.3...v1.5.0) (2021-10-26)
 
 
 ### Bug Fixes

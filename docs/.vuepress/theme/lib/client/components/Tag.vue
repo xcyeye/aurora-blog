@@ -68,19 +68,11 @@
           </div>
           <div class="tag-cloud"></div>
         </template>
-        <template #page-center2>
-          <el-pagination
-              :page-size="pageSize"
-              :pager-count="5"
-              :key="1"
-              layout="prev, pager, next"
-              :total="allPageMap.length"
-              :current-page="$store.state.currentTagNum"
-              hide-on-single-page
-              @current-change="handleCurrentChange"
-              small
-          >
-          </el-pagination>
+        <template #page-center3>
+          <Pagination @changePage="handleCurrentChange"
+                     :total="allPageMap.length"
+                     :current-page="$store.state.currentTagNum"
+                     :page-size="pageSize"/>
         </template>
       </BCenter>
     </template>
@@ -92,7 +84,7 @@ import TagCloud from "./child/tag/TagCloud";
 import TagItem from "./child/tag/TagItem";
 import TagPage from "./child/tag/TagPage";
 import {useThemeData} from "../composables";
-import { ElPagination } from 'element-plus'
+import Pagination from "./Pagination";
 
 export default {
   name: "Tag",
@@ -100,7 +92,7 @@ export default {
     TagItem,
     TagPage,
     TagCloud,
-    ElPagination
+    Pagination
   },
   data() {
     return {

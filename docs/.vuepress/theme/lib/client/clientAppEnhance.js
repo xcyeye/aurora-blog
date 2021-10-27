@@ -28,7 +28,6 @@ import AuroraGlobal from "./components/global/AuroraGlobal";
 
 import './styles/index.scss';
 import './styles/photo.scss'
-import 'element-plus/dist/index.css'
 import './styles/coverStyle.css'
 export default defineClientAppEnhance(({ app, router }) => {
     app.component('Badge', Badge);
