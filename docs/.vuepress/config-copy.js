@@ -1,5 +1,3 @@
-const { path } = require("@vuepress/utils");
-
 module.exports = {
     //在这里配置插件
     plugins: [
@@ -33,7 +31,7 @@ module.exports = {
         ],
     ],
     //这里使用本地主题
-    theme: path.resolve(__dirname, "theme/lib/node/index.js"),
+    theme: 'aurora',
 
     //站点title
     title: "I do not follow,i lives is always all you want",
