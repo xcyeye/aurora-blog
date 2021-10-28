@@ -6,29 +6,7 @@
       <div class="link">
         <div :style="$store.state.borderRadiusStyle + $store.state.opacityStyle"
              class="box link-common" id="c-link">
-<!--          <h2 class="link-center center-common">我的站点</h2>
-          <div class="link-self">
-            <a target="_blank" class="link-self-item" :href="siteInformation.url">
-              <div :style="setSpanStyle(99)" class="link-item"  id="link-item">
-                <div class="link-top">
-                  <div class="link-img">
-                    <img id="link-img" :src="siteInformation.logo" :alt="siteInformation.title">
-                  </div>
-                </div>
-                <div class="link-bottom" :style="setBottomStyle(99)" >
-                  <div class="link-bottom-title link-bottom-common">
-                    <span>{{siteInformation.title}}</span>
-                  </div>
-                  <div class="link-bottom-describe link-bottom-common">
-                    <span id="link-bottom-describe">{{siteInformation.describe}}</span>
-                  </div>
-                </div>
-              </div>
-            </a>
-          </div>-->
 
-
-          <!--<h2 class="link-center center-common">我的朋友</h2>-->
           <div class="about-title link-title">
             <div class="about-title-single">
               <span class="about-title-single-value">我的朋友</span>
@@ -116,6 +94,17 @@ export default defineComponent({
       max = Math.floor(max);
       return Math.floor(Math.random() * (max - min)) + min; //不含最大值，含最小值
     },
+    shuffleArray(array) {
+      return new Promise((resolve,reject) => {
+        for (let i = array.length - 1; i > 0; i--) {
+          let j = Math.floor(Math.random() * (i + 1));
+          let temp = array[i];
+          array[i] = array[j];
+          array[j] = temp;
+        }
+        resolve(array)
+      })
+    },
     shuffle(arr){
       let l = arr.length
       let index, temp
@@ -139,7 +128,11 @@ export default defineComponent({
 
     this.themeProperty = useThemeData().value
     if (this.themeProperty.friendLinks !== undefined && this.themeProperty.friendLinks != null) {
-      this.friendLinks = this.shuffle(this.themeProperty.friendLinks)
+      // this.friendLinks = this.shuffle(this.themeProperty.friendLinks)
+
+      this.shuffleArray(this.themeProperty.friendLinks).then((arr) => {
+        this.friendLinks = arr
+      })
     }
 
     if (this.themeProperty.siteInformation !== undefined) {
