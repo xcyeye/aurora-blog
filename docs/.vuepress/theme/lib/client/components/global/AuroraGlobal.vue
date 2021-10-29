@@ -3,7 +3,7 @@
        :style="$store.state.borderRadiusStyle +
        $store.state.opacityStyle + $store.state.fontColorStyle +
        $store.state.fontFamilyStyle + $store.state.filterBlurStyle">
-    <Navbar class="sidebar-single-enter-animate" :style="$store.state.opacityStyle" v-if="showNavbar">
+    <Navbar :show-header-bg="showHeaderBg" class="sidebar-single-enter-animate" :style="$store.state.opacityStyle" v-if="showNavbar">
       <template #before>
         <slot name="navbar-before" />
       </template>
@@ -90,6 +90,7 @@ export default defineComponent({
   },
   data() {
     return {
+      showHeaderBg: true,
       sidebarRowVar: 5,
       colorStyle: '',
       fontStyle: '',
@@ -99,7 +100,8 @@ export default defineComponent({
       themeProperty: '',
       //首页壁纸数组
       homeWps: [],
-      mobilePageSidebar: true
+      mobilePageSidebar: true,
+      pageYOffset: 0
     }
   },
   computed: {
@@ -111,6 +113,14 @@ export default defineComponent({
     }
   },
   methods: {
+    handleScroll() {
+      if (window.pageYOffset > this.pageYOffset) {
+        this.showHeaderBg = false
+      }else {
+        this.showHeaderBg = true
+      }
+      this.pageYOffset = window.pageYOffset
+    },
     getBodyStyle() {
       let fontColorStyle = this.$store.state.fontColorStyle
       let fontFamilyStyle = this.$store.state.fontFamilyStyle
@@ -223,6 +233,7 @@ export default defineComponent({
     this.colorFontStyle = this.colorStyle + " "+ this.fontStyle
   },
   mounted() {
+    window.addEventListener('scroll', this.handleScroll, true)
     if (document.documentElement.clientWidth < 719) {
       this.sidebarRowVar = 6
     }

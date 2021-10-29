@@ -9,16 +9,16 @@
     <span ref="siteBrand">
       <RouterLink to="/">
         <img
-          style="border-radius: 30px"
+            style="border-radius: 30px"
 
-          class="logo"
-          :src="getLogoImg"
-          :alt="siteBrandTitle"
+            class="logo"
+            :src="getLogoImg"
+            :alt="siteBrandTitle"
         />
         <span
 
-          class="site-name"
-          :style="setLogoColor"
+            class="site-name"
+            :style="setLogoColor"
 
         >
           {{getLogoTitle}}
@@ -53,16 +53,12 @@ import {useThemeData, useThemeLocaleData} from '../composables'
 import NavbarLinks from './NavbarLinks.vue'
 import ToggleDarkModeButton from './ToggleDarkModeButton.vue'
 import ToggleSidebarButton from './ToggleSidebarButton.vue'
-
 defineEmits(['toggle-sidebar'])
-
 const routeLocale = useRouteLocale()
 const siteLocale = useSiteLocaleData()
 const themeLocale = useThemeLocaleData()
-
 const navbar = ref<HTMLElement | null>(null)
 const siteBrand = ref<HTMLElement | null>(null)
-
 let props = defineProps({
   showHeaderBg: {
     type: Boolean,
@@ -71,21 +67,16 @@ let props = defineProps({
     }
   }
 })
-
 //设置logo颜色
 const setLogoColor = computed(() => {
   let logoColor = useThemeData().value.logoColor === undefined || useThemeData().value.logoColor == null ? "#2c3e50" : useThemeData().value.logoColor
   return "color: "+ logoColor + ";"
 })
-
 let setHeaderStyle = computed(() => {
   if (props.showHeaderBg) {
-
   }else {
-
   }
 })
-
 const getLogoTitle = computed(() => {
   let logoTitle = useThemeData().value.logoTitle
   if (logoTitle === undefined) {
@@ -93,7 +84,6 @@ const getLogoTitle = computed(() => {
   }
   return logoTitle
 })
-
 const getLogoImg = computed(() => {
   const themeLocale = useThemeLocaleData()
   let src = themeLocale.value.logo
@@ -104,7 +94,6 @@ const getLogoImg = computed(() => {
     return  src
   }
 })
-
 const siteBrandLogo = computed(() => {
   return  themeLocale.value.logo
 })
@@ -119,35 +108,33 @@ const linksWrapperStyle = computed(() => {
   }
 })
 const enableDarkMode = computed(() => themeLocale.value.darkMode)
-
 // avoid overlapping of long title and long navbar links
 onMounted(() => {
   // TODO: migrate to css var
   // refer to _variables.scss
   const MOBILE_DESKTOP_BREAKPOINT = 719
   const navbarHorizontalPadding =
-    getCssValue(navbar.value, 'paddingLeft') +
-    getCssValue(navbar.value, 'paddingRight')
+      getCssValue(navbar.value, 'paddingLeft') +
+      getCssValue(navbar.value, 'paddingRight')
   const handleLinksWrapWidth = (): void => {
     if (window.innerWidth <= MOBILE_DESKTOP_BREAKPOINT) {
       linksWrapperMaxWidth.value = 0
     } else {
       linksWrapperMaxWidth.value =
-        navbar.value!.offsetWidth -
-        navbarHorizontalPadding -
-        (siteBrand.value?.offsetWidth || 0)
+          navbar.value!.offsetWidth -
+          navbarHorizontalPadding -
+          (siteBrand.value?.offsetWidth || 0)
     }
   }
   handleLinksWrapWidth()
   window.addEventListener('resize', handleLinksWrapWidth, false)
   window.addEventListener('orientationchange', handleLinksWrapWidth, false)
 })
-
 function getCssValue(el: HTMLElement | null, property: string): number {
   // NOTE: Known bug, will return 'auto' if style value is 'auto'
   const val = el?.ownerDocument?.defaultView?.getComputedStyle(el, null)?.[
-    property
-  ]
+      property
+      ]
   const num = Number.parseInt(val, 10)
   return Number.isNaN(num) ? 0 : num
 }
