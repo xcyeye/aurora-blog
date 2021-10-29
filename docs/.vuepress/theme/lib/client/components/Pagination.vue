@@ -128,6 +128,9 @@ export default {
         this.render(1)
       }
     },
+    currentPage(nV) {
+      this.currentPageNum = nV
+    },
     currentPageNum(nv) {
       this.currentPageNum = nv;
       this.getBreakPageNum()

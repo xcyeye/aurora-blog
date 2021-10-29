@@ -210,6 +210,9 @@ export default {
         }
       },30)
     },
+    showTagCloud(e,index) {
+      this.tagIndex = index
+    },
     clickCloudTag(tagItem) {
       //当前鼠标点击的标签
       this.tag = tagItem.tagItem
@@ -255,12 +258,12 @@ export default {
       }).then((temPage) => {
         this.allPageMap = temPage
         this.handleCurrentChange(1)
+        this.$route.query = {
+          tag: categories.tagItem
+        }
       })
 
       this.autoScroll()
-    },
-    showTagCloud(e,index) {
-      this.tagIndex = index
     },
     setIsActive(e,index,item) {
       this.isActive = index
