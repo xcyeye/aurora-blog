@@ -5112,8 +5112,8 @@ body::-webkit-scrollbar-thumb {
     /*box-shadow: rgb(100 100 111 / 20%) 0px 7px 29px 0px;*/
     padding-bottom: 1rem;
     padding-top: 1rem;
-    -webkit-filter: blur(0.1px);
-    filter: blur(0.1px);
+    /* -webkit-filter: blur(0.1px); */
+    /* filter: blur(0.1px); */
 }
 
 .sidebar-page {
