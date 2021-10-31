@@ -1,4 +1,22 @@
-# [1.0.0](https://github.com/qsyyke/vuepress-theme-aurora/compare/v1.5.1...v1.0.0) (2021-10-26)
+# [1.0.0](https://github.com/qsyyke/vuepress-theme-aurora/compare/v1.5.2...v1.0.0) (2021-10-29)
+
+
+### Bug Fixes
+
+* **auroraglobal:** fix auroraGlobal navbar style ([ae9f0d1](https://github.com/qsyyke/vuepress-theme-aurora/commit/ae9f0d147661fa4ff929eb49f845901a48a767f3))
+* fix the problem of blurring in safari sidebar ([5151c67](https://github.com/qsyyke/vuepress-theme-aurora/commit/5151c6732c1f79fd3cc92eb5b8c711b44a46f156))
+* **link:** fix the mismatch between the friendship link logo and url ([41c17b5](https://github.com/qsyyke/vuepress-theme-aurora/commit/41c17b56678792a54f2409cda2d0fe2fec396716))
+* **tag:** fix tag pagination ([2ed2be8](https://github.com/qsyyke/vuepress-theme-aurora/commit/2ed2be820740bca26b6d2c81734f83539114f609))
+
+
+
+## [1.5.2](https://github.com/qsyyke/vuepress-theme-aurora/compare/v1.5.1...v1.5.2) (2021-10-27)
+
+
+### Bug Fixes
+
+* fix refreshing blank page ([5c0f652](https://github.com/qsyyke/vuepress-theme-aurora/commit/5c0f652061fd4b26d1700dc573cb3b065df2e911))
+* fix refreshing blank page ([cb9d6f6](https://github.com/qsyyke/vuepress-theme-aurora/commit/cb9d6f6d9f47369758fca5730ca9f7beaf6f835a))
 
 
 

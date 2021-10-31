@@ -26,10 +26,6 @@
       </RouterLink>
     </span>
 
-    <div id="mobile-search-show" class="search-common">
-      <NavbarSearch/>
-    </div>
-
     <div class="navbar-links-wrapper" :style="linksWrapperStyle">
       <slot name="before" />
 
@@ -39,9 +35,7 @@
 
       <ToggleDarkModeButton v-if="enableDarkMode" />
 
-      <div id="mobile-search-no-show" class="search-common">
-        <NavbarSearch  />
-      </div>
+      <NavbarSearch  />
     </div>
   </header>
 </template>
@@ -100,9 +94,9 @@ const siteBrandLogo = computed(() => {
 const siteBrandTitle = computed(() => siteLocale.value.title)
 const linksWrapperMaxWidth = ref(0)
 const linksWrapperStyle = computed(() => {
-  /*if (!linksWrapperMaxWidth.value) {
+  if (!linksWrapperMaxWidth.value) {
     return {}
-  }*/
+  }
   return {
     maxWidth: linksWrapperMaxWidth.value + 'px',
   }
