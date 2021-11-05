@@ -627,7 +627,7 @@ module.exports = {
         defaultBorderRadius: 10,
 
         //默认的透明度，传入0到1之间的小数，0表示全透明
-        defaultOpacity: 0.4,
+        defaultOpacity: 1,
 
         //首页文章列表透明度是否跟随样式面板改变，true表示跟随，全白色,false表示不跟随
         isHomePageFollow: false,

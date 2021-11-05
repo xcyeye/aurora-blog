@@ -96,7 +96,7 @@ export default {
       fontArr: [],
       colorArr: [],
       isFitter: true,
-      opacity: 0.4,
+      opacity: 1,
       blur: 5,
       borderRadius: 30,
       maxFontColorArr: 8,

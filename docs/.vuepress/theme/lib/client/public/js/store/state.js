@@ -12,7 +12,7 @@ module.exports = {
     isFitter: false,
     varFilterBlur: 5,
     varBorderRadius: 20,
-    varOpacity: 0.5,
+    varOpacity: 1,
     filterBlurStyle: '--fitter-blue: 5px;',
     borderRadiusStyle: '--borderRadius: 20px;',
     opacityStyle: '--opacity: 0.5;',

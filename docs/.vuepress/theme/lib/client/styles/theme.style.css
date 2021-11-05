@@ -913,8 +913,8 @@ a[data-v-d8ec41bc] {
     top: 0;
     right: 0;
     z-index: -2;
-    opacity:0.4;
-    filter: alpha(opacity=60);
+    /*opacity:0.4;*/
+    /*filter: alpha(opacity=60);*/
 }
 
 .posterShade {
@@ -3977,7 +3977,7 @@ body::-webkit-scrollbar-thumb {
     width: 100%;
     display: inline-block;
     content: "";
-    background: rgba(1,1,1,.35);
+    background: rgba(1,1,1,.20);
 }
 @media screen and (max-width: 500px) {
     #mobile-search-no-show {
@@ -4744,7 +4744,7 @@ body::-webkit-scrollbar-thumb {
 }
 
 .home-page-tag-content code {
-    color: whitesmoke;
+    /*color: whitesmoke;*/
     background-color: rgba(255,255,255,0);
 }
 
@@ -4753,7 +4753,10 @@ body::-webkit-scrollbar-thumb {
 }
 
 .home-page-tag-bottom {
-    height: 3rem;
+    /*height: 3rem;*/
+    margin-top: .5rem;
+    margin-bottom: .5rem;
+    height: max-content;
     display: -webkit-box;
     display: -webkit-flex;
     display: -ms-flexbox;
@@ -4776,6 +4779,9 @@ body::-webkit-scrollbar-thumb {
             0deg,rgba(255,255,255,0) 0,#fff 120%);
 }
 
+.home-page-tag-bottom div div:first-child {
+    margin-left: .5rem;
+}
 .home-page-tag-tag-desc {
     -webkit-box-flex: 3;
     -webkit-flex: 3;
@@ -4786,7 +4792,9 @@ body::-webkit-scrollbar-thumb {
     scrollbar-color: transparent transparent;
     padding-left: 20px;
 }
-
+.home-page-tag-tag-desc div {
+   margin-left: 15px;
+}
 .home-page-tag-tag-desc::-webkit-scrollbar {
     display: none;
 }
@@ -4796,10 +4804,10 @@ body::-webkit-scrollbar-thumb {
     display: -webkit-flex;
     display: -ms-flexbox;
     display: flex;
-    -webkit-box-pack: center;
-    -webkit-justify-content: center;
-    -ms-flex-pack: center;
-    justify-content: center;
+    /*-webkit-box-pack: center;*/
+    /*-webkit-justify-content: center;*/
+    /*-ms-flex-pack: center;*/
+    /*justify-content: center;*/
     -webkit-box-align: center;
     -webkit-align-items: center;
     -ms-flex-align: center;
@@ -4808,6 +4816,7 @@ body::-webkit-scrollbar-thumb {
     -webkit-flex: 2.2;
     -ms-flex: 2.2;
     flex: 2.2;
+    text-align: left;
 }
 
 .home-page-info-time {
@@ -5257,6 +5266,7 @@ body::-webkit-scrollbar-thumb {
     -webkit-flex: 1.2;
     -ms-flex: 1.2;
     flex: 1.2;
+    text-align: left;
 }
 
 .icon-thumb-tack:before {

@@ -1,6 +1,6 @@
 <template>
   <div ref="pageItemTop" class="home-page-scroll home-page-tag-item sidebar-single-enter-animate" id="home-page-tag-item">
-    <div class="home-page-tag-img">
+    <div class="home-page-tag-img" @click="goRead(event,pageItem.articleUrl)">
       <div class="home-page-img-gradual"></div>
       <img id="home-page-img" :data-src="getPageUrl(pageItem)" :src="homePageLazyLoadingImg" alt="">
     </div>
@@ -16,8 +16,10 @@
       </div>
       <div class="home-page-tag-bottom">
         <div v-if="pageItem.frontmatter.stick" class="home-page-stick">
-          <span class="aurora-stick aurora-iconfont-common"></span>
-          <span class="aurora-stick-label">置顶</span>
+          <div>
+            <span class="aurora-stick aurora-iconfont-common"></span>
+            <span class="aurora-stick-label">置顶</span>
+          </div>
         </div>
         <div class="home-page-info">
           <div class="home-page-info-time">
@@ -29,12 +31,6 @@
           <div>
             <span class="aurora-iconfont-common aurora-home-tag"></span>
             <span class="home-page-tag-span" v-for="item in getPageTag(pageItem)">{{item}}</span>
-          </div>
-        </div>
-        <div class="home-page-tag-enter">
-          <div @click="goRead(event,pageItem.articleUrl)">
-            <span class="aurora-iconfont-common aurora-home-read"></span>
-            <span class="home-page-read">阅读</span>
           </div>
         </div>
       </div>
