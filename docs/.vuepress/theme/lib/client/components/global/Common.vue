@@ -20,6 +20,12 @@
         @setBodyWallpaper="setBodyWallpaper"
         :is-show-ico="true"
         custom-class="custom-about"/>
+    <slot name="top1"></slot>
+    <slot name="top2"></slot>
+    <slot name="top3"></slot>
+    <slot name="top4"></slot>
+    <slot name="top5"></slot>
+    <slot name="top6"></slot>
     <div
         class="theme-container sidebar-single-enter-animate"
         @touchstart="onTouchStart"
@@ -34,9 +40,9 @@
                    :head-line="headLine">
         </top-image>
 
-        <div id="content">
-          <div id="article-page-parent" class="article-page-parent">
-            <div :class="{noShowSidebar: showSidebar}" id="page-sidebar-left"
+        <div :class="{'content': !isHomePage}">
+          <div id="article-page-parent" :class="{'article-page-parent-pro': !isHomePage}" class="article-page-parent">
+            <div :class="{noShowSidebar: getNoShowSidebar}" id="page-sidebar-left"
                  class="page-sidebar-left">
               <slot name="center1"></slot>
               <slot name="center2"></slot>
@@ -145,6 +151,12 @@ export default defineComponent({
     }
   },
   props: {
+    isHomePage: {
+      type: Boolean,
+      default() {
+        return false
+      }
+    },
     showSidebarLink: {
       type: Boolean,
       default() {
@@ -207,6 +219,14 @@ export default defineComponent({
     }
   },
   computed: {
+    getNoShowSidebar() {
+      // showSidebar
+      if (this.isHomePage) {
+        return false
+      }else {
+        return this.showSidebar
+      }
+    },
     getIndex() {
       return (index,length)=> {
         if (index === 0 && length === 1) {
@@ -312,6 +332,7 @@ export default defineComponent({
     }
   },
   created() {
+
     if (this.$store.state.printRightIndex === 0) {
       console.log("%c vuepress-theme-Aurora %c by qsyyke","font-weight: bold;color: white;display: inline-block;text-align: center;height: 1.5rem;line-height: 1.5rem;background-color: rgba(255,202,212,.8);padding: 10px;border-bottom-left-radius: 13px;border-top-left-radius: 13px;","font-weight: bold;color: white;display: inline-block;text-align: center;height: 1.5rem;line-height: 1.5rem;background-color: rgba(178,247,239,.85);padding: 10px;border-bottom-right-radius: 13px;border-top-right-radius: 13px;")
       console.log("%c Version %c "+ this.$store.state.latestVersion + "","font-weight: bold;color: white;display: inline-block;text-align: center;height: 1.5rem;line-height: 1.5rem;background-color: rgba(255,202,212,.8);padding: 10px;border-bottom-left-radius: 13px;border-top-left-radius: 13px;","font-weight: bold;color: white;display: inline-block;text-align: center;height: 1.5rem;line-height: 1.5rem;background-color: rgba(178,247,239,.85);padding: 10px;border-bottom-right-radius: 13px;border-top-right-radius: 13px;")

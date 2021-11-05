@@ -1,16 +1,16 @@
 <template>
   <div class="home" :style="getHomeHeight">
-    <div class="home-hero-img" id="home-hero-img">
+    <div class="home-hero-img" :class="{'home-hero-img-custom': isHome}" id="home-hero-img">
       <img :src="getHeroImg" alt="">
     </div>
     <slot name="home1"></slot>
-    <div v-if="randomSawRes" class="home-random-say">
+    <div v-if="randomSawRes" :class="{'home-random-say-custom': isHome}" class="home-random-say">
       <div v-if="isHome">
         <span>「 {{obj.output}}」</span>
       </div>
     </div>
     <slot name="home2"></slot>
-    <div class="home-social">
+    <div :class="{'home-social-custom': isHome}" class="home-social">
       <HomeSidebarSocialItem :sidebar-row-pc-var="socialsIsHomeNum + 1"
                              :sidebar-width-pc-var="'65vw'"
                              :sidebar-row-var="socialsIsHomeNum + 1"
@@ -304,6 +304,11 @@ export default defineComponent({
     }
   },
   computed: {
+    getHomeSocial() {
+      if (this.isHome) {
+        return 'home-social-custom'
+      }
+    },
     getHeroImg() {
       const themeLocale = useThemeLocaleData()
       let src = themeLocale.value.heroImg

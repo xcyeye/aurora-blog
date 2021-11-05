@@ -1,6 +1,7 @@
 <template>
   <common :is-sticky-sidebar="!frontmatter.home" :head-line="headLine"
           :is-show-head-line="!frontmatter.home"
+          :is-home-page="frontmatter.home"
           :is-show-catalog="!frontmatter.home"
           :is-show-top-img="getIsHome">
     <template #center1>
