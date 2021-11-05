@@ -2,8 +2,6 @@
   <RouterLink
     v-if="isRouterLink"
     class="nav-link"
-    :chuchen="item.text"
-
     :to="item.link"
     :aria-label="linkAriaLabel"
     v-bind="$attrs"

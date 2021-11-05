@@ -974,6 +974,7 @@ a[data-v-d8ec41bc] {
     text-align: center;
 }
 
+
 .theme-default-content h1:after {
     text-align: center;
     content: "";
@@ -988,7 +989,11 @@ a[data-v-d8ec41bc] {
 }
 
 .theme-default-content h2 {
-    text-align: center;
+    text-align: left;
+}
+
+.theme-default-content h3 {
+    text-align: left;
 }
 
 .theme-default-content li {
@@ -1372,6 +1377,18 @@ a[data-v-d8ec41bc] {
     /*-webkit-box-shadow: rgba(17, 17, 26, 0.1) 0px 1px 0px, rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 48px;*/
     /*box-shadow: rgba(17, 17, 26, 0.1) 0px 1px 0px, rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 48px;*/
     opacity: .85;
+
+    /*box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;*/
+    /*box-shadow: rgba(0, 0, 0, 0.17) 0px -23px 25px 0px inset, rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;*/
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
+
+}
+
+.sidebar-single-common {
+
+}
+.page {
+
 }
 
 .tag-page-item {
@@ -1392,8 +1409,8 @@ a[data-v-d8ec41bc] {
     -ms-flex-align: center;
     align-items: center;
     background-color: rgba(255,255,255,.7);
-    -webkit-box-shadow: rgb(50 50 93 / 25%) 0px 50px 100px -20px, rgb(0 0 0 / 30%) 0px 30px 60px -30px;
-    box-shadow: rgb(50 50 93 / 25%) 0px 50px 100px -20px, rgb(0 0 0 / 30%) 0px 30px 60px -30px;
+    /*-webkit-box-shadow: rgb(50 50 93 / 25%) 0px 50px 100px -20px, rgb(0 0 0 / 30%) 0px 30px 60px -30px;*/
+    /*box-shadow: rgb(50 50 93 / 25%) 0px 50px 100px -20px, rgb(0 0 0 / 30%) 0px 30px 60px -30px;*/
 }
 
 .tag-page-left {
@@ -4908,9 +4925,18 @@ body::-webkit-scrollbar-thumb {
 
 .navbar-links-item {
     font-family: var(--fontFamily);
-    color: var(--fontColor);
+    /*color: var(--fontColor);*/
+    color: #8093f1;
 }
 
+.navbar-links-item a,.navbar-links-item button {
+    font-weight: bold;
+}
+
+.dropdown-wrapper .nav-dropdown {
+    /*color: var(--fontColor);*/
+    /*color: rgba(172,237,255,.7);*/
+}
 /*首页侧边栏样式*/
 
 .home-sidebar {

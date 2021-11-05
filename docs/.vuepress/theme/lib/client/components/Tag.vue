@@ -70,6 +70,7 @@
         </template>
         <template #page-center3>
           <Pagination @changePage="handleCurrentChange"
+                      v-if="allPageMap.length !== 1"
                      :total="allPageMap.length"
                      :current-page="$store.state.currentTagNum"
                      :page-size="pageSize"/>
