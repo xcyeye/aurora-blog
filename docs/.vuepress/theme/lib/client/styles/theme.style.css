@@ -1374,20 +1374,8 @@ a[data-v-d8ec41bc] {
     -webkit-align-items: center;
     -ms-flex-align: center;
     align-items: center;
-    /*-webkit-box-shadow: rgba(17, 17, 26, 0.1) 0px 1px 0px, rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 48px;*/
-    /*box-shadow: rgba(17, 17, 26, 0.1) 0px 1px 0px, rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 48px;*/
     opacity: .85;
-
-    /*box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;*/
-    /*box-shadow: rgba(0, 0, 0, 0.17) 0px -23px 25px 0px inset, rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;*/
     box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
-
-}
-
-.sidebar-single-common {
-
-}
-.page {
 
 }
 
@@ -3303,6 +3291,16 @@ body::-webkit-scrollbar-thumb {
 /* 自适应 */
 @media screen and (max-width: 719px) {
 
+    .about-bar-title::-webkit-scrollbar-button{
+        width: 0;
+    }
+    .about-bar-title::-webkit-scrollbar {
+        display: none;
+    }
+    .about-bar-title {
+        overflow-x: scroll;
+    }
+
     .sidebar-single-common:last-child {
         margin-bottom: 0rem;
     }
@@ -3374,7 +3372,7 @@ body::-webkit-scrollbar-thumb {
         margin-left: 0;
     }
     #article-page-parent {
-        width: 96%;
+        width: 92%;
         display: block;
     }
     #theme-default-content {
@@ -3637,7 +3635,7 @@ body::-webkit-scrollbar-thumb {
         display: none;
     }
     #home-bottom {
-        width: 96%;
+        width: 93%;
     }
     #home-page-tag {
         width: 100%;
@@ -4014,39 +4012,49 @@ body::-webkit-scrollbar-thumb {
         position: absolute;
         right: 2%;
     }
+
     #welcome {
         width: 85%;
         right: 0;
     }
+
     #tag-select-common {
         -webkit-box-flex: 3;
         -webkit-flex: 3;
         -ms-flex: 3;
         flex: 3;
     }
+
     .mobile-record {
         /*margin-bottom: -3rem;*/
     }
+
     #control-comment .mobile-record .box {
         margin-bottom: 0rem;
     }
+
     #home-social-item img {
         margin-left: .6rem;
     }
+
     #home-social {
         bottom: -5rem;
         margin-bottom: 2rem;
     }
+
     .hero {
         margin-top: 115px;
     }
+
     #show-img:before {
         margin-top: -53px;
     }
+
     #setIco {
         right: .3rem;
         bottom: 1.3rem;
     }
+
     #social_spin_po {
         right: .3rem;
         bottom: 4.3rem;
@@ -4064,29 +4072,35 @@ body::-webkit-scrollbar-thumb {
     #page-top {
         height: 15rem;
     }
+
     #top-image {
         top: -webkit-calc(7vh);
         top: calc(7vh);
     }
+
     #page-top-record {
         width: 100%;
     }
+
     #page-record-bot-tag {
         max-width: -webkit-calc(90vw);
         max-width: calc(90vw);
     }
+
     #c-page {
         position: relative;
         width: 96%;
         text-align: center;
         margin: 2rem auto;
     }
+
     .prev {
         float: left;
     }
+
     #c-link {
         position: relative;
-        width: 96%;
+        width: 100%;
         text-align: center;
         margin: 0 auto;
         margin-bottom: 2rem;
@@ -4096,13 +4110,16 @@ body::-webkit-scrollbar-thumb {
         width: 100%;
         margin-left: 0;
     }
+
     #link-self-item {
         width: 100%;
         margin-left: 0;
     }
+
     .about-desc {
         text-align: left;
     }
+
     #link-self-top-left {
         width: 8rem;
     }
@@ -4120,6 +4137,7 @@ body::-webkit-scrollbar-thumb {
         background-repeat: no-repeat;
         background-size: cover;
     }
+
     .center-common:after {
         content: "";
         display: block;
@@ -4139,15 +4157,17 @@ body::-webkit-scrollbar-thumb {
         background-position: 25.5% -5px;
         background-repeat: no-repeat;
     }
+
     .c-center {
         position: relative;
         width: 96%;
         left: 2%;
         text-align: center;
     }
+
     .footer {
         position: relative;
-        width: 96%;
+        width: 92%;
         text-align: center;
         display: inline-block;
     }
