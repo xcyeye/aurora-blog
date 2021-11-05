@@ -56,8 +56,8 @@ export default {
     let showThemeCopyright = this.themeProperty.isShowThemeCopyright
     if (showThemeCopyright === undefined || showThemeCopyright == null || showThemeCopyright === true) {
       //默认为TRUE，显示页脚主题版权
-      let themeCopyright = "theme&nbsp;<a href='https://github.com/qsyyke/vuepress-theme-ccds' target='_blank'>ccds</a>" +
-          "&nbsp;by&nbsp;<a href='https://theme-ccds.cco.vin' target='_blank'>qsyyke</a>"
+      let themeCopyright = "theme&nbsp;<a href='https://github.com/qsyyke/vuepress-theme-ccds' target='_blank'>Aurora</a>" +
+          "&nbsp;by&nbsp;<a href='https://aurora.cco.vin/' target='_blank'>qsyyke</a>"
       // this.footerArr.push(themeCopyright)
       let set = new Set()
       for (let i = 0; i < this.footerArr.length; i++) {
