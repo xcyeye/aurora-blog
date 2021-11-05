@@ -35,7 +35,7 @@
 
       <ToggleDarkModeButton v-if="enableDarkMode" />
 
-      <NavbarSearch  />
+      <NavbarSearch/>
     </div>
   </header>
 </template>

@@ -45,7 +45,7 @@ export default defineComponent({
   },
   data() {
     return {
-      lazyLoadingImg: null,
+      lazyLoadingImg: 'https://ooszy.cco.vin/img/blog-public/ljz.gif',
       originPageData: '',
       posterContent: '',
       title: '',
@@ -69,6 +69,17 @@ export default defineComponent({
   },
   emits: ['getHeadLine'],
   created() {
+    this.$nextTick(() => {
+      let imgs = document.querySelectorAll(".pageContent img")
+      for (let i = 0; i < imgs.length; i++) {
+        let originSrc = imgs[i].src
+        if (imgs[i].getAttribute("data-origin") == null) {
+          //图片没有设置懒加载
+          imgs[i].setAttribute("data-origin",originSrc)
+          imgs[i].src = this.lazyLoadingImg
+        }
+      }
+    })
 
     //如果手机端侧边栏打开的，那么就关闭
     if (this.$store.state.openMobileSidebar) {
@@ -221,6 +232,12 @@ export default defineComponent({
     }
   },
   mounted() {
+    let imgs = document.querySelectorAll(".pageContent img")
+    for (let i = 0; i < imgs.length; i++) {
+      let originSrc = imgs[i].src
+      imgs[i].setAttribute("data-origin",originSrc)
+      imgs[i].src = this.lazyLoadingImg
+    }
 
     $(window).on("scroll",() => {
       this.start()
@@ -231,19 +248,11 @@ export default defineComponent({
         this.posterContent = res
       })
       this.setMeta()
+      let h1s = $("#c-page h1")
+      if (h1s.length > 0) {
+        $(h1s[0]).css('display','none')
+      }
     })
-
-    let imgs = $(".pageContent img")
-    for (let i = 0; i < imgs.length; i++) {
-      let originSrc = imgs[i].src
-      imgs[i].setAttribute("data-origin",originSrc)
-      imgs[i].src = this.lazyLoadingImg
-    }
-
-    let h1s = $("#c-page h1")
-    if (h1s.length > 0) {
-      $(h1s[0]).css('display','none')
-    }
   }
 })
 </script>

@@ -1,5 +1,7 @@
 # 页脚设置
 
+![](/avatar.png)
+
 ## 配置
 
 页脚组件位置`docs/.vuepress/theme/lib/client/components/global/Footer.vue`

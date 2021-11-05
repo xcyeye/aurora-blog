@@ -2,17 +2,6 @@
   <common :is-sticky-sidebar="true" :show-mood-edit="showMoodEdit" :is-show-side-bar="false" :is-show-top-img="true" :is-show-head-line="false">
     <template #center1>
       <div class="mood-first">
-
-        <!--在线编写的心情文件-->
-        <div class="link mood-control" v-for="(item,index) in onlineMoods">
-          <div :style="$store.state.borderRadiusStyle + $store.state.opacityStyle"
-               class="c-page online-mood mood-article">
-            <div class="moods-page" id="moods-page">
-              <mood-item :show-online-mood="true" :moods="onlineMoods" :mood-item="item" :theme-property="themeProperty"/>
-            </div>
-          </div>
-        </div>
-
         <!--下面是在本地存放于docs/mood中的md文件-->
         <div class="link mood-control" v-for="(item,index) in moods">
           <div :style="$store.state.borderRadiusStyle + $store.state.opacityStyle"
@@ -41,7 +30,6 @@ import myData from '@temp/my-data'
 import {useThemeData} from "../composables";
 
 //导入配置属性
-const network = require('../public/js/network.js')
 export default defineComponent({
   name: 'Mood',
 
@@ -58,7 +46,6 @@ export default defineComponent({
       themeProperty: '',
       hexToRgbColor: '',
       moods: [],
-      onlineMoods: [],
       showMoodEdit: false,
       siteName: ''
     }
@@ -87,25 +74,6 @@ export default defineComponent({
       this.siteName = this.themeProperty.addMood.siteName
     }
 
-    if (showOnlineMood) {
-      //使用在线展示
-      network.cors({
-        baseURL: 'https://picture.cco.vin/',
-        url: '/mood/all',
-        method: 'GET',
-        timeout: 70000,
-        responseType: 'json',
-        params: {
-          siteName: this.siteName
-        }
-      }).then((res) => {
-        this.onlineMoods = res.data.entity.moods
-        this.$store.commit("setEditMoods",{
-          editMoods: res.data.entity.moods
-        })
-      })
-    }
-
     new Promise((resolve,reject) => {
       for (let i = 0; i < myData.length; i++) {
         if (myData[i].path.search("/moods/") === 0) {
@@ -114,6 +82,8 @@ export default defineComponent({
         }
       }
       resolve()
+    }).then(() => {
+      console.log(this.moods)
     })
 
     if (this.themeProperty.ico !== undefined) {
@@ -133,32 +103,6 @@ export default defineComponent({
     }
     this.hexToRgbColor = this.hexToRgb(background_color)
   },
-  /*mounted() {
-    let showOnlineMood = this.themeProperty.showOnlineMood
-    if (showOnlineMood === undefined || showOnlineMood == null) {
-      showOnlineMood = false
-    }
-
-    if (showOnlineMood) {
-      //使用在线展示
-      network.cors({
-        // baseURL: 'https://picture.cco.vin/',
-        baseURL: 'http://localhost:8900/',
-        url: '/mood/all',
-        method: 'GET',
-        timeout: 70000,
-        responseType: 'json',
-        params: {
-          siteName: host
-        }
-      }).then((res) => {
-        this.onlineMoods = res.data.entity.moods
-        this.$store.commit("setEditMoods",{
-          editMoods: res.data.entity.moods
-        })
-      })
-    }
-  },*/
   computed: {
     setBottomStyle() {
       return (index) => {
@@ -173,11 +117,21 @@ export default defineComponent({
           this.hexToRgbColor.g + "," + this.hexToRgbColor.b + "," +
           (this.$store.state.varOpacity * 1.2) + ");"
     },
-    getOnlineMoods() {
-      return this.$store.state.editMoods
-    }
   },
   methods: {
+    compare(updatedTime) {
+      return  function( object1, object2) {
+        let value1  = object1.date;
+        let value2  = object2.date;
+        if (value2  < value1) {
+          return  1;
+        }  else  if (value2  > value1) {
+          return  - 1;
+        }  else {
+          return  0;
+        }
+      }
+    },
     getRandomInt(min, max) {
       min = Math.ceil(min);
       max = Math.floor(max);
@@ -191,11 +145,6 @@ export default defineComponent({
         b: parseInt(result[3], 16)
       } : null;
     },
-  },
-  watch: {
-    getOnlineMoods(nV,oV) {
-      this.onlineMoods = nV
-    }
   }
 })
 </script>
