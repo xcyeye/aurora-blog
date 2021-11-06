@@ -5020,6 +5020,7 @@ body::-webkit-scrollbar-thumb {
     animation-iteration-count: 1;
     -webkit-animation-fill-mode: forwards;
     animation-fill-mode: forwards;
+    cursor: pointer;
 }
 
 @keyframes navbar-link-item-hover {

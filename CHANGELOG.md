@@ -1,9 +1,18 @@
-# [1.0.0](https://github.com/qsyyke/vuepress-theme-aurora/compare/v1.5.3...v1.0.0) (2021-11-02)
+# [1.0.0](https://github.com/qsyyke/vuepress-theme-aurora/compare/v1.5.3...v1.0.0) (2021-11-06)
 
 
 ### Bug Fixes
 
+* **footer:** fix footer theme copyright info ([0d7a767](https://github.com/qsyyke/vuepress-theme-aurora/commit/0d7a76781ac473c89769f1ee19580a91c6438bcf))
+* **page:** repair the article page from the outside, the picture is invalid ([6df136f](https://github.com/qsyyke/vuepress-theme-aurora/commit/6df136f87a5b9ec3961c8258a4a667b94adc5487))
 * **search:** fix search style ([285f33e](https://github.com/qsyyke/vuepress-theme-aurora/commit/285f33e0ba847eea940e7786c1d5b1d2a06701b0))
+
+
+### Features
+
+* **about page:** remove the li subscript on the about page ([1e57c17](https://github.com/qsyyke/vuepress-theme-aurora/commit/1e57c17e2e805beadef551f617f16bda0ec2806e))
+* **navbar:** custom navbar icon ([670add7](https://github.com/qsyyke/vuepress-theme-aurora/commit/670add79f988af7d276c93212df9ebc268b09048))
+* **page:** custom h tag icon ([c7901f7](https://github.com/qsyyke/vuepress-theme-aurora/commit/c7901f79cf47583e407bab0ba8f4f9962de94e3f))
 
 
 
