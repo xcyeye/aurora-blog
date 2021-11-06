@@ -810,7 +810,21 @@ module.exports = {
         showAddMood: true,
 
         //生成海报的顶部图片api接口，请注意，该接口需要直接返回图片地址，不能有跨域问题，设置之前，可以先使用ajax看是否存在跨域
-        postImgApi: 'https://picture.cco.vin/pic/rmimg?type=bing'
+        postImgApi: 'https://picture.cco.vin/pic/rmimg?type=bing',
+
+        /*
+        * 以下为v1.5.4新增功能
+        * */
+
+        //文章h2标签的icon
+        articleH2Icon: '🌸',
+
+        //文章h3标签的icon
+        articleH3Icon: '🐳',
+
+        //文章h4标签及h4标签之后的标签的icon
+        articleH4Icon: '⛄',
+
 
         /*
         * 下面这些是在v1.3.2中移除的配置，但是在V1.3.2之前的版本中，可能还可以使用，某些配置我不确定具体在哪个

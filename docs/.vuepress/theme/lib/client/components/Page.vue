@@ -257,15 +257,27 @@ export default defineComponent({
       let medium_zoom_content_h3Tag = document.querySelectorAll(".medium-zoom-content h3 a");
       let medium_zoom_content_h4Tag = document.querySelectorAll(".medium-zoom-content h4 a,.medium-zoom-content h5 a,.medium-zoom-content h6 a");
       for (let i = 0; i < medium_zoom_content_h2Tag.length; i++) {
-        medium_zoom_content_h2Tag[i].innerText = "🌸"
+        if (this.themeProperty.articleH2Icon !== undefined) {
+          medium_zoom_content_h2Tag[i].innerText = this.themeProperty.articleH2Icon
+        }else {
+          medium_zoom_content_h2Tag[i].innerText = "🌸"
+        }
       }
 
       for (let i = 0; i < medium_zoom_content_h3Tag.length; i++) {
-        medium_zoom_content_h3Tag[i].innerText = "🐳"
+        if (this.themeProperty.articleH3Icon !== undefined) {
+          medium_zoom_content_h3Tag[i].innerText = this.themeProperty.articleH3Icon
+        }else {
+          medium_zoom_content_h3Tag[i].innerText = "🐳"
+        }
       }
 
       for (let i = 0; i < medium_zoom_content_h4Tag.length; i++) {
-        medium_zoom_content_h4Tag[i].innerText = "⛄"
+        if (this.themeProperty.articleH4Icon !== undefined) {
+          medium_zoom_content_h4Tag[i].innerText = this.themeProperty.articleH4Icon
+        }else {
+          medium_zoom_content_h4Tag[i].innerText = "⛄"
+        }
       }
     })
   }

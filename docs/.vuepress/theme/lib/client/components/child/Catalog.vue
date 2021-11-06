@@ -23,7 +23,8 @@
                :class="{catalogChildrenActive: catalogChildrenActive === itemLevel2Index }"
                class="catalog-page-children-item">
             <div class="catalog-page-children-title">
-              <router-link :to="itemLevel1.path + '#' + itemLevel2.title">
+              <!--<router-link :to="itemLevel1.path + '#' + itemLevel2.title">-->
+              <router-link :to="getCatalogPath(itemLevel1.path,itemLevel2.title)">
                 <span @click="clickCatalogTitle" :slug="itemLevel2.slug">{{itemLevel2.title}}</span>
               </router-link>
             </div>
@@ -86,6 +87,16 @@ export default {
     }
   },
   computed: {
+    getCatalogPath() {
+      return (path,title) => {
+        let pathSubstr = path.substr(path.length -1,1);
+        if (pathSubstr === "/") {
+          path = path.substr(0,path.length -1)
+        }
+
+        return path + "#" + title
+      }
+    },
     getCatalogLevel1Title() {
       return (itemLevel1) => {
         let title = itemLevel1.title
