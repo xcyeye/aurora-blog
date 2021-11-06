@@ -493,65 +493,166 @@ module.exports = {
         //友情链接数组
         friendLinks: [
             {
-                //网站标题
-                title: "XI溪",
+                title: '我的朋友',
+                links: [
+                    {
+                        //网站标题
+                        title: "XI溪",
 
-                //站点链接
-                url: "http://www.xiaoxuya.top",
+                        //站点链接
+                        url: "http://www.xiaoxuya.top",
 
-                //站点logo
-                logo: "https://www.xiaoxuya.top/img/logo.png",
+                        //站点logo
+                        logo: "https://www.xiaoxuya.top/img/logo.png",
 
-                //站点描述
-                describe: "人生若只是初见,何事秋风悲画扇",
+                        //站点描述
+                        describe: "人生若只是初见,何事秋风悲画扇",
+                        cover: 'https://ooszy.cco.vin/img/blog-note/image-20211106100103898.png?x-oss-process=style/pictureProcess1'
+                    },
+                    {
+                        title: "左眼会陪右眼哭の博客",
+                        url: "http://qkongtao.cn/",
+                        logo: "http://qiniu.qkongtao.cn/2020/12/d11-e1628358435552.png",
+                        describe: "干嘛这么想不开，要在脸上贴个输字！",
+                        cover: 'https://ooszy.cco.vin/img/blog-note/image-20211106101057042.png?x-oss-process=style/pictureProcess1'
+                    },
+                    {
+                        title: "[ Blog We]",
+                        url: "https://blogwe.com/",
+                        logo: "https://blogwe.com/favicon.ico",
+                        describe: "博客大全-做最好的博客导航！",
+                        cover: "https://ooszy.cco.vin/img/blog-note/image-20211106100344348.png?x-oss-process=style/pictureProcess1"
+                    },
+                    {
+                        title: "I Am I",
+                        url: "https://5ime.cn",
+                        logo: "https://cdn.jsdelivr.net/gh/5ime/img/avatar.jpg",
+                        describe: "永远相信美好的事情即将发生",
+                        cover: 'https://ooszy.cco.vin/img/blog-note/image-20211106100424035.png?x-oss-process=style/pictureProcess1'
+                    },
+                    {
+                        title: "Davinci的红茶馆",
+                        url: "https://davincievans.top/",
+                        logo: "https://cdn.jsdelivr.net/gh/DavinciEvans/Imgs-bed@master/gallery/avatar.jpg",
+                        describe: "You are all stardust.",
+                        cover: 'https://ooszy.cco.vin/img/blog-note/image-20211106100502873.png?x-oss-process=style/pictureProcess1'
+                    },
+                    {
+                        title: "皮皮凛の小窝",
+                        url: "https://owomoe.net/",
+                        logo: "https://cdn.jsdelivr.net/gh/AyagawaSeirin/Assets/img/logo.jpg",
+                        describe: "永远相信美好的事情即将发生~",
+                        cover: 'https://ooszy.cco.vin/img/blog-note/image-20211106100608395.png?x-oss-process=style/pictureProcess1'
+                    },
+                    {
+                        title: "月月月子喵",
+                        url: "https://haozi.moe",
+                        logo: "https://haozi.moe/css/images/logo_christmas.png",
+                        describe: "可爱的月子酱",
+                        cover: 'https://ooszy.cco.vin/img/blog-note/image-20211106100009647.png?x-oss-process=style/pictureProcess1'
+                    },
+                    {
+                        title: "疫情在线捐款系统",
+                        url: "http://yq.vipblogs.cn/",
+                        logo: "https://ooszy.cco.vin/img/blog-public/avatar.jpg",
+                        describe: "基于echarts的疫情捐款系统",
+                        cover: ''
+                    },
+                    {
+                        title: "疫情在线捐款系统后台登录",
+                        url: "http://admin.vipblogs.cn/",
+                        logo: "https://ooszy.cco.vin/img/blog-public/avatar.jpg",
+                        describe: "该捐款系统后台登录",
+                        cover: ''
+                    },
+                ]
             },
             {
-                title: "左眼会陪右眼哭の博客",
-                url: "http://qkongtao.cn/",
-                logo: "http://qiniu.qkongtao.cn/2020/12/d11-e1628358435552.png",
-                describe: "干嘛这么想不开，要在脸上贴个输字！",
+                title: '大佬',
+                links: [
+                    {
+                        //网站标题
+                        title: "XI溪",
+
+                        //站点链接
+                        url: "http://www.xiaoxuya.top",
+
+                        //站点logo
+                        logo: "https://www.xiaoxuya.top/img/logo.png",
+
+                        //站点描述
+                        describe: "人生若只是初见,何事秋风悲画扇",
+                        cover: 'https://ooszy.cco.vin/img/blog-note/image-20211106100103898.png?x-oss-process=style/pictureProcess1'
+                    },
+                    {
+                        title: "左眼会陪右眼哭の博客",
+                        url: "http://qkongtao.cn/",
+                        logo: "http://qiniu.qkongtao.cn/2020/12/d11-e1628358435552.png",
+                        describe: "干嘛这么想不开，要在脸上贴个输字！",
+                        cover: 'https://ooszy.cco.vin/img/blog-note/image-20211106101057042.png?x-oss-process=style/pictureProcess1'
+                    },
+                    {
+                        title: "皮皮凛の小窝",
+                        url: "https://owomoe.net/",
+                        logo: "https://cdn.jsdelivr.net/gh/AyagawaSeirin/Assets/img/logo.jpg",
+                        describe: "永远相信美好的事情即将发生~",
+                        cover: 'https://ooszy.cco.vin/img/blog-note/image-20211106100608395.png?x-oss-process=style/pictureProcess1'
+                    },
+                    {
+                        title: "月月月子喵",
+                        url: "https://haozi.moe",
+                        logo: "https://haozi.moe/css/images/logo_christmas.png",
+                        describe: "可爱的月子酱",
+                        cover: 'https://ooszy.cco.vin/img/blog-note/image-20211106100009647.png?x-oss-process=style/pictureProcess1'
+                    },
+                ]
             },
             {
-                title: "[ Blog We]",
-                url: "https://blogwe.com/",
-                logo: "https://blogwe.com/favicon.ico",
-                describe: "博客大全-做最好的博客导航！",
-            },
-            {
-                title: "I Am I",
-                url: "https://5ime.cn",
-                logo: "https://cdn.jsdelivr.net/gh/5ime/img/avatar.jpg",
-                describe: "永远相信美好的事情即将发生",
-            },
-            {
-                title: "Davinci的红茶馆",
-                url: "https://davincievans.top/",
-                logo: "https://cdn.jsdelivr.net/gh/DavinciEvans/Imgs-bed@master/gallery/avatar.jpg",
-                describe: "You are all stardust.",
-            },
-            {
-                title: "皮皮凛の小窝",
-                url: "https://owomoe.net/",
-                logo: "https://cdn.jsdelivr.net/gh/AyagawaSeirin/Assets/img/logo.jpg",
-                describe: "永远相信美好的事情即将发生~",
-            },
-            {
-                title: "月月月子喵",
-                url: "https://haozi.moe",
-                logo: "https://haozi.moe/css/images/logo_christmas.png",
-                describe: "可爱的月子酱",
-            },
-            {
-                title: "疫情在线捐款系统",
-                url: "http://yq.vipblogs.cn/",
-                logo: "https://ooszy.cco.vin/img/blog-public/avatar.jpg",
-                describe: "基于echarts的疫情捐款系统",
-            },
-            {
-                title: "疫情在线捐款系统后台登录",
-                url: "http://admin.vipblogs.cn/",
-                logo: "https://ooszy.cco.vin/img/blog-public/avatar.jpg",
-                describe: "该捐款系统后台登录",
+                title: '小伙伴',
+                links: [
+                    {
+                        //网站标题
+                        title: "XI溪",
+
+                        //站点链接
+                        url: "http://www.xiaoxuya.top",
+
+                        //站点logo
+                        logo: "https://www.xiaoxuya.top/img/logo.png",
+
+                        //站点描述
+                        describe: "人生若只是初见,何事秋风悲画扇",
+                        cover: 'https://ooszy.cco.vin/img/blog-note/image-20211106100103898.png?x-oss-process=style/pictureProcess1'
+                    },
+                    {
+                        title: "[ Blog We]",
+                        url: "https://blogwe.com/",
+                        logo: "https://blogwe.com/favicon.ico",
+                        describe: "博客大全-做最好的博客导航！",
+                        cover: "https://ooszy.cco.vin/img/blog-note/image-20211106100344348.png?x-oss-process=style/pictureProcess1"
+                    },
+                    {
+                        title: "Davinci的红茶馆",
+                        url: "https://davincievans.top/",
+                        logo: "https://cdn.jsdelivr.net/gh/DavinciEvans/Imgs-bed@master/gallery/avatar.jpg",
+                        describe: "You are all stardust.",
+                        cover: 'https://ooszy.cco.vin/img/blog-note/image-20211106100502873.png?x-oss-process=style/pictureProcess1'
+                    },
+                    {
+                        title: "皮皮凛の小窝",
+                        url: "https://owomoe.net/",
+                        logo: "https://cdn.jsdelivr.net/gh/AyagawaSeirin/Assets/img/logo.jpg",
+                        describe: "永远相信美好的事情即将发生~",
+                        cover: 'https://ooszy.cco.vin/img/blog-note/image-20211106100608395.png?x-oss-process=style/pictureProcess1'
+                    },
+                    {
+                        title: "疫情在线捐款系统",
+                        url: "http://yq.vipblogs.cn/",
+                        logo: "https://ooszy.cco.vin/img/blog-public/avatar.jpg",
+                        describe: "基于echarts的疫情捐款系统",
+                        cover: ''
+                    },
+                ]
             },
         ],
 
@@ -568,9 +669,17 @@ module.exports = {
 
             //自己站点描述
             describe: "vuepress-theme-Aurora是一款简洁，美观，功能强大的静态主题",
+            cover: 'https://ooszy.cco.vin/img/blog-note/image-20211106100103898.png?x-oss-process=style/pictureProcess1',
 
             //自己的头像
-            email: "cqycco@gmail.com",
+            contact: "email: cqycco@gmail.com, qq:2291308094",
+            otherDescribe: [
+                '申请友链请按照下面格式，在此页面留言，我看到就会进行添加',
+                '博客名称    博客地址      博客描述      博客logo',
+                '友链申请要求',
+                '拒绝涉政/涉黄/太多广告/盈利性站点',
+                '站点能正常访问',
+            ]
         },
 
         //需要排除的标签，自动生成的标签中，不会有这个标签，这是一个数组

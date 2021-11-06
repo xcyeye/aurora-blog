@@ -1004,6 +1004,10 @@ a[data-v-d8ec41bc] {
     text-align: left;
 }
 
+.self-site .language-javascript::-webkit-scrollbar {
+    display: none;
+}
+
 .navbar {
     -webkit-border-radius: var(--borderRadius);
     border-radius: var(--borderRadius);
@@ -1167,6 +1171,9 @@ a[data-v-d8ec41bc] {
     margin-left: 2.5%;
     margin-right: 2.5%;
     padding-bottom: 10px;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
+    /*box-shadow: rgb(204, 219, 232) 3px 3px 6px 0px inset, rgba(255, 255, 255, 0.5) -3px -3px 6px 1px inset;*/
+    /*box-shadow: rgba(0, 0, 0, 0.17) 0px -23px 25px 0px inset, rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;*/
 }
 
 .link-self-item {
@@ -1238,10 +1245,46 @@ a[data-v-d8ec41bc] {
     padding-left: 15px;
     padding-right: 15px;
     overflow: hidden;
-    background-color: white;
+    background-repeat: no-repeat;
+    background-size: cover;
     position: relative;
+    color: white;
+    font-weight: bold;
+
+    -webkit-animation: link-bottom 500ms;
+    animation: link-bottom 500ms;
+    -webkit-animation-iteration-count: 1;
+    animation-iteration-count: 1;
+    -webkit-animation-fill-mode: forwards;
+    animation-fill-mode: forwards;
 }
 
+.link-bottom:hover {
+    -webkit-animation: link-bottom-hover 900ms;
+    animation: link-bottom-hover 900ms;
+    -webkit-animation-iteration-count: 1;
+    animation-iteration-count: 1;
+    -webkit-animation-fill-mode: forwards;
+    animation-fill-mode: forwards;
+}
+
+@keyframes link-bottom-hover {
+    0% {
+        color: white;
+    }
+    100% {
+        color: var(--hoverColor);
+    }
+}
+
+@keyframes link-bottom {
+    0% {
+        color: var(--hoverColor);
+    }
+    100% {
+       /*color: white;*/
+    }
+}
 .link-bottom-title {
     top: 22%;
     left: 0;
@@ -1291,6 +1334,15 @@ a[data-v-d8ec41bc] {
 
 .link-center:before {
     background-image: url("https://ooszy.cco.vin/img/ico/tea.svg");
+}
+
+.link-info-desc {
+    margin-top: .5rem;
+    padding-left: 0;
+    margin-bottom: -1rem;
+}
+.link-info-desc li {
+    list-style: none;
 }
 
 .about-center:before {
@@ -4959,8 +5011,8 @@ body::-webkit-scrollbar-thumb {
 
 .navbar-links-item {
     font-family: var(--fontFamily);
-    /*color: var(--fontColor);*/
-    color: #8093f1;
+    color: var(--fontColor);
+    /*color: #8093f1;*/
 }
 
 .navbar-links-item a,.navbar-links-item button {
@@ -5818,7 +5870,7 @@ body::-webkit-scrollbar-thumb {
     animation-iteration-count: 1;
     -webkit-animation-fill-mode: forwards;
     animation-fill-mode: forwards;
-    color: #8186d5;
+    color: var(--hoverColor);
 }
 
 .sidebar-site-single:hover .sidebar-site-desc span {

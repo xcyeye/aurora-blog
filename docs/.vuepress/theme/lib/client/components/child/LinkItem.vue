@@ -6,7 +6,7 @@
           <img id="link-img" :src="item.logo" :alt="item.title">
         </div>
       </div>
-      <div class="link-bottom" :style="setLinkColor">
+      <div class="link-bottom" :style="setLinkColor(item.cover)">
         <div class="link-bottom-title link-bottom-common">
           <span>{{item.title}}</span>
         </div>
@@ -57,10 +57,17 @@ export default {
   },
   computed: {
     setTopBg() {
-      return 'background-color: rgba(' + this.hexRgb.r +"," + this.hexRgb.g + "," + this.hexRgb.b + ",.7);"
+      return 'background-color: rgba(' + this.hexRgb.r +"," + this.hexRgb.g + "," + this.hexRgb.b + ",.85);"
     },
     setLinkColor() {
-      return 'color: rgb(' + this.hexRgb.r +"," + this.hexRgb.g + "," + this.hexRgb.b + ");"
+      return (cover) => {
+        //return 'color: rgb(' + this.hexRgb.r +"," + this.hexRgb.g + "," + this.hexRgb.b + "); background-image: url("+ cover +");"
+        if (cover === undefined || cover === "") {
+          return "background-color: white;" + 'color: rgb(' + this.hexRgb.r +"," + this.hexRgb.g + "," + this.hexRgb.b + ");"
+        }else {
+          return "background-image: url("+ cover +");"
+        }
+      }
     }
   }
 }

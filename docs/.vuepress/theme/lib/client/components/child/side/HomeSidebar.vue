@@ -316,10 +316,18 @@ export default {
     }
 
     if (this.themeProperty.friendLinks !== undefined && this.themeProperty.friendLinks != null) {
-      this.shuffleArray(this.themeProperty.friendLinks).then((arr) => {
-        this.friendLinks = arr
+      let friendArrs = []
+      new Promise((resolve,reject) => {
+        for (let i = 0; i < this.themeProperty.friendLinks.length; i++) {
+          let links = this.themeProperty.friendLinks[i].links;
+          friendArrs = friendArrs.concat(links)
+        }
+        resolve()
+      }).then(() => {
+        this.shuffleArray(friendArrs).then((arr) => {
+          this.friendLinks = arr
+        })
       })
-
     }
 
     let socials = this.themeProperty.socials
