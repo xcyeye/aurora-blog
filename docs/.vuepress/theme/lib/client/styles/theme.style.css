@@ -1082,6 +1082,11 @@ a[data-v-d8ec41bc] {
     list-style: none;
 }
 
+.about-desc:last-child {
+    margin-bottom: 1rem;
+    padding-bottom: 0;
+}
+
 .about-desc span:nth-child(1) {
     display: inline-block;
     width: 13%;
