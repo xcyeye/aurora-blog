@@ -3862,14 +3862,14 @@ body::-webkit-scrollbar-thumb {
     }
 
     .home-page-tag-img {
-        height: 15rem;
+        height: 17rem;
     }
     #home-page-img {
-        max-height: 15rem;
+        max-height: 17rem;
     }
 
     .home-page-tag-content {
-        max-height: 15rem;
+        max-height: 9.5rem;
     }
 
     .sidebar-single-common {
@@ -4729,20 +4729,19 @@ body::-webkit-scrollbar-thumb {
 .home-page-tag-title {
     margin: 0 auto;
     max-width: 90%;
-    height: 3rem;
+    height: 2.5rem;
     text-align: center;
     white-space: nowrap;
     -o-text-overflow: ellipsis;
     text-overflow: ellipsis;
     overflow: hidden;
 }
-
 .home-page-read {
     color: whitesmoke;
 }
 
 .home-page-tag-title span {
-    line-height: 3rem;
+    line-height: 2.5rem;
     color: var(--fontColor);
     font-size: 24px;
     font-weight: 550;
@@ -4766,6 +4765,13 @@ body::-webkit-scrollbar-thumb {
             top,rgba(255,255,255,0) 0,#fff 120%);
     background-image: linear-gradient(
             -180deg,rgba(255,255,255,0) 0,#fff 120%);
+}
+
+.home-page-tag-content p,.home-page-tag-content ul {
+    text-align: left;
+}
+.home-page-tag-content .custom-container {
+    text-align: left;
 }
 
 .home-page-tag-content li {
