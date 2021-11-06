@@ -1684,8 +1684,11 @@ a[data-v-d8ec41bc] {
     -webkit-border-radius: var(--borderRadius);
     border-radius: var(--borderRadius);
     background-color: rgba(255,255,255,var(--opacity));
-    -webkit-box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+    /*-webkit-box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;*/
+    /*box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;*/
+}
+.medium-zoom-content h1 a,.medium-zoom-content h2 a,.medium-zoom-content h3 a,.medium-zoom-content h4 a,.medium-zoom-content h5 a,.medium-zoom-content h6 a {
+    /*display: none;*/
 }
 
 .footer .footer-item:first-child {

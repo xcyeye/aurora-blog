@@ -51,7 +51,7 @@ code {
 
 blockquote {
   font-size: 1rem;
-  color: var(--c-text-quote);
+  color: #211e1e;
   border-left: 0.2rem solid rgba(66, 165, 245, 0.57);
   margin: 1rem 0;
   padding: 0.25rem 0 0.25rem 1rem;
@@ -91,19 +91,19 @@ h1 {
 h2 {
   font-size: 1.65rem;
   padding-bottom: 0.3rem;
-  border-bottom: 1px solid var(--c-border);
+  //border-bottom: 1px solid var(--c-border);
 }
 
 h3 {
-  font-size: 1.35rem;
+  font-size: 1.3rem;
 }
 
 h4 {
-  font-size: 1.15rem;
+  font-size: 1.1rem;
 }
 
 h5 {
-  font-size: 1.05rem;
+  font-size: 1rem;
 }
 
 h6 {
@@ -116,7 +116,7 @@ a.header-anchor {
   margin-left: -0.87em;
   padding-right: 0.23em;
   margin-top: 0.125em;
-  opacity: 0;
+  opacity: 1;
 
   &:hover {
     text-decoration: none;

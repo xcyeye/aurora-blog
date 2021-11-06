@@ -252,6 +252,21 @@ export default defineComponent({
       if (h1s.length > 0) {
         $(h1s[0]).css('display','none')
       }
+
+      let medium_zoom_content_h2Tag = document.querySelectorAll(".medium-zoom-content h2 a");
+      let medium_zoom_content_h3Tag = document.querySelectorAll(".medium-zoom-content h3 a");
+      let medium_zoom_content_h4Tag = document.querySelectorAll(".medium-zoom-content h4 a,.medium-zoom-content h5 a,.medium-zoom-content h6 a");
+      for (let i = 0; i < medium_zoom_content_h2Tag.length; i++) {
+        medium_zoom_content_h2Tag[i].innerText = "🌸"
+      }
+
+      for (let i = 0; i < medium_zoom_content_h3Tag.length; i++) {
+        medium_zoom_content_h3Tag[i].innerText = "🐳"
+      }
+
+      for (let i = 0; i < medium_zoom_content_h4Tag.length; i++) {
+        medium_zoom_content_h4Tag[i].innerText = "⛄"
+      }
     })
   }
 })
