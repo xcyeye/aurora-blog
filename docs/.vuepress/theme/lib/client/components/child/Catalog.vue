@@ -225,7 +225,7 @@ export default {
               }).then((activeTemp) => {
                 for (let k = 0; k < activeTemp.length; k++) {
                   if (activeTemp[k].getAttribute("slug") === activeHeader) {
-                    activeTemp[k].setAttribute("id","ccds-active")
+                    activeTemp[k].setAttribute("id","aurora-active")
                   }else {
                     activeTemp[k].setAttribute("id","")
                   }

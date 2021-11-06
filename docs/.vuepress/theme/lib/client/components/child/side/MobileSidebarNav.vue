@@ -34,7 +34,8 @@
       <div v-for="(menuItem,index) in navbarLinks">
         <div v-if="menuItem.link" class="sidebar-menu-item">
           <div class="menu-item-left">
-            <span :style="setHomeNavIco(menuItem.link)" :class="setHomeClass(menuItem.link)" class="aurora-iconfont-common"></span>
+            <!--<span :style="setHomeNavIco(menuItem.link)" :class="setHomeClass(menuItem.link)" class="aurora-iconfont-common"></span>-->
+            <span class="aurora-iconfont-common aurora-font" :class="setHomeClass(menuItem)"></span>
           </div>
           <div class="menu-item-right">
             <a :key="index" :href="menuItem.link">
@@ -247,6 +248,7 @@ const useNavbarConfig = (): ComputedRef<ResolvedNavbarItem[]> => {
 }
 import Catalog from "../Catalog.vue";
 import {DefaultThemePageFrontmatter} from "../../../../shared";
+import {useThemeData} from '../../../composables'
 export default {
   name: "MobileSidebarNav",
   components: {Catalog},
@@ -303,27 +305,19 @@ export default {
       }
     },
     setHomeClass() {
-      return (href) => {
-        if ("/link".search(href) !== -1) {
-          return "aurora-sidebar-nav-link"
+      return (item) => {
+        // console.log(item)
+        if (item.iconClass !== undefined && item.iconClass !== "") {
+          return item.iconClass
+        }else {
+          if (item.link !== undefined && item.link.search("github") !== -1) {
+            if (useThemeData().value.repoIconClass !== undefined) {
+              return useThemeData().value.repoIconClass
+            }else {
+              return "aurora-sidebar-nav-github"
+            }
+          }
         }
-        if ("/tag".search(href) !== -1) {
-          return "aurora-sidebar-nav-tag"
-        }
-        if ("/mood".search(href) !== -1) {
-          return "aurora-sidebar-nav-mood"
-        }
-        if ("/photo".search(href) !== -1) {
-          return "aurora-sidebar-nav-photo"
-        }
-        if ("/about".search(href) !== -1) {
-          return "aurora-sidebar-nav-about"
-        }
-        if (href !== undefined && href.search("github") !== -1) {
-          return "aurora-sidebar-nav-github"
-        }
-
-        return "aurora-sidebar-nav-other"
       }
     },
     getMenuIco() {

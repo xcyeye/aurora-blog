@@ -89,7 +89,8 @@
   .navbar-links-item {
     position: relative;
     display: inline-block;
-    margin-left: 1.5rem;
+    margin-left: 0.65rem;
+    margin-right: 0.65rem;
     line-height: var(--navbar-line-height);
 
     &:first-child {
@@ -118,7 +119,8 @@
     &:hover,
     &.router-link-active {
       margin-bottom: -2px;
-      border-bottom: 2px solid var(--c-text-accent);
+      //color: var(--auroraActiveColor);
+      //border-bottom: 2px solid var(--c-text-accent);
     }
   }
 }

@@ -69,10 +69,6 @@ a[data-v-d8ec41bc] {
 
 /*默认ico图标*/
 
-.sidebar-menu-item a {
-
-}
-
 .sidebar-menu-item span {
     color: var(--fontColor);
 }
@@ -393,6 +389,10 @@ a[data-v-d8ec41bc] {
     height: -moz-max-content;
     height: max-content;
     z-index: 2;
+}
+
+.aurora-navbar-icon {
+    margin-right: .5rem;
 }
 
 #home-social-item {
@@ -4764,9 +4764,7 @@ body::-webkit-scrollbar-thumb {
 #home-page-img {
     z-index: 0;
     /* size: portrait; */
-    height: -webkit-max-content;
-    height: -moz-max-content;
-    height: max-content;
+    max-height: 17rem;
     width: 100%;
     cursor: pointer;
     object-fit: fill;
@@ -5015,8 +5013,25 @@ body::-webkit-scrollbar-thumb {
     /*color: #8093f1;*/
 }
 
+.navbar-links-item:hover  .aurora-navbar-icon, .navbar-links-item:hover  .nav-link-active,.navbar-links-item:hover  .dropdown-wrapper .dropdown-title {
+    -webkit-animation: navbar-link-item-hover 500ms;
+    animation: navbar-link-item-hover 500ms;
+    -webkit-animation-iteration-count: 1;
+    animation-iteration-count: 1;
+    -webkit-animation-fill-mode: forwards;
+    animation-fill-mode: forwards;
+}
+
+@keyframes navbar-link-item-hover {
+    0% {
+        color: var(--fontColor);
+    }
+    100% {
+        color: var(--hoverColor);
+    }
+}
 .navbar-links-item a,.navbar-links-item button {
-    font-weight: bold;
+    /*font-weight: bold;*/
 }
 
 .dropdown-wrapper .nav-dropdown {
@@ -5795,7 +5810,12 @@ body::-webkit-scrollbar-thumb {
 }
 
 #ccds-active {
-    color: #8186d5;
+    color: var(--auroraActiveColor);
+    font-weight: 600;
+}
+
+#aurora-active {
+    color: var(--auroraActiveColor);
     font-weight: 600;
 }
 

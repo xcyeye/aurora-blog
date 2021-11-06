@@ -1,7 +1,9 @@
 <template>
+  <span :class="item.iconClass" class="aurora-font aurora-navbar-icon"></span>
   <RouterLink
     v-if="isRouterLink"
     class="nav-link"
+    :class="{'nav-link-active': !isDropdownLink}"
     :to="item.link"
     :aria-label="linkAriaLabel"
     v-bind="$attrs"
@@ -11,6 +13,7 @@
   <a
     v-else
     class="nav-link external"
+    :class="{'nav-link-active': !isDropdownLink}"
     :href="item.link"
     :rel="linkRel"
     :target="linkTarget"
@@ -34,14 +37,18 @@ import type { NavLink } from '../../shared'
 
 export default defineComponent({
   name: 'NavLink',
-
   inheritAttrs: false,
-
   props: {
     item: {
       type: Object as PropType<NavLink>,
       required: true,
     },
+    isDropdownLink: {
+      type: Boolean,
+      default() {
+        return false
+      }
+    }
   },
 
   setup(props) {

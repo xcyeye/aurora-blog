@@ -31,6 +31,14 @@ module.exports = {
                 rel: "icon",
             },
         ],
+        [
+            "link",
+            {
+                rel: 'stylesheet',
+                type: 'text/css',
+                href: '//at.alicdn.com/t/font_2849934_7el0cvwfmn.css'
+            }
+        ]
     ],
     //这里使用本地主题
     theme: path.resolve(__dirname, "theme/lib/node/index.js"),
@@ -50,14 +58,17 @@ module.exports = {
 
             {
                 text: '快速开始',
-                link: '/readme/'
+                link: '/readme/',
+                iconClass: 'aurora-0023pacman'
             },
             {
                 text: "所有配置",
-                link: '/home/config.html'
+                link: '/home/config.html',
+                iconClass: 'aurora-link'
             },
             {
                 text: '问题和bug',
+                iconClass: 'aurora-si-glyph-global',
                 children: [
                     {
                         text: 'CHANGELOG',
@@ -88,6 +99,7 @@ module.exports = {
             },
             {
                 text: '其他配置',
+                iconClass: 'aurora-sticker',
                 children: [
                     {
                         children: [
@@ -114,23 +126,28 @@ module.exports = {
             },
             {
                 text: "about",
-                link: "/about"
+                link: "/about",
+                iconClass: 'aurora-chat'
             },
             {
                 text: 'link',
-                link: '/link'
+                link: '/link',
+                iconClass: 'aurora-menu'
             },
             {
                 text: 'tag',
-                link: '/tag'
+                link: '/tag',
+                iconClass: 'aurora-page'
             },
             {
                 text: 'chat',
-                link: '/mood'
+                link: '/mood',
+                iconClass: 'aurora-volume-icon'
             },
             {
                 text: "photo",
-                link: '/photo'
+                link: '/photo',
+                iconClass: 'aurora-icon-time'
             }
         ],
 
@@ -139,6 +156,8 @@ module.exports = {
 
         //项目地址
         repo: "https://github.com/qsyyke/vuepress-theme-aurora",
+
+        repoIconClass: 'aurora-github1',
 
         //md文件的仓库地址
         docsRepo: 'https://github.com/qsyyke/aurora-docs',

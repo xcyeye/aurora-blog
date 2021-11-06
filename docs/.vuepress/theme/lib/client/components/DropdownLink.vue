@@ -1,5 +1,6 @@
 <template>
   <div class="dropdown-wrapper" :class="{ open }">
+    <span :class="item.iconClass" class="aurora-font aurora-navbar-icon"></span>
     <button
       class="dropdown-title"
       type="button"
@@ -51,6 +52,7 @@
             >
               <NavLink
                 :item="grandchild"
+                :is-dropdown-link="true"
                 @focusout="
                   isLastItemOfArray(grandchild, child.children) &&
                     isLastItemOfArray(child, item.children) &&
