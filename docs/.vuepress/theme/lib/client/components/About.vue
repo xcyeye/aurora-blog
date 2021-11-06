@@ -28,7 +28,7 @@
             </div>
           </div>
           <li v-if="!item.bar" v-for="(desc,index) in item.describe"
-              class="about-desc">{{getIndex(index,item.describe.length)}} {{desc}}</li>
+              class="about-desc">{{desc}}</li>
           <li v-if="item.bar" v-for="desc in item.describe" class="about-desc">
             <span class="about-bar-title">{{desc.name}}</span>
             <span :style="setSpanStyle(desc.score)">{{desc.score}}%</span>
