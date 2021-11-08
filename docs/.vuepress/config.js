@@ -13,7 +13,23 @@ module.exports = {
                     placeholder: "搜索",
                 },
             },
-        }
+        },
+        [
+            path.resolve(__dirname, "../../Aurora-plugin/vuepress-plugin-coze/lib/node/index.js"),
+            {
+                /*appId: 'c5GfUYtqdSYxSU5yWUvvqh5X-MdYXbMMI',
+                appKey: 'sU9cXu96cYmzvwG2QBbdVTGW',
+                masterKey: 'QuvL8dSuGOnrynENNI0QpXOa',
+                avatarPath: 'https://ooszy.cco.vin/img/blog-note/avatar-aurora.png',*/
+                appId: 'c5GfUYtqdSYxSU5yWUvvqh5X-MdYXbMMI',
+                appKey: 'sU9cXu96cYmzvwG2QBbdVTGW',
+                masterKey: 'QuvL8dSuGOnrynENNI0QpXOa',
+                avatarPath: 'https://cdn.jsdelivr.net/gh/AyagawaSeirin/Assets/img/logo.jpg',
+                registerPath: '/qsyyke'
+
+            }
+        ]
+
     ],
     //设置head 一定要加入<script src="https://at.alicdn.com/t/font_2849934_v6y652peian.js"></script>项配置，否则一些图标不能正常显示
     head: [
@@ -41,7 +57,7 @@ module.exports = {
         ]
     ],
     //这里使用本地主题
-    theme: path.resolve(__dirname, "theme/lib/node/index.js"),
+    theme: path.resolve(__dirname, "../../Aurora-theme/lib/node/index.js"),
 
     //站点title
     title: "I do not follow,i lives is always all you want",

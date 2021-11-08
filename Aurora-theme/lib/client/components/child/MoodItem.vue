@@ -8,9 +8,7 @@
         </div>
       </div>
       <div class="mood-item-right" id="mood-item-right">
-        <div class="mood-item-title mood-item-right-common mood-item-common">
-          <span>{{title}}</span>
-        </div>
+
         <div id="mood-item-content" class="mood-item-content mood-item-right-common">
           <span>{{content}}</span>
         </div>

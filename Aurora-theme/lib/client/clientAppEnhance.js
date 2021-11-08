@@ -14,7 +14,7 @@ import Footer from './components/global/Footer';
 import Message from './components/global/Message';
 import Donate from "./components/global/Donate";
 import Comment from "./components/global/Comment";
-import Mood from "./components/Mood";
+//import Mood from "./components/Mood";
 import About from './components/About';
 import Tag from './components/Tag';
 import store from './public/js/store'
@@ -49,7 +49,7 @@ export default defineClientAppEnhance(({ app, router }) => {
     app.component("HomeBottom",HomeBottom)
     app.component("About",About)
     app.component("Link",Link)
-    app.component("Mood",Mood)
+    //app.component("Mood",Mood)
     app.component("PhotoFall",PhotoFall)
     app.component("Tag",Tag)
     app.component("AuroraGlobal",AuroraGlobal)
