@@ -1,0 +1,278 @@
+@import '_variables';
+
+.home {
+  //padding: var(--navbar-height) 2rem 0;
+  //max-width: var(--homepage-width);
+  //margin: 0px auto;
+  //margin-bottom: 6rem;
+  //display: block;
+  //height: 100%;
+  //border: 1px solid red;
+
+  @media screen and (min-width: 719px) {
+    .hero-div {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 1%;
+      margin-bottom: 3rem;
+    }
+    .mood,.random-saw {
+      margin-top: 3rem;
+      margin-bottom: 3rem;
+    }
+  }
+  .hero {
+    text-align: center;
+    height: 100%;
+
+    /*.home-top1 {
+      height: 25%;
+      width: 100%;
+      border: 1px solid red;
+    }*/
+
+    img {
+      border-radius: 70px;
+      width: 8rem;
+      height: 8rem;
+      /*max-width: 200px;
+      max-height: 200px;*/
+      display: block;
+    }
+
+    h1 {
+      font-size: 3rem;
+    }
+
+    h1,
+    .description,
+    .actions {
+      margin: 1.8rem auto;
+    }
+
+    .description {
+      max-width: 35rem;
+      font-size: 1.6rem;
+      line-height: 1.3;
+      color: var(--c-text-lightest);
+    }
+
+    .action-button {
+      display: inline-block;
+      font-size: 1.2rem;
+      padding: 0.8rem 1.6rem;
+      border-width: 2px;
+      border-style: solid;
+      border-radius: 4px;
+      transition: background-color 0.1s ease;
+      box-sizing: border-box;
+
+      &:not(:first-child) {
+        margin-left: 1.5rem;
+      }
+
+      &.primary {
+        color: var(--c-bg);
+        background-color: var(--c-brand);
+        border-color: var(--c-brand);
+        &:hover {
+          background-color: var(--c-brand-light);
+        }
+      }
+
+      &.secondary {
+        color: var(--c-brand);
+        background-color: var(--c-bg);
+        border-color: var(--c-brand);
+        &:hover {
+          color: var(--c-bg);
+          background-color: var(--c-brand-light);
+        }
+      }
+    }
+  }
+
+  .features {
+    border-top: 1px solid var(--c-border);
+    padding: 1.2rem 0;
+    margin-top: 2.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    align-content: stretch;
+    justify-content: space-between;
+  }
+
+  .feature {
+    flex-grow: 1;
+    flex-basis: 30%;
+    max-width: 30%;
+
+    h2 {
+      font-size: 1.4rem;
+      font-weight: 500;
+      border-bottom: none;
+      padding-bottom: 0;
+      color: var(--c-text-light);
+    }
+
+    p {
+      color: var(--c-text-lighter);
+    }
+  }
+
+  .footer {
+    padding: 2.5rem;
+    border-top: 1px solid var(--c-border);
+    text-align: center;
+    color: var(--c-text-lighter);
+  }
+}
+
+@media (max-width: $MQMobile) {
+  .home {
+    .features {
+      flex-direction: column;
+    }
+
+    .feature {
+      max-width: 100%;
+      padding: 0 2.5rem;
+    }
+  }
+}
+
+@media (max-width: $MQMobileNarrow) {
+  .home {
+    //padding-left: 1.5rem;
+    //padding-right: 1.5rem;
+
+    .hero {
+      img {
+        max-height: 210px;
+        margin: 2rem auto 1.2rem;
+      }
+
+      h1 {
+        font-size: 2rem;
+      }
+
+      h1,
+      .description,
+      .actions {
+        margin: 1.2rem auto;
+      }
+
+      .description {
+        font-size: 1.2rem;
+      }
+
+      .action-button {
+        font-size: 1rem;
+        padding: 0.6rem 1.2rem;
+      }
+    }
+
+    .feature {
+      h2 {
+        font-size: 1.25rem;
+      }
+    }
+  }
+}
+
+//从这里开始都是我自己的css
+.random-saw {
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+.random-saw span {
+  //color: red;
+  font-weight: 650;
+  color: whitesmoke;
+}
+
+.mood {
+  width: 65%;
+  height: 2.5rem;
+  //height: 25%;
+  background-color: rgba(148,182,225,.88);
+  //margin: 4rem auto 4rem;
+  //margin: 3rem auto 2rem;
+  margin: 0 auto;
+  margin-top: 2%;
+  margin-bottom: 3%;
+  overflow: hidden;
+  text-align: center;
+  line-height: 2.5rem;
+  border-radius: 21px;
+  //background-color: var(--c-text);
+  opacity: 0.5;
+  padding: 0px 10px 0px 10px;
+}
+
+.mood span {
+  height: 100%;
+  overflow: hidden;
+}
+
+.mood span {
+  color: var(--c-bg);
+}
+
+@media screen and (max-width: 400px) {
+
+  .random-saw {
+    //margin-top: 0rem;
+    margin-bottom: -2rem;
+  }
+  .mood {
+    width: 95%;
+    height: 40px;
+    overflow: hidden;
+    text-align: center;
+    line-height: 40px;
+  }
+  .mood span {
+    padding: 0 1px;
+  }
+
+  #top-social {
+    width: 96%;
+    height: 50px;
+    margin-top: 1rem;
+    //border: 1px solid red;
+  }
+
+  #top-social ul li {
+
+    margin-top: -2.7rem;
+  }
+
+}
+
+//设置社交样式
+#top-social {
+  margin: 1rem auto;
+  width: 65%;
+  height: 50px;
+  //border: 1px solid red;
+  //display: flex;
+}
+
+#top-social ul {
+  padding-left: 0;
+  display: flex;
+}
+#top-social ul li  {
+  list-style: none;
+  float: left;
+  margin-top: -1rem;
+  flex: 1;
+}
+
+#top-social img {
+  width: 36px;
+  height: 36px;
+}

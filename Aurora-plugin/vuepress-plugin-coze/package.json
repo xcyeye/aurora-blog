@@ -1,0 +1,33 @@
+{
+  "name": "vuepress-plugin-coze",
+  "version": "1.0.0",
+  "description": "为Vuepress静态站点提供在线发布，编辑说说功能，支持图片上传，点赞，评论，用户登录，注册等功能 Provide online publishing, editing and talking functions for Vuepress static sites, support image upload, like, comment, user login, registration and other functions",
+  "main": "./lib/node/index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vuepress-aurora/vuepress-plugin-coze"
+  },
+  "keywords": [
+    "vuepress-theme",
+    "vuepress-theme-aurora",
+    "plugin",
+    "vue",
+    "vuepress-plugin",
+    "blog-theme",
+    "vuepress2",
+    "aurora theme",
+    "vuepress-chat"
+  ],
+  "author": "qsyyke",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/vuepress-aurora/vuepress-plugin-coze/issues"
+  },
+  "homepage": "https://aurora.xcye.xyz/plugin/coze/index.html"
+}

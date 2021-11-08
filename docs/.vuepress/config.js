@@ -13,6 +13,28 @@ module.exports = {
                     placeholder: "搜索",
                 },
             },
+        },
+        /*'vuepress-plugin-coze',
+        {
+            appId: 'leanCloud中得到的appId',
+            appKey: 'leanCloud中得到的appKey',
+            masterKey: 'leanCloud中得到的masterKey',
+            //下面这些是可选的
+            avatarPath: 'https://ooszy.cco.vin/img/blog-note/avatar-aurora.png',//说说头像url
+            registerPath: '/aurora-register', //自定义插件默认提供的注册页面路由，请在前面加上/
+            onlyAdministrator: false //是否运行其他注册的用户发布说说，true表示只有管理员可以发布
+
+        }*/
+        'vuepress-plugin-coze',
+        {
+            appId: '2A2Dyd2AffrnldhwftlEddVn-MdYXbMMI',
+            appKey: 'qHYTbb91iOPLelyC9lpbXxLH',
+            masterKey: 'eUwfvS3luIPnPiHS5SpEhDYr',
+            //下面这些是可选的
+            avatarPath: 'https://ooszy.cco.vin/img/blog-note/avatar-aurora.png',//说说头像url
+            registerPath: '/aurora-register', //自定义插件默认提供的注册页面路由，请在前面加上/
+            onlyAdministrator: false //是否运行其他注册的用户发布说说，true表示只有管理员可以发布
+
         }
     ],
     //设置head 一定要加入<script src="https://at.alicdn.com/t/font_2849934_v6y652peian.js"></script>项配置，否则一些图标不能正常显示
@@ -41,7 +63,7 @@ module.exports = {
         ]
     ],
     //这里使用本地主题
-    theme: path.resolve(__dirname, "theme/lib/node/index.js"),
+    theme: path.resolve(__dirname, "../../Aurora-theme/lib/node/index.js"),
 
     //站点title
     title: "I do not follow,i lives is always all you want",

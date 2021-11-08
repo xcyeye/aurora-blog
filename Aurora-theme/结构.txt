@@ -1,0 +1,141 @@
+E:\vue\vuepress-theme\single-theme\theme
+├─package.json
+├─lib
+|  ├─shared
+|  |   ├─index.d.ts
+|  |   ├─index.js
+|  |   ├─nav.d.ts
+|  |   ├─nav.js
+|  |   ├─options.d.ts
+|  |   ├─options.js
+|  |   ├─page.d.ts
+|  |   └page.js
+|  ├─node
+|  |  ├─auroraTheme.js
+|  |  ├─auroraTheme.ts
+|  |  ├─index.d.ts
+|  |  ├─index.js
+|  |  ├─utils
+|  |  |   ├─assignDefaultLocaleOptions.d.ts
+|  |  |   ├─assignDefaultLocaleOptions.js
+|  |  |   ├─index.d.ts
+|  |  |   ├─index.js
+|  |  |   ├─resolveActiveHeaderLinksPluginOptions.d.ts
+|  |  |   ├─resolveActiveHeaderLinksPluginOptions.js
+|  |  |   ├─resolveContainerPluginOptions.d.ts
+|  |  |   ├─resolveContainerPluginOptions.js
+|  |  |   ├─resolveGitPluginOptions.d.ts
+|  |  |   ├─resolveGitPluginOptions.js
+|  |  |   ├─resolveMediumZoomPluginOptions.d.ts
+|  |  |   └resolveMediumZoomPluginOptions.js
+|  ├─client
+|  |   ├─clientAppEnhance.d.ts
+|  |   ├─clientAppEnhance.js
+|  |   ├─clientAppSetup.d.ts
+|  |   ├─clientAppSetup.js
+|  |   ├─index.d.ts
+|  |   ├─index.js
+|  |   ├─shim.d.ts
+|  |   ├─store.index.js
+|  |   ├─utils
+|  |   |   ├─index.d.ts
+|  |   |   ├─index.js
+|  |   |   ├─resolveEditLink.d.ts
+|  |   |   ├─resolveEditLink.js
+|  |   |   ├─resolveRepoType.d.ts
+|  |   |   └resolveRepoType.js
+|  |   ├─styles
+|  |   |   ├─arrow.scss
+|  |   |   ├─badge.scss
+|  |   |   ├─code-group.scss
+|  |   |   ├─code.scss
+|  |   |   ├─custom-container.scss
+|  |   |   ├─dropdown.scss
+|  |   |   ├─home.scss
+|  |   |   ├─index.scss
+|  |   |   ├─layout.scss
+|  |   |   ├─navbar.scss
+|  |   |   ├─normalize.scss
+|  |   |   ├─page.scss
+|  |   |   ├─sidebar.scss
+|  |   |   ├─sr-only.scss
+|  |   |   ├─theme.style.css
+|  |   |   ├─toc.scss
+|  |   |   ├─transitions.scss
+|  |   |   ├─vars-dark.scss
+|  |   |   ├─vars.scss
+|  |   |   ├─_variables.scss
+|  |   |   └_wrapper.scss
+|  |   ├─public
+|  |   |   ├─js
+|  |   |   | ├─hrefs.js
+|  |   |   | ├─navbar.js
+|  |   |   | ├─network.js
+|  |   |   | ├─tag.js
+|  |   |   | ├─store
+|  |   |   | |   ├─actions.js
+|  |   |   | |   ├─index.js
+|  |   |   | |   ├─mutations.js
+|  |   |   | |   └state.js
+|  |   ├─layouts
+|  |   |    ├─404.vue
+|  |   |    └Layout.vue
+|  |   ├─composables
+|  |   |      ├─index.d.ts
+|  |   |      ├─index.js
+|  |   |      ├─useDarkMode.d.ts
+|  |   |      ├─useDarkMode.js
+|  |   |      ├─useNavLink.d.ts
+|  |   |      ├─useNavLink.js
+|  |   |      ├─useResolveRouteWithRedirect.d.ts
+|  |   |      ├─useResolveRouteWithRedirect.js
+|  |   |      ├─useScrollPromise.d.ts
+|  |   |      ├─useScrollPromise.js
+|  |   |      ├─useSidebarItems.d.ts
+|  |   |      ├─useSidebarItems.js
+|  |   |      ├─useThemeData.d.ts
+|  |   |      └useThemeData.js
+|  |   ├─components
+|  |   |     ├─About.vue
+|  |   |     ├─AdSense.vue
+|  |   |     ├─DropdownLink.vue
+|  |   |     ├─DropdownTransition.vue
+|  |   |     ├─Home.vue
+|  |   |     ├─Link.vue
+|  |   |     ├─Mood.vue
+|  |   |     ├─Navbar.vue
+|  |   |     ├─NavbarLinks.vue
+|  |   |     ├─NavLink.vue
+|  |   |     ├─Page.vue
+|  |   |     ├─PageMeta.vue
+|  |   |     ├─PageNav.vue
+|  |   |     ├─RecommendPage.vue
+|  |   |     ├─Sidebar.vue
+|  |   |     ├─SidebarChild.d.ts
+|  |   |     ├─SidebarChild.js
+|  |   |     ├─Tag.vue
+|  |   |     ├─ToggleDarkModeButton.vue
+|  |   |     ├─ToggleSidebarButton.vue
+|  |   |     ├─global
+|  |   |     |   ├─Badge.vue
+|  |   |     |   ├─BCenter.vue
+|  |   |     |   ├─CodeGroup.d.ts
+|  |   |     |   ├─CodeGroup.js
+|  |   |     |   ├─CodeGroupItem.vue
+|  |   |     |   ├─Common.vue
+|  |   |     |   ├─Donate.vue
+|  |   |     |   ├─Footer.vue
+|  |   |     |   ├─Message.vue
+|  |   |     |   ├─OutboundLink.vue
+|  |   |     |   ├─Profile.vue
+|  |   |     |   └TopImage.vue
+|  |   |     ├─child
+|  |   |     |   ├─FooterItem.vue
+|  |   |     |   ├─HomeSocial.vue
+|  |   |     |   ├─HomeSocialItem.vue
+|  |   |     |   ├─HomeWelcome.vue
+|  |   |     |   ├─LinkItem.vue
+|  |   |     |   ├─MoodItem.vue
+|  |   |     |   ├─RecommendItem.vue
+|  |   |     |   ├─TagItem.vue
+|  |   |     |   └TagPage.vue
