@@ -247,7 +247,6 @@ export default {
       }
     },
     edit() {
-      console.log(this.files)
       const currentUser = AV.User.current();
       if (!currentUser) {
         this.resultText = '你已经退出了(●￣(ｴ)￣●)'
@@ -378,7 +377,6 @@ export default {
     },
     saveData(photoDataArr,originArr) {
       const currentUser = AV.User.current();
-      console.log(currentUser)
 
       let administrator = 0
       let username = ""
@@ -387,7 +385,6 @@ export default {
         username = currentUser.attributes.username
       }
 
-      console.log("username: " + username)
       const array  = photoDataArr;
       const Talk = AV.Object.extend('Talk');
       const talk = new Talk();
