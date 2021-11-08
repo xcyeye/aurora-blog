@@ -12,7 +12,7 @@
       </template>
     </Navbar>
     <mobile-sidebar :show-navbar="frontmatter.home"/>
-    <social-spin/>
+    <!--<social-spin/>-->
     <style-menu
         :theme-property="themeProperty"
         @setIsFitter="setIsFitter"

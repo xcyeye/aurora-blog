@@ -25,7 +25,8 @@ module.exports = {
                 appKey: 'sU9cXu96cYmzvwG2QBbdVTGW',
                 masterKey: 'QuvL8dSuGOnrynENNI0QpXOa',
                 avatarPath: 'https://cdn.jsdelivr.net/gh/AyagawaSeirin/Assets/img/logo.jpg',
-                registerPath: '/qsyyke'
+                registerPath: '/qsyyke',
+                onlyAdministrator: false
 
             }
         ]
@@ -289,7 +290,7 @@ module.exports = {
                 show: true,
                 sidebar: true,
                 symbol: '#icon-email'
-            }
+            },
         ],
 
         // cancelIcoHref: "https://ooszy.cco.vin/img/ico/quxiao.svg", 在v1.3.2中移除

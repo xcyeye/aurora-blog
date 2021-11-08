@@ -12,7 +12,7 @@
     <slot name="home2"></slot>
     <div :class="{'home-social-custom': isHome}" class="home-social">
       <HomeSidebarSocialItem :sidebar-row-pc-var="socialsIsHomeNum + 1"
-                             :sidebar-width-pc-var="'65vw'"
+                             :sidebar-width-pc-var="sidebarWidthPcVar"
                              :sidebar-row-var="socialsIsHomeNum + 1"
                              :show-social-img="true"
                              :sidebar-cut-width="1"
@@ -86,6 +86,12 @@ export default defineComponent({
       type: Array,
       default() {
         return []
+      }
+    },
+    sidebarWidthPcVar: {
+      type: String,
+      default() {
+        return "88vw"
       }
     },
     homeHeightVar: {
@@ -237,7 +243,7 @@ export default defineComponent({
     this.socialsArrTemp = []
     new Promise((resolve,reject) => {
       if (document.body.clientWidth < 719) {
-        this.sidebarWidthVar = 0.96
+        this.sidebarWidthVar = 0.92
         this.sidebarRowVar = this.socialsIsHomeNum + 1
 
         if (this.socialsArr.length > 7) {

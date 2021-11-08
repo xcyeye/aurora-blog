@@ -1,20 +1,11 @@
 <template>
-  <common :is-sticky-sidebar="true" :show-mood-edit="showMoodEdit" :is-show-side-bar="false" :is-show-top-img="true" :is-show-head-line="false">
+  <common :is-sticky-sidebar="true"
+          :is-show-side-bar="false" :is-show-top-img="true" :is-show-head-line="false">
     <template #center1>
-      <div class="mood-first">
-        <!--下面是在本地存放于docs/mood中的md文件-->
-        <div class="link mood-control" v-for="(item,index) in moods">
-          <div :style="$store.state.borderRadiusStyle + $store.state.opacityStyle"
-               class="c-page mood-article">
-            <div class="moods-page" id="moods-page">
-              <mood-item :moods="moods" :mood-item="item" :theme-property="themeProperty"/>
-            </div>
-          </div>
-        </div>
-      </div>
+      <CozeMood @coze-success="cozeSuccess"></CozeMood>
     </template>
     <template #center2>
-      <comment :path-name="$route.path" />
+      <comment v-show="showComment" :path-name="$route.path" />
     </template>
   </common>
 </template>
@@ -24,30 +15,19 @@ import {
   defineComponent,
   Transition,
 } from 'vue'
-
-import MoodItem from './child/MoodItem'
-import myData from '@temp/my-data'
-import {useThemeData} from "../composables";
-
 //导入配置属性
 export default defineComponent({
   name: 'Mood',
 
   components: {
-    Transition,
-    MoodItem
+    Transition
   },
   data() {
     return {
       //这是一个数组对象
       color: '',
       ico: '',
-      showMessage: '',
-      themeProperty: '',
-      hexToRgbColor: '',
-      moods: [],
-      showMoodEdit: false,
-      siteName: ''
+      showComment: false
     }
   },
   created() {
@@ -57,100 +37,18 @@ export default defineComponent({
         openMobileSidebar: false
       })
     }
-
-    this.themeProperty = useThemeData().value
-
-    let showOnlineMood = this.themeProperty.showOnlineMood
-    this.showMoodEdit = this.themeProperty.showMoodEdit
-    if (showOnlineMood === undefined) {
-      showOnlineMood = false
-    }
-
-    if (this.showMoodEdit === undefined) {
-      showOnlineMood = false
-    }
-
-    if (this.themeProperty.addMood !== undefined) {
-      this.siteName = this.themeProperty.addMood.siteName
-    }
-
-    new Promise((resolve,reject) => {
-      for (let i = 0; i < myData.length; i++) {
-        if (myData[i].path.search("/moods/") === 0) {
-          //是心情页面
-          this.moods.push(myData[i])
-        }
-      }
-      resolve()
-    }).then(() => {
-      console.log(this.moods)
-    })
-
-    if (this.themeProperty.ico !== undefined) {
-      this.ico = this.themeProperty.ico.linkIco
-    }
-    if (this.themeProperty.isShowMessage !== undefined) {
-      this.showMessage = this.themeProperty.isShowMessage
-    }
-
-    let background_color = ''
-    if (this.themeProperty.randomColor !== undefined) {
-      background_color = this.themeProperty.randomColor[
-          this.getRandomInt(0,this.themeProperty.randomColor.length -1)]
-    }else {
-      background_color = this.$store.state.defaultRandomColors[
-          this.getRandomInt(0,this.$store.state.defaultRandomColors.length -1)]
-    }
-    this.hexToRgbColor = this.hexToRgb(background_color)
-  },
-  computed: {
-    setBottomStyle() {
-      return (index) => {
-        return "color: "+this.color + ";"
-      }
-    },
-    setIco() {
-      return 'background-image: url('+this.ico+');'
-    },
-    setSpanStyle() {
-      return "background-color: rgba(" + this.hexToRgbColor.r + "," +
-          this.hexToRgbColor.g + "," + this.hexToRgbColor.b + "," +
-          (this.$store.state.varOpacity * 1.2) + ");"
-    },
   },
   methods: {
-    compare(updatedTime) {
-      return  function( object1, object2) {
-        let value1  = object1.date;
-        let value2  = object2.date;
-        if (value2  < value1) {
-          return  1;
-        }  else  if (value2  > value1) {
-          return  - 1;
-        }  else {
-          return  0;
-        }
-      }
-    },
-    getRandomInt(min, max) {
-      min = Math.ceil(min);
-      max = Math.floor(max);
-      return Math.floor(Math.random() * (max - min)) + min; //不含最大值，含最小值
-    },
-    hexToRgb(hex) {
-      var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-      return result ? {
-        r: parseInt(result[1], 16),
-        g: parseInt(result[2], 16),
-        b: parseInt(result[3], 16)
-      } : null;
-    },
+    cozeSuccess(cozeMoodData) {
+      setTimeout(() => {
+        this.showComment = true
+      },500)
+    }
   }
 })
 </script>
 <style>
-  .mood-top-set {
-    width: 100%;
-    height: 4rem;
-  }
+.coze-box {
+  margin-top: -1.5rem;
+}
 </style>

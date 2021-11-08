@@ -5,7 +5,9 @@
       :is-show-top-img="false"
       :is-show-head-line="false">
     <template #center1>
-      <Home :home-height-var="'max-content'" :socials-arr="socialsArr" :navbar-style="'margin-top: 0;'" :theme-property="themeProperty" />
+      <Home :home-height-var="'max-content'" :socials-arr="socialsArr"
+            :sidebar-width-pc-var="'65vw'"
+            :navbar-style="'margin-top: 0;'" :theme-property="themeProperty" />
     </template>
     <template #center2>
       <div class="about">
