@@ -17,15 +17,11 @@ module.exports = {
         [
             path.resolve(__dirname, "../../Aurora-plugin/vuepress-plugin-coze/lib/node/index.js"),
             {
-                /*appId: 'c5GfUYtqdSYxSU5yWUvvqh5X-MdYXbMMI',
-                appKey: 'sU9cXu96cYmzvwG2QBbdVTGW',
-                masterKey: 'QuvL8dSuGOnrynENNI0QpXOa',
-                avatarPath: 'https://ooszy.cco.vin/img/blog-note/avatar-aurora.png',*/
-                appId: 'c5GfUYtqdSYxSU5yWUvvqh5X-MdYXbMMI',
-                appKey: 'sU9cXu96cYmzvwG2QBbdVTGW',
-                masterKey: 'QuvL8dSuGOnrynENNI0QpXOa',
-                avatarPath: 'https://cdn.jsdelivr.net/gh/AyagawaSeirin/Assets/img/logo.jpg',
-                registerPath: '/qsyyke',
+                appId: 'LeanCloud中的appId',
+                appKey: 'LeanCloud中的appKey',
+                masterKey: 'LeanCloud中的masterKey',
+                avatarPath: 'https://ooszy.cco.vin/img/blog-note/avatar-aurora.png',
+                registerPath: '/coze-register',
                 onlyAdministrator: false
 
             }
