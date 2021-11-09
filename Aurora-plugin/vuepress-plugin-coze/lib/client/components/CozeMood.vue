@@ -42,10 +42,18 @@ import MoodItem from "./MoodItem.vue";
 import AddMood from './AddMood.vue'
 const AV = require('leancloud-storage');
 const { Query, User } = AV;
-const appId = __APP_ID__;
-const appKey = __APP_KEY__;
-const masterKey = __Master_Key__;
-const avatar = __AVATAR_PATH__;
+let appId = ''
+let appKey = ''
+let masterKey = ''
+let avatar = 'https://ooszy.cco.vin/img/blog-note/avatar-aurora.png'
+try {
+  appId = __APP_ID__;
+  appKey = __APP_KEY__;
+  masterKey = __Master_Key__;
+  avatar = __AVATAR_PATH__;
+}catch (e) {
+  console.warn("你必须在插件中传入appId,appKey,masterKey配置项")
+}
 //导入配置属性
 export default defineComponent({
   name: 'Mood',

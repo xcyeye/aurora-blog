@@ -83,11 +83,20 @@
 <script>
 const AV = require('leancloud-storage');
 const { Query, User } = AV;
-const appId = __APP_ID__;
-const appKey = __APP_KEY__;
-const masterKey = __Master_Key__;
-const avatar = __AVATAR_PATH__;
-let onlyAdministrator = __ONLY_ADMINISTRATOR;
+let appId = ''
+let appKey = ''
+let masterKey = ''
+let onlyAdministrator = true;
+let avatar = 'https://ooszy.cco.vin/img/blog-note/avatar-aurora.png'
+try {
+  appId = __APP_ID__;
+  appKey = __APP_KEY__;
+  masterKey = __Master_Key__;
+  avatar = __AVATAR_PATH__;
+  onlyAdministrator = __ONLY_ADMINISTRATOR
+}catch (e) {
+  console.warn("你必须在插件中传入appId,appKey,masterKey配置项")
+}
 
 export default {
   name: "AddMood",
@@ -219,6 +228,22 @@ export default {
   },
   methods: {
     changeMoodStatus() {
+      //判断当前的用户名是否和发布说说的一样，管理员可以编写所有的说说，但是非管理员只能编写自己的
+
+      const currentUser = AV.User.current();
+      let publishUser = this.currentMoodObj.attributes.mood_user
+      let administrator = currentUser.attributes.administrator
+      let currentUsername = currentUser.attributes.username
+
+      if (administrator === 0) {
+        if (publishUser !== currentUsername) {
+          this.resultText = "没有权限修改其他用户说说(￣へ￣)"
+          setTimeout(() => {
+            this.resultText = ""
+          },1500)
+          return
+        }
+      }
 
       this.buttonChangeStatus = !this.buttonChangeStatus
       this.moodUpdateStatus = !this.moodUpdateStatus

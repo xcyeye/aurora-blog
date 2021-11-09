@@ -58,10 +58,20 @@
 <script>
 const AV = require('leancloud-storage');
 const { User } = AV;
-const appId = __APP_ID__;
-const appKey = __APP_KEY__;
-const masterKey = __Master_Key__;
-const avatar = __AVATAR_PATH__;
+let appId = ''
+let appKey = ''
+let masterKey = ''
+let onlyAdministrator = true;
+let avatar = 'https://ooszy.cco.vin/img/blog-note/avatar-aurora.png'
+try {
+  appId = __APP_ID__;
+  appKey = __APP_KEY__;
+  masterKey = __Master_Key__;
+  avatar = __AVATAR_PATH__;
+  onlyAdministrator = __ONLY_ADMINISTRATOR
+}catch (e) {
+  console.warn("你必须在插件中传入appId,appKey,masterKey配置项")
+}
 
 import mediumZoom from 'medium-zoom'
 export default {

@@ -1,9 +1,9 @@
 <template>
   <div class="coze-register-user">
     <div class="add-mood-pwd coze-login" id="add-mood-pwd">
-      <div class="poster-cancel">
+      <!--<div class="poster-cancel">
         <span class="coze-home-menu-ico"></span>&nbsp;
-      </div>
+      </div>-->
       <div id="pro-single-mood" class="pro-single pro-message">
         <div class="add-mood-pwd" id="mood-verify-pwd">
           <span>{{verifyText}}</span>
@@ -11,15 +11,14 @@
       </div>
       <div class="coze-donate-pay" id="">
         <form v-on:submit.prevent>
-          <div class="pro-common pro-message">
-            <div class="donate-bottom-input pro-common">
+          <!--<div class="pro-common pro-message">
+
+          </div>-->
+          <div class="pro-single pro-message">
+            <div class="donate-bottom-input">
               <input autocomplete type="text" placeholder="请输入用户名" v-model="username" name="username">
             </div>
-            <!--<div class="donate-bottom-button pro-common">
-              <button @click="verifyIdentify">注册</button>
-            </div>-->
-          </div>
-          <div class="pro-single pro-message">
+            <br>
             <div class="donate-bottom-input">
               <input autocomplete placeholder="输入6到20位包含数字,字母密码" v-model="password" name="password" type="password">
             </div>
@@ -46,10 +45,20 @@
 <script>
 const AV = require('leancloud-storage');
 const { Query, User } = AV;
-const appId = __APP_ID__;
-const appKey = __APP_KEY__;
-const masterKey = __Master_Key__;
-const avatar = __AVATAR_PATH__;
+let appId = ''
+let appKey = ''
+let masterKey = ''
+let onlyAdministrator = true;
+let avatar = 'https://ooszy.cco.vin/img/blog-note/avatar-aurora.png'
+try {
+  appId = __APP_ID__;
+  appKey = __APP_KEY__;
+  masterKey = __Master_Key__;
+  avatar = __AVATAR_PATH__;
+  onlyAdministrator = __ONLY_ADMINISTRATOR
+}catch (e) {
+  console.warn("你必须在插件中传入appId,appKey,masterKey配置项")
+}
 import AddMood from "./AddMood";
 export default {
   name: "RegisterUser",

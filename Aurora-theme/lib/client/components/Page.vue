@@ -69,7 +69,7 @@ export default defineComponent({
   },
   emits: ['getHeadLine'],
   created() {
-    this.$nextTick(() => {
+    /*this.$nextTick(() => {
       let imgs = document.querySelectorAll(".pageContent img")
       for (let i = 0; i < imgs.length; i++) {
         let originSrc = imgs[i].src
@@ -79,7 +79,7 @@ export default defineComponent({
           imgs[i].src = this.lazyLoadingImg
         }
       }
-    })
+    })*/
 
     //如果手机端侧边栏打开的，那么就关闭
     if (this.$store.state.openMobileSidebar) {
@@ -238,6 +238,9 @@ export default defineComponent({
       imgs[i].setAttribute("data-origin",originSrc)
       imgs[i].src = this.lazyLoadingImg
     }
+
+    console.log(imgs)
+    console.log("-----------mounted 进入了----------")
 
     $(window).on("scroll",() => {
       this.start()

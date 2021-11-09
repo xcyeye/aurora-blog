@@ -8,10 +8,14 @@ const vuepressPluginCoze = ({appId,appKey,masterKey,avatarPath,registerPath,only
     return {
         onInitialized: async (app) => {
 
-            AV.init({
-                appId: appId,
-                appKey: appKey
-            });
+            try {
+                AV.init({
+                    appId: appId,
+                    appKey: appKey
+                });
+            }catch (e) {
+                console.log('\x1B[31m%s\x1B[0m', 'vuepress-plugin-coze: 你传入的appId,appKey,masterKey有误,请正确传入或到https://console.leancloud.app/进行获取')
+            }
 
             if (registerPath === undefined || registerPath === null) {
                 registerPath = "/aurora-register"
