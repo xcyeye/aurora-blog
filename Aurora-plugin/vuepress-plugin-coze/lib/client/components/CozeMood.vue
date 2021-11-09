@@ -36,17 +36,8 @@
 
 <script lang="ts">
 import {
-<<<<<<< HEAD
   defineComponent
 } from 'vue'
-
-=======
-  createApp,
-  defineComponent
-} from 'vue'
-
-import $ from 'jquery'
->>>>>>> dev
 import MoodItem from "./MoodItem.vue";
 import AddMood from './AddMood.vue'
 const AV = require('leancloud-storage');
@@ -75,11 +66,7 @@ export default defineComponent({
       showMoodControl: false
     }
   },
-<<<<<<< HEAD
-  emits: ['cozeSuccess'],
-=======
   emits: ['cozeSuccess','moodEdit','cozeCancelEdit'],
->>>>>>> dev
   created() {
     const query = new AV.Query('Talk');
     query.descending('createdAt');
@@ -142,13 +129,10 @@ export default defineComponent({
     cancel(openEditStatus) {
       this.openEditStatus = openEditStatus.openEditStatus
       this.showMoodControl = openEditStatus.openEditStatus
-<<<<<<< HEAD
-=======
 
       this.$emit("cozeCancelEdit",{
         openEditStatus: this.openEditStatus
       })
->>>>>>> dev
     },
     moodComment(moodItem) {
 
@@ -168,12 +152,9 @@ export default defineComponent({
       }else {
         this.showMoodControl = true
       }
-<<<<<<< HEAD
-=======
       this.$emit("moodEdit",{
         openEditStatus: this.openEditStatus
       })
->>>>>>> dev
     }
   },
 })

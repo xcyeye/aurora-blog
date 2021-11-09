@@ -1,3 +1,5 @@
+const { path } = require("@vuepress/utils");
+
 module.exports = {
     //在这里配置插件
     plugins: [
@@ -11,6 +13,17 @@ module.exports = {
                     placeholder: "搜索",
                 },
             },
+        },
+        'vuepress-plugin-coze',
+        {
+            appId: 'leanCloud中得到的appId',
+            appKey: 'leanCloud中得到的appKey',
+            masterKey: 'leanCloud中得到的masterKey',
+            //下面这些是可选的
+            avatarPath: 'https://ooszy.cco.vin/img/blog-note/avatar-aurora.png',//说说头像url
+            registerPath: '/aurora-register', //自定义插件默认提供的注册页面路由，请在前面加上/
+            onlyAdministrator: false //是否运行其他注册的用户发布说说，true表示只有管理员可以发布
+
         }
     ],
     //设置head 一定要加入<script src="https://at.alicdn.com/t/font_2849934_v6y652peian.js"></script>项配置，否则一些图标不能正常显示
@@ -29,9 +42,17 @@ module.exports = {
                 rel: "icon",
             },
         ],
+        [
+            "link",
+            {
+                rel: 'stylesheet',
+                type: 'text/css',
+                href: '//at.alicdn.com/t/font_2849934_7el0cvwfmn.css'
+            }
+        ]
     ],
     //这里使用本地主题
-    theme: 'aurora',
+    theme: path.resolve(__dirname, "../../Aurora-theme/lib/node/index.js"),
 
     //站点title
     title: "I do not follow,i lives is always all you want",
@@ -48,14 +69,17 @@ module.exports = {
 
             {
                 text: '快速开始',
-                link: '/readme/'
+                link: '/readme/',
+                iconClass: 'aurora-0023pacman'
             },
             {
                 text: "所有配置",
-                link: '/home/config.html'
+                link: '/home/config.html',
+                iconClass: 'aurora-link'
             },
             {
                 text: '问题和bug',
+                iconClass: 'aurora-si-glyph-global',
                 children: [
                     {
                         text: 'CHANGELOG',
@@ -86,6 +110,7 @@ module.exports = {
             },
             {
                 text: '其他配置',
+                iconClass: 'aurora-sticker',
                 children: [
                     {
                         children: [
@@ -112,23 +137,28 @@ module.exports = {
             },
             {
                 text: "about",
-                link: "/about"
+                link: "/about",
+                iconClass: 'aurora-chat'
             },
             {
                 text: 'link',
-                link: '/link'
+                link: '/link',
+                iconClass: 'aurora-menu'
             },
             {
                 text: 'tag',
-                link: '/tag'
+                link: '/tag',
+                iconClass: 'aurora-page'
             },
             {
                 text: 'chat',
-                link: '/mood'
+                link: '/mood',
+                iconClass: 'aurora-volume-icon'
             },
             {
                 text: "photo",
-                link: '/photo'
+                link: '/photo',
+                iconClass: 'aurora-icon-time'
             }
         ],
 
@@ -137,6 +167,8 @@ module.exports = {
 
         //项目地址
         repo: "https://github.com/qsyyke/vuepress-theme-aurora",
+
+        repoIconClass: 'aurora-github1',
 
         //md文件的仓库地址
         docsRepo: 'https://github.com/qsyyke/aurora-docs',
@@ -252,7 +284,7 @@ module.exports = {
                 show: true,
                 sidebar: true,
                 symbol: '#icon-email'
-            }
+            },
         ],
 
         // cancelIcoHref: "https://ooszy.cco.vin/img/ico/quxiao.svg", 在v1.3.2中移除
@@ -491,65 +523,166 @@ module.exports = {
         //友情链接数组
         friendLinks: [
             {
-                //网站标题
-                title: "XI溪",
+                title: '我的朋友',
+                links: [
+                    {
+                        //网站标题
+                        title: "XI溪",
 
-                //站点链接
-                url: "http://www.xiaoxuya.top",
+                        //站点链接
+                        url: "http://www.xiaoxuya.top",
 
-                //站点logo
-                logo: "https://www.xiaoxuya.top/img/logo.png",
+                        //站点logo
+                        logo: "https://www.xiaoxuya.top/img/logo.png",
 
-                //站点描述
-                describe: "人生若只是初见,何事秋风悲画扇",
+                        //站点描述
+                        describe: "人生若只是初见,何事秋风悲画扇",
+                        cover: 'https://ooszy.cco.vin/img/blog-note/image-20211106100103898.png?x-oss-process=style/pictureProcess1'
+                    },
+                    {
+                        title: "左眼会陪右眼哭の博客",
+                        url: "http://qkongtao.cn/",
+                        logo: "http://qiniu.qkongtao.cn/2020/12/d11-e1628358435552.png",
+                        describe: "干嘛这么想不开，要在脸上贴个输字！",
+                        cover: 'https://ooszy.cco.vin/img/blog-note/image-20211106101057042.png?x-oss-process=style/pictureProcess1'
+                    },
+                    {
+                        title: "[ Blog We]",
+                        url: "https://blogwe.com/",
+                        logo: "https://blogwe.com/favicon.ico",
+                        describe: "博客大全-做最好的博客导航！",
+                        cover: "https://ooszy.cco.vin/img/blog-note/image-20211106100344348.png?x-oss-process=style/pictureProcess1"
+                    },
+                    {
+                        title: "I Am I",
+                        url: "https://5ime.cn",
+                        logo: "https://cdn.jsdelivr.net/gh/5ime/img/avatar.jpg",
+                        describe: "永远相信美好的事情即将发生",
+                        cover: 'https://ooszy.cco.vin/img/blog-note/image-20211106100424035.png?x-oss-process=style/pictureProcess1'
+                    },
+                    {
+                        title: "Davinci的红茶馆",
+                        url: "https://davincievans.top/",
+                        logo: "https://cdn.jsdelivr.net/gh/DavinciEvans/Imgs-bed@master/gallery/avatar.jpg",
+                        describe: "You are all stardust.",
+                        cover: 'https://ooszy.cco.vin/img/blog-note/image-20211106100502873.png?x-oss-process=style/pictureProcess1'
+                    },
+                    {
+                        title: "皮皮凛の小窝",
+                        url: "https://owomoe.net/",
+                        logo: "https://cdn.jsdelivr.net/gh/AyagawaSeirin/Assets/img/logo.jpg",
+                        describe: "永远相信美好的事情即将发生~",
+                        cover: 'https://ooszy.cco.vin/img/blog-note/image-20211106100608395.png?x-oss-process=style/pictureProcess1'
+                    },
+                    {
+                        title: "月月月子喵",
+                        url: "https://haozi.moe",
+                        logo: "https://haozi.moe/css/images/logo_christmas.png",
+                        describe: "可爱的月子酱",
+                        cover: 'https://ooszy.cco.vin/img/blog-note/image-20211106100009647.png?x-oss-process=style/pictureProcess1'
+                    },
+                    {
+                        title: "疫情在线捐款系统",
+                        url: "http://yq.vipblogs.cn/",
+                        logo: "https://ooszy.cco.vin/img/blog-public/avatar.jpg",
+                        describe: "基于echarts的疫情捐款系统",
+                        cover: ''
+                    },
+                    {
+                        title: "疫情在线捐款系统后台登录",
+                        url: "http://admin.vipblogs.cn/",
+                        logo: "https://ooszy.cco.vin/img/blog-public/avatar.jpg",
+                        describe: "该捐款系统后台登录",
+                        cover: ''
+                    },
+                ]
             },
             {
-                title: "左眼会陪右眼哭の博客",
-                url: "http://qkongtao.cn/",
-                logo: "http://qiniu.qkongtao.cn/2020/12/d11-e1628358435552.png",
-                describe: "干嘛这么想不开，要在脸上贴个输字！",
+                title: '大佬',
+                links: [
+                    {
+                        //网站标题
+                        title: "XI溪",
+
+                        //站点链接
+                        url: "http://www.xiaoxuya.top",
+
+                        //站点logo
+                        logo: "https://www.xiaoxuya.top/img/logo.png",
+
+                        //站点描述
+                        describe: "人生若只是初见,何事秋风悲画扇",
+                        cover: 'https://ooszy.cco.vin/img/blog-note/image-20211106100103898.png?x-oss-process=style/pictureProcess1'
+                    },
+                    {
+                        title: "左眼会陪右眼哭の博客",
+                        url: "http://qkongtao.cn/",
+                        logo: "http://qiniu.qkongtao.cn/2020/12/d11-e1628358435552.png",
+                        describe: "干嘛这么想不开，要在脸上贴个输字！",
+                        cover: 'https://ooszy.cco.vin/img/blog-note/image-20211106101057042.png?x-oss-process=style/pictureProcess1'
+                    },
+                    {
+                        title: "皮皮凛の小窝",
+                        url: "https://owomoe.net/",
+                        logo: "https://cdn.jsdelivr.net/gh/AyagawaSeirin/Assets/img/logo.jpg",
+                        describe: "永远相信美好的事情即将发生~",
+                        cover: 'https://ooszy.cco.vin/img/blog-note/image-20211106100608395.png?x-oss-process=style/pictureProcess1'
+                    },
+                    {
+                        title: "月月月子喵",
+                        url: "https://haozi.moe",
+                        logo: "https://haozi.moe/css/images/logo_christmas.png",
+                        describe: "可爱的月子酱",
+                        cover: 'https://ooszy.cco.vin/img/blog-note/image-20211106100009647.png?x-oss-process=style/pictureProcess1'
+                    },
+                ]
             },
             {
-                title: "[ Blog We]",
-                url: "https://blogwe.com/",
-                logo: "https://blogwe.com/favicon.ico",
-                describe: "博客大全-做最好的博客导航！",
-            },
-            {
-                title: "I Am I",
-                url: "https://5ime.cn",
-                logo: "https://cdn.jsdelivr.net/gh/5ime/img/avatar.jpg",
-                describe: "永远相信美好的事情即将发生",
-            },
-            {
-                title: "Davinci的红茶馆",
-                url: "https://davincievans.top/",
-                logo: "https://cdn.jsdelivr.net/gh/DavinciEvans/Imgs-bed@master/gallery/avatar.jpg",
-                describe: "You are all stardust.",
-            },
-            {
-                title: "皮皮凛の小窝",
-                url: "https://owomoe.net/",
-                logo: "https://cdn.jsdelivr.net/gh/AyagawaSeirin/Assets/img/logo.jpg",
-                describe: "永远相信美好的事情即将发生~",
-            },
-            {
-                title: "月月月子喵",
-                url: "https://haozi.moe",
-                logo: "https://haozi.moe/css/images/logo_christmas.png",
-                describe: "可爱的月子酱",
-            },
-            {
-                title: "疫情在线捐款系统",
-                url: "http://yq.vipblogs.cn/",
-                logo: "https://ooszy.cco.vin/img/blog-public/avatar.jpg",
-                describe: "基于echarts的疫情捐款系统",
-            },
-            {
-                title: "疫情在线捐款系统后台登录",
-                url: "http://admin.vipblogs.cn/",
-                logo: "https://ooszy.cco.vin/img/blog-public/avatar.jpg",
-                describe: "该捐款系统后台登录",
+                title: '小伙伴',
+                links: [
+                    {
+                        //网站标题
+                        title: "XI溪",
+
+                        //站点链接
+                        url: "http://www.xiaoxuya.top",
+
+                        //站点logo
+                        logo: "https://www.xiaoxuya.top/img/logo.png",
+
+                        //站点描述
+                        describe: "人生若只是初见,何事秋风悲画扇",
+                        cover: 'https://ooszy.cco.vin/img/blog-note/image-20211106100103898.png?x-oss-process=style/pictureProcess1'
+                    },
+                    {
+                        title: "[ Blog We]",
+                        url: "https://blogwe.com/",
+                        logo: "https://blogwe.com/favicon.ico",
+                        describe: "博客大全-做最好的博客导航！",
+                        cover: "https://ooszy.cco.vin/img/blog-note/image-20211106100344348.png?x-oss-process=style/pictureProcess1"
+                    },
+                    {
+                        title: "Davinci的红茶馆",
+                        url: "https://davincievans.top/",
+                        logo: "https://cdn.jsdelivr.net/gh/DavinciEvans/Imgs-bed@master/gallery/avatar.jpg",
+                        describe: "You are all stardust.",
+                        cover: 'https://ooszy.cco.vin/img/blog-note/image-20211106100502873.png?x-oss-process=style/pictureProcess1'
+                    },
+                    {
+                        title: "皮皮凛の小窝",
+                        url: "https://owomoe.net/",
+                        logo: "https://cdn.jsdelivr.net/gh/AyagawaSeirin/Assets/img/logo.jpg",
+                        describe: "永远相信美好的事情即将发生~",
+                        cover: 'https://ooszy.cco.vin/img/blog-note/image-20211106100608395.png?x-oss-process=style/pictureProcess1'
+                    },
+                    {
+                        title: "疫情在线捐款系统",
+                        url: "http://yq.vipblogs.cn/",
+                        logo: "https://ooszy.cco.vin/img/blog-public/avatar.jpg",
+                        describe: "基于echarts的疫情捐款系统",
+                        cover: ''
+                    },
+                ]
             },
         ],
 
@@ -566,9 +699,17 @@ module.exports = {
 
             //自己站点描述
             describe: "vuepress-theme-Aurora是一款简洁，美观，功能强大的静态主题",
+            cover: 'https://ooszy.cco.vin/img/blog-note/image-20211106100103898.png?x-oss-process=style/pictureProcess1',
 
             //自己的头像
-            email: "cqycco@gmail.com",
+            contact: "email: cqycco@gmail.com, qq:2291308094",
+            otherDescribe: [
+                '申请友链请按照下面格式，在此页面留言，我看到就会进行添加',
+                '博客名称    博客地址      博客描述      博客logo',
+                '友链申请要求',
+                '拒绝涉政/涉黄/太多广告/盈利性站点',
+                '站点能正常访问',
+            ]
         },
 
         //需要排除的标签，自动生成的标签中，不会有这个标签，这是一个数组
@@ -625,7 +766,7 @@ module.exports = {
         defaultBorderRadius: 10,
 
         //默认的透明度，传入0到1之间的小数，0表示全透明
-        defaultOpacity: 0.4,
+        defaultOpacity: 1,
 
         //首页文章列表透明度是否跟随样式面板改变，true表示跟随，全白色,false表示不跟随
         isHomePageFollow: false,
@@ -808,7 +949,21 @@ module.exports = {
         showAddMood: true,
 
         //生成海报的顶部图片api接口，请注意，该接口需要直接返回图片地址，不能有跨域问题，设置之前，可以先使用ajax看是否存在跨域
-        postImgApi: 'https://unsplash.it/1600/900?random'
+        postImgApi: 'https://picture.cco.vin/pic/rmimg?type=bing',
+
+        /*
+        * 以下为v1.5.4新增功能
+        * */
+
+        //文章h2标签的icon
+        articleH2Icon: '🌸',
+
+        //文章h3标签的icon
+        articleH3Icon: '🐳',
+
+        //文章h4标签及h4标签之后的标签的icon
+        articleH4Icon: '⛄',
+
 
         /*
         * 下面这些是在v1.3.2中移除的配置，但是在V1.3.2之前的版本中，可能还可以使用，某些配置我不确定具体在哪个
