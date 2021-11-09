@@ -14,7 +14,7 @@ const network = require('../../public/js/network.js')
 import PosterImg from "../child/PosterImg";
 import $ from 'jquery'
 import html2canvas from 'html2canvas'
-var QRCode = require('qrcode')
+let QRCode = require('qrcode')
 import {createApp} from 'vue'
 import storeIndex from '../../public/js/store'
 export default {
