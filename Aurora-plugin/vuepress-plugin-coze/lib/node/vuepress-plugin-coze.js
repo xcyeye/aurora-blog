@@ -7,16 +7,6 @@ const AV = require('leancloud-storage');
 const vuepressPluginCoze = ({appId,appKey,masterKey,avatarPath,registerPath,onlyAdministrator }) => {
     return {
         onInitialized: async (app) => {
-
-            try {
-                AV.init({
-                    appId: appId,
-                    appKey: appKey
-                });
-            }catch (e) {
-                console.log('\x1B[31m%s\x1B[0m', 'vuepress-plugin-coze: 你传入的appId,appKey,masterKey有误,请正确传入或到https://console.leancloud.app/进行获取')
-            }
-
             if (registerPath === undefined || registerPath === null) {
                 registerPath = "/aurora-register"
             }
@@ -42,7 +32,6 @@ const vuepressPluginCoze = ({appId,appKey,masterKey,avatarPath,registerPath,only
                 // 设置 markdown 内容
                 content: "",
             })
-
 
             // 把它添加到 `app.pages`
             app.pages.push(AuroraCozePage)

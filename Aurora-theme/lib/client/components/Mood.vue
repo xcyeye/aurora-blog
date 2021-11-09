@@ -2,28 +2,8 @@
   <common :is-sticky-sidebar="true" :show-sidebar-animate-class="false"
           :is-show-side-bar="false" :is-show-top-img="true" :is-show-head-line="false">
     <template #center1>
-      <CozeMood @coze-cancel-edit="cozeCancelEdit" @mood-edit="moodEdit" @coze-success="cozeSuccess">
-        <!--<template #coze-mood-content>
-          <span style="color: red">
-            coze-mood-content
-          </span>
-        </template>
-        <template #coze-img>
-          <span style="color: red">
-            coze-img
-          </span>
-        </template>
-        <template #coze-mood-bottom-left>
-          <span style="color: red">
-            coze-mood-bottom-left
-          </span>
-        </template>
-        <template #coze-mood-bottom-right>
-          <span style="color: red">
-            coze-mood-bottom-right
-          </span>
-        </template>-->
-      </CozeMood>
+      <!--<CozeLogin @coze-login="cozeLogin"></CozeLogin>-->
+      <CozeMood @coze-cancel-edit="cozeCancelEdit" @mood-edit="moodEdit" @coze-success="cozeSuccess"></CozeMood>
     </template>
     <template #center2>
       <comment v-show="showComment" :path-name="$route.path" />

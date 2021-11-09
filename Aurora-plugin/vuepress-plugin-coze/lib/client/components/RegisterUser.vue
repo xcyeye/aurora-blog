@@ -11,9 +11,6 @@
       </div>
       <div class="coze-donate-pay" id="">
         <form v-on:submit.prevent>
-          <!--<div class="pro-common pro-message">
-
-          </div>-->
           <div class="pro-single pro-message">
             <div class="donate-bottom-input">
               <input autocomplete type="text" placeholder="请输入用户名" v-model="username" name="username">
