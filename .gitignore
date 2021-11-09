@@ -5,3 +5,5 @@ docs/.vuepress/dist
 **/.temp
 deploy.sh
 /package-lock.json
+/Aurora-plugin/**/.git
+/Aurora-plugin/**/node_modules

@@ -14,6 +14,7 @@ module.exports = {
                 },
             },
         },
+<<<<<<< HEAD
         /*'vuepress-plugin-coze',
         {
             appId: 'leanCloud中得到的appId',
@@ -25,17 +26,25 @@ module.exports = {
             onlyAdministrator: false //是否运行其他注册的用户发布说说，true表示只有管理员可以发布
 
         }*/
+=======
+>>>>>>> dev
         [
             path.resolve(__dirname, "../../Aurora-plugin/vuepress-plugin-coze/lib/node/index.js"),
             {
                 appId: '2A2Dyd2AffrnldhwftlEddVn-MdYXbMMI',
                 appKey: 'qHYTbb91iOPLelyC9lpbXxLH',
                 masterKey: 'eUwfvS3luIPnPiHS5SpEhDYr',
+<<<<<<< HEAD
                 //下面这些是可选的
                 avatarPath: 'https://ooszy.cco.vin/img/blog-note/avatar-aurora.png',//说说头像url
                 registerPath: '/aurora-register', //自定义插件默认提供的注册页面路由，请在前面加上/
                 onlyAdministrator: false //是否运行其他注册的用户发布说说，true表示只有管理员可以发布
 
+=======
+                avatarPath: 'https://ooszy.cco.vin/img/blog-note/avatar-aurora.png',
+                registerPath: '/coze-register',
+                onlyAdministrator: false
+>>>>>>> dev
             }
         ]
 
@@ -298,7 +307,7 @@ module.exports = {
                 show: true,
                 sidebar: true,
                 symbol: '#icon-email'
-            }
+            },
         ],
 
         // cancelIcoHref: "https://ooszy.cco.vin/img/ico/quxiao.svg", 在v1.3.2中移除
