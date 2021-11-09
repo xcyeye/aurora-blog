@@ -33,9 +33,4 @@ export default defineClientAppEnhance(({ app, router }) => {
     }catch (e) {
         console.warn(e)
     }
-
-    router.addRoute({
-        path: '/login',
-        component: CozeLogin
-    })
 });

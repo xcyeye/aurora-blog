@@ -81,7 +81,8 @@ export default {
       title: '',
       content: '',
       moodLink: 0,
-      moodLikeStatus: false
+      moodLikeStatus: false,
+      setLikeSuccess: true
     }
   },
   props: {
@@ -141,7 +142,8 @@ export default {
         moodItem
       })
     },
-    moodLove(e,moodItem) {
+    setLikeNum(moodItem) {
+      this.setLikeSuccess = false
       let cookie = document.cookie;
       let mood_link_status = false
       new Promise((resolve,reject) => {
@@ -169,6 +171,7 @@ export default {
               document.cookie="mood_like_status_" + this.moodItem.id + "=1";
               this.moodLink = mood_like + 1
               this.moodLikeStatus = true
+              this.setLikeSuccess = true
             });
           });
         }else {
@@ -182,6 +185,7 @@ export default {
               document.cookie="mood_like_status_" + this.moodItem.id + "=0";
               this.moodLink = mood_like - 1
               this.moodLikeStatus = false
+              this.setLikeSuccess = true
             });
           });
         }
@@ -189,6 +193,22 @@ export default {
 
       this.$emit("moodLove", {
         moodItem
+      })
+    },
+    moodLove(e,moodItem) {
+      new Promise((resolve,reject) => {
+        if (!this.setLikeSuccess) {
+          let loadingLikeStatus = setInterval(() =>{
+            if (this.setLikeSuccess) {
+              clearInterval(loadingLikeStatus)
+              resolve()
+            }
+          },50)
+        }else {
+          resolve()
+        }
+      }).then(() => {
+        this.setLikeNum(moodItem)
       })
     },
     moodPoster(e,moodItem) {
