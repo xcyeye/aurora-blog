@@ -40,7 +40,7 @@ module.exports = {
 
 
 
-> 运行你的vuepress应用，待启动完成之后，分别访问`/aurora-register`和`/aurora-coze`进行用户注册和说说展示
+> 运行你的vuepress应用，待启动完成之后，分别访问`/aurora-register`和`/aurora-coze`进行用户注册和说说展示，上面的[appId配置](#秘钥获取)
 
 
 
@@ -88,7 +88,7 @@ module.exports = {
 
 ### 秘钥获取
 
-该插件的说说存储于`leancloud`,进入[leanCloud国际版](https://console.leancloud.app/)(`一定要使用国际版，国内版我没测试过`)，你如果没有`leanCloud`账户的话，需要先创建一个有效账户，
+该插件数据存储于`leancloud`,进入[leanCloud国际版](https://console.leancloud.app/)(`一定要使用国际版，国内版域名为console.leancloud.cn我没测试过`)，你如果没有`leanCloud`账户的话，需要先创建一个有效账户
 
 ![image-20211108192136530](https://ooszy.cco.vin/img/blog-note/image-20211108192136530.png?x-oss-process=style/pictureProcess1)
 
