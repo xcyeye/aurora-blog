@@ -17,13 +17,12 @@ module.exports = {
         [
             path.resolve(__dirname, "../../Aurora-plugin/vuepress-plugin-coze/lib/node/index.js"),
             {
-                appId: 'LeanCloud中的appId',
-                appKey: 'LeanCloud中的appKey',
-                masterKey: 'LeanCloud中的masterKey',
+                appId: '2A2Dyd2AffrnldhwftlEddVn-MdYXbMMI',
+                appKey: 'qHYTbb91iOPLelyC9lpbXxLH',
+                masterKey: 'eUwfvS3luIPnPiHS5SpEhDYr',
                 avatarPath: 'https://ooszy.cco.vin/img/blog-note/avatar-aurora.png',
                 registerPath: '/coze-register',
                 onlyAdministrator: false
-
             }
         ]
 
