@@ -69,18 +69,6 @@ export default defineComponent({
   },
   emits: ['getHeadLine'],
   created() {
-    /*this.$nextTick(() => {
-      let imgs = document.querySelectorAll(".pageContent img")
-      for (let i = 0; i < imgs.length; i++) {
-        let originSrc = imgs[i].src
-        if (imgs[i].getAttribute("data-origin") == null) {
-          //图片没有设置懒加载
-          imgs[i].setAttribute("data-origin",originSrc)
-          imgs[i].src = this.lazyLoadingImg
-        }
-      }
-    })*/
-
     //如果手机端侧边栏打开的，那么就关闭
     if (this.$store.state.openMobileSidebar) {
       this.$store.commit("setOpenMobileSidebar",{
@@ -140,6 +128,9 @@ export default defineComponent({
     },
     loadImg(img) {
       let originSrc = img.getAttribute("data-origin")
+      if (originSrc === null) {
+        return;
+      }
       img.setAttribute("src",originSrc)
     },
     setOtherProperty(keyword,description) {
@@ -238,9 +229,6 @@ export default defineComponent({
       imgs[i].setAttribute("data-origin",originSrc)
       imgs[i].src = this.lazyLoadingImg
     }
-
-    console.log(imgs)
-    console.log("-----------mounted 进入了----------")
 
     $(window).on("scroll",() => {
       this.start()
