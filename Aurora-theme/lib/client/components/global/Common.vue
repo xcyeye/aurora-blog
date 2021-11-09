@@ -27,10 +27,11 @@
     <slot name="top5"></slot>
     <slot name="top6"></slot>
     <div
-        class="theme-container sidebar-single-enter-animate"
+        class="theme-container"
         @touchstart="onTouchStart"
         @touchend="onTouchEnd"
         :style="colorFontStyle"
+        :class="{'sidebar-single-enter-animate': showSidebarAnimateClass}"
     >
       <div class="page-sidebar">
         <top-image :is-show-top-img="isShowTopImg"
@@ -151,6 +152,12 @@ export default defineComponent({
     }
   },
   props: {
+    showSidebarAnimateClass: {
+      type: Boolean,
+      default() {
+        return true
+      }
+    },
     isHomePage: {
       type: Boolean,
       default() {

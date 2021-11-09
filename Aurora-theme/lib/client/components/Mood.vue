@@ -1,8 +1,8 @@
 <template>
-  <common :is-sticky-sidebar="true"
+  <common :is-sticky-sidebar="true" :show-sidebar-animate-class="false"
           :is-show-side-bar="false" :is-show-top-img="true" :is-show-head-line="false">
     <template #center1>
-      <CozeMood @coze-success="cozeSuccess">
+      <CozeMood @coze-cancel-edit="cozeCancelEdit" @mood-edit="moodEdit" @coze-success="cozeSuccess">
         <!--<template #coze-mood-content>
           <span style="color: red">
             coze-mood-content
@@ -60,6 +60,15 @@ export default defineComponent({
     }
   },
   methods: {
+    cozeCancelEdit(openEditStatus) {
+      // if (!openEditStatus.openEditStatus) {
+      //   let cozeMoodAurora = document.querySelector(".coze-mood-aurora");
+      //   cozeMoodAurora.className = "theme-container coze-mood-aurora sidebar-single-enter-animate"
+      // }
+    },
+    moodEdit(openEditStatus) {
+
+    },
     cozeLoginOut(data) {
       console.log("点击登出按钮")
       console.log(data)

@@ -117,7 +117,6 @@ export default {
       }
     },
     loadPosterImg(spanData) {
-
       if (this.$store.state.posterData !== spanData) {
         let append = document.querySelector("#poster-append")
         if (append === null) {

@@ -1,5 +1,5 @@
 <template>
-  <div id="control-comment" v-if="showComment">
+  <div id="control-comment" class="sidebar-single-enter-animate" v-if="showComment">
     <div class="mobile-record">
       <div class="page box" :style="$store.state.borderRadiusStyle + $store.state.opacityStyle">
         <div id="waline" class="vcomment-bottom theme-default-content"></div>

@@ -1,0 +1,79 @@
+@font-face {
+  font-family: "aurora-coze-font"; /* Project id 2919721 */
+  src: url('iconfont.woff2?t=1636197186346') format('woff2'),
+       url('iconfont.woff?t=1636197186346') format('woff'),
+       url('iconfont.ttf?t=1636197186346') format('truetype');
+}
+
+.aurora-coze-font {
+  font-family: "aurora-coze-font" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.aurora-coze-commentfill:before {
+  content: "\e666";
+}
+
+.aurora-coze-love:before {
+  content: "\e665";
+}
+
+.aurora-coze-dianzan:before {
+  content: "\e656";
+}
+
+.aurora-coze-edit:before {
+  content: "\e60b";
+}
+
+.aurora-coze-comment:before {
+  content: "\e611";
+}
+
+.aurora-coze-cancel:before {
+  content: "\e600";
+}
+
+.aurora-coze-love1:before {
+  content: "\e667";
+}
+
+.aurora-coze-edit1:before {
+  content: "\e7a0";
+}
+
+.aurora-coze-dianzan1:before {
+  content: "\ec7f";
+}
+
+.aurora-coze-comments:before {
+  content: "\e6e7";
+}
+
+.aurora-coze-zhiding:before {
+  content: "\e601";
+}
+
+.aurora-coze-cancel-2:before {
+  content: "\e6a4";
+}
+
+.aurora-coze-edit2:before {
+  content: "\e66e";
+}
+
+.aurora-coze-zhiding1:before {
+  content: "\e607";
+}
+
+.aurora-coze-love2:before {
+  content: "\e638";
+}
+
+.aurora-coze-ic_cancel:before {
+  content: "\e6b6";
+}
+

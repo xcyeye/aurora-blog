@@ -1,0 +1,859 @@
+/*这是说说插件样式*/
+:root {
+    --coze-border-radius: 10px; /*圆角*/
+    --coze-background: white;/*背景色*/
+    --coze-margin-top: 1.5rem;/*margin-top值*/
+    --coze-margin-bottom: 1.5rem;/*margin-bottom*/
+    --coze-mood-content-background: rgba(255, 202, 212, 0.35);/*说说内容背景色*/
+}
+
+.mood-top-set {
+    width: 100%;
+    height: 4rem;
+}
+
+.mood-edit {
+    max-height: 2.5rem;
+    height: 2.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.mood-edit-left {
+    flex: 5;
+}
+.mood-edit-right {
+    height: 100%;
+    line-height: 2.5rem;
+    flex: 5;
+}
+
+.mood-edit-right {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.mood-edit-single-common {
+    flex: 1;
+}
+
+.aurora-coze-custom-edit:before {
+    content: "\e60b";
+}
+
+.aurora-coze-custom-comment:before {
+    content: "\e6e7";
+}
+
+.aurora-coze-custom-love:before {
+    content: "\e665";
+}
+
+.aurora-coze-custom-poster:before {
+    content: "\e656";
+}
+
+.aurora-coze-font {
+    font-size: 20px;
+    cursor: pointer;
+}
+.mood_checkbox {
+    display: inline-block;
+    width: 60%;
+}
+.show_mood_status_checkbox {
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    border-radius: 30px;
+}
+.mood_update_status {
+    display: flex;
+    flex: 1;
+}
+.mood_checkbox {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 2;
+}
+.edit-upload {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.mood_update_status button {
+    flex: 1;
+    margin-left: .5rem;
+    margin-right: .5rem;
+}
+.mood_checkbox_left {
+    flex: 2;
+}
+.mood_checkbox_right {
+    flex: 1.1;
+}
+#upload-file {
+    width: 100%;
+}
+
+.mood_like_love_active {
+    -webkit-animation: mood_like_love_active 500ms;
+    animation: mood_like_love_active 500ms;
+    -webkit-animation-iteration-count: 1;
+    animation-iteration-count: 1;
+    -webkit-animation-fill-mode: forwards;
+    animation-fill-mode: forwards;
+}
+
+@keyframes mood_like_love_active {
+    0% {
+        font-size: 20px;
+    }
+    10% {
+        font-size: 21px;
+    }
+    20% {
+        font-size: 22.5px;
+    }
+    30% {
+        font-size: 24px;
+    }
+    40% {
+        font-size: 25.5px;
+    }
+    50% {
+        font-size: 27px;
+    }
+    60% {
+        font-size: 25.5px;
+    }
+    70% {
+        font-size: 24px;
+    }
+    80% {
+        font-size: 22.5px;
+    }
+    90% {
+        font-size: 21px;
+    }
+    100% {
+        font-size: 20px;
+    }
+}
+
+@media screen and (min-width: 719px) {
+    .add-mood-pwd {
+        width: 34%;
+    }
+    #mood-verify-pwd {
+        width: 100%;
+    }
+}
+
+@media screen and (max-width: 719px) {
+    #mood_checkbox {
+        flex: 2.5;
+    }
+    #mood_update_status {
+        flex: 2.5;
+    }
+    #mood_checkbox_left  {
+        width: 4rem;
+        flex: 1;
+    }
+    #mood_checkbox_right {
+        flex: 4;
+    }
+}
+.coze-mood-list {
+    /*width: 80%;*/
+    margin: 0 auto;
+}
+.coze-mood-control {
+    z-index: 2;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+    margin-top: var(--coze-margin-top);
+    margin-bottom: var(--coze-margin-bottom);
+    background: var(--coze-background);
+    -webkit-border-radius: var(--coze-border-radius);
+    border-radius: var(--coze-border-radius);
+}
+
+.coze-mood-item-parent {
+    width: 100%;
+}
+
+.mood-article {
+    width: 100%;
+    background-color: rgba(255,255,255,var(--opacity));
+    position: relative;
+    display: block;
+    z-index: 2;
+    margin: 0 auto;
+    /*margin-top: 1.5rem;*/
+    /*margin-bottom: 1.5rem;*/
+    -webkit-border-radius: var(--coze-border-radius);
+    border-radius: var(--coze-border-radius);
+    overflow: hidden;
+    /*box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;*/
+}
+
+.mood-text {
+    display: none;
+}
+
+.mood-page {
+    padding: 2rem 2.5rem;
+}
+
+.coze-mood-item {
+    min-height: 4rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    width: 100%;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+}
+
+.mood-item-img {
+    width: 100%;
+    height: 100%;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+}
+
+.mood-img {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+}
+
+.mood-img-left {
+    -webkit-box-flex: 1.2;
+    -webkit-flex: 1.2;
+    -ms-flex: 1.2;
+    flex: 1.2;
+}
+
+.mood-img-right {
+    -webkit-box-flex: 5;
+    -webkit-flex: 5;
+    -ms-flex: 5;
+    flex: 5;
+    max-height: 8rem;
+    height: -webkit-max-content;
+    height: -moz-max-content;
+    height: max-content;
+    overflow: scroll;
+}
+
+.mood-img-right .mood-li-control {
+    /*width: 95%;*/
+}
+
+.mood-img-right::-webkit-scrollbar {
+    background-color: #8186d5;
+    width: .3rem;
+    -webkit-border-radius: var(--coze-border-radius);
+    border-radius: var(--coze-border-radius);
+    display: none;
+}
+
+.mood-img li {
+    list-style: none;
+    padding: 10px;
+    border-radius: var(--coze-border-radius);
+    box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 8px;
+    width: 13rem;
+    height: 5.5rem;
+    float: left;
+    margin-left: .2rem;
+    margin-right: .2rem;
+    margin-top: .5rem;
+    margin-bottom: .5rem;
+    background-size: 100%;
+}
+
+#mood-bottom-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.mood-item-img-parent {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+}
+
+.mood-item-common {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+}
+
+.mood-item-left {
+    -webkit-box-flex: 1.2;
+    -webkit-flex: 1.2;
+    -ms-flex: 1.2;
+    flex: 1.2;
+}
+
+.mood-item-right {
+    -webkit-box-flex: 5;
+    -webkit-flex: 5;
+    -ms-flex: 5;
+    flex: 5;
+}
+.file-upload-status {
+    width: 100%;
+    max-height: 5rem;
+    overflow-y: scroll;
+}
+.file-upload-status::-webkit-scrollbar {
+    display: none;
+}
+.file-upload-status li {
+    list-style: none;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.coze-file-upload-common {
+    display: inline-block;
+}
+
+.coze-file-upload-name::-webkit-scrollbar {
+    display: none;
+}
+.coze-file-upload-name {
+    overflow-x: scroll;
+    flex: 1.5;
+    max-width: 5rem;
+}
+.coze-file-upload-status-par {
+    display: inline-block;
+    flex: 5;
+}
+.coze-file-upload-status {
+    background: #00cfc8;
+    flex: 5;
+    height: 5px;
+    width: 70%;
+    margin-left: .5rem;
+    margin-right: .5rem;
+    border-radius: 30px;
+}
+
+.coze-mood-item-content {
+    background: var(--coze-mood-content-background);
+    border-radius: var(--coze-border-radius);
+    box-shadow: rgba(0, 0, 0, 0.1) -4px 9px 25px -6px;
+    height: 100%;
+    width: 97%;
+    /*margin: 0 auto;*/
+}
+
+.mood-item-right-common {
+    --mood-item-heigth: 65%;
+}
+
+.mood-item-content {
+    /*display: -webkit-box;*/
+    /*display: -webkit-flex;*/
+    /*display: -ms-flexbox;*/
+    /*display: flex;*/
+    text-align: left;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+    overflow: hidden;
+    padding: 6px 6px;
+}
+
+.mood-item-title {
+    height: 2.2rem;
+}
+
+@media screen and (max-width: 719px) {
+    #mood-page {
+        padding: .5rem;
+    }
+    #coze-mood-item-img img {
+        -webkit-border-radius: 40px;
+        border-radius: 40px;
+        height: 3.8rem;
+        width: 3.8rem;
+        cursor: pointer;
+    }
+    #mood-item-left {
+        -webkit-box-flex: 2;
+        -webkit-flex: 2;
+        -ms-flex: 2;
+        flex: 2;
+    }
+    #mood-item-right {
+        -webkit-box-flex: 6;
+        -webkit-flex: 6;
+        -ms-flex: 6;
+        flex: 6;
+    }
+    #mood-img-right {
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-pack: center;
+        -webkit-justify-content: center;
+        -ms-flex-pack: center;
+        justify-content: center;
+        -webkit-box-align: center;
+        -webkit-align-items: center;
+        -ms-flex-align: center;
+        align-items: center;
+        position: relative;
+    }
+    .mood-li-control {
+        width: 14rem;
+        max-height: 8rem;
+        text-align: right;
+    }
+    #mood-img-li {
+        position: relative;
+        right: 0;
+    }
+}
+#coze-mood-item-img img {
+    -webkit-border-radius: 100px;
+    border-radius: 100px;
+}
+
+@media screen and (min-width: 719px) {
+    #coze-mood-item-img img {
+        height: 40%;
+        width: 40%;
+        cursor: pointer;
+    }
+}
+
+.add-mood {
+    padding-bottom: 1rem;
+    padding-top: 1rem;
+    -webkit-border-radius: var(--coze-border-radius);
+    border-radius: var(--coze-border-radius);
+    margin: 0 auto;
+    margin-top: 1rem;
+    width: 34%;
+    height: -webkit-max-content;
+    height: -moz-max-content;
+    height: max-content;
+    -webkit-box-shadow: rgb(0 0 0 / 25%) 0px 25px 50px -12px;
+    box-shadow: rgb(0 0 0 / 25%) 0px 25px 50px -12px;
+    background-color: rgba(255,255,255,.7);
+}
+
+.poster-cancel {
+    text-align: right;
+    padding-top: 5px;
+    padding-right: 1rem;
+}
+
+.coze-home-menu-ico:before {
+    font-family: aurora-coze-font;
+    content: "\e600";
+    cursor: pointer;
+    margin-right: 5px;
+}
+.coze-login {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    margin: 0 auto;
+    margin-top: 1rem;
+    -webkit-border-radius: var(--coze-border-radius);
+    border-radius: var(--coze-border-radius);
+    background-color: rgba(255,255,255,.9);
+    -webkit-box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+}
+.coze-donate-pay {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    width: 90%;
+    margin: 0 auto;
+    margin-top: 1rem;
+    -webkit-border-radius: var(--coze-border-radius);
+    border-radius: var(--coze-border-radius);
+    background-color: rgba(255,255,255,.9);
+    -webkit-box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+}
+
+
+.donate-bottom-input {
+    -webkit-box-flex: 1;
+    -webkit-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+}
+
+.pro-message {
+    width: 90%;
+    margin: 0 auto;
+}
+
+.pro-single {
+    margin-top: 1rem;
+    text-align: left;
+}
+
+.donate-bottom-input input {
+    padding-left: 15px;
+    padding-right: 15px;
+    width: 90%;
+    height: 2.15rem;
+    -webkit-border-radius: 30px;
+    border-radius: 30px;
+    border: none;
+    outline: none;
+    text-align: center;
+    -webkit-box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+
+/* 谷歌 */
+
+.donate-bottom-input input::-webkit-outer-spin-button,
+.donate-bottom-input input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    appearance: none;
+    margin: 0;
+}
+
+/* 火狐 */
+
+.donate-bottom-input input{
+    -moz-appearance:textfield;
+}
+
+.donate-bottom-button {
+    -webkit-box-flex: 1;
+    -webkit-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+}
+
+.donate-bottom-button button {
+    width: 40%;
+    height: 2.15rem;
+    background-color: #f5365c;
+    color: #ffffff;
+    border: none;
+    cursor: pointer;
+    -webkit-border-radius: var(--coze-border-radius);
+    border-radius: var(--coze-border-radius);
+    -webkit-box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+}
+
+.pro-common {
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+}
+
+.pro-img {
+    -webkit-box-flex: 1;
+    -webkit-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+}
+
+
+.edit-content textarea {
+    width: 90%;
+    min-width: 90%;
+    padding-left: 15px;
+    padding-right: 15px;
+    height: -webkit-max-content;
+    height: -moz-max-content;
+    height: max-content;
+    min-height: 10rem;
+    -webkit-border-radius: 30px;
+    border-radius: 30px;
+    border: none;
+    outline: none;
+    text-align: left;
+    -webkit-box-shadow: rgb(100 100 111 / 20%) 0px 7px 29px 0px;
+    box-shadow: rgb(100 100 111 / 20%) 0px 7px 29px 0px
+}
+
+.edit-content textarea::-webkit-scrollbar {
+    display: none;
+}
+
+.edit-upload button {
+    width: 16%;
+    height: 2.15rem;
+    background-color: #f5365c;
+    color: #ffffff;
+    border: none;
+    cursor: pointer;
+    -webkit-border-radius: var(--coze-border-radius);
+    border-radius: var(--coze-border-radius);
+    -webkit-box-shadow: rgb(0 0 0 / 16%) 0px 10px 36px 0px, rgb(0 0 0 / 6%) 0px 0px 0px 1px;
+    box-shadow: rgb(0 0 0 / 16%) 0px 10px 36px 0px, rgb(0 0 0 / 6%) 0px 0px 0px 1px;
+}
+
+.add-mood-button {
+    position: absolute;
+    bottom: 1%;
+    right: 1%;
+    z-index: 5;
+}
+
+.add-mood-button span {
+    display: inline-block;
+    background: -webkit-linear-gradient(
+            50deg , rgb(224, 195, 252), rgb(142, 197, 252));
+    background: -o-linear-gradient(
+            50deg , rgb(224, 195, 252), rgb(142, 197, 252));
+    background: linear-gradient(
+            40deg , rgb(224, 195, 252), rgb(142, 197, 252));
+    position: relative;
+    color: white;
+    line-height: initial;
+    padding-left: 7px;
+    padding-right: 7px;
+    -webkit-border-radius: 4px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.add-mood-pwd {
+    margin-bottom: .5rem;
+    z-index: 33;
+}
+
+#textarea-content {
+    font-size: 16px;
+    margin-top: 1.5rem;
+}
+
+.add-coze-mood-control {
+
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0px;
+    height: -webkit-calc(100vh);
+    height: calc(100vh);
+    width: -webkit-calc(100vw);
+    width: calc(100vw);
+    background: palevioletred;
+}
+
+.coze-mask {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+    position: fixed;
+    top: 0px;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 9999999;
+}
+.cozeEditMood {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+    position: fixed;
+    top: 0px;
+    right: 0;
+    width: 100%;
+    /*height: 100%;*/
+    /*width: calc(100vw);*/
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 9999999;
+}
+
+#app {
+    position: relative;
+}
+
+.coze-box {
+    position: relative;
+}
+
+#pro-single-mood {
+    margin-top: 0rem;
+}
+
+#edit-mood-load {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+}
+
+.editMoodLoad span:first-child {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-image: url("https://ooszy.cco.vin/img/blog-note/load3line.png");
+    -webkit-animation: round_animate 1.5s linear infinite;
+    animation: round_animate 1.5s linear infinite;
+}
+
+.editMoodLoad span:nth-child(2) {
+    margin-left: .5rem;
+}
+.coze-mood-time {
+    margin-top: .5rem;
+    font-size: 13px;
+}
+
+.coze-mood-bottom-left {
+    flex: 2.5;
+}
+.register-button {
+    margin-top: 1rem;
+}
+
+.coze-enter-animate {
+    -webkit-animation: cozeEnterAnimateEnter 1000ms;
+    animation: cozeEnterAnimateEnter 1000ms;
+    -webkit-animation-iteration-count: 1;
+    animation-iteration-count: 1;
+    -webkit-animation-fill-mode: forwards;
+    animation-fill-mode: forwards;
+}
+
+.coze-enter-animate {
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+
+    border-radius: var(--coze-border-radius);
+}
+
+
+@-webkit-keyframes cozeEnterAnimateEnter {
+    from {
+        opacity: 0;
+        -webkit-transform: translateY(-15%);
+        transform: translateY(-15%)
+    }
+    to {
+        opacity: 1;
+        -webkit-transform: translateY(0);
+        transform: translateY(0)
+    }
+}
+
+@keyframes cozeEnterAnimateEnter {
+    from {
+        opacity: 0;
+        -webkit-transform: translateY(-15%);
+        transform: translateY(-15%)
+    }
+    to {
+        opacity: 1;
+        -webkit-transform: translateY(0);
+        transform: translateY(0)
+    }
+}

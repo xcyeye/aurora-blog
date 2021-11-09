@@ -1,0 +1,121 @@
+{
+  "id": "2919721",
+  "name": "coze-plugin",
+  "font_family": "aurora-coze-font",
+  "css_prefix_text": "aurora-coze-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "30415",
+      "name": "comment_fill",
+      "font_class": "commentfill",
+      "unicode": "e666",
+      "unicode_decimal": 58982
+    },
+    {
+      "icon_id": "800879",
+      "name": "love",
+      "font_class": "love",
+      "unicode": "e665",
+      "unicode_decimal": 58981
+    },
+    {
+      "icon_id": "809963",
+      "name": "点赞",
+      "font_class": "dianzan",
+      "unicode": "e656",
+      "unicode_decimal": 58966
+    },
+    {
+      "icon_id": "1061038",
+      "name": "edit",
+      "font_class": "edit",
+      "unicode": "e60b",
+      "unicode_decimal": 58891
+    },
+    {
+      "icon_id": "1061044",
+      "name": "comment",
+      "font_class": "comment",
+      "unicode": "e611",
+      "unicode_decimal": 58897
+    },
+    {
+      "icon_id": "1857383",
+      "name": "cancel",
+      "font_class": "cancel",
+      "unicode": "e600",
+      "unicode_decimal": 58880
+    },
+    {
+      "icon_id": "3889116",
+      "name": "love ",
+      "font_class": "love1",
+      "unicode": "e667",
+      "unicode_decimal": 58983
+    },
+    {
+      "icon_id": "6151070",
+      "name": "edit",
+      "font_class": "edit1",
+      "unicode": "e7a0",
+      "unicode_decimal": 59296
+    },
+    {
+      "icon_id": "6337455",
+      "name": "点赞",
+      "font_class": "dianzan1",
+      "unicode": "ec7f",
+      "unicode_decimal": 60543
+    },
+    {
+      "icon_id": "7685038",
+      "name": "comments",
+      "font_class": "comments",
+      "unicode": "e6e7",
+      "unicode_decimal": 59111
+    },
+    {
+      "icon_id": "15007626",
+      "name": "置顶",
+      "font_class": "zhiding",
+      "unicode": "e601",
+      "unicode_decimal": 58881
+    },
+    {
+      "icon_id": "15066904",
+      "name": "cancel-2",
+      "font_class": "cancel-2",
+      "unicode": "e6a4",
+      "unicode_decimal": 59044
+    },
+    {
+      "icon_id": "15838470",
+      "name": "edit",
+      "font_class": "edit2",
+      "unicode": "e66e",
+      "unicode_decimal": 58990
+    },
+    {
+      "icon_id": "20288404",
+      "name": "置顶",
+      "font_class": "zhiding1",
+      "unicode": "e607",
+      "unicode_decimal": 58887
+    },
+    {
+      "icon_id": "21916296",
+      "name": "love",
+      "font_class": "love2",
+      "unicode": "e638",
+      "unicode_decimal": 58936
+    },
+    {
+      "icon_id": "21937631",
+      "name": "ic_cancel",
+      "font_class": "ic_cancel",
+      "unicode": "e6b6",
+      "unicode_decimal": 59062
+    }
+  ]
+}
