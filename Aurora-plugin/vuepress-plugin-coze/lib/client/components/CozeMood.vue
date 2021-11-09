@@ -79,16 +79,14 @@ export default defineComponent({
     const query = new AV.Query('Talk');
     query.descending('createdAt');
     query.find().then((talks) => {
-      this.moods = talks
-      this.$emit("cozeSuccess",{
-        cozeMoods: this.moods
-      })
-      /*if (talks.length === 0) {
+      if (talks.length === 0) {
         this.moods = [{
           attributes: {
+            mood_user: 'aurora',
             mood_comment: "",
-            mood_content: "这是默认内容",
-            mood_like: 0,
+            mood_content: "这个是当你leanCloud中，有Talk类，但是里面没有任何数据时，默认显示的内容，如果你Talk中，一条数据也没有，请不要隐藏此条数据，" +
+                "否则你将不能发布说说，只能删除Talk类，重新初始化",
+            mood_like: 12,
             mood_photos: [{
               objectId: "61869d9b49cd7e59a03e09c8",
               photoName: "1GyQsaZ8MhjTVKi.jpg",
@@ -99,7 +97,12 @@ export default defineComponent({
           },
           id: "61869da949cd7e59a03e09cc",
         }]
-      }*/
+      }else {
+        this.moods = talks
+      }
+      this.$emit("cozeSuccess",{
+        cozeMoods: this.moods
+      })
     });
 
     //验证用户是否登录
