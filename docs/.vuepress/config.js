@@ -15,6 +15,7 @@ module.exports = {
             },
         },
         [
+            //'vuepress-plugin-coze',//你如果不是克隆我仓库项目，那么将此注释打开，并注释path.resolve(__dirname, "../../Aurora-plugin/vuepress-plugin-coze/lib/node/index.js"),
             path.resolve(__dirname, "../../Aurora-plugin/vuepress-plugin-coze/lib/node/index.js"),
             {
                 appId: 'leanCloud中得到的appId',
