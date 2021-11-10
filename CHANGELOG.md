@@ -1,10 +1,34 @@
-# [1.0.0](https://github.com/vuepress-aurora/vuepress-theme-aurora/compare/v1.5.4...v1.0.0) (2021-11-09)
+# [1.0.0](https://github.com/vuepress-aurora/vuepress-theme-aurora/compare/v1.6.2...v1.0.0) (2021-11-10)
+
+
+
+## [1.6.2](https://github.com/vuepress-aurora/vuepress-theme-aurora/compare/v1.6.1...v1.6.2) (2021-11-10)
 
 
 ### Bug Fixes
 
+* fix the homepage article list, the title has # symbol ([ad2269d](https://github.com/vuepress-aurora/vuepress-theme-aurora/commit/ad2269d3f44d159f3e03f7087ce8f6289d2fc6c5))
+* fix the problem of data mismatch on the friendship link page ([f3033ca](https://github.com/vuepress-aurora/vuepress-theme-aurora/commit/f3033ca57924c2ecdecbf370add52c38fb78b7ec))
+* fix the problem that social networking cannot display the QR code ([d4584ef](https://github.com/vuepress-aurora/vuepress-theme-aurora/commit/d4584ef5be27196f7057d322c5ea22143afe9ad2))
+
+
+### Features
+
+* album function moved to the coze plug-in, using talk pictures ([86195ae](https://github.com/vuepress-aurora/vuepress-theme-aurora/commit/86195ae54afb340e157e9f5a1244a4faab4e3282))
+
+
+
+## [1.6.1](https://github.com/vuepress-aurora/vuepress-theme-aurora/compare/v1.5.4...v1.6.1) (2021-11-09)
+
+
+### Bug Fixes
+
+* **coze-plugin:** fix input box of the default registered component positon ([1d95984](https://github.com/vuepress-aurora/vuepress-theme-aurora/commit/1d95984cded5781b63ebc4d59a69a57cc722bd82))
+* **coze-plugin:** fix leanCloud improper operation and no data emergencies ([cab22cf](https://github.com/vuepress-aurora/vuepress-theme-aurora/commit/cab22cf323cf228cad8e1457baa372d1d3eee4d3))
+* **coze-plugin:** fix the bug of clicking twice in a row ([b780c29](https://github.com/vuepress-aurora/vuepress-theme-aurora/commit/b780c29b86f40232f0688db35bf3e61c1019509f))
 * **coze-plugin:** update coze-plugin ([24539b1](https://github.com/vuepress-aurora/vuepress-theme-aurora/commit/24539b137bf5f87d2bb50fd84c87fb37c9627540))
 * fix homesidebar con't read  url ([837679c](https://github.com/vuepress-aurora/vuepress-theme-aurora/commit/837679c981dc3402c18a24b4cb6865bf25de1f27))
+* fix that the article URL is invalid when opening the picture in a new tab ([5ee2d4a](https://github.com/vuepress-aurora/vuepress-theme-aurora/commit/5ee2d4a236dd0244099fad8440f066f7d329918d))
 * fix the problem of fixed failure when writing talk ([2aced5a](https://github.com/vuepress-aurora/vuepress-theme-aurora/commit/2aced5ac92a266c77fac9afd1ddce327b2c6363e))
 * update coze-plugin ([79f9058](https://github.com/vuepress-aurora/vuepress-theme-aurora/commit/79f9058d70698e97389d0c0a93bf30f23c998927))
 
@@ -16,6 +40,7 @@
 
 ### Features
 
+* **coze-login:** custom login to increase login ([e67999e](https://github.com/vuepress-aurora/vuepress-theme-aurora/commit/e67999e7a0c2c6668e8c84436c67fbdfedbf1dd8))
 * **coze-plugin:** add other user support ([0cae5b3](https://github.com/vuepress-aurora/vuepress-theme-aurora/commit/0cae5b325128fa3eac3d0c57f60a671bbb5864a0))
 * **plugin:** add vuepress-plugin-coze ([d8db9c2](https://github.com/vuepress-aurora/vuepress-theme-aurora/commit/d8db9c23146a7e0d7107ec134ba1a9ecb705b342))
 
