@@ -175,6 +175,20 @@ export default {
     }
   },
   mounted() {
+    let h1s = document.querySelectorAll(".home-page-tag-content h1");
+    let h2s = document.querySelectorAll(".home-page-tag-content h2");
+    let h3s = document.querySelectorAll(".home-page-tag-content h3");
+    let h4s = document.querySelectorAll(".home-page-tag-content h4");
+    let h5s = document.querySelectorAll(".home-page-tag-content h5");
+
+    for (let i = 0; i < 5; i++) {
+      let hTag = document.querySelectorAll(".home-page-tag-content h"+ (i + 1));
+      for (let j = 0; j < hTag.length; j++) {
+        let aElement = hTag[j].getElementsByTagName("a");
+        aElement[0].innerText = ""
+      }
+    }
+
     let contentHtmlImg = document.querySelectorAll(".home-page-tag-content img")
     new Promise((resolve,rejcet) => {
       for (let i = 0; i < contentHtmlImg.length; i++) {
