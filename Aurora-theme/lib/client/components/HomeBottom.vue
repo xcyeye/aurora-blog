@@ -3,9 +3,8 @@
   <div :style="$store.state.borderRadiusStyle +
        $store.state.opacityStyle + $store.state.fontColorStyle +
        $store.state.fontFamilyStyle + $store.state.filterBlurStyle" class="home-bottom" id="home-bottom">
-  <!--<div :style="getHomePageStyle" class="home-bottom" id="home-bottom">-->
     <div class="home-page-tag" :style="getHomePageStyle" id="home-page-tag">
-      <home-page-item :index="index" :theme-property="themeProperty" :key="index" v-for="(item,index) in showPageArr" :page-item="item"/>
+      <home-page-item :index="index" :theme-property="themeProperty" :data="item.articleUrl" :key="item.articleUrl" v-for="(item,index) in showPageArr" :page-item="item"/>
       <Pagination @changePage="handleCurrentChange"
                   :total="allPageArr.length"
                   :current-page="$store.state.currentPageNum"

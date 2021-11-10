@@ -12,7 +12,7 @@
         <div id="tag-page-right-center" class="tag-page-right-center">
           <span class="tag-page-content">{{tagContent}}</span>
         </div>
-        <div id="tag-page-right-bottom" class="tag-page-right-bottom">
+        <div id="tag-page-right-bottom" v-if="allCategories.length !== 0" class="tag-page-right-bottom">
           <span class="home-menu-ico" style="--homeIcoCode: '\e7b5';color: rgba(98, 182, 203, 0.48);"></span>&nbsp;<span :data="allCategories.length" :style="setBackgroundStyle(888)" v-for="(item,index) in allCategories">{{item}}</span>
         </div>
       </div>

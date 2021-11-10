@@ -9,7 +9,7 @@
       <div class="mood-item-right" id="mood-item-right">
         <div class="coze-mood-item-content">
           <div id="mood-item-content" class="mood-item-content mood-item-right-common">
-            <span>{{moodItem.attributes.mood_content}}</span>
+            <span v-html="moodItem.attributes.mood_content"></span>
             <div class="coze-mood-time">
               <span>@{{moodItem.attributes.mood_user}}</span>&nbsp;&nbsp;
               <span>更新于: {{getUpdatedTime}}</span>
@@ -25,7 +25,7 @@
       </div>
       <div class="mood-img-right" id="mood-img-right">
         <div class="mood-li-control">
-          <li v-for="(item,index) in moodItem.attributes.mood_photos" :key="index" id="mood-img-li">
+          <li v-for="(item,index) in moodItem.attributes.mood_photos" :data="item.photoUrl" :key="item.photoUrl" id="mood-img-li">
             <img @click="openImg" class="medium-zoom-image" id="mood-bottom-img" :src="item.photoUrl" :alt="item.photoName">
           </li>
         </div>

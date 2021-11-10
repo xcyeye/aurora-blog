@@ -1,7 +1,7 @@
 <template>
   <div class="">
     <!--一级标题-->
-    <div :date="getCatalogLevel1" v-for="(itemLevel1,itemLevel1Index) in currentCatalog"
+    <div :date="getCatalogLevel1" :data="getCatalogLevel1" v-for="(itemLevel1,itemLevel1Index) in currentCatalog"
          id="catalog-single" :class="getCatalogOpenStatus(itemLevel1Index)"
          class="catalog-single sidebar-catalog-item">
       <!--展示一级标题-->
@@ -19,7 +19,7 @@
       <!--展示二级标题-->
       <div class="page-catalog-children-parent">
         <div class="page-catalog-children">
-          <div v-for="(itemLevel2,itemLevel2Index) in itemLevel1.headers"
+          <div :data="itemLevel2.slug" :key="itemLevel2.slug" v-for="(itemLevel2,itemLevel2Index) in itemLevel1.headers"
                :class="{catalogChildrenActive: catalogChildrenActive === itemLevel2Index }"
                class="catalog-page-children-item">
             <div class="catalog-page-children-title">
@@ -32,7 +32,7 @@
             <!--展示三级标题-->
             <div class="page-catalog-children-level3-parent">
               <div :style="setLevel3Style(itemLevel2Index)" class="page-catalog-children-level3">
-                <div v-for="item in itemLevel2.children"
+                <div :data="item.slug" v-for="item in itemLevel2.children"
                      class="page-catalog-children-level3-title">
                   <router-link :to="itemLevel1.path + '#' + item.title">
                     <span @click="clickCatalogTitle" :slug="item.slug">{{item.title}}</span>

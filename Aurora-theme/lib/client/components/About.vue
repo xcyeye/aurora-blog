@@ -12,7 +12,7 @@
     <template #center2>
       <div class="about">
         <div :style="$store.state.borderRadiusStyle + $store.state.opacityStyle"
-             v-for="(item) in themeProperty.about" class="introduce box">
+             v-for="(item) in themeProperty.about" :data="item.title" :key="item.title" class="introduce box">
           <div class="about-title">
             <div class="about-title-single">
               <span class="about-title-single-value">{{item.title}}</span>
@@ -29,8 +29,8 @@
               />
             </div>
           </div>
-          <li v-if="!item.bar" v-for="(desc,index) in item.describe"
-              class="about-desc">{{desc}}</li>
+          <li v-if="!item.bar" :data="desc" :key="desc" v-for="(desc,index) in item.describe"
+              class="about-desc" v-html="desc"></li>
           <li v-if="item.bar" v-for="desc in item.describe" class="about-desc">
             <span class="about-bar-title">{{desc.name}}</span>
             <span :style="setSpanStyle(desc.score)">{{desc.score}}%</span>

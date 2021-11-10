@@ -325,6 +325,7 @@ module.exports = {
                 bar: false,
                 title: "我?",
                 describe: [
+                    "这是关于页面支持html<a href='https://blog.cco.vin' target='_blank'>这是一个标签</a>",
                     "目前是一名大三学生,CS专业,坐标西南边陲",
                     "喜欢安静,不喜社交",
                     "喜欢听音乐,什么类型都可",
@@ -723,6 +724,7 @@ module.exports = {
                 '友链申请要求',
                 '拒绝涉政/涉黄/太多广告/盈利性站点',
                 '站点能正常访问',
+                '这是一个html的测试<a href="https://blog.cco.vin" target="_blank">这是一个a标签</a>'
             ]
         },
 

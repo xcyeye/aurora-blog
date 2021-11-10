@@ -4,7 +4,7 @@
               :current-mood-obj="currentMoodObj" @save-data-success="saveDataSuccess" @cancel="cancel"
               :open-edit-status="openEditStatus"/>
     <div class="coze-mood-list">
-      <div :key="index" v-for="(item,index) in moods" class="coze-enter-animate">
+      <div :key="item.attributes.mood_content" v-for="(item,index) in moods" class="coze-enter-animate">
         <div class="coze-mood-control" v-if="item.attributes.mood_show">
           <mood-item @mood-comment="moodComment" @mood-love="moodLove" @mood-poster="moodPoster"
                      @mood-edit="moodEdit" :mood-item="item">
@@ -90,19 +90,22 @@ export default defineComponent({
             mood_photos: [{
               objectId: "61869d9b49cd7e59a03e09c8",
               photoName: "1GyQsaZ8MhjTVKi.jpg",
-              photoUrl: "https://lc-gluttony.s3.amazonaws.com/c5GfUYtqdSYx/AeBxej8RVowlnCyR5gcWf8b5A4TcYW2v/1GyQsaZ8MhjTVKi.jpg"
+              photoUrl: "https://ooszy.cco.vin/img/theme/%E4%B8%BB%E9%A2%98.jpg"
             }],
             mood_title: "这是标题",
             mood_show: true
           },
           id: "61869da949cd7e59a03e09cc",
         }]
+        this.$emit("cozeSuccess",{
+          cozeMoods: []
+        })
       }else {
         this.moods = talks
+        this.$emit("cozeSuccess",{
+          cozeMoods: this.moods
+        })
       }
-      this.$emit("cozeSuccess",{
-        cozeMoods: this.moods
-      })
     });
 
     //验证用户是否登录

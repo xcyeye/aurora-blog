@@ -61,7 +61,8 @@
             <div class="tag-bottom">
               <TagPage v-for="(item,index) in showPageArr"
                        :page-map="item"
-                       :key="index"
+                       :key="item.articleUrl"
+                       :data="item.articleUrl"
                        :theme-property="themeProperty"
               />
             </div>

@@ -3,17 +3,16 @@
           :show-sidebar-link="false"
           :is-show-top-img="true" :is-show-head-line="false">
     <template #center1>
-      <div class="link" v-for="(linkItem,linkIndex) in themeProperty.friendLinks">
+      <div class="link" :data="linkItem.title" :key="linkItem.title" v-for="(linkItem,linkIndex) in themeProperty.friendLinks">
         <div :style="$store.state.borderRadiusStyle + $store.state.opacityStyle"
              class="box link-common" id="c-link">
-
           <div>
             <div class="about-title link-title">
               <div class="about-title-single">
                 <span class="about-title-single-value">{{linkItem.title}}</span>
               </div>
             </div>
-            <div v-for="(item,index) in linkItem.links" :key="index">
+            <div v-for="(item,index) in linkItem.links" :data="item.url" :key="item.url">
               <LinkItem
                   :theme-property="themeProperty"
                   :item="item"/>
@@ -40,7 +39,7 @@
 </code></pre><div class="line-numbers"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br></div></div>
 
             <ul class="link-info-desc">
-              <li v-for="(linkItem,index) in siteInformation.otherDescribe" :key="index">{{linkItem}}</li>
+              <li v-for="(linkItem,index) in siteInformation.otherDescribe" :key="linkItem" v-html="linkItem"></li>
             </ul>
           </div>
         </template>
@@ -80,12 +79,10 @@ export default defineComponent({
   computed: {
     getRandomLinks() {
       return (linkArr) => {
-        console.log(111111111111)
         let linkArrs = []
         this.shuffleArray(linkArr).then((arr) => {
           linkArrs = arr;
         })
-
       }
     },
     setSpanStyle() {
@@ -113,25 +110,32 @@ export default defineComponent({
     shuffleArray(array) {
       return new Promise((resolve,reject) => {
         for (let i = array.length - 1; i > 0; i--) {
-          let j = Math.floor(Math.random() * (i + 1));
-          let temp = array[i];
-          array[i] = array[j];
-          array[j] = temp;
+          let random1 = this.getRandomInt(0,array.length -1)
+          let temp = array[i]
+          array[i] = array[random1]
+          array[random1] = temp
+          console.log(i + "---> " + array.length)
+          array[i] = {
+            name: 'qsyyke',
+            sex: 'nan'
+          }
         }
         resolve(array)
       })
     },
     shuffle(arr){
-      let l = arr.length
-      let index, temp
-      while(l>0){
-        index = Math.floor(Math.random()*l)
-        temp = arr[l-1]
-        arr[l-1] = arr[index]
-        arr[index] = temp
-        l--
-      }
-      return arr
+      return new Promise((resolve,reject) => {
+        let l = arr.length
+        let index, temp
+        while(l>0){
+          index = Math.floor(Math.random()*l)
+          temp = arr[l-1]
+          arr[l-1] = arr[index]
+          arr[index] = temp
+          l--
+        }
+        resolve(arr)
+      })
     }
   },
   created() {
@@ -143,11 +147,13 @@ export default defineComponent({
     }
 
     this.themeProperty = useThemeData().value
+    // console.log(this.themeProperty.friendLinks)
     if (this.themeProperty.friendLinks !== undefined && this.themeProperty.friendLinks != null) {
       for (let i = 0; i < this.themeProperty.friendLinks.length; i++) {
-        this.shuffleArray(this.themeProperty.friendLinks[i].links).then((arr) => {
-          this.themeProperty.friendLinks[i].links = arr
-        })
+        console.log(this.themeProperty.friendLinks[i].links)
+        /*this.shuffleArray(this.themeProperty.friendLinks[i].links).then((arr) => {
+          // this.themeProperty.friendLinks[i].links = arr
+        })*/
       }
     }
 

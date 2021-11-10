@@ -41,7 +41,7 @@
         <div class="sidebar-social">
           <HomeSidebarSocialItem :sidebar-row-var="sidebarRowVar"
                                  :sidebar-width-var="sidebarWidthVar"
-                                 :social-item="item" v-for="item in socialsArr"/>
+                                 :social-item="item" :data="item.aHref" :key="item.aHref" v-for="(item,index) in socialsArr"/>
           <slot name="sidebar-son2"/>
         </div>
       </div>
@@ -50,7 +50,7 @@
       <!--侧边栏友情链接-->
       <div :id="customId" v-if="getShowSidebarLink" class="sidebar-single-common">
         <div class="sidebar-link">
-          <a :href="item.url" target="_blank" :key="index" v-for="(item,index) in friendLinks">
+          <a :href="item.url" target="_blank" :data="item.url" :key="item.url" v-for="(item,index) in friendLinks">
             <div class="sidebar-link-single">
               <div class="sidebar-link-avatar">
                 <img :src="item.logo" alt="">
@@ -92,7 +92,7 @@
         <catalog :is-show-catalog="isShowCatalog" v-show="changePageIndex === '1'" />
         <!--最新文章-->
         <div v-show="changePageIndex === '2'">
-          <div v-for="item in getLatestPage" class="sidebar-page-item sidebar-hover-bg-common">
+          <div v-for="item in getLatestPage" :key="item.articleUrl" :data="item.articleUrl" class="sidebar-page-item sidebar-hover-bg-common">
             <div class="sidebar-page-title">
               <a :href="item.articleUrl">
                 <span>{{item.title === "" ? getRecommendNoTitle : item.title}}</span>
@@ -114,7 +114,7 @@
           <span>公告</span>
         </div>
         <div class="sidebar-message">
-          <li id="sidebar-message" v-for="(item,index) in themeProperty.message" class="sidebar-hover-bg-common">
+          <li id="sidebar-message" :key="item" v-for="(item,index) in themeProperty.message" class="sidebar-hover-bg-common">
             <span v-html="item"></span>
           </li>
         </div>
@@ -141,7 +141,7 @@
         </div>
 
         <div class="sidebar-tag-item">
-          <router-link v-for="(item,index) in getSidebarTagArr" :to="'/tag?tag=' + item">
+          <router-link :key="item" v-for="(item,index) in getSidebarTagArr" :to="'/tag?tag=' + item">
             <div class="sidebar-tag-single">
               <span class="home-sidebar-tag-hover" :key="index" :style="setTagItemStyle(index)">{{item}}</span>
             </div>
