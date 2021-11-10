@@ -1,7 +1,6 @@
  <template>
    <photo/>
    <div class="photo-bg"></div>
-   <div class="photo-html" style="display: none"></div>
    <div class="photo-waterfull">
      <div class="waterfull">
        <div class="v-waterfall-content" id="v-waterfall">
@@ -17,9 +16,9 @@
 
  <script>
  import Photo from "./Photo";
- import myData from '@temp/my-data'
  import $ from 'jquery'
  import mediumZoom from "medium-zoom";
+ const AV = require('leancloud-storage');
 
  export default {
    name: "v-waterfall",
@@ -45,45 +44,23 @@
      }
    },
    created() {
-     for (let i = 0; i < myData.length; i++) {
-       if (myData[i].path === '/photos/') {
-         this.photoData = myData[i]
-         this.existPhotos = true
+     //从leanCloud获取所有的数据
+     const query = new AV.Query('Talk');
+     query.find().then((talks) => {
+       for (let i = 0; i < talks.length; i++) {
+         if (talks[i].attributes.mood_show) {
+           for (let j = 0; j < talks[i].attributes.mood_photos.length; j++) {
+            this.imgList.push(talks[i].attributes.mood_photos[j].photoUrl)
+             if (i === talks.length -1 && j === talks[i].attributes.mood_photos.length -1) {
+               this.imgPreloading()
+             }
+           }
+         }
        }
-     }
+     })
    },
    mounted() {
-     if (this.existPhotos) {
-       new Promise((resolve,reject) => {
-         setTimeout(() => {
-           document.querySelector(".photo-html").innerHTML = this.photoData.contentRendered
-           resolve()
-         },500)
-
-       }).then(() => {
-         let allPhotos = document.querySelectorAll(".photo-html img");
-         for (let i = 0; i < allPhotos.length; i++) {
-           this.imgList.push(allPhotos[i].src)
-         }
-         this.imgPreloading()
-         $(".loadingAnimate").fadeOut(400)
-       })
-     }else {
-       this.imgList = [
-           'https://ooszy.cco.vin/img/blog-note/image-20210910160320304.png?x-oss-process=style/pictureProcess1',
-           'https://ooszy.cco.vin/img/blog-note/image-20210910160335602.png?x-oss-process=style/pictureProcess1',
-           'https://ooszy.cco.vin/img/blog-note/image-20210910160455739.png?x-oss-process=style/pictureProcess1',
-           'https://ooszy.cco.vin/img/blog-note/image-20210910160510785.png?x-oss-process=style/pictureProcess1',
-           'https://ooszy.cco.vin/img/blog-note/image-20210910160523968.png?x-oss-process=style/pictureProcess1',
-           'https://ooszy.cco.vin/img/blog-note/image-20210910160541591.png?x-oss-process=style/pictureProcess1',
-           'https://ooszy.cco.vin/img/blog-note/image-20210910160601558.png?x-oss-process=style/pictureProcess1',
-           'https://ooszy.cco.vin/img/blog-note/image-20210910160650553.png?x-oss-process=style/pictureProcess1',
-           'https://ooszy.cco.vin/img/blog-note/image-20210910160702449.png?x-oss-process=style/pictureProcess1'
-       ]
-       this.imgPreloading()
-       $(".loadingAnimate").fadeOut(400)
-     }
-
+     $(".loadingAnimate").fadeOut(400)
      setTimeout(() => {
        this.clientWidth = document.body.offsetWidth
        this.height = document.body.offsetHeight

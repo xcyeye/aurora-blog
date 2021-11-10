@@ -20,8 +20,6 @@ import Tag from './components/Tag';
 import store from './public/js/store'
 import Link from './components/Link';
 import Poster from "./components/global/Poster";
-import Photo from "./components/Photo";
-import PhotoFall from "./components/PhotoFall";
 import HomeSidebar from "./components/child/side/HomeSidebar";
 import HomeBottom from "./components/HomeBottom";
 import AuroraGlobal from "./components/global/AuroraGlobal";
@@ -42,13 +40,11 @@ export default defineClientAppEnhance(({ app, router }) => {
     app.component('Donate', Donate);
     app.component('Comment', Comment);
     app.component('Poster', Poster);
-    app.component("Photo",Photo)
     app.component("HomeSidebar",HomeSidebar)
     app.component("HomeBottom",HomeBottom)
     app.component("About",About)
     app.component("Link",Link)
     app.component("Mood",Mood)
-    app.component("PhotoFall",PhotoFall)
     app.component("Tag",Tag)
     app.component("AuroraGlobal",AuroraGlobal)
 

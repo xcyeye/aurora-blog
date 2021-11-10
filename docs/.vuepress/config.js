@@ -27,7 +27,7 @@ module.exports = {
                 onlyAdministrator: false //是否运行其他注册的用户发布说说，true表示只有管理员可以发布
             }
         ],*/
-        [
+        /*[
             path.resolve(__dirname, "../../Aurora-plugin/vuepress-plugin-coze/lib/node/index.js"),
             {
                 appId: '2A2Dyd2AffrnldhwftlEddVn-MdYXbMMI',
@@ -38,7 +38,7 @@ module.exports = {
                 registerPath: '/aurora-register', //自定义插件默认提供的注册页面路由，请在前面加上/
                 onlyAdministrator: false //是否运行其他注册的用户发布说说，true表示只有管理员可以发布
             }
-        ]
+        ]*/
     ],
     //设置head 一定要加入<script src="https://at.alicdn.com/t/font_2849934_v6y652peian.js"></script>项配置，否则一些图标不能正常显示
     head: [

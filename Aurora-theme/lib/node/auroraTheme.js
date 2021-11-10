@@ -62,17 +62,6 @@ const auroraTheme = ({ themePlugins = {}, ...localeOptions }) => {
                 content: "",
             })
 
-            const photoPage = await createPage(app, {
-                path: '/photo',
-                // 设置 frontmatter
-                frontmatter: {
-                    layout: 'PhotoFall',
-                    slug: 'aurora-photo',
-                },
-                // 设置 markdown 内容
-                content: "",
-            })
-
             const tagPhoto = await createPage(app, {
                 path: '/tag',
                 // 设置 frontmatter
@@ -102,7 +91,6 @@ const auroraTheme = ({ themePlugins = {}, ...localeOptions }) => {
             app.pages.push(aboutPage)
             app.pages.push(moodPage)
             app.pages.push(linkPage)
-            app.pages.push(photoPage)
             app.pages.push(tagPhoto)
         },
         onGenerated: (app) => {

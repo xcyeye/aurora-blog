@@ -22,6 +22,17 @@ const vuepressPluginCoze = ({appId,appKey,masterKey,avatarPath,registerPath,only
                 content: "",
             })
 
+            const photoPage = await createPage(app, {
+                path: '/photo',
+                // 设置 frontmatter
+                frontmatter: {
+                    layout: 'PhotoFall',
+                    slug: 'aurora-photo',
+                },
+                // 设置 markdown 内容
+                content: "",
+            })
+
             const RegisterUserPage = await createPage(app, {
                 //说说页面，默认
                 path: registerPath,
@@ -36,6 +47,7 @@ const vuepressPluginCoze = ({appId,appKey,masterKey,avatarPath,registerPath,only
             // 把它添加到 `app.pages`
             app.pages.push(AuroraCozePage)
             app.pages.push(RegisterUserPage)
+            app.pages.push(photoPage)
         },
         name: 'vuepress-plugin-coze',
         define: {
