@@ -3067,8 +3067,29 @@ body::-webkit-scrollbar-thumb {
     align-items: center;
 }
 
+.home-random-say-custom {
+    margin-top: 0;
+    position: relative;
+    top: 35%;
+}
+
+.home-social-custom {
+    margin-top: -webkit-calc(0vh);
+    margin-top: calc(0vh);
+    margin-bottom: 0;
+    position: absolute;
+    bottom: 22%;
+}
+
 /* 自适应 */
 @media screen and (max-width: 719px) {
+
+    .home-random-say-custom {
+        top: 31%;
+    }
+    .home-social-custom {
+        bottom: 26%;
+    }
 
     .about-bar-title::-webkit-scrollbar-button{
         width: 0;
@@ -5699,23 +5720,9 @@ body::-webkit-scrollbar-thumb {
     text-align: center;
 }
 
-.home-social-custom {
-    margin-top: -webkit-calc(0vh);
-    margin-top: calc(0vh);
-    margin-bottom: 0;
-    position: absolute;
-    bottom: 22%;
-}
-
 .home-random-say {
     margin-top: -webkit-calc(7vh);
     margin-top: calc(7vh);
-}
-
-.home-random-say-custom {
-    margin-top: 0;
-    position: relative;
-    top: 35%;
 }
 
 .home-random-say div {
