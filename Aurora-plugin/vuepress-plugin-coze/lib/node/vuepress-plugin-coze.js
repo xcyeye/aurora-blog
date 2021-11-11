@@ -26,7 +26,7 @@ const vuepressPluginCoze = ({appId,appKey,masterKey,avatarPath,registerPath,only
                 path: '/photo',
                 // 设置 frontmatter
                 frontmatter: {
-                    layout: 'PhotoFall',
+                    layout: 'CozePhoto',
                     slug: 'aurora-photo',
                 },
                 // 设置 markdown 内容

@@ -2,8 +2,7 @@ import { defineClientAppEnhance } from '@vuepress/client';
 import CozeMood from './components/CozeMood'
 import RegisterUser from './components/RegisterUser'
 import CozeLogin from "./components/CozeLogin";
-import Photo from "./components/Photo";
-import PhotoFall from "./components/PhotoFall";
+import CozePhoto from "./components/CozePhoto";
 import './style/coze-plugin.css'
 const AV = require('leancloud-storage');
 
@@ -26,8 +25,12 @@ export default defineClientAppEnhance(({ app, router }) => {
     app.component("CozeMood",CozeMood)
     app.component("RegisterUser",RegisterUser)
     app.component("CozeLogin",CozeLogin)
-    app.component("Photo",Photo)
-    app.component("PhotoFall",PhotoFall)
+    app.component("CozePhoto",CozePhoto)
+
+    router.addRoute({
+        path: '/login',
+        component: CozePhoto
+    })
 
     try {
         AV.init({

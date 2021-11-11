@@ -1,4 +1,5 @@
 <template>
+  <canvas v-show="registerSuccess" id="coze-flowers-canvas"></canvas>
   <div class="coze-register-user">
     <div class="add-mood-pwd coze-login" id="add-mood-pwd">
       <!--<div class="poster-cancel">
@@ -40,6 +41,7 @@
 </template>
 
 <script>
+const flowers = require("../public/js/flowers")
 const AV = require('leancloud-storage');
 const { Query, User } = AV;
 let appId = ''
@@ -68,6 +70,7 @@ export default {
       username:'',
       email: '',
       verifyText: '请注册(●￣(ｴ)￣●)',
+      registerSuccess: false
     }
   },
   methods: {
@@ -138,47 +141,87 @@ export default {
       }
       return true
     },
+    showSuccessFlowers() {
+      let flowersNum = 1600
+      if (document.body.clientWidth < 719) {
+        flowersNum = 670
+      }
+      flowers.flowers(flowersNum)
+      setTimeout(() => {
+        this.registerSuccess = false
+      },5000)
+    },
     verifyIdentify() {
-      if (!this.isEmail(this.email) || !this.isValidUsername(this.username) || !this.isValidPassword(this.password)) {
+      this.registerSuccess = false
+
+      if (!this.isValidUsername(this.username)) {
+        this.verifyText = "用户名重复或格式错误(●￣(ｴ)￣●)"
+        setTimeout(() => {
+          this.verifyText = '请注册(●￣(ｴ)￣●)'
+        },3000)
+        return
+      }
+
+      if (!this.isValidPassword(this.password)) {
+        this.verifyText = "密码重复或格式错误(●￣(ｴ)￣●)"
+        setTimeout(() => {
+          this.verifyText = '请注册(●￣(ｴ)￣●)'
+        },3000)
+        return
+      }
+
+      if (!this.isEmail(this.email)) {
+        this.verifyText = "邮箱重复或格式错误(●￣(ｴ)￣●)"
+        setTimeout(() => {
+          this.verifyText = '请注册(●￣(ｴ)￣●)'
+        },3000)
+        return
+      }
+
+      let administrator = 0
+      //判断是否存在talk数据
+      new Promise((resolve,reject) => {
+        const query = new AV.Query('Talk');
+        query.count().then((count) => {
+          resolve()
+        },(err) => {
+          //没有数据，不存在这个TalkClass
+          administrator = 1
+          resolve()
+        });
+      }).then(() => {
+        const user = new AV.User();
+        user.setUsername(this.username);
+        user.setPassword(this.password);
+        user.setEmail(this.email);
+        user.set('administrator', administrator);
+        user.signUp().then((user) => {
+          this.registerSuccess = true
+          this.showSuccessFlowers()
+          // 注册成功
+          if (administrator === 1) {
+            this.verifyText = "注册成功,正在进行设置,请等待"
+            this.setMoodClass()
+          }else {
+            this.verifyText = "注册成功,欢迎小主(●￣(ｴ)￣●)"
+          }
+        }, (error) => {
+          this.verifyText = error
+          // 注册失败（通常是因为用户名已被使用）
+          setTimeout(() => {
+            this.verifyText = '请注册(●￣(ｴ)￣●)'
+          },3000)
+        });
+      })
+
+      /*if (!this.isEmail(this.email) || !this.isValidUsername(this.username) || !this.isValidPassword(this.password)) {
         this.verifyText = "请正确输入信息(●￣(ｴ)￣●)"
         setTimeout(() => {
           this.verifyText = '请注册(●￣(ｴ)￣●)'
         },3000)
       }else {
-        let administrator = 0
-        //判断是否存在talk数据
-        new Promise((resolve,reject) => {
-          const query = new AV.Query('Talk');
-          query.count().then((count) => {
-            resolve()
-          },(err) => {
-            //没有数据，不存在这个TalkClass
-            administrator = 1
-            resolve()
-          });
-        }).then(() => {
-          const user = new AV.User();
-          user.setUsername(this.username);
-          user.setPassword(this.password);
-          user.setEmail(this.email);
-          user.set('administrator', administrator);
-          user.signUp().then((user) => {
-            // 注册成功
-            if (administrator === 1) {
-              this.verifyText = "注册成功,正在进行设置,请等待"
-              this.setMoodClass()
-            }else {
-              this.verifyText = "注册成功,欢迎小主(●￣(ｴ)￣●)"
-            }
-          }, (error) => {
-            this.verifyText = error
-            // 注册失败（通常是因为用户名已被使用）
-            setTimeout(() => {
-              this.verifyText = '请注册(●￣(ｴ)￣●)'
-            },3000)
-          });
-        })
-      }
+
+      }*/
     },
   }
 }

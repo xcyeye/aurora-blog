@@ -2,7 +2,7 @@
 
 ## introduce
 
-这是Vuepress2的一个插件，该插件提供在线发布，修改说说功能，支持文件上传，登录注册，点赞，评论等功能，使用简单，只需在[leancloud](https://console.leancloud.app/)中获取到正确的`appId`,`appKey`便可以在任何地方使用
+这是Vuepress2的一个插件，该插件提供在线发布，修改说说，相册功能，支持文件上传，登录注册，点赞，评论等，使用简单，只需在[leancloud](https://console.leancloud.app/)中获取到正确的`appId`,`appKey`便可以在任何地方使用
 
 
 
@@ -53,7 +53,9 @@ module.exports = {
 
 ![image-20211108191227820](https://ooszy.cco.vin/img/blog-note/image-20211108191227820.png?x-oss-process=style/pictureProcess1)
 
+- 相册
 
+![image-20211110233924959](https://ooszy.cco.vin/img/blog-note/image-20211110233924959.png?x-oss-process=style/pictureProcess1)
 
 - 提供的注册界面
 

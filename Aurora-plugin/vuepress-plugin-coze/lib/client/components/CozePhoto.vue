@@ -1,5 +1,17 @@
  <template>
-   <photo/>
+   <div class="photo">
+     <div class="photo-center">
+       <div id="photo-li">
+       </div>
+     </div>
+     <div :style="getLoadingAnimate" class="loadingAnimate">
+       <div class="loader">
+         <div class="inner one"></div>
+         <div class="inner two"></div>
+         <div class="inner three"></div>
+       </div>
+     </div>
+   </div>
    <div class="photo-bg"></div>
    <div class="photo-waterfull">
      <div class="waterfull">
@@ -15,16 +27,11 @@
  </template>
 
  <script>
- import Photo from "./Photo";
- import $ from 'jquery'
  import mediumZoom from "medium-zoom";
  const AV = require('leancloud-storage');
 
  export default {
    name: "v-waterfall",
-   components: {
-     Photo
-   },
    data() {
      return {
        waterfallList: [],
@@ -40,27 +47,47 @@
        height: 500,
        photos: [],
        photoData: null,
-       existPhotos: false
+       existPhotos: false,
+       loadingAnimateSuccess: false,
+       isMounted: false
      }
    },
    created() {
      //从leanCloud获取所有的数据
      const query = new AV.Query('Talk');
      query.find().then((talks) => {
+       if (talks.length === 0) {
+         this.loadingAnimateSuccess = true
+       }
        for (let i = 0; i < talks.length; i++) {
          if (talks[i].attributes.mood_show) {
            for (let j = 0; j < talks[i].attributes.mood_photos.length; j++) {
             this.imgList.push(talks[i].attributes.mood_photos[j].photoUrl)
              if (i === talks.length -1 && j === talks[i].attributes.mood_photos.length -1) {
-               this.imgPreloading()
+               this.loadingAnimateSuccess = true
              }
            }
          }
        }
      })
    },
+   watch: {
+     loadingAnimateSuccess() {
+     },
+     isMounted() {
+       let loadImgs = setInterval(() => {
+         if (this.loadingAnimateSuccess) {
+           clearInterval(loadImgs)
+           this.imgPreloading()
+         }
+       },50)
+     }
+   },
    mounted() {
-     $(".loadingAnimate").fadeOut(400)
+
+     this.isMounted = true
+
+     //$(".loadingAnimate").fadeOut(400)
      setTimeout(() => {
        this.clientWidth = document.body.offsetWidth
        this.height = document.body.offsetHeight
@@ -141,7 +168,6 @@
 
        //imgData.top = top === 0 ? 0 : top - 40;
        imgData.top = waterfallDeviationHeight[minIndex];
-       //console.log("top:" + top)
        imgData.left = minIndex * (waterfallImgRight + waterfallImgWidth);
        // waterfallDeviationHeight[minIndex] += imgData.height + waterfallImgBottom;// 不加文字的盒子高度
        waterfallDeviationHeight[minIndex] += imgData.height + waterfallImgBottom + 56;// 加了文字的盒子高度，留出文字的地方（这里设置56px）
@@ -152,6 +178,11 @@
      }
    },
    computed: {
+     getLoadingAnimate() {
+       if (this.loadingAnimateSuccess) {
+         return "display: none;"
+       }
+     },
      getStyle() {
        return (img) => {
          let interval = (this.clientWidth - this.waterfallImgWidth * this.waterfallImgCol) /2

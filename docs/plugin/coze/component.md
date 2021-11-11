@@ -2,8 +2,6 @@
 
 > 以下所有的组件都是全局组件
 
-
-
 ## CozeMood
 
 该组件是展示说说的组件，也就是下面这个页面
@@ -64,13 +62,14 @@ methods: {
 
 > 该组件展示效果
 
-![image-20211108202558972](https://ooszy.cco.vin/img/blog-note/image-20211108202558972.png?x-oss-process=style/pictureProcess1)
+![image-20211110234327520](https://ooszy.cco.vin/img/blog-note/image-20211110234327520.png?x-oss-process=style/pictureProcess1)
 
 
 
 - 结构
 
 ```html
+<!--这是一个登录注册的组件-->
 <div class="coze-custom-login">
     <slot name="cozeCustomTop"></slot>
     <form v-on:submit.prevent>
@@ -82,15 +81,18 @@ methods: {
         </div>
 
         <div class="coze-custom-item-common">
-            <input autocomplete placeholder="请输入邮箱" v-model="email" name="email" type="text">
+            <input autocomplete placeholder="请输入邮箱 登录不需要此邮箱" v-model="email" name="email" type="text">
         </div>
 
         <slot name="cozeCustomCenter"></slot>
-        <div class="coze-custom-item-common coze-custom-button">
-            <button @click="verifyIdentify">注册</button>
+        <div class="coze-custom-item-common coze-custom-button coze-custom-register">
+            <div @click="verifyIdentify">注册</div>
         </div>
-        <div class="coze-custom-item-common coze-custom-button">
-            <button @click="loginOut">登出</button>
+        <div class="coze-custom-item-common coze-custom-button coze-custom-login">
+            <div @click="loginIn">登录</div>
+        </div>
+        <div class="coze-custom-item-common coze-custom-button coze-custom-out">
+            <div @click="loginOut">登出</div>
         </div>
     </form>
     <slot name="cozeCustomBottom"></slot>
@@ -105,10 +107,11 @@ methods: {
 
 
 
-| 名称         | 数据                 | 描述                     |
-| ------------ | -------------------- | ------------------------ |
-| cozeLoginOut | 返回数据             | 点击登出按钮返回登出状态 |
-| cozeLogin    | 返回用户登录相关信息 | 点击注册按钮             |
+| 名称         | 数据                 | 描述                      |
+| ------------ | -------------------- | ------------------------- |
+| cozeLoginOut | 返回数据             | 点击登出按钮返回登出状态  |
+| cozeLogin    | 返回用户登录相关信息 | 点击登录                  |
+| cozeRegister | 返回用户注册数据     | 在leanCloud中，注册新用户 |
 
 
 
@@ -123,6 +126,10 @@ methods: {
       console.log(data)
     },
     cozeLogin(data) {
+      console.log("点击登录按钮")
+      console.log(data)
+    },
+    cozeRegister(data) {
       console.log("点击注册按钮")
       console.log(data)
     }
@@ -155,6 +162,17 @@ methods: {
 
 
 
+### 插槽
+
+```html
+<slot name="cozeCustomTop"></slot>
+<slot name="cozeCustomBottom"></slot>
+```
+
+
+
+
+
 ## RegisterUser
 
 该组件也是一个全局组件，插件提供的默认注册组件，未提供任何钩子等
@@ -168,3 +186,29 @@ methods: {
 ## 样式
 
 [样式设置](./style.md)
+
+
+
+
+
+## CozePhoto
+
+该组件是展示相册的一个全局组件，该组件的展示效果如下图
+
+![image-20211111000148676](https://ooszy.cco.vin/img/blog-note/image-20211111000148676.png?x-oss-process=style/pictureProcess1)
+
+该组件会展示所有用户发布在说说上，并且设置为显示的图片
+
+::: tip
+
+后续会加上，不是管理员只显示当前用户对应的图片，管理员显示所有
+
+:::
+
+> 该组件没有提供任何的插槽等
+
+
+
+## 样式配置
+
+[样式配置](./style.md)

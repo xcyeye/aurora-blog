@@ -1,4 +1,4 @@
-const { path } = require("@vuepress/utils");
+//const { path } = require("@vuepress/utils");
 
 module.exports = {
     //在这里配置插件
@@ -14,17 +14,19 @@ module.exports = {
                 },
             },
         },
-        'vuepress-plugin-coze',
-        {
-            appId: 'leanCloud中得到的appId',
-            appKey: 'leanCloud中得到的appKey',
-            masterKey: 'leanCloud中得到的masterKey',
-            //下面这些是可选的
-            avatarPath: 'https://ooszy.cco.vin/img/blog-note/avatar-aurora.png',//说说头像url
-            registerPath: '/aurora-register', //自定义插件默认提供的注册页面路由，请在前面加上/
-            onlyAdministrator: false //是否运行其他注册的用户发布说说，true表示只有管理员可以发布
-
-        }
+        [
+            'vuepress-plugin-coze',//你如果不是克隆我仓库项目，那么将此注释打开，并注释path.resolve(__dirname, "../../Aurora-plugin/vuepress-plugin-coze/lib/node/index.js"),
+            //path.resolve(__dirname, "../../Aurora-plugin/vuepress-plugin-coze/lib/node/index.js"),
+            {
+                appId: 'leanCloud中得到的appId',
+                appKey: 'leanCloud中得到的appKey',
+                masterKey: 'leanCloud中得到的masterKey',
+                //下面这些是可选的
+                avatarPath: 'https://ooszy.cco.vin/img/blog-note/avatar-aurora.png',//说说头像url
+                registerPath: '/aurora-register', //自定义插件默认提供的注册页面路由，请在前面加上/
+                onlyAdministrator: false //是否运行其他注册的用户发布说说，true表示只有管理员可以发布
+            }
+        ],
     ],
     //设置head 一定要加入<script src="https://at.alicdn.com/t/font_2849934_v6y652peian.js"></script>项配置，否则一些图标不能正常显示
     head: [
@@ -52,7 +54,8 @@ module.exports = {
         ]
     ],
     //这里使用本地主题
-    theme: path.resolve(__dirname, "../../Aurora-theme/lib/node/index.js"),
+    //theme: path.resolve(__dirname, "../../Aurora-theme/lib/node/index.js"),
+    theme: 'aurora',
 
     //站点title
     title: "I do not follow,i lives is always all you want",
@@ -311,6 +314,7 @@ module.exports = {
                 bar: false,
                 title: "我?",
                 describe: [
+                    "这是关于页面支持html<a href='https://blog.cco.vin' target='_blank'>这是一个标签</a>",
                     "目前是一名大三学生,CS专业,坐标西南边陲",
                     "喜欢安静,不喜社交",
                     "喜欢听音乐,什么类型都可",
@@ -709,6 +713,7 @@ module.exports = {
                 '友链申请要求',
                 '拒绝涉政/涉黄/太多广告/盈利性站点',
                 '站点能正常访问',
+                '这是一个html的测试<a href="https://blog.cco.vin" target="_blank">这是一个a标签</a>'
             ]
         },
 

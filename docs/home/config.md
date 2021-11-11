@@ -33,6 +33,12 @@ stick: true
 
 :::
 
+
+
+## 新版本
+
+sdffsdfsdf
+
 ## 首页
 
 <a href="https://aurora.cco.vin/config/">点击查看配置</a>
