@@ -21,7 +21,6 @@ module.exports = {
                 "#75c9c8", "#ded9e2", "#b5e2fa", "#62b6cb", "#5fa8d3", "#0fa3b1", "#b5e2fa",
                 "#5fa8d3", "#62b6cb", "#b892ff",
             ];
-        //for (i = 0; i < 1700; i++) {
         for (i = 0; i < flowersNum; i++) {
             particle.push({
                 x: width / 2,
