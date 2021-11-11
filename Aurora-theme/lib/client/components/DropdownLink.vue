@@ -34,6 +34,7 @@
             <NavLink
               v-if="child.link"
               :item="child"
+              :show-icon="false"
               @focusout="
                 isLastItemOfArray(child, item.children) &&
                   child.children.length === 0 &&
@@ -51,6 +52,7 @@
               class="dropdown-subitem"
             >
               <NavLink
+                :show-icon="false"
                 :item="grandchild"
                 :is-dropdown-link="true"
                 @focusout="
@@ -65,6 +67,7 @@
 
         <template v-else>
           <NavLink
+            :show-icon="false"
             :item="child"
             @focusout="
               isLastItemOfArray(child, item.children) && (open = false)

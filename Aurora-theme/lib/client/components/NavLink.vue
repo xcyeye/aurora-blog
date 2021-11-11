@@ -1,5 +1,5 @@
 <template>
-  <span :class="item.iconClass" class="aurora-font aurora-navbar-icon"></span>
+  <span :class="item.iconClass" v-if="showIcon" class="aurora-font aurora-navbar-icon"></span>
   <RouterLink
     v-if="isRouterLink"
     class="nav-link"
@@ -43,6 +43,12 @@ export default defineComponent({
       type: Object as PropType<NavLink>,
       required: true,
     },
+    showIcon: {
+      type: Boolean,
+      default() {
+        return true
+      }
+    },
     isDropdownLink: {
       type: Boolean,
       default() {
@@ -50,7 +56,8 @@ export default defineComponent({
       }
     }
   },
-
+  created() {
+  },
   setup(props) {
     const route = useRoute()
     const site = useSiteData()
