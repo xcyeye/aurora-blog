@@ -980,6 +980,9 @@ module.exports = {
         //文章h4标签及h4标签之后的标签的icon
         articleH4Icon: '⛄',
 
+        //v1.6.4新增配置
+        //sidebarAvatar: 'https://ooszy.cco.vin/img/blog-note/avatar-aurora.png',
+
 
         /*
         * 下面这些是在v1.3.2中移除的配置，但是在V1.3.2之前的版本中，可能还可以使用，某些配置我不确定具体在哪个

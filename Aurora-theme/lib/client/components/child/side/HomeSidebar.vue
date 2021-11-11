@@ -423,13 +423,16 @@ export default {
       return logoTitle
     },
     getAvatar() {
-      let src = this.themeProperty.heroImg
-      if (src === undefined) {
-        console.warn("you need to set the heroImg field value,the default is: https://ooszy.cco.vin/img/blog-public/avatar.jpg")
-        return "https://ooszy.cco.vin/img/blog-public/avatar.jpg"
+
+      let sidebarAvatar = "https://ooszy.cco.vin/img/blog-public/avatar.jpg"
+      if (this.themeProperty.sidebarAvatar !== undefined) {
+        sidebarAvatar = this.themeProperty.sidebarAvatar
       }else {
-        return src
+        if (this.themeProperty.heroImg !== undefined) {
+          sidebarAvatar = this.themeProperty.heroImg
+        }
       }
+      return sidebarAvatar
     },
     getLatestPage() {
       return this.allSortPageArr.slice(0,this.latestPageSize)
