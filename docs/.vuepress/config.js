@@ -981,7 +981,7 @@ module.exports = {
         articleH4Icon: '⛄',
 
         //v1.6.4新增配置
-        //sidebarAvatar: 'https://ooszy.cco.vin/img/blog-note/avatar-aurora.png',
+        sidebarAvatar: 'https://ooszy.cco.vin/img/blog-note/avatar-aurora.png',
 
 
         /*
