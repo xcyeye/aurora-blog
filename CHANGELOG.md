@@ -1,4 +1,21 @@
-# [1.0.0](https://github.com/vuepress-aurora/vuepress-theme-aurora/compare/v1.6.2...v1.0.0) (2021-11-10)
+# [1.0.0](https://github.com/vuepress-aurora/vuepress-theme-aurora/compare/v1.7.0...v1.0.0) (2021-11-12)
+
+
+
+# [1.7.0](https://github.com/vuepress-aurora/vuepress-theme-aurora/compare/v1.6.2...v1.7.0) (2021-11-12)
+
+
+### Bug Fixes
+
+* **coze-plugin:** repaire the installation of the plug-in, the build failed ([3923faf](https://github.com/vuepress-aurora/vuepress-theme-aurora/commit/3923fafd35ddd469878fc0b0c016f1a9908a6431))
+* **home-social:** fix the homepage social position on the mobile phone ([3ea9622](https://github.com/vuepress-aurora/vuepress-theme-aurora/commit/3ea9622b90ccfa5991be84e62991c55a27e173e0))
+* **navbar:** fix the navigation bar interval is large ([06c04d2](https://github.com/vuepress-aurora/vuepress-theme-aurora/commit/06c04d2466b7ba86f1b8cb3bcd99ec23a13d17d8))
+
+
+### Features
+
+* **coze-plugin:** increase the successful registration and the effect of sprinkling flowers ([3adaf43](https://github.com/vuepress-aurora/vuepress-theme-aurora/commit/3adaf433b420c54f6d6189304319f37d1aef087a))
+* **sidebar-avatar:** add sidebar avatar customization ([435b317](https://github.com/vuepress-aurora/vuepress-theme-aurora/commit/435b3172034db1fb35898f6563e77a1a2333d638))
 
 
 

@@ -51,7 +51,7 @@
          :class="{donateListActive: donateListActive}"
          id="donate-bottom2">
       <div class="donate-pro" id="donate-pro-list">
-        <div :key="index" v-for="(item,index) in localDonateList"   class="donate-bottom-common donate-pro-single">
+        <div :key="index" v-for="(item,index) in localDonateList"  class="donate-bottom-common donate-pro-single">
           <div class="pro-img pro-common" id="pro-img-list">
             <span>{{item.name}}</span>
           </div>
@@ -126,21 +126,22 @@ export default {
       this.hexToRgbColor = this.hexToRgb(background_color)
     }
 
-    network.req({
-      baseURL: 'https://pay.cco.vin/pay/info'
-      //baseURL: 'http://localhost:8099/pay/info'
-    }).then((res) => {
-      this.donateList = res
-    })
-
+    if (this.donate.onlineList) {
+      console.log("执行")
+      network.req({
+        baseURL: 'https://pay.cco.vin/pay/info'
+      }).then((res) => {
+        this.donateList = res
+      })
+    }
   },
   mounted() {
     this.window = window
   },
   computed: {
     localDonateList() {
-      if (this.themeProperty.donateList !== undefined && this.themeProperty.donateList != null) {
-        return this.themeProperty.donateList
+      if (this.themeProperty.donate !== undefined && this.themeProperty.donate != null) {
+        return this.themeProperty.donate.donateList
       }else {
         return []
       }

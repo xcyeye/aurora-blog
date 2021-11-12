@@ -835,7 +835,7 @@ module.exports = {
             ],
 
             //是否显示在线支付的订单信息，如果需要开启，请自己写支付接口，自己修改源码，默认关闭
-            onlineList: true,
+            onlineList: false,
 
             //用户赞赏列表数组
             donateList: [
