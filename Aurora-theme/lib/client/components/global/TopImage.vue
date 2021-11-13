@@ -15,7 +15,7 @@
           <div class="page-record-top-left page-record-single-common">
             <span class="aurora-iconfont-common aurora-page-word"></span>&nbsp;
             <span class="page-record-single-desc">总字数</span>
-            <span>{{getWordLength}}</span>
+            <span>{{contentLength}}</span>
           </div>
           <div class="page-record-top-right page-record-single-common">
             <span class="aurora-iconfont-common aurora-page-time"></span>&nbsp;
@@ -52,6 +52,7 @@
 
 <script>
 import {useThemeLocaleData} from "../../composables";
+import WordCount from "crisp-word-count";
 
 const network = require('../../public/js/network.js')
 export default {
@@ -60,11 +61,11 @@ export default {
     return {
       animeImg: '',
       pageMap: '',
-      length: 0,
+      contentLength: 0,
       tagArr: [],
       topBackgroundUrl: 'https://picture.cco.vin/pic/rmimg',
       pathName: '',
-      pathname: ''
+      sugCountPerMin: 230
     }
   },
   props: {
@@ -91,6 +92,9 @@ export default {
     }
   },
   created() {
+    if (this.themeProperty.sugCountPerMin !== undefined) {
+      this.sugCountPerMin = this.themeProperty.sugCountPerMin
+    }
     this.setPathName(this.$route.path)
     this.$router.beforeEach((to,from,next) => {
       this.setPathName(to.path)
@@ -98,7 +102,7 @@ export default {
     })
   },
   mounted() {
-    this.pathname = window.location.pathname
+    this.pathName = window.location.pathname
     setTimeout(() =>{
       this.getPageMap()
     },500)
@@ -152,7 +156,8 @@ export default {
       return this.length
     },
     getSugTime() {
-      return  Math.floor(this.length / 330) === 0 ? 1 : Math.floor(this.length / 330);
+
+      return  Math.floor(this.contentLength / this.sugCountPerMin) === 0 ? 1 : Math.ceil(this.contentLength / this.sugCountPerMin);
     },
     getRandom() {
       return this.getRandomInt(0,99999)
@@ -196,7 +201,7 @@ export default {
     getPageMap() {
       let allPageMap = this.$store.state.allPageMap
       for (let i = 0; i < allPageMap.length; i++) {
-        if (this.pathname === allPageMap[i].articleUrl) {
+        if (this.pathName === allPageMap[i].articleUrl) {
           this.pageMap = allPageMap[i]
           if (this.pageMap.categories.length === 0) {
             this.tagArr = this.pageMap.tag
@@ -211,13 +216,69 @@ export default {
       max = Math.floor(max);
       return Math.floor(Math.random() * (max - min)) + min; //不含最大值，含最小值
     },
+    countNum() {
+      new Promise((resolve,reject) => {
+        let allContent = ''
+        try {
+          allContent = document.querySelector(".medium-zoom-content").innerText;
+        }catch (e) {
+          return
+        }
+        let allCodeElement = document.querySelectorAll(".medium-zoom-content div[class*=language-]");
+        for (let i = 0; i < allCodeElement.length; i++) {
+          let codeContent = allCodeElement[i].innerText;
+          let indexOf = allContent.indexOf(codeContent);
+          if (indexOf === -1) {
+            continue
+          }
+          let startContent = allContent.substr(0,indexOf)
+          let endContent = allContent.substr((indexOf + codeContent.length), allContent.length)
+          startContent = startContent.replace("\n","")
+          endContent = endContent.replace("\n","")
+          allContent = startContent + endContent
+          allContent = allContent.replace("\n","")
+        }
+        resolve(allContent)
+      }).then((allContent) => {
+        const string_summary = WordCount.stringSummary(allContent)
+        new Promise((resolve,reject) => {
+          let chineseContentNum = 0
+          for (let i = 0; i < allContent.length; i++) {
+            let c = allContent.charAt(i);
+            //基本汉字
+            if (c.match(/[\u4e00-\u9fa5]/)) {
+              chineseContentNum++;
+            }
+            //基本汉字补充
+            else if (c.match(/[\u9FA6-\u9fcb]/)){
+              chineseContentNum++;
+            }
+          }
+          resolve(chineseContentNum)
+        }).then((chineseContentNum) => {
+          this.contentLength = chineseContentNum + string_summary.spaces
+        })
+      })
+    }
   },
   watch: {
     headLine(newValue,oldValue) {
       setTimeout(() => {
-        this.pathname = window.location.pathname
+        this.pathName = window.location.pathname
         this.getPageMap()
       },500)
+      if (this.isShowHeadLine) {
+        setTimeout(() => {
+          this.countNum()
+        },1000)
+      }
+    },
+    pathName() {
+      if (this.isShowHeadLine) {
+        setTimeout(() => {
+          this.countNum()
+        },1000)
+      }
     }
   }
 }

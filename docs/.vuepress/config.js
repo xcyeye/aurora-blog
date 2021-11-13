@@ -983,6 +983,9 @@ module.exports = {
         //v1.6.4新增配置
         sidebarAvatar: 'https://ooszy.cco.vin/img/blog-note/avatar-aurora.png',
 
+        //1.7.1增加配置
+        sugCountPerMin: 300
+
 
         /*
         * 下面这些是在v1.3.2中移除的配置，但是在V1.3.2之前的版本中，可能还可以使用，某些配置我不确定具体在哪个

@@ -34,6 +34,7 @@ import RecommendPage from "./RecommendPage";
 import {usePageData} from "@vuepress/client";
 import PageNext from "./child/page/PageNext";
 import $ from 'jquery'
+import WordCount from 'crisp-word-count';
 export default defineComponent({
   name: 'Page',
   components: {

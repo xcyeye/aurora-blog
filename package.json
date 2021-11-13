@@ -20,6 +20,7 @@
     "@vuepress/bundler-vite": "^2.0.0-beta.27",
     "@vuepress/plugin-google-analytics": "^2.0.0-beta.27",
     "@vuepress/plugin-register-components": "^2.0.0-beta.27",
+    "crisp-word-count": "^1.0.0",
     "cz-conventional-changelog": "^3.3.0",
     "jquery": "^3.2.1",
     "vuepress": "^2.0.0-beta.27"

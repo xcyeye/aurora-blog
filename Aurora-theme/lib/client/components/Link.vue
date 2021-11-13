@@ -114,7 +114,6 @@ export default defineComponent({
           let temp = array[i]
           array[i] = array[random1]
           array[random1] = temp
-          console.log(i + "---> " + array.length)
           array[i] = {
             name: 'qsyyke',
             sex: 'nan'
@@ -147,10 +146,8 @@ export default defineComponent({
     }
 
     this.themeProperty = useThemeData().value
-    // console.log(this.themeProperty.friendLinks)
     if (this.themeProperty.friendLinks !== undefined && this.themeProperty.friendLinks != null) {
       for (let i = 0; i < this.themeProperty.friendLinks.length; i++) {
-        console.log(this.themeProperty.friendLinks[i].links)
         /*this.shuffleArray(this.themeProperty.friendLinks[i].links).then((arr) => {
           // this.themeProperty.friendLinks[i].links = arr
         })*/
