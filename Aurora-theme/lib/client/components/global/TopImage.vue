@@ -65,7 +65,8 @@ export default {
       tagArr: [],
       topBackgroundUrl: 'https://picture.cco.vin/pic/rmimg',
       pathName: '',
-      sugCountPerMin: 230
+      sugCountPerMin: 230,
+      document: {}
     }
   },
   props: {
@@ -84,7 +85,7 @@ export default {
     headLine: {
       type: String,
       default() {
-        return "";
+        return "aurora";
       }
     },
     themeProperty: {
@@ -102,6 +103,7 @@ export default {
     })
   },
   mounted() {
+    this.document = document
     this.pathName = window.location.pathname
     setTimeout(() =>{
       this.getPageMap()
@@ -220,11 +222,11 @@ export default {
       new Promise((resolve,reject) => {
         let allContent = ''
         try {
-          allContent = document.querySelector(".medium-zoom-content").innerText;
+          allContent = this.document.querySelector(".medium-zoom-content").innerText;
         }catch (e) {
           return
         }
-        let allCodeElement = document.querySelectorAll(".medium-zoom-content div[class*=language-]");
+        let allCodeElement = this.document.querySelectorAll(".medium-zoom-content div[class*=language-]");
         for (let i = 0; i < allCodeElement.length; i++) {
           let codeContent = allCodeElement[i].innerText;
           let indexOf = allContent.indexOf(codeContent);

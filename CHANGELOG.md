@@ -1,4 +1,12 @@
-# [1.0.0](https://github.com/vuepress-aurora/vuepress-theme-aurora/compare/v1.7.0...v1.0.0) (2021-11-12)
+# [1.0.0](https://github.com/vuepress-aurora/vuepress-theme-aurora/compare/v1.7.0...v1.0.0) (2021-11-13)
+
+
+### Bug Fixes
+
+* fix the appreciation page cannot get local data ([60d0c5a](https://github.com/vuepress-aurora/vuepress-theme-aurora/commit/60d0c5a602160e2f4f6794ab091feffef0dbc03c))
+* fix the error of the word count of the article ([7e9b023](https://github.com/vuepress-aurora/vuepress-theme-aurora/commit/7e9b023bac33adab62ed0972c036de0bca4cab34))
+* fix the height problem of the tab page ([014f367](https://github.com/vuepress-aurora/vuepress-theme-aurora/commit/014f367acf20b5c94a1e77f82e3805e4799a27cb))
+* fix theme copyright information ([527dd9b](https://github.com/vuepress-aurora/vuepress-theme-aurora/commit/527dd9b9143bbbb92fc76e0895df95ec401038e3))
 
 
 
