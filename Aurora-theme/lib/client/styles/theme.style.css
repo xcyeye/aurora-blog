@@ -1456,7 +1456,6 @@ a[data-v-d8ec41bc] {
 .tag-page-right {
     margin-left: 10px;
     margin-right: 10px;
-    --tag-page-content: 60%;
     -webkit-border-radius: -webkit-calc(var(--borderRadius) / 2);
     border-radius: calc(var(--borderRadius) / 2);
     height: 80%;
@@ -3084,6 +3083,10 @@ body::-webkit-scrollbar-thumb {
 /* 自适应 */
 @media screen and (max-width: 719px) {
 
+    .tag-page-right {
+        --tag-page-content: 60%;
+    }
+
     .home-random-say-custom {
         top: 31%;
     }
@@ -3526,6 +3529,10 @@ body::-webkit-scrollbar-thumb {
 
 
 @media screen and (min-width: 719px) {
+
+    .tag-page-right {
+        --tag-page-content: 62%;
+    }
 
     .sidebar-single-common:first-child {
         margin-top: 0;
