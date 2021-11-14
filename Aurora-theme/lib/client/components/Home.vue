@@ -1,6 +1,6 @@
 <template>
   <div class="home" :style="getHomeHeight">
-    <div class="home-hero-img" :class="{'home-hero-img-custom': isHome}" id="home-hero-img">
+    <div class="home-hero-img" :class="{'home-hero-img-custom ': isHome}" id="home-hero-img">
       <img :src="getHeroImg" alt="">
     </div>
     <slot name="home1"></slot>
@@ -11,13 +11,15 @@
     </div>
     <slot name="home2"></slot>
     <div :class="{'home-social-custom': isHome}" class="home-social">
-      <HomeSidebarSocialItem :sidebar-row-pc-var="socialsIsHomeNum + 1"
-                             :sidebar-width-pc-var="sidebarWidthPcVar"
-                             :sidebar-row-var="socialsIsHomeNum + 1"
-                             :show-social-img="true"
-                             :sidebar-cut-width="1"
-                             :sidebar-width-var="sidebarWidthVar"
-                             :social-item="item" v-for="item in socialsArrTemp"/>
+      <div :class="{'home-social-custom-single': isHome}">
+        <HomeSidebarSocialItem :sidebar-row-pc-var="socialsIsHomeNum + 1"
+                               :sidebar-width-pc-var="sidebarWidthPcVar"
+                               :sidebar-row-var="socialsIsHomeNum + 1"
+                               :show-social-img="true"
+                               :sidebar-cut-width="1"
+                               :sidebar-width-var="sidebarWidthVar"
+                               :social-item="item" v-for="item in socialsArrTemp"/>
+      </div>
     </div>
     <slot name="home3"></slot>
   </div>
