@@ -1,4 +1,8 @@
-# [1.0.0](https://github.com/vuepress-aurora/vuepress-theme-aurora/compare/v1.7.0...v1.0.0) (2021-11-13)
+# [1.0.0](https://github.com/vuepress-aurora/vuepress-theme-aurora/compare/v1.7.1...v1.0.0) (2021-11-13)
+
+
+
+## [1.7.1](https://github.com/vuepress-aurora/vuepress-theme-aurora/compare/v1.7.0...v1.7.1) (2021-11-13)
 
 
 ### Bug Fixes

@@ -9,3 +9,13 @@
      /*opacity: 1;*/
 }
 
+
+.set-bg-fitter:before {
+    /* -webkit-filter: blur(0px); */
+    /* filter: blur(0px); */
+}
+
+
+body::-webkit-scrollbar {
+     display: none;
+}
