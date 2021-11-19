@@ -4,14 +4,14 @@
       <div class="timeline-year">
         <span class="timeline-year-title">{{item}}</span>
       </div>
-      <timeline-item v-for="month in getAllMonthArr(item)" :month="month" :page-year="item" :all-page-data-arr="allPageDataArr"></timeline-item>
+      <archive-item v-for="month in getAllMonthArr(item)" :month="month" :page-year="item" :all-page-data-arr="allPageDataArr"></archive-item>
     </div>
   </div>
 </template>
 
 <script>
 const pageData = require('@temp/page-data')
-import TimelineItem from "./TimelineItem";
+import ArchiveItem from "./ArchiveItem";
 let excludes = []
 try {
   excludes = __EXCLUDES__;
@@ -19,9 +19,9 @@ try {
   console.warn(e)
 }
 export default {
-  name: "Timeline",
+  name: "AuroraArchive",
   components: {
-    TimelineItem
+    ArchiveItem
   },
   data() {
     return {

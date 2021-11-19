@@ -3,11 +3,12 @@
     /*--archive-timeline: rgba(144, 241, 239, 0.35);*/
     /*--archive-timeline-active: pink;*/
     /*--archive-timeline-active-title: pink;*/
+    /*--archive-box-width: 80%;*/
 }
 .timeline-box {
-    width: 80%;
     height: max-content;
     margin: 0 auto;
+    width: var(--archive-box-width,80%);
 }
 
 .timeline-single {
@@ -48,6 +49,10 @@
     background: var(--archive-timeline,rgba(144, 241, 239, 0.35));
     margin: 0 auto;
     margin-top: 3px;
+}
+
+.timeline-create-link-single {
+    margin-left: 1.15rem;
 }
 
 .timeline-create-link-single li:hover .timeline-line-icon {
@@ -94,12 +99,11 @@
 .timeline-create-time {
     height: 1.5rem;
     width: 10rem;
-    display: flex;
 }
 
 .timeline-create-time span {
     line-height: 1.5rem;
-    padding-left: 1rem;
+    /*padding-left: 1rem;*/
 }
 
 .timeline-create-link-single ul {
@@ -109,9 +113,6 @@
 .timeline-create-link-single ul li {
     list-style: none;
     margin-bottom: 1.5rem;
-    /*padding-left: 10px;*/
-
-
     display: flex;
 }
 
@@ -158,12 +159,10 @@
 
 @-webkit-keyframes archiveHover {
     from {
-        /*color: whitesmoke;*/
         padding-left: 0px;
     }
     to {
         padding-left: 10px;
-        /*color: red;*/
     }
 }
 
@@ -180,7 +179,7 @@
     height: 3rem;
     position: relative;
     width: 6rem;
-    text-align: center;
+    padding-left: 1.15rem;
 }
 
 .timeline-year-title:before {
@@ -188,7 +187,7 @@
     height: 7px;
     margin: 0 auto;
     position: absolute;
-    bottom: 20%;
+    bottom: 10%;
     content: "";
     border-radius: 10px;
     -webkit-animation: timelineYearLevel 900ms;
@@ -211,7 +210,7 @@
 @keyframes timelineYearLevel {
     from {
         background: rgba(0,207,200,.9);
-        width: 40%;
+        width: 50%;
     }
     to {
         background: rgba(0,207,200,.4);
@@ -225,7 +224,7 @@
         width: 15%;
     }
     to {
-        width: 40%;
+        width: 50%;
         background: rgba(0,207,200,.9);
     }
 }
@@ -233,7 +232,7 @@
 .timeline-year span {
     line-height: 2rem;
     font-weight: bold;
-    font-size: 18px;
+    font-size: 32px;
 }
 
 .timeline-item {

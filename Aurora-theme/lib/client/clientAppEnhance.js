@@ -23,6 +23,7 @@ import Poster from "./components/global/Poster";
 import HomeSidebar from "./components/child/side/HomeSidebar";
 import HomeBottom from "./components/HomeBottom";
 import AuroraGlobal from "./components/global/AuroraGlobal";
+import Archive from './components/Archive'
 
 import './styles/index.scss';
 import './styles/photo.scss'
@@ -47,6 +48,7 @@ export default defineClientAppEnhance(({ app, router }) => {
     app.component("Mood",Mood)
     app.component("Tag",Tag)
     app.component("AuroraGlobal",AuroraGlobal)
+    app.component("Archive",Archive)
 
     //路由
     // @ts-ignore

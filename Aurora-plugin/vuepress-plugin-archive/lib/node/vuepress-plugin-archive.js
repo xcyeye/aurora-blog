@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.cozePlugin = void 0;
 const { createPage } = require('@vuepress/core');
 const utils_1 = require("@vuepress/utils");
-const vuepressPluginTimeline = ({ excludes,noTitle }) => {
+const vuepressPluginArchive = ({ excludes,noTitle }) => {
     return {
         define: {
             __EXCLUDES__: excludes,
@@ -12,13 +12,13 @@ const vuepressPluginTimeline = ({ excludes,noTitle }) => {
         onInitialized: async (app) => {
             // 如果主页不存在
             const timeline = await createPage(app, {
-                path: '/aurora-timeline',
+                path: '/aurora-archive',
                 // 设置 frontmatter
                 frontmatter: {
-                    layout: 'Timeline',
-                    slug: 'aurora-timeline',
+                    layout: 'AuroraArchive',
+                    slug: 'aurora-plugin-archive',
                 },
-                permalink: '/aurora-timeline',
+                permalink: '/aurora-archive',
                 // 设置 markdown 内容
                 content: "",
             })
@@ -35,9 +35,9 @@ const vuepressPluginTimeline = ({ excludes,noTitle }) => {
                 `export default ${JSON.stringify(pageData)}`
             );
         },
-        name: 'vuepress-plugin-timeline',
+        name: 'vuepress-plugin-archive',
         multiple: false,
         clientAppEnhanceFiles: utils_1.path.resolve(__dirname, '../client/clientAppEnhance.js')
     };
 };
-exports.timelinePlugin = vuepressPluginTimeline;
+exports.archivePlugin = vuepressPluginArchive;

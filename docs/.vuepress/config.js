@@ -27,7 +27,7 @@ module.exports = {
                 onlyAdministrator: false //是否运行其他注册的用户发布说说，true表示只有管理员可以发布
             }
         ],*/
-        [
+        /*[
             path.resolve(__dirname, "../../Aurora-plugin/vuepress-plugin-coze/lib/node/index.js"),
             {
                 appId: '2A2Dyd2AffrnldhwftlEddVn-MdYXbMMI',
@@ -38,9 +38,9 @@ module.exports = {
                 registerPath: '/aurora-register', //自定义插件默认提供的注册页面路由，请在前面加上/
                 onlyAdministrator: false //是否运行其他注册的用户发布说说，true表示只有管理员可以发布
             }
-        ],
+        ],*/
         [
-            path.resolve(__dirname, "../../Aurora-plugin/vuepress-plugin-timeline/lib/node/index.js"),
+            path.resolve(__dirname, "../../Aurora-plugin/vuepress-plugin-archive/lib/node/index.js"),
             {
                 excludes: ['/footer.html','/404.html','/about/','/mood/','/link/','/tag/','/photo/'],
                 noTitle: '暂时没有标题配置'
@@ -183,7 +183,7 @@ module.exports = {
             },
             {
                 text: "time",
-                link: '/aurora-timeline',
+                link: '/archive',
                 iconClass: 'aurora-icon-time'
             }
         ],

@@ -10,6 +10,6 @@ var __exportStar = (this && this.__exportStar) || function(m, exports) {
     for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const timelinePlugin_1 = require("./vuepress-plugin-timeline");
-__exportStar(require("./vuepress-plugin-timeline"), exports);
-exports.default = timelinePlugin_1.timelinePlugin;
+const archivePlugin_1 = require("./vuepress-plugin-archive");
+__exportStar(require("./vuepress-plugin-archive"), exports);
+exports.default = archivePlugin_1.archivePlugin;

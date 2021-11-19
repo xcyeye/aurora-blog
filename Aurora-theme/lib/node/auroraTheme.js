@@ -73,6 +73,17 @@ const auroraTheme = ({ themePlugins = {}, ...localeOptions }) => {
                 content: "",
             })
 
+            const ArchivePage = await createPage(app, {
+                path: '/archive',
+                // 设置 frontmatter
+                frontmatter: {
+                    layout: 'Archive',
+                    slug: 'aurora-archive',
+                },
+                // 设置 markdown 内容
+                content: "",
+            })
+
             if (app.pages.every((page) => page.path !== '/')) {
                 const homepage = await createPage(app, {
                     path: '/',
@@ -92,6 +103,7 @@ const auroraTheme = ({ themePlugins = {}, ...localeOptions }) => {
             app.pages.push(moodPage)
             app.pages.push(linkPage)
             app.pages.push(tagPhoto)
+            app.pages.push(ArchivePage)
         },
         onGenerated: (app) => {
             setTimeout(() => {
