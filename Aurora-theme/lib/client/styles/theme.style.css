@@ -635,7 +635,6 @@ a[data-v-d8ec41bc] {
     bottom: -30%;
     content: "";
     border-radius: 10px;
-
     -webkit-animation: aboutTitleLevel 900ms;
     animation: aboutTitleLevel 900ms;
     -webkit-animation-iteration-count: 1;
@@ -5418,25 +5417,7 @@ body::-webkit-scrollbar-thumb {
     }
 }
 
-@keyframes sidebarMenuItemHover {
-    from {
-        padding-left: 0px;
-    }
-    to {
-        padding-left: 10px;
-    }
-}
-
 @-webkit-keyframes sidebarMenuItemEnter {
-    from {
-        padding-left: 10px;
-    }
-    to {
-        padding-left: 0px;
-    }
-}
-
-@keyframes sidebarMenuItemEnter {
     from {
         padding-left: 10px;
     }
