@@ -21,7 +21,7 @@
             <span class="aurora-stick-label">置顶</span>
           </div>
         </div>
-        <div class="home-page-info">
+        <div v-if="getTime !== ''" class="home-page-info">
           <div class="home-page-info-time">
             <span class="aurora-iconfont-common aurora-home-time"></span>
             <span>{{getTime}}</span>

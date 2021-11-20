@@ -59,7 +59,7 @@ module.exports = {
                             articleMap.pageCreateTime = new Date(createPageDate).getTime();
                             articleMap.customTime = new Date(createPageDate).getTime();
                         }else {
-                            if (commitPageDate !== undefined) {
+                            if (commitPageDate !== undefined && commitPageDate !== null) {
                                 articleMap.pageCreateTime = commitPageDate
                             }
                         }

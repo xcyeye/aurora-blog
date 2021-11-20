@@ -436,8 +436,6 @@ export default {
       return sidebarAvatar
     },
     getLatestPage() {
-      console.log("----------------")
-      console.log(this.allSortPageArr)
       return this.allSortPageArr.slice(0,this.latestPageSize)
     },
     isShow() {
