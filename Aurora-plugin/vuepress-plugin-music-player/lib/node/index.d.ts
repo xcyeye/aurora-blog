@@ -1,3 +1,3 @@
-import { MusicPlayerPluginOptions } from './vuepress-plugin-music-player';
-export * from './vuepress-plugin-music-player';
-export default MusicPlayerPluginOptions;
+import { PlayerPluginOptions } from './vuepress-plugin-player';
+export * from './vuepress-plugin-player';
+export default PlayerPluginOptions;

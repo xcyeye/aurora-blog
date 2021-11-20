@@ -1,69 +1,37 @@
 {
-  "_from": "@vuepress/plugin-back-to-top@2.0.0-beta.26",
-  "_id": "@vuepress/plugin-back-to-top@2.0.0-beta.26",
-  "_inBundle": false,
-  "_integrity": "sha1-xb6u2TrbtYl2WLmoByAAs9rY+LA=",
-  "_location": "/@vuepress/plugin-back-to-top",
-  "_phantomChildren": {},
-  "_requested": {
-    "type": "version",
-    "registry": true,
-    "raw": "@vuepress/plugin-back-to-top@2.0.0-beta.26",
-    "name": "@vuepress/plugin-back-to-top",
-    "escapedName": "@vuepress%2fplugin-back-to-top",
-    "scope": "@vuepress",
-    "rawSpec": "2.0.0-beta.26",
-    "saveSpec": null,
-    "fetchSpec": "2.0.0-beta.26"
+  "name": "vuepress-plugin-player",
+  "version": "1.0.0-beta.4",
+  "description": "A vuepress-based animation blog theme, simple, beautiful, multi-color, multiple custom functions, providing article poster sharing, talk, photo album, comment and other features 一个基于vuepress的动漫类博客主题，简洁，漂亮，多色彩，多种自定义功能，提供文章海报分享，说说，相册，评论等特色功�?",
+  "main": "./lib/node/index.js",
+  "directories": {
+    "lib": "lib"
   },
-  "_requiredBy": [
-    "/@vuepress/theme-default"
-  ],
-  "_resolved": "https://registry.nlark.com/@vuepress/plugin-back-to-top/download/@vuepress/plugin-back-to-top-2.0.0-beta.26.tgz",
-  "_shasum": "c5beaed93adbb5897658b9a8072000b3dad8f8b0",
-  "_spec": "@vuepress/plugin-back-to-top@2.0.0-beta.26",
-  "_where": "D:\\theme-aurora\\theme-aurora\\node_modules\\@vuepress\\theme-default",
-  "author": {
-    "name": "meteorlxy"
-  },
-  "bugs": {
-    "url": "https://github.com/vuepress/vuepress-next/issues"
-  },
-  "bundleDependencies": false,
-  "dependencies": {
-    "@vuepress/core": "2.0.0-beta.26",
-    "@vuepress/utils": "2.0.0-beta.25",
-    "ts-debounce": "^3.0.0",
-    "vue": "^3.2.3"
-  },
-  "deprecated": false,
-  "description": "VuePress plugin - back to top",
-  "files": [
-    "lib"
-  ],
-  "gitHead": "6cbf3e07b2871383cebad5180fcbb02d69c79566",
-  "homepage": "https://github.com/vuepress",
-  "keywords": [
-    "vuepress-plugin",
-    "vuepress",
-    "plugin",
-    "top"
-  ],
-  "license": "MIT",
-  "main": "lib/node/index.js",
-  "name": "@vuepress/plugin-back-to-top",
-  "publishConfig": {
-    "access": "public"
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/vuepress/vuepress-next.git"
+    "url": "https://github.com/vuepress-aurora/vuepress-plugin-music-player"
   },
-  "scripts": {
-    "build": "tsc -b tsconfig.build.json",
-    "clean": "rimraf lib *.tsbuildinfo",
-    "copy": "cpx \"src/**/*.{css,svg}\" lib"
+  "keywords": [
+    "vuepress-theme",
+    "vuepress-plugin",
+    "vuepress-plugin-music",
+    "vuepress-plugin-player",
+    "blog-theme",
+    "vuepress",
+    "theme-plugin"
+  ],
+  "author": "qsyyke",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/vuepress-aurora/vuepress-plugin-music-player/issues"
   },
-  "types": "lib/node/index.d.ts",
-  "version": "2.0.0-beta.26"
+  "homepage": "https://aurora.xcye.xyz/plugin/music-player",
+  "dependencies": {
+    "axios": "^0.21.1"
+  },
+  "publishConfig": {
+    "tag": "next"
+  }
 }

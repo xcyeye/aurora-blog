@@ -10,6 +10,6 @@ var __exportStar = (this && this.__exportStar) || function(m, exports) {
     for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const musicPlayerPlugin_1 = require("./vuepress-plugin-music-player");
-__exportStar(require("./vuepress-plugin-music-player"), exports);
-exports.default = musicPlayerPlugin_1.musicPlayerPlugin;
+const playerPlugin_1 = require("./vuepress-plugin-player");
+__exportStar(require("./vuepress-plugin-player"), exports);
+exports.default = playerPlugin_1.playerPlugin;

@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.cozePlugin = void 0;
 const { createPage } = require('@vuepress/core');
 const utils_1 = require("@vuepress/utils");
-const vuepressPluginMusicPlayer = ({songIds,playlist,showPlaylist ,disabledNetEaseMusic,localSongs}) => {
+const vuepressPluginPlayer = ({songIds,playlist,showPlaylist ,disabledNetEaseMusic,localSongs}) => {
     return {
         define: {
             __SONG_IDS__: songIds,
@@ -29,9 +29,9 @@ const vuepressPluginMusicPlayer = ({songIds,playlist,showPlaylist ,disabledNetEa
             // 把它添加到 `app.pages`
             app.pages.push(timeline)
         },
-        name: 'vuepress-plugin-music-player',
+        name: 'vuepress-plugin-player',
         multiple: false,
         clientAppEnhanceFiles: utils_1.path.resolve(__dirname, '../client/clientAppEnhance.js')
     };
 };
-exports.musicPlayerPlugin = vuepressPluginMusicPlayer;
+exports.playerPlugin = vuepressPluginPlayer;

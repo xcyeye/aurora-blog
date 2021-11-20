@@ -4,7 +4,7 @@ const axios = require('axios')
 module.exports = {
     req: function (option) {
         return new Promise((resolve, reject) => {
-            let timeout = 15000;
+            let timeout = 5000;
             let method = "GET"
             let baseURL = ""
             try {

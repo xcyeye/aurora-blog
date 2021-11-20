@@ -52,21 +52,23 @@ module.exports = {
                 //网易云单个歌单id
                 songIds: ['29723011','1887893189','1421069053'],
                 //网易云歌单
-                playlist: '5410113377',
+                playlist: '2410215112',
                 showPlaylist: true,
                 //是否禁用网易云音乐，如果你选择禁用，那么就将使用本地的歌曲，请传入链接
-                disabledNetEaseMusic: true,
+                disabledNetEaseMusic: false,
                 //本地歌曲
                 localSongs: {
                     coverUrl: 'https://ooszy.cco.vin/img/blog-public/avatar.jpg',
                     songs: [
                         {
                             path: '/song/1.mp3',
-                            songName: '12'
+                            songName: '12',
+                            cover: 'https://p1.music.126.net/Rg1x9LeUacIDqtvUzL35Cw==/109951163688517312.jpg'
                         },
                         {
-                            path: '/song/2.mp3',
-                            songName: '23'
+                            path: 'http://m7.music.126.net/20211120155029/f99e2fe5f557455fd37b7bfd0c0d6c3e/ymusic/545a/005e/025f/c03ab3077e74b9d50e07557d82ca472b.flac',
+                            songName: '23',
+                            cover: 'https://p2.music.126.net/8mnn6YiQldsRIHe_nER8wg==/109951162894925733.jpg'
                         },
                         {
                             path: '/song/3.mp3',
@@ -105,14 +107,14 @@ module.exports = {
                 href: '//at.alicdn.com/t/font_2849934_7el0cvwfmn.css'
             }
         ],
-        [
+        /*[
             "link",
             {
                 rel: 'stylesheet',
                 type: 'text/css',
                 href: '//at.alicdn.com/t/font_2951154_btu3y5blqnn.css'
             }
-        ]
+        ]*/
     ],
     //这里使用本地主题
     theme: path.resolve(__dirname, "../../Aurora-theme/lib/node/index.js"),

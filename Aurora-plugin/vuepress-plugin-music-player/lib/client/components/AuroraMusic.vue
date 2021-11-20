@@ -1,13 +1,19 @@
 <template>
-  <div class="aurora-music-box">
+  <div :class="showMusicBoxStatus ? 'show-aurora-music-box' : 'no-aurora-music-box'" class="aurora-music-box">
     <div @mouseleave="musicMouseLeave" class="music-box">
+      <div class="music-more" :class="showMoreSongStatus ? 'show-more-song' : 'no-show-more-song'">
+        <div class="aurora-music-more-single" v-for="(item,index) in musicMapArr" :key="index">
+          <span @click="clickMusicPlay($event,index)" :class="{'aurora-music-song-active': index === currentMusicNum}" class="aurora-music-font aurora-music-music1 aurora-music-song-info aurora-music-cursor aurora-music-song">{{item.songName}}</span>
+        </div>
+      </div>
       <div class="music-player">
+
         <div class="aurora-music-pic-par">
-          <div :class="{'music-rotate': playMusicStatus}" class="aurora-music-pic" id="aurora-music-pic">
-            <div @mouseenter="musicMouseenter" class="aurora-music-pause">
+          <div @mouseenter="musicMouseenter" :class="{'music-rotate': playMusicStatus}" class="aurora-music-pic" id="aurora-music-pic">
+            <div class="aurora-music-pause">
               <span :class="playMusicStatus ? 'aurora-music-zanting2' : 'aurora-music-bofang4'" @click="playMusic" class="aurora-music-font aurora-music-control-pause aurora-music-cursor"></span>
             </div>
-            <img :src="currentMusicObject.picSrc === undefined ? 'https://ooszy.cco.vin/img/blog-public/avatar.jpg' : currentMusicObject.picSrc" alt="">
+            <img :src="currentMusicObject.picSrc === undefined ? defaultCover : currentMusicObject.picSrc" alt="">
           </div>
         </div>
         <div class="aurora-music-info" :class="{'show-aurora-music-info': showMusicBoxStatus}">
@@ -39,11 +45,6 @@
               </div>
             </div>
           </div>
-        </div>
-      </div>
-      <div class="music-more" :class="{'show-more-song': showMoreSongStatus}">
-        <div class="aurora-music-more-single" v-for="(item,index) in musicMapArr" :key="index">
-          <span @click="clickMusicPlay($event,index)" :class="{'aurora-music-song-active': index === currentMusicNum}" class="aurora-music-font aurora-music-music1 aurora-music-song-info aurora-music-cursor aurora-music-song">{{item.songName}}</span>
         </div>
       </div>
     </div>
@@ -96,22 +97,34 @@ export default {
       musicOrderPlay: false,
       musicOperateClassArr: [],
       isMusicRandomPlay: true,
-      baseURL: 'https://netease-cloud-music-api-teal-psi.vercel.app/',
+      //baseURL: 'https://netease-cloud-music-api-teal-psi.vercel.app/',
+      baseURL: 'http://localhost:3000/',
       allSongIdArrLen: 0,
-      isLoadingFinish: false
+      isLoadingFinish: false,
+
+      firstSongStatus: false,
+
+      defaultCover: 'https://ooszy.cco.vin/img/blog-public/avatar.jpg',
+      defaultSonger: '默认歌手',
+      defaultSongName: '默认歌曲名'
     }
   },
   created() {
-    if (!disabledNetEaseMusic) {
+    if (disabledNetEaseMusic) {
       for (let i = 0; i < localSongs.songs.length; i++) {
         //使用本地的
-        this.musicMapArr.push({
-          picSrc: localSongs.coverUrl,
+        let musicMap = {
+          picSrc: localSongs.songs[i].cover === undefined ? this.defaultCover : localSongs.songs[i].cover,
           songName: localSongs.songs[i].songName === undefined ? '暂时不知道歌名惹' : localSongs.songs[i].songName,
           singer: '',
           id: (i+1),
           songSrc: localSongs.songs[i].path
-        })
+        }
+        this.musicMapArr.push(musicMap)
+
+        if (i === 0) {
+          this.currentMusicNum = musicMap
+        }
 
         if (i === localSongs.songs.length -1) {
           this.requestStatus = true
@@ -126,8 +139,7 @@ export default {
           baseURL: this.baseURL,
           url: '/playlist/detail',
           params: {
-            //id: playlist
-            id: '4978878748'
+            id: playlist
           },
           songSrc: ''
         }).then((res) => {
@@ -149,8 +161,18 @@ export default {
     window.addEventListener('keyup',this.keyListener)
   },
   watch: {
+    requestSuccessNum() {
+      if ((this.requestSuccessNum + this.requestFailNum) === this.allSongIdArrLen) {
+        this.requestStatus = true
+      }
+    },
+    requestFailNum() {
+      if ((this.requestSuccessNum + this.requestFailNum) === this.allSongIdArrLen) {
+        this.requestStatus = true
+      }
+    },
     requestStatus() {
-      this.currentMusicObject = this.musicMapArr[0]
+      //this.currentMusicObject = this.musicMapArr[0]
       this.currentMusicNum = 0
     },
     currentMusicObject() {
@@ -177,6 +199,15 @@ export default {
         },
         songSrc: ''
       }).then((data) => {
+        console.log(data)
+
+        try {
+          let src = data.data.data[0].url
+        }catch (e) {
+          this.requestFailNum++
+          return
+        }
+
         if (data.data.data[0].url !== null) {
           network.req({
             baseURL: this.baseURL,
@@ -187,9 +218,20 @@ export default {
             songSrc: data.data.data[0].url
           }).then((data) => {
             this.requestSuccessNum++
-            let picSrc = data.data.songs[0].al.picUrl
-            let songName = data.data.songs[0].al.name
-            let singer = data.data.songs[0].ar[0].name
+            let picSrc = ''
+            let songName = ''
+            let singer = ''
+            try {
+
+              picSrc = data.data.songs[0].al.picUrl
+              songName = data.data.songs[0].al.name
+              singer = data.data.songs[0].ar[0].name
+            }catch (e) {
+              console.warn(e)
+              picSrc = this.defaultCover
+              songName = this.defaultSongName
+              singer = this.defaultSonger
+            }
 
             this.musicMapArr.push({
               picSrc: picSrc,
@@ -200,6 +242,7 @@ export default {
             })
 
             if (this.requestSuccessNum === 1) {
+              this.firstSongStatus = true
               this.currentMusicObject = {
                 picSrc: picSrc,
                 songName,
@@ -208,14 +251,14 @@ export default {
                 songSrc: data.src
               }
             }
-
-            if ((this.requestSuccessNum + this.requestFailNum) === this.allSongIdArrLen) {
-              this.requestStatus = true
-            }
+          }).catch((err) => {
+            console.warn(err)
           })
         }else {
           this.requestFailNum++
         }
+      }).catch((err) => {
+        console.warn(err)
       })
     },
 
@@ -237,7 +280,6 @@ export default {
       return Math.floor(Math.random() * (max - min)) + min; //不含最大值，含最小值
     },
     musicNext() {
-
       this.playMusicStatus = false
       //点击下一首
       if (this.isMusicRandomPlay) {
@@ -281,8 +323,12 @@ export default {
     },
     playMusic() {
       if (!this.requestStatus) {
-        return
+        if (!this.firstSongStatus) {
+          return
+        }
+        this.playMusicStatus = false
       }
+
 
       if (this.playMusicStatus) {
         this.$refs["aurora-music-player"].pause()
@@ -308,7 +354,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-
-</style>

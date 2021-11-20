@@ -1,0 +1,179 @@
+@font-face {
+  font-family: "aurora-music-font"; /* Project id 2951154 */
+  src: url('iconfont.woff2?t=1637388549741') format('woff2'),
+       url('iconfont.woff?t=1637388549741') format('woff'),
+       url('iconfont.ttf?t=1637388549741') format('truetype');
+}
+
+.aurora-music-font {
+  font-family: "aurora-music-font" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.aurora-music-danquxunhuan2:before {
+  content: "\e62f";
+}
+
+.aurora-music-danquxunhuan3:before {
+  content: "\e637";
+}
+
+.aurora-music-xunhuanshunxubofangicon:before {
+  content: "\e627";
+}
+
+.aurora-music-geshunxubofang:before {
+  content: "\e645";
+}
+
+.aurora-music-weibiaoti534:before {
+  content: "\e626";
+}
+
+.aurora-music-zhankai1:before {
+  content: "\e605";
+}
+
+.aurora-music-shousuo:before {
+  content: "\e606";
+}
+
+.aurora-music-shousuo1:before {
+  content: "\e639";
+}
+
+.aurora-music-gengduotianchong:before {
+  content: "\e67f";
+}
+
+.aurora-music-bofang4:before {
+  content: "\e653";
+}
+
+.aurora-music-bofang5:before {
+  content: "\e60e";
+}
+
+.aurora-music-bofang6:before {
+  content: "\e87c";
+}
+
+.aurora-music-zanting2:before {
+  content: "\e693";
+}
+
+.aurora-music-zanting:before {
+  content: "\e604";
+}
+
+.aurora-music-bofang2:before {
+  content: "\e8a3";
+}
+
+.aurora-music-bofang3:before {
+  content: "\e624";
+}
+
+.aurora-music-zanting1:before {
+  content: "\e6c2";
+}
+
+.aurora-music-yangshengqi:before {
+  content: "\e600";
+}
+
+.aurora-music-music:before {
+  content: "\e76e";
+}
+
+.aurora-music-musicfill:before {
+  content: "\e795";
+}
+
+.aurora-music-music1:before {
+  content: "\e8b2";
+}
+
+.aurora-music-music2:before {
+  content: "\e658";
+}
+
+.aurora-music-danquxunhuan:before {
+  content: "\e63e";
+}
+
+.aurora-music-tubiaozhizuomoban:before {
+  content: "\e607";
+}
+
+.aurora-music-laba:before {
+  content: "\e8c1";
+}
+
+.aurora-music-danquxunhuan1:before {
+  content: "\e66d";
+}
+
+.aurora-music-xiayishou:before {
+  content: "\e601";
+}
+
+.aurora-music-xiayishou1:before {
+  content: "\e688";
+}
+
+.aurora-music-shangyishou:before {
+  content: "\e689";
+}
+
+.aurora-music-music3:before {
+  content: "\e704";
+}
+
+.aurora-music-Music:before {
+  content: "\e63f";
+}
+
+.aurora-music-bofang:before {
+  content: "\e612";
+}
+
+.aurora-music-shangyishou1:before {
+  content: "\e603";
+}
+
+.aurora-music-xiayishou2:before {
+  content: "\e602";
+}
+
+.aurora-music-xiayishou3:before {
+  content: "\e64c";
+}
+
+.aurora-music-xiayishou4:before {
+  content: "\e6df";
+}
+
+.aurora-music-Music1:before {
+  content: "\e99b";
+}
+
+.aurora-music-shangyishou2:before {
+  content: "\e7fd";
+}
+
+.aurora-music-status-zanting:before {
+  content: "\e699";
+}
+
+.aurora-music-bofang1:before {
+  content: "\f5fa";
+}
+
+.aurora-music-a-ziyuan156:before {
+  content: "\e8f2";
+}
+
