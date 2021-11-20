@@ -1041,7 +1041,30 @@ module.exports = {
         sidebarAvatar: 'https://ooszy.cco.vin/img/blog-note/avatar-aurora.png',
 
         //1.7.1增加配置
-        sugCountPerMin: 300
+        sugCountPerMin: 300,
+
+        //v1.8.0新增配置项
+
+        //是否展示文章推荐 默认展示
+        showRecommend: false,
+
+        //文章页面是否显示上一页，下一页 默认展示
+        articlePagination: false,
+
+        global: {
+            sidebar: {
+                showStatus: true,
+                perData: false,
+                social: false,
+                friendLink: true,
+                navbar: false,
+                latestPage: true,
+                message: false,
+                tag: true,
+                siteData: false
+            },
+            footer: false,
+        },
 
 
         /*

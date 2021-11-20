@@ -11,7 +11,7 @@
     <PageMeta />
     <slot name="bottom" />
   </main>
-  <b-center>
+  <b-center v-if="themeProperty.articlePagination === undefined ? true : themeProperty.articlePagination">
     <template #page-center1>
       <page-next/>
     </template>

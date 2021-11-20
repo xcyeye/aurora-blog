@@ -1,5 +1,5 @@
 <template>
-  <BCenter>
+  <BCenter v-if="themeProperty.showRecommend === undefined ? true : themeProperty.showRecommend">
     <template #page-center1>
       <h2 id="recommend-top-title">推荐阅读</h2>
     </template>
