@@ -169,7 +169,9 @@ export default {
             const todo = AV.Object.createWithoutData('Talk', this.moodItem.id);
             todo.set('mood_like', mood_like + 1);
             todo.save().then(() => {
-              document.cookie="mood_like_status_" + this.moodItem.id + "=1";
+              let expiresTime = new Date().getTime() + 864000000;
+              let expires = new Date(expiresTime);
+              document.cookie = "mood_like_status_" + this.moodItem.id + "=1;expires=" + expires + ";";
               this.moodLink = mood_like + 1
               this.moodLikeStatus = true
               this.setLikeSuccess = true
@@ -197,10 +199,6 @@ export default {
       })
     },
     moodLove(e,moodItem) {
-
-      let expires = 'Thu, 18 Dec 2043 12:00:00 GMT';
-      console.log(expires)
-      return
       new Promise((resolve,reject) => {
         if (!this.setLikeSuccess) {
           let loadingLikeStatus = setInterval(() =>{
