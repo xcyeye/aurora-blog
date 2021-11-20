@@ -90,6 +90,7 @@
         </div>
         <!--文章目录-->
         <catalog :is-show-catalog="isShowCatalog" v-show="changePageIndex === '1'" />
+
         <!--最新文章-->
         <div v-show="changePageIndex === '2'">
           <div v-for="item in getLatestPage" :key="item.articleUrl" :data="item.articleUrl" class="sidebar-page-item sidebar-hover-bg-common">

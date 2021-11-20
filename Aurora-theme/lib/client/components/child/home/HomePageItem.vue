@@ -170,6 +170,7 @@ export default {
     }
   },
   created() {
+    console.log(this.pageItem)
     if (this.themeProperty.homePageLazyLoadingImg !== undefined) {
       this.homePageLazyLoadingImg = this.themeProperty.homePageLazyLoadingImg
     }

@@ -55,7 +55,7 @@ module.exports = {
                 playlist: '2410215112',
                 showPlaylist: true,
                 //是否禁用网易云音乐，如果你选择禁用，那么就将使用本地的歌曲，请传入链接
-                disabledNetEaseMusic: false,
+                disabledNetEaseMusic: true,
                 //本地歌曲
                 localSongs: {
                     coverUrl: 'https://ooszy.cco.vin/img/blog-public/avatar.jpg',
