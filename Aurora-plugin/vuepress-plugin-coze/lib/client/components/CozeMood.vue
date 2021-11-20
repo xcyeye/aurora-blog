@@ -53,6 +53,7 @@ try {
   avatar = __AVATAR_PATH__;
 }catch (e) {
   console.warn("你必须在插件中传入appId,appKey,masterKey配置项")
+  console.warn(e)
 }
 //导入配置属性
 export default defineComponent({

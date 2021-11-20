@@ -12,7 +12,7 @@
             <span v-html="moodItem.attributes.mood_content"></span>
             <div class="coze-mood-time">
               <span>@{{moodItem.attributes.mood_user}}</span>&nbsp;&nbsp;
-              <span>更新于: {{getUpdatedTime}}</span>
+              <span>发布于: {{getUpdatedTime}}</span>
             </div>
             <slot name="coze-mood-content"></slot>
           </div>
@@ -71,6 +71,7 @@ try {
   onlyAdministrator = __ONLY_ADMINISTRATOR
 }catch (e) {
   console.warn("你必须在插件中传入appId,appKey,masterKey配置项")
+  console.warn(e)
 }
 
 import mediumZoom from 'medium-zoom'
@@ -110,7 +111,7 @@ export default {
   },
   computed: {
     getUpdatedTime() {
-      let updatedAt = this.moodItem.updatedAt;
+      let updatedAt = this.moodItem.createdAt;
       return this.getLocalTime(updatedAt);
     },
     getMoodLike() {
@@ -196,6 +197,10 @@ export default {
       })
     },
     moodLove(e,moodItem) {
+
+      let expires = 'Thu, 18 Dec 2043 12:00:00 GMT';
+      console.log(expires)
+      return
       new Promise((resolve,reject) => {
         if (!this.setLikeSuccess) {
           let loadingLikeStatus = setInterval(() =>{
