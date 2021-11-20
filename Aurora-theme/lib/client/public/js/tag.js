@@ -108,10 +108,12 @@ module.exports = {
                                 articleMap.frontmatter = excludeMapArr[i].frontmatter
                                 articleMap.contentRendered = excludeMapArr[i].contentRendered
                                 articleMap.content = excludeMapArr[i].content
-                                articleMap.categories = excludeMapArr[i].frontmatter.categories === undefined ? [] : excludeMapArr[i].frontmatter.categories
 
                                 let categories = excludeMapArr[i].frontmatter.categories
                                 categories = categories === undefined ? [] : categories
+
+                                articleMap.categories = categories
+
                                 for (let j = 0; j < categories.length; j++) {
                                     categoriesSet.add(categories[j])
                                 }
@@ -131,10 +133,12 @@ module.exports = {
                             articleMap.frontmatter = excludeMapArr[i].frontmatter
                             articleMap.contentRendered = excludeMapArr[i].contentRendered
                             articleMap.content = excludeMapArr[i].content
-                            articleMap.categories = excludeMapArr[i].frontmatter.categories === undefined ? [] : excludeMapArr[i].frontmatter.categories
 
                             let categories = excludeMapArr[i].frontmatter.categories
                             categories = categories === undefined ? [] : categories
+
+                            articleMap.categories = categories
+
                             for (let j = 0; j < categories.length; j++) {
                                 categoriesSet.add(categories[j])
                             }
@@ -164,6 +168,9 @@ module.exports = {
                     app.$store.commit('setCategories',{
                         categories: categoriesArr
                     })
+
+                    console.log(set)
+                    console.log(categoriesArr)
 
                     app.$store.commit('setAllPageMap',{
                         allPageMap: mapSet
