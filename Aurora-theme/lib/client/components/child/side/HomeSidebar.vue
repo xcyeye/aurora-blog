@@ -100,7 +100,7 @@
               </a>
             </div>
             <div class="sidebar-page-time">
-              <span>{{getLocalTime(item.data.git.updatedTime)}}</span>
+              <span>{{getLocalTime(item.pageCreateTime)}}</span>
             </div>
           </div>
         </div>
@@ -436,6 +436,8 @@ export default {
       return sidebarAvatar
     },
     getLatestPage() {
+      console.log("----------------")
+      console.log(this.allSortPageArr)
       return this.allSortPageArr.slice(0,this.latestPageSize)
     },
     isShow() {
@@ -504,8 +506,8 @@ export default {
     },
     compare(updatedTime) {
       return  function( object1, object2) {
-        var value1  = object1.date;
-        var value2  = object2.date;
+        var value1  = object1.pageCreateTime;
+        var value2  = object2.pageCreateTime;
         if (value2  < value1) {
           return  1;
         }  else  if (value2  > value1) {

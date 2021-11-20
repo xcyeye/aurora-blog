@@ -24,7 +24,7 @@
         <div class="home-page-info">
           <div class="home-page-info-time">
             <span class="aurora-iconfont-common aurora-home-time"></span>
-            <span>{{getTime(pageItem)}}</span>
+            <span>{{getTime}}</span>
           </div>
         </div>
         <div class="home-page-tag-tag-desc" v-if="getPageTag(pageItem).length !== 0" id="home-page-tag-tag-desc">
@@ -79,9 +79,7 @@ export default {
       return 'homePageConImg' + this.index
     },
     getTime() {
-      return (item) => {
-        return this.getLocalTime(item.date)
-      }
+      return this.getLocalTime(this.pageItem.pageCreateTime)
     },
     getPageUrl() {
       return (item) => {
@@ -170,7 +168,6 @@ export default {
     }
   },
   created() {
-    console.log(this.pageItem)
     if (this.themeProperty.homePageLazyLoadingImg !== undefined) {
       this.homePageLazyLoadingImg = this.themeProperty.homePageLazyLoadingImg
     }

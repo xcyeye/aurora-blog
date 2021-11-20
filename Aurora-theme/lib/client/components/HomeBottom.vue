@@ -91,8 +91,8 @@ export default {
     },
     compare(updatedTime) {
       return  function( object1, object2) {
-        let value1  = object1.date;
-        let value2  = object2.date;
+        let value1  = object1.pageCreateTime;
+        let value2  = object2.pageCreateTime;
         if (value2  < value1) {
           return  1;
         }  else  if (value2  > value1) {
