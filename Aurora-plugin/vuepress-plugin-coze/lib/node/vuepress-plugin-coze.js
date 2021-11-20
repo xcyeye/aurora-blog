@@ -49,13 +49,14 @@ const vuepressPluginCoze = ({appId,appKey,masterKey,avatarPath,registerPath,only
             app.pages.push(RegisterUserPage)
             app.pages.push(photoPage)
         },
-        name: 'vuepress-plugin-codefine: {\n' +
-            '            __APP_ID__: appId,\n' +
-            '            __APP_KEY__: appKey,\n' +
-            '            __Master_Key__: masterKey,\n' +
-            '            __AVATAR_PATH__: avatarPath,\n' +
-            '            __ONLY_ADMINISTRATOR: onlyAdministrator\n' +
-            '        },ze',
+        define: {
+            __APP_ID__: appId,
+            __APP_KEY__: appKey,
+            __Master_Key__: masterKey,
+            __AVATAR_PATH__: avatarPath,
+            __ONLY_ADMINISTRATOR: onlyAdministrator
+        },
+        name: 'vuepress-plugin-coze',
 
         multiple: false,
         clientAppEnhanceFiles: utils_1.path.resolve(__dirname, '../client/clientAppEnhance.js')

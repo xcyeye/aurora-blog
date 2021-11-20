@@ -27,7 +27,7 @@ module.exports = {
                 onlyAdministrator: false //是否运行其他注册的用户发布说说，true表示只有管理员可以发布
             }
         ],*/
-        /*[
+        [
             path.resolve(__dirname, "../../Aurora-plugin/vuepress-plugin-coze/lib/node/index.js"),
             {
                 appId: '2A2Dyd2AffrnldhwftlEddVn-MdYXbMMI',
@@ -38,7 +38,7 @@ module.exports = {
                 registerPath: '/aurora-register', //自定义插件默认提供的注册页面路由，请在前面加上/
                 onlyAdministrator: false //是否运行其他注册的用户发布说说，true表示只有管理员可以发布
             }
-        ],*/
+        ],
         [
             path.resolve(__dirname, "../../Aurora-plugin/vuepress-plugin-archive/lib/node/index.js"),
             {
@@ -47,7 +47,7 @@ module.exports = {
             }
         ],
         [
-            path.resolve(__dirname, "../../Aurora-plugin/vuepress-plugin-music-player/lib/node/index.js"),
+            path.resolve(__dirname, "../../Aurora-plugin/vuepress-plugin-player/lib/node/index.js"),
             {
                 //网易云单个歌单id
                 songIds: ['29723011','1887893189','1421069053'],

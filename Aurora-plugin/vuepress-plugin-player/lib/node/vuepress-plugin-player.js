@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.cozePlugin = void 0;
+const { path } = require('@vuepress/utils')
 const { createPage } = require('@vuepress/core');
 const utils_1 = require("@vuepress/utils");
 const vuepressPluginPlayer = ({songIds,playlist,showPlaylist ,disabledNetEaseMusic,localSongs}) => {
@@ -31,7 +32,8 @@ const vuepressPluginPlayer = ({songIds,playlist,showPlaylist ,disabledNetEaseMus
         },
         name: 'vuepress-plugin-player',
         multiple: false,
-        clientAppEnhanceFiles: utils_1.path.resolve(__dirname, '../client/clientAppEnhance.js')
+        clientAppEnhanceFiles: utils_1.path.resolve(__dirname, '../client/clientAppEnhance.js'),
+        clientAppRootComponentFiles: path.resolve(__dirname, '../client/components/AuroraMusic.vue'),
     };
 };
 exports.playerPlugin = vuepressPluginPlayer;
