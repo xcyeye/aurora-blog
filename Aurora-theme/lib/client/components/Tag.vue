@@ -8,7 +8,7 @@
             <div class="tag-top">
               <div id="tag-select" class="tag-center-title">
                 <div id="tag-select-common" class="tag-select-common">
-                  <h2 class="tag-scroll">标签</h2>
+                  <h2 class="tag-scroll">类别</h2>
                 </div>
                 <div class="tag-select-icomoon">
                   <span :class="{tagCloudControl: tagIndex === 0}" @click="showTagCloud(event,0)"
@@ -18,7 +18,7 @@
                 </div>
               </div>
 
-              <!--这里显示的是标签-->
+              <!--这里显示的是类别-->
               <div class="tag-no-show-common" :class="{tagListActive: tagIndex === 1}">
                 <TagItem
                     :class="isCategoriesActive === index ? 'active' : ''"
@@ -29,7 +29,7 @@
                     :key="index" :tag="item"/>
               </div>
 
-            <!-- 显示标签云 -->
+            <!-- 显示类别云 -->
               <TagCloud class="tag-no-show-common" :class="{tagCloudActive: tagIndex === 0}"
                         @click-cloud-tag="clickCloudCategories"
                         :theme-property="themeProperty"
@@ -37,10 +37,10 @@
             </div>
             <div style="clear: both"></div>
 
-            <!--这里是显示类别-->
+            <!--这里是显示标签-->
             <div class="tag-top">
               <div class="tag-center-title">
-                <h2>类别</h2>
+                <h2>标签</h2>
               </div>
               <div class="tag-no-show-common" :class="{tagListActive: tagIndex === 1}">
                 <TagItem
@@ -253,7 +253,6 @@ export default {
             if (this.tag === pageTag) {
               temPage.push(allPages[i])
             }
-            continue
           }
         }
         resolve(temPage)

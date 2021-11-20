@@ -1,5 +1,7 @@
 ---
 date: "2021/11/20"
+categories: [footer-类别,特征]
+tag: [home-config,foo]
 ---
 
 # 页脚设置

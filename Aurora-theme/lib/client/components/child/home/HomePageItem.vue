@@ -30,7 +30,7 @@
         <div class="home-page-tag-tag-desc" v-if="getPageTag(pageItem).length !== 0" id="home-page-tag-tag-desc">
           <div>
             <span class="aurora-iconfont-common aurora-home-tag"></span>
-            <span class="home-page-tag-span" v-for="item in getPageTag(pageItem)">{{item}}</span>
+            <span class="home-page-tag-span" :key="index" v-for="(item,index) in getPageTag(pageItem)">{{item}}</span>
           </div>
         </div>
       </div>
@@ -101,10 +101,10 @@ export default {
     },
     getPageTag() {
       return (item) => {
-        if (item.categories.length === 0) {
-          return item.tag
-        }else {
+        if (item.tag.length === 0) {
           return item.categories
+        }else {
+          return item.tag
         }
       }
     }

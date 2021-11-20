@@ -22,11 +22,11 @@
           </div>
           <div class="sidebar-page-common">
             <div>标签</div>
-            <div>{{$store.state.categories.length}}</div>
+            <div>{{$store.state.tagArr.length}}</div>
           </div>
           <div class="sidebar-page-common">
             <div>类别</div>
-            <div>{{$store.state.tagArr.length}}</div>
+            <div>{{$store.state.categories.length}}</div>
           </div>
         </div>
         <a target="_blank" :href="getGithubUrl">
@@ -142,7 +142,7 @@
         </div>
 
         <div class="sidebar-tag-item">
-          <router-link :key="item" v-for="(item,index) in getSidebarTagArr" :to="'/tag?tag=' + item">
+          <router-link :key="index" v-for="(item,index) in getSidebarTagArr" :to="'/tag?tag=' + item">
             <div class="sidebar-tag-single">
               <span class="home-sidebar-tag-hover" :key="index" :style="setTagItemStyle(index)">{{item}}</span>
             </div>
@@ -393,10 +393,10 @@ export default {
         return this.$store.state.tagArr
       }
 
-      if (sidebarTag === "tag") {
-        return this.$store.state.tagArr
-      }else {
+      if (sidebarTag === "categories") {
         return this.$store.state.categories
+      }else {
+        return this.$store.state.tagArr
       }
     },
     getRecommendNoTitle() {

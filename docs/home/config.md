@@ -1,6 +1,7 @@
 ---
-categories: [主题配置,配置项,配置总览,主题配置,配置项,配置总览,主题配置,配置项,配置总览]
+categories: [config-类别]
 stick: true
+tag: [config,配置]
 ---
 
 

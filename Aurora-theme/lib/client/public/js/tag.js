@@ -2,7 +2,7 @@ const myData = require('@temp/my-data')
 let themeProperty = null
 
 //需要排除的页面url
-let excludes = ['/','/about/','/mood/','/link/','/tag/','/archive/','/aurora-archive/','/aurora-music/','/404.html']
+let excludes = ['/','/about/','/mood/','/link/','/tag/','/archive/','/photo/','/aurora-coze/','/aurora-register/','/aurora-archive/','/aurora-music/','/404.html']
 
 module.exports = {
     setTag: function (app) {
@@ -14,11 +14,11 @@ module.exports = {
             }
             resolve()
         }).then(() => {
-            //set存放所有分割的tag
-            let set = new Set()
-
             //存放所有categories
-            let categoriesSet = new Set()
+            let categoriesSetArr = new Set()
+
+            //set存放所有分割的tag
+            let tagSetArr = new Set()
 
             //mapSet存放所有文章的map集合
             let mapSet = new Set()
@@ -34,12 +34,14 @@ module.exports = {
                         const articleMap = {
                             articleUrl: '',
                             title: '',
+                            //这个是标签，在v1.8.0以前，这个是类别
                             tag: '',
                             component: '',
                             //路由名字
                             name: '',
                             content: '',
                             contentRendered: '',
+                            //这个是类别，在v1.8.0之前，这个是标签
                             categories: [],
                             frontmatter: [],
                             data: null,
@@ -66,13 +68,30 @@ module.exports = {
 
                         articleMap.gitTime = commitPageDate === undefined ? 0 : commitPageDate
 
+                        let pageTagArr = excludeMapArr[i].data.frontmatter.tag === undefined ? [] : excludeMapArr[i].data.frontmatter.tag
+                        articleMap.tag = pageTagArr
+                        for (let j = 0; j < pageTagArr.length; j++) {
+                            tagSetArr.add(pageTagArr[j])
+                        }
+
                         //获取path
                         let path = excludeMapArr[i].path
                         let strings = path.split("/");
                         if (strings.length >2) {
                             //从strings中的第二个开始遍历，到倒数第二个结束
+
+                            let tempCategoriesSetArr = new Set()
                             let temTag = []
                             new Promise((resolve,reject) => {
+
+                                //将frontmatter中的categories放入此集合里面
+                                if (excludeMapArr[i].data.frontmatter.categories !== undefined) {
+                                    for (let j = 0; j < excludeMapArr[i].data.frontmatter.categories.length; j++) {
+                                        categoriesSetArr.add(excludeMapArr[i].data.frontmatter.categories[j])
+                                        tempCategoriesSetArr.add(excludeMapArr[i].data.frontmatter.categories[j])
+                                    }
+                                }
+
                                 for (let j = 0; j < strings.length; j++) {
                                     if (j +1 >= strings.length -1) {
                                         continue
@@ -87,21 +106,20 @@ module.exports = {
                                     if (excludeTag.length !== 0) {
                                         for (let k = 0; k < excludeTag.length; k++) {
                                             if (!(tag === excludeTag[k])) {
-                                                set.add(tag)
+                                                categoriesSetArr.add(tag)
+                                                tempCategoriesSetArr.add(tag)
                                                 temTag.push(tag)
                                             }
                                         }
                                     }else {
-                                        set.add(tag)
+                                        categoriesSetArr.add(tag)
+                                        tempCategoriesSetArr.add(tag)
                                         temTag.push(tag)
                                     }
                                 }
-                                resolve()
-                            }).then(() => {
-
+                                resolve(tempCategoriesSetArr)
+                            }).then((tempCategoriesSetArr) => {
                                 //获取标签
-                                articleMap.tag = temTag
-
                                 //获取文章连接
                                 articleMap.articleUrl = path
 
@@ -109,14 +127,8 @@ module.exports = {
                                 articleMap.contentRendered = excludeMapArr[i].contentRendered
                                 articleMap.content = excludeMapArr[i].content
 
-                                let categories = excludeMapArr[i].frontmatter.categories
-                                categories = categories === undefined ? [] : categories
+                                articleMap.categories = Array.from(tempCategoriesSetArr)
 
-                                articleMap.categories = categories
-
-                                for (let j = 0; j < categories.length; j++) {
-                                    categoriesSet.add(categories[j])
-                                }
                                 //获取标题
                                 let title = excludeMapArr[i].title
                                 articleMap.title = title === undefined ? "" : title
@@ -125,8 +137,6 @@ module.exports = {
                             })
                         }else {
                             //获取标签
-                            articleMap.tag = []
-
                             //获取文章连接
                             articleMap.articleUrl = path
 
@@ -140,7 +150,7 @@ module.exports = {
                             articleMap.categories = categories
 
                             for (let j = 0; j < categories.length; j++) {
-                                categoriesSet.add(categories[j])
+                                categoriesSetArr.add(categories[j])
                             }
                             //获取标题
                             let title = excludeMapArr[i].title
@@ -156,25 +166,31 @@ module.exports = {
                         page: mapSet.size
                     })
 
-                    let categoriesArr = Array.from(categoriesSet)
+                    //这个是所有的标签
+                    let allTagArr = Array.from(tagSetArr)
 
-                    let setArr = Array.from(set)
+                    //这个是所有类别
+                    let allCategoriesArr = Array.from(categoriesSetArr)
 
                     //将标签和文章数组对象放入store中
                     app.$store.commit('setTagArr',{
-                        tagArr: setArr
+                        tagArr: allTagArr
                     })
 
                     app.$store.commit('setCategories',{
-                        categories: categoriesArr
+                        categories: allCategoriesArr
                     })
 
-                    console.log(set)
-                    console.log(categoriesArr)
+                    console.log("类别")
+                    console.log(allCategoriesArr)
+                    console.log("标签")
+                    console.log(allTagArr)
 
                     app.$store.commit('setAllPageMap',{
                         allPageMap: mapSet
                     })
+
+                    console.log(mapSet)
                 })
             })
         })

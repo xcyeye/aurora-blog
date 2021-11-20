@@ -1,3 +1,8 @@
+---
+categories: [bug-类别,footer-类别]
+tag: [bug,issue-tag]
+---
+
 # Aurora主题bug记录
 
 ::: tip 
