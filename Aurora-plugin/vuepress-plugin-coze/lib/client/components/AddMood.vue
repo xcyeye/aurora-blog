@@ -414,6 +414,7 @@ export default {
       const Talk = AV.Object.extend('Talk');
       const talk = new Talk();
       talk.set('mood_title', this.title);
+      this.content = this.content.replaceAll("\n","<br>")
       talk.set('mood_content', this.content);
       talk.set("mood_like",0)
       talk.set("mood_comment","")
