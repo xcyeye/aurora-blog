@@ -145,7 +145,7 @@ const auroraTheme = ({ themePlugins = {}, ...localeOptions }) => {
             ['@vuepress/nprogress', themePlugins.nprogress !== false],
             ['@vuepress/palette', { preset: 'css' }],
             ['@vuepress/prismjs', themePlugins.prismjs !== false],
-            ['@vuepress/theme-data', { themeData: localeOptions }],
+            ['@vuepress/theme-data', { themeData: localeOptions }]
         ],
     };
 };

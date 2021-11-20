@@ -1,0 +1,69 @@
+{
+  "_from": "@vuepress/plugin-back-to-top@2.0.0-beta.26",
+  "_id": "@vuepress/plugin-back-to-top@2.0.0-beta.26",
+  "_inBundle": false,
+  "_integrity": "sha1-xb6u2TrbtYl2WLmoByAAs9rY+LA=",
+  "_location": "/@vuepress/plugin-back-to-top",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "version",
+    "registry": true,
+    "raw": "@vuepress/plugin-back-to-top@2.0.0-beta.26",
+    "name": "@vuepress/plugin-back-to-top",
+    "escapedName": "@vuepress%2fplugin-back-to-top",
+    "scope": "@vuepress",
+    "rawSpec": "2.0.0-beta.26",
+    "saveSpec": null,
+    "fetchSpec": "2.0.0-beta.26"
+  },
+  "_requiredBy": [
+    "/@vuepress/theme-default"
+  ],
+  "_resolved": "https://registry.nlark.com/@vuepress/plugin-back-to-top/download/@vuepress/plugin-back-to-top-2.0.0-beta.26.tgz",
+  "_shasum": "c5beaed93adbb5897658b9a8072000b3dad8f8b0",
+  "_spec": "@vuepress/plugin-back-to-top@2.0.0-beta.26",
+  "_where": "D:\\theme-aurora\\theme-aurora\\node_modules\\@vuepress\\theme-default",
+  "author": {
+    "name": "meteorlxy"
+  },
+  "bugs": {
+    "url": "https://github.com/vuepress/vuepress-next/issues"
+  },
+  "bundleDependencies": false,
+  "dependencies": {
+    "@vuepress/core": "2.0.0-beta.26",
+    "@vuepress/utils": "2.0.0-beta.25",
+    "ts-debounce": "^3.0.0",
+    "vue": "^3.2.3"
+  },
+  "deprecated": false,
+  "description": "VuePress plugin - back to top",
+  "files": [
+    "lib"
+  ],
+  "gitHead": "6cbf3e07b2871383cebad5180fcbb02d69c79566",
+  "homepage": "https://github.com/vuepress",
+  "keywords": [
+    "vuepress-plugin",
+    "vuepress",
+    "plugin",
+    "top"
+  ],
+  "license": "MIT",
+  "main": "lib/node/index.js",
+  "name": "@vuepress/plugin-back-to-top",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vuepress/vuepress-next.git"
+  },
+  "scripts": {
+    "build": "tsc -b tsconfig.build.json",
+    "clean": "rimraf lib *.tsbuildinfo",
+    "copy": "cpx \"src/**/*.{css,svg}\" lib"
+  },
+  "types": "lib/node/index.d.ts",
+  "version": "2.0.0-beta.26"
+}

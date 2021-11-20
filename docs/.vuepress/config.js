@@ -45,7 +45,41 @@ module.exports = {
                 excludes: ['/footer.html','/404.html','/about/','/mood/','/link/','/tag/','/photo/'],
                 noTitle: '暂时没有标题配置'
             }
-        ]
+        ],
+        [
+            path.resolve(__dirname, "../../Aurora-plugin/vuepress-plugin-music-player/lib/node/index.js"),
+            {
+                //网易云单个歌单id
+                songIds: ['29723011','1887893189','1421069053'],
+                //网易云歌单
+                playlist: '5410113377',
+                showPlaylist: true,
+                //是否禁用网易云音乐，如果你选择禁用，那么就将使用本地的歌曲，请传入链接
+                disabledNetEaseMusic: true,
+                //本地歌曲
+                localSongs: {
+                    coverUrl: 'https://ooszy.cco.vin/img/blog-public/avatar.jpg',
+                    songs: [
+                        {
+                            path: '/song/1.mp3',
+                            songName: '12'
+                        },
+                        {
+                            path: '/song/2.mp3',
+                            songName: '23'
+                        },
+                        {
+                            path: '/song/3.mp3',
+                            songName: '34'
+                        },
+                    ]
+                }
+            }
+        ],
+        /*"vuepress-plugin-archive",{
+            excludes: ['/footer.html','/404.html','/about/','/mood/','/link/','/tag/','/photo/'],
+            noTitle: '暂时没有标题配置'
+        }*/
     ],
     //设置head 一定要加入<script src="https://at.alicdn.com/t/font_2849934_v6y652peian.js"></script>项配置，否则一些图标不能正常显示
     head: [
@@ -70,10 +104,19 @@ module.exports = {
                 type: 'text/css',
                 href: '//at.alicdn.com/t/font_2849934_7el0cvwfmn.css'
             }
+        ],
+        [
+            "link",
+            {
+                rel: 'stylesheet',
+                type: 'text/css',
+                href: '//at.alicdn.com/t/font_2951154_btu3y5blqnn.css'
+            }
         ]
     ],
     //这里使用本地主题
     theme: path.resolve(__dirname, "../../Aurora-theme/lib/node/index.js"),
+    //theme: 'aurora',
 
     //站点title
     title: "I do not follow,i lives is always all you want",
