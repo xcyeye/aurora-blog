@@ -1,4 +1,5 @@
 <template>
+  <AuroraMusic/>
   <div class="common"
        :style="$store.state.borderRadiusStyle +
        $store.state.opacityStyle + $store.state.fontColorStyle +
@@ -109,9 +110,7 @@ import {computed, defineComponent, Transition,} from 'vue'
 import {usePageData, usePageFrontmatter} from '@vuepress/client'
 import type {DefaultThemePageFrontmatter} from '../../../shared'
 import {useThemeData, useThemeLocaleData} from '../../composables'
-import EasyTyper from "easy-typer-js";
 import $ from 'jquery'
-
 
 export default defineComponent({
   name: 'Common',

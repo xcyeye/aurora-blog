@@ -246,6 +246,7 @@
     position: fixed;
     left: 0;
     bottom: 3%;
+    z-index: 10;
 }
 
 .no-show-more-song {

@@ -168,8 +168,6 @@ module.exports = {
                     app.$store.commit('setAllPageMap',{
                         allPageMap: mapSet
                     })
-
-                    console.log(mapSet)
                 })
             })
         })
