@@ -21,6 +21,12 @@
                                :social-item="item" v-for="item in socialsArrTemp"/>
       </div>
     </div>
+    <div v-if="showWave && isHome" :class="showHomeWaveStyle ? 'home-wave-show': 'home-wave-hide'" class="home-wave-box" ref="home-wave">
+      <div class="home-wave">
+        <canvas class="home-wave-canvas1" id="home-wave-canvas1"></canvas>
+        <canvas class="home-wave-canvas2" id="home-wave-canvas2"></canvas>
+      </div>
+    </div>
     <slot name="home3"></slot>
   </div>
   <div v-if="isHome" class="theme-default-content custom">
@@ -39,6 +45,8 @@ import HomeSocial from './child/home/HomeSocial.vue'
 import EasyTyper from "easy-typer-js";
 import HomeSidebarSocialItem from './child/side/HomeSidebarSocialItem'
 import {useThemeLocaleData} from "../composables";
+
+const wave = require('../public/js/wave')
 
 //导入配置属性
 const network = require('../public/js/network.js')
@@ -73,7 +81,10 @@ export default defineComponent({
       intervalTime: 1500,
       socialsIsHomeNum: 0,
       sidebarWidthVar: 0,
-      sidebarRowVar: 0
+      sidebarRowVar: 0,
+      showHomeWaveStyle: true,
+      //是否显示波浪效果
+      showWave: true
     }
   },
   props: {
@@ -212,6 +223,10 @@ export default defineComponent({
       this.socialsIsHomeNum = this.socialsArr.length
     }
 
+    if (this.themeProperty.wave !== undefined) {
+      this.showWave = this.themeProperty.wave.showWave
+    }
+
     //如果手机端侧边栏打开的，那么就关闭
     if (this.$store.state.openMobileSidebar) {
       this.$store.commit("setOpenMobileSidebar",{
@@ -242,6 +257,13 @@ export default defineComponent({
     })
   },
   mounted() {
+    window.addEventListener('scroll', this.handleScroll, true)
+    this.$nextTick(() => {
+      if (this.showWave) {
+        wave.wave()
+      }
+    })
+
     this.socialsArrTemp = []
     new Promise((resolve,reject) => {
       if (document.body.clientWidth < 719) {
@@ -271,6 +293,13 @@ export default defineComponent({
     })
   },
   methods: {
+    handleScroll() {
+      if (window.pageYOffset > 10) {
+        this.showHomeWaveStyle = false
+      }else {
+        this.showHomeWaveStyle = true
+      }
+    },
     getRandomInt(min, max) {
       min = Math.ceil(min);
       max = Math.floor(max);

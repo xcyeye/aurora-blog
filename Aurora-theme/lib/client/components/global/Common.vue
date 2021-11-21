@@ -43,7 +43,7 @@
         </top-image>
 
         <div :class="{'content': !isHomePage}">
-          <div id="article-page-parent" :class="{'article-page-parent-pro': !isHomePage}" class="article-page-parent">
+          <div :id="getArticleId" :class="{'article-page-parent-pro': !isHomePage}" class="article-page-parent">
             <div :class="{noShowSidebar: getNoShowSidebar}" id="page-sidebar-left"
                  class="page-sidebar-left">
               <slot name="center1"></slot>
@@ -147,7 +147,8 @@ export default defineComponent({
       //首页壁纸数组
       homeWps: [],
       mobilePageSidebar: true,
-      pageYOffset: 0
+      pageYOffset: 0,
+      width: 0
     }
   },
   props: {
@@ -225,6 +226,18 @@ export default defineComponent({
     }
   },
   computed: {
+    getArticleId() {
+      if (!this.isHomePage) {
+        return 'article-page-parent'
+      }else {
+        //如果是首页，并且不是手机端
+        if (this.width > 719) {
+          return 'article-page-parent'
+        }else {
+          return 'article-page-parent-mobile'
+        }
+      }
+    },
     getNoShowSidebar() {
       // showSidebar
       if (this.isHomePage) {
@@ -401,6 +414,9 @@ export default defineComponent({
     this.colorFontStyle = this.colorStyle + " "+ this.fontStyle
   },
   mounted() {
+
+    this.width = document.body.clientWidth
+
     if (document.documentElement.clientWidth < 719) {
       this.sidebarRowVar = 6
     }

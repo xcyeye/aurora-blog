@@ -3068,6 +3068,10 @@ body::-webkit-scrollbar-thumb {
 /* 自适应 */
 @media screen and (max-width: 719px) {
 
+    .sidebar-single-common {
+        margin: 0 auto;
+    }
+
     .tag-page-right {
         --tag-page-content: 60%;
     }
@@ -3514,6 +3518,10 @@ body::-webkit-scrollbar-thumb {
 
 
 @media screen and (min-width: 719px) {
+
+    .sidebar-single-common {
+        margin-left: auto;
+    }
 
     .tag-page-right {
         --tag-page-content: 62%;
@@ -4524,6 +4532,7 @@ body::-webkit-scrollbar-thumb {
 /*首页侧边栏样式*/
 
 .home-sidebar {
+
     -webkit-border-radius: var(--borderRadius);
     border-radius: var(--borderRadius);
     position: relative;
@@ -4718,7 +4727,6 @@ body::-webkit-scrollbar-thumb {
 }
 
 .sidebar-single-common {
-    margin: 0 auto;
     /*margin-top: 1rem;*/
     margin-bottom: 1.7em;
     background-color: whitesmoke;
@@ -5249,7 +5257,7 @@ body::-webkit-scrollbar-thumb {
     -webkit-flex: 4.6;
     -ms-flex: 4.6;
     flex: 4.6;
-    overflow: hidden;
+    /*overflow: hidden;*/
     width: 100%;
     /*margin-top: -1.7rem;*/
 }
@@ -6024,3 +6032,60 @@ body::-webkit-scrollbar-thumb {
     margin-bottom: 1rem;
 }
 /*# sourceMappingURL=app.7b4a9d9156053fe54ac5c1374020768a.css.map*/
+
+/*v1.8.0额外添加的css*/
+.home-wave-box {
+    transition: all .35s cubic-bezier(0,0,.37,.94);
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    height: 5rem;
+    /*background: red;*/
+}
+
+.home-wave-show {
+    opacity: 1;
+}
+
+.home-wave-hide {
+    opacity: 0;
+}
+
+.home-wave {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    /*background: red;*/
+    filter:blur(1px);
+}
+
+.home-wave-canvas1 {
+    z-index: 3;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    filter: drop-shadow(-5px 3px 5px #FFFFFF);
+}
+
+.home-wave-canvas2 {
+    z-index: 2;
+    width: 100%;
+    /*height: 100%;*/
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    filter: drop-shadow(-6px 12px 5px #ffffff);
+}
+
+.home-wave-bottom {
+    height: .3rem;
+    width: 100%;
+    background: whitesmoke;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    filter: blur(7px);
+}

@@ -1073,7 +1073,12 @@ module.exports = {
         //excludeTag: ["note"], 此配置项，不再需要使用
 
         //在统计文章，标签，类别的时候，需要排除的路径，只针对于根目录下的路径，
-        excludePath: ['/test.html']
+        excludePath: ['/test.html'],
+
+        //首页波浪效果设置
+        wave: {
+            showWave: true
+        }
 
 
         /*
