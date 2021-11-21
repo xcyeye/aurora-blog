@@ -375,7 +375,7 @@ export default defineComponent({
 
     this.homeWps = homeWps
 
-    if (this.aboutOption !== undefined || this.aboutOption != null) {
+    if (this.aboutOption !== undefined) {
       this.aboutOption = this.themeProperty.about
     }
 
@@ -424,8 +424,7 @@ export default defineComponent({
     //手机端壁纸
     let screen = document.body.clientWidth
     if (screen < 500) {
-      if (this.themeProperty.homeWpsMobile !== undefined &&
-          this.themeProperty.homeWpsMobile != null) {
+      if (this.themeProperty.homeWpsMobile !== undefined) {
         try {
           if (this.themeProperty.homeWpsMobile.length !== 0) {
             this.homeWps = this.themeProperty.homeWpsMobile
@@ -438,11 +437,13 @@ export default defineComponent({
     let backgroundUrl = ''
     if (this.$store.state.homeWps === "") {
       //将首页壁纸设置为配置文件数组中的第一张图片
-      backgroundUrl = this.homeWps[0]
+      // backgroundUrl = this.homeWps[0]
+      backgroundUrl = this.homeWps[this.getRandomInt(0,this.homeWps.length -1)]
     }else {
       //将首页壁纸设置为配置文件数组中的第一张图片
       backgroundUrl = this.$store.state.homeWps
     }
+
     this.$store.commit("setHomeWps",{
       homeWps: backgroundUrl
     })

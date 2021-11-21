@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.cozePlugin = void 0;
 const { path } = require('@vuepress/utils')
 const utils_1 = require("@vuepress/utils");
-const vuepressPluginBubble = ({bubbleNumber,bubbleAlpha,alphaChangeSpeed,size,sizeChangeSpeed,riseSpeed,color}) => {
+const vuepressPluginBubble = ({bubbleNumber,bubbleAlpha,alphaChangeSpeed,size,sizeChangeSpeed,riseSpeed,color,zIndex}) => {
     return {
         onInitialized: (app) => {
 
@@ -16,7 +16,8 @@ const vuepressPluginBubble = ({bubbleNumber,bubbleAlpha,alphaChangeSpeed,size,si
             __SIZE__: size,
             __SIZE_CHANGE_SPEED__: sizeChangeSpeed,
             __RISE_SPEED__: riseSpeed,
-            __COLOR__: color
+            __COLOR__: color,
+            __Z_INDEX__: zIndex
         },
         multiple: false,
         clientAppEnhanceFiles: utils_1.path.resolve(__dirname, '../clientAppEnhance.js'),

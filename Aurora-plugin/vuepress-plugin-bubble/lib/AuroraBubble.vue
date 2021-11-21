@@ -1,5 +1,5 @@
 <template>
-  <div class="aurora-bubble">
+  <div class="aurora-bubble" :style="getBubbleStyle">
     <div class="aurora-bubble-box" id="aurora-bubble-box"></div>
     <canvas class="aurora-bubble-canvas" id="aurora-bubble-canvas"></canvas>
   </div>
@@ -14,6 +14,7 @@ let size = 0.5
 let sizeChangeSpeed = 0.002
 let riseSpeed = 0.9
 let color = '255,255,255'
+let zIndex = -1
 
 try {
   bubbleNumber = __BUBBLE_NUMBER__
@@ -23,6 +24,7 @@ try {
   sizeChangeSpeed = __SIZE_CHANGE_SPEED__
   riseSpeed = __RISE_SPEED__
   color = __COLOR__
+  zIndex = __Z_INDEX__
 }catch (e) {
   console.warn(e)
 }
@@ -30,6 +32,11 @@ try {
 const bubble = require('./bubble')
 export default {
   name: "AuroraBubble",
+  computed: {
+    getBubbleStyle() {
+      return '--aurora-bubble-z-index: ' + zIndex + "';"
+    }
+  },
   mounted() {
     bubble.bubble(bubbleNumber,bubbleAlpha,alphaChangeSpeed,size,sizeChangeSpeed,riseSpeed,color)
   }
@@ -43,7 +50,7 @@ export default {
     right: 0;
     width: 100%;
     height: 100%;
-    z-index: -1;
+    z-index: var(--aurora-bubble-z-index,-1);
   }
 
   .aurora-bubble-box,.aurora-bubble-canvas {
