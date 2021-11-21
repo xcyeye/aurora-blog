@@ -86,6 +86,32 @@ module.exports = {
             excludes: ['/footer.html','/404.html','/about/','/mood/','/link/','/tag/','/photo/'],
             noTitle: '暂时没有标题配置'
         }*/
+
+        [
+            path.resolve(__dirname, "../../Aurora-plugin/vuepress-plugin-bubble/lib/node/index.js"),
+            {
+                //气泡数量 推荐0(不包括)到1之前的小数，
+                bubbleNumber: 0.14,
+
+                //气泡透明度 0到1之间的小数
+                bubbleAlpha: 0.6,
+
+                //透明度变化速度，越接近于0越好
+                alphaChangeSpeed: 0.00001,
+
+                //气泡大小，推荐0到1之间的值
+                size: 0.4,
+
+                //气泡大小变化速度 越小越好
+                sizeChangeSpeed: 0.0002,
+
+                //气泡上升速度
+                riseSpeed: 0.4,
+
+                //气泡颜色，白色rgb(255,255,255) 请传入255,255,255
+                color: '255,255,255'
+            }
+        ],
     ],
     //设置head 一定要加入<script src="https://at.alicdn.com/t/font_2849934_v6y652peian.js"></script>项配置，否则一些图标不能正常显示
     head: [

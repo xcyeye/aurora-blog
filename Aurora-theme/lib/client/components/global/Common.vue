@@ -81,12 +81,9 @@
               :is-show-footer="isShowFooter">
       </Footer>
     </div>
-    <div id="set-bg"
-         :chu="$store.state.homeWps"
-         :class="{'set-bg-fitter': $store.state.isFitter}"
+    <div id="set-bg" class="set-bg-fitter"
          :style="'--opacity: ' + $store.state.varOpacity +
-         '; --fitter-blue: ' + $store.state.varFilterBlur +
-         'px; --borderRadius: ' + $store.state.varBorderRadius +
+         '; --borderRadius: ' + $store.state.varBorderRadius +
          'px; --backgroundImageUrl: url(' + $store.state.homeWps + ')'"
     ></div>
     <div id="posterShade" :class="{posterShade: $store.state.showPosterShadow}">

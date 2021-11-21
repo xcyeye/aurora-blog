@@ -925,16 +925,13 @@ a[data-v-d8ec41bc] {
     position: absolute;
     top: 0; bottom: 0;
     left: 0; right: 0;
-    -webkit-filter: blur(var(--fitter-blue));
-    filter: blur(var(--fitter-blue));
+    /*-webkit-filter: blur(var(--fitter-blue));*/
+    /*filter: blur(var(--fitter-blue));*/
     z-index: -2;
-}
-
-.set-bg-fitter:before {
-    content: "";
-    background-image: var(--backgroundImageUrl);
-    background-repeat: no-repeat;
-    background-size: cover;
+    /*background-image: var(--backgroundImageUrl);*/
+    /*background-repeat: no-repeat;*/
+    /*background-size: cover;*/
+    background: rgba(0,0,0,.15);
 }
 
 .el-pager li {

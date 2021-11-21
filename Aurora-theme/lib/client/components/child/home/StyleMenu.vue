@@ -9,7 +9,7 @@
     <div class="welcome-parent" id="welcome-parent">
       <div @click="clickSet" :class="customClass" :style="getColorStyle" class="m-4 p-4 f4 color-shadow-small bg-gray-800-mktg rounded-2 signup-content-container welcome" id="welcome">
         <span @click="clickSetColor" class="cancel aurora-iconfont-common aurora-style-cancel" id="cancel"></span>
-        <h1 class="common-style" id="sr-only-h2">Welcome to my blog! <br>Let's begin the adventure</h1>
+        <h1 class="common-style" id="sr-only-h2"></h1>
         <div class="custom-top custom-common">
           <div class="custom-top-span custom-common-span">
             <span @click="setImg" class="aurora-iconfont-common aurora-style-img home-welcome-custom-icon"></span>&nbsp;
@@ -51,7 +51,7 @@
             </div>
           </div>
         </div>
-        <div class="custom-bottom custom-common">
+        <!--<div class="custom-bottom custom-common">
           <div class="custom-bottom-span custom-common-span">
             模糊度
           </div>
@@ -65,7 +65,7 @@
               </div>
             </div>
           </div>
-        </div>
+        </div>-->
         <div class="custom-bottom custom-common">
           <div class="custom-bottom-span custom-common-span">
             透明度
