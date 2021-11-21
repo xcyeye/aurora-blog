@@ -30,8 +30,7 @@ module.exports = {
             const instance = axios.create({
                 baseURL,
                 timeout,
-                method,
-
+                method
             })
 
             //拦截器

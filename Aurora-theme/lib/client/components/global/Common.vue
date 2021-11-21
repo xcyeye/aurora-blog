@@ -107,7 +107,7 @@ import {usePageData, usePageFrontmatter} from '@vuepress/client'
 import type {DefaultThemePageFrontmatter} from '../../../shared'
 import {useThemeData, useThemeLocaleData} from '../../composables'
 import $ from 'jquery'
-
+const network = require('../../public/js/network')
 export default defineComponent({
   name: 'Common',
   components: {
@@ -347,7 +347,6 @@ export default defineComponent({
     }
   },
   created() {
-
     if (this.$store.state.printRightIndex === 0) {
       console.log("%c vuepress-theme-Aurora %c by qsyyke","font-weight: bold;color: white;display: inline-block;text-align: center;height: 1.5rem;line-height: 1.5rem;background-color: rgba(255,202,212,.8);padding: 10px;border-bottom-left-radius: 13px;border-top-left-radius: 13px;","font-weight: bold;color: white;display: inline-block;text-align: center;height: 1.5rem;line-height: 1.5rem;background-color: rgba(178,247,239,.85);padding: 10px;border-bottom-right-radius: 13px;border-top-right-radius: 13px;")
       console.log("%c Version %c "+ this.$store.state.latestVersion + "","font-weight: bold;color: white;display: inline-block;text-align: center;height: 1.5rem;line-height: 1.5rem;background-color: rgba(255,202,212,.8);padding: 10px;border-bottom-left-radius: 13px;border-top-left-radius: 13px;","font-weight: bold;color: white;display: inline-block;text-align: center;height: 1.5rem;line-height: 1.5rem;background-color: rgba(178,247,239,.85);padding: 10px;border-bottom-right-radius: 13px;border-top-right-radius: 13px;")
