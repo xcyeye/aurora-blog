@@ -10,16 +10,13 @@
       <RouterLink to="/">
         <img
             style="border-radius: 30px"
-
             class="logo"
             :src="getLogoImg"
             :alt="siteBrandTitle"
         />
         <span
-
             class="site-name"
             :style="setLogoColor"
-
         >
           {{getLogoTitle}}
         </span>

@@ -171,9 +171,59 @@ module.exports = {
                 iconClass: 'aurora-0023pacman'
             },
             {
+                text: '百度一下',
+                link: 'https://www.baidu.com/',
+                iconClass: 'aurora-0023pacman'
+            },
+            /*{
                 text: "所有配置",
                 link: '/home/config.html',
                 iconClass: 'aurora-link'
+            },*/
+            {
+                text: '好用网站',
+                iconClass: 'aurora-si-glyph-global',
+                children: [
+                    {
+                        text: 'npm',
+                        children: [
+                            {
+                                text: 'npm',
+                                link: 'https://www.npmjs.com/'
+                            },
+                            {
+                                text: '我自己的包',
+                                link: 'https://www.npmjs.com/settings/qsyyke/packages'
+                            }
+                        ]
+                    },
+                    {
+                        text: '搜索引擎',
+                        children: [
+                            {
+                                text: "百度",
+                                link: 'https://www.baidu.com/',
+                            },
+                            {
+                                text: '谷歌',
+                                link: 'https://www.google.com/'
+                            }
+                        ]
+                    },
+                    {
+                        text: 'icon',
+                        children: [
+                            {
+                                text: '阿里图标',
+                                link: 'https://www.iconfont.cn/',
+                            },
+                            {
+                                text: '好看网站',
+                                link: 'https://solstice23.top/'
+                            }
+                        ]
+                    }
+                ]
             },
             {
                 text: '问题和bug',

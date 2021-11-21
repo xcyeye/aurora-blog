@@ -31,7 +31,7 @@
         </div>
       </div>
 
-      <div v-for="(menuItem,index) in navbarLinks">
+      <div v-for="(menuItem,index) in navbarLinks" :key="index">
         <div v-if="menuItem.link" class="sidebar-menu-item">
           <div class="menu-item-left">
             <!--<span :style="setHomeNavIco(menuItem.link)" :class="setHomeClass(menuItem.link)" class="aurora-iconfont-common"></span>-->
@@ -48,7 +48,7 @@
 
     <!--这是是导航栏-->
     <div v-show="changePageIndex === 2" class="mobile-sidebar-catalog sidebar-nav">
-      <div style="overflow: hidden" v-for="(itemLevel1,itemLevel1Index) in navbarLinks">
+      <div style="overflow: hidden" :key="itemLevel1Index" v-for="(itemLevel1,itemLevel1Index) in navbarLinks">
         <!--这是顶部导航的文章目录 一级标题-->
         <div v-if="itemLevel1.children"
              id="catalog-single" :class="getCatalogOpenStatus(itemLevel1Index)"
@@ -75,7 +75,7 @@
           <!--展示二级标题-->
           <div v-if="itemLevel1.children" class="page-catalog-children-parent">
             <div class="page-catalog-children">
-              <div v-for="(itemLevel2,itemLevel2Index) in itemLevel1.children"
+              <div :key="itemLevel2Index" v-for="(itemLevel2,itemLevel2Index) in itemLevel1.children"
                    :class="{catalogChildrenActive: catalogChildrenActive === itemLevel2Index }"
                    class="catalog-page-children-item">
                 <div class="catalog-page-children-title">
@@ -88,11 +88,18 @@
                 <!--展示三级标题-->
                 <div class="page-catalog-children-level3-parent">
                   <div :style="setLevel3Style(itemLevel1Index)" class="page-catalog-children-level3">
-                    <div v-for="item in itemLevel2.children"
+                    <div :key="itemLevel3Index" v-for="(item,itemLevel3Index) in itemLevel2.children"
                          class="page-catalog-children-level3-title">
-                      <router-link v-if="item.link" :to="item.link">
-                        <span>{{item.text}}</span>
-                      </router-link>
+                      <span v-if="!getIsOuterLink(item.link)">
+                        <router-link v-if="item.link" :da="item.link" :data="getIsOuterLink(item.link)" :to="item.link">
+                          <span>{{item.text}}</span>
+                        </router-link>
+                      </span>
+                      <span v-if="getIsOuterLink(item.link)">
+                        <a target="_blank" v-if="item.link" :da="item.link" :data="getIsOuterLink(item.link)" :href="item.link">
+                          <span>{{item.text}}</span>
+                        </a>
+                      </span>
                       <span class="content-single-show" v-if="!item.link">{{item.text}}</span>
                     </div>
                   </div>
@@ -278,6 +285,12 @@ export default {
     },
   },
   computed: {
+    getIsOuterLink() {
+      return (item) => {
+        let reg=/^([hH][tT]{2}[pP]:\/\/|[hH][tT]{2}[pP][sS]:\/\/)(([A-Za-z0-9-~]+)\.)+([A-Za-z0-9-~\/])+$/;
+        return reg.test(item)
+      }
+    },
     setHomeNavIco() {
       return (href) => {
         if ("/link".search(href) !== -1) {
@@ -306,7 +319,6 @@ export default {
     },
     setHomeClass() {
       return (item) => {
-        // console.log(item)
         if (item.iconClass !== undefined && item.iconClass !== "") {
           return item.iconClass
         }else {
@@ -418,7 +430,6 @@ export default {
       ...navbarSelectLanguage.value,
       ...navbarRepo.value,
     ])
-
     return {
       frontmatter,
       navbarLinks,
