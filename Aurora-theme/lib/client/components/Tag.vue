@@ -208,7 +208,7 @@ export default {
       let autoScroll = setInterval(() => {
         if (document.querySelectorAll(".tag-bottom .tag-page").length !== 0) {
           clearInterval(autoScroll)
-          document.querySelectorAll(".tag-bottom .tag-page")[0].scrollIntoView()
+          document.querySelectorAll(".tag-bottom .tag-page")[0].scrollIntoView({behavior: "smooth"})
         }
       },30)
     },

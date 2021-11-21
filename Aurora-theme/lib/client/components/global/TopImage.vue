@@ -15,7 +15,7 @@
           <div class="page-record-top-left page-record-single-common">
             <span class="aurora-iconfont-common aurora-page-word"></span>&nbsp;
             <span class="page-record-single-desc">总字数</span>
-            <span>{{contentLength}}</span>
+            <span>{{animatedContentLength}}</span>
           </div>
           <div class="page-record-top-right page-record-single-common">
             <span class="aurora-iconfont-common aurora-page-time"></span>&nbsp;
@@ -53,7 +53,7 @@
 <script>
 import {useThemeLocaleData} from "../../composables";
 import WordCount from "crisp-word-count";
-
+import gsap from "gsap";
 const network = require('../../public/js/network.js')
 export default {
   name: "TopImage",
@@ -66,7 +66,11 @@ export default {
       topBackgroundUrl: 'https://picture.cco.vin/pic/rmimg',
       pathName: '',
       sugCountPerMin: 230,
-      document: {}
+      document: {},
+
+      contentLengthTemp: 0,
+      sugReadTimeTemp: 0,
+      totalReadNumTemp: 0
     }
   },
   props: {
@@ -110,6 +114,9 @@ export default {
     },500)
   },
   computed: {
+    animatedContentLength() {
+      return this.contentLengthTemp.toFixed(0)
+    },
     goTag() {
       return (item) => {
         return '/tag?tag=' + item
@@ -158,8 +165,7 @@ export default {
       return this.length
     },
     getSugTime() {
-
-      return  Math.floor(this.contentLength / this.sugCountPerMin) === 0 ? 1 : Math.ceil(this.contentLength / this.sugCountPerMin);
+      return this.sugReadTimeTemp.toFixed(0)
     },
     getRandom() {
       return this.getRandomInt(0,99999)
@@ -264,6 +270,11 @@ export default {
     }
   },
   watch: {
+    contentLength(nv) {
+      gsap.to(this.$data, { duration: 0.5, contentLengthTemp: nv })
+      let sugReadTime = Math.floor(this.contentLength / this.sugCountPerMin) === 0 ? 1 : Math.ceil(this.contentLength / this.sugCountPerMin)
+      gsap.to(this.$data, { duration: 0.5, sugReadTimeTemp: sugReadTime })
+    },
     headLine(newValue,oldValue) {
       setTimeout(() => {
         this.pathName = window.location.pathname

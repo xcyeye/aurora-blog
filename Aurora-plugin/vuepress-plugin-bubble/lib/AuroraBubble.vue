@@ -34,7 +34,7 @@ export default {
   name: "AuroraBubble",
   computed: {
     getBubbleStyle() {
-      return '--aurora-bubble-z-index: ' + zIndex + "';"
+      return '--aurora-bubble-z-index: ' + zIndex + ";"
     }
   },
   mounted() {

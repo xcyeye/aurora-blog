@@ -21,6 +21,9 @@
                                :social-item="item" v-for="item in socialsArrTemp"/>
       </div>
     </div>
+    <div v-if="isHome" class="home-click-down">
+      <span @click="clickDown" class="aurora-iconfont-common home-click-down-icon"></span>
+    </div>
     <div v-if="showWave && isHome" :class="showHomeWaveStyle ? 'home-wave-show': 'home-wave-hide'" class="home-wave-box" ref="home-wave">
       <div class="home-wave">
         <canvas class="home-wave-canvas1" id="home-wave-canvas1"></canvas>
@@ -259,7 +262,7 @@ export default defineComponent({
   mounted() {
     window.addEventListener('scroll', this.handleScroll, true)
     this.$nextTick(() => {
-      if (this.showWave) {
+      if (this.showWave && this.isHome) {
         wave.wave()
       }
     })
@@ -293,6 +296,10 @@ export default defineComponent({
     })
   },
   methods: {
+    clickDown() {
+      document.querySelector(".home-bottom").scrollIntoView({behavior: "smooth"})
+    },
+
     handleScroll() {
       if (window.pageYOffset > 10) {
         this.showHomeWaveStyle = false

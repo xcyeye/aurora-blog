@@ -12,7 +12,7 @@
             <span v-html="moodItem.attributes.mood_content"></span>
             <div class="coze-mood-time">
               <span>@{{moodItem.attributes.mood_user}}</span>&nbsp;&nbsp;
-              <span>发布于: {{getUpdatedTime}}</span>
+              <span :data="getUpdatedTime">发布于: {{cozeYear}}-{{cozeMonth}}-{{cozeDay}}</span>
             </div>
             <slot name="coze-mood-content"></slot>
           </div>
@@ -40,7 +40,8 @@
         </div>
         <div :class="getMoodLike" class="mood-edit-single-common">
           <span :class="{'mood_like_love_active': moodLikeStatus}" @click="moodLove($event,moodItem)" class="aurora-coze-font aurora-coze-custom-love"></span>&nbsp;
-          <span>{{moodLink === 0 ? "" : moodLink}}</span>
+          <!--<span>{{moodLink === 0 ? "" : moodLink}}</span>-->
+          <span>{{getCozeMoodLink === 0 ? "" : getCozeMoodLink}}</span>
         </div>
         <!--<div class="mood-edit-single-common">
           <poster :title="moodItem.attributes.mood_title" :content="content" />
@@ -73,7 +74,7 @@ try {
   console.warn("你必须在插件中传入appId,appKey,masterKey配置项")
   console.warn(e)
 }
-
+import gsap from "gsap";
 import mediumZoom from 'medium-zoom'
 export default {
   name: "MoodItem",
@@ -83,14 +84,20 @@ export default {
       content: '',
       moodLink: 0,
       moodLikeStatus: false,
-      setLikeSuccess: true
+      setLikeSuccess: true,
+
+      cozeYearTemp: 0,
+      cozeMonthTemp: 0,
+      cozeDayTemp: 0,
+      cozeLikeTemp: 0
     }
   },
   props: {
     moodItem: {},
   },
   created() {
-    this.moodLink = this.moodItem.attributes.mood_like
+    let moodLike = this.moodItem.attributes.mood_like
+    gsap.to(this.$data, {duration: 1.5, cozeLikeTemp: moodLike, ease: 'sine'})
   },
   mounted() {
     let cookie = document.cookie;
@@ -110,9 +117,26 @@ export default {
     })
   },
   computed: {
+    getCozeMoodLink() {
+      return this.cozeLikeTemp.toFixed(0)
+    },
+    cozeYear() {
+      return this.cozeYearTemp.toFixed(0)
+    },
+    cozeMonth() {
+      return this.cozeMonthTemp.toFixed(0)
+    },
+    cozeDay() {
+      return this.cozeDayTemp.toFixed(0)
+    },
     getUpdatedTime() {
       let updatedAt = this.moodItem.createdAt;
-      return this.getLocalTime(updatedAt);
+      let day = new Date(updatedAt).getDate();
+      let month = new Date(updatedAt).getMonth();
+      let year = new Date(updatedAt).getFullYear();
+      gsap.to(this.$data, {duration: 1.1, cozeYearTemp:year, ease: 'sine'})
+      gsap.to(this.$data, {duration: 2, cozeMonthTemp: month, ease: 'sine'})
+      gsap.to(this.$data, {duration: 2, cozeDayTemp: day, ease: 'sine'})
     },
     getMoodLike() {
       if (this.moodLikeStatus) {

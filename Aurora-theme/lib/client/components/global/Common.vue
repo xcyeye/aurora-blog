@@ -90,7 +90,6 @@
       <span :class="{iconSpinner6: $store.state.showShadeLoad}"></span>
     </div>
   </div>
-
 </template>
 <script lang="ts">
 

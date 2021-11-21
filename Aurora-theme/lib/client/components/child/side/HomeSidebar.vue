@@ -174,8 +174,6 @@
       <slot name="sidebar8"></slot>
     </div>
   </div>
-
-
 </template>
 
 <script>
@@ -183,6 +181,7 @@ import Catalog from "../Catalog";
 import MobileSidebarNav from "./MobileSidebarNav";
 import HomeSidebarSocialItem from "./HomeSidebarSocialItem";
 import {useThemeData} from "../../../composables";
+import gsap from "gsap";
 export default {
   name: "HomeSidebar",
   components: {
@@ -198,7 +197,7 @@ export default {
       changePageIndex: '2',
       stickSidebar: false,
       socialsArr: [],
-      friendLinks: []
+      friendLinks: [],
     }
   },
   props: {

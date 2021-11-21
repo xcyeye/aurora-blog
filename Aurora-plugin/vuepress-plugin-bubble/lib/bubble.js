@@ -83,7 +83,6 @@ module.exports = {
         sizeChangeSpeed = aurora_sizeChangeSpeed
         riseSpeed = aurora_riseSpeed
         color = aurora_color
-
         initHeader();
     }
 }
