@@ -1,8 +1,12 @@
 <template>
   <div class="sidebar-single-enter-animate page-top" v-if="isShowTopImg" id="page-top">
     <div class="top-mask" :style="setBackgroundUrl"></div>
-    <div class="top-image" id="top-image" v-if="isShowHeadLine">
-      <h1>{{headLine}}</h1>
+
+    <div v-if="showBubble" class="aurora-top-bubble">
+      <div class="aurora-top-bubble-par">
+        <div class="aurora-top-bubble-box" id="aurora-top-bubble-box"></div>
+        <canvas class="aurora-top-bubble-canvas" id="aurora-top-bubble-canvas"></canvas>
+      </div>
     </div>
     <slot name="top1"></slot>
     <slot name="top2"></slot>
@@ -47,6 +51,9 @@
         </div>
       </div>
     </div>
+    <div class="top-image" id="top-image" v-if="isShowHeadLine">
+      <h1>{{headLine}}</h1>
+    </div>
   </div>
 </template>
 
@@ -55,6 +62,7 @@ import {useThemeLocaleData} from "../../composables";
 import WordCount from "crisp-word-count";
 import gsap from "gsap";
 const network = require('../../public/js/network.js')
+const bubble = require('../../public/js/bubble')
 export default {
   name: "TopImage",
   data() {
@@ -70,7 +78,8 @@ export default {
 
       contentLengthTemp: 0,
       sugReadTimeTemp: 0,
-      totalReadNumTemp: 0
+      totalReadNumTemp: 0,
+      showBubble: true
     }
   },
   props: {
@@ -107,6 +116,30 @@ export default {
     })
   },
   mounted() {
+    let bubbleNumber = 0.15
+    let bubbleAlpha = 0.7
+    let alphaChangeSpeed = 0.0005
+    let size = 0.5
+    let sizeChangeSpeed = 0.002
+    let riseSpeed = 0.9
+    let color = '255,255,255'
+
+    if (this.themeProperty.bubble !== undefined) {
+      this.showBubble = this.themeProperty.bubble.show
+      bubbleNumber = this.themeProperty.bubble.bubbleNumber
+      bubbleAlpha = this.themeProperty.bubble.bubbleAlpha
+      alphaChangeSpeed = this.themeProperty.bubble.alphaChangeSpeed
+      size = this.themeProperty.bubble.size
+      sizeChangeSpeed = this.themeProperty.bubble.sizeChangeSpeed
+      riseSpeed = this.themeProperty.bubble.riseSpeed
+      color = this.themeProperty.bubble.color
+    }
+
+    this.$nextTick(() =>{
+      if (this.showBubble) {
+        bubble.bubble(bubbleNumber,bubbleAlpha,alphaChangeSpeed,size,sizeChangeSpeed,riseSpeed,color)
+      }
+    })
     this.document = document
     this.pathName = window.location.pathname
     setTimeout(() =>{

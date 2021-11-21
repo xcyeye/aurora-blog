@@ -5737,8 +5737,8 @@ body::-webkit-scrollbar-thumb {
     position: absolute;
     top: -webkit-calc(20vh);
     top: calc(20vh);
-    width: -webkit-calc(100vw);
-    width: calc(100vw);
+    /*width: -webkit-calc(100vw);*/
+    /*width: calc(100vw);*/
     height: -webkit-max-content;
     height: -moz-max-content;
     height: max-content;
@@ -6129,4 +6129,27 @@ body::-webkit-scrollbar-thumb {
     .home-click-down {
         bottom: 8%;
     }
+}
+
+.aurora-top-bubble {
+    z-index: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+}
+
+.aurora-top-bubble-par {
+    position: relative;
+    height: 100%;
+    width: 100%;
+}
+
+.aurora-top-bubble-box, .aurora-top-bubble-canvas {
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: 100%;
 }

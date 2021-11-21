@@ -1156,6 +1156,32 @@ module.exports = {
         //首页波浪效果设置
         wave: {
             showWave: true
+        },
+
+        //顶部图片的气泡控制
+        bubble: {
+            show: true,
+
+            //气泡数量 推荐0(不包括)到1之前的小数，
+            bubbleNumber: 0.14,
+
+            //气泡透明度 0到1之间的小数
+            bubbleAlpha: 0.6,
+
+            //透明度变化速度，越接近于0越好
+            alphaChangeSpeed: 0.00001,
+
+            //气泡大小，推荐0到1之间的值
+            size: 0.4,
+
+            //气泡大小变化速度 越小越好
+            sizeChangeSpeed: 0.0002,
+
+            //气泡上升速度
+            riseSpeed: 0.4,
+
+            //气泡颜色，白色rgb(255,255,255) 请传入255,255,255
+            color: '255,255,255'
         }
 
 
