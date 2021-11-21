@@ -56,6 +56,10 @@ module.exports = {
                 showPlaylist: true,
                 //是否禁用网易云音乐，如果你选择禁用，那么就将使用本地的歌曲，请传入链接
                 disabledNetEaseMusic: true,
+
+                //请求接口的baseURL
+                serverUrl: 'http://localhost:3000',
+
                 //本地歌曲
                 localSongs: {
                     coverUrl: 'https://ooszy.cco.vin/img/blog-public/avatar.jpg',
@@ -786,7 +790,7 @@ module.exports = {
         },
 
         //需要排除的标签，自动生成的标签中，不会有这个标签，这是一个数组
-        excludeTag: ["note"],
+        //excludeTag: ["note"],
 
         //样式控制面板显示的字体，有默认值
         fontFamily: [
@@ -1065,6 +1069,11 @@ module.exports = {
             },
             footer: false,
         },
+
+        //excludeTag: ["note"], 此配置项，不再需要使用
+
+        //在统计文章，标签，类别的时候，需要排除的路径，只针对于根目录下的路径，
+        excludePath: ['/test.html']
 
 
         /*

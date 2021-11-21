@@ -378,7 +378,7 @@ export default defineComponent({
     this.$store.commit("setIsFitter",{
       isFitter: this.themeProperty.isFitter
     })
-    tag.setTag(this).then(() => {
+    tag.setTag(this,this.themeProperty).then(() => {
       this.$store.commit('setTagStatus',{
         isSuccess:  true
       })

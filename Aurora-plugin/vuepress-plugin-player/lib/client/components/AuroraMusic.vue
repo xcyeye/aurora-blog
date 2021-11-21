@@ -63,12 +63,14 @@ let playlist = ''
 let showPlaylist = false
 let disabledNetEaseMusic = false
 let localSongs = {}
+let serverUrl = ''
 try {
   songIds = __SONG_IDS__
   playlist = __PLAYLIST__
   showPlaylist = __SHOW_PLAYLIST__
   disabledNetEaseMusic = __DISABLED_NET_EASE_MUSIC__
   localSongs = __LOCAL_SONGS__
+  serverUrl =  __SERVER_URL__
 }catch (e) {
   console.warn(e)
 }
@@ -97,8 +99,7 @@ export default {
       musicOrderPlay: false,
       musicOperateClassArr: [],
       isMusicRandomPlay: true,
-      //baseURL: 'https://netease-cloud-music-api-teal-psi.vercel.app/',
-      baseURL: 'http://localhost:3000/',
+      baseURL: 'https://netease-cloud-music-api-teal-psi.vercel.app/',
       allSongIdArrLen: 0,
       isLoadingFinish: false,
 
@@ -110,6 +111,11 @@ export default {
     }
   },
   created() {
+
+    if (serverUrl !== undefined && serverUrl !== "") {
+      this.baseURL = serverUrl
+    }
+
     if (disabledNetEaseMusic) {
       for (let i = 0; i < localSongs.songs.length; i++) {
         //使用本地的

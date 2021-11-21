@@ -4,7 +4,7 @@ exports.cozePlugin = void 0;
 const { path } = require('@vuepress/utils')
 const { createPage } = require('@vuepress/core');
 const utils_1 = require("@vuepress/utils");
-const vuepressPluginPlayer = ({songIds,playlist,showPlaylist ,disabledNetEaseMusic,localSongs}) => {
+const vuepressPluginPlayer = ({songIds,playlist,showPlaylist ,disabledNetEaseMusic,localSongs,serverUrl}) => {
     return {
         define: {
             __SONG_IDS__: songIds,
@@ -12,6 +12,7 @@ const vuepressPluginPlayer = ({songIds,playlist,showPlaylist ,disabledNetEaseMus
             __SHOW_PLAYLIST__: showPlaylist,
             __DISABLED_NET_EASE_MUSIC__: disabledNetEaseMusic,
             __LOCAL_SONGS__: localSongs,
+            __SERVER_URL__ :serverUrl
         },
         onInitialized: async (app) => {
             // 如果主页不存在

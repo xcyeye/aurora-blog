@@ -1,19 +1,25 @@
 const myData = require('@temp/my-data')
-let themeProperty = null
 
 //需要排除的页面url
 let excludes = ['/','/about/','/mood/','/link/','/tag/','/archive/','/photo/','/aurora-coze/','/aurora-register/','/aurora-archive/','/aurora-music/','/404.html']
 
 module.exports = {
-    setTag: function (app) {
+    setTag: function (app,themeProperty) {
         return new Promise((resolve,reject) => {
-            for (let i = 0; i < myData.default.length; i++) {
-                if (myData.default[i].path === '/') {
-                    themeProperty = myData.default[i].frontmatter
+            let excludePathSet = new Set()
+
+            for (let i = 0; i < excludes.length; i++) {
+                excludePathSet.add(excludes[i])
+            }
+
+            if (themeProperty.excludePath !== undefined) {
+                for (let i = 0; i < themeProperty.excludePath.length; i++) {
+                    excludePathSet.add(themeProperty.excludePath[i])
                 }
             }
-            resolve()
-        }).then(() => {
+            resolve(excludePathSet)
+        }).then((excludePathSet) => {
+            excludes = Array.from(excludePathSet)
             //存放所有categories
             let categoriesSetArr = new Set()
 
@@ -181,16 +187,9 @@ module.exports = {
                         categories: allCategoriesArr
                     })
 
-                    console.log("类别")
-                    console.log(allCategoriesArr)
-                    console.log("标签")
-                    console.log(allTagArr)
-
                     app.$store.commit('setAllPageMap',{
                         allPageMap: mapSet
                     })
-
-                    console.log(mapSet)
                 })
             })
         })
