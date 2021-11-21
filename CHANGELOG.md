@@ -1,4 +1,43 @@
-# [1.0.0](https://github.com/vuepress-aurora/vuepress-theme-aurora/compare/v1.7.1...v1.0.0) (2021-11-13)
+# [1.0.0](https://github.com/vuepress-aurora/vuepress-theme-aurora/compare/v1.8.0...v1.0.0) (2021-11-21)
+
+
+
+# [1.8.0](https://github.com/vuepress-aurora/vuepress-theme-aurora/compare/v1.7.1...v1.8.0) (2021-11-21)
+
+
+### Bug Fixes
+
+* **coze-plugin:** fix the content of coze plugin cannot wrap ([0f1444f](https://github.com/vuepress-aurora/vuepress-theme-aurora/commit/0f1444f4bcf1dfb82f3eb0146987ce2a7c59c2b3))
+* **coze-plugin:** fix the problem of cookie invalidation in the coze plugin expires is 10 day ([17b589c](https://github.com/vuepress-aurora/vuepress-theme-aurora/commit/17b589cd5aa88eaacd7d8a559723ad582a40a316))
+* fix homepage style ([c0756d9](https://github.com/vuepress-aurora/vuepress-theme-aurora/commit/c0756d9ff30ed36d7091eb133ea578468a7126ff))
+* fix the href error on the mobile phone ([5ea0804](https://github.com/vuepress-aurora/vuepress-theme-aurora/commit/5ea0804135af330d232934a233cf73b5b42bfc51))
+* fix the incorrect time of the latest article in the sidebar ([fc739db](https://github.com/vuepress-aurora/vuepress-theme-aurora/commit/fc739db05426313279f024bed2bc70480a25a099))
+* fix the problem that the component cannot be automatically added to the root node ([1c5a9e9](https://github.com/vuepress-aurora/vuepress-theme-aurora/commit/1c5a9e9bd685ecd0e85df76096a2168a21cec280))
+* fix the sorting problem of coze plugin ([672cc45](https://github.com/vuepress-aurora/vuepress-theme-aurora/commit/672cc45b547b9485aba11068925efb59692ca980))
+* fix the wrong time of git commit without customization ([3acd702](https://github.com/vuepress-aurora/vuepress-theme-aurora/commit/3acd702b7863e38f32bb1a34706b6f93e6b8d7d3))
+* optimize all article data ([732ca38](https://github.com/vuepress-aurora/vuepress-theme-aurora/commit/732ca38e8315b667dd151a5fee60b464aa31d9c8))
+* **player-plugin:** optimize the player plugin ([1681fe5](https://github.com/vuepress-aurora/vuepress-theme-aurora/commit/1681fe580a8eeacb4697d66ad9b56232e3c139a1))
+
+
+### Features
+
+* add music player ([6d06e16](https://github.com/vuepress-aurora/vuepress-theme-aurora/commit/6d06e164d84d3d8e37f894747681146209d264db))
+* add number beating ([19ce362](https://github.com/vuepress-aurora/vuepress-theme-aurora/commit/19ce36293521afa42f64a5a3fc24f510e1c6e784))
+* add special the wave effects for home-page ([ee70253](https://github.com/vuepress-aurora/vuepress-theme-aurora/commit/ee7025346bcca18ef72c2ec8bf010e329ef31348))
+* add the function of excluding a certain path ([7cfe606](https://github.com/vuepress-aurora/vuepress-theme-aurora/commit/7cfe6061c835497fc111613b1e25820cf5880187))
+* **archive plugin:** create vuepress-plugin-archive ([46f7097](https://github.com/vuepress-aurora/vuepress-theme-aurora/commit/46f7097b3c2302f13532ec31ea9619e4f262e9fc))
+* create vuepress-plugin-bubble ([5a0a19e](https://github.com/vuepress-aurora/vuepress-theme-aurora/commit/5a0a19e4ba9e5a484eb1d3c70b321c3d01b85c8d))
+* increase bubble effect for top image ([4801b12](https://github.com/vuepress-aurora/vuepress-theme-aurora/commit/4801b1256de6adc543c4b2bff8fa6c6fa275c1a8))
+* make the  background image become random ([259d658](https://github.com/vuepress-aurora/vuepress-theme-aurora/commit/259d658a6d9a7f19e599479f67d9d27d9c61898c))
+* **musicplayer-plugin:** support NetEase Cloud Music ([c943cec](https://github.com/vuepress-aurora/vuepress-theme-aurora/commit/c943cec64d865aa1852b610952922eb44d01df77))
+* **page:** add disabling article recommendation, article previous page next page ([676b403](https://github.com/vuepress-aurora/vuepress-theme-aurora/commit/676b403f4611ae953239c0f743bd2c399eb844ba))
+* reset all tag ([151e877](https://github.com/vuepress-aurora/vuepress-theme-aurora/commit/151e877bcf0fb7102dcced1002906f5cb8c1db76))
+* **theme:** add archive for theme ([34c00e3](https://github.com/vuepress-aurora/vuepress-theme-aurora/commit/34c00e3c438f95ae8ec2bb1f741a82c8d5a8fb5c))
+
+
+### Performance Improvements
+
+* tag.js ([66555d3](https://github.com/vuepress-aurora/vuepress-theme-aurora/commit/66555d3bd5163739f79e0e12cd7ca11440741668))
 
 
 
