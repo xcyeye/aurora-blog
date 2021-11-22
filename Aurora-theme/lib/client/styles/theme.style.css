@@ -6031,7 +6031,7 @@ body::-webkit-scrollbar-thumb {
 
 .home-random-say-custom {
     margin-top: 0;
-    position: relative;
+    /*position: relative;*/
     /*top: 35%;*/
     margin-top: -webkit-calc(0vh);
     margin-top: calc(0vh);
@@ -6060,6 +6060,25 @@ body::-webkit-scrollbar-thumb {
     /*margin-bottom: 0;*/
     /*position: absolute;*/
     /*bottom: 22%;*/
+}
+
+@media screen and (max-width: 719px) {
+    .home-random-say-custom {
+        height: 10%;
+    }
+
+    .home-social-custom {
+        margin-top: -webkit-calc(0vh);
+        margin-top: calc(0vh);
+        /*background: #00cfc8;*/
+        height: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        /*margin-bottom: 0;*/
+        /*position: absolute;*/
+        /*bottom: 22%;*/
+    }
 }
 
 .home-social-custom-single {

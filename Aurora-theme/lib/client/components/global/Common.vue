@@ -1,5 +1,4 @@
 <template>
-  <!--<AuroraMusic/>-->
   <div class="common"
        :style="$store.state.borderRadiusStyle +
        $store.state.opacityStyle + $store.state.fontColorStyle +
