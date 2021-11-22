@@ -1,6 +1,7 @@
 ---
 categories: [首页配置,一言,头像,社交,页脚]
 date: "2021/11/18"
+coverUrl: 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimg.jj20.com%2Fup%2Fallimg%2Ftp05%2F19100220060CY5-0-lp.jpg'
 ---
 
 

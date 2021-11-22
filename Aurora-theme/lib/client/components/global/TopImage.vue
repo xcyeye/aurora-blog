@@ -231,6 +231,9 @@ export default {
       this.pathName = pathName
     },
     getRandomBg() {
+      if (this.pageMap !== "" && this.pageMap.data.frontmatter.coverUrl !== undefined) {
+        return "background-image: url(" + this.pageMap.data.frontmatter.coverUrl + ");"
+      }
       //用户没有自定义图片，使用随机图片
       let num1 = this.getRandomInt(-9999,999)
       let num2 = this.getRandomInt(0,300)
