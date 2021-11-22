@@ -1181,6 +1181,16 @@ module.exports = {
 
             //气泡颜色，白色rgb(255,255,255) 请传入255,255,255
             color: '255,255,255'
+        },
+
+        /**
+         * 这里是配置统计阅读量的leanCloud配置，从1.9.0开始，将不再需要依赖waline的阅读统计,这里配置的appId,appKey,masterKey可以
+         * 和vuepress-plugin-coze插件使用同一个应用
+         * */
+        leanCloud: {
+            appId: '2A2Dyd2AffrnldhwftlEddVn-MdYXbMMI',
+            appKey: 'qHYTbb91iOPLelyC9lpbXxLH',
+            masterKey: 'eUwfvS3luIPnPiHS5SpEhDYr',
         }
 
 

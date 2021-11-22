@@ -34,7 +34,8 @@ import RecommendPage from "./RecommendPage";
 import {usePageData} from "@vuepress/client";
 import PageNext from "./child/page/PageNext";
 import $ from 'jquery'
-import WordCount from 'crisp-word-count';
+import {useThemeLocaleData} from "../composables";
+const AV = require('leancloud-storage');
 export default defineComponent({
   name: 'Page',
   components: {
@@ -83,7 +84,6 @@ export default defineComponent({
     this.$emit('getHeadLine',page.value.title)
     let lazyLoadingImg = this.themeProperty.lazyLoadingImg
     this.lazyLoadingImg = lazyLoadingImg === undefined ? "https://ooszy.cco.vin/img/blog-public/ljz.gif" : lazyLoadingImg
-
   },
   methods: {
     getPosterText() {

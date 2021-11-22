@@ -1,6 +1,6 @@
 import { h } from 'vue';
 import { defineClientAppEnhance } from '@vuepress/client';
-import { useScrollPromise } from './composables';
+import {useScrollPromise, useThemeData, useThemeLocaleData} from './composables';
 import 'default-passive-events'
 
 import CodeGroup from './components/global/CodeGroup';
@@ -24,9 +24,11 @@ import HomeSidebar from "./components/child/side/HomeSidebar";
 import HomeBottom from "./components/HomeBottom";
 import AuroraGlobal from "./components/global/AuroraGlobal";
 import Archive from './components/Archive'
+const AV = require('leancloud-storage');
 
 import './styles/index.scss';
 import './styles/photo.scss'
+import {siteData} from "../../../docs/.vuepress/.temp/internal/siteData";
 //import './styles/coverStyle.css'
 export default defineClientAppEnhance(({ app, router }) => {
     app.component('Badge', Badge);
@@ -49,6 +51,23 @@ export default defineClientAppEnhance(({ app, router }) => {
     app.component("Tag",Tag)
     app.component("AuroraGlobal",AuroraGlobal)
     app.component("Archive",Archive)
+
+    /*let themeConfig = useThemeData().value
+    let isSetLeanCloud = false
+
+    if (themeConfig.leanCloud === undefined || themeConfig.leanCloud.appId === undefined) {
+        console.warn("你未在主题配置中指定leanCloud秘钥，不能使用文章阅读量统计功能")
+    }else {
+        isSetLeanCloud = true
+    }
+
+    if (isSetLeanCloud) {
+        AV.init({
+            appId: themeConfig.leanCloud.appId,
+            appKey: themeConfig.leanCloud.appKey,
+            masterKey: themeConfig.leanCloud.masterKey
+        });
+    }*/
 
     //路由
     // @ts-ignore

@@ -11,7 +11,7 @@
           <div id="mood-item-content" class="mood-item-content mood-item-right-common">
             <span v-html="moodItem.attributes.mood_content"></span>
             <div class="coze-mood-time">
-              <span>@{{moodItem.attributes.mood_user}}</span>&nbsp;&nbsp;
+              <span>@{{moodItem.attributes.mood_user}}</span>
               <span :data="getUpdatedTime">发布于: {{cozeYear}}-{{cozeMonth}}-{{cozeDay}}</span>
             </div>
             <slot name="coze-mood-content"></slot>
@@ -40,8 +40,7 @@
         </div>
         <div :class="getMoodLike" class="mood-edit-single-common">
           <span :class="{'mood_like_love_active': moodLikeStatus}" @click="moodLove($event,moodItem)" class="aurora-coze-font aurora-coze-custom-love"></span>&nbsp;
-          <!--<span>{{moodLink === 0 ? "" : moodLink}}</span>-->
-          <span>{{getCozeMoodLink === 0 ? "" : getCozeMoodLink}}</span>
+          <span>{{getCozeMoodLink}}</span>
         </div>
         <!--<div class="mood-edit-single-common">
           <poster :title="moodItem.attributes.mood_title" :content="content" />
@@ -82,7 +81,6 @@ export default {
     return {
       title: '',
       content: '',
-      moodLink: 0,
       moodLikeStatus: false,
       setLikeSuccess: true,
 
@@ -196,7 +194,7 @@ export default {
               let expiresTime = new Date().getTime() + 864000000;
               let expires = new Date(expiresTime);
               document.cookie = "mood_like_status_" + this.moodItem.id + "=1;expires=" + expires + ";";
-              this.moodLink = mood_like + 1
+              this.cozeLikeTemp = mood_like + 1
               this.moodLikeStatus = true
               this.setLikeSuccess = true
             });
@@ -209,8 +207,10 @@ export default {
             const todo = AV.Object.createWithoutData('Talk', this.moodItem.id);
             todo.set('mood_like', mood_like - 1);
             todo.save().then(() => {
-              document.cookie="mood_like_status_" + this.moodItem.id + "=0";
-              this.moodLink = mood_like - 1
+              let expiresTime = new Date().getTime() + 864000000;
+              let expires = new Date(expiresTime);
+              document.cookie = "mood_like_status_" + this.moodItem.id + "=0;expires=" + expires + ";";
+              this.cozeLikeTemp = mood_like - 1
               this.moodLikeStatus = false
               this.setLikeSuccess = true
             });
