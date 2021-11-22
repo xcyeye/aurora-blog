@@ -205,8 +205,6 @@ export default {
         },
         songSrc: ''
       }).then((data) => {
-        console.log(data)
-
         try {
           let src = data.data.data[0].url
         }catch (e) {

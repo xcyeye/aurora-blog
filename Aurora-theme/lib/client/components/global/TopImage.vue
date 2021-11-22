@@ -136,7 +136,7 @@ export default {
     }
 
     this.$nextTick(() =>{
-      if (this.showBubble) {
+      if (this.showBubble && this.isShowTopImg) {
         bubble.bubble(bubbleNumber,bubbleAlpha,alphaChangeSpeed,size,sizeChangeSpeed,riseSpeed,color)
       }
     })

@@ -52,13 +52,13 @@ module.exports = {
                 //网易云单个歌单id
                 songIds: ['29723011','1887893189','1421069053'],
                 //网易云歌单
-                playlist: '2410215112',
+                playlist: '7082462754',
                 showPlaylist: true,
                 //是否禁用网易云音乐，如果你选择禁用，那么就将使用本地的歌曲，请传入链接
-                disabledNetEaseMusic: true,
+                disabledNetEaseMusic: false,
 
                 //请求接口的baseURL
-                serverUrl: 'http://localhost:3000',
+                serverUrl: 'http://localhost:3000/',
 
                 //本地歌曲
                 localSongs: {
