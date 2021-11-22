@@ -1960,50 +1960,22 @@ body::-webkit-scrollbar-thumb {
 }
 
 .recommend {
-    width: 100%;
-    height: 9.2rem;
-    display: block;
-    overflow: scroll;
+    height: 5.2rem;
+    overflow-y: scroll;
+    margin-bottom: 1rem;
 }
 
 .recommend::-webkit-scrollbar {
-    background-color: #8186d5;
-    width: .3rem;
-    -webkit-border-radius: var(--borderRadius);
-    border-radius: var(--borderRadius);
     display: none;
-}
-
-.recommend::-webkit-scrollbar-button {
-    display: none;
-}
-
-.recommend::-webkit-scrollbar-thumb {
-    background-color: #f5cac3;
-    -webkit-border-radius: 20px;
-    border-radius: 20px;
 }
 
 .recommend-item {
-    float: left;
-    width: 33%;
-    height: 7.5rem;
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-pack: center;
-    -webkit-justify-content: center;
-    -ms-flex-pack: center;
-    justify-content: center;
-    -webkit-box-align: center;
-    -webkit-align-items: center;
-    -ms-flex-align: center;
-    align-items: center;
-    -webkit-box-flex: 1;
-    -webkit-flex: 1;
-    -ms-flex: 1;
-    flex: 1;
+    position: relative;
+    width: 23.3333%;
+    margin-left: 5%;
+    margin-right: 5%;
+    height: 5rem;
+    display: inline-block;
 }
 
 .recommend-top {
@@ -2016,7 +1988,6 @@ body::-webkit-scrollbar-thumb {
     -webkit-justify-content: center;
     -ms-flex-pack: center;
     justify-content: center;
-    width: 80%;
     height: 80%;
     -webkit-border-radius: -webkit-calc(var(--borderRadius) /1.8);
     border-radius: calc(var(--borderRadius) /1.8);
@@ -2029,6 +2000,9 @@ body::-webkit-scrollbar-thumb {
     bottom: 0;
     width: 90%;
     height: 80%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     -webkit-border-radius: -webkit-calc(var(--borderRadius) / 1.8);
     border-radius: calc(var(--borderRadius) / 1.8);
     background-color: rgb(255,255,255);
@@ -2036,15 +2010,35 @@ body::-webkit-scrollbar-thumb {
     box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
 }
 
-.recommend-tag {
+.aurora-recommend-bo {
+    text-align: center;
+    height: 2rem;
     width: 100%;
-    height: 40%;
+    white-space: nowrap;
+    -o-text-overflow: ellipsis;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.aurora-recommend-bo span {
+    line-height: 2rem;
+}
+
+.recommend-tag::-webkit-scrollbar {
+    display: none;
+}
+
+.recommend-tag {
+    white-space: nowrap;
+    width: 100%;
+    height: 50%;
     text-align: center;
     display: -webkit-box;
     display: -webkit-flex;
     display: -ms-flexbox;
     display: flex;
     padding: 0;
+    overflow-x: scroll;
 }
 
 .recommend-tag div {
@@ -2067,19 +2061,24 @@ body::-webkit-scrollbar-thumb {
     flex: 1;
 }
 
-.recommend-tag div span {
+.recommend-tag span {
+    /*float: left;*/
     display: inline-block;
-    height: 80%;
+    height: 60%;
     width: 80%;
     -webkit-border-radius: 5px;
     border-radius: 5px;
     background-color: chartreuse;
     color: white;
+    /*padding-left: 5px;*/
+    /*padding-right: 5px;*/
+    margin-left: .5rem;
+    /*margin-right: .5rem;*/
 }
 
 .recommend-title {
     width: 100%;
-    height: 60%;
+    height: 50%;
     text-align: center;
     overflow: hidden;
     display: -webkit-box;
@@ -2106,11 +2105,8 @@ body::-webkit-scrollbar-thumb {
 
 #recommend-top-title {
     text-align: center;
-    margin-top: -7rem;
-}
 
-#recommend {
-    margin-bottom: -2rem;
+    /*margin-top: -7rem;*/
 }
 
 .input-range {
@@ -3533,6 +3529,18 @@ body::-webkit-scrollbar-thumb {
     .mobile-sidebar::-webkit-scrollbar {
         display: none;
     }
+
+    .recommend-item {
+        /* width: 100%; */
+        height: 5.5rem;
+        /* width: 25%; */
+        /* margin-left: 10%; */
+        /* margin-right: 10%; */
+    }
+
+    .recommend-top {
+        width: 100%;
+    }
 }
 
 
@@ -3978,9 +3986,9 @@ body::-webkit-scrollbar-thumb {
         display: block;
     }
     #recommend-item {
-        float: left;
-        width: 50%;
-        height: 7.5rem;
+        /*float: left;*/
+        /*width: 50%;*/
+        /*height: 7.5rem;*/
     }
 
     .donate {

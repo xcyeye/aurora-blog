@@ -2,15 +2,10 @@
   <div class="recommend-item" id="recommend-item">
     <div :style="setSpanStyle(index)" class="recommend-top">
       <div class="recommend-bottom">
-        <div class="recommend-tag recommend-common">
-          <div v-for="(tag,index) in item.tag">
-            <span :style="setSpanStyle(index + 1)">{{tag}}</span>
-          </div>
-        </div>
-        <div class="recommend-title recommend-common">
-          <a :href="getHref">
+        <div class="aurora-recommend-bo">
+          <router-link :to="getHref">
             <span>{{item.title === "" ? recommendNoTitle : item.title}}</span>
-          </a>
+          </router-link>
         </div>
       </div>
     </div>
@@ -32,8 +27,22 @@ export default {
     themeProperty: ''
   },
   computed: {
-    setSpanStyle() {
+    getRecommendTag() {
 
+      return this.item.categories
+      if (this.themeProperty.sidebarTag === "categories") {
+        if (this.item.categories.length === 0) {
+          return this.item.tag
+        }
+        return this.item.categories
+      }
+
+      if (this.item.tag.length === 0) {
+        return this.item.categories
+      }
+      return this.item.tag
+    },
+    setSpanStyle() {
       return (index) => {
         let background_color = ''
         if (this.themeProperty.randomColor !== undefined) {
@@ -47,10 +56,7 @@ export default {
       }
     },
     getHref() {
-      let articleUrl = this.item.articleUrl
-      let base = useSiteLocaleData().value.base;
-      base = base === '/' ? "" : base
-      return  window.location.origin + base + articleUrl;
+      return this.item.articleUrl
     }
   },
   created() {

@@ -1127,10 +1127,10 @@ module.exports = {
 
         //v1.8.0新增配置项
         //是否展示文章推荐 默认展示
-        showRecommend: false,
+        showRecommend: true,
 
         //文章页面是否显示上一页，下一页 默认展示
-        articlePagination: false,
+        articlePagination: true,
 
         global: {
             sidebar: {
