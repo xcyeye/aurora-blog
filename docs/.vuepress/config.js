@@ -30,9 +30,9 @@ module.exports = {
         [
             path.resolve(__dirname, "../../Aurora-plugin/vuepress-plugin-coze/lib/node/index.js"),
             {
-                appId: 'pgOPlNNdMBjb8EfGSrI3S8pG-MdYXbMMI',
-                appKey: 'CNUsYlbxSzyyvUrHeJzPAR6D',
-                masterKey: 'sEP8cvkDARKgQD2WWDEOtirT',
+                appId: '2A2Dyd2AffrnldhwftlEddVn-MdYXbMMI',
+                appKey: 'qHYTbb91iOPLelyC9lpbXxLH',
+                masterKey: 'eUwfvS3luIPnPiHS5SpEhDYr',
                 //下面这些是可选的
                 avatarPath: 'https://ooszy.cco.vin/img/blog-note/avatar-aurora.png',//说说头像url
                 registerPath: '/aurora-register', //自定义插件默认提供的注册页面路由，请在前面加上/
@@ -1126,7 +1126,6 @@ module.exports = {
         sugCountPerMin: 300,
 
         //v1.8.0新增配置项
-
         //是否展示文章推荐 默认展示
         showRecommend: false,
 
@@ -1151,7 +1150,7 @@ module.exports = {
         //excludeTag: ["note"], 此配置项，不再需要使用
 
         //在统计文章，标签，类别的时候，需要排除的路径，只针对于根目录下的路径，
-        excludePath: ['/test.html'],
+        excludePath: ['/footer.html','/v1.3.0/','/plugin/'],
 
         //首页波浪效果设置
         wave: {
