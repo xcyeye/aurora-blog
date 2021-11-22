@@ -2,7 +2,7 @@
   <!--点击生成海报-->
   <div class="poster-share" style="z-index: 99">
     <div class="poster-button" id="poster-button">
-      <span class="aurora-iconfont-common aurora-poster-ico" :data="getRandomInt(0,10)" @click="createPoster">生成海报 {{clickSecond}}</span>&nbsp;
+      <span class="aurora-iconfont-common aurora-poster-ico" :data="getRandomInt(0,10)" @click="createPoster">生成海报{{clickSecond}}</span>&nbsp;
     </div>
   </div>
 </template>

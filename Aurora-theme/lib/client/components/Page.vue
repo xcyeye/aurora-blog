@@ -2,10 +2,15 @@
   <main :style="$store.state.borderRadiusStyle + $store.state.opacityStyle"
         class="page sidebar-single-enter-animate" id="article-page">
     <slot name="top" />
-    <div class="page-top-share">
+    <!--<div class="page-top-share">
       <poster :title="originPageData.title" :content="posterContent"/>
-    </div>
+    </div>-->
     <div id="theme-default-content" class="theme-default-content pageContent medium-zoom-content">
+      <div class="page-top-share">
+        <div class="page-top-share-next">
+          <poster :title="originPageData.title" :content="posterContent"/>
+        </div>
+      </div>
       <Content />
     </div>
     <PageMeta />

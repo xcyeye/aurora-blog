@@ -122,7 +122,7 @@ h6 {
 .theme-default-content:not(.custom) {
   @extend %wrapper;
 
-  padding-top: 0;
+  //padding-top: 0;
 
   a:hover {
     text-decoration: underline;
