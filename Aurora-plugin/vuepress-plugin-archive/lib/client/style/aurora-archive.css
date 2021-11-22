@@ -21,7 +21,7 @@
 
 .timeline-line {
     text-align: center;
-    flex: .1;
+    flex: .3;
 }
 
 .timeline-content {
@@ -44,7 +44,7 @@
     margin: 0 auto;
 }
 .timeline-line-bottom {
-    height: 100%;
+    height: 90%;
     width: 4px;
     background: var(--archive-timeline,rgba(144, 241, 239, 0.35));
     margin: 0 auto;
@@ -112,7 +112,7 @@
 
 .timeline-create-link-single ul li {
     list-style: none;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.7rem;
     display: flex;
 }
 

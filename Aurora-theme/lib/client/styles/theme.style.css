@@ -3747,9 +3747,26 @@ body::-webkit-scrollbar-thumb {
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
+    animation: top-mask-animate 2s cubic-bezier(0.39, 0.58, 0.57, 1) infinite;
+    -webkit-animation: top-mask-animate 2s cubic-bezier(0.39, 0.58, 0.57, 1) infinite;
+    -webkit-animation-iteration-count: 1;
+    animation-iteration-count: 1;
+    -webkit-animation-fill-mode: forwards;
+    animation-fill-mode: forwards;
     /*opacity: 0;*/
 }
 
+@keyframes top-mask-animate {
+    0% {
+        opacity: 0;
+    }
+    65% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
 
 .top-mask:before {
     position: absolute;
@@ -3760,27 +3777,6 @@ body::-webkit-scrollbar-thumb {
     display: inline-block;
     content: "";
     background: rgba(1,1,1,.20);
-}
-
-.top-mask {
-    /*opacity: 1;*/
-    animation: top-mask-animate 2s cubic-bezier(0.39, 0.58, 0.57, 1) infinite;
-    -webkit-animation: top-mask-animate 2s cubic-bezier(0.39, 0.58, 0.57, 1) infinite;
-    /*animation: top-mask-animate 3s;*/
-    -webkit-animation-iteration-count: 1;
-    animation-iteration-count: 1;
-    -webkit-animation-fill-mode: forwards;
-    animation-fill-mode: forwards;
-
-}
-
-@keyframes top-mask-animate {
-    0% {
-        opacity: 0;
-    }
-    100% {
-        opacity: 1;
-    }
 }
 
 @media screen and (max-width: 500px) {
