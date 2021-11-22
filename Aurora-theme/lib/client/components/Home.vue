@@ -38,7 +38,6 @@
 </template>
 
 <script lang="ts">
-
 import { computed, defineComponent } from 'vue'
 import { usePageFrontmatter, useSiteLocaleData, withBase} from '@vuepress/client'
 import { isArray } from '@vuepress/shared'
@@ -48,8 +47,6 @@ import HomeSocial from './child/home/HomeSocial.vue'
 import EasyTyper from "easy-typer-js";
 import HomeSidebarSocialItem from './child/side/HomeSidebarSocialItem'
 import {useThemeLocaleData} from "../composables";
-
-const wave = require('../public/js/wave')
 
 //导入配置属性
 const network = require('../public/js/network.js')
@@ -85,7 +82,7 @@ export default defineComponent({
       socialsIsHomeNum: 0,
       sidebarWidthVar: 0,
       sidebarRowVar: 0,
-      showHomeWaveStyle: true,
+      showHomeWaveStyle: false,
       //是否显示波浪效果
       showWave: true
     }
@@ -261,8 +258,16 @@ export default defineComponent({
   },
   mounted() {
     window.addEventListener('scroll', this.handleScroll, true)
+
+    if (window.pageYOffset > 0) {
+      this.showHomeWaveStyle = false
+    }else {
+      this.showHomeWaveStyle = true
+    }
+
     this.$nextTick(() => {
       if (this.showWave && this.isHome) {
+        const wave = require('../public/js/wave')
         wave.wave()
       }
     })
@@ -301,7 +306,7 @@ export default defineComponent({
     },
 
     handleScroll() {
-      if (window.pageYOffset > 10) {
+      if (window.pageYOffset > 0) {
         this.showHomeWaveStyle = false
       }else {
         this.showHomeWaveStyle = true

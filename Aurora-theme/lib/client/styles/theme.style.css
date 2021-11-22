@@ -891,15 +891,33 @@ a[data-v-d8ec41bc] {
 #set-bg {
     width: 100%;
     height: 100%;
-    background-image: var(--backgroundImageUrl);
     background-repeat: no-repeat;
     background-size: cover;
     position: fixed;
     top: 0;
     right: 0;
     z-index: -2;
-    /*opacity:0.4;*/
-    /*filter: alpha(opacity=60);*/
+    animation: imageAnimation 1.6s cubic-bezier(0.39, 0.58, 0.57, 1) infinite;
+    -webkit-animation: imageAnimation 1.6s cubic-bezier(0.39, 0.58, 0.57, 1) infinite;
+    -webkit-animation-iteration-count: 1;
+    animation-iteration-count: 1;
+    -webkit-animation-fill-mode: forwards;
+    animation-fill-mode: forwards;
+    background-image: var(--backgroundImageUrl);
+    opacity: 0;
+}
+
+@-webkit-keyframes imageAnimation {
+    0% {
+        opacity: 0;
+        -webkit-animation-timing-function: ease-in;
+        animation-timing-function: ease-in;
+    }
+    100% {
+        opacity: 1;
+        -webkit-animation-timing-function: ease-out;
+        animation-timing-function: ease-out;
+    }
 }
 
 .posterShade {
