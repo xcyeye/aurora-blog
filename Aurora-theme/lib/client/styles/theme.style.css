@@ -5258,7 +5258,7 @@ body::-webkit-scrollbar-thumb {
     -webkit-flex: 4.6;
     -ms-flex: 4.6;
     flex: 4.6;
-    /*overflow: hidden;*/
+    overflow: hidden;
     width: 100%;
     /*margin-top: -1.7rem;*/
 }
