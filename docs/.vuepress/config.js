@@ -55,7 +55,7 @@ module.exports = {
                 playlist: '7082462754',
                 showPlaylist: true,
                 //是否禁用网易云音乐，如果你选择禁用，那么就将使用本地的歌曲，请传入链接
-                disabledNetEaseMusic: false,
+                disabledNetEaseMusic: true,
 
                 //请求接口的baseURL
                 serverUrl: 'http://localhost:3000/',

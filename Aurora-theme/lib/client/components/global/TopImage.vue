@@ -62,7 +62,6 @@ import {useThemeLocaleData} from "../../composables";
 import WordCount from "crisp-word-count";
 import gsap from "gsap";
 const network = require('../../public/js/network.js')
-const bubble = require('../../public/js/bubble')
 export default {
   name: "TopImage",
   data() {
@@ -123,20 +122,43 @@ export default {
     let sizeChangeSpeed = 0.002
     let riseSpeed = 0.9
     let color = '255,255,255'
-
     if (this.themeProperty.bubble !== undefined) {
-      this.showBubble = this.themeProperty.bubble.show
-      bubbleNumber = this.themeProperty.bubble.bubbleNumber
-      bubbleAlpha = this.themeProperty.bubble.bubbleAlpha
-      alphaChangeSpeed = this.themeProperty.bubble.alphaChangeSpeed
-      size = this.themeProperty.bubble.size
-      sizeChangeSpeed = this.themeProperty.bubble.sizeChangeSpeed
-      riseSpeed = this.themeProperty.bubble.riseSpeed
-      color = this.themeProperty.bubble.color
+      if (this.themeProperty.bubble.show !== undefined) {
+        this.showBubble = this.themeProperty.bubble.show
+      }
+
+      if (this.themeProperty.bubble.bubbleNumber !== undefined) {
+        bubbleNumber = this.themeProperty.bubble.bubbleNumber
+      }
+
+      if (this.themeProperty.bubble.bubbleAlpha !== undefined) {
+        bubbleAlpha = this.themeProperty.bubble.bubbleAlpha
+      }
+
+      if (this.themeProperty.bubble.alphaChangeSpeed !== undefined) {
+        alphaChangeSpeed = this.themeProperty.bubble.alphaChangeSpeed
+      }
+
+      if (this.themeProperty.bubble.size !== undefined) {
+        size = this.themeProperty.bubble.size
+      }
+
+      if (this.themeProperty.bubble.sizeChangeSpeed !== undefined) {
+        sizeChangeSpeed = this.themeProperty.bubble.sizeChangeSpeed
+      }
+
+      if (this.themeProperty.bubble.riseSpeed !== undefined) {
+        riseSpeed = this.themeProperty.bubble.riseSpeed
+      }
+
+      if (this.themeProperty.bubble.color !== undefined) {
+        color = this.themeProperty.bubble.color
+      }
     }
 
     this.$nextTick(() =>{
       if (this.showBubble && this.isShowTopImg) {
+        const bubble = require('../../public/js/bubble')
         bubble.bubble(bubbleNumber,bubbleAlpha,alphaChangeSpeed,size,sizeChangeSpeed,riseSpeed,color)
       }
     })

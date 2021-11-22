@@ -17,19 +17,34 @@ let color = '255,255,255'
 let zIndex = -1
 
 try {
-  bubbleNumber = __BUBBLE_NUMBER__
-  bubbleAlpha = __BUBBLE_ALPHA__
-  alphaChangeSpeed = __ALPHA_CHANGE_SPEED__
-  size = __SIZE__
-  sizeChangeSpeed = __SIZE_CHANGE_SPEED__
-  riseSpeed = __RISE_SPEED__
-  color = __COLOR__
-  zIndex = __Z_INDEX__
+  if (__BUBBLE_NUMBER__ !== undefined) {
+    bubbleNumber = __BUBBLE_NUMBER__
+  }
+  if (__BUBBLE_ALPHA__ !== undefined) {
+    bubbleAlpha = __BUBBLE_ALPHA__
+  }
+  if (__ALPHA_CHANGE_SPEED__ !== undefined) {
+    alphaChangeSpeed = __ALPHA_CHANGE_SPEED__
+  }
+  if (__SIZE__ !== undefined) {
+    size = __SIZE__
+  }
+  if (__SIZE_CHANGE_SPEED__ !== undefined) {
+    sizeChangeSpeed = __SIZE_CHANGE_SPEED__
+  }
+  if (__RISE_SPEED__ !== undefined) {
+    riseSpeed = __RISE_SPEED__
+  }
+  if (__COLOR__ !== undefined) {
+    color = __COLOR__
+  }
+  if (__Z_INDEX__ !== undefined) {
+    zIndex = __Z_INDEX__
+  }
 }catch (e) {
   console.warn(e)
 }
 
-const bubble = require('./bubble')
 export default {
   name: "AuroraBubble",
   computed: {
@@ -38,6 +53,7 @@ export default {
     }
   },
   mounted() {
+    const bubble = require('./bubble')
     bubble.bubble(bubbleNumber,bubbleAlpha,alphaChangeSpeed,size,sizeChangeSpeed,riseSpeed,color)
   }
 }

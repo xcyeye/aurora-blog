@@ -1,19 +1,6 @@
 /* 这个气泡特效是收集于网络，作者为一为忆, http://www.iowen.cn */
 let canvas, ctx, width, height, bubbles, animateHeader = true;
 let bubbleNumber,bubbleAlpha,alphaChangeSpeed,size,sizeChangeSpeed,riseSpeed,color;
-function initHeader() {
-    canvas = document.getElementById('aurora-top-bubble-canvas');
-    window_resize();
-    ctx = canvas.getContext('2d');
-    //建立泡泡
-    bubbles = [];
-    let num = width * bubbleNumber;//气泡数量
-    for (let i = 0; i < num; i++) {
-        let c = new Bubble();
-        bubbles.push(c);
-    }
-    animate();
-}
 
 function animate() {
     if (animateHeader) {
@@ -73,6 +60,19 @@ function Bubble() {
     };
 }
 
+function initHeader() {
+    canvas = document.getElementById('aurora-top-bubble-canvas');
+    window_resize();
+    ctx = canvas.getContext('2d');
+    //建立泡泡
+    bubbles = [];
+    let num = width * bubbleNumber;//气泡数量
+    for (let i = 0; i < num; i++) {
+        let c = new Bubble();
+        bubbles.push(c);
+    }
+    animate();
+}
 
 module.exports = {
     bubble: function (aurora_bubbleNumber,aurora_bubbleAlpha,aurora_alphaChangeSpeed,aurora_size,aurora_sizeChangeSpeed,aurora_riseSpeed,aurora_color) {

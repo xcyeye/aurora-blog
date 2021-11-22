@@ -5734,11 +5734,12 @@ body::-webkit-scrollbar-thumb {
 /*文章顶部图片样式*/
 
 .top-image {
+    margin: 0 auto;
     position: absolute;
     top: -webkit-calc(20vh);
     top: calc(20vh);
-    /*width: -webkit-calc(100vw);*/
-    /*width: calc(100vw);*/
+    right: 0;
+    width: 100%;
     height: -webkit-max-content;
     height: -moz-max-content;
     height: max-content;
