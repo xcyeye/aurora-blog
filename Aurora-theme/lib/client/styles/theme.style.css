@@ -3726,10 +3726,10 @@ body::-webkit-scrollbar-thumb {
     top: 0;
     height: 100%;
     width: 100%;
-    background-image: url(https://api.ixiaowai.cn/api/api.php?time=-106792);
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
+    /*opacity: 0;*/
 }
 
 
@@ -3743,6 +3743,28 @@ body::-webkit-scrollbar-thumb {
     content: "";
     background: rgba(1,1,1,.20);
 }
+
+.top-mask {
+    /*opacity: 1;*/
+    animation: top-mask-animate 2s cubic-bezier(0.39, 0.58, 0.57, 1) infinite;
+    -webkit-animation: top-mask-animate 2s cubic-bezier(0.39, 0.58, 0.57, 1) infinite;
+    /*animation: top-mask-animate 3s;*/
+    -webkit-animation-iteration-count: 1;
+    animation-iteration-count: 1;
+    -webkit-animation-fill-mode: forwards;
+    animation-fill-mode: forwards;
+
+}
+
+@keyframes top-mask-animate {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
 @media screen and (max-width: 500px) {
     #mobile-search-no-show {
         display: none;
@@ -5128,6 +5150,8 @@ body::-webkit-scrollbar-thumb {
         transform: translateY(0)
     }
 }
+
+
 
 @keyframes sidebarSingleEnterAnimateEnter {
     from {

@@ -232,6 +232,7 @@ export default {
     },
     getRandomBg() {
       if (this.pageMap !== "" && this.pageMap.data.frontmatter.coverUrl !== undefined) {
+        //return "background-image: url(" + this.pageMap.data.frontmatter.coverUrl + ");"
         return "background-image: url(" + this.pageMap.data.frontmatter.coverUrl + ");"
       }
       //用户没有自定义图片，使用随机图片
