@@ -3,6 +3,7 @@
   <div :style="$store.state.borderRadiusStyle +
        $store.state.opacityStyle + $store.state.fontColorStyle +
        $store.state.fontFamilyStyle + $store.state.filterBlurStyle" ref="home-bottom" class="home-bottom" id="home-bottom">
+    <div ref="home-bottom-scroll"></div>
     <div class="home-page-tag" :style="getHomePageStyle" id="home-page-tag">
       <home-page-item :index="index" :theme-property="themeProperty" :data="item.articleUrl" :key="item.articleUrl" v-for="(item,index) in showPageArr" :page-item="item"/>
       <Pagination @changePage="handleCurrentChange"
@@ -63,9 +64,6 @@ export default {
   },
   methods: {
     handleCurrentChange(currentPageNum) {
-
-
-
       this.$store.commit("setCurrentPageNum", {
         currentPageNum: currentPageNum
       })
@@ -74,6 +72,7 @@ export default {
       let start = (currentPageNum -1) * this.pageSize
       let end = start + this.pageSize
       this.showPageArr = this.allPageArr.slice(start, end)
+      this.$refs["home-bottom-scroll"].scrollIntoView({behavior: "smooth"})
     },
     getLocalTime(time) {
       if (time === undefined) {
