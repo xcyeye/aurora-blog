@@ -133,7 +133,7 @@ export default defineComponent({
       }
     },
     loadImg(img) {
-      let originSrc = img.getAttribute("data-origin")
+      let originSrc = img.getAttribute("originSrc")
       if (originSrc === null) {
         return;
       }
@@ -229,13 +229,6 @@ export default defineComponent({
     }
   },
   mounted() {
-    let imgs = document.querySelectorAll(".pageContent img")
-    for (let i = 0; i < imgs.length; i++) {
-      let originSrc = imgs[i].src
-      imgs[i].setAttribute("data-origin",originSrc)
-      imgs[i].src = this.lazyLoadingImg
-    }
-
     $(window).on("scroll",() => {
       this.start()
     })

@@ -258,6 +258,8 @@ a[data-v-d8ec41bc] {
 }
 .aurora-style-cancel:before {
     content: "\e68f";
+    padding-right: 2px;
+    padding-top: 2px;
 }
 .aurora-poster-cancel:before {
     content: "\e68f";
@@ -517,8 +519,8 @@ a[data-v-d8ec41bc] {
 .cancel {
     cursor: pointer;
     position: absolute;
-    top: 0;
-    right: 0;
+    top: 3px;
+    right: 3px;
     display: inline-block;
     width: 25px;
     height: 25px;

@@ -2,14 +2,13 @@
 
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.defaultTheme = void 0;
-const { path } = require('@vuepress/utils')
 const { createPage } = require('@vuepress/core');
 const utils_1 = require("@vuepress/utils");
 const utils_2 = require("./utils");
-const auroraTheme = ({ themePlugins = {}, ...localeOptions }) => {
+
+const auroraTheme = ({ themePlugins = {},...localeOptions }) => {
     utils_2.assignDefaultLocaleOptions(localeOptions);
     return {
-        //name: '@vuepress/theme-default',
         name: '@vuepress-theme-aurora',
         layouts: utils_1.path.resolve(__dirname, '../client/layouts'),
         clientAppEnhanceFiles: utils_1.path.resolve(__dirname, '../client/clientAppEnhance.js'),
@@ -109,6 +108,24 @@ const auroraTheme = ({ themePlugins = {}, ...localeOptions }) => {
             setTimeout(() => {
                 process.exit(0)
             },3000)
+        },
+        extendsMarkdown: (md) => {
+            md.use(require('markdown-it-modify-token')).set({
+                modifyToken: function (token, env) {
+                    switch (token.type) {
+                        case 'image':
+                            let originSrc = token.attrObj.src
+                            console.log(originSrc)
+                            token.attrObj.src = "https://ooszy.cco.vin/img/blog-public/ljz.gif?time=chuchen"
+                            token.attrObj.originSrc = originSrc
+                            token.attrObj.data = "chuchen"
+                            break;
+                        case 'link_open':
+                            token.attrObj.target = '_self'; // set all links to open in new window
+                            break;
+                    }
+                }
+            })
         },
         plugins: [
             [
