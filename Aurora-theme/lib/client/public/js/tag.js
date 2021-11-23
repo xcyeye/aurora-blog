@@ -2,10 +2,14 @@ const myData = require('@temp/my-data')
 
 //需要排除的页面url
 let excludes = ['/','/about/','/mood/','/link/','/tag/','/archive/','/photo/','/aurora-coze/','/aurora-register/','/aurora-archive/','/aurora-music/','/404.html']
-
+let categoriesIncludeFolderName = true
 module.exports = {
     setTag: function (app,themeProperty) {
         return new Promise((resolve,reject) => {
+
+            if (themeProperty.categoriesIncludeFolderName !== undefined) {
+                categoriesIncludeFolderName = themeProperty.categoriesIncludeFolderName
+            }
             let excludePathSet = new Set()
 
             for (let i = 0; i < excludes.length; i++) {
@@ -83,7 +87,7 @@ module.exports = {
                         //获取path
                         let path = excludeMapArr[i].path
                         let strings = path.split("/");
-                        if (strings.length >2) {
+                        if (strings.length >2 && categoriesIncludeFolderName) {
                             //从strings中的第二个开始遍历，到倒数第二个结束
 
                             let tempCategoriesSetArr = new Set()

@@ -63,6 +63,9 @@ export default {
   },
   methods: {
     handleCurrentChange(currentPageNum) {
+
+
+
       this.$store.commit("setCurrentPageNum", {
         currentPageNum: currentPageNum
       })

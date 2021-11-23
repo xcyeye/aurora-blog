@@ -1,10 +1,8 @@
 const { path } = require("@vuepress/utils");
-const { html5Media } = require('markdown-it-html5-media');
-const hljs = require('highlight.js')
 module.exports = {
     //https://ooszy.cco.vin/img/blog-note/aurora-loading.gif
     extendsMarkdown: (md) => {
-        //md.use(require('markdown-it-highlightjs'))
+
     },
 
     //在这里配置插件
@@ -1104,7 +1102,7 @@ module.exports = {
         mobileCutText: "Aurora",
 
         //侧边栏标签处显示还是分类还是标签，只有两个值，默认为分类，如果为categories，那么就显示为类别，否则显示为标签
-        sidebarTag: "tag",
+        sidebarTag: "categories",
 
         //额外的功能，也就是样式控制面板上面那个，默认是关闭的
         showAddMood: true,
@@ -1138,6 +1136,7 @@ module.exports = {
         //文章页面是否显示上一页，下一页 默认展示
         articlePagination: true,
 
+        //这个global暂时没用
         global: {
             sidebar: {
                 showStatus: true,
@@ -1158,6 +1157,8 @@ module.exports = {
         //在统计文章，标签，类别的时候，需要排除的路径，只针对于根目录下的路径，
         excludePath: ['/footer.html','/v1.3.0/','/plugin/'],
 
+        //类别项是否包含文件夹名，默认包含
+        categoriesIncludeFolderName: false,
         //首页波浪效果设置
         wave: {
             showWave: true
