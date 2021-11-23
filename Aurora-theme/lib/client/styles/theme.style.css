@@ -1318,9 +1318,10 @@ a[data-v-d8ec41bc] {
     height: calc(50% - var(--tag-page-content)/2)
 }
 
-.tag-page-right-top a span {
+.tag-page-right-top span {
     color: #8186d5;
-    font-weight: 900
+    font-weight: 900;
+    cursor: pointer;
 }
 
 .tag-label:before {
