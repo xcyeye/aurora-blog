@@ -105,6 +105,10 @@
     animation-fill-mode: forwards
 }
 
+.mood_like_love_active:before {
+    color: red;
+}
+
 @-webkit-keyframes mood_like_love_active {
     0% {
         font-size: 20px
