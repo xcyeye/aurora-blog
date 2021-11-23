@@ -1,22 +1,11 @@
 const { path } = require("@vuepress/utils");
 const { html5Media } = require('markdown-it-html5-media');
+const hljs = require('highlight.js')
 module.exports = {
-
-    /*extendsMarkdown: (md) => {
-        md.use(require('markdown-it-modify-token')).set({
-            modifyToken: function (token, env) {
-                switch (token.type) {
-                    case 'image':
-                        token.attrObj.src = "/1.jpg"
-                        token.attrObj.originSrc = "https://aurora.xcye.xyz/" + token.attrObj.src
-                        break;
-                    case 'link_open':
-                        token.attrObj.target = '_self'; // set all links to open in new window
-                        break;
-                }
-            }
-        })
-    },*/
+    //https://ooszy.cco.vin/img/blog-note/aurora-loading.gif
+    extendsMarkdown: (md) => {
+        //md.use(require('markdown-it-highlightjs'))
+    },
 
     //在这里配置插件
     plugins: [

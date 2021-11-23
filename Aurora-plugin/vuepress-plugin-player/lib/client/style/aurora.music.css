@@ -39,7 +39,7 @@
 
 .aurora-music-pic-par {
     position: absolute;
-    left: 0;
+    left: -5%;
     z-index: 5;
 }
 
@@ -68,7 +68,7 @@
 .aurora-music-pic img {
     width: 4.5rem;
     height: 4.5rem;
-    padding: .3rem;
+    padding: .25rem;
     border-radius: 200px;
     box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 }
@@ -209,7 +209,6 @@
     }
 }
 
-
 /*嵌入播放器样式*/
 #cover {
     border-radius: 200px;
@@ -244,7 +243,7 @@
 
 .aurora-music-box {
     position: fixed;
-    left: 0;
+    left: 0.3%;
     bottom: 3%;
     z-index: 10;
 }

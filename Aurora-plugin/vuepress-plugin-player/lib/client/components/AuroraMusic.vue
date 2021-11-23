@@ -53,7 +53,6 @@
       Your browser does not support this audio format.
     </audio>
   </div>
-
 </template>
 
 <script>

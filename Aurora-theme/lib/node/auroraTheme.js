@@ -115,13 +115,9 @@ const auroraTheme = ({ themePlugins = {},...localeOptions }) => {
                     switch (token.type) {
                         case 'image':
                             let originSrc = token.attrObj.src
-                            console.log(originSrc)
-                            token.attrObj.src = "https://ooszy.cco.vin/img/blog-public/ljz.gif?time=chuchen"
+                            token.attrObj.src = "https://ooszy.cco.vin/img/blog-public/ljz.gif"
                             token.attrObj.originSrc = originSrc
-                            token.attrObj.data = "chuchen"
-                            break;
-                        case 'link_open':
-                            token.attrObj.target = '_self'; // set all links to open in new window
+                            token.attrObj.data = "aurora"
                             break;
                     }
                 }
