@@ -203,6 +203,7 @@ export default {
       let start = (currentNum -1) * this.pageSize
       let end = start + this.pageSize
       this.showPageArr = this.allPageMap.slice(start,end)
+      this.autoScroll()
     },
     autoScroll() {
       let autoScroll = setInterval(() => {

@@ -1302,6 +1302,7 @@ a[data-v-d8ec41bc] {
 }
 
 .tag-page-right {
+    position: relative;
     margin-right: 10px;
     flex: 4;
     overflow: hidden
@@ -1315,13 +1316,13 @@ a[data-v-d8ec41bc] {
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
-    height: calc(50% - var(--tag-page-content)/2)
+    height: 2rem;
 }
 
 .tag-page-right-top span {
-    color: #8186d5;
     font-weight: 900;
     cursor: pointer;
+    color: #8186d5;
 }
 
 .tag-label:before {
@@ -1336,15 +1337,16 @@ a[data-v-d8ec41bc] {
     display: -webkit-box;
     -webkit-line-clamp: 5;
     -webkit-box-orient: vertical;
-    height: var(--tag-page-content);
     padding-left: 10px
 }
 
 .tag-page-right-bottom {
+    position: absolute;
+    bottom: 0;
     max-width: 22.5rem;
     display: flex;
     align-items: center;
-    height: calc(50% - var(--tag-page-content)/2);
+    height: 2rem;
     overflow-x: scroll;
     white-space: nowrap
 }
@@ -2539,10 +2541,6 @@ body::-webkit-scrollbar-thumb {
         margin: 0 auto
     }
 
-    .tag-page-right {
-        --tag-page-content: 60%
-    }
-
     .home-random-say-custom {
         top: 31%
     }
@@ -2695,6 +2693,10 @@ body::-webkit-scrollbar-thumb {
     #tag-page-right-bottom,
     #tag-page-right-top {
         height: 2rem
+    }
+
+    .tag-page-right-bottom {
+        position: relative;
     }
 
     #tag-page-right-center {
@@ -2971,7 +2973,7 @@ body::-webkit-scrollbar-thumb {
     }
 
     .tag-page-right {
-        --tag-page-content: 62%
+        /* --tag-page-content: 62% */
     }
 
     .sidebar-single-common:first-child {
@@ -3876,6 +3878,7 @@ body::-webkit-scrollbar-thumb {
 }
 
 .stickSidebar {
+    -o-position: sticky;
     position: sticky;
     top: 6%;
     overflow: hidden

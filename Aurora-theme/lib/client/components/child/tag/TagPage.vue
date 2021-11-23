@@ -5,9 +5,7 @@
       <div id="tag-page-left" :style="setBackgroundImg" class="tag-page-left tag-page-item-common"></div>
       <div class="tag-page-right tag-page-item-common" id="tag-page-right">
         <div id="tag-page-right-top" class="tag-page-right-top">
-<!--/*          <span style="color: #2c3e50;text-decoration: none;"*/-->
-             <span @click="goPage">{{getTitle(pageMap.title)}}</span>
-          <!--</span>-->
+          <span @click="goPage">{{getTitle(pageMap.title)}}</span>
         </div>
         <div id="tag-page-right-center" class="tag-page-right-center">
           <span class="tag-page-content">{{tagContent}}</span>
