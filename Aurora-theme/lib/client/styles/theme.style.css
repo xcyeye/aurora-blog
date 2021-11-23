@@ -3307,7 +3307,6 @@ body::-webkit-scrollbar-thumb {
     #c-link {
         position: relative;
         width: 100%;
-        text-align: center;
         margin: 0 auto;
         margin-bottom: 2rem
     }
