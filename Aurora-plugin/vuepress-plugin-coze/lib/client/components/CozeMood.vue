@@ -1,4 +1,5 @@
 <template>
+  <div class="coze-image-container" id="coze-image-container"></div>
   <div class="coze-box">
     <add-mood :verify-identify-status="verifyIdentifyStatus" :show-mood-control="showMoodControl"
               :current-mood-obj="currentMoodObj" @save-data-success="saveDataSuccess" @cancel="cancel"

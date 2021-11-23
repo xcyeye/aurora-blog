@@ -42,10 +42,6 @@
           <span :class="{'mood_like_love_active': moodLikeStatus}" @click="moodLove($event,moodItem)" class="aurora-coze-font aurora-coze-custom-love"></span>&nbsp;
           <span>{{getCozeMoodLink}}</span>
         </div>
-        <!--<div class="mood-edit-single-common">
-          <poster :title="moodItem.attributes.mood_title" :content="content" />
-          &lt;!&ndash;<span @click="moodPoster($event,moodItem)" class="aurora-coze-font aurora-coze-custom-poster"></span>&ndash;&gt;
-        </div>-->
         <div class="mood-edit-single-common">
           <span @click="moodEdit($event,moodItem)" class="aurora-coze-font aurora-coze-custom-edit"></span>
         </div>
@@ -87,7 +83,8 @@ export default {
       cozeYearTemp: 0,
       cozeMonthTemp: 0,
       cozeDayTemp: 0,
-      cozeLikeTemp: 0
+      cozeLikeTemp: 0,
+      showImageHeight: false
     }
   },
   props: {
@@ -253,9 +250,3 @@ export default {
   }
 }
 </script>
-
-<style scoped lang="css">
-.mood_like_active {
-  color: red;
-}
-</style>
