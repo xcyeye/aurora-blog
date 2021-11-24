@@ -64,15 +64,14 @@
         </div>
 
         <!--下面时从网络中请求回来的数据-->
-        <div v-if="setOnline" :key="index" v-for="(item,index) in donateList"
-             class="donate-bottom-common donate-pro-single">
-          <div class="pro-img pro-common" id="pro-img-list">
+        <div v-if="setOnline" :key="index" v-for="(item,index) in donateList"  class="donate-bottom-common donate-pro-single">
+          <div class="theme-pro-img theme-pro-common aurora-theme-pro-name" id="pro-img-list">
             <span>{{item.username}}</span>
           </div>
-          <div class="pro-name pro-common" id="pro-list-message">
+          <div class="theme-pro-name theme-pro-common" id="pro-list-message">
             <span>{{item.subject}}</span>
           </div>
-          <div class="pro-price pro-common">
+          <div class="theme-pro-price theme-pro-common">
             <span>￥&nbsp;{{item.payMoney}}</span>
           </div>
         </div>
