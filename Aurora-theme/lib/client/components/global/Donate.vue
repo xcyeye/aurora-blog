@@ -7,13 +7,13 @@
     <div class="donate-pay-filed donate-bottom"
          :class="{donateActive: isActive}"
          :style="setSpanStyle" id="donate-bottom">
-      <div class="donate-img donate-bottom-common" id="donate-img">
+      <div class="donate-img donate-bottom-common theme-donate-qr-img" id="donate-img">
         <li :key="index" v-for="(item,index) in donateImg">
           <img :src="item" alt="">
         </li>
       </div>
       <div class="donate-pro" id="donate-pro">
-        <div :key="index" v-for="(item,index) in donateProduct"   class="donate-bottom-common donate-pro-single">
+        <div :key="index" v-for="(item,index) in donateProduct"   class="theme-donate-qr-img donate-bottom-common donate-pro-single">
           <div class="pro-img pro-common" id="pro-img">
             <img :src="item.img" alt="">
           </div>

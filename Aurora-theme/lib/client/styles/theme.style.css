@@ -810,13 +810,13 @@ a[data-v-d8ec41bc] {
     top: 0;
     right: 0;
     z-index: -2;
+    background-image: var(--backgroundImageUrl);
     animation: imageAnimation 1.6s cubic-bezier(.39, .58, .57, 1) infinite;
     -webkit-animation: imageAnimation 1.6s cubic-bezier(.39, .58, .57, 1) infinite;
     -webkit-animation-iteration-count: 1;
     animation-iteration-count: 1;
     -webkit-animation-fill-mode: forwards;
     animation-fill-mode: forwards;
-    background-image: var(--backgroundImageUrl);
     opacity: 0
 }
 
@@ -1890,6 +1890,10 @@ body::-webkit-scrollbar-thumb {
 
 .pro-img {
     flex: 1
+}
+
+.theme-donate-qr-img {
+    display: flex;
 }
 
 #pro-list-message {
@@ -5168,4 +5172,65 @@ body::-webkit-scrollbar-thumb {
 
 .aurora-theme-pro-name span {
     display: inline-block;
+}
+
+
+.theme-comment-box {
+    height: 2.5rem;
+    cursor: pointer;
+    width: 30%;
+    margin: 0 auto;
+    margin-bottom: 3rem;
+    border-radius: var(--borderRadius);;
+    background-color: #F2F2F2;
+}
+
+@media screen and (max-width:719px) {
+    .theme-comment-box {
+        width: 100%;
+        margin-bottom: 1rem;
+    }
+
+    .show-theme-comment-box {
+        margin-bottom: 3rem;
+    }
+}
+
+.aurora-control-comment-box {
+    overflow: hidden;
+    height: auto;
+}
+
+.aurora-comment-animate {
+    transition: all 1.5s;
+    transform: translateY(300%);
+    height: 0;
+}
+
+.aurora-show-comment-animate {
+    transition: all 1s;
+    transform: translateY(0);
+    height: max-content;
+}
+
+.page-comment-icon::before {
+    content: "\ecb1";
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.aurora-comment-common {
+    display: inline-block;
+    line-height: 2.5rem;
+}
+.page-comment-icon {
+    width: 20%;
+    text-align: center;
+}
+
+.aurora-comment-text {
+    width: 80%;
+    font-weight: bold;
+    font-size: 18px;
+    text-align: left;
 }

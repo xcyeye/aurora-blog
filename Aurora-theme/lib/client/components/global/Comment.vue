@@ -1,6 +1,10 @@
 <template>
-  <div id="control-comment" class="sidebar-single-enter-animate" v-if="showComment">
-    <div class="mobile-record">
+  <div id="control-comment" class="aurora-control-comment-box" v-if="showComment">
+    <div class="theme-comment-box" :class="{'show-theme-comment-box': showCommentAnimateClass}" @click="showCommentAnimate">
+      <span class="aurora-comment-common aurora-iconfont-common page-comment-icon" ></span>
+      <span class="aurora-comment-common aurora-comment-text">点击评论</span>
+    </div>
+    <div class="mobile-record aurora-comment-animate" :class="{'aurora-show-comment-animate': showCommentAnimateClass}">
       <div class="page box" :style="$store.state.borderRadiusStyle + $store.state.opacityStyle">
         <div id="waline" class="vcomment-bottom theme-default-content"></div>
       </div>
@@ -14,6 +18,7 @@ export default {
   name: "Comment",
   data() {
     return {
+      showCommentAnimateClass: false,
       themeProperty: '',
       showComment: false,
       serverURL: '',
@@ -74,6 +79,11 @@ export default {
       }
     }
   },
+  methods: {
+    showCommentAnimate() {
+      this.showCommentAnimateClass = !this.showCommentAnimateClass
+    }
+  }
 }
 </script>
 

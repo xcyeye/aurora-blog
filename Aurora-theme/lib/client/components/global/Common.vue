@@ -98,6 +98,7 @@ import Navbar from '../../components/Navbar.vue'
 import Home from '../Home'
 import MobileSidebar from "../child/side/MobileSidebar.vue";
 import SocialSpin from '../SocialSpin'
+import 'animate.css';
 
 //配置导入
 const tag = require('../../public/js/tag')
