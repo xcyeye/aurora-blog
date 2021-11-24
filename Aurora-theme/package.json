@@ -53,6 +53,7 @@
     "vuepress-plugin-bubble": "latest",
     "vuepress-plugin-player": "latest",
     "gsap": "^3.8.0",
-    "markdown-it-modify-token": "latest"
+    "markdown-it-modify-token": "latest",
+    "smoothscroll-polyfill": "^0.4.4"
   }
 }

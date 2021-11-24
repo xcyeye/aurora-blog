@@ -87,6 +87,7 @@ import TagItem from "./child/tag/TagItem";
 import TagPage from "./child/tag/TagPage";
 import {useThemeData} from "../composables";
 import Pagination from "./Pagination";
+import smoothscroll from 'smoothscroll-polyfill';
 
 export default {
   name: "Tag",
@@ -143,6 +144,7 @@ export default {
     }
   },
   mounted() {
+    window.__forceSmoothScrollPolyfill__ = true;
     this.autoScroll()
     setTimeout(() => {
       this.tagArr = this.$store.state.tagArr
@@ -206,6 +208,7 @@ export default {
       this.autoScroll()
     },
     autoScroll() {
+      smoothscroll.polyfill();
       let autoScroll = setInterval(() => {
         if (document.querySelectorAll(".tag-bottom .tag-page").length !== 0) {
           clearInterval(autoScroll)
