@@ -5196,6 +5196,10 @@ body::-webkit-scrollbar-thumb {
     }
 }
 
+.aurora-comment-animate {
+    display: none;
+}
+/*
 .aurora-control-comment-box {
     overflow: hidden;
     height: auto;
@@ -5211,7 +5215,7 @@ body::-webkit-scrollbar-thumb {
     transition: all 1s;
     transform: translateY(0);
     height: max-content;
-}
+}*/
 
 .page-comment-icon::before {
     content: "\ecb1";

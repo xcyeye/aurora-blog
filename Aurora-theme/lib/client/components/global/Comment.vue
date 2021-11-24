@@ -13,6 +13,7 @@
 </template>
 <script>
 import {useThemeData} from "../../composables";
+import $ from "jquery";
 //import Waline from '@waline/client';
 export default {
   name: "Comment",
@@ -82,6 +83,7 @@ export default {
   methods: {
     showCommentAnimate() {
       this.showCommentAnimateClass = !this.showCommentAnimateClass
+      $(".aurora-comment-animate").slideToggle(500)
     }
   }
 }
