@@ -28,7 +28,6 @@ const AV = require('leancloud-storage');
 
 import './styles/index.scss';
 import './styles/photo.scss'
-import {siteData} from "../../../docs/.vuepress/.temp/internal/siteData";
 //import './styles/coverStyle.css'
 export default defineClientAppEnhance(({ app, router }) => {
     app.component('Badge', Badge);
