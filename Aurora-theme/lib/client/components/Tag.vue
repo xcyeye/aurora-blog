@@ -108,11 +108,11 @@ export default {
       themeProperty: '',
       tagIndex: 0,
       pageSize: 5,
-      showPageArr: []
+      showPageArr: [],
+      isLoadingFinish: false
     }
   },
   created() {
-
     //如果手机端侧边栏打开的，那么就关闭
     if (this.$store.state.openMobileSidebar) {
       this.$store.commit("setOpenMobileSidebar",{
@@ -144,7 +144,7 @@ export default {
     }
   },
   mounted() {
-    window.__forceSmoothScrollPolyfill__ = true;
+    this.isLoadingFinish = true
     this.autoScroll()
     setTimeout(() => {
       this.tagArr = this.$store.state.tagArr
@@ -152,6 +152,9 @@ export default {
     },100)
   },
   watch: {
+    isLoadingFinish() {
+
+    },
     getRouteQuery(nV,oV) {
       if (this.$route.query.tag === undefined) {
         return
@@ -205,7 +208,9 @@ export default {
       let start = (currentNum -1) * this.pageSize
       let end = start + this.pageSize
       this.showPageArr = this.allPageMap.slice(start,end)
-      this.autoScroll()
+      if (this.isLoadingFinish) {
+        this.autoScroll()
+      }
     },
     autoScroll() {
       smoothscroll.polyfill();

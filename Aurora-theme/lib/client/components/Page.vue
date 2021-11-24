@@ -2,6 +2,9 @@
   <main :style="$store.state.borderRadiusStyle + $store.state.opacityStyle"
         class="page sidebar-single-enter-animate" id="article-page">
     <slot name="top" />
+    <!--<div class="page-top-share">
+      <poster :title="originPageData.title" :content="posterContent"/>
+    </div>-->
     <div id="theme-default-content" class="theme-default-content pageContent medium-zoom-content">
       <div class="page-top-share">
         <div class="page-top-share-next">
@@ -10,7 +13,7 @@
       </div>
       <Content />
     </div>
-    <PageMeta v-if="showPageMeta" />
+    <PageMeta />
     <slot name="bottom" />
   </main>
   <b-center v-if="themeProperty.articlePagination === undefined ? true : themeProperty.articlePagination">
@@ -54,7 +57,6 @@ export default defineComponent({
       posterContent: '',
       title: '',
       showMobileCatalog: true,
-      showPageMeta: true
     }
   },
   props: {
@@ -74,8 +76,6 @@ export default defineComponent({
   },
   emits: ['getHeadLine'],
   created() {
-    this.showPageMeta = this.themeProperty.showPageMeta
-
     //如果手机端侧边栏打开的，那么就关闭
     if (this.$store.state.openMobileSidebar) {
       this.$store.commit("setOpenMobileSidebar",{

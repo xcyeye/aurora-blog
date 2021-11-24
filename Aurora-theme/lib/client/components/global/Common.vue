@@ -28,6 +28,8 @@
     <slot name="top6"></slot>
     <div
         class="theme-container"
+        @touchstart="onTouchStart"
+        @touchend="onTouchEnd"
         :style="colorFontStyle"
         :class="{'sidebar-single-enter-animate': showSidebarAnimateClass}"
     >
@@ -40,10 +42,9 @@
         </top-image>
 
         <div :class="{'content': !isHomePage}">
-
           <div :id="getArticleId" :class="{'article-page-parent-pro': !isHomePage}" class="article-page-parent">
-
-            <div :class="{noShowSidebar: getNoShowSidebar}" id="page-sidebar-left" class="page-sidebar-left">
+            <div :class="{noShowSidebar: getNoShowSidebar}" id="page-sidebar-left"
+                 class="page-sidebar-left">
               <slot name="center1"></slot>
               <slot name="center2"></slot>
               <slot name="center3"></slot>
@@ -54,7 +55,6 @@
               <slot name="center8"></slot>
               <slot name="center9"></slot>
             </div>
-
             <div id="page-sidebar-right" v-if="!frontmatter.home" v-show="showSidebar" class="page-sidebar-right">
               <div class="stickSidebar" v-if="mobilePageSidebar">
                 <HomeSidebar :show-navbar="false"
@@ -64,13 +64,12 @@
                              :sidebar-row-var="sidebarRowVar"
                              :is-sticky-sidebar="isStickySidebar"
                              :show-tag-cloud="showTagCloud"
-                             :is-show-catalog="isShowCatalog"/>
+                             :is-show-catalog="isShowCatalog">
+                </HomeSidebar>
               </div>
             </div>
-
           </div>
         </div>
-
       </div>
       <slot name="bottom1"></slot>
       <slot name="bottom2"></slot>
