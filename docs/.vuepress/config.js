@@ -989,6 +989,13 @@ module.exports = {
                     price: 7,
                     prefix: "￥",
                 },
+                {
+                    name: "初时代峰峻看还水电费尘",
+                    msg: "主题太棒了",
+                    img: "https://ooszy.cco.vin/img/blog-public/nc.jpeg",
+                    price: 7,
+                    prefix: "￥",
+                },
             ],
         },
 
@@ -1198,7 +1205,11 @@ module.exports = {
             appId: '2A2Dyd2AffrnldhwftlEddVn-MdYXbMMI',
             appKey: 'qHYTbb91iOPLelyC9lpbXxLH',
             masterKey: 'eUwfvS3luIPnPiHS5SpEhDYr',
-        }
+        },
+
+
+        //这是v1.9.0新增加的功能 是否在文章页底部显示最后更新时间，贡献者，点击编辑,默认显示
+        showPageMeta: false
 
 
         /*
