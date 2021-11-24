@@ -11,11 +11,11 @@
       </div>
       <div class="coze-donate-pay" id="">
         <form v-on:submit.prevent>
-          <div class="pro-common pro-message">
-            <div class="donate-bottom-input pro-common">
+          <div class="coze-pro-common pro-message">
+            <div class="donate-bottom-input coze-pro-common">
               <input autocomplete :style="setVerifyStyle" type="text" placeholder="请输入用户名" v-model="username" name="username">
             </div>
-            <div class="donate-bottom-button pro-common">
+            <div class="donate-bottom-button coze-pro-common">
               <button @click="verifyIdentify">登录</button>
             </div>
           </div>

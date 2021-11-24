@@ -988,14 +988,7 @@ module.exports = {
                     img: "https://ooszy.cco.vin/img/blog-public/nc.jpeg",
                     price: 7,
                     prefix: "￥",
-                },
-                {
-                    name: "初时代峰峻看还水电费尘",
-                    msg: "主题太棒了",
-                    img: "https://ooszy.cco.vin/img/blog-public/nc.jpeg",
-                    price: 7,
-                    prefix: "￥",
-                },
+                }
             ],
         },
 

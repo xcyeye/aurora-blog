@@ -564,14 +564,10 @@
     box-shadow: 0 10px 36px 0 rgba(0, 0, 0, .16), 0 0 0 1px rgba(0, 0, 0, .06)
 }
 
-.pro-common {
+.coze-pro-common {
     justify-content: center;
     align-items: center;
     display: flex
-}
-
-.pro-img {
-    flex: 1
 }
 
 .edit-content textarea {

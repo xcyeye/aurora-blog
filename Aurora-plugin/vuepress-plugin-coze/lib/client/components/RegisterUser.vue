@@ -26,11 +26,11 @@
             </div>
           </div>
 
-          <div class="pro-common pro-message register-button">
-            <div class="donate-bottom-button pro-common">
+          <div class="coze-pro-common pro-message register-button">
+            <div class="donate-bottom-button coze-pro-common">
               <button @click="verifyIdentify">注册</button>
             </div>
-            <div class="donate-bottom-button pro-common">
+            <div class="donate-bottom-button coze-pro-common">
               <button @click="loginOut">登出</button>
             </div>
           </div>

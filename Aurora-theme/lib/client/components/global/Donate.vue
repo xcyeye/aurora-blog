@@ -52,13 +52,13 @@
          id="donate-bottom2">
       <div class="donate-pro" id="donate-pro-list">
         <div :key="index" v-for="(item,index) in localDonateList"  class="donate-bottom-common donate-pro-single">
-          <div class="pro-img pro-common" id="pro-img-list">
+          <div class="theme-pro-img theme-pro-common aurora-theme-pro-name" id="pro-img-list">
             <span>{{item.name}}</span>
           </div>
-          <div class="pro-name pro-common" id="pro-list-message">
+          <div class="theme-pro-name theme-pro-common" id="pro-list-message">
             <span>{{item.msg}}</span>
           </div>
-          <div class="pro-price pro-common">
+          <div class="theme-pro-price theme-pro-common">
             <span>{{item.prefix}}&nbsp;{{item.price}}</span>
           </div>
         </div>

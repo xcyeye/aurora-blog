@@ -1816,9 +1816,31 @@ body::-webkit-scrollbar-thumb {
 
 .donate-bottom-common {
     margin: 0 auto;
-    display: flex;
-    justify-content: center;
-    align-items: center
+
+}
+
+.theme-pro-common {
+    text-align: center;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    display: inline-block;
+}
+
+.theme-pro-img {
+    width: 30%;
+}
+
+.theme-pro-name {
+    width: 50%;
+}
+
+.theme-pro-price {
+    width: 20%;
+}
+
+.theme-pro-common::-webkit-scrollbar {
+    display: none;
 }
 
 .donate-img {
@@ -3400,7 +3422,7 @@ body::-webkit-scrollbar-thumb {
     }
 
     .donate {
-        width: 96%;
+        width: 100%;
         margin: 0 auto;
         margin-bottom: 1rem
     }
@@ -5130,4 +5152,20 @@ body::-webkit-scrollbar-thumb {
     right: 0;
     height: 100%;
     width: 100%
+}
+
+
+.aurora-theme-pro-name {
+    text-align: left;
+    overflow-x: scroll;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.aurora-theme-pro-name::-webkit-scrollbar {
+    display: none;
+}
+
+.aurora-theme-pro-name span {
+    display: inline-block;
 }
