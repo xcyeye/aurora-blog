@@ -36,7 +36,6 @@
     <Content />
   </div>
 </template>
-
 <script lang="ts">
 import { computed, defineComponent } from 'vue'
 import { usePageFrontmatter, useSiteLocaleData, withBase} from '@vuepress/client'
@@ -50,7 +49,6 @@ import {useThemeLocaleData} from "../composables";
 //导入配置属性
 const network = require('../public/js/network.js')
 import smoothscroll from 'smoothscroll-polyfill';
-
 export default defineComponent({
   name: 'Home',
   components: {
@@ -257,7 +255,6 @@ export default defineComponent({
     })
   },
   mounted() {
-    window.__forceSmoothScrollPolyfill__ = true;
     window.addEventListener('scroll', this.handleScroll, true)
 
     if (window.pageYOffset > 0) {
@@ -305,7 +302,6 @@ export default defineComponent({
     clickDown() {
       smoothscroll.polyfill();
       document.querySelector(".home-bottom").scrollIntoView({behavior: "smooth"})
-    
     },
 
     handleScroll() {

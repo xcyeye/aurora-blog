@@ -82,7 +82,13 @@ export default {
   },
   methods: {
     showCommentAnimate() {
-      this.showCommentAnimateClass = !this.showCommentAnimateClass
+      if (this.showCommentAnimateClass) {
+        setTimeout(() => {
+          this.showCommentAnimateClass = !this.showCommentAnimateClass
+        },500)
+      }else {
+        this.showCommentAnimateClass = !this.showCommentAnimateClass
+      }
       $(".aurora-comment-animate").slideToggle(500)
     }
   }

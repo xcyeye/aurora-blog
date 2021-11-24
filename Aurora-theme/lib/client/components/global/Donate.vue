@@ -126,13 +126,14 @@ export default {
       this.hexToRgbColor = this.hexToRgb(background_color)
     }
 
-    if (this.donate.onlineList) {
-      console.log("执行")
-      network.req({
-        baseURL: 'https://pay.cco.vin/pay/info'
-      }).then((res) => {
-        this.donateList = res
-      })
+    if (this.themeProperty.donate !== undefined) {
+      if (this.donate.onlineList) {
+        network.req({
+          baseURL: 'https://pay.cco.vin/pay/info'
+        }).then((res) => {
+          this.donateList = res
+        })
+      }
     }
   },
   mounted() {
