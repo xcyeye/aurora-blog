@@ -36,7 +36,6 @@
     <Content />
   </div>
 </template>
-
 <script lang="ts">
 import { computed, defineComponent } from 'vue'
 import { usePageFrontmatter, useSiteLocaleData, withBase} from '@vuepress/client'
@@ -47,10 +46,9 @@ import HomeSocial from './child/home/HomeSocial.vue'
 import EasyTyper from "easy-typer-js";
 import HomeSidebarSocialItem from './child/side/HomeSidebarSocialItem'
 import {useThemeLocaleData} from "../composables";
-import smoothscroll from 'smoothscroll-polyfill';
 //导入配置属性
 const network = require('../public/js/network.js')
-
+import smoothscroll from 'smoothscroll-polyfill';
 export default defineComponent({
   name: 'Home',
   components: {

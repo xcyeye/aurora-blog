@@ -111,20 +111,16 @@ export default {
     try {
       this.donateProduct = this.donate.donateProduct
     }catch (e) {
-
     }
-
     if (this.themeProperty.randomColor === undefined || this.themeProperty.randomColor == null) {
       let background_color = this.$store.state.defaultRandomColors[
           this.getRandomInt(0,this.$store.state.defaultRandomColors.length -1)]
-
       this.hexToRgbColor = this.hexToRgb(background_color)
     }else {
       let background_color = this.themeProperty.randomColor[
           this.getRandomInt(0,this.themeProperty.randomColor.length -1)]
       this.hexToRgbColor = this.hexToRgb(background_color)
     }
-
     if (this.themeProperty.donate !== undefined) {
       if (this.donate.onlineList) {
         network.req({
@@ -150,11 +146,9 @@ export default {
       if (this.donate === undefined) {
         return false
       }
-
       if (this.donate.onlineList === undefined) {
         return false
       }
-
       return this.donate.onlineList
     },
     setSpanStyle() {
@@ -203,12 +197,10 @@ export default {
       }else {
         $(".donate-list-filed").slideToggle(350)
       }
-
     }
   },
 }
 </script>
 
 <style scoped>
-
 </style>
