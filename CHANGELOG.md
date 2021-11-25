@@ -1,4 +1,66 @@
-# [1.0.0](https://github.com/vuepress-aurora/vuepress-theme-aurora/compare/v1.8.0...v1.0.0) (2021-11-21)
+# [1.0.0](https://github.com/vuepress-aurora/vuepress-theme-aurora/compare/v1.9.3...v1.0.0) (2021-11-25)
+
+
+
+## [1.9.3](https://github.com/vuepress-aurora/vuepress-theme-aurora/compare/v1.9.2...v1.9.3) (2021-11-25)
+
+
+### Bug Fixes
+
+* optimize coze-plugin ([f0949f0](https://github.com/vuepress-aurora/vuepress-theme-aurora/commit/f0949f0cd8a4d228dbd79ee9da77ebd2f024aac8))
+
+
+
+## [1.9.2](https://github.com/vuepress-aurora/vuepress-theme-aurora/compare/v1.9.0...v1.9.2) (2021-11-24)
+
+
+### Bug Fixes
+
+* fix build failure problem ([30bfd88](https://github.com/vuepress-aurora/vuepress-theme-aurora/commit/30bfd880a9eecf28bebb0fcc4c17b99d011c1b64))
+* fix donate page style ([bb649e6](https://github.com/vuepress-aurora/vuepress-theme-aurora/commit/bb649e66003366ec2e571c48d43c1c0e136ce4f4))
+* fix safair article page sticky failure ([45b05e7](https://github.com/vuepress-aurora/vuepress-theme-aurora/commit/45b05e7c4aa994ab821c97037202460a1bb45f79))
+* fix safair smooth scrolling ([7f819a1](https://github.com/vuepress-aurora/vuepress-theme-aurora/commit/7f819a1824e594a36d8c040492df30c35916dcc4))
+* fix the error of appreciation page style ([02eac79](https://github.com/vuepress-aurora/vuepress-theme-aurora/commit/02eac790d7dfd81b94e1909a6a647e1f0eac59fb))
+* optimize comment display and hide ([106e7e7](https://github.com/vuepress-aurora/vuepress-theme-aurora/commit/106e7e7a12a3b2892aa9b1dc068c0e2be2dc54da))
+
+
+### Features
+
+* add comment display and hide ([092fa7d](https://github.com/vuepress-aurora/vuepress-theme-aurora/commit/092fa7dad67645b1a13a70bd4cebb5f67135f061))
+* add whether show pageMeta info ([7bc6b46](https://github.com/vuepress-aurora/vuepress-theme-aurora/commit/7bc6b468e7d847bca1098a10dac161eac8012ce3))
+
+
+
+# [1.9.0](https://github.com/vuepress-aurora/vuepress-theme-aurora/compare/v1.8.1...v1.9.0) (2021-11-23)
+
+
+### Bug Fixes
+
+* fix it without discoloration ([14fe456](https://github.com/vuepress-aurora/vuepress-theme-aurora/commit/14fe4568646ba3367d07c1bc1c886cdadd17c1ee))
+* fix the article content beyond the div ([201bd8e](https://github.com/vuepress-aurora/vuepress-theme-aurora/commit/201bd8e01a8f4364d3697c81e36b98009e9273d2))
+* fix the automatic scrolling and style of tag page ([c1996c4](https://github.com/vuepress-aurora/vuepress-theme-aurora/commit/c1996c49305d55f836acf1acf449e7699ea8dff8))
+* fix the center alignment problem of the archive on the mobile phone ([1265fd3](https://github.com/vuepress-aurora/vuepress-theme-aurora/commit/1265fd3517ecf706c27889400f6f38e58d28192f))
+* fix the height of tag page content ([4bffb3f](https://github.com/vuepress-aurora/vuepress-theme-aurora/commit/4bffb3fdfa92887cb92c373b5e8a47d0ad577fa7))
+* fix the homepage visual problem ([54ab0c4](https://github.com/vuepress-aurora/vuepress-theme-aurora/commit/54ab0c4902205abe8c1204af683cfd3bda05e723))
+* fix the issue of tag page title ([40b3411](https://github.com/vuepress-aurora/vuepress-theme-aurora/commit/40b34113b94b582a4a86f7daf51fe84a50ad127e))
+* fix the mobile phone style of the archive page ([32cf602](https://github.com/vuepress-aurora/vuepress-theme-aurora/commit/32cf60288d819c5f17ce1ff7eb3ca584f41ebc76))
+* fix the mobile phone style of the homepage ([c3f44eb](https://github.com/vuepress-aurora/vuepress-theme-aurora/commit/c3f44ebbaa34605983cce4453ba93baf04a12578))
+* fix the problem that bubbles cannot be displayed on the homepage ([e5d61fd](https://github.com/vuepress-aurora/vuepress-theme-aurora/commit/e5d61fd75d13a111a0db271dabf86e3754cc5227))
+* fix the problem that talk about likes cannot be updated synchronously ([b4698bb](https://github.com/vuepress-aurora/vuepress-theme-aurora/commit/b4698bb50781200179e9ab5f4176e9347dc6f803))
+* fix the title position of the top image ([d95609a](https://github.com/vuepress-aurora/vuepress-theme-aurora/commit/d95609a593bb0c019a2c3b26453c5940f5f5b1c5))
+* optimized style ([601d4e9](https://github.com/vuepress-aurora/vuepress-theme-aurora/commit/601d4e992757ffc1f9099b5c4d5996bc861c57d5))
+* repair music, lazy loading of pictures ([2d121ec](https://github.com/vuepress-aurora/vuepress-theme-aurora/commit/2d121ecd00290674522cd97b7146b5acf365364e))
+* reset image lazy loading ([45a974e](https://github.com/vuepress-aurora/vuepress-theme-aurora/commit/45a974ea2ec3c7f951411aad04111946f072221b))
+
+
+### Features
+
+* add a custom cover image to the top image ([9af8154](https://github.com/vuepress-aurora/vuepress-theme-aurora/commit/9af81543490d41fa672e15d99446917096ac54ae))
+* disable getting folder name as category name ([4ce677b](https://github.com/vuepress-aurora/vuepress-theme-aurora/commit/4ce677be44943fff1141321a813d8b00d6c63fa8))
+
+
+
+## [1.8.1](https://github.com/vuepress-aurora/vuepress-theme-aurora/compare/v1.8.0...v1.8.1) (2021-11-21)
 
 
 
