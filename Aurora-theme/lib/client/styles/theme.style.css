@@ -3865,6 +3865,10 @@ body::-webkit-scrollbar-thumb {
     cursor: pointer
 }
 
+.aurora-nav-font-common {
+    font-family: aurora-nav-font;
+}
+
 @-webkit-keyframes navbar-link-item-hover {
     0% {
         color: var(--fontColor)

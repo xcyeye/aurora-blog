@@ -140,7 +140,7 @@ module.exports = {
             {
                 rel: 'stylesheet',
                 type: 'text/css',
-                href: '//at.alicdn.com/t/font_2849934_7el0cvwfmn.css'
+                href: '//at.alicdn.com/t/font_2932340_asqdp2wdeg.css'
             }
         ],
         /*[
@@ -172,12 +172,12 @@ module.exports = {
             {
                 text: '快速开始',
                 link: '/readme/',
-                iconClass: 'aurora-0023pacman'
+                iconClass: 'aurora-navbar-si-glyph-game-1'
             },
             {
                 text: '百度一下',
                 link: 'https://www.baidu.com/',
-                iconClass: 'aurora-0023pacman'
+                iconClass: 'aurora-navbar-si-glyph-billiard-ball'
             },
             /*{
                 text: "所有配置",
@@ -186,7 +186,7 @@ module.exports = {
             },*/
             {
                 text: '好用网站',
-                iconClass: 'aurora-si-glyph-global',
+                iconClass: 'aurora-navbar-si-glyph-glass-water',
                 children: [
                     {
                         text: 'npm',
@@ -231,7 +231,7 @@ module.exports = {
             },
             {
                 text: '问题和bug',
-                iconClass: 'aurora-si-glyph-global',
+                iconClass: 'aurora-navbar-si-glyph-emoticon',
                 children: [
                     {
                         text: 'CHANGELOG',
@@ -262,7 +262,7 @@ module.exports = {
             },
             {
                 text: '其他配置',
-                iconClass: 'aurora-sticker',
+                iconClass: 'aurora-navbar-shoulijindu-xuanzhong',
                 children: [
                     {
                         children: [
@@ -290,32 +290,32 @@ module.exports = {
             {
                 text: "about",
                 link: "/about",
-                iconClass: 'aurora-chat'
+                iconClass: 'aurora-navbar-a-ziyuan107'
             },
             {
                 text: 'link',
                 link: '/link',
-                iconClass: 'aurora-menu'
+                iconClass: 'aurora-navbar-guide'
             },
             {
                 text: 'tag',
                 link: '/tag',
-                iconClass: 'aurora-page'
+                iconClass: 'aurora-navbar-hua2'
             },
             {
                 text: 'chat',
                 link: '/mood',
-                iconClass: 'aurora-volume-icon'
+                iconClass: 'aurora-navbar-weather'
             },
             {
                 text: "photo",
                 link: '/photo',
-                iconClass: 'aurora-icon-time'
+                iconClass: 'aurora-navbar-kechengguanli'
             },
             {
                 text: "time",
                 link: '/archive',
-                iconClass: 'aurora-icon-time'
+                iconClass: 'aurora-navbar-si-glyph-egg'
             }
         ],
 
@@ -1158,7 +1158,7 @@ module.exports = {
         excludePath: ['/footer.html','/v1.3.0/','/plugin/'],
 
         //类别项是否包含文件夹名，默认包含
-        categoriesIncludeFolderName: false,
+        categoriesIncludeFolderName: true,
         //首页波浪效果设置
         wave: {
             showWave: true

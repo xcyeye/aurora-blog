@@ -1,6 +1,6 @@
 <template>
   <div class="dropdown-wrapper" :class="{ open }">
-    <span :class="item.iconClass" class="aurora-font aurora-navbar-icon"></span>
+    <span :class="item.iconClass" class="aurora-nav-font aurora-navbar-icon"></span>
     <button
       class="dropdown-title"
       type="button"

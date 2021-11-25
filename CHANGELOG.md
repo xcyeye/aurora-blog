@@ -1,4 +1,20 @@
-# [1.0.0](https://github.com/vuepress-aurora/vuepress-theme-aurora/compare/v1.9.3...v1.0.0) (2021-11-25)
+# [1.0.0](https://github.com/vuepress-aurora/vuepress-theme-aurora/compare/v1.9.5...v1.0.0) (2021-11-25)
+
+
+
+## [1.9.5](https://github.com/vuepress-aurora/vuepress-theme-aurora/compare/v1.9.3...v1.9.5) (2021-11-25)
+
+
+### Bug Fixes
+
+* fix commend component ([5a85aff](https://github.com/vuepress-aurora/vuepress-theme-aurora/commit/5a85affeaa684a15f8bcdb5f90ee13173eb2306c))
+* fix smoothscroll ([69a21a3](https://github.com/vuepress-aurora/vuepress-theme-aurora/commit/69a21a38d25cf0f62ed7f109332adfe44c5c88f3))
+* fix tag page smoothscroll wrong ([b2f1155](https://github.com/vuepress-aurora/vuepress-theme-aurora/commit/b2f11551750cdee188a40844c3bee8b140e53912))
+
+
+### Features
+
+* talk about support for line breaks ([44f76d4](https://github.com/vuepress-aurora/vuepress-theme-aurora/commit/44f76d420ce57efc494c2e371ac9307eaf964309))
 
 
 

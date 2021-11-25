@@ -1,5 +1,5 @@
 <template>
-  <span :class="item.iconClass" v-if="showIcon" class="aurora-font aurora-navbar-icon"></span>
+  <span :class="item.iconClass" v-if="showIcon" class="aurora-nav-font aurora-navbar-icon"></span>
   <RouterLink
     v-if="isRouterLink"
     class="nav-link"
