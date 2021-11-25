@@ -5184,7 +5184,7 @@ body::-webkit-scrollbar-thumb {
     margin: 0 auto;
     margin-bottom: 3rem;
     border-radius: var(--borderRadius);;
-    background-color: #F2F2F2;
+    background-color: rgba(242, 242, 242, var(--opacity));
 }
 
 @media screen and (max-width:719px) {

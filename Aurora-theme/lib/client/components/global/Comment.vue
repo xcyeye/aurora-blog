@@ -1,6 +1,6 @@
 <template>
   <div id="control-comment" class="aurora-control-comment-box" v-if="showComment">
-    <div class="theme-comment-box" :class="{'show-theme-comment-box': showCommentAnimateClass}" @click="showCommentAnimate">
+    <div :style="$store.state.borderRadiusStyle + $store.state.opacityStyle" class="theme-comment-box" :class="{'show-theme-comment-box': showCommentAnimateClass}" @click="showCommentAnimate">
       <span class="aurora-comment-common aurora-iconfont-common page-comment-icon" ></span>
       <span class="aurora-comment-common aurora-comment-text">点击评论</span>
     </div>
