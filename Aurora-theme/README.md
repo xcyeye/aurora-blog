@@ -1,6 +1,6 @@
 ## Introduce
 
-<a target="_blank" href="http://aurora.cco.vin/" >Demo</a>
+<a target="_blank" href="http://aurora.xcye.xyz/" >Demo</a>
 
 > A vuepress-based animation blog theme, simple, beautiful, multi-color, multiple custom functions, providing article poster sharing, talk, photo album, comment and other features
 >
@@ -12,13 +12,17 @@
 
 如果你之前没有使用过`vuepress`，那么安装过程，可以查看<a target="_blank" href="https://v2.vuepress.vuejs.org/zh/guide/getting-started.html">官方教程</a>或者本主题<a target="_blank" href="/readme/introduce.md">详细安装教程</a>
 
-主题使用文档地址为 <a href="https://aurora.cco.vin/" target="_blank">**click me**</a>
+主题使用文档地址为 <a href="https://aurora.xcye.xyz/" target="_blank">**click me**</a>
 
-<a href="https://blog.cco.vin/" target="_blank"> **Demo** </a>
+<a href="https://xcye.xyz/" target="_blank"> **Demo** </a>
 
-![image-20211009083404086](https://ooszy.cco.vin/img/blog-note/image-20211009083404086.png?x-oss-process=style/pictureProcess1)
+![image-20211125153810153](https://ooszy.cco.vin/img/blog-note/image-20211125153810153.png?x-oss-process=style/pictureProcess1)
 
-![image-20211014230618458](https://ooszy.cco.vin/img/blog-note/image-20211014230618458.png?x-oss-process=style/pictureProcess1)
+![image-20211125154003812](https://ooszy.cco.vin/img/blog-note/image-20211125154003812.png?x-oss-process=style/pictureProcess1)
+
+
+
+![image-20211125163143029](https://ooszy.cco.vin/img/blog-note/image-20211125163143029.png?x-oss-process=style/pictureProcess1)
 
 ## Feature
 
@@ -64,7 +68,7 @@
 - 安装依赖
 
 ```sh
-npm i vuepress@2.0.0-beta.25
+npm i vuepress@2.0.0-beta.27
 npm i vuepress-theme-aurora
 ```
 
@@ -76,12 +80,11 @@ npm i vuepress-theme-aurora
   "scripts": {
       "test": "echo \"Error: no test specified\" && exit 1",
       "dev": "vuepress dev docs",
-      "build": "vuepress build docs",
-      "deploy": "bash deploy.sh"
+      "build": "vuepress build docs"
     },
   ```
-
   
+
 
 ## 使用主题
 
@@ -161,11 +164,5 @@ npm run dev
 ![](https://ooszy.cco.vin/img/theme/photo-theme.jpg)
 ![](https://ooszy.cco.vin/img/theme/tag.jpg)
 
-或者我的<a target="_blank" href="https://blog.cco.vin">博客站点</a>
-
-## 首页配置
-
-
-
-[首页](../homeconfig.md)
+或者我的[博客站点](https://xcye.xyz)
 

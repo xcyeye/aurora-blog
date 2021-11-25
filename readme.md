@@ -22,7 +22,7 @@
 
 
 
-
+![image-20211125163143029](https://ooszy.cco.vin/img/blog-note/image-20211125163143029.png?x-oss-process=style/pictureProcess1)
 
 ## Feature
 
@@ -68,7 +68,7 @@
 - 安装依赖
 
 ```sh
-npm i vuepress@2.0.0-beta.25
+npm i vuepress@2.0.0-beta.27
 npm i vuepress-theme-aurora
 ```
 
@@ -80,12 +80,11 @@ npm i vuepress-theme-aurora
   "scripts": {
       "test": "echo \"Error: no test specified\" && exit 1",
       "dev": "vuepress dev docs",
-      "build": "vuepress build docs",
-      "deploy": "bash deploy.sh"
+      "build": "vuepress build docs"
     },
   ```
-
   
+
 
 ## 使用主题
 
@@ -165,11 +164,5 @@ npm run dev
 ![](https://ooszy.cco.vin/img/theme/photo-theme.jpg)
 ![](https://ooszy.cco.vin/img/theme/tag.jpg)
 
-或者我的<a target="_blank" href="https://blog.cco.vin">博客站点</a>
-
-## 首页配置
-
-
-
-[首页](../homeconfig.md)
+或者我的[博客站点](https://xcye.xyz)
 
