@@ -1,3 +1,10 @@
+---
+tag: [bubble,plugin]
+categories: [plugin]
+---
+
+
+
 # vuepress-plugin-bubble
 
 ::: tip

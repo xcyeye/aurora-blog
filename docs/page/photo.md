@@ -1,5 +1,5 @@
 ---
-categories: [相册,photo]
+tag: [相册,photo]
 ---
 
 

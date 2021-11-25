@@ -1,5 +1,5 @@
 ---
-categories: [海报,poster]
+tag: [海报,poster]
 ---
 
 

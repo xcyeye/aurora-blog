@@ -2804,10 +2804,6 @@ body::-webkit-scrollbar-thumb {
         margin-bottom: 1rem
     }
 
-    #poster-button {
-        width: 96%
-    }
-
     #poster-img {
         display: none;
         height: -webkit-max-content;

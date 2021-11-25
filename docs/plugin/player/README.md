@@ -1,3 +1,10 @@
+---
+tag: [music,player,播放器,plugin]
+categories: [plugin]
+---
+
+
+
 # vuepress-plugin-player
 
 ::: tip

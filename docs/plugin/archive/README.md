@@ -1,3 +1,10 @@
+---
+tag: [archive,plugin]
+categories: [plugin]
+---
+
+
+
 # vuepress-plugin-archive
 
 ::: tip

@@ -1,5 +1,5 @@
 ---
-categories: [部署,deploy,Github Page,自定义域名]
+tag: [部署,deploy,Github Page,自定义域名]
 ---
 
 
