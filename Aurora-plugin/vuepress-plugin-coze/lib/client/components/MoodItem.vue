@@ -12,7 +12,7 @@
             <span v-html="moodItem.attributes.mood_content"></span>
             <div class="coze-mood-time">
               <span>@{{moodItem.attributes.mood_user}}</span>
-              <span :data="getUpdatedTime">发布于: {{cozeYear}}-{{cozeMonth}}-{{cozeDay}}</span>
+              <span :data="getUpdatedTime">&nbsp;&nbsp;发布于: {{cozeYear}}-{{cozeMonth}}-{{cozeDay}}</span>
             </div>
             <slot name="coze-mood-content"></slot>
           </div>
