@@ -29,7 +29,7 @@
     </div>
 
     <div v-show="getShowMoodControl(2)" class="add-mood" id="add-mood">
-    <!--<div v-show="true" class="add-mood" id="add-mood">-->
+      <!--<div v-show="true" class="add-mood" id="add-mood">-->
       <div class="poster-cancel">
         <span class="coze-home-menu-ico" @click="cancelEdit"></span>&nbsp;
       </div>
