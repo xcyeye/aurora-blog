@@ -23,7 +23,6 @@
 import HomePageItem from "./child/home/HomePageItem";
 import {useThemeData} from "../composables";
 import Pagination from "./Pagination";
-import smoothscroll from 'smoothscroll-polyfill';
 export default {
   name: "HomeBottom",
   components: {
@@ -73,6 +72,7 @@ export default {
       let start = (currentPageNum -1) * this.pageSize
       let end = start + this.pageSize
       this.showPageArr = this.allPageArr.slice(start, end)
+      const smoothscroll = require('smoothscroll-polyfill');
       smoothscroll.polyfill();
       this.$refs["home-bottom-scroll"].scrollIntoView({behavior: "smooth"})
     },

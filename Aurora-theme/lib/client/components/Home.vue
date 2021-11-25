@@ -48,7 +48,6 @@ import HomeSidebarSocialItem from './child/side/HomeSidebarSocialItem'
 import {useThemeLocaleData} from "../composables";
 //导入配置属性
 const network = require('../public/js/network.js')
-import smoothscroll from 'smoothscroll-polyfill';
 export default defineComponent({
   name: 'Home',
   components: {
@@ -300,6 +299,7 @@ export default defineComponent({
   },
   methods: {
     clickDown() {
+      const smoothscroll = require('smoothscroll-polyfill');
       smoothscroll.polyfill();
       document.querySelector(".home-bottom").scrollIntoView({behavior: "smooth"})
     },
