@@ -107,7 +107,8 @@ export default {
       themeProperty: '',
       tagIndex: 0,
       pageSize: 5,
-      showPageArr: []
+      showPageArr: [],
+      isLoadingFinish: false
     }
   },
   created() {
@@ -143,6 +144,7 @@ export default {
     }
   },
   mounted() {
+    this.isLoadingFinish = true
     this.autoScroll()
     setTimeout(() => {
       this.tagArr = this.$store.state.tagArr
@@ -150,6 +152,9 @@ export default {
     },100)
   },
   watch: {
+    isLoadingFinish() {
+      this.autoScroll()
+    },
     getRouteQuery(nV,oV) {
       if (this.$route.query.tag === undefined) {
         return
@@ -203,7 +208,9 @@ export default {
       let start = (currentNum -1) * this.pageSize
       let end = start + this.pageSize
       this.showPageArr = this.allPageMap.slice(start,end)
-      this.autoScroll()
+      if (this.isLoadingFinish) {
+        this.autoScroll()
+      }
     },
     autoScroll() {
       const smoothscroll = require('smoothscroll-polyfill');
