@@ -1,6 +1,6 @@
 ## Introduce
 
-<a target="_blank" href="http://aurora.xcye.xyz/" >Demo</a>
+<a target="_blank" href="http://aurora.cco.vin/" >Demo</a>
 
 > A vuepress-based animation blog theme, simple, beautiful, multi-color, multiple custom functions, providing article poster sharing, talk, photo album, comment and other features
 >
@@ -11,18 +11,6 @@
 
 
 如果你之前没有使用过`vuepress`，那么安装过程，可以查看<a target="_blank" href="https://v2.vuepress.vuejs.org/zh/guide/getting-started.html">官方教程</a>或者本主题<a target="_blank" href="/readme/introduce.md">详细安装教程</a>
-
-主题使用文档地址为 <a href="https://aurora.xcye.xyz/" target="_blank">**click me**</a>
-
-<a href="https://xcye.xyz/" target="_blank"> **Demo** </a>
-
-![image-20211125153810153](https://ooszy.cco.vin/img/blog-note/image-20211125153810153.png?x-oss-process=style/pictureProcess1)
-
-![image-20211125154003812](https://ooszy.cco.vin/img/blog-note/image-20211125154003812.png?x-oss-process=style/pictureProcess1)
-
-
-
-![image-20211125163143029](https://ooszy.cco.vin/img/blog-note/image-20211125163143029.png?x-oss-process=style/pictureProcess1)
 
 ## Feature
 
@@ -53,84 +41,106 @@
 
 
 
-## 安装
+## Quick start
+
+### Node安装
+
+运行环境需要依赖`node`，如果你未安装`node`，请先安装node，我安装的版本为`v14.17.3`
+
+> 安装node可查看<a href="https://aurora.xcye.xyz/node.html" target="_blank">node 安装</a>
 
 
 
+### 安装脚手架
 
+- npm
 
-运行环境需要依赖`node`，所以在安装之前，请确保操作系统已经安装了node，我运行时的版本为`v14.17.3`
-
-> 安装node可查看<a href="https://aurora.cco.vin/use/useTheme.html" target="_blank">node 安装</a>
-
-- 创建新文件夹`blog-demo`,在此文件夹进入cmd，使用`npm init`命令初始化，你会得到一个`package.json`文件
-
-- 安装依赖
-
-```sh
-npm i vuepress@2.0.0-beta.27
-npm i vuepress-theme-aurora
-```
-
-
-
-- 将下面内容复制替换`package.json`中的scripts项
-
-  ```json
-  "scripts": {
-      "test": "echo \"Error: no test specified\" && exit 1",
-      "dev": "vuepress dev docs",
-      "build": "vuepress build docs"
-    },
+  ```sh
+  npm i vuepress-theme-cli -g
   ```
-  
 
+- yarn
 
-## 使用主题
-
-#### 1.配置config.js
-
-在`docs/.vuepress/config.js`下，添加下面内容
-
-```js
-module.exports = {
-    //设置head 一定要加入<script src="https://at.alicdn.com/t/font_2849934_v6y652peian.js"></script>项配置，否则一些图标不能正常显示
-    head: [
-        [
-            "script",
-            {
-                src: "https://at.alicdn.com/t/font_2849934_v6y652peian.js",
-            },
-        ]
-    ],
-    theme: 'aurora',
-    themeConfig: {
-        darkMode: false,
-    }
-};
-```
+  ```sh
+  yarn global vuepress-theme-cli
+  ```
 
 
 
-#### 2.使用
+### 创建博客
 
-运行
+待脚手架安装成功之后，进入cmd中
+
+![image-20211127104249135](https://ooszy.cco.vin/img/blog-note/image-20211127104249135.png?x-oss-process=style/pictureProcess1)
+
+
+
+在命令行处输入下面命令
 
 ```sh
-npm run dev
+aurora blog-demo
 ```
 
-你将会看到下图
+> `blog-demo`是你的博客文件件名称，会自动创建以此名字命名的文件夹
+
+
+
+::: tip
+
+如果提示
+
+```sh
+'aurora' 不是内部或外部命令，也不是可运行的程序
+或批处理文件。
+```
+
+请看[这里](https://aurora.xcye.xyz/issue/cli-issue.md)
+
+:::
+
+
+
+![image-20211127104417748](https://ooszy.cco.vin/img/blog-note/image-20211127104417748.png?x-oss-process=style/pictureProcess1)
+
+
+
+> 这个过程大概几秒，取决于你的网速，待安装成功之后，你会发现在当前目录下，多了一个目录
+
+![image-20211127104750379](https://ooszy.cco.vin/img/blog-note/image-20211127104750379.png?x-oss-process=style/pictureProcess1)
+
+
+
+> 然后进入此`demo-blog`目录中，使用命令`npm install`或者`yarn install`安装所需的依赖，待依赖安装成功之后，使用`npm run dev`或者`yarn dev`启动博客
+
+![image-20211127104833140](https://ooszy.cco.vin/img/blog-note/image-20211127104833140.png?x-oss-process=style/pictureProcess1)
+
+
+
+
+
+
+
+> 运行成功之后，会出现一个地址，你只需要在浏览器中，输入这个地址，就可以看到下面的页面
+
+
 
 ![image-20211010232918219](https://ooszy.cco.vin/img/blog-note/image-20211010232918219.png?x-oss-process=style/pictureProcess1)
 
 
 
-> 恭喜你，到这里，你已经安装成功了，接下来便可以尽情书写博客和修改配置(`上图展示出来的效果是默认配置，你可以更改`)
->
-> 主题配置修改，请参考此<a href="https://github.com/qsyyke/vuepress-theme-aurora/blob/master/docs/.vuepress/config.js">config.js</a>文件
+::: tip
 
+恭喜你，到这里，你已经安装成功了，接下来便可以尽情书写博客和修改配置(`上图展示出来的效果是默认配置，你可以更改`)
 
+为了更好的对主题进行配置，你可以直接复制我GitHub中的<a href="https://github.com/vuepress-aurora/vuepress-theme-aurora/blob/master/docs/.vuepress/config-copy.js" target="_blank">config.js</a>文件
+
+推荐阅读
+
+- [主题所有配置](/home/config.md)
+- [问题及报错解决](/issue/bug.md)
+- [注意更新日志](/issue/CHANGELOG.md)
+
+:::
 
 ## 联系我
 
@@ -145,11 +155,11 @@ npm run dev
 
 ## 渲染
 
-更多的体验效果，可以查看<a href="https://aurora.cco.vin/">演示站点</a>
-
-![](https://ooszy.cco.vin/img/blog-note/%E4%B8%BB%E9%A2%98.jpg?x-oss-process=style/pictureProcess1)
+更多的体验效果，可以查看<a href="https://aurora.xcye.xyz/">演示站点</a>
 
 ![image-20211010162940583](https://ooszy.cco.vin/img/blog-note/image-20211010162940583.png?x-oss-process=style/pictureProcess1)
+
+![image-20211111090833031](https://ooszy.cco.vin/img/blog-note/image-20211111090833031.png?x-oss-process=style/pictureProcess1)
 
 ![image-20211010163133623](https://ooszy.cco.vin/img/blog-note/image-20211010163133623.png?x-oss-process=style/pictureProcess1)
 
@@ -164,5 +174,9 @@ npm run dev
 ![](https://ooszy.cco.vin/img/theme/photo-theme.jpg)
 ![](https://ooszy.cco.vin/img/theme/tag.jpg)
 
-或者我的[博客站点](https://xcye.xyz)
+或者我的<a target="_blank" href="https://blog.xcye.xyz">博客站点</a>
+
+## 首页配置
+
+[首页](https://aurora.xcye.xyz/homeconfig.html)
 
