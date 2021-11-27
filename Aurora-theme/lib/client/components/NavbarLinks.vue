@@ -153,6 +153,6 @@ const navbarRepo = useNavbarRepo()
 const navbarLinks = computed(() => [
   ...navbarConfig.value,
   ...navbarSelectLanguage.value,
-  ...navbarRepo.value,
+  // ...navbarRepo.value,
 ])
 </script>

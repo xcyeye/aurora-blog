@@ -35,7 +35,7 @@
         <div v-if="menuItem.link" class="sidebar-menu-item">
           <div class="menu-item-left">
             <!--<span :style="setHomeNavIco(menuItem.link)" :class="setHomeClass(menuItem.link)" class="aurora-iconfont-common"></span>-->
-            <span class="aurora-iconfont-common aurora-font" :class="setHomeClass(menuItem)"></span>
+            <span class="aurora-nav-font aurora-font" :class="setHomeClass(menuItem)"></span>
           </div>
           <div class="menu-item-right">
             <a :key="index" :href="menuItem.link">
@@ -428,7 +428,7 @@ export default {
     const navbarLinks = computed(() => [
       ...navbarConfig.value,
       ...navbarSelectLanguage.value,
-      ...navbarRepo.value,
+      // ...navbarRepo.value,
     ])
     return {
       frontmatter,

@@ -140,7 +140,7 @@ module.exports = {
             {
                 rel: 'stylesheet',
                 type: 'text/css',
-                href: '//at.alicdn.com/t/font_2932340_asqdp2wdeg.css'
+                href: '//at.alicdn.com/t/font_2932340_r7zitafg82.css'
             }
         ],
         /*[
@@ -316,6 +316,11 @@ module.exports = {
                 text: "time",
                 link: '/archive',
                 iconClass: 'aurora-navbar-si-glyph-egg'
+            },
+            {
+                text: 'Aurora',
+                link: 'https://github.com/vuepress-aurora/vuepress-theme-aurora',
+                iconClass: 'aurora-navbar-github-circle'
             }
         ],
 
@@ -325,7 +330,7 @@ module.exports = {
         //项目地址
         repo: "https://github.com/qsyyke/vuepress-theme-aurora",
 
-        repoIconClass: 'aurora-github1',
+        repoIconClass: 'aurora-navbar-github',
 
         //md文件的仓库地址
         docsRepo: 'https://github.com/qsyyke/aurora-docs',

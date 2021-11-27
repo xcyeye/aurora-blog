@@ -22,7 +22,7 @@
   >
     <slot name="before" />
     {{ item.text }}
-    <OutboundLink v-if="isBlankTarget" />
+    <!--<OutboundLink v-if="isBlankTarget" />-->
     <slot name="after" />
   </a>
 </template>
@@ -55,8 +55,6 @@ export default defineComponent({
         return false
       }
     }
-  },
-  created() {
   },
   setup(props) {
     const route = useRoute()
