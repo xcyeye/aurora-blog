@@ -74,6 +74,10 @@ export default defineComponent({
   },
   emits: ['getHeadLine'],
   created() {
+    if (this.$route.hash !== "") {
+      this.$router.push(this.$route.hash)
+    }
+
     this.showPageMeta = this.themeProperty.showPageMeta
 
     //如果手机端侧边栏打开的，那么就关闭
