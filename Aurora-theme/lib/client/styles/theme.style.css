@@ -4935,9 +4935,9 @@ body::-webkit-scrollbar-thumb {
 }
 
 .page-bottom-next {
-    margin-bottom: -1rem;
-    margin-top: 1rem;
-    height: 7rem;
+    /*margin-bottom: -1rem;*/
+    /*margin-top: 1rem;*/
+    height: 10rem;
     width: 100%;
     display: flex
 }
@@ -4957,11 +4957,12 @@ body::-webkit-scrollbar-thumb {
     left: 0;
     right: 0;
     filter: blur(1.7px);
-    z-index: -1;
+    z-index: -2;
     content: "";
     background-image: var(--homePageImgApi);
     background-repeat: no-repeat;
-    background-size: 100% 100%
+    background-position: center;
+    background-size: cover;
 }
 
 .page-next-left {
