@@ -24,8 +24,8 @@
                class="catalog-page-children-item">
             <div class="catalog-page-children-title">
               <!--<router-link :to="itemLevel1.path + '#' + itemLevel2.title">-->
-              <router-link :to="getCatalogPath(itemLevel1.path,itemLevel2.title)">
-                <span @click="clickCatalogTitle" :slug="itemLevel2.slug">{{itemLevel2.title}}</span>
+              <router-link :to="getCatalogPath(itemLevel1.path,itemLevel2.slug)">
+                <span @click="clickCatalogTitle($event,itemLevel2.slug)" :slug="itemLevel2.slug">{{itemLevel2.title}}</span>
               </router-link>
             </div>
 
@@ -34,7 +34,7 @@
               <div :style="setLevel3Style(itemLevel2Index)" class="page-catalog-children-level3">
                 <div :data="item.slug" v-for="item in itemLevel2.children"
                      class="page-catalog-children-level3-title">
-                  <router-link :to="itemLevel1.path + '#' + item.title">
+                  <router-link :to="$route.path + '#' + item.slug">
                     <span @click="clickCatalogTitle" :slug="item.slug">{{item.title}}</span>
                   </router-link>
                 </div>
@@ -89,12 +89,14 @@ export default {
   computed: {
     getCatalogPath() {
       return (path,title) => {
-        let pathSubstr = path.substr(path.length -1,1);
+        /*let pathSubstr = path.substr(path.length -1,1);
         if (pathSubstr === "/") {
           path = path.substr(0,path.length -1)
         }
 
-        return path + "#" + title
+        return path + "#" + title*/
+
+        return this.$route.path + "#" + title
       }
     },
     getCatalogLevel1Title() {
@@ -169,7 +171,8 @@ export default {
     window.addEventListener('scroll', this.handleScroll, true)
   },
   methods: {
-    clickCatalogTitle() {
+    clickCatalogTitle(e,title) {
+      // this.$router.push(this.$route.path + "#" + title)
       //如果手机端侧边栏打开的，那么就关闭
       if (this.$store.state.openMobileSidebar) {
         this.$store.commit("setOpenMobileSidebar",{

@@ -5,6 +5,10 @@
     margin-top: 0
 }
 
+html,body {
+     scroll-behavior: smooth;
+}
+
 h1[data-v-d8ec41bc],
 h2[data-v-d8ec41bc] {
     font-weight: 400

@@ -49,6 +49,7 @@
     "stylus-loader": "^6.1.0",
     "unplugin-vue-components": "^0.16.0",
     "vue-fucking-gallery": "^1.0.1",
+    "vue-fullpage.js": "^0.1.7",
     "vuepress-plugin-autometa": "^0.1.13",
     "vuex": "^4.0.0-0"
   },

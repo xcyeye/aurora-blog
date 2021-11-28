@@ -24,7 +24,7 @@ import HomeSidebar from "./components/child/side/HomeSidebar";
 import HomeBottom from "./components/HomeBottom";
 import AuroraGlobal from "./components/global/AuroraGlobal";
 import Archive from './components/Archive'
-const AV = require('leancloud-storage');
+//const AV = require('leancloud-storage');
 
 import './styles/index.scss';
 import './styles/photo.scss'
