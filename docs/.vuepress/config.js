@@ -1160,7 +1160,7 @@ module.exports = {
         //excludeTag: ["note"], 此配置项，不再需要使用
 
         //在统计文章，标签，类别的时候，需要排除的路径，只针对于根目录下的路径，
-        excludePath: ['/footer.html','/v1.3.0/','/plugin/'],
+        excludePath: ['/footer.html','/v1.3.0/','/plugin/',"/node.html","/style.html"],
 
         //类别项是否包含文件夹名，默认包含
         categoriesIncludeFolderName: true,

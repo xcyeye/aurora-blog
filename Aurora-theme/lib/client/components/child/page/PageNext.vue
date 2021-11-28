@@ -3,19 +3,19 @@
   <div :style="getBgSrc" class="page-bottom-next">
     <div class="page-next-left page-next-item">
       <router-link :to="prePage.path === undefined ? '' : prePage.path">
-        <span :data="prePage.path">{{prePage.title}}</span>
+        <span :data="prePage.path">{{prePage.title === "" ? recommendNoTitle : prePage.title}}</span>
       </router-link>
     </div>
     <div v-if="nextPage !== ''" class="page-next-right page-next-item">
       <router-link :to="nextPage.path === undefined ? '' : nextPage.path">
-        <span :data="nextPage.path">{{nextPage.title}}</span>
+        <span :data="nextPage.path">{{nextPage.title === "" ? recommendNoTitle : nextPage.title}}</span>
       </router-link>
     </div>
   </div>
 </template>
 
 <script>
-import {useThemeLocaleData} from "../../../composables";
+import {useThemeData, useThemeLocaleData} from "../../../composables";
 
 export default {
   name: "PageNextItem",
@@ -24,7 +24,9 @@ export default {
       //当前的激活的目录的数组
       currentCatalogObjectArr: null,
       prePage: '',
-      nextPage: ''
+      nextPage: '',
+      themeConfig: {},
+      recommendNoTitle: "╮(￣▽￣)╭"
     }
   },
   computed: {
@@ -46,6 +48,10 @@ export default {
     }
   },
   created() {
+    this.themeConfig = useThemeData().value
+    if (this.themeConfig.recommendNoTitle !== undefined) {
+      this.recommendNoTitle = this.themeConfig.recommendNoTitle
+    }
     let loadingCatalog = setInterval(() =>{
       if (this.$store.state.currentCatalogObjectArr.length !== 0) {
         this.currentCatalogObjectArr = this.$store.state.currentCatalogObjectArr
@@ -71,25 +77,31 @@ export default {
       let routePath = this.$route.path
       let targetIndex = 0
 
+      let excludePathArr = []
+
+      if (useThemeData().value.excludePath !== undefined) {
+        excludePathArr = useThemeData().value.excludePath
+      }
+
       new Promise((resolve,reject) => {
-        for (let i = 0; i < this.currentCatalogObjectArr.length; i++) {
-          //获取当前路由在当前侧边栏数组中的位置
-          /*if (routePath.search(this.currentCatalogObjectArr[i].path) !== -1) {
-            console.log(i)
-            console.log(this.currentCatalogObjectArr[i].path)
-            targetIndex = i
-            break
-          }*/
-          if (this.currentCatalogObjectArr[i].path === routePath) {
-            targetIndex = i
-            break
+        let currentCatalogObjectArr = this.currentCatalogObjectArr.filter(page => {
+          return !excludePathArr.includes(page.path)
+        })
+        resolve(currentCatalogObjectArr)
+      }).then((currentCatalogObjectArr) => {
+        new Promise((resolve,reject) => {
+          for (let i = 0; i < currentCatalogObjectArr.length; i++) {
+            if (currentCatalogObjectArr[i].path === routePath) {
+              targetIndex = i
+              break
+            }
           }
-        }
-        resolve()
-      }).then(() => {
-        let prePageObject = this.currentCatalogObjectArr[(targetIndex - 1) % this.currentCatalogObjectArr.length]
-        this.prePage = prePageObject === undefined ? this.currentCatalogObjectArr[this.currentCatalogObjectArr.length -1] : prePageObject
-        this.nextPage = this.currentCatalogObjectArr[(targetIndex + 1) % this.currentCatalogObjectArr.length]
+          resolve(currentCatalogObjectArr)
+        }).then((currentCatalogObjectArr) => {
+          let prePageObject = currentCatalogObjectArr[(targetIndex - 1) % currentCatalogObjectArr.length]
+          this.prePage = prePageObject === undefined ? currentCatalogObjectArr[currentCatalogObjectArr.length -1] : prePageObject
+          this.nextPage = currentCatalogObjectArr[(targetIndex + 1) % currentCatalogObjectArr.length]
+        })
       })
     }
   }
