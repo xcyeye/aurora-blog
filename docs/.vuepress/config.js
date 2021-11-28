@@ -872,7 +872,7 @@ module.exports = {
                 '友链申请要求',
                 '拒绝涉政/涉黄/太多广告/盈利性站点',
                 '站点能正常访问',
-                '这是一个html的测试<a href="https://blog.cco.vin" target="_blank">这是一个a标签</a>'
+                '这是一个html的测试<a href="https://aurora.xcye.xyz" target="_blank">这是一个a标签</a>'
             ]
         },
 

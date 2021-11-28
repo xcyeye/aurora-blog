@@ -1,4 +1,24 @@
-# [1.0.0](https://github.com/vuepress-aurora/vuepress-theme-aurora/compare/v1.9.5...v1.0.0) (2021-11-25)
+# [1.0.0](https://github.com/vuepress-aurora/vuepress-theme-aurora/compare/v1.9.6...v1.0.0) (2021-11-27)
+
+
+### Bug Fixes
+
+* fix navbar icon display ([9ccbf5d](https://github.com/vuepress-aurora/vuepress-theme-aurora/commit/9ccbf5dafd63d65cc6758ccc7864e9ef513c1b17))
+
+
+
+## [1.9.6](https://github.com/vuepress-aurora/vuepress-theme-aurora/compare/v1.9.5...v1.9.6) (2021-11-25)
+
+
+### Bug Fixes
+
+* fix the comment button background ([010dc5a](https://github.com/vuepress-aurora/vuepress-theme-aurora/commit/010dc5abf9d8beceacef77f1e58b8aebc792fdc5))
+* fix the description part of the friendship link is hidden ([911e3e4](https://github.com/vuepress-aurora/vuepress-theme-aurora/commit/911e3e4331f6fd73bec436ca0ae2f1b7978c88df))
+
+
+### Features
+
+* use separate font for navigation bar ([850f2a1](https://github.com/vuepress-aurora/vuepress-theme-aurora/commit/850f2a1a5ef388793399c614bc39970be46e06e8))
 
 
 

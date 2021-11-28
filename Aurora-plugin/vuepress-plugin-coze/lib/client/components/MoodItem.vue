@@ -127,7 +127,7 @@ export default {
     getUpdatedTime() {
       let updatedAt = this.moodItem.createdAt;
       let day = new Date(updatedAt).getDate();
-      let month = new Date(updatedAt).getMonth();
+      let month = new Date(updatedAt).getMonth() + 1;
       let year = new Date(updatedAt).getFullYear();
       gsap.to(this.$data, {duration: 1.1, cozeYearTemp:year, ease: 'sine'})
       gsap.to(this.$data, {duration: 2, cozeMonthTemp: month, ease: 'sine'})
