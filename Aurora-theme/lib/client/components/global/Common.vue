@@ -408,7 +408,6 @@ export default defineComponent({
     this.colorFontStyle = this.colorStyle + " "+ this.fontStyle
   },
   mounted() {
-
     this.width = document.body.clientWidth
 
     if (document.documentElement.clientWidth < 719) {

@@ -6,6 +6,7 @@
                  :show-sidebar-social="true"
                  :custom-id="'mobile-sidebar-custom'" :show-site="false"
                  :show-search="false"
+                 v-if="isShowMobileSidebar"
                  :show-enter-animate="false"
                  :show-sidebar-link="false"
                  :is-show-catalog="true">
@@ -71,6 +72,11 @@ export default {
   },
   created() {
     this.themeProperty = useThemeData().value
+  },
+  mounted() {
+    if (document.body.clientWidth <= 719) {
+      this.isShowMobileSidebar = true
+    }
   }
 }
 </script>

@@ -181,7 +181,6 @@ import Catalog from "../Catalog";
 import MobileSidebarNav from "./MobileSidebarNav";
 import HomeSidebarSocialItem from "./HomeSidebarSocialItem";
 import {useThemeData} from "../../../composables";
-import gsap from "gsap";
 export default {
   name: "HomeSidebar",
   components: {

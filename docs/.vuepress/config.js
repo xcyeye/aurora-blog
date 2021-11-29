@@ -122,6 +122,12 @@ module.exports = {
     //设置head 一定要加入<script src="https://at.alicdn.com/t/font_2849934_v6y652peian.js"></script>项配置，否则一些图标不能正常显示
     head: [
         [
+            "meta",{
+                "http-equiv": "Content-Security-Policy",
+                "content": "upgrade-insecure-requests"
+            }
+        ],
+        [
             "script",
             {
                 src: "https://at.alicdn.com/t/font_2849934_v6y652peian.js",
