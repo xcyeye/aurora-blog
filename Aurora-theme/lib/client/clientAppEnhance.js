@@ -26,6 +26,9 @@ import AuroraGlobal from "./components/global/AuroraGlobal";
 import Archive from './components/Archive'
 //const AV = require('leancloud-storage');
 
+//主题内置组件
+import Pins from "./components/global/inner/Pins";
+
 import './styles/index.scss';
 import './styles/photo.scss'
 //import './styles/coverStyle.css'
@@ -50,6 +53,7 @@ export default defineClientAppEnhance(({ app, router }) => {
     app.component("Tag",Tag)
     app.component("AuroraGlobal",AuroraGlobal)
     app.component("Archive",Archive)
+    app.component("Pins",Pins)
 
     /*let themeConfig = useThemeData().value
     let isSetLeanCloud = false

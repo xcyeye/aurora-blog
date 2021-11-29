@@ -5245,3 +5245,87 @@ body::-webkit-scrollbar-thumb {
     font-size: 18px;
     text-align: left;
 }
+
+/*内置组件*/
+.github-pins {
+    position: relative;
+    width: 100%;
+    border-radius: var(--borderRadius);
+    padding: 1rem;
+    box-sizing: border-box;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+
+:root {
+    --borderColor: #00cfc8;
+}
+
+.github-pins-inner,.github-pins-bg {
+    position: relative;
+    height: 100%;
+    width: 100%;
+}
+
+.github-pins-bg {
+    border-radius: var(--borderRadius);
+    background-position: center;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    background-image: url("https://github-readme-stats.vercel.app/api/pin/?username=vuepress-aurora&repo=vuepress-theme-aurora");
+}
+
+.github-pins-inner:before,.github-pins-inner:after {
+    content: "";
+    position: absolute;
+    width: 3.5rem;
+    height: 3.5rem;
+    transition: .3s ease-in-out;
+}
+
+.github-pins-inner:before {
+    top: 0;
+    left: 0;
+    border-top: .15rem solid var(--borderColor);
+    border-left: .15rem solid var(--borderColor);
+}
+
+.github-pins-inner:after {
+    right: 0;
+    bottom: 0;
+    border-bottom: .15rem solid var(--borderColor);
+    border-right: .15rem solid var(--borderColor);
+}
+
+@media screen and (min-width:719px) {
+    .github-pins-inner img {
+        width: 100%;
+        height: 100%;
+        object-fit:cover;
+        box-shadow: none;
+    }
+
+    .github-pins-inner:hover::before,.github-pins-inner:hover::after {
+        width: 85%;
+        height: 75%;
+    }
+}
+
+@media screen and (max-width:719px) {
+    .github-pins-inner:before,.github-pins-inner:after {
+        width: 2.5rem;
+        height: 2.5rem;
+    }
+
+    .github-pins-inner img {
+        box-shadow: none;
+    }
+
+    .github-pins {
+        height: max-content;
+    }
+
+    .github-pins-inner:hover::before,.github-pins-inner:hover::after {
+        width: 75%;
+        height: 75%;
+    }
+}
