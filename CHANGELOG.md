@@ -1,9 +1,23 @@
-# [1.0.0](https://github.com/vuepress-aurora/vuepress-theme-aurora/compare/v1.9.6...v1.0.0) (2021-11-27)
+# [1.0.0](https://github.com/vuepress-aurora/vuepress-theme-aurora/compare/v1.10.0...v1.0.0) (2021-11-29)
+
+
+
+# [1.10.0](https://github.com/vuepress-aurora/vuepress-theme-aurora/compare/v1.9.6...v1.10.0) (2021-11-29)
 
 
 ### Bug Fixes
 
 * fix navbar icon display ([9ccbf5d](https://github.com/vuepress-aurora/vuepress-theme-aurora/commit/9ccbf5dafd63d65cc6758ccc7864e9ef513c1b17))
+* fix sidebar loading twice ([f6dc572](https://github.com/vuepress-aurora/vuepress-theme-aurora/commit/f6dc5724b399236952dd1aad224c3a78faaf762e))
+* fix the article page cannot be automatically scrolled ([9302532](https://github.com/vuepress-aurora/vuepress-theme-aurora/commit/9302532a60d34aa7090c5313bb0553ad6856d88d))
+* fix the failure of the anchor link of the article directory ([9bf8eb1](https://github.com/vuepress-aurora/vuepress-theme-aurora/commit/9bf8eb1a98751b927667ef4d33ab2493f46d766e))
+* fix the pagination part of the article title is not displayed ([65b55f1](https://github.com/vuepress-aurora/vuepress-theme-aurora/commit/65b55f1c11bd6574ae048f684914f31cfafd9bc2))
+* fix the wrong of coze-plugin create month ([bad23bb](https://github.com/vuepress-aurora/vuepress-theme-aurora/commit/bad23bbe5ec77ea0c754982e5bff5dddc31c0c5c))
+
+
+### Features
+
+* add github warehouse card ([dc42fe2](https://github.com/vuepress-aurora/vuepress-theme-aurora/commit/dc42fe2ca7e305f1a3693cec071a1ebae51eac59))
 
 
 
