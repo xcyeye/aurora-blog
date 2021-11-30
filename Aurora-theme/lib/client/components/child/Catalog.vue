@@ -1,14 +1,14 @@
 <template>
   <div class="">
     <!--一级标题-->
-    <div :date="getCatalogLevel1" :data="getCatalogLevel1" v-for="(itemLevel1,itemLevel1Index) in currentCatalog"
+    <div :date="getCatalogLevel1" :key="itemLevel1Index" :data="getCatalogLevel1" v-for="(itemLevel1,itemLevel1Index) in currentCatalog"
          id="catalog-single" :class="getCatalogOpenStatus(itemLevel1Index)"
          class="catalog-single sidebar-catalog-item">
       <!--展示一级标题-->
       <div class="page-catalog-parent">
         <div class="catalog-page-title">
           <router-link :to="itemLevel1.path">
-            <span class="content-single-show">{{getCatalogLevel1Title(itemLevel1)}}</span>
+            <span @click="changeCurrentLevel1Active(event,itemLevel1Index)" class="content-single-show">{{getCatalogLevel1Title(itemLevel1)}}</span>
           </router-link>
         </div>
         <div @click="changeCurrentLevel1Active(event,itemLevel1Index)" class="catalog-page-spread">
