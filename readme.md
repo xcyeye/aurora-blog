@@ -118,7 +118,7 @@ aurora blog-demo
 
 待依赖安装成功之后，运行`npm run dev`，会出现一个地址，你只需要在浏览器中，输入这个地址，就可以看到下面的页面
 
-![image-20211130110845273](C:/Users/Administrator/AppData/Roaming/Typora/typora-user-images/image-20211130110845273.png)
+![image-20211130110845273](https://ooszy.cco.vin/img/blog-note/image-20211130110845273.png?x-oss-process=style/pictureProcess1)
 
 
 
