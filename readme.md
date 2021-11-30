@@ -82,17 +82,25 @@ aurora blog-demo
 > `blog-demo`是你的博客文件件名称，会自动创建以此名字命名的文件夹
 >
 > 当你输入`aurora blog-demo`命令之后，会需要你填写一下`description`和`logoText(首页logo文字)`，你可以随便填一下
->
-> 如果提示下面错误，请看[这里](https://aurora.xcye.xyz/issue/cli-issue.md)
->
-> ```sh 
-> 'aurora' 不是内部或外部命令，也不是可运行的程序
-> 或批处理文件。
-> ```
 
 
 
-![image-20211129213029591](https://ooszy.cco.vin/img/blog-note/image-20211129213029591.png?x-oss-process=style/pictureProcess1)
+::: tip
+
+如果提示
+
+```sh
+'aurora' 不是内部或外部命令，也不是可运行的程序
+或批处理文件。
+```
+
+请看[这里](https://aurora.xcye.xyz/issue/cli-issue.md)
+
+:::
+
+![image-20211130123037624](https://ooszy.cco.vin/img/blog-note/image-20211130123037624.png?x-oss-process=style/pictureProcess1)
+
+
 
 
 
@@ -100,25 +108,30 @@ aurora blog-demo
 
 
 
-![image-20211129213052601](https://ooszy.cco.vin/img/blog-note/image-20211129213052601.png?x-oss-process=style/pictureProcess1)
+![image-20211130123146954](https://ooszy.cco.vin/img/blog-note/image-20211130123146954.png?x-oss-process=style/pictureProcess1)
 
 
 
-不知道你有没有注意到上图红色框中的信息，当博客模板下载完成之后，你还需要三步，才能启动博客，也就是上图中的`step1,step2,step3`
+::: tip
 
-现在你需要根据`你自己电脑的环境`执行上图中白色部分的相应命令
+不知道你有没有注意到上图红色框中的信息，当博客模板下载完成之后，你还需要安装依赖，请根据你自己的环境，选择使用`npm`还是`yarn`
 
-> 这里举个例子:
->
-> 假如你电脑没有安装`yarn`，那么需要执行带有`npm`的命令，对于`yarn`的命令，就不需要执行
->
-> 推荐看一下[这个视频](https://ooszy.cco.vin/theme-template/%E4%B8%BB%E9%A2%98%E5%AE%89%E8%A3%85.mp4)
+:::
 
 
+<video controls="" class="aurora-video" style="width: 100%;"  autoplay="" name="media"><source src="https://ooszy.cco.vin/theme-template/%E6%9C%80%E7%BB%88%E7%89%88%E6%9C%AC.mp4" type="video/mp4"></video>
 
-![image-20211130110845273](https://ooszy.cco.vin/img/blog-note/image-20211130110845273.png?x-oss-process=style/pictureProcess1)
 
-待依赖安装成功之后，运行`npm run dev`，会出现一个地址，你只需要在浏览器中，输入这个地址，就可以看到下面的页面
+
+
+
+### 启动
+
+
+
+
+
+> 运行成功之后，会出现一个地址，你只需要在浏览器中，输入这个地址，就可以看到下面的页面
 
 
 
@@ -126,7 +139,7 @@ aurora blog-demo
 
 
 
-
+::: tip
 
 恭喜你，到这里，你已经安装成功了，接下来便可以尽情书写博客和修改配置(`上图展示出来的效果是默认配置，你可以更改`)
 
