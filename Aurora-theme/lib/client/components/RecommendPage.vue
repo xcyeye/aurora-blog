@@ -1,19 +1,15 @@
 <template>
-  <BCenter v-if="themeProperty.showRecommend === undefined ? true : themeProperty.showRecommend">
-    <template #page-center1>
-      <h2 id="recommend-top-title">推荐阅读</h2>
-    </template>
-    <template #page-center3>
-      <div id="recommend" class="recommend">
-        <recommend-item
-            :item="item"
-            :key="index"
-            :theme-property="themeProperty"
-            :index="index"
-            v-for="(item,index) in allPages"/>
-      </div>
-    </template>
-  </BCenter>
+  <main  v-if="themeProperty.showRecommend === undefined ? true : themeProperty.showRecommend" :style="$store.state.borderRadiusStyle + $store.state.opacityStyle" class="page box">
+    <h2 id="recommend-top-title">推荐阅读</h2>
+    <div id="recommend" class="recommend">
+      <recommend-item
+          :item="item"
+          :key="index"
+          :theme-property="themeProperty"
+          :index="index"
+          v-for="(item,index) in allPages"/>
+    </div>
+  </main>
 </template>
 
 <script>
