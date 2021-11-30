@@ -1,7 +1,7 @@
 {
   "name": "vuepress-plugin-player",
-  "version": "1.1.0",
-  "description": "A vuepress-based animation blog theme, simple, beautiful, multi-color, multiple custom functions, providing article poster sharing, talk, photo album, comment and other features 一个基于vuepress的动漫类博客主题，简洁，漂亮，多色彩，多种自定义功能，提供文章海报分享，说说，相册，评论等特色功�?",
+  "version": "1.1.2-beta.1",
+  "description": "这是vuepress2版本的一个音乐播放器插件，支持本地歌曲和网易云歌曲，提供单曲顺序播放，随机播放等功能",
   "main": "./lib/node/index.js",
   "directories": {
     "lib": "lib"
@@ -27,7 +27,7 @@
   "bugs": {
     "url": "https://github.com/vuepress-aurora/vuepress-plugin-music-player/issues"
   },
-  "homepage": "https://aurora.xcye.xyz/plugin/music-player",
+  "homepage": "https://aurora.xcye.xyz/plugin/player",
   "dependencies": {
     "axios": "^0.21.1"
   }

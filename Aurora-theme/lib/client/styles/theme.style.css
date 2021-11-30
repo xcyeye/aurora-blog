@@ -2276,9 +2276,10 @@ body::-webkit-scrollbar-thumb {
 }
 
 #poster-page-avatar {
-    max-width: 5rem;
-    padding: .5rem;
-    border-radius: 30rem
+    height: 5rem;
+    width: 5rem;
+    padding: 0;
+    border-radius: 100rem
 }
 
 .poster-bottom {
@@ -2555,7 +2556,7 @@ body::-webkit-scrollbar-thumb {
 
 .poster-append {
     z-index: 1;
-    position: absolute;
+    position: fixed;
     height: 100%;
     width: 100%;
     top: 0;
@@ -2745,9 +2746,12 @@ body::-webkit-scrollbar-thumb {
     }
 
     #poster-page-avatar {
-        max-width: 5rem;
-        padding: .5rem;
-        border-radius: 100rem
+        /*max-width: 5rem;*/
+        /*max-height: 5rem;*/
+        height: 5rem;
+        width: 5rem;
+        padding: 0;
+        border-radius: 200rem
     }
 
     #poster-say {
@@ -3072,9 +3076,9 @@ body::-webkit-scrollbar-thumb {
     }
 
     #poster-page-avatar {
-        max-width: 5rem;
-        padding: .5rem;
-        border-radius: 30rem
+        /*max-width: 5rem;*/
+        padding: 0;
+        border-radius: 100rem
     }
 
     .home-page-tag-img {
