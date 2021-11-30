@@ -13,7 +13,8 @@
             <div class="aurora-music-pause">
               <span :class="playMusicStatus ? 'aurora-music-zanting2' : 'aurora-music-bofang4'" @click="playMusic" class="aurora-music-font aurora-music-control-pause aurora-music-cursor"></span>
             </div>
-            <img :src="currentMusicObject.picSrc === undefined ? defaultCover : currentMusicObject.picSrc" alt="">
+            <!--<img :src="currentMusicObject.picSrc === undefined ? defaultCover : currentMusicObject.picSrc" alt="">-->
+            <img :src="currentMusicObject.picSrc" alt="">
           </div>
         </div>
         <div class="aurora-music-info" :class="{'show-aurora-music-info': showMusicBoxStatus}">
