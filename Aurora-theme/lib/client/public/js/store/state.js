@@ -65,7 +65,7 @@ module.exports = {
     defaultPostImgApi: 'https://unsplash.it/1600/900?random',
 
     //版权信息
-    latestVersion: 'V1.8.x',
+    latestVersion: 'V1.10.x',
     printRightIndex: 0,
     mobileOpenStatus: false,
     currentTagNum: 1
