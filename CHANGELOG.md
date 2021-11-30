@@ -1,4 +1,18 @@
-# [1.0.0](https://github.com/vuepress-aurora/vuepress-theme-aurora/compare/v1.10.0...v1.0.0) (2021-11-29)
+# [1.0.0](https://github.com/vuepress-aurora/vuepress-theme-aurora/compare/v1.10.1...v1.0.0) (2021-11-30)
+
+
+
+## [1.10.1](https://github.com/vuepress-aurora/vuepress-theme-aurora/compare/v1.10.0...v1.10.1) (2021-11-30)
+
+
+### Bug Fixes
+
+* fix article page can't be center ([232648b](https://github.com/vuepress-aurora/vuepress-theme-aurora/commit/232648b3dd1ca4381720bafd42e459150cb0732d))
+* fix cover can't normally display when use local img beta.1 ([b0917b7](https://github.com/vuepress-aurora/vuepress-theme-aurora/commit/b0917b759fc11b5ea239f49756b332956f23701f))
+* fix directory was not expanded when clicking the first level navigation on the mobile phone ([b716463](https://github.com/vuepress-aurora/vuepress-theme-aurora/commit/b7164631f298a6af11f5beebf696d905349c1123))
+* fix recommend component margin value ([aaf91b7](https://github.com/vuepress-aurora/vuepress-theme-aurora/commit/aaf91b7bb6e5455fd390e73131ca50007ac83647))
+* fix the misplacement of poster avatar ([e2628c3](https://github.com/vuepress-aurora/vuepress-theme-aurora/commit/e2628c3a20ec8be5cd5ed1817c2a93b6e7140f11))
+* update default version info ([8a3210c](https://github.com/vuepress-aurora/vuepress-theme-aurora/commit/8a3210c45fbc1140aeba56500bad74a36ab5f782))
 
 
 
