@@ -116,9 +116,9 @@ aurora blog-demo
 
 
 
-待依赖安装成功之后，运行`npm run dev`，会出现一个地址，你只需要在浏览器中，输入这个地址，就可以看到下面的页面
-
 ![image-20211130110845273](https://ooszy.cco.vin/img/blog-note/image-20211130110845273.png?x-oss-process=style/pictureProcess1)
+
+待依赖安装成功之后，运行`npm run dev`，会出现一个地址，你只需要在浏览器中，输入这个地址，就可以看到下面的页面
 
 
 
@@ -126,7 +126,7 @@ aurora blog-demo
 
 
 
-::: tip
+
 
 恭喜你，到这里，你已经安装成功了，接下来便可以尽情书写博客和修改配置(`上图展示出来的效果是默认配置，你可以更改`)
 
@@ -138,7 +138,7 @@ aurora blog-demo
 - [问题及报错解决](/issue/bug.md)
 - [注意更新日志](/issue/CHANGELOG.md)
 
-:::
+
 
 ## 联系我
 
