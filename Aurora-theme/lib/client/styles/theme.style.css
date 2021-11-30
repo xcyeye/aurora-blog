@@ -5248,6 +5248,7 @@ body::-webkit-scrollbar-thumb {
 
 /*内置组件*/
 .github-pins {
+    min-height: 5rem;
     position: relative;
     width: 100%;
     border-radius: var(--borderRadius);
@@ -5322,10 +5323,15 @@ body::-webkit-scrollbar-thumb {
 
     .github-pins {
         height: max-content;
+        min-height: 3rem;
     }
 
     .github-pins-inner:hover::before,.github-pins-inner:hover::after {
         width: 75%;
         height: 75%;
+    }
+
+    #theme-default-content {
+        width: auto;
     }
 }

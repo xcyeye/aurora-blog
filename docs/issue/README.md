@@ -15,7 +15,6 @@ date: 2021/10/10 12:45
 
 :::
 
-[comment]: <> (<Pins/>)
 <Pins username="anuraghazra" repo="github-readme-stats"/>
 
 ## 使用和需学习知识

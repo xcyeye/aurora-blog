@@ -1,6 +1,6 @@
 {
   "name": "vuepress-theme-aurora",
-  "version": "1.9.7",
+  "version": "1.10.0",
   "description": "A vuepress-based animation blog theme, simple, beautiful, multi-color, multiple custom functions, providing article poster sharing, talk, photo album, comment and other features 一个基于vuepress的动漫类博客主题，简洁，漂亮，多色彩，多种自定义功能，提供文章海报分享，说说，相册，评论等特色功�?",
   "main": "./lib/node/index.js",
   "directories": {
