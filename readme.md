@@ -65,6 +65,8 @@
 
 
 
+- [观看视频](https://ooszy.cco.vin/theme-template/%E6%9C%80%E7%BB%88%E7%89%88%E6%9C%AC.mp4)
+
 ### 创建博客
 
 待脚手架cli安装成功之后，进入cmd中
@@ -82,21 +84,15 @@ aurora blog-demo
 > `blog-demo`是你的博客文件件名称，会自动创建以此名字命名的文件夹
 >
 > 当你输入`aurora blog-demo`命令之后，会需要你填写一下`description`和`logoText(首页logo文字)`，你可以随便填一下
+>
+> 如果提示下面信息，请看[这里](https://aurora.xcye.xyz/issue/cli-issue.md)
+>
+> ```sh
+> 'aurora' 不是内部或外部命令，也不是可运行的程序
+> 或批处理文件。
+> ```
 
 
-
-::: tip
-
-如果提示
-
-```sh
-'aurora' 不是内部或外部命令，也不是可运行的程序
-或批处理文件。
-```
-
-请看[这里](https://aurora.xcye.xyz/issue/cli-issue.md)
-
-:::
 
 ![image-20211130123037624](https://ooszy.cco.vin/img/blog-note/image-20211130123037624.png?x-oss-process=style/pictureProcess1)
 
@@ -110,16 +106,11 @@ aurora blog-demo
 
 ![image-20211130123146954](https://ooszy.cco.vin/img/blog-note/image-20211130123146954.png?x-oss-process=style/pictureProcess1)
 
-
-
-::: tip
-
 不知道你有没有注意到上图红色框中的信息，当博客模板下载完成之后，你还需要安装依赖，请根据你自己的环境，选择使用`npm`还是`yarn`
 
-:::
 
 
-<video controls="" class="aurora-video" style="width: 100%;"  autoplay="" name="media"><source src="https://ooszy.cco.vin/theme-template/%E6%9C%80%E7%BB%88%E7%89%88%E6%9C%AC.mp4" type="video/mp4"></video>
+
 
 
 
