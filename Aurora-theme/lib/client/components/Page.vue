@@ -2,7 +2,7 @@
   <main :style="$store.state.borderRadiusStyle + $store.state.opacityStyle"
         class="page sidebar-single-enter-animate" id="article-page">
     <slot name="top" />
-    <div id="theme-default-content" class="theme-default-content pageContent medium-zoom-content">
+    <div id="theme-default-content" :class="!isHideH1 ? 'hide-h1-tag' : 'show-h1-tag'" class="theme-default-content pageContent medium-zoom-content">
       <div class="page-top-share">
         <div class="page-top-share-next">
           <poster :title="originPageData.title" :content="posterContent"/>
@@ -36,7 +36,6 @@ import RecommendPage from "./RecommendPage";
 import {usePageData} from "@vuepress/client";
 import PageNext from "./child/page/PageNext";
 import $ from 'jquery'
-import {useThemeLocaleData} from "../composables";
 const AV = require('leancloud-storage');
 export default defineComponent({
   name: 'Page',
@@ -54,7 +53,8 @@ export default defineComponent({
       posterContent: '',
       title: '',
       showMobileCatalog: true,
-      showPageMeta: true
+      showPageMeta: true,
+      isHideH1: true
     }
   },
   props: {
@@ -89,6 +89,10 @@ export default defineComponent({
     //设置sidebar的class
     const page = usePageData()
     this.originPageData = page
+
+    if (page.value.frontmatter.title === undefined) {
+      this.isHideH1 = false
+    }
 
     this.$emit('getHeadLine',page.value.title)
     let lazyLoadingImg = this.themeProperty.lazyLoadingImg
