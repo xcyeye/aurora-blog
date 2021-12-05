@@ -251,9 +251,16 @@ export default defineComponent({
         $(h1s[0]).css('display','none')
       }
 
+
+      let medium_zoom_content_h1Tag = document.querySelectorAll(".medium-zoom-content h1 a");
       let medium_zoom_content_h2Tag = document.querySelectorAll(".medium-zoom-content h2 a");
       let medium_zoom_content_h3Tag = document.querySelectorAll(".medium-zoom-content h3 a");
       let medium_zoom_content_h4Tag = document.querySelectorAll(".medium-zoom-content h4 a,.medium-zoom-content h5 a,.medium-zoom-content h6 a");
+
+      for (let i = 0; i < medium_zoom_content_h1Tag.length; i++) {
+        medium_zoom_content_h1Tag[i].innerText = ''
+      }
+
       for (let i = 0; i < medium_zoom_content_h2Tag.length; i++) {
         if (this.themeProperty.articleH2Icon !== undefined) {
           medium_zoom_content_h2Tag[i].innerText = this.themeProperty.articleH2Icon
