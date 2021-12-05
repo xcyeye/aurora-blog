@@ -415,6 +415,10 @@
     padding: 6px 6px
 }
 
+.mood-item-content span iframe {
+    width: 100%;
+}
+
 .mood-item-title {
     height: 2.2rem
 }
@@ -436,7 +440,8 @@
     }
 
     #mood-item-right {
-        flex: 6
+        flex: 6;
+        overflow: hidden;
     }
 
     #mood-img-right {
