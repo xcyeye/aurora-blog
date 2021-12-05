@@ -49,23 +49,39 @@
        photoData: null,
        existPhotos: false,
        loadingAnimateSuccess: false,
-       isMounted: false
+       isMounted: false,
+       noShowNum: 0,
+       showNum: 0,
+       loadingSingle: false,
+       photoLength: 0
      }
    },
    created() {
      //从leanCloud获取所有的数据
      const query = new AV.Query('Talk');
      query.find().then((talks) => {
+       this.photoLength = talks.length
        if (talks.length === 0) {
          this.loadingAnimateSuccess = true
        }
        for (let i = 0; i < talks.length; i++) {
-         if (talks[i].attributes.mood_show) {
-           for (let j = 0; j < talks[i].attributes.mood_photos.length; j++) {
-            this.imgList.push(talks[i].attributes.mood_photos[j].photoUrl)
-             if (i === talks.length -1 && j === talks[i].attributes.mood_photos.length -1) {
+         if (talks[i].attributes.mood_photos.length === 0) {
+           if (i === talks.length -1) {
+             this.loadingAnimateSuccess = true
+           }
+         }
+         for (let j = 0; j < talks[i].attributes.mood_photos.length; j++) {
+           //判断是否显示
+           if (!talks[i].attributes.mood_show) {
+             continue
+             if (i === talks.length -1) {
                this.loadingAnimateSuccess = true
              }
+           }
+
+           this.imgList.push(talks[i].attributes.mood_photos[j].photoUrl)
+           if (i === talks.length -1 && j === talks[i].attributes.mood_photos.length -1) {
+             this.loadingAnimateSuccess = true
            }
          }
        }
