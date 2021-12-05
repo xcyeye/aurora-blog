@@ -16,7 +16,7 @@
    <div class="photo-waterfull">
      <div class="waterfull">
        <div class="v-waterfall-content" id="v-waterfall">
-         <div v-for="(img, index) in waterfallList" :key="index"
+         <div :data="waterfallList.length" v-for="(img, index) in waterfallList" :key="img.src"
               class="v-waterfall-item hover-fall hover-div"
               :style="getStyle(img)">
            <img style="opacity: 1" @mouseenter="imgEnter" @mouseleave="imgLeave" @click="openImg" class="medium-zoom-image hover-img hover-div" :src="img.src" alt="">
@@ -53,7 +53,8 @@
        noShowNum: 0,
        showNum: 0,
        loadingSingle: false,
-       photoLength: 0
+       photoLength: 0,
+       isImgPreloading: false
      }
    },
    created() {
@@ -100,7 +101,6 @@
      }
    },
    mounted() {
-     this.isMounted = true
      //$(".loadingAnimate").fadeOut(400)
      setTimeout(() => {
        this.clientWidth = document.body.offsetWidth
@@ -110,15 +110,13 @@
        if (this.clientWidth < 550) {
          this.waterfallImgCol = 2
          this.waterfallImgWidth = (this.clientWidth - this.waterfallImgRight * 2) / 2
-         this.start()
+         this.calculationWidth();
        }else {
          this.waterfallImgWidth =(this.clientWidth - this.waterfallImgRight * 5)  / this.waterfallImgCol
-         this.start()
+         this.calculationWidth();
        }
+       this.isMounted = true
      },200)
-     setTimeout(() => {
-       this.mountedStatus = true
-     },50)
    },
    methods: {
      imgEnter(e) {
@@ -149,11 +147,13 @@
        for (let i = 0; i < this.waterfallDeviationHeight.length; i++) {
          this.waterfallDeviationHeight[i] = 0;
        }
-
-       this.imgPreloading()
+       if (this.loadingAnimateSuccess) {
+         this.imgPreloading()
+       }
      },
      //图片预加载
      imgPreloading() {
+       this.isImgPreloading = true
        for (let i = 0; i < this.imgList.length; i++) {
          let aImg = new Image();
          aImg.src = this.imgList[i];
@@ -185,6 +185,7 @@
        // waterfallDeviationHeight[minIndex] += imgData.height + waterfallImgBottom;// 不加文字的盒子高度
        waterfallDeviationHeight[minIndex] += imgData.height + waterfallImgBottom + 56;// 加了文字的盒子高度，留出文字的地方（这里设置56px)
        this.waterfallList.push(imgData);
+       //console.log(1)
      },
      filterMin() {
        const min = Math.min.apply(null, this.waterfallDeviationHeight);
