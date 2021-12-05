@@ -219,6 +219,8 @@ export default {
       this.verifyIdentifyStatus_ = nV
     },
     currentMoodObj() {
+      this.buttonChangeStatus = false
+      this.buttonChangeStatus = !this.buttonChangeStatus
       this.progressUploadArr = []
       this.moodUpdateStatus = false
       this.content = ""

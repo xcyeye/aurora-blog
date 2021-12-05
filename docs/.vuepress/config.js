@@ -34,9 +34,13 @@ module.exports = {
         [
             path.resolve(__dirname, "../../Aurora-plugin/vuepress-plugin-coze/lib/node/index.js"),
             {
-                appId: '2A2Dyd2AffrnldhwftlEddVn-MdYXbMMI',
+                /*appId: '2A2Dyd2AffrnldhwftlEddVn-MdYXbMMI',
                 appKey: 'qHYTbb91iOPLelyC9lpbXxLH',
-                masterKey: 'eUwfvS3luIPnPiHS5SpEhDYr',
+                masterKey: 'eUwfvS3luIPnPiHS5SpEhDYr',*/
+
+                appId: '83KY2mbDWyIVxyIpjCSl3Ywg-MdYXbMMI',
+                appKey: 'rNtp1g2lyfxhPG5E1S4z1DfP',
+                masterKey: 'Acab5WLWaCbTuFe5V210SBiY',
                 //下面这些是可选的
                 avatarPath: 'https://ooszy.cco.vin/img/blog-note/avatar-aurora.png',//说说头像url
                 registerPath: '/aurora-register', //自定义插件默认提供的注册页面路由，请在前面加上/
