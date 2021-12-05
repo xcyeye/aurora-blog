@@ -143,7 +143,7 @@ export default defineComponent({
       homeWps: [],
       mobilePageSidebar: true,
       pageYOffset: 0,
-      width: 0
+      width: 0,
     }
   },
   props: {

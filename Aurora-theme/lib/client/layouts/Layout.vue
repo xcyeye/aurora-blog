@@ -5,7 +5,7 @@
           :is-show-catalog="!frontmatter.home"
           :is-show-top-img="getIsHome">
     <template #center1>
-      <Home :theme-property="themeProperty" :is-home=frontmatter.home v-if="frontmatter.home" />
+      <Home :theme-property="themeProperty" :show-random-say="true" :is-home=frontmatter.home v-if="frontmatter.home" />
     </template>
     <template #center2>
       <Page :path-name="page.path" v-if="!frontmatter.home" @getHeadLine="getHeadLine" :theme-property="themeProperty" :key="page.path">

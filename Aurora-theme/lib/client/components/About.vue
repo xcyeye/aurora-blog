@@ -7,6 +7,7 @@
     <template #center1>
       <Home :home-height-var="'max-content'" :socials-arr="socialsArr"
             :sidebar-width-pc-var="'65vw'"
+            :show-random-say="true"
             :navbar-style="'margin-top: 0;'" :theme-property="themeProperty" />
     </template>
     <template #center2>

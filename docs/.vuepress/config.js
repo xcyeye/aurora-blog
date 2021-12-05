@@ -1217,7 +1217,17 @@ module.exports = {
 
 
         //这是v1.9.0新增加的功能 是否在文章页底部显示最后更新时间，贡献者，点击编辑,默认显示
-        showPageMeta: false
+        showPageMeta: false,
+
+        /*
+        * 以下是1.11.0版本新增的配置项
+        * */
+
+        //随机一眼接口，请注意，一定要保证该接口直接返回Text文本，一定要保证该接口直接返回Text文本，而不是返回json
+        randomSayApi: {
+            method: 'GET',
+            urlApi: 'https://v1.hitokoto.cn/?encode=text&c=a'
+        }
 
 
         /*
