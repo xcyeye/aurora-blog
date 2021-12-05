@@ -19,7 +19,7 @@
          <div v-for="(img, index) in waterfallList" :key="index"
               class="v-waterfall-item hover-fall hover-div"
               :style="getStyle(img)">
-           <img style="opacity: 1"  @mouseenter="imgEnter" @mouseleave="imgLeave" @click="openImg" class="medium-zoom-image hover-img hover-div" :src="img.src" alt="">
+           <img style="opacity: 1" @mouseenter="imgEnter" @mouseleave="imgLeave" @click="openImg" class="medium-zoom-image hover-img hover-div" :src="img.src" alt="">
          </div>
        </div>
      </div>
@@ -100,14 +100,12 @@
      }
    },
    mounted() {
-
      this.isMounted = true
-
      //$(".loadingAnimate").fadeOut(400)
      setTimeout(() => {
        this.clientWidth = document.body.offsetWidth
        this.height = document.body.offsetHeight
-       this.clientWidth = this.clientWidth  * 0.97
+       //this.clientWidth = this.clientWidth  * 0.97
 
        if (this.clientWidth < 550) {
          this.waterfallImgCol = 2
@@ -166,7 +164,7 @@
            imgData.src = this.imgList[i];
            imgData.title = '...';
            imgData.info = '...';
-           this.waterfallList.push(imgData);
+           imgData.originWidth = aImg.width
            this.rankImg(imgData);
          }
        }
@@ -181,12 +179,12 @@
          waterfallImgCol
        } = this;
        let minIndex = this.filterMin();
-
        //imgData.top = top === 0 ? 0 : top - 40;
        imgData.top = waterfallDeviationHeight[minIndex];
        imgData.left = minIndex * (waterfallImgRight + waterfallImgWidth);
        // waterfallDeviationHeight[minIndex] += imgData.height + waterfallImgBottom;// 不加文字的盒子高度
-       waterfallDeviationHeight[minIndex] += imgData.height + waterfallImgBottom + 56;// 加了文字的盒子高度，留出文字的地方（这里设置56px）
+       waterfallDeviationHeight[minIndex] += imgData.height + waterfallImgBottom + 56;// 加了文字的盒子高度，留出文字的地方（这里设置56px)
+       this.waterfallList.push(imgData);
      },
      filterMin() {
        const min = Math.min.apply(null, this.waterfallDeviationHeight);

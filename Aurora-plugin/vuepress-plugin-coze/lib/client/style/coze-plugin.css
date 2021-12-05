@@ -735,11 +735,6 @@
     }
 }
 
-.photo-waterfull {
-    width: 95%;
-    margin: 0 auto
-}
-
 .photo-bg {
     position: fixed;
     top: 0;
@@ -767,13 +762,16 @@
 
 .v-waterfall-item {
     float: left;
-    position: absolute
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .v-waterfall-item img {
-    width: 90%;
+    width: 98%;
     height: auto;
-    border-radius: 6px
+    border-radius: 6px;
 }
 
 .loadingAnimate {
@@ -800,6 +798,21 @@
     z-index: 20;
     width: 100%;
     height: 3.6rem
+}
+
+@media screen and (max-width:550px) {
+    .v-waterfall-item img {
+        width: 90%;
+    }
+}
+
+@media screen and (min-width:550px) {
+    .photo-waterfull {
+        margin: 0 auto
+    }
+    .v-waterfall-item img {
+        width: 95%;
+    }
 }
 
 .photo-center,
