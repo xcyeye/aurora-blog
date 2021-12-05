@@ -5339,3 +5339,7 @@ body::-webkit-scrollbar-thumb {
         width: auto;
     }
 }
+
+.catalog-title {
+    cursor: pointer;
+}

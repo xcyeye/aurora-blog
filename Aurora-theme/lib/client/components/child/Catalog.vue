@@ -8,10 +8,10 @@
       <div class="page-catalog-parent">
         <div class="catalog-page-title">
           <router-link :to="itemLevel1.path">
-            <span @click="changeCurrentLevel1Active(event,itemLevel1Index)" class="content-single-show">{{getCatalogLevel1Title(itemLevel1)}}</span>
+            <span @click="changeCurrentLevel1Active(event,itemLevel1Index,true)" class="content-single-show">{{getCatalogLevel1Title(itemLevel1)}}</span>
           </router-link>
         </div>
-        <div @click="changeCurrentLevel1Active(event,itemLevel1Index)" class="catalog-page-spread">
+        <div @click="changeCurrentLevel1Active(event,itemLevel1Index,false)" class="catalog-page-spread">
           <span :class="getSpreadClass(itemLevel1Index)" class="aurora-iconfont-common"></span>
         </div>
       </div>
@@ -23,20 +23,15 @@
                :class="{catalogChildrenActive: catalogChildrenActive === itemLevel2Index }"
                class="catalog-page-children-item">
             <div class="catalog-page-children-title">
-              <!--<router-link :to="itemLevel1.path + '#' + itemLevel2.title">-->
-              <router-link :to="getCatalogPath(itemLevel1.path,itemLevel2.slug)">
-                <span @click="clickCatalogTitle($event,itemLevel2.slug)" :slug="itemLevel2.slug">{{itemLevel2.title}}</span>
-              </router-link>
+                <span class="catalog-title" @click="clickCatalogTitle($event,itemLevel2.slug,itemLevel1.path,itemLevel1Index)" :slug="itemLevel2.slug">{{itemLevel2.title}}</span>
             </div>
 
             <!--展示三级标题-->
             <div class="page-catalog-children-level3-parent">
               <div :style="setLevel3Style(itemLevel2Index)" class="page-catalog-children-level3">
-                <div :data="item.slug" v-for="item in itemLevel2.children"
+                <div :key="index" :data="item.slug" v-for="(item,index) in itemLevel2.children"
                      class="page-catalog-children-level3-title">
-                  <router-link :to="$route.path + '#' + item.slug">
-                    <span @click="clickCatalogTitle" :slug="item.slug">{{item.title}}</span>
-                  </router-link>
+                  <span class="catalog-title" @click="clickCatalogTitle($event,item.slug,itemLevel1.path,itemLevel1Index)" :slug="item.slug">{{item.title}}</span>
                 </div>
               </div>
             </div>
@@ -64,7 +59,8 @@ export default {
       clickCatalogNum: 0,
       catalogOpenStatus: {
         openStatus: true,
-        index: 0
+        index: 0,
+        currentRouterIndex: 0
       },
       currentCatalogObject: {},
       currentHeaderIndex: 0,
@@ -139,6 +135,7 @@ export default {
       for (let i = 0; i < this.currentCatalog.length; i++) {
         if (this.currentCatalog[i].path === this.$route.path) {
           this.catalogOpenStatus.index = i
+          this.catalogOpenStatus.currentRouterIndex = i
           this.currentCatalogObject = this.currentCatalog[i]
           this.showCurrentCatalog = this.currentCatalog[i]
         }
@@ -171,8 +168,15 @@ export default {
     window.addEventListener('scroll', this.handleScroll, true)
   },
   methods: {
-    clickCatalogTitle(e,title) {
-      // this.$router.push(this.$route.path + "#" + title)
+    clickCatalogTitle(e,title,path,itemLevel1Index) {
+      this.$route.hash = ""
+
+      if (itemLevel1Index !== this.catalogOpenStatus.currentRouterIndex) {
+        this.$router.push(path)
+      }else {
+        this.$router.push(`#${title}`)
+      }
+
       //如果手机端侧边栏打开的，那么就关闭
       if (this.$store.state.openMobileSidebar) {
         this.$store.commit("setOpenMobileSidebar",{
@@ -264,7 +268,10 @@ export default {
         }
       }
     },
-    changeCurrentLevel1Active(e,index) {
+    changeCurrentLevel1Active(e,index,clickRouter) {
+      if (clickRouter) {
+        this.catalogOpenStatus.currentRouterIndex = index
+      }
       if (this.catalogOpenStatus.openStatus) {
         //是打开状态
         if (this.catalogOpenStatus.index === index) {
