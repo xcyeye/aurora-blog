@@ -64,6 +64,7 @@ let showPlaylist = false
 let disabledNetEaseMusic = false
 let localSongs = {}
 let serverUrl = ''
+let disabledSpace = false
 try {
   songIds = __SONG_IDS__
   playlist = __PLAYLIST__
@@ -71,6 +72,7 @@ try {
   disabledNetEaseMusic = __DISABLED_NET_EASE_MUSIC__
   localSongs = __LOCAL_SONGS__
   serverUrl =  __SERVER_URL__
+  disabledSpace = __DISABLED_SPACE__
 }catch (e) {
   console.warn(e)
 }
@@ -164,7 +166,10 @@ export default {
   mounted() {
     this.isLoadingFinish = true
     this.$refs["aurora-music-player"].addEventListener('ended', this.currentAudioFinish, false);
-    window.addEventListener('keyup',this.keyListener)
+
+    if (!disabledSpace) {
+      window.addEventListener('keyup',this.keyListener)
+    }
   },
   watch: {
     requestSuccessNum() {

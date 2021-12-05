@@ -42,7 +42,7 @@ module.exports = {
                 appKey: 'rNtp1g2lyfxhPG5E1S4z1DfP',
                 masterKey: 'Acab5WLWaCbTuFe5V210SBiY',
                 //下面这些是可选的
-                avatarPath: 'https://ooszy.cco.vin/img/blog-note/avatar-aurora.png',//说说头像url
+                avatarPath: '/avatar.jpg',//说说头像url
                 registerPath: '/aurora-register', //自定义插件默认提供的注册页面路由，请在前面加上/
                 onlyAdministrator: false //是否运行其他注册的用户发布说说，true表示只有管理员可以发布
             }
@@ -57,6 +57,7 @@ module.exports = {
         [
             path.resolve(__dirname, "../../Aurora-plugin/vuepress-plugin-player/lib/node/index.js"),
             {
+                disableSpace: false,
                 //网易云单个歌单id
                 songIds: ['29723011','1887893189','1421069053'],
                 //网易云歌单
@@ -374,10 +375,10 @@ module.exports = {
         showFont: "程",
 
         //首页中间hero图片地址，默认为https://ooszy.cco.vin/img/blog-public/avatar.jpg
-        heroImg: 'https://ooszy.cco.vin/img/ico/yuan.png',
+        heroImg: '/avatar.jpg',
 
         //logo图片地址，默认为https://ooszy.cco.vin/img/ico/yuan.png
-        logo: "https://ooszy.cco.vin/img/ico/yuan.png",
+        logo: "/avatar.jpg",
 
         //文章懒加载图片 仅限文章，首页文章占位图片并不是这个
         lazyLoadingImg: "https://ooszy.cco.vin/img/blog-public/ljz.gif",
