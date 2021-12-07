@@ -268,10 +268,15 @@ export default defineComponent({
   },
   methods: {
     setHomeBg() {
+      let base = ""
+      if (this.$site.base !== "/") {
+        base = this.$site.base
+      }
       new Promise((resolve,reject) => {
         let homeWpsSet = new Set()
         for (let i = 0; i < this.homeWps.length; i++) {
-          homeWpsSet.add(withBase(this.homeWps[i]))
+          // homeWpsSet.add(withBase(this.homeWps[i]))
+          homeWpsSet.add(base + this.homeWps[i])
         }
         resolve(homeWpsSet)
       }).then((homeWpsSet) => {

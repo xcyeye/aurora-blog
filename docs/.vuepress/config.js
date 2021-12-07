@@ -1,6 +1,6 @@
 const { path } = require("@vuepress/utils");
 module.exports = {
-    base: '/aurora/',
+    //base: '/aurora/',
     //https://ooszy.cco.vin/img/blog-note/aurora-loading.gif
     extendsMarkdown: (md) => {
 
