@@ -267,6 +267,30 @@ export default defineComponent({
     }
   },
   methods: {
+    setHomeBg() {
+      new Promise((resolve,reject) => {
+        let homeWpsSet = new Set()
+        for (let i = 0; i < this.homeWps.length; i++) {
+          homeWpsSet.add(withBase(this.homeWps[i]))
+        }
+        resolve(homeWpsSet)
+      }).then((homeWpsSet) => {
+        this.homeWps = Array.from(homeWpsSet)
+        let backgroundUrl = ''
+        if (this.$store.state.homeWps === "") {
+          //将首页壁纸设置为配置文件数组中的第一张图片
+          // backgroundUrl = this.homeWps[0]
+          backgroundUrl = this.homeWps[this.getRandomInt(0,this.homeWps.length -1)]
+        }else {
+          //将首页壁纸设置为配置文件数组中的第一张图片
+          backgroundUrl = this.$store.state.homeWps
+        }
+
+        this.$store.commit("setHomeWps",{
+          homeWps: backgroundUrl
+        })
+      })
+    },
     handleScroll() {
       if (window.pageYOffset > this.pageYOffset) {
         this.showHeaderBg = false
@@ -426,19 +450,7 @@ export default defineComponent({
       }
     }
 
-    let backgroundUrl = ''
-    if (this.$store.state.homeWps === "") {
-      //将首页壁纸设置为配置文件数组中的第一张图片
-      // backgroundUrl = this.homeWps[0]
-      backgroundUrl = this.homeWps[this.getRandomInt(0,this.homeWps.length -1)]
-    }else {
-      //将首页壁纸设置为配置文件数组中的第一张图片
-      backgroundUrl = this.$store.state.homeWps
-    }
-
-    this.$store.commit("setHomeWps",{
-      homeWps: backgroundUrl
-    })
+    this.setHomeBg()
 
 
     const frontmatter = usePageFrontmatter<DefaultThemePageFrontmatter>()

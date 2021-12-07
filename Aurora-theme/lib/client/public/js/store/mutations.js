@@ -1,4 +1,3 @@
-const {withBase} = require('@vuepress/client')
 module.exports = {
     setAnimeImg(state,imgUrl) {
         this.state.animeImg = imgUrl.imgUrl
@@ -96,7 +95,7 @@ module.exports = {
         this.state.posterData = posterData.posterData
     },
     setHomeWps(state,homeWps) {
-        this.state.homeWps = withBase(homeWps.homeWps)
+        this.state.homeWps = homeWps.homeWps
     },
     setCurrentCatalogObjectArr(state,currentCatalogObjectArr) {
         this.state.currentCatalogObjectArr = currentCatalogObjectArr.currentCatalogObjectArr

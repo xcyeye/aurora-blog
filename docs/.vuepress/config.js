@@ -1088,8 +1088,12 @@ module.exports = {
             "https://picoss.cco.vin/animate/wall/734386.png",
             "https://picoss.cco.vin/animate/wall/5332.png",
             "https://picoss.cco.vin/animate/wall/6202.png",
+            '/bg/2.jpg',
+            '/bg/3.jpg',
+            '/bg/4.jpg',
+            '/bg/5.jpg',
         ],
-        /*homeWps: [
+       /* homeWps: [
             '/bg/1.jpg',
             '/bg/2.jpg',
             '/bg/3.jpg',
