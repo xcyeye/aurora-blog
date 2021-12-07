@@ -176,7 +176,7 @@ export default {
         //播放
         this.playMusicStatus = true
       }
-    },2500)
+    },3500)
 
     if (!disabledSpace) {
       window.addEventListener('keyup',this.keyListener)
