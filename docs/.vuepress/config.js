@@ -64,10 +64,10 @@ module.exports = {
                 playlist: '7082462754',
                 showPlaylist: true,
                 //是否禁用网易云音乐，如果你选择禁用，那么就将使用本地的歌曲，请传入链接
-                disabledNetEaseMusic: true,
+                disabledNetEaseMusic: false,
 
                 //请求接口的baseURL
-                serverUrl: 'http://localhost:3000/',
+                serverUrl: 'https://netease-cloud-music-api-teal-psi.vercel.app/',
 
                 //本地歌曲
                 localSongs: {

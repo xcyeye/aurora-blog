@@ -13,8 +13,8 @@
             <div class="aurora-music-pause">
               <span :class="playMusicStatus ? 'aurora-music-zanting2' : 'aurora-music-bofang4'" @click="playMusic" class="aurora-music-font aurora-music-control-pause aurora-music-cursor"></span>
             </div>
-            <!--<img :src="currentMusicObject.picSrc === undefined ? defaultCover : currentMusicObject.picSrc" alt="">-->
-            <img :src="currentMusicObject.picSrc" alt="">
+            <img :src="currentMusicObject.picSrc === undefined ? defaultCover : currentMusicObject.picSrc" alt="">
+            <!--<img :src="currentMusicObject.picSrc" alt="">-->
           </div>
         </div>
         <div class="aurora-music-info" :class="{'show-aurora-music-info': showMusicBoxStatus}">
@@ -49,7 +49,7 @@
         </div>
       </div>
     </div>
-    <audio class="aurora-music-player-control" ref="aurora-music-player" controls="controls">
+    <audio autoplay class="aurora-music-player-control" ref="aurora-music-player" controls="controls">
       <source src="musicSrc" type="audio/mp3" />
       Your browser does not support this audio format.
     </audio>
@@ -113,7 +113,6 @@ export default {
     }
   },
   created() {
-
     if (serverUrl !== undefined && serverUrl !== "") {
       this.baseURL = serverUrl
     }
@@ -131,7 +130,7 @@ export default {
         this.musicMapArr.push(musicMap)
 
         if (i === 0) {
-          this.currentMusicNum = musicMap
+          this.currentMusicObject = musicMap
         }
 
         if (i === localSongs.songs.length -1) {
@@ -187,6 +186,7 @@ export default {
       this.currentMusicNum = 0
     },
     currentMusicObject() {
+      console.warn(this.currentMusicObject)
       if (this.isLoadingFinish) {
         this.$refs["aurora-music-player"].src = this.musicMapArr[this.currentMusicNum].songSrc
       }
@@ -212,60 +212,60 @@ export default {
       }).then((data) => {
         try {
           let src = data.data.data[0].url
+          if (src === null) {
+            this.requestFailNum++
+            return
+          }
         }catch (e) {
           this.requestFailNum++
           return
         }
 
-        if (data.data.data[0].url !== null) {
-          network.req({
-            baseURL: this.baseURL,
-            url: '/song/detail',
-            params: {
-              ids: songId
-            },
-            songSrc: data.data.data[0].url
-          }).then((data) => {
-            this.requestSuccessNum++
-            let picSrc = ''
-            let songName = ''
-            let singer = ''
-            try {
+        //这里的歌曲存在url
+        network.req({
+          baseURL: this.baseURL,
+          url: '/song/detail',
+          params: {
+            ids: songId
+          },
+          songSrc: data.data.data[0].url
+        }).then((data) => {
+          this.requestSuccessNum++
+          let picSrc = ''
+          let songName = ''
+          let singer = ''
+          try {
+            picSrc = data.data.songs[0].al.picUrl
+            songName = data.data.songs[0].al.name
+            singer = data.data.songs[0].ar[0].name
+          }catch (e) {
+            console.warn(e)
+            picSrc = this.defaultCover
+            songName = this.defaultSongName
+            singer = this.defaultSonger
+          }
 
-              picSrc = data.data.songs[0].al.picUrl
-              songName = data.data.songs[0].al.name
-              singer = data.data.songs[0].ar[0].name
-            }catch (e) {
-              console.warn(e)
-              picSrc = this.defaultCover
-              songName = this.defaultSongName
-              singer = this.defaultSonger
-            }
+          this.musicMapArr.push({
+            picSrc: picSrc,
+            songName,
+            singer,
+            id: data.data.songs[0].id,
+            songSrc: data.src
+          })
 
-            this.musicMapArr.push({
+          if (this.requestSuccessNum === 1) {
+            this.firstSongStatus = true
+            this.currentMusicObject = {
               picSrc: picSrc,
               songName,
               singer,
               id: data.data.songs[0].id,
               songSrc: data.src
-            })
-
-            if (this.requestSuccessNum === 1) {
-              this.firstSongStatus = true
-              this.currentMusicObject = {
-                picSrc: picSrc,
-                songName,
-                singer,
-                id: data.data.songs[0].id,
-                songSrc: data.src
-              }
             }
-          }).catch((err) => {
-            console.warn(err)
-          })
-        }else {
-          this.requestFailNum++
-        }
+          }
+        }).catch((err) => {
+          console.warn(err)
+        })
       }).catch((err) => {
         console.warn(err)
       })
