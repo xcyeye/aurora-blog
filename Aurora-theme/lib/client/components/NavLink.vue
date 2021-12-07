@@ -130,6 +130,6 @@ export default defineComponent({
       linkTarget,
       linkAriaLabel,
     }
-  },
+  }
 })
 </script>
