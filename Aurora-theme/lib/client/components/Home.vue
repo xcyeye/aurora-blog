@@ -47,6 +47,7 @@ import HomeSocial from './child/home/HomeSocial.vue'
 import EasyTyper from "easy-typer-js";
 import HomeSidebarSocialItem from './child/side/HomeSidebarSocialItem'
 import {useThemeLocaleData} from "../composables";
+import axios from "axios";
 //导入配置属性
 const network = require('../public/js/network.js')
 export default defineComponent({

@@ -26,25 +26,31 @@
         </div>
       </div>
       <!--下面是在线支付的设置-->
-      <form v-if="setOnline" action="https://pay.cco.vin/pay/" method="post">
+      <!--<form action="https://afdian.net/@qsyyke" method="post">-->
         <div class="donate-pay" id="donate-pay">
           <div class="pro-common pro-message">
             <div class="donate-bottom-input pro-common">
-              <input type="number" name="payMoney">
+              <input type="number" name="per_month">
+              <input type="text" style="display: none" name="per_month">
+              <input type="text" style="display: none" name="addr_address">
+              <input type="text" style="display: none" name="addr_name">
             </div>
             <div class="donate-bottom-button pro-common">
-              <button>赞助</button>
+              <!--<button>爱发电</button>-->
+              <button>
+                <a style="text-decoration: none;color: whitesmoke" :href="afDianUrl" target="_blank">爱发电</a>
+              </button>
             </div>
           </div>
           <div class="pro-single pro-message">
             <div class="donate-bottom-input">
-              <input id="pro-input-message" name="msg" type="text">
+              <input id="pro-input-message" name="remark" type="text">
               <input style="display:none" name="target" :value="getHost" type="text">
               <input style="display:none" name="type" value="xml" type="text">
             </div>
           </div>
         </div>
-      </form>
+      <!--</form>-->
     </div>
     <div class="donate-list-filed donate-bottom"
          :style="setSpanStyle"
@@ -60,19 +66,6 @@
           </div>
           <div class="theme-pro-price theme-pro-common">
             <span>{{item.prefix}}&nbsp;{{item.price}}</span>
-          </div>
-        </div>
-
-        <!--下面时从网络中请求回来的数据-->
-        <div v-if="setOnline" :key="index" v-for="(item,index) in donateList"  class="donate-bottom-common donate-pro-single">
-          <div class="theme-pro-img theme-pro-common aurora-theme-pro-name" id="pro-img-list">
-            <span>{{item.username}}</span>
-          </div>
-          <div class="theme-pro-name theme-pro-common" id="pro-list-message">
-            <span>{{item.subject}}</span>
-          </div>
-          <div class="theme-pro-price theme-pro-common">
-            <span>￥&nbsp;{{item.payMoney}}</span>
           </div>
         </div>
       </div>
@@ -97,11 +90,16 @@ export default {
       donate: '',
       donateImg: [],
       //打赏金额产品列表
-      donateProduct: []
+      donateProduct: [],
+      afDianUrl: 'https://afdian.net/@qsyyke'
     }
   },
   created() {
     this.themeProperty = useThemeData().value
+
+    if (this.themeProperty.afDianUrl !== undefined) {
+      this.afDianUrl = this.themeProperty.afDianUrl
+    }
     this.donate = this.themeProperty.donate
     try {
       this.donateImg = this.donate.donateImg
@@ -121,15 +119,6 @@ export default {
           this.getRandomInt(0,this.themeProperty.randomColor.length -1)]
       this.hexToRgbColor = this.hexToRgb(background_color)
     }
-    if (this.themeProperty.donate !== undefined) {
-      if (this.donate.onlineList) {
-        network.req({
-          baseURL: 'https://pay.cco.vin/pay/info'
-        }).then((res) => {
-          this.donateList = res
-        })
-      }
-    }
   },
   mounted() {
     this.window = window
@@ -141,15 +130,6 @@ export default {
       }else {
         return []
       }
-    },
-    setOnline() {
-      if (this.donate === undefined) {
-        return false
-      }
-      if (this.donate.onlineList === undefined) {
-        return false
-      }
-      return this.donate.onlineList
     },
     setSpanStyle() {
       return "background-color: rgba(" + this.hexToRgbColor.r + "," +

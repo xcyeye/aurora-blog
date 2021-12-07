@@ -996,7 +996,7 @@ module.exports = {
             ],
 
             //是否显示在线支付的订单信息，如果需要开启，请自己写支付接口，自己修改源码，默认关闭
-            onlineList: true,
+            //onlineList: true, v1.11.2已被移除
 
             //用户赞赏列表数组
             donateList: [
@@ -1082,19 +1082,30 @@ module.exports = {
         },
 
         //首页背景图片数组，考虑到使用随机图片，打开网站速度变慢，所以移除随机图片，使用自己设置的图片链接
-        homeWps: [
+        /*homeWps: [
             'https://ooszy.cco.vin/img/blog-note/illust_74502138_20211008_183343.png',
             "https://picoss.cco.vin/animate/wall/404901.png",
             "https://picoss.cco.vin/animate/wall/734386.png",
             "https://picoss.cco.vin/animate/wall/5332.png",
             "https://picoss.cco.vin/animate/wall/6202.png",
+        ],*/
+        homeWps: [
+            '/bg/1.jpg',
+            '/bg/2.jpg',
+            '/bg/3.jpg',
+            '/bg/4.jpg',
+            '/bg/5.jpg',
         ],
 
         //手机端首页背景图片
-        homeWpsMobile: [
+        /*homeWpsMobile: [
             "https://ooszy.cco.vin/img/blog-note/881770.jpg",
             "https://ooszy.cco.vin/img/blog-note/109136.jpg",
             "https://ooszy.cco.vin/img/blog-note/929842.jpg",
+        ],*/
+        homeWpsMobile: [
+            '/bg/4.jpg',
+            '/bg/5.jpg',
         ],
 
         //首页文章显示条数，默认为4，此值不推荐设置太大
@@ -1230,7 +1241,13 @@ module.exports = {
         randomSayApi: {
             method: 'GET',
             urlApi: 'https://v1.hitokoto.cn/?encode=text&c=a'
-        }
+        },
+
+
+        /*
+        * 一下是v1.11.1版本增加的配置
+        * */
+        afDianUrl: 'https://afdian.net/@qsyyke'//你的爱发电个人页面地址
 
 
         /*
