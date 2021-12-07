@@ -98,11 +98,10 @@ import Navbar from '../../components/Navbar.vue'
 import Home from '../Home'
 import MobileSidebar from "../child/side/MobileSidebar.vue";
 import SocialSpin from '../SocialSpin'
-
 //配置导入
 const tag = require('../../public/js/tag')
 import {computed, defineComponent, Transition,} from 'vue'
-import {usePageData, usePageFrontmatter} from '@vuepress/client'
+import {usePageData, usePageFrontmatter, withBase} from '@vuepress/client'
 import type {DefaultThemePageFrontmatter} from '../../../shared'
 import {useThemeData, useThemeLocaleData} from '../../composables'
 import $ from 'jquery'
@@ -382,9 +381,6 @@ export default defineComponent({
       this.ico = "https://ooszy.cco.vin/img/ico/cat.svg"
     }
 
-    this.$store.commit("setIsFitter",{
-      isFitter: this.themeProperty.isFitter
-    })
     tag.setTag(this,this.themeProperty).then(() => {
       this.$store.commit('setTagStatus',{
         isSuccess:  true

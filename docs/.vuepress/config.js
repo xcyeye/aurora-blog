@@ -1082,20 +1082,20 @@ module.exports = {
         },
 
         //首页背景图片数组，考虑到使用随机图片，打开网站速度变慢，所以移除随机图片，使用自己设置的图片链接
-        /*homeWps: [
+        homeWps: [
             'https://ooszy.cco.vin/img/blog-note/illust_74502138_20211008_183343.png',
             "https://picoss.cco.vin/animate/wall/404901.png",
             "https://picoss.cco.vin/animate/wall/734386.png",
             "https://picoss.cco.vin/animate/wall/5332.png",
             "https://picoss.cco.vin/animate/wall/6202.png",
-        ],*/
-        homeWps: [
+        ],
+        /*homeWps: [
             '/bg/1.jpg',
             '/bg/2.jpg',
             '/bg/3.jpg',
             '/bg/4.jpg',
             '/bg/5.jpg',
-        ],
+        ],*/
 
         //手机端首页背景图片
         /*homeWpsMobile: [
