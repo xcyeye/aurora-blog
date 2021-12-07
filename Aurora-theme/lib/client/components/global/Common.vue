@@ -58,7 +58,7 @@
             <div id="page-sidebar-right" v-if="!frontmatter.home" v-show="showSidebar" class="page-sidebar-right">
               <div class="stickSidebar" v-if="mobilePageSidebar">
                 <HomeSidebar :show-navbar="false"
-                             :sidebar-width-var="0.96"
+                             :sidebar-width-var="0.92"
                              :show-sidebar-social="true"
                              :show-sidebar-link="showSidebarLink"
                              :sidebar-row-var="sidebarRowVar"
