@@ -38,9 +38,13 @@
             <span class="aurora-nav-font aurora-font" :class="setHomeClass(menuItem)"></span>
           </div>
           <div class="menu-item-right">
-            <a :key="index" :href="menuItem.link">
+
+            <a v-if="getIsOuterLink(menuItem.link)" target="_blank" :key="index" :href="menuItem.link">
               <span>{{menuItem.text}}</span>
             </a>
+            <router-link v-else :to="menuItem.link">
+              <span>{{menuItem.text}}</span>
+            </router-link>
           </div>
         </div>
       </div>
