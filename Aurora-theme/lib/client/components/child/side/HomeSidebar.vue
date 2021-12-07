@@ -95,9 +95,9 @@
         <div v-show="changePageIndex === '2'">
           <div v-for="item in getLatestPage" :key="item.articleUrl" :data="item.articleUrl" class="sidebar-page-item sidebar-hover-bg-common">
             <div class="sidebar-page-title">
-              <a :href="item.articleUrl">
+              <router-link :to="item.articleUrl">
                 <span>{{item.title === "" ? getRecommendNoTitle : item.title}}</span>
-              </a>
+              </router-link>
             </div>
             <div class="sidebar-page-time">
               <span>{{getLocalTime(item.pageCreateTime)}}</span>
