@@ -109,7 +109,10 @@ export default {
 
       defaultCover: 'https://ooszy.cco.vin/img/blog-public/avatar.jpg',
       defaultSonger: '默认歌手',
-      defaultSongName: '默认歌曲名'
+      defaultSongName: '默认歌曲名',
+
+      //判断当前是暂停还是播放，true表示暂停，false表示播放
+      currentPauseStatus: true
     }
   },
   created() {
@@ -163,8 +166,17 @@ export default {
     }
   },
   mounted() {
+
     this.isLoadingFinish = true
     this.$refs["aurora-music-player"].addEventListener('ended', this.currentAudioFinish, false);
+
+    setTimeout(() => {
+      this.currentPauseStatus = this.$refs["aurora-music-player"].paused
+      if (!this.currentPauseStatus) {
+        //播放
+        this.playMusicStatus = true
+      }
+    },2500)
 
     if (!disabledSpace) {
       window.addEventListener('keyup',this.keyListener)
