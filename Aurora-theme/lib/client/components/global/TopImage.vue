@@ -61,6 +61,7 @@
 import {useThemeLocaleData} from "../../composables";
 import WordCount from "crisp-word-count";
 import gsap from "gsap";
+import {withBase} from "@vuepress/client";
 const network = require('../../public/js/network.js')
 export default {
   name: "TopImage",
@@ -268,7 +269,7 @@ export default {
     getPageMap() {
       let allPageMap = this.$store.state.allPageMap
       for (let i = 0; i < allPageMap.length; i++) {
-        if (this.pathName === allPageMap[i].articleUrl) {
+        if (this.pathName === withBase(allPageMap[i].articleUrl)) {
           this.pageMap = allPageMap[i]
           if (this.pageMap.categories.length === 0) {
             this.tagArr = this.pageMap.tag
