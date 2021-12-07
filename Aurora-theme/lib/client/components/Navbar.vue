@@ -11,7 +11,7 @@
         <img
             style="border-radius: 30px"
             class="logo"
-            :src="getLogoImg"
+            :src="withBase(getLogoImg)"
             :alt="siteBrandTitle"
         />
         <span

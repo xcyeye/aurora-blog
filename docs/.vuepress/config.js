@@ -1,5 +1,6 @@
 const { path } = require("@vuepress/utils");
 module.exports = {
+    base: '/chu/',
     //https://ooszy.cco.vin/img/blog-note/aurora-loading.gif
     extendsMarkdown: (md) => {
 
@@ -375,10 +376,11 @@ module.exports = {
         showFont: "程",
 
         //首页中间hero图片地址，默认为https://ooszy.cco.vin/img/blog-public/avatar.jpg
-        heroImg: '/avatar.jpg',
+        //heroImg: '/avatar.jpg',
+        heroImg: 'https://ooszy.cco.vin/img/blog-public/avatar.jpg',
 
         //logo图片地址，默认为https://ooszy.cco.vin/img/ico/yuan.png
-        logo: "/avatar.jpg",
+        logo: "https://ooszy.cco.vin/img/ico/yuan.png",
 
         //文章懒加载图片 仅限文章，首页文章占位图片并不是这个
         lazyLoadingImg: "https://ooszy.cco.vin/img/blog-public/ljz.gif",
@@ -1140,7 +1142,7 @@ module.exports = {
         articleH4Icon: '⛄',
 
         //v1.6.4新增配置
-        sidebarAvatar: 'https://ooszy.cco.vin/img/blog-note/avatar-aurora.png',
+        sidebarAvatar: '/avatar.jpg',
 
         //1.7.1增加配置
         sugCountPerMin: 300,

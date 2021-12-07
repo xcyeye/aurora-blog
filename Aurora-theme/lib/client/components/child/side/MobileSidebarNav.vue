@@ -42,7 +42,7 @@
             <a v-if="getIsOuterLink(menuItem.link)" target="_blank" :key="index" :href="menuItem.link">
               <span>{{menuItem.text}}</span>
             </a>
-            <router-link v-else :to="menuItem.link">
+            <router-link v-else :to="$withBase(menuItem.link)">
               <span>{{menuItem.text}}</span>
             </router-link>
           </div>

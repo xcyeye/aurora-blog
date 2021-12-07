@@ -1,7 +1,7 @@
 <template>
   <div class="home" :style="getHomeHeight">
     <div class="home-hero-img" :class="{'home-hero-img-custom ': isHome}" id="home-hero-img">
-      <img :src="getHeroImg" alt="">
+      <img :src="getHeroImg">
     </div>
     <slot name="home1"></slot>
     <div v-if="randomSawRes" :class="{'home-random-say-custom': isHome}" class="home-random-say">
@@ -39,6 +39,7 @@
 <script lang="ts">
 import { computed, defineComponent } from 'vue'
 import { usePageFrontmatter, useSiteLocaleData, withBase} from '@vuepress/client'
+
 import { isArray } from '@vuepress/shared'
 import type { DefaultThemeHomePageFrontmatter } from '../../shared'
 import NavLink from './NavLink.vue'
@@ -366,7 +367,7 @@ export default defineComponent({
         console.warn("%c you need to set the heroImg field value,the default is: https://ooszy.cco.vin/img/blog-public/avatar.jpg","color: pink;")
         return "https://ooszy.cco.vin/img/blog-public/avatar.jpg"
       }else {
-        return  src
+        return  withBase(src)
       }
     },
     getHomeHeight() {
