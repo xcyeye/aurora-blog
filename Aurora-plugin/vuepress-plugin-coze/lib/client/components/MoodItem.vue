@@ -3,7 +3,7 @@
     <div class="coze-mood-item" id="coze-mood-item">
       <div class="mood-item-left mood-item-img-parent" id="mood-item-left">
         <div class="mood-item-img" id="coze-mood-item-img">
-          <img :src="getAvatar" alt="">
+          <img :src="$withBase(getAvatar)" alt="">
         </div>
       </div>
       <div class="mood-item-right" id="mood-item-right">
