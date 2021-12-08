@@ -1241,7 +1241,7 @@ module.exports = {
         * 以下是1.11.0版本新增的配置项
         * */
 
-        //随机一眼接口，请注意，一定要保证该接口直接返回Text文本，一定要保证该接口直接返回Text文本，而不是返回json
+        //随机一言接口，请注意，一定要保证该接口直接返回Text文本，一定要保证该接口直接返回Text文本，而不是返回json
         randomSayApi: {
             method: 'GET',
             urlApi: 'https://v1.hitokoto.cn/?encode=text&c=a'
@@ -1253,83 +1253,5 @@ module.exports = {
         * */
         afDianUrl: 'https://afdian.net/@qsyyke'//你的爱发电个人页面地址
 
-
-        /*
-        * 下面这些是在v1.3.2中移除的配置，但是在V1.3.2之前的版本中，可能还可以使用，某些配置我不确定具体在哪个
-        * 版本中被移除的，并且在v1.3.2版本中，才把主题配置移到docs/.vuepress/config.js中，之前所有版本都是在
-        * docs/readme.md中进行配置，并不推荐使用V1.3.2之前的版本，没有侧边栏，可能还存在一些bug
-        * 同时你可能会发现上面的某些配置项并不是很好，比如随机一言的配置，我最开始想的就是希望能在配置项中，通过简单的配置
-        * 就能从api接口返回回来的复杂json数据中，获取到想要的值，但是目前此配置项，特别不方便，在后续版本中，会继续对此项
-        * 进行优化
-        *
-        * 未来:
-        * 此博客主题目前也拥有博客的最基本功能，但是某些功能，我目前并没有实现，在后续版本中，如果使用此主题的用户多的话
-        * 我都会逐一实现，此项目我会一直维护，以下便是在后续版本中，需要实现或者优化的
-        *
-        * 1.时间轴
-        * 2.优化SEO
-        * 3.优化海报分享功能，目前海报分享功能，对于一些文章，海报的宽度和高度会发生变化，并将海报分享制作成一个插件
-        * 4.广告，其实在最初的版本中，就已经实现了广告功能，只是不太理想，就移除了，后续会重新开发
-        * 5.页面交互动画，我并不擅长写前端，所以此主题的页面动画只是简单的做了一下，会在后续版本中进行优化
-        * 6.希望将所有的样式配置都进行抽离，比如菜单栏的ico图标等等，可以自己配置，虽然目前也可以更改，但是需要在
-        * 源码中进行简单的Unicode替换，其实如果改源码的话，也是非常简单的，只是我想在配置文件中，就可以进行修改
-        * 7.说说功能感觉如果在本地编写，然后再进行上传发布的话，并不是很方便，说说应该是一个随时能发布，修改的功能，
-        * 所以在后续版本中，会加入(目前也实现了这个功能，只是后端api是我自己写的，目前只能我自己使用，在后续版本中，希望能
-        * 够找到解决办法)
-        * 8.暗夜模式，最初在修改默认主题的时候，就被我移除了，但是一些用户可能还会使用到，所以也会在后续版本中，添加此功能
-        * 9.优化首页文章列表
-        *
-        * 最后:该主题最开始只是想魔改vuepress默认主题供自己使用，但是后面又想继续完善供所有需要的人使用，由于我对前端特别
-        * 菜，源码和页面中有很多不规范的地方，请各位大佬多多担待`(｀・ω・´)`
-        * */
-
-        // heroLogo: "https://ooszy.cco.vin/img/blog-public/avatar.jpg", 在v1.3.2中被移除
-        //faviconIco: https://ooszy.cco.vin/img/ico/yuan.png 已弃用
-        //faviconIco: https://github.githubassets.com/favicons/favicon.svg 已弃用
-        // showHomeMood: false,在v1.3.2中已移除
-        // defaultTitleColor: "#8093f1", 默认文章页，标题颜色 在v1.3.2中移除
-        //animeOption 配置已弃用
-        /*animeOption: {
-            baseURL: "https://api.vvhan.com/api/acgimg?type=json",
-            method: 'get',
-            timeout: 5000,
-            query: "imgurl",
-        },*/
-        //随机图片地址，设置背景用 已弃用，在v1.3.2以后，改用自己设置的形式
-        //randomWallpaper: https://api.mtyqx.cn/api/random.php
-        //randomWallpaperMb: https://api.mtyqx.cn/api/random.php
-        /*ico: { 在v1.3.2之后被移除
-            linkIco: "https://ooszy.cco.vin/img/ico/tea.svg",
-            aboutIco: "https://ooszy.cco.vin/img/ico/cat.svg",
-            homeWelcome: [
-                "https://ooszy.cco.vin/img/ico/love2.svg",
-                "https://ooszy.cco.vin/img/ico/xy.svg",
-            ],
-        },*/
-        // keyRule: 40, 如果没有设置key值，那么就截取描述作为key，keyRule就是截取多少个字 弃用
-        // isShowMessage: true,//已弃用，在v1.3.2之后，改用在侧边栏显示公告
-        /*adsenseArr: [ 弃用
-            {
-                position: "right",
-                adsenseMessage: "官网用户专享",
-                script: "",
-                adsenseBackgroundImg: "/img/33.jpg",
-            },
-            {
-                position: 'center',
-                adsenseMessage: "官网用户专享1",
-                script: '<a href="https://baidu.com">这是中间1</a>',
-                adsenseBackgroundImg: "/img/33.jpg",
-            },
-            {
-                position: "center",
-                adsenseMessage: "官网用户专享2",
-                script: '<a href="https://baidu.com">这是中间2</a>',
-                adsenseBackgroundImg: "/img/33.jpg",
-            },
-        ],*/
-        // insertAdsenseRule: 17, 弃用
-        // adsenseLength: 3, 每一页文章中，最大广告数 弃用
-        // socialMaxLength: 7, 在v1.3.2版本中移除
     }
 };

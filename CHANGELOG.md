@@ -1,4 +1,4 @@
-# [1.0.0](https://github.com/vuepress-aurora/vuepress-theme-aurora/compare/v1.11.1...v1.0.0) (2021-12-07)
+# [1.0.0](https://github.com/vuepress-aurora/vuepress-theme-aurora/compare/v1.11.1...v1.0.0) (2021-12-08)
 
 
 
