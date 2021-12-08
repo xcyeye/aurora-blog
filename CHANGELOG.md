@@ -1,4 +1,49 @@
-# [1.0.0](https://github.com/vuepress-aurora/vuepress-theme-aurora/compare/v1.10.1...v1.0.0) (2021-11-30)
+# [1.0.0](https://github.com/vuepress-aurora/vuepress-theme-aurora/compare/v1.11.1...v1.0.0) (2021-12-07)
+
+
+
+## [1.11.1](https://github.com/vuepress-aurora/vuepress-theme-aurora/compare/v1.11.0...v1.11.1) (2021-12-07)
+
+
+### Bug Fixes
+
+* fix music playback, failed to get the playback status ([c46d474](https://github.com/vuepress-aurora/vuepress-theme-aurora/commit/c46d474360942cba6ebcb63e083a15886b261e84))
+* fix that there is a base item, the article page does not display the label ([171cede](https://github.com/vuepress-aurora/vuepress-theme-aurora/commit/171cede65819e6ccfc151866baf512838626cf58))
+* fix the existence of base configuration item, href error ([fae1311](https://github.com/vuepress-aurora/vuepress-theme-aurora/commit/fae13110075ea50b45fd10fc8bfa97ba4b78080f))
+* fix the existence of base configuration item, href error for coze-plugin ([928587d](https://github.com/vuepress-aurora/vuepress-theme-aurora/commit/928587d7d745a7b5027091e7020642faf69cea6f))
+* fix the existence of base configuration item, local background image 404 ([da5cb0b](https://github.com/vuepress-aurora/vuepress-theme-aurora/commit/da5cb0b71ddcb0855bf7009101ae62c411cbf583))
+* fix the existence of base item and background image ([4ef0abd](https://github.com/vuepress-aurora/vuepress-theme-aurora/commit/4ef0abd9b25c7fa6cce91035903d91434f6a2c45))
+* fix the existence of base item and invalid background image ([67993dd](https://github.com/vuepress-aurora/vuepress-theme-aurora/commit/67993dda85c447d000d0a244deb94f258d43e72c))
+* fix the existence of base item and menu bar error ([d02f726](https://github.com/vuepress-aurora/vuepress-theme-aurora/commit/d02f726d1ccb39a31925dcffa7d4d1a9dd5b3622))
+* fix the existence of base item and sidebar error ([eacb71d](https://github.com/vuepress-aurora/vuepress-theme-aurora/commit/eacb71d61be33f068de7c4d243e8be3973cef94a))
+* fix the social width error on the mobile phone ([6664369](https://github.com/vuepress-aurora/vuepress-theme-aurora/commit/666436952758fa1fdbc1ca278f05d69b34a7b027))
+* fix the song is loaded successfully but the picture is't replaced for player-plugin ([316491e](https://github.com/vuepress-aurora/vuepress-theme-aurora/commit/316491e66b53356e791338a812fd66010ed8ec00))
+* increase the number of seconds to monitor the playback state ([08b06d3](https://github.com/vuepress-aurora/vuepress-theme-aurora/commit/08b06d35a1aa494b87bdfaa9c744dfba1af55c6a))
+* modify online rewards as aifadian ([2cc8f5d](https://github.com/vuepress-aurora/vuepress-theme-aurora/commit/2cc8f5d2fa83cafe3b3d7b96c8e381b18c705e4a))
+* repair click the latest article to refresh ([880dfa9](https://github.com/vuepress-aurora/vuepress-theme-aurora/commit/880dfa981ab92bb259728de54c7b9f6a1bdd9d35))
+* repair click the menu item to refresh ([5b5ccbb](https://github.com/vuepress-aurora/vuepress-theme-aurora/commit/5b5ccbb646278d7d00cbf49eff275c63b2642ec3))
+
+
+
+# [1.11.0](https://github.com/vuepress-aurora/vuepress-theme-aurora/compare/v1.10.1...v1.11.0) (2021-12-05)
+
+
+### Bug Fixes
+
+* fix directory routing errors ([400f417](https://github.com/vuepress-aurora/vuepress-theme-aurora/commit/400f417ead7824b337cceda7380551928936c4f7))
+* fix duplicate photo display ([7bfed28](https://github.com/vuepress-aurora/vuepress-theme-aurora/commit/7bfed28e95b631a12460eb804169d347c292b69a))
+* fix photo not showing problem ([fd5c607](https://github.com/vuepress-aurora/vuepress-theme-aurora/commit/fd5c60768c422a97882a424eda4bd09567c88338))
+* fix the error of talk about page switching status ([7998800](https://github.com/vuepress-aurora/vuepress-theme-aurora/commit/799880029a7c1e450bf2c07911d5892ab234f32d))
+* fix the problem that frontmatter contains title and h1 is hidden ([d1a3981](https://github.com/vuepress-aurora/vuepress-theme-aurora/commit/d1a3981c22ed0f1f67247a05760314f6dafa9339))
+* fix to talk about the page iframe beyond the box ([858eba9](https://github.com/vuepress-aurora/vuepress-theme-aurora/commit/858eba9ad1eaf79927c5b458049e62e4206cd0db))
+* optimize photo page style ([81b6ac6](https://github.com/vuepress-aurora/vuepress-theme-aurora/commit/81b6ac6bdfcc146079a85fada9188ce408a46e63))
+* optimize the h1 tag of the page page ([e977094](https://github.com/vuepress-aurora/vuepress-theme-aurora/commit/e977094aed41de0730ec532c989b85882acc4409))
+
+
+### Features
+
+* add a custom random glance interface ([28129cc](https://github.com/vuepress-aurora/vuepress-theme-aurora/commit/28129ccaa34129bada865ccb71d95a92ce9cd1ad))
+* add disable space key for player-plugin ([ecfd907](https://github.com/vuepress-aurora/vuepress-theme-aurora/commit/ecfd907d9e0c77b3aa93dd5c1e641dda3582b051))
 
 
 
