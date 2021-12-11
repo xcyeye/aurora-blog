@@ -1,6 +1,6 @@
 <template>
   <footer class="page-meta">
-    <div v-if="editNavLink" :data="editNavLink" class="meta-item edit-link">
+    <div v-if="editNavLink" :data="editNavLink.link" :chu="getEditLink" class="meta-item edit-link">
       <NavLink class="meta-item-label" :item="editNavLink" />
     </div>
 
@@ -131,35 +131,47 @@ export default defineComponent({
     Poster,
     NavLink,
   },
+  data() {
+    return {
+      editNavLink: {
+        link: '',
+        text: ''
+      }
+    }
+  },
 
   setup() {
     const themeLocale = useThemeLocaleData()
-    let editNavLink = useEditNavLink()
     const lastUpdated = useLastUpdated()
     const contributors = useContributors()
-    const page = usePageData()
-
-    let githubActions = themeLocale.value.githubActions
-    if (githubActions && themeLocale.value.docsRepo !== undefined) {
-      let filePathRelative = page.value.filePathRelative
-      let docsRepo = themeLocale.value.docsRepo
-      let docsBranch = ''
-
-      if (themeLocale.value.docsBranch !== undefined) {
-        docsBranch = themeLocale.value.docsBranch
-      }else {
-        docsBranch = 'main'
-      }
-
-      editNavLink.value.link = docsRepo + "/edit/" + docsBranch + "/docs/" + filePathRelative
-    }
 
     return {
       themeLocale,
-      editNavLink,
       lastUpdated,
       contributors,
     }
   },
+  computed: {
+    getEditLink() {
+      const page = usePageData()
+      const themeLocale = useThemeLocaleData()
+      let editNavLink = useEditNavLink()
+      let githubActions = themeLocale.value.githubActions
+      if (githubActions && themeLocale.value.docsRepo !== undefined) {
+        let filePathRelative = page.value.filePathRelative
+        let docsRepo = themeLocale.value.docsRepo
+        let docsBranch = ''
+
+        if (themeLocale.value.docsBranch !== undefined) {
+          docsBranch = themeLocale.value.docsBranch
+        }else {
+          docsBranch = 'main'
+        }
+
+        this.editNavLink.link = docsRepo + "/edit/" + docsBranch + "/docs/" + filePathRelative
+        this.editNavLink.text = editNavLink.value.text
+      }
+    }
+  }
 })
 </script>

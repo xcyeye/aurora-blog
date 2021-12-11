@@ -128,12 +128,6 @@ module.exports = {
     //设置head 一定要加入<script src="https://at.alicdn.com/t/font_2849934_v6y652peian.js"></script>项配置，否则一些图标不能正常显示
     head: [
         [
-            "meta",{
-                "http-equiv": "Content-Security-Policy",
-                "content": "upgrade-insecure-requests"
-            }
-        ],
-        [
             "script",
             {
                 src: "https://at.alicdn.com/t/font_2849934_v6y652peian.js",
@@ -1235,7 +1229,7 @@ module.exports = {
 
 
         //这是v1.9.0新增加的功能 是否在文章页底部显示最后更新时间，贡献者，点击编辑,默认显示
-        showPageMeta: false,
+        showPageMeta: true,
 
         /*
         * 以下是1.11.0版本新增的配置项
