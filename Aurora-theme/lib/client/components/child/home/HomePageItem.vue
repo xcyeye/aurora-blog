@@ -1,39 +1,49 @@
 <template>
   <div ref="pageItemTop" class="home-page-scroll home-page-tag-item sidebar-single-enter-animate" id="home-page-tag-item">
-    <div class="home-page-tag-img" @click="goRead(event,pageItem.articleUrl)">
-      <div class="home-page-img-gradual"></div>
-      <img id="home-page-img" :data-src="getPageUrl(pageItem)" :src="homePageLazyLoadingImg" alt="">
+    <div class="home-page-tag-img">
+      <div class="home-page-img-gradual">
+        <div class="home-page-gradual-title-par">
+          <div class="home-page-top" v-if="pageItem.frontmatter.stick">
+            <div>
+              <span>{{homeTopText}}</span>
+            </div>
+          </div>
+          <div :class="getGradualClass" class="home-page-gradual-title-item-common">
+            <div class="home-page-tag-title home-page-gradual-title">
+              <router-link :to="pageItem.articleUrl">
+                <span>{{getPageItemTitle}}</span>
+              </router-link>
+            </div>
+
+            <div class="home-page-gradual-info">
+              <div class="home-page-gradual-info-time home-page-gradual-info-common">
+                <div v-if="getTime !== ''">
+                  <div class="home-page-info-time">
+                    <span class="aurora-iconfont-common aurora-home-time"></span>
+                    <span>{{getTime}}</span>
+                  </div>
+                </div>
+              </div>
+              <div class="home-page-gradual-info-tag home-page-gradual-info-common">
+                <div class="home-page-tag-tag-desc home-page-gradual-tag" v-if="getPageTag(pageItem).length !== 0" id="home-page-tag-tag-desc">
+                  <div>
+                    <span class="aurora-iconfont-common aurora-home-tag"></span>
+                    <span class="home-page-tag-span" :key="index" v-for="(item,index) in getPageTag(pageItem)">{{item}}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <img id="home-page-img" ref="home-page-img" :data-src="getPageUrl(pageItem)" :src="homePageLazyLoadingImg" alt="">
     </div>
 
     <div class="home-page-tag-con">
-      <div class="home-page-tag-title">
-        <router-link :to="pageItem.articleUrl">
-          <span>{{getPageItemTitle}}</span>
-        </router-link>
-      </div>
       <div ref="homePageDom" :class="getPageClass" class="home-page-tag-content">
         <div class="home-page-tag-content-rendered" style="display: block" v-html="pageItem.contentRendered"></div>
       </div>
-      <div class="home-page-tag-bottom">
-        <div v-if="pageItem.frontmatter.stick" class="home-page-stick">
-          <div>
-            <span class="aurora-stick aurora-iconfont-common"></span>
-            <span class="aurora-stick-label">置顶</span>
-          </div>
-        </div>
-        <div v-if="getTime !== ''" class="home-page-info">
-          <div class="home-page-info-time">
-            <span class="aurora-iconfont-common aurora-home-time"></span>
-            <span>{{getTime}}</span>
-          </div>
-        </div>
-        <div class="home-page-tag-tag-desc" v-if="getPageTag(pageItem).length !== 0" id="home-page-tag-tag-desc">
-          <div>
-            <span class="aurora-iconfont-common aurora-home-tag"></span>
-            <span class="home-page-tag-span" :key="index" v-for="(item,index) in getPageTag(pageItem)">{{item}}</span>
-          </div>
-        </div>
-      </div>
+      <!--<div class="home-page-tag-bottom"></div>-->
     </div>
   </div>
 </template>
@@ -44,7 +54,9 @@ export default {
   name: "HomePageItem",
   data() {
     return {
-      homePageLazyLoadingImg: 'https://ooszy.cco.vin/img/blog-note/aurora-loading.gif'
+      homePageLazyLoadingImg: 'https://ooszy.cco.vin/img/blog-note/aurora-loading.gif',
+      coverUrl: '',
+      homeTopText: 'Top'
     }
   },
   props: {
@@ -64,6 +76,14 @@ export default {
     index: 0
   },
   computed: {
+    getGradualClass() {
+      let num = this.index % 2
+      if (num === 0) {
+        return 'home-page-gradual-title-item-left'
+      }else {
+        return 'home-page-gradual-title-item-right'
+      }
+    },
     getPageItemTitle() {
       let title = this.pageItem.title
       if (title === "") {
@@ -96,7 +116,8 @@ export default {
           homePageImgApi = this.$store.state.defaultHomePageImgApi
         }
         let path = homePageImgApi + "?time=" + num
-        return item.frontmatter.coverUrl === undefined ? path : item.frontmatter.coverUrl
+        this.coverUrl = item.frontmatter.coverUrl === undefined ? path : item.frontmatter.coverUrl
+        return this.coverUrl
       }
     },
     getPageTag() {
@@ -168,6 +189,9 @@ export default {
     }
   },
   created() {
+    if (this.themeProperty.homeTopText !== undefined) {
+      this.homeTopText = this.themeProperty.homeTopText
+    }
     if (this.themeProperty.homePageLazyLoadingImg !== undefined) {
       this.homePageLazyLoadingImg = this.themeProperty.homePageLazyLoadingImg
     }

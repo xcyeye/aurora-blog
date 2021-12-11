@@ -1245,7 +1245,13 @@ module.exports = {
         /*
         * 一下是v1.11.1版本增加的配置
         * */
-        afDianUrl: 'https://afdian.net/@qsyyke'//你的爱发电个人页面地址
+        afDianUrl: 'https://afdian.net/@qsyyke',//你的爱发电个人页面地址
 
+        /*
+        * 下面这些是v1.12.0版本新增的配置项
+        * */
+
+        // 首页置顶文字
+        homeTopText: '置顶'
     }
 };
