@@ -804,11 +804,15 @@
     .v-waterfall-item img {
         width: 90%;
     }
+    .waterfull {
+        margin-bottom: 1rem;
+    }
 }
 
 @media screen and (min-width:550px) {
     .photo-waterfull {
-        margin: 0 auto
+        margin: 0 auto;
+        margin-bottom: 1rem;
     }
     .v-waterfall-item img {
         width: 95%;
