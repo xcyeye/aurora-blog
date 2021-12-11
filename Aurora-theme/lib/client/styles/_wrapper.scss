@@ -8,9 +8,11 @@
 
   @media (max-width: $MQNarrow) {
     padding: 2rem;
+    padding-bottom: 0;
   }
 
   @media (max-width: $MQMobileNarrow) {
     padding: 1.5rem;
+    padding-bottom: 0;
   }
 }

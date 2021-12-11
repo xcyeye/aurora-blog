@@ -1856,9 +1856,14 @@ body::-webkit-scrollbar-thumb {
 
 #donate-img li {
     list-style: none;
-    margin-left: 2rem;
+    /*margin-left: 2rem;
     margin-right: 2rem;
-    padding: .5rem
+    padding: .5rem;
+    width: 100%;*/
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
 }
 
 #donate-img li img {
