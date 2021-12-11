@@ -2864,11 +2864,11 @@ body::-webkit-scrollbar-thumb {
     }
 
     .home-page-tag-img {
-        height: 12.5rem
+        height: var(--aurora-mb-home-page-item-height)
     }
 
     #home-page-img {
-        max-height: 12.5rem
+        height: var(--aurora-mb-home-page-item-height)
     }
 
     .home-page-tag-content {
@@ -3087,11 +3087,11 @@ body::-webkit-scrollbar-thumb {
     }
 
     .home-page-tag-img {
-        height: 17rem
+        height: var(--aurora-home-page-item-height)
     }
 
     #home-page-img {
-        max-height: 17rem
+        height: var(--aurora-home-page-item-height)
     }
 
     .home-page-tag-content {
@@ -3673,7 +3673,7 @@ body::-webkit-scrollbar-thumb {
 
 #home-page-img {
     z-index: 0;
-    max-height: 17rem;
+    /*max-height: var(--aurora-home-page-item-height);*/
     width: 100%;
     cursor: pointer;
     -o-object-fit: fill;
@@ -3756,7 +3756,7 @@ body::-webkit-scrollbar-thumb {
 
 @media screen and (max-width:719px) {
     .home-page-gradual-title-item-common {
-        bottom: 0;
+        bottom: 5%;
     }
 
     .home-page-gradual-info-common {
@@ -3795,8 +3795,8 @@ body::-webkit-scrollbar-thumb {
 
 @media screen and (max-width:719px) {
     .home-page-top {
-        width: 2.5rem;
-        height: 2.5rem;
+        /*width: 2.5rem;*/
+        /*height: 2.5rem;*/
     }
 }
 
@@ -3815,7 +3815,7 @@ body::-webkit-scrollbar-thumb {
     justify-content: center;
     align-items: center;
     transform: rotate(-45deg);
-    font-weight: bold;
+    /*font-weight: bold;*/
 }
 
 .home-page-read {

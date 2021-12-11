@@ -1,6 +1,7 @@
 ---
 tag: [music,player,播放器,plugin]
 categories: [plugin]
+show: false
 ---
 
 

@@ -35,6 +35,9 @@ module.exports = {
 
             new Promise((resolve,reject) => {
                 let excludeMapArr = myData.default.filter(pageData => {
+                    if (pageData.data.frontmatter.show !== undefined && !pageData.data.frontmatter.show) {
+                        return false
+                    }
                     return !excludes.includes(pageData.path);
                 })
                 resolve(excludeMapArr)
