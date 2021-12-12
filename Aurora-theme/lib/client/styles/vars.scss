@@ -13,8 +13,14 @@
   --homeHeight: 100vh;
   --sidebarCutWidth: 0.9;
   -aurora-tag-opacity: 0.45;
-  --hoverColor: #8186d5;
+  --hoverColor: red;
   --auroraActiveColor: #8186d5;
+
+  //主题全局背景色 包括hover
+  --aurora-global-bg: blue;
+  --aurora-global-active-color: #d20629;
+  //rgba(198, 203, 239, .4)
+  --aurora-global-active-bg: rgba(255, 0, 0, 0.45);
 
   --aurora-page-top-bg: rgba(135, 224, 232, 0.69);
   --aurora-page-top-color: red;

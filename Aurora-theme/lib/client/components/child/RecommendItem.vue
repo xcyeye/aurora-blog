@@ -4,7 +4,7 @@
       <div class="recommend-bottom">
         <div class="aurora-recommend-bo">
           <router-link :to="getHref">
-            <span>{{item.title === "" ? recommendNoTitle : item.title}}</span>
+            <span class="aurora-hover-color-animate">{{item.title === "" ? recommendNoTitle : item.title}}</span>
           </router-link>
         </div>
       </div>

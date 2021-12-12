@@ -80,11 +80,11 @@
         padding: 0 1.5rem 0 1.25rem;
 
         &:hover {
-          color: #8186d5;
+          color: var(--aurora-global-active-color);
         }
 
         &.router-link-active {
-          color: #8186d5;
+          color: var(--aurora-global-active-color);
           font-weight: 550;
 
           /*&::before {

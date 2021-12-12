@@ -25,7 +25,7 @@
           </div>
           <div class="menu-item-right">
             <router-link to="/">
-              <span>Home</span>
+              <span class="">Home</span>
             </router-link>
           </div>
         </div>

@@ -3,12 +3,12 @@
   <div :style="getBgSrc" class="page-bottom-next">
     <div class="page-next-left page-next-item">
       <router-link :to="prePage.path === undefined ? '' : prePage.path">
-        <span :data="prePage.path">{{prePage.title === "" ? recommendNoTitle : prePage.title}}</span>
+        <span :data="prePage.path" class="aurora-hover-color-animate">{{prePage.title === "" ? recommendNoTitle : prePage.title}}</span>
       </router-link>
     </div>
     <div v-if="nextPage !== ''" class="page-next-right page-next-item">
       <router-link :to="nextPage.path === undefined ? '' : nextPage.path">
-        <span :data="nextPage.path">{{nextPage.title === "" ? recommendNoTitle : nextPage.title}}</span>
+        <span :data="nextPage.path" class="aurora-hover-color-animate">{{nextPage.title === "" ? recommendNoTitle : nextPage.title}}</span>
       </router-link>
     </div>
   </div>
