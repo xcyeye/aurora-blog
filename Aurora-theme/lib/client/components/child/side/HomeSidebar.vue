@@ -13,7 +13,7 @@
           <img id="home-sidebar-avatar-img" :src="$withBase(getAvatar)" alt="">
         </div>
         <div class="home-sidebar-info-desc">
-          <span>{{getLogoTitle}}</span>
+          <span v-html="getLogoTitle"></span>
         </div>
         <div class="home-sidebar-info-page">
           <div class="sidebar-page-common">
@@ -35,6 +35,13 @@
         <slot name="sidebar-son1"/>
       </div>
       <slot name="sidebar1"></slot>
+
+      <!--时间-->
+      <!--<div :id="customId" v-if="getShowSidebarSocial" class="sidebar-single-common">
+        <div class="sidebar-time">
+          <span>12:36:57</span>
+        </div>
+      </div>-->
 
       <!--社交-->
       <div :id="customId" v-if="getShowSidebarSocial" class="sidebar-single-common">
@@ -422,9 +429,9 @@ export default {
       }
     },
     getLogoTitle() {
-      let logoTitle = this.themeProperty.logoTitle
+      let logoTitle = this.themeProperty.sidebarDesc
       if (logoTitle === undefined || logoTitle === null) {
-        logoTitle = "ccds"
+        logoTitle = "Aurora"
       }
       return logoTitle
     },

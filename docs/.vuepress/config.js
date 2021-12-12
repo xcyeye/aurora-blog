@@ -1252,6 +1252,9 @@ module.exports = {
         * */
 
         // 首页置顶文字
-        homeTopText: '置顶'
+        homeTopText: '置顶',
+
+        //侧边栏一句话描述
+        sidebarDesc: '喜欢动漫，Coding目前是一名大三学生,CS专业,坐标西南边陲'
     }
 };

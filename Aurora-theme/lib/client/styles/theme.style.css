@@ -250,6 +250,10 @@ a[data-v-d8ec41bc] {
     content: "\e923"
 }
 
+@font-face {
+    font-family: aurora-time-font;
+    src: url("../public/fonts/DS-DIGIT.TTF");
+}
 
 @font-face {
     font-family: "aurora-font"; /* Project id 2849934 */
@@ -3675,7 +3679,7 @@ body::-webkit-scrollbar-thumb {
 }
 
 .home-page-tag-img:hover #home-page-img {
-    transform: scale(1.2);
+    /*transform: scale(1.2);*/
     transition: all .6s ease-in
 }
 
@@ -3695,6 +3699,7 @@ body::-webkit-scrollbar-thumb {
     border-bottom-right-radius: var(--borderRadius);
     background-color: rgba(255, 255, 255, var(--opacity));
     margin-bottom: 1rem;
+    margin-top: 1rem;
 }
 
 .home-page-tag-title {
@@ -3740,7 +3745,7 @@ body::-webkit-scrollbar-thumb {
 }
 
 .home-page-tag-img:hover img{
-    filter: blur(2px);
+    /*filter: blur(1.2px);*/
 }
 
 .home-page-tag-img:hover .home-page-img-gradual {
@@ -3801,6 +3806,7 @@ body::-webkit-scrollbar-thumb {
     width: 3rem;
     height: 3rem;
     z-index: 2;
+    font-weight: bold;
     background: var(--aurora-page-top-bg);
     color: var(--aurora-page-top-color);
     border-bottom-right-radius: 30rem;
@@ -4134,15 +4140,15 @@ body::-webkit-scrollbar-thumb {
 }
 
 .home-sidebar-info-desc {
+    width: 90%;
+    margin: 0 auto;
     margin-top: 1rem;
-    height: 2rem;
-    text-align: center
+    /*height: 2rem;*/
+    text-align: left
 }
 
 .home-sidebar-info-desc span {
-    line-height: 1.5rem;
-    font-size: 22px;
-    font-weight: 700
+    /*font-size: 1rem;*/
 }
 
 .home-sidebar-info-page {
@@ -5550,4 +5556,12 @@ body::-webkit-scrollbar-thumb {
     -webkit-animation-fill-mode: forwards;
     animation-fill-mode: forwards;
     cursor: pointer
+}
+
+/*v1.12.0*/
+.sidebar-time {
+    width: 90%;
+    margin: 0 auto;
+    font-family: aurora-time-font;
+    height: 5rem;
 }
