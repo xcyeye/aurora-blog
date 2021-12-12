@@ -18,9 +18,14 @@
 
   //主题全局背景色 包括hover
   --aurora-global-bg: blue;
-  --aurora-global-active-color: #d20629;
-  //rgba(198, 203, 239, .4)
-  --aurora-global-active-bg: rgba(255, 0, 0, 0.45);
+  --aurora-global-active-color: #8186d5;
+  --aurora-global-active-bg: rgba(198, 203, 239, .4);
+
+  //分页颜色
+  --aurora-pagination-active-bg: #b2f7ef;
+  --aurora-pagination-active-color: white;
+  --aurora-pagination-bg: hsla(0, 0%, 100%, .8);
+  --aurora-pagination-color: #555;
 
   --aurora-page-top-bg: rgba(135, 224, 232, 0.69);
   --aurora-page-top-color: red;

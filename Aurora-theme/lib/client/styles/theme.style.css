@@ -4382,7 +4382,7 @@ body::-webkit-scrollbar-thumb {
 .home-cut-page-num li {
     height: 1.3rem;
     line-height: 1.3rem;
-    color: #555;
+    color: var(--aurora-pagination-color);
     cursor: pointer;
     padding-right: 10px;
     padding-left: 10px;
@@ -4390,7 +4390,7 @@ body::-webkit-scrollbar-thumb {
     margin-right: .3rem;
     border-radius: 5px;
     list-style: none;
-    background-color: hsla(0, 0%, 100%, .8)
+    background-color: var(--aurora-pagination-bg)
 }
 
 .home-cut-page-num li span {
@@ -4398,8 +4398,8 @@ body::-webkit-scrollbar-thumb {
 }
 
 #cutPageActive {
-    background-color: var(--aurora-global-active-bg);
-    color: #f5f5f5
+    background-color: var(--aurora-pagination-active-bg);
+    color: var(--aurora-pagination-active-color)
 }
 
 .home-cut-page-change {
