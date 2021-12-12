@@ -13,7 +13,7 @@
           <img id="home-sidebar-avatar-img" :src="$withBase(getAvatar)" alt="">
         </div>
         <div class="home-sidebar-info-desc">
-          <span v-html="getLogoTitle"></span>
+          <span v-if="getLogoTitle !== ''" v-html="getLogoTitle"></span>
         </div>
         <div class="home-sidebar-info-page">
           <div class="sidebar-page-common">
@@ -429,11 +429,9 @@ export default {
       }
     },
     getLogoTitle() {
-      let logoTitle = this.themeProperty.sidebarDesc
-      if (logoTitle === undefined || logoTitle === null) {
-        logoTitle = "Aurora"
+      if (this.themeProperty.sidebarDesc !== undefined) {
+        return this.themeProperty.sidebarDesc
       }
-      return logoTitle
     },
     getAvatar() {
 
