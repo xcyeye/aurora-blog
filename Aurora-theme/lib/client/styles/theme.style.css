@@ -2864,11 +2864,11 @@ body::-webkit-scrollbar-thumb {
     }
 
     .home-page-tag-img {
-        height: var(--aurora-mb-home-page-item-height)
+        max-height: var(--aurora-mb-home-page-item-height)
     }
 
     #home-page-img {
-        height: var(--aurora-mb-home-page-item-height)
+        max-height: var(--aurora-mb-home-page-item-height)
     }
 
     .home-page-tag-content {
@@ -3087,11 +3087,11 @@ body::-webkit-scrollbar-thumb {
     }
 
     .home-page-tag-img {
-        height: var(--aurora-home-page-item-height)
+        max-height: var(--aurora-home-page-item-height)
     }
 
     #home-page-img {
-        height: var(--aurora-home-page-item-height)
+        max-height: var(--aurora-home-page-item-height)
     }
 
     .home-page-tag-content {
