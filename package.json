@@ -20,7 +20,6 @@
     "@vuepress/bundler-vite": "^2.0.0-beta.27",
     "@vuepress/plugin-google-analytics": "^2.0.0-beta.27",
     "@vuepress/plugin-register-components": "^2.0.0-beta.27",
-    "crisp-word-count": "^1.0.0",
     "cz-conventional-changelog": "^3.3.0",
     "jquery": "^3.2.1",
     "vuepress": "^2.0.0-beta.27"
@@ -45,6 +44,7 @@
     "markdown-it-modify-token": "^1.0.2",
     "postcss": "^8.3.9",
     "qrcode": "^1.4.4",
+    "reading-time-estimator": "^1.4.0",
     "smoothscroll-polyfill": "^0.4.4",
     "stylus-loader": "^6.1.0",
     "unplugin-vue-components": "^0.16.0",

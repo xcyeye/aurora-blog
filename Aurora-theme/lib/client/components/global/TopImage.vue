@@ -58,8 +58,8 @@
 </template>
 
 <script>
+import { readingTime } from 'reading-time-estimator';
 import {useThemeLocaleData} from "../../composables";
-import WordCount from "crisp-word-count";
 import gsap from "gsap";
 import {withBase} from "@vuepress/client";
 const network = require('../../public/js/network.js')
@@ -67,6 +67,11 @@ export default {
   name: "TopImage",
   data() {
     return {
+      totalWordObj: {
+        minutes: '',
+        text: '',
+        words: 0
+      },
       animeImg: '',
       pageMap: '',
       contentLength: 0,
@@ -306,26 +311,13 @@ export default {
           allContent = startContent + endContent
           allContent = allContent.replace("\n","")
         }
+
+        allContent = allContent.substr(document.querySelector(".page-top-share").innerText.length,allContent.length)
         resolve(allContent)
       }).then((allContent) => {
-        const string_summary = WordCount.stringSummary(allContent)
-        new Promise((resolve,reject) => {
-          let chineseContentNum = 0
-          for (let i = 0; i < allContent.length; i++) {
-            let c = allContent.charAt(i);
-            //基本汉字
-            if (c.match(/[\u4e00-\u9fa5]/)) {
-              chineseContentNum++;
-            }
-            //基本汉字补充
-            else if (c.match(/[\u9FA6-\u9fcb]/)){
-              chineseContentNum++;
-            }
-          }
-          resolve(chineseContentNum)
-        }).then((chineseContentNum) => {
-          this.contentLength = chineseContentNum + string_summary.spaces
-        })
+        const totalWordObj = readingTime(allContent, this.sugCountPerMin);
+        this.totalWordObj = totalWordObj
+        this.contentLength = totalWordObj.words
       })
     }
   },
@@ -333,7 +325,7 @@ export default {
     contentLength(nv) {
       gsap.to(this.$data, { duration: 0.5, contentLengthTemp: nv })
       let sugReadTime = Math.floor(this.contentLength / this.sugCountPerMin) === 0 ? 1 : Math.ceil(this.contentLength / this.sugCountPerMin)
-      gsap.to(this.$data, { duration: 0.5, sugReadTimeTemp: sugReadTime })
+      gsap.to(this.$data, { duration: 0.5, sugReadTimeTemp: this.totalWordObj.minutes })
     },
     headLine(newValue,oldValue) {
       setTimeout(() => {
