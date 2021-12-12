@@ -1,16 +1,24 @@
-# [1.0.0](https://github.com/vuepress-aurora/vuepress-theme-aurora/compare/v1.11.1...v1.0.0) (2021-12-11)
+# [1.0.0](https://github.com/vuepress-aurora/vuepress-theme-aurora/compare/v1.12.0...v1.0.0) (2021-12-12)
+
+
+
+# [1.12.0](https://github.com/vuepress-aurora/vuepress-theme-aurora/compare/v1.11.1...v1.12.0) (2021-12-12)
 
 
 ### Bug Fixes
 
 * fix the album page on the mobile phone ([290566e](https://github.com/vuepress-aurora/vuepress-theme-aurora/commit/290566e117d3a107823e4cb36af88209498fdf8c))
 * fix the mobile phone appreciating the QR code style ([e1a24bb](https://github.com/vuepress-aurora/vuepress-theme-aurora/commit/e1a24bb2a6a284c480701673aaae784924e77960))
+* modify global pagination style color ([ce6eabf](https://github.com/vuepress-aurora/vuepress-theme-aurora/commit/ce6eabfad065b34ecfbe0e9091785d7bac6799a3))
+* modify sidebar logoTitle ([7d47b01](https://github.com/vuepress-aurora/vuepress-theme-aurora/commit/7d47b015d31a728ca5551ca1c81b7c940ddfb49b))
 * **theme:** fix edit link failure ([8210c23](https://github.com/vuepress-aurora/vuepress-theme-aurora/commit/8210c235bc07f8736ea52804548df41f621f4299))
+* unify global colors ([7221d48](https://github.com/vuepress-aurora/vuepress-theme-aurora/commit/7221d486d3c46ac89d6f566a80e82b4d24c9ff9d))
 
 
 ### Features
 
 * add a certain article not to be displayed ([67224e3](https://github.com/vuepress-aurora/vuepress-theme-aurora/commit/67224e3b0606e7356a3d7a9361721a03e42de7ce))
+* add one sentence description ([7f3865f](https://github.com/vuepress-aurora/vuepress-theme-aurora/commit/7f3865f0dc4619b7ffdeec43e684435b7d17ab61))
 
 
 
