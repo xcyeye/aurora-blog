@@ -3745,6 +3745,10 @@ body::-webkit-scrollbar-thumb {
     background: rgba(0,0,0,.2);
 }
 
+.home-page-tag-item:hover .home-page-img-gradual {
+    background: rgba(0,0,0,.2);
+}
+
 .home-page-gradual-info-common {
     display: inline-block;
 }
