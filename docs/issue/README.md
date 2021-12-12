@@ -3,7 +3,8 @@ stick: true
 date: 2021/10/10 12:45
 title: ceshi
 tag: [标签1,标签1,标签1,标签1,标签1,标签1,标签1,标签1,标签1,标签1,标签1,标签1]
-show: false
+coverUrl: https://picoss.cco.vin/animate/wall/254.png
+show: true
 ---
 
 

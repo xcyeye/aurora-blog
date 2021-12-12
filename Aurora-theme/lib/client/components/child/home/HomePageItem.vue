@@ -1,6 +1,6 @@
 <template>
   <div ref="pageItemTop" class="home-page-scroll home-page-tag-item sidebar-single-enter-animate" id="home-page-tag-item">
-    <div class="home-page-tag-img">
+    <div @click="goRead($event,pageItem.articleUrl)" class="home-page-tag-img">
       <div class="home-page-img-gradual">
         <div class="home-page-gradual-title-par">
           <div class="home-page-top" v-if="pageItem.frontmatter.stick">
@@ -9,34 +9,25 @@
             </div>
           </div>
           <div :class="getGradualClass" class="home-page-gradual-title-item-common">
-            <div class="home-page-tag-title home-page-gradual-title">
-              <router-link :to="pageItem.articleUrl">
-                <span>{{getPageItemTitle}}</span>
-              </router-link>
-            </div>
-
-            <div class="home-page-gradual-info">
-              <div class="home-page-gradual-info-time home-page-gradual-info-common">
-                <div v-if="getTime !== ''">
-                  <div class="home-page-info-time">
-                    <span class="aurora-iconfont-common aurora-home-time"></span>
-                    <span>{{getTime}}</span>
-                  </div>
-                </div>
+            <div class="home-page-gradual-item">
+              <div class="home-page-gradual-title home-page-gradual-common">
+                <router-link :to="pageItem.articleUrl">
+                  <span>{{getPageItemTitle}}</span>
+                </router-link>
               </div>
-              <div class="home-page-gradual-info-tag home-page-gradual-info-common">
-                <div class="home-page-tag-tag-desc home-page-gradual-tag" v-if="getPageTag(pageItem).length !== 0" id="home-page-tag-tag-desc">
-                  <div>
-                    <span class="aurora-iconfont-common aurora-home-tag"></span>
-                    <span class="home-page-tag-span" :key="index" v-for="(item,index) in getPageTag(pageItem)">{{item}}</span>
-                  </div>
+              <div class="home-page-gradual-other-info home-page-gradual-common">
+                <div class="home-page-gradual-other-info-common home-page-gradual-other-time">
+                  <span>{{getTime}}&nbsp;&nbsp;</span>
+                </div>
+                <div class="home-page-gradual-other-info-common home-page-gradual-other-tag">
+                  <span :key="index" v-for="(item,index) in getPageTag(pageItem)">{{item}}{{index !== getPageTag(pageItem).length -1? '、': ''}}</span>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <img id="home-page-img" ref="home-page-img" :data-src="getPageUrl(pageItem)" :src="homePageLazyLoadingImg" alt="">
+      <img id="home-page-img" class="home-page-img" ref="home-page-img" :data-src="getPageUrl(pageItem)" :src="homePageLazyLoadingImg" alt="">
     </div>
 
     <div class="home-page-tag-con">

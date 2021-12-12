@@ -1123,7 +1123,7 @@ module.exports = {
         sidebarCatalogLevel: 3,
 
         //首页文章列表封面图api接口
-        homePageImgApi: "https://api.ixiaowai.cn/api/api.php",
+        homePageImgApi: "https://www.dmoe.cc/random.php?return=text?time=-Infinity",
 
         //手机端侧边栏横线分割文字，默认为Aurora
         mobileCutText: "Aurora",

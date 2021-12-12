@@ -53,7 +53,7 @@
           <a :href="item.url" target="_blank" :data="item.url" :key="item.url" v-for="(item,index) in friendLinks">
             <div class="sidebar-link-single">
               <div class="sidebar-link-avatar">
-                <img :src="item.logo" alt="">
+                <img :origin-src="item.logo" :src="showFriendAvatar ? item.logo : homePageLazyLoadingImg" alt="">
               </div>
               <div :dat="item.title" class="sidebar-link-title">
                 <span>{{item.title}}</span>
@@ -191,6 +191,7 @@ export default {
   },
   data() {
     return {
+      showFriendAvatar: false,
       themeProperty: '',
       allSortPageArr: [],
       latestPageSize: 6,
@@ -198,6 +199,7 @@ export default {
       stickSidebar: false,
       socialsArr: [],
       friendLinks: [],
+      homePageLazyLoadingImg: 'https://ooszy.cco.vin/img/blog-public/ljz.gif'
     }
   },
   props: {
@@ -310,6 +312,10 @@ export default {
     },50)
 
     this.themeProperty = useThemeData().value
+
+    if (this.themeProperty.homePageLazyLoadingImg !== undefined) {
+      this.homePageLazyLoadingImg = this.themeProperty.homePageLazyLoadingImg
+    }
 
     if (this.themeProperty.latestPageSize !== undefined) {
       this.latestPageSize = this.themeProperty.latestPageSize
@@ -528,17 +534,13 @@ export default {
       }catch (e) {
       }
 
-      if (this.isStickySidebar) {
-        if (distance_top < 98) {
-          this.stickSidebar = true
-        }else {
-          this.stickSidebar = false
-        }
+      if (distance_top < 210) {
+        this.showFriendAvatar = true
       }
     }
   },
   mounted() {
-    // window.addEventListener('scroll', this.handleScroll, true)
+     window.addEventListener('scroll', this.handleScroll, true)
   }
 
 }

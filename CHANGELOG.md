@@ -1,4 +1,16 @@
-# [1.0.0](https://github.com/vuepress-aurora/vuepress-theme-aurora/compare/v1.11.1...v1.0.0) (2021-12-08)
+# [1.0.0](https://github.com/vuepress-aurora/vuepress-theme-aurora/compare/v1.11.1...v1.0.0) (2021-12-11)
+
+
+### Bug Fixes
+
+* fix the album page on the mobile phone ([290566e](https://github.com/vuepress-aurora/vuepress-theme-aurora/commit/290566e117d3a107823e4cb36af88209498fdf8c))
+* fix the mobile phone appreciating the QR code style ([e1a24bb](https://github.com/vuepress-aurora/vuepress-theme-aurora/commit/e1a24bb2a6a284c480701673aaae784924e77960))
+* **theme:** fix edit link failure ([8210c23](https://github.com/vuepress-aurora/vuepress-theme-aurora/commit/8210c235bc07f8736ea52804548df41f621f4299))
+
+
+### Features
+
+* add a certain article not to be displayed ([67224e3](https://github.com/vuepress-aurora/vuepress-theme-aurora/commit/67224e3b0606e7356a3d7a9361721a03e42de7ce))
 
 
 
