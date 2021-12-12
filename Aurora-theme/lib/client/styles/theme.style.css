@@ -3726,11 +3726,11 @@ body::-webkit-scrollbar-thumb {
 }
 
 .home-page-gradual-title-item-left {
-    transform: translateX(170%);
+    /*transform: translateX(170%);*/
 }
 
 .home-page-gradual-title-item-right {
-    transform: translateX(-170%);
+    /*transform: translateX(-170%);*/
 }
 
 .home-page-tag-item:hover .home-page-gradual-title-item-left, .home-page-tag-item:hover .home-page-gradual-title-item-right{
@@ -3852,6 +3852,12 @@ body::-webkit-scrollbar-thumb {
 .home-page-gradual-common {
     margin-top: 1rem;
     color: var(--aurora-home-page-color);
+}
+
+@media screen and (max-width: 719px){
+    .home-page-gradual-common {
+        margin-top: .5rem;
+    }
 }
 
 .home-page-gradual-common span {
