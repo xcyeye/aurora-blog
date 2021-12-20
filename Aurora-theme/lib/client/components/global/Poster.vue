@@ -10,11 +10,11 @@
 <script>
 import {useThemeData} from "../../composables";
 
-const network = require('../../public/js/network.js')
 import PosterImg from "../child/PosterImg.vue";
-const $ = require("jquery")
+import $ from 'jquery'
 import html2canvas from 'html2canvas'
-let QRCode = require('qrcode')
+
+import qrcode from 'qrcode'
 import {createApp} from 'vue'
 import storeIndex from '../../public/js/store'
 export default {
@@ -170,7 +170,7 @@ export default {
         posterData: spanData
       })
 
-      QRCode.toDataURL(qrHref, (err,url) => {
+      qrcode.toDataURL(qrHref, (err,url) => {
         this.saveQrimg(url).then(async () => {
           await html2canvas(document.querySelector("#create-poster"), {
             onclone: () => {

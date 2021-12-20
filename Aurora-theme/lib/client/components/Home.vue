@@ -49,7 +49,8 @@ import HomeSidebarSocialItem from './child/side/HomeSidebarSocialItem.vue'
 import {useThemeLocaleData} from "../composables";
 import axios from "axios";
 //导入配置属性
-const network = require('../public/js/network.js')
+import network from '../public/js/network'
+
 export default defineComponent({
   name: 'Home',
   components: {

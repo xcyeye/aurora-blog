@@ -1,8 +1,7 @@
-const network = require('../network')
-const myData = require('@temp/my-data')
-let themeProperty = null
+
+/*
 module.exports = {
-    /*getAnimeImg(context) {
+    /!*getAnimeImg(context) {
         return new Promise((resolve,reject) => {
             new Promise((resolve,reject) => {
                 for (let i = 0; i < myData.default.length; i++) {
@@ -21,5 +20,5 @@ module.exports = {
                 resolve()
             })
         })
-    },*/
-}
+    },
+}*/

@@ -74,9 +74,8 @@
 </template>
 
 <script>
-const $ = require("jquery")
+import $ from 'jquery'
 import {useThemeData} from "../../composables";
-const network = require('../../public/js/network')
 export default {
   name: "Donate",
   data() {

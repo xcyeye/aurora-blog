@@ -87,7 +87,7 @@
 </template>
 
 <script>
-const $ = require("jquery")
+import $ from 'jquery'
 export default {
   name: "HomeWelcome",
   data() {

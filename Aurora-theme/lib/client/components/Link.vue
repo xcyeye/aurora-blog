@@ -59,7 +59,6 @@ import LinkItem from './child/LinkItem.vue'
 import {useThemeData} from "../composables";
 //导入配置属性
 
-const network = require('../public/js/network.js')
 export default defineComponent({
   name: 'About',
   components: {

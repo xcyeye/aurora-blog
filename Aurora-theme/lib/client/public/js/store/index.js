@@ -1,13 +1,13 @@
 import { createStore } from 'vuex'
 
-const actions = require("./actions");
-const mutations = require('./mutations')
-const state = require('./state')
+//const actions = require("./actions");
+import mutations from "./mutations";
+import state from "./state";
 
 export default createStore({
     state,
     mutations,
-    actions,
+    //actions,
     modules: {
     }
 })

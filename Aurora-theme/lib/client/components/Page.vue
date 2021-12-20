@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import Mood from "./Mood";
+import Mood from "./Mood.vue";
 import { defineComponent } from 'vue'
 import PageMeta from './PageMeta.vue'
 import PageNav from './PageNav.vue'
@@ -36,7 +36,6 @@ import RecommendPage from "./RecommendPage.vue";
 import {usePageData} from "@vuepress/client";
 import PageNext from "./child/page/PageNext.vue";
 import $ from 'jquery'
-const AV = require('leancloud-storage');
 export default defineComponent({
   name: 'Page',
   components: {

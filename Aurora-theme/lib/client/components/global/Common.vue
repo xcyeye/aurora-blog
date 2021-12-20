@@ -99,13 +99,13 @@ import Home from '../Home.vue'
 import MobileSidebar from "../child/side/MobileSidebar.vue";
 import SocialSpin from '../SocialSpin.vue'
 //配置导入
-const tag = require('../../public/js/tag')
+// const tag = require('../../public/js/tag')
+import tag from '../../public/js/tag.js'
 import {computed, defineComponent, Transition,} from 'vue'
 import {usePageData, usePageFrontmatter, withBase} from '@vuepress/client'
 import type {DefaultThemePageFrontmatter} from '../../../shared'
 import {useThemeData, useThemeLocaleData} from '../../composables'
-const $ = require("jquery")
-const network = require('../../public/js/network')
+import $ from 'jquery'
 export default defineComponent({
   name: 'Common',
   components: {

@@ -49,7 +49,7 @@ import {computed, defineComponent, Transition,} from 'vue'
 import {usePageData, usePageFrontmatter} from '@vuepress/client'
 import type {DefaultThemePageFrontmatter} from '../../../shared'
 import {useThemeData, useThemeLocaleData} from '../../composables'
-const $ = require("jquery")
+import $ from 'jquery'
 
 export default defineComponent({
   name: 'Common',
