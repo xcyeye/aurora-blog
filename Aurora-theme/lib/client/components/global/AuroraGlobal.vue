@@ -40,17 +40,16 @@
 //组件导入
 import StyleMenu from '../child/home/StyleMenu.vue'
 import Navbar from '../../components/Navbar.vue'
-import Home from '../Home'
+import Home from '../Home.vue'
 import MobileSidebar from "../child/side/MobileSidebar.vue";
-import SocialSpin from '../SocialSpin'
+import SocialSpin from '../SocialSpin.vue'
 
 //配置导入
 import {computed, defineComponent, Transition,} from 'vue'
 import {usePageData, usePageFrontmatter} from '@vuepress/client'
 import type {DefaultThemePageFrontmatter} from '../../../shared'
 import {useThemeData, useThemeLocaleData} from '../../composables'
-import EasyTyper from "easy-typer-js";
-import $ from 'jquery'
+const $ = require("jquery")
 
 export default defineComponent({
   name: 'Common',
@@ -315,9 +314,9 @@ export default defineComponent({
 })
 </script>
 
-<style lang="css">
-/* 从调色板中引入变量 */
-@import '@vuepress/plugin-palette/palette';
-</style>
+<!--<style lang="css">-->
+<!--/* 从调色板中引入变量 */-->
+<!--@import '@vuepress/plugin-palette/palette';-->
+<!--</style>-->
 
-<style lang="css" src="@vuepress/plugin-palette/style"></style>
+<!--<style lang="css" src="@vuepress/plugin-palette/style"></style>-->

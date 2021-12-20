@@ -57,7 +57,7 @@
 </template>
 
 <script>
-import $ from 'jquery'
+const $ = require("jquery")
 import {useThemeData} from "../../composables";
 const network = require('../../public/js/network.js')
 export default {

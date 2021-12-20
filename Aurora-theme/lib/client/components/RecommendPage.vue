@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import RecommendItem from "./child/RecommendItem"
+import RecommendItem from "./child/RecommendItem.vue"
 export default {
   name: "RecommendPage",
   components: {

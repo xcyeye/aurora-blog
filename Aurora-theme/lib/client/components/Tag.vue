@@ -82,11 +82,11 @@
 </template>
 
 <script>
-import TagCloud from "./child/tag/TagCloud";
-import TagItem from "./child/tag/TagItem";
-import TagPage from "./child/tag/TagPage";
+import TagCloud from "./child/tag/TagCloud.vue";
+import TagItem from "./child/tag/TagItem.vue";
+import TagPage from "./child/tag/TagPage.vue";
 import {useThemeData} from "../composables";
-import Pagination from "./Pagination";
+import Pagination from "./Pagination.vue";
 
 export default {
   name: "Tag",

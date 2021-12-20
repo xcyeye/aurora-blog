@@ -11,8 +11,8 @@
 import {useThemeData} from "../../composables";
 
 const network = require('../../public/js/network.js')
-import PosterImg from "../child/PosterImg";
-import $ from 'jquery'
+import PosterImg from "../child/PosterImg.vue";
+const $ = require("jquery")
 import html2canvas from 'html2canvas'
 let QRCode = require('qrcode')
 import {createApp} from 'vue'

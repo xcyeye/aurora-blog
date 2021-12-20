@@ -55,7 +55,7 @@ import {
   Transition,
 } from 'vue'
 
-import LinkItem from './child/LinkItem'
+import LinkItem from './child/LinkItem.vue'
 import {useThemeData} from "../composables";
 //导入配置属性
 

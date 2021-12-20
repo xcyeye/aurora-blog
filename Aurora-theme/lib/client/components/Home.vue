@@ -45,7 +45,7 @@ import type { DefaultThemeHomePageFrontmatter } from '../../shared'
 import NavLink from './NavLink.vue'
 import HomeSocial from './child/home/HomeSocial.vue'
 import EasyTyper from "easy-typer-js";
-import HomeSidebarSocialItem from './child/side/HomeSidebarSocialItem'
+import HomeSidebarSocialItem from './child/side/HomeSidebarSocialItem.vue'
 import {useThemeLocaleData} from "../composables";
 import axios from "axios";
 //导入配置属性

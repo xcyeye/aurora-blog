@@ -95,16 +95,16 @@
 //组件导入
 import StyleMenu from '../child/home/StyleMenu.vue'
 import Navbar from '../../components/Navbar.vue'
-import Home from '../Home'
+import Home from '../Home.vue'
 import MobileSidebar from "../child/side/MobileSidebar.vue";
-import SocialSpin from '../SocialSpin'
+import SocialSpin from '../SocialSpin.vue'
 //配置导入
 const tag = require('../../public/js/tag')
 import {computed, defineComponent, Transition,} from 'vue'
 import {usePageData, usePageFrontmatter, withBase} from '@vuepress/client'
 import type {DefaultThemePageFrontmatter} from '../../../shared'
 import {useThemeData, useThemeLocaleData} from '../../composables'
-import $ from 'jquery'
+const $ = require("jquery")
 const network = require('../../public/js/network')
 export default defineComponent({
   name: 'Common',
@@ -514,4 +514,4 @@ export default defineComponent({
 @import '@vuepress/plugin-palette/palette';
 </style>
 
-<style lang="css" src="@vuepress/plugin-palette/style"></style>
+<!--<style lang="css" src="@vuepress/plugin-palette/style"></style>-->

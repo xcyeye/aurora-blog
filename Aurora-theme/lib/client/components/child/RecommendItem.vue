@@ -13,7 +13,6 @@
 </template>
 
 <script>
-import {useSiteLocaleData} from "@vuepress/client";
 export default {
   name: "RecommendItem",
   data() {

@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import FooterItem from "../child/FooterItem"
+import FooterItem from "../child/FooterItem.vue"
 import {useThemeData} from "../../composables";
 export default {
   name: "Footer",

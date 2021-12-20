@@ -6,29 +6,27 @@ import 'default-passive-events'
 import CodeGroup from './components/global/CodeGroup';
 import Badge from './components/global/Badge.vue';
 import CodeGroupItem from './components/global/CodeGroupItem.vue';
-import OutboundLink from './components/global/OutboundLink.vue';
-import TopImage from './components/global/TopImage';
-import BCenter from './components/global/BCenter';
-import Common from './components/global/Common';
-import Footer from './components/global/Footer';
-import Message from './components/global/Message';
-import Donate from "./components/global/Donate";
-import Comment from "./components/global/Comment";
-import Mood from "./components/Mood";
-import About from './components/About';
-import Tag from './components/Tag';
-import store from './public/js/store'
-import Link from './components/Link';
-import Poster from "./components/global/Poster";
-import HomeSidebar from "./components/child/side/HomeSidebar";
-import HomeBottom from "./components/HomeBottom";
-import AuroraGlobal from "./components/global/AuroraGlobal";
-import Archive from './components/Archive'
-//const AV = require('leancloud-storage');
-
+import OutboundLink from './components/global/ExternalLinkIcon.vue';
+import TopImage from './components/global/TopImage.vue';
+import BCenter from './components/global/BCenter.vue';
+import Common from './components/global/Common.vue';
+import Footer from './components/global/Footer.vue';
+import Message from './components/global/Message.vue';
+import Donate from "./components/global/Donate.vue";
+import Comment from "./components/global/Comment.vue";
+import Mood from "./components/Mood.vue";
+import About from './components/About.vue';
+import Tag from './components/Tag.vue';
+import Link from './components/Link.vue';
+import Poster from "./components/global/Poster.vue";
+import HomeSidebar from "./components/child/side/HomeSidebar.vue";
+import HomeBottom from "./components/HomeBottom.vue";
+import AuroraGlobal from "./components/global/AuroraGlobal.vue";
+import Archive from './components/Archive.vue'
 //主题内置组件
-import Pins from "./components/global/inner/Pins";
+import Pins from "./components/global/inner/Pins.vue";
 
+import store from './public/js/store'
 import './styles/index.scss';
 import './styles/photo.scss'
 //import './styles/coverStyle.css'

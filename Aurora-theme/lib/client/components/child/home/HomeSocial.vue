@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import HomeSocialItem from "./HomeSocialItem";
+import HomeSocialItem from "./HomeSocialItem.vue";
 
 export default {
   name: "HomeSocial",

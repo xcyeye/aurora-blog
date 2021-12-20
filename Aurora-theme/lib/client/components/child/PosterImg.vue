@@ -89,9 +89,8 @@
 </template>
 
 <script>
-import $ from "jquery";
+const $ = require("jquery")
 import {usePageData} from "@vuepress/client";
-import myData from '@temp/my-data'
 import mediumZoom from "medium-zoom";
 import {useThemeData} from "../../composables";
 export default {

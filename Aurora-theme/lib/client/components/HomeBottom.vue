@@ -20,9 +20,9 @@
 </template>
 
 <script>
-import HomePageItem from "./child/home/HomePageItem";
+import HomePageItem from "./child/home/HomePageItem.vue";
 import {useThemeData} from "../composables";
-import Pagination from "./Pagination";
+import Pagination from "./Pagination.vue";
 export default {
   name: "HomeBottom",
   components: {

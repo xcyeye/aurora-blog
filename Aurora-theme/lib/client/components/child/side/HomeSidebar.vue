@@ -185,9 +185,9 @@
 
 <script>
 import {withBase} from "@vuepress/client";
-import Catalog from "../Catalog";
-import MobileSidebarNav from "./MobileSidebarNav";
-import HomeSidebarSocialItem from "./HomeSidebarSocialItem";
+import Catalog from "../Catalog.vue";
+import MobileSidebarNav from "./MobileSidebarNav.vue";
+import HomeSidebarSocialItem from "./HomeSidebarSocialItem.vue";
 import {useThemeData} from "../../../composables";
 export default {
   name: "HomeSidebar",

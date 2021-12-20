@@ -13,7 +13,7 @@
 </template>
 <script>
 import {useThemeData} from "../../composables";
-import $ from "jquery";
+const $ = require("jquery")
 //import Waline from '@waline/client';
 export default {
   name: "Comment",
