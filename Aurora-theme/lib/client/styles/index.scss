@@ -17,4 +17,7 @@
 @use 'toc';
 @use 'transitions';
 
-@use '@vuepress/plugin-palette/style';
+//下面的是主题默认样式，和从@vuepress/plugin-palette插件上，引入的样式
+@import "theme.style.css";
+@import "@vuepress/plugin-palette/palette";
+@import "@vuepress/plugin-palette/style";

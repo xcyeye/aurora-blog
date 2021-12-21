@@ -49,8 +49,8 @@
         </div>
       </div>
     </div>
-    <audio autoplay class="aurora-music-player-control" ref="aurora-music-player" controls="controls">
-      <source src="musicSrc" type="audio/mp3" />
+    <audio class="aurora-music-player-control" ref="aurora-music-player" controls="controls">
+      <source src="" type="audio/mp3" />
       Your browser does not support this audio format.
     </audio>
   </div>

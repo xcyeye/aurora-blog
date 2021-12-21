@@ -30,8 +30,6 @@ import Pins from "./components/global/inner/Pins.vue";
 
 //样式导入
 import './styles/index.scss';
-import './styles/photo.scss'
-//import './styles/coverStyle.css'
 export default defineClientAppEnhance(({ app, router }) => {
     app.component('Badge', Badge);
     app.component('CodeGroup', CodeGroup);
