@@ -14,7 +14,6 @@
 <script>
 import {useThemeData} from "../../composables";
 import $ from "jquery";
-import Waline from '@waline/client';
 export default {
   name: "Comment",
   data() {
@@ -41,14 +40,16 @@ export default {
   mounted() {
     if (this.showComment) {
       this.$nextTick(() => {
-        Waline({
-          el: '#waline',
-          serverURL: this.serverURL,
-          path: this.pathName,
-          avatar: this.avatar,
-          emoji: this.emojis,
-          visitor: true, // 阅读量统计
-        });
+        import('@waline/client').then(module => {
+          module.default({
+            el: '#waline',
+            serverURL: this.serverURL,
+            path: this.pathName,
+            avatar: this.avatar,
+            emoji: this.emojis,
+            visitor: true, // 阅读量统计
+          })
+        })
 
         setTimeout(() => {
           let vtabImgs = document.querySelectorAll(".vtabs .vtab img")

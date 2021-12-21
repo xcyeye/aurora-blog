@@ -18,6 +18,7 @@
   "devDependencies": {
     "@types/jquery": "^3.5.6",
     "@vuepress/bundler-vite": "^2.0.0-beta.29",
+    "@vuepress/plugin-external-link-icon": "^2.0.0-beta.29",
     "@vuepress/plugin-google-analytics": "^2.0.0-beta.29",
     "@vuepress/plugin-register-components": "^2.0.0-beta.29",
     "cz-conventional-changelog": "^3.3.0",
@@ -25,7 +26,6 @@
     "vuepress": "^2.0.0-beta.29"
   },
   "dependencies": {
-    "@vuepress/plugin-external-link-icon": "^2.0.0-beta.29",
     "@vuepress/plugin-search": "^2.0.0-beta.29",
     "@waline/client": "^1.3.10",
     "aplayer": "^1.10.1",

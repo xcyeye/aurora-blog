@@ -8,7 +8,6 @@ import store from './public/js/store'
 import CodeGroup from "./components/global/CodeGroup";
 import Badge from './components/global/Badge.vue';
 import CodeGroupItem from './components/global/CodeGroupItem.vue';
-import OutboundLink from './components/global/ExternalLinkIcon.vue';
 import TopImage from './components/global/TopImage.vue';
 import BCenter from './components/global/BCenter.vue';
 import Common from './components/global/Common.vue';
@@ -30,6 +29,9 @@ import Pins from "./components/global/inner/Pins.vue";
 
 //样式导入
 import './styles/index.scss';
+import './styles/theme.style.css'
+import "@vuepress/plugin-palette/palette";
+import "@vuepress/plugin-palette/style";
 export default defineClientAppEnhance(({ app, router }) => {
     app.component('Badge', Badge);
     app.component('CodeGroup', CodeGroup);
@@ -74,9 +76,6 @@ export default defineClientAppEnhance(({ app, router }) => {
     // @ts-ignore
     app.use(store)
 
-    delete app._context.components.OutboundLink;
-    // override the built-in `<OutboundLink>`
-    app.component('OutboundLink', OutboundLink);
     // compat with @vuepress/plugin-docsearch and @vuepress/plugin-search
     app.component('NavbarSearch', () => {
         const SearchComponent = app.component('Docsearch') || app.component('SearchBox');

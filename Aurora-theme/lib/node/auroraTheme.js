@@ -124,6 +124,7 @@ const auroraTheme = ({ themePlugins = {},...localeOptions }) => {
             })
         },
         plugins: [
+            ['@vuepress/external-link-icon', themePlugins.externalLinkIcon !== false],
             [
                 '@vuepress/active-header-links',
                 utils_2.resolveActiveHeaderLinksPluginOptions(themePlugins),
