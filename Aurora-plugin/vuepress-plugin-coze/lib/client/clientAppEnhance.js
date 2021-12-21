@@ -1,10 +1,10 @@
 import { defineClientAppEnhance } from '@vuepress/client';
-import CozeMood from './components/CozeMood'
-import RegisterUser from './components/RegisterUser'
-import CozeLogin from "./components/CozeLogin";
-import CozePhoto from "./components/CozePhoto";
+import CozeMood from './components/CozeMood.vue'
+import RegisterUser from './components/RegisterUser.vue'
+import CozeLogin from "./components/CozeLogin.vue";
+import CozePhoto from "./components/CozePhoto.vue";
 import './style/coze-plugin.css'
-const AV = require('leancloud-storage');
+import AV from 'leancloud-storage'
 
 let appId = ''
 let appKey = ''

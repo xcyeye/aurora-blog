@@ -57,7 +57,7 @@
 </template>
 
 <script>
-const network = require('../network')
+import network from "../network";
 let songIds = []
 let playlist = ''
 let showPlaylist = false

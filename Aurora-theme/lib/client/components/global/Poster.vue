@@ -9,14 +9,13 @@
 
 <script>
 import {useThemeData} from "../../composables";
-
-import PosterImg from "../child/PosterImg.vue";
 import $ from 'jquery'
 import html2canvas from 'html2canvas'
-
 import qrcode from 'qrcode'
 import {createApp} from 'vue'
 import storeIndex from '../../public/js/store'
+
+import PosterImg from "../child/PosterImg.vue";
 export default {
   name: "Poster",
   components: {

@@ -39,17 +39,15 @@
 <script lang="ts">
 import { computed, defineComponent } from 'vue'
 import { usePageFrontmatter, useSiteLocaleData, withBase} from '@vuepress/client'
-
 import { isArray } from '@vuepress/shared'
 import type { DefaultThemeHomePageFrontmatter } from '../../shared'
+import EasyTyper from "easy-typer-js";
+import {useThemeLocaleData} from "../composables";
+import network from '../public/js/network.js'
+
 import NavLink from './NavLink.vue'
 import HomeSocial from './child/home/HomeSocial.vue'
-import EasyTyper from "easy-typer-js";
 import HomeSidebarSocialItem from './child/side/HomeSidebarSocialItem.vue'
-import {useThemeLocaleData} from "../composables";
-import axios from "axios";
-//导入配置属性
-import network from '../public/js/network'
 
 export default defineComponent({
   name: 'Home',

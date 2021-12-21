@@ -41,8 +41,8 @@
 </template>
 
 <script>
-const flowers = require("../public/js/flowers")
-const AV = require('leancloud-storage');
+import flowers from "../public/js/flowers";
+import AV from 'leancloud-storage'
 const { Query, User } = AV;
 let appId = ''
 let appKey = ''
@@ -58,7 +58,7 @@ try {
 }catch (e) {
   console.warn("你必须在插件中传入appId,appKey,masterKey配置项")
 }
-import AddMood from "./AddMood";
+import AddMood from "./AddMood.vue";
 export default {
   name: "RegisterUser",
   components: {

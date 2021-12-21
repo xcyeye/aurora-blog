@@ -7,7 +7,7 @@ module.exports = {
     },
 
     //在这里配置插件
-    /*plugins: [
+   /* plugins: [
         "@vuepress/plugin-search",
         {
             locales: {
@@ -1087,13 +1087,13 @@ module.exports = {
             '/bg/4.jpg',
             '/bg/5.jpg',
         ],
-       /* homeWps: [
-            '/bg/1.jpg',
-            '/bg/2.jpg',
-            '/bg/3.jpg',
-            '/bg/4.jpg',
-            '/bg/5.jpg',
-        ],*/
+        /* homeWps: [
+             '/bg/1.jpg',
+             '/bg/2.jpg',
+             '/bg/3.jpg',
+             '/bg/4.jpg',
+             '/bg/5.jpg',
+         ],*/
 
         //手机端首页背景图片
         /*homeWpsMobile: [

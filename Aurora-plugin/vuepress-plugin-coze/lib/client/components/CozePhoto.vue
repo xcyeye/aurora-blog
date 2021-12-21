@@ -28,7 +28,7 @@
 
  <script>
  import mediumZoom from "medium-zoom";
- const AV = require('leancloud-storage');
+ import AV from 'leancloud-storage'
 
  export default {
    name: "v-waterfall",

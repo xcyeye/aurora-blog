@@ -98,14 +98,16 @@ import Navbar from '../../components/Navbar.vue'
 import Home from '../Home.vue'
 import MobileSidebar from "../child/side/MobileSidebar.vue";
 import SocialSpin from '../SocialSpin.vue'
+
+
 //配置导入
-// const tag = require('../../public/js/tag')
-import tag from '../../public/js/tag.js'
+import tag from '../../public/js/tag'
 import {computed, defineComponent, Transition,} from 'vue'
 import {usePageData, usePageFrontmatter, withBase} from '@vuepress/client'
 import type {DefaultThemePageFrontmatter} from '../../../shared'
 import {useThemeData, useThemeLocaleData} from '../../composables'
 import $ from 'jquery'
+
 export default defineComponent({
   name: 'Common',
   components: {
@@ -511,7 +513,7 @@ export default defineComponent({
 <style lang="css">
 @import "../../styles/theme.style.css";
 /* 从调色板中引入变量 */
-@import '@vuepress/plugin-palette/palette';
+/*@import '@vuepress/plugin-palette/palette';*/
 </style>
 
 <!--<style lang="css" src="@vuepress/plugin-palette/style"></style>-->

@@ -61,9 +61,7 @@
 import { readingTime } from 'reading-time-estimator';
 import {useThemeLocaleData} from "../../composables";
 import gsap from "gsap";
-import {withBase} from "@vuepress/client";
-
-
+import network from "../../public/js/network";
 export default {
   name: "TopImage",
   data() {

@@ -39,11 +39,9 @@
 
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue'
-import { useRouteLocale, useSiteLocaleData, withBase } from '@vuepress/client'
+import {useRouteLocale, useSiteLocaleData, withBase} from '@vuepress/client'
 import {useThemeData, useThemeLocaleData} from '../composables'
-import NavbarLinks from './NavbarLinks.vue'
-import ToggleDarkModeButton from './ToggleDarkModeButton.vue'
-import ToggleSidebarButton from './ToggleSidebarButton.vue'
+
 defineEmits(['toggle-sidebar'])
 const routeLocale = useRouteLocale()
 const siteLocale = useSiteLocaleData()

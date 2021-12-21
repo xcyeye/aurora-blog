@@ -21,8 +21,9 @@
 
 <script>
 import HomePageItem from "./child/home/HomePageItem.vue";
-import {useThemeData} from "../composables";
 import Pagination from "./Pagination.vue";
+
+import {useThemeData} from "../composables";
 export default {
   name: "HomeBottom",
   components: {

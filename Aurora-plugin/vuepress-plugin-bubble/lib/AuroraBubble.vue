@@ -53,7 +53,7 @@ export default {
     }
   },
   mounted() {
-    const bubble = require('./bubble')
+    const bubble = import("./bubble")
     bubble.bubble(bubbleNumber,bubbleAlpha,alphaChangeSpeed,size,sizeChangeSpeed,riseSpeed,color)
   }
 }

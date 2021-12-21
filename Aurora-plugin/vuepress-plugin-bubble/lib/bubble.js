@@ -74,7 +74,7 @@ function Bubble() {
 }
 
 
-module.exports = {
+export default {
     bubble: function (aurora_bubbleNumber,aurora_bubbleAlpha,aurora_alphaChangeSpeed,aurora_size,aurora_sizeChangeSpeed,aurora_riseSpeed,aurora_color) {
         bubbleNumber = aurora_bubbleNumber
         bubbleAlpha = aurora_bubbleAlpha

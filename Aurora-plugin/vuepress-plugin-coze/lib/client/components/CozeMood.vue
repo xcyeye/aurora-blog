@@ -41,7 +41,7 @@ import {
 } from 'vue'
 import MoodItem from "./MoodItem.vue";
 import AddMood from './AddMood.vue'
-const AV = require('leancloud-storage');
+import AV from 'leancloud-storage'
 const { Query, User } = AV;
 let appId = ''
 let appKey = ''

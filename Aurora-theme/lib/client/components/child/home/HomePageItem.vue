@@ -40,7 +40,7 @@
 </template>
 
 <script>
-import {useThemeLocaleData} from '../../../composables'
+import {useThemeLocaleData} from "../../../composables";
 export default {
   name: "HomePageItem",
   data() {

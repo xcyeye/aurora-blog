@@ -14,6 +14,7 @@
 
 <script>
 import FooterItem from "../child/FooterItem.vue"
+
 import {useThemeData} from "../../composables";
 export default {
   name: "Footer",

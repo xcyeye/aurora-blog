@@ -81,7 +81,7 @@
 </template>
 
 <script>
-const AV = require('leancloud-storage');
+import AV from 'leancloud-storage'
 const { Query, User } = AV;
 let appId = ''
 let appKey = ''

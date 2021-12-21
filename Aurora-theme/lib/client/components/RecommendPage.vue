@@ -14,6 +14,7 @@
 
 <script>
 import RecommendItem from "./child/RecommendItem.vue"
+
 export default {
   name: "RecommendPage",
   components: {

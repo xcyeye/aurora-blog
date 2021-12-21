@@ -56,8 +56,8 @@ import {
 } from 'vue'
 
 import LinkItem from './child/LinkItem.vue'
+
 import {useThemeData} from "../composables";
-//导入配置属性
 
 export default defineComponent({
   name: 'About',

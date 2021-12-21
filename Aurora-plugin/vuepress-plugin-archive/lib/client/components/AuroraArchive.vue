@@ -10,8 +10,8 @@
 </template>
 
 <script>
-const pageData = require('@temp/page-data')
-import ArchiveItem from "./ArchiveItem";
+import pageData from '@temp/page-data'
+import ArchiveItem from "./ArchiveItem.vue";
 let excludes = []
 try {
   excludes = __EXCLUDES__;

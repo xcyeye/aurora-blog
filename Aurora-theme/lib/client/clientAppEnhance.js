@@ -2,8 +2,10 @@ import { h } from 'vue';
 import { defineClientAppEnhance } from '@vuepress/client';
 import {useScrollPromise, useThemeData, useThemeLocaleData} from './composables';
 import 'default-passive-events'
+import store from './public/js/store'
 
-import CodeGroup from './components/global/CodeGroup';
+//组件导入
+import CodeGroup from "./components/global/CodeGroup";
 import Badge from './components/global/Badge.vue';
 import CodeGroupItem from './components/global/CodeGroupItem.vue';
 import OutboundLink from './components/global/ExternalLinkIcon.vue';
@@ -26,7 +28,7 @@ import Archive from './components/Archive.vue'
 //主题内置组件
 import Pins from "./components/global/inner/Pins.vue";
 
-import store from './public/js/store'
+//样式导入
 import './styles/index.scss';
 import './styles/photo.scss'
 //import './styles/coverStyle.css'

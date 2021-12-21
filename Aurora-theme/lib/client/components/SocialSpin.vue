@@ -15,6 +15,7 @@
 
 <script>
 import AddMood from "./child/AddMood.vue";
+
 import {useThemeData} from "../composables";
 export default {
   name: "SocialSpin",

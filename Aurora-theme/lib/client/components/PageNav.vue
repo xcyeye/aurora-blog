@@ -25,6 +25,7 @@ import type {
   ResolvedSidebarItem,
 } from '../../shared'
 import { useNavLink, useSidebarItems } from '../composables'
+
 import NavLink from './NavLink.vue'
 
 /**

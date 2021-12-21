@@ -29,13 +29,15 @@
 
 <script>
 import Mood from "./Mood.vue";
-import { defineComponent } from 'vue'
 import PageMeta from './PageMeta.vue'
 import PageNav from './PageNav.vue'
 import RecommendPage from "./RecommendPage.vue";
-import {usePageData} from "@vuepress/client";
 import PageNext from "./child/page/PageNext.vue";
+
+import { defineComponent } from 'vue'
+import {usePageData} from "@vuepress/client";
 import $ from 'jquery'
+
 export default defineComponent({
   name: 'Page',
   components: {

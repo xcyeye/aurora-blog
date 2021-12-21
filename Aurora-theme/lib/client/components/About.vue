@@ -54,8 +54,8 @@ import {
 } from 'vue'
 import Home from './Home.vue'
 import TagItem from './child/tag/TagItem.vue'
+
 import {useThemeData} from "../composables";
-//导入配置属性
 
 export default defineComponent({
   name: 'About',

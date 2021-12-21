@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     flowers: function (flowersNum) {
         let i;
         let canvas = document.getElementById("coze-flowers-canvas");

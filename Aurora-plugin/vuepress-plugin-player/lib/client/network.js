@@ -1,7 +1,6 @@
-//import axios from "axios"
-const axios = require('axios')
+import axios from "axios";
 
-module.exports = {
+export default {
     req: function (option) {
         return new Promise((resolve, reject) => {
             let timeout = 5000;

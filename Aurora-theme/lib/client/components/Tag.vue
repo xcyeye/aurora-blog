@@ -85,8 +85,9 @@
 import TagCloud from "./child/tag/TagCloud.vue";
 import TagItem from "./child/tag/TagItem.vue";
 import TagPage from "./child/tag/TagPage.vue";
-import {useThemeData} from "../composables";
 import Pagination from "./Pagination.vue";
+
+import {useThemeData} from "../composables";
 
 export default {
   name: "Tag",
