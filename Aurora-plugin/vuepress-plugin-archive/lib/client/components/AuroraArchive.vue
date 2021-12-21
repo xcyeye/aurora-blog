@@ -34,11 +34,17 @@ export default {
     let allPageArr = []
     let allYearSet = new Set()
     new Promise((resolve,reject) => {
-      newPageArr = pageData.default.filter((pageData) => {
+      newPageArr = pageData.filter((pageData) => {
         let includes = excludes.includes(pageData.path);
         let title = pageData.title
         //git commit的时间
-        let updatedTime = pageData.data.git.updatedTime
+
+        let updatedTime = ''
+        try {
+          updatedTime = pageData.data.git.updatedTime
+        }catch (e) {
+          updatedTime = "2021/01/01"
+        }
 
         if (pageData.data.frontmatter.date !== undefined) {
           updatedTime = new Date(pageData.data.frontmatter.date).getTime()
