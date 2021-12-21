@@ -53,8 +53,9 @@ export default {
     }
   },
   mounted() {
-    const bubble = import("./bubble")
-    bubble.bubble(bubbleNumber,bubbleAlpha,alphaChangeSpeed,size,sizeChangeSpeed,riseSpeed,color)
+    import("./bubble").then(module => {
+      module.bubble(bubbleNumber,bubbleAlpha,alphaChangeSpeed,size,sizeChangeSpeed,riseSpeed,color)
+    })
   }
 }
 </script>
