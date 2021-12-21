@@ -71,13 +71,12 @@ function wave2() {
     }
     tickB();
 }
-module.exports = {
-    wave: function () {
-        let canvas1 = document.getElementById('home-wave-canvas1');
-        canvas1.width = window.innerWidth;
-        let canvas2 = document.getElementById('home-wave-canvas2');
-        canvas2.width = window.innerWidth;
-        wave1()
-        wave2()
-    }
+export function wave () {
+    let canvas1 = document.getElementById('home-wave-canvas1');
+    canvas1.width = window.innerWidth;
+    let canvas2 = document.getElementById('home-wave-canvas2');
+    canvas2.width = window.innerWidth;
+    wave1()
+    wave2()
 }
+

@@ -59,7 +59,8 @@
 <script>
 import $ from 'jquery'
 import {useThemeData} from "../../composables";
-import network from "../../public/js/network";
+import {req,cors} from "../../public/js/network";
+
 export default {
   name: "AddMood",
   data() {
@@ -167,7 +168,7 @@ export default {
       formData.append("appId",this.appId)
       formData.append("appKey",this.appKey)
       formData.append("siteName",this.siteName)
-      network.cors({
+      cors({
         baseURL: 'https://picture.cco.vin/',
         url: '/mood/add',
         method: 'POST',
@@ -213,7 +214,7 @@ export default {
       }
     },
     verifyIdentify() {
-      network.cors({
+      cors({
         baseURL: 'https://picture.cco.vin/',
         url: '/user/verify',
         method: 'POST',

@@ -43,7 +43,8 @@ import { isArray } from '@vuepress/shared'
 import type { DefaultThemeHomePageFrontmatter } from '../../shared'
 import EasyTyper from "easy-typer-js";
 import {useThemeLocaleData} from "../composables";
-import network from '../public/js/network.js'
+
+import { req,cors } from "../public/js/network.js";
 
 import NavLink from './NavLink.vue'
 import HomeSocial from './child/home/HomeSocial.vue'
@@ -262,8 +263,10 @@ export default defineComponent({
 
     this.$nextTick(() => {
       if (this.showWave && this.isHome) {
-        const wave = require('../public/js/wave')
-        wave.wave()
+        import("../public/js/wave").then(module => {
+          module.wave()
+        })
+
       }
     })
 
@@ -297,8 +300,9 @@ export default defineComponent({
   },
   methods: {
     clickDown() {
-      const smoothscroll = require('smoothscroll-polyfill');
-      smoothscroll.polyfill();
+      import("smoothscroll-polyfill").then(module => {
+        module.polyfill()
+      })
       document.querySelector(".home-bottom").scrollIntoView({behavior: "smooth"})
     },
 
@@ -330,7 +334,7 @@ export default defineComponent({
           },this.intervalTime)
         })
       }else {
-        network.req(this.networkOption).then(res => {
+        req(this.networkOption).then(res => {
           try {
             this.randomSawRes = res;
             const typed = this.initTyped(this.randomSawRes,() => {

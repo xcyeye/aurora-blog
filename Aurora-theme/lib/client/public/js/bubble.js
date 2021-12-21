@@ -74,15 +74,13 @@ function initHeader() {
     animate();
 }
 
-module.exports = {
-    bubble: function (aurora_bubbleNumber,aurora_bubbleAlpha,aurora_alphaChangeSpeed,aurora_size,aurora_sizeChangeSpeed,aurora_riseSpeed,aurora_color) {
-        bubbleNumber = aurora_bubbleNumber
-        bubbleAlpha = aurora_bubbleAlpha
-        alphaChangeSpeed = aurora_alphaChangeSpeed
-        size = aurora_size
-        sizeChangeSpeed = aurora_sizeChangeSpeed
-        riseSpeed = aurora_riseSpeed
-        color = aurora_color
-        initHeader();
-    }
+export function bubble(aurora_bubbleNumber,aurora_bubbleAlpha,aurora_alphaChangeSpeed,aurora_size,aurora_sizeChangeSpeed,aurora_riseSpeed,aurora_color) {
+    bubbleNumber = aurora_bubbleNumber
+    bubbleAlpha = aurora_bubbleAlpha
+    alphaChangeSpeed = aurora_alphaChangeSpeed
+    size = aurora_size
+    sizeChangeSpeed = aurora_sizeChangeSpeed
+    riseSpeed = aurora_riseSpeed
+    color = aurora_color
+    initHeader();
 }

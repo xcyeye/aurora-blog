@@ -214,8 +214,9 @@ export default {
       }
     },
     autoScroll() {
-      const smoothscroll = require('smoothscroll-polyfill');
-      smoothscroll.polyfill();
+      import("smoothscroll-polyfill").then(module => {
+        module.polyfill()
+      })
       let autoScroll = setInterval(() => {
         if (document.querySelectorAll(".tag-bottom .tag-page").length !== 0) {
           clearInterval(autoScroll)

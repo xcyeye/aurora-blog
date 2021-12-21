@@ -38,6 +38,11 @@
 </template>
 
 <script setup lang="ts">
+
+import NavbarLinks from './NavbarLinks.vue'
+import ToggleDarkModeButton from './ToggleDarkModeButton.vue'
+import ToggleSidebarButton from './ToggleSidebarButton.vue'
+
 import { computed, onMounted, ref } from 'vue'
 import {useRouteLocale, useSiteLocaleData, withBase} from '@vuepress/client'
 import {useThemeData, useThemeLocaleData} from '../composables'

@@ -101,7 +101,7 @@ import SocialSpin from '../SocialSpin.vue'
 
 
 //配置导入
-import tag from '../../public/js/tag'
+import {setTag} from '../../public/js/tag'
 import {computed, defineComponent, Transition,} from 'vue'
 import {usePageData, usePageFrontmatter, withBase} from '@vuepress/client'
 import type {DefaultThemePageFrontmatter} from '../../../shared'
@@ -412,7 +412,7 @@ export default defineComponent({
       this.ico = "https://ooszy.cco.vin/img/ico/cat.svg"
     }
 
-    tag.setTag(this,this.themeProperty).then(() => {
+    setTag(this,this.themeProperty).then(() => {
       this.$store.commit('setTagStatus',{
         isSuccess:  true
       })

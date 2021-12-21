@@ -61,7 +61,7 @@
 import { readingTime } from 'reading-time-estimator';
 import {useThemeLocaleData} from "../../composables";
 import gsap from "gsap";
-import network from "../../public/js/network";
+import {withBase} from "@vuepress/client";
 export default {
   name: "TopImage",
   data() {
@@ -163,8 +163,9 @@ export default {
 
     this.$nextTick(() =>{
       if (this.showBubble && this.isShowTopImg) {
-        const bubble = require('../../public/js/bubble')
-        bubble.bubble(bubbleNumber,bubbleAlpha,alphaChangeSpeed,size,sizeChangeSpeed,riseSpeed,color)
+        import("../../public/js/bubble").then(module => {
+          module.bubble(bubbleNumber,bubbleAlpha,alphaChangeSpeed,size,sizeChangeSpeed,riseSpeed,color)
+        })
       }
     })
     this.document = document

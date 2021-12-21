@@ -14,7 +14,7 @@
 <script>
 import {useThemeData} from "../../composables";
 import $ from "jquery";
-//import Waline from '@waline/client';
+import Waline from '@waline/client';
 export default {
   name: "Comment",
   data() {
@@ -41,7 +41,6 @@ export default {
   mounted() {
     if (this.showComment) {
       this.$nextTick(() => {
-        const Waline = require('@waline/client');
         Waline({
           el: '#waline',
           serverURL: this.serverURL,
