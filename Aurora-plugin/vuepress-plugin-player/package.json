@@ -1,6 +1,6 @@
 {
   "name": "vuepress-plugin-player",
-  "version": "1.1.5",
+  "version": "1.1.6",
   "description": "这是vuepress2版本的一个音乐播放器插件，支持本地歌曲和网易云歌曲，提供单曲顺序播放，随机播放等功能",
   "main": "./lib/node/index.js",
   "directories": {
@@ -29,6 +29,7 @@
   },
   "homepage": "https://aurora.xcye.xyz/plugin/player",
   "dependencies": {
-    "axios": "^0.21.1"
+    "axios": "^0.21.1",
+    "vuepress": "2.0.0-beta.29"
   }
 }
