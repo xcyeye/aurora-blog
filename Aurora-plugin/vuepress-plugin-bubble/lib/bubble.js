@@ -39,10 +39,6 @@ function window_resize() {
     canvas.height = height;
 }
 
-window.onresize = function(){
-    window_resize();
-}
-
 function Bubble() {
     let _this = this;
     (function() {
@@ -72,8 +68,6 @@ function Bubble() {
         ctx.fill();
     };
 }
-
-
 
 export function bubble(aurora_bubbleNumber,aurora_bubbleAlpha,aurora_alphaChangeSpeed,aurora_size,aurora_sizeChangeSpeed,aurora_riseSpeed,aurora_color) {
     bubbleNumber = aurora_bubbleNumber

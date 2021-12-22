@@ -1,6 +1,6 @@
 const { path } = require("@vuepress/utils");
 module.exports = {
-    base: '/aurora-vite/',//如果你准备发布到 https://<USERNAME>.github.io/<REPO>/ ，也就是说你的仓库地址是 https://github.com/<USERNAME>/<REPO> ，则将 base 设置为 "/<REPO>/"。
+    //base: '/aurora-vite/',//如果你准备发布到 https://<USERNAME>.github.io/<REPO>/ ，也就是说你的仓库地址是 https://github.com/<USERNAME>/<REPO> ，则将 base 设置为 "/<REPO>/"。
     //https://ooszy.cco.vin/img/blog-note/aurora-loading.gif
     extendsMarkdown: (md) => {
 
@@ -8,7 +8,7 @@ module.exports = {
 
     //在这里配置插件
     plugins: [
-        /*"@vuepress/plugin-search",
+        "@vuepress/plugin-search",
         {
             locales: {
                 "/": {
@@ -18,7 +18,7 @@ module.exports = {
                     placeholder: "搜索",
                 },
             },
-        },*/
+        },
         [
             path.resolve(__dirname, "../../Aurora-plugin/vuepress-plugin-coze/lib/node/index.js"),
             {
@@ -38,7 +38,7 @@ module.exports = {
                 noTitle: '暂时没有标题配置'
             }
         ],
-        /*[
+        [
             path.resolve(__dirname, "../../Aurora-plugin/vuepress-plugin-player/lib/node/index.js"),
             {
                 disableSpace: false,
@@ -75,10 +75,10 @@ module.exports = {
                 }
             }
         ],
-        /!*"vuepress-plugin-archive",{
+        /*"vuepress-plugin-archive",{
             excludes: ['/footer.html','/404.html','/about/','/mood/','/link/','/tag/','/photo/'],
             noTitle: '暂时没有标题配置'
-        }*!/
+        }*/
 
         [
             path.resolve(__dirname, "../../Aurora-plugin/vuepress-plugin-bubble/lib/node/index.js"),
@@ -106,7 +106,7 @@ module.exports = {
 
                 zIndex: -2
             }
-        ],*/
+        ],
     ],
     //设置head 一定要加入<script src="https://at.alicdn.com/t/font_2849934_v6y652peian.js"></script>项配置，否则一些图标不能正常显示
     head: [

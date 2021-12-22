@@ -105,6 +105,7 @@ const auroraTheme = ({ themePlugins = {},...localeOptions }) => {
             app.pages.push(ArchivePage)
         },
         onGenerated: (app) => {
+            console.log("\x1B[32m\x1B[1m","\n博客部署请看: https://aurora.xcye.xyz/home/deploy.html\n")
             setTimeout(() => {
                 process.exit(0)
             },3000)
