@@ -1238,6 +1238,10 @@ module.exports = {
         homeTopText: '置顶',
 
         //侧边栏一句话描述
-        sidebarDesc: '喜欢动漫，Coding目前是一名大三学生,CS专业,坐标西南边陲'
+        sidebarDesc: '喜欢动漫，Coding目前是一名大三学生,CS专业,坐标西南边陲',
+
+        /*
+        * 下面的是v1.12.2版本的配置
+        * */
     }
 };

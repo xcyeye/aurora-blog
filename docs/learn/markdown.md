@@ -85,7 +85,7 @@ VuePress 会使用 [markdown-it](https://github.com/markdown-it/markdown-it) 来
 
 - 内部链接会被转换为 `<RouterLink>` 以便进行 SPA 导航。
 - 指向 `.md` 文件的内部链接会被转换为目标页面的 [路由路径](./page.md#路由)，并且支持绝对路径和相对路径。
-- 外部链接会被添加 `target="_blank" rel="noopener noreferrer"` 属性和一个 <OutboundLink /> 标记。
+- 外部链接会被添加 `target="_blank" rel="noopener noreferrer"` 属性和一个 `<OutboundLink />` 标记。
 
 **建议**
 
