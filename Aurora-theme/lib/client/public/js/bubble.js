@@ -26,10 +26,6 @@ function window_resize() {
     canvas.height = height;
 }
 
-window.onresize = function(){
-    window_resize();
-}
-
 function Bubble() {
     let _this = this;
     (function() {

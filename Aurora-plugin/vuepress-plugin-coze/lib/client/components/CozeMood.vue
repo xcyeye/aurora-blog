@@ -175,6 +175,3 @@ export default defineComponent({
   },
 })
 </script>
-<style lang="css">
-@import "../public/font/iconfont.css";
-</style>

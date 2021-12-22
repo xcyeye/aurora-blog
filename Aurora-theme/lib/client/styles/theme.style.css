@@ -10,22 +10,21 @@ html,body {
     scroll-behavior: smooth;
 }
 
-h1[data-v-d8ec41bc],
-h2[data-v-d8ec41bc] {
+h1, h2 {
     font-weight: 400
 }
 
-ul[data-v-d8ec41bc] {
+ul {
     list-style-type: none;
     padding: 0
 }
 
-li[data-v-d8ec41bc] {
+li {
     display: inline-block;
     margin: 0 10px
 }
 
-a[data-v-d8ec41bc] {
+a {
     color: #42b983
 }
 
@@ -5053,7 +5052,6 @@ body::-webkit-scrollbar-thumb {
     margin-left: 5px;
     margin-right: 5px
 }
-
 .page-record-bot-tag {
     height: 1.5rem;
     max-width: 80vw;
@@ -5249,7 +5247,6 @@ body::-webkit-scrollbar-thumb {
     width: 100%;
     height: 5rem
 }
-
 .home-wave-show {
     opacity: 1
 }
@@ -5359,7 +5356,6 @@ body::-webkit-scrollbar-thumb {
     height: 100%;
     width: 100%
 }
-
 .aurora-top-bubble-par {
     position: relative;
     height: 100%;
@@ -5385,7 +5381,6 @@ body::-webkit-scrollbar-thumb {
 .aurora-theme-pro-name::-webkit-scrollbar {
     display: none;
 }
-
 .aurora-theme-pro-name span {
     display: inline-block;
 }
@@ -5397,7 +5392,7 @@ body::-webkit-scrollbar-thumb {
     width: 30%;
     margin: 0 auto;
     margin-bottom: 3rem;
-    border-radius: var(--borderRadius);;
+    border-radius: var(--borderRadius);
     background-color: rgba(242, 242, 242, var(--opacity));
 }
 
@@ -5415,6 +5410,7 @@ body::-webkit-scrollbar-thumb {
 .aurora-comment-animate {
     display: none;
 }
+
 /*
 .aurora-control-comment-box {
     overflow: hidden;

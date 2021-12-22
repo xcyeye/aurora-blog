@@ -4,6 +4,7 @@ import RegisterUser from './components/RegisterUser.vue'
 import CozeLogin from "./components/CozeLogin.vue";
 import CozePhoto from "./components/CozePhoto.vue";
 import './style/coze-plugin.css'
+import './public/font/iconfont.css'
 import AV from 'leancloud-storage'
 
 let appId = ''
