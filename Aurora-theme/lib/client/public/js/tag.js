@@ -4,7 +4,18 @@ import myData from'@temp/my-data'
 let excludes = ['/','/about/','/mood/','/link/','/tag/','/archive/','/photo/','/aurora-coze/','/aurora-register/','/aurora-archive/','/aurora-music/','/404.html']
 let categoriesIncludeFolderName = true
 
+let customTagName = "tag"
+let customCategoriesName = "categories"
+
 export function setTag(app,themeProperty) {
+    if (themeProperty.customTagName !== undefined) {
+        customTagName = themeProperty.customTagName
+    }
+
+    if (themeProperty.customCategoriesName !== undefined) {
+        customCategoriesName = themeProperty.customCategoriesName
+    }
+
     return new Promise((resolve,reject) => {
 
         if (themeProperty.categoriesIncludeFolderName !== undefined) {
@@ -81,7 +92,7 @@ export function setTag(app,themeProperty) {
 
                     articleMap.gitTime = commitPageDate === undefined ? 0 : commitPageDate
 
-                    let pageTagArr = excludeMapArr[i].data.frontmatter.tag === undefined ? [] : excludeMapArr[i].data.frontmatter.tag
+                    let pageTagArr = excludeMapArr[i].data.frontmatter[customTagName] === undefined ? [] : excludeMapArr[i].data.frontmatter[customTagName]
                     articleMap.tag = pageTagArr
                     for (let j = 0; j < pageTagArr.length; j++) {
                         tagSetArr.add(pageTagArr[j])
@@ -98,10 +109,10 @@ export function setTag(app,themeProperty) {
                         new Promise((resolve,reject) => {
 
                             //将frontmatter中的categories放入此集合里面
-                            if (excludeMapArr[i].data.frontmatter.categories !== undefined) {
-                                for (let j = 0; j < excludeMapArr[i].data.frontmatter.categories.length; j++) {
-                                    categoriesSetArr.add(excludeMapArr[i].data.frontmatter.categories[j])
-                                    tempCategoriesSetArr.add(excludeMapArr[i].data.frontmatter.categories[j])
+                            if (excludeMapArr[i].data.frontmatter[customCategoriesName] !== undefined) {
+                                for (let j = 0; j < excludeMapArr[i].data.frontmatter[customCategoriesName].length; j++) {
+                                    categoriesSetArr.add(excludeMapArr[i].data.frontmatter[customCategoriesName][j])
+                                    tempCategoriesSetArr.add(excludeMapArr[i].data.frontmatter[customCategoriesName][j])
                                 }
                             }
 
@@ -157,7 +168,7 @@ export function setTag(app,themeProperty) {
                         articleMap.contentRendered = excludeMapArr[i].contentRendered
                         articleMap.content = excludeMapArr[i].content
 
-                        let categories = excludeMapArr[i].frontmatter.categories
+                        let categories = excludeMapArr[i].frontmatter[customCategoriesName]
                         categories = categories === undefined ? [] : categories
 
                         articleMap.categories = categories

@@ -1168,7 +1168,7 @@ module.exports = {
         excludePath: ['/footer.html','/v1.3.0/','/plugin/',"/node.html","/style.html"],
 
         //类别项是否包含文件夹名，默认包含
-        categoriesIncludeFolderName: true,
+        categoriesIncludeFolderName: false,
         //首页波浪效果设置
         wave: {
             showWave: true
@@ -1241,7 +1241,19 @@ module.exports = {
         sidebarDesc: '喜欢动漫，Coding目前是一名大三学生,CS专业,坐标西南边陲',
 
         /*
-        * 下面的是v1.12.2版本的配置
+        * 下面的是v1.13.0版本的配置
         * */
+
+        /*
+        * 如果你以前使用的是其他的主题或者工具，比如hexo的主题，reco主题等等，发现frontmatter中的标签并不是使用tag字段设置，而是使用比如tags进行设置的
+        * 那么你可以像customTagName: 'tags'自定义标签的字段，此配置仅仅针对于md文件设置的标签并不是使用tag字段，请注意，谨慎使用
+        * */
+        //customTagName: 'tags',
+
+        /*
+       * 如果你以前使用的是其他的主题，比如hexo，reco等等，发现frontmatter中的类别并不是使用categories字段，而是使用比如category进行设置的
+       * 那么你可以像customCategoriesName: "category"这样自定义类别的字段，此配置仅仅针对于md文件设置的类别并不是使用categories字段，请注意，谨慎使用
+       * */
+        //customCategoriesName: "category"
     }
 };
