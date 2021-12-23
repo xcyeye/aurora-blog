@@ -41,7 +41,7 @@ import {
 } from 'vue'
 import MoodItem from "./MoodItem.vue";
 import AddMood from './AddMood.vue'
-import AV from 'leancloud-storage'
+const AV = require('leancloud-storage');
 const { Query, User } = AV;
 let appId = ''
 let appKey = ''
@@ -175,3 +175,6 @@ export default defineComponent({
   },
 })
 </script>
+<style lang="css">
+@import "../public/font/iconfont.css";
+</style>

@@ -1,4 +1,33 @@
-# [1.0.0](https://github.com/vuepress-aurora/vuepress-theme-aurora/compare/v1.12.0...v1.0.0) (2021-12-12)
+# [1.0.0](https://github.com/vuepress-aurora/vuepress-theme-aurora/compare/v1.12.2...v1.0.0) (2021-12-22)
+
+
+### Features
+
+* add custom tag, category items ([9de0f15](https://github.com/vuepress-aurora/vuepress-theme-aurora/commit/9de0f159e80008510f70dae9b9d316fff98974b3)), closes [#2](https://github.com/vuepress-aurora/vuepress-theme-aurora/issues/2)
+
+
+
+## [1.12.2](https://github.com/vuepress-aurora/vuepress-theme-aurora/compare/v1.12.0...v1.12.2) (2021-12-22)
+
+
+### Bug Fixes
+
+* **archive-plugin:** fix git.updateTime is undefined ([9bdbd50](https://github.com/vuepress-aurora/vuepress-theme-aurora/commit/9bdbd50b820c7041f645ff476a29a14af5d0793b))
+* **bubble-plugin:** fix bubble.bubble is not a function ([ca2582d](https://github.com/vuepress-aurora/vuepress-theme-aurora/commit/ca2582ded342b3a36a2c890ef474302b22ff4e64))
+* fix custom component useBlog.vue ([9daca87](https://github.com/vuepress-aurora/vuepress-theme-aurora/commit/9daca8705c9f3b3089fde6ea45f53f0a971b179e))
+* fix theme style ([2f2b5ac](https://github.com/vuepress-aurora/vuepress-theme-aurora/commit/2f2b5ac8bf3939c7a4bbf7695c55737a19541bcb))
+* fix theme.style.css expection ([90a3d56](https://github.com/vuepress-aurora/vuepress-theme-aurora/commit/90a3d568684491fba56085da5651b0d507d6feb8))
+* solve that require is not defined ([09b0d9b](https://github.com/vuepress-aurora/vuepress-theme-aurora/commit/09b0d9b091bcc2454f0d596439bef784a538c203))
+* solve that require is not defined ([d38723c](https://github.com/vuepress-aurora/vuepress-theme-aurora/commit/d38723c2c44632348b4d6b22bb7d9ff9adc0c930))
+* solve the error of vite packaging ([c65a99b](https://github.com/vuepress-aurora/vuepress-theme-aurora/commit/c65a99b716a8abd75fd036bf76b6c4cb64cc9177))
+* **theme:** fix theme default style ([8e9aacb](https://github.com/vuepress-aurora/vuepress-theme-aurora/commit/8e9aacb8bcd4f92c42cc3230ae7a47b35d01096e))
+* **theme:** optimization theme comment ([a67c6aa](https://github.com/vuepress-aurora/vuepress-theme-aurora/commit/a67c6aa6f2f85f8d2cfd843ec60501d6789171ab))
+* use vite as a packaging tool ([74c0288](https://github.com/vuepress-aurora/vuepress-theme-aurora/commit/74c0288e8384b869f0ea55f64baf6e52179faba2))
+
+
+### Features
+
+* **theme-build:** add build print information ([acb8bca](https://github.com/vuepress-aurora/vuepress-theme-aurora/commit/acb8bca8f8ab83f22fc8b914e3af15067ec3a75f))
 
 
 

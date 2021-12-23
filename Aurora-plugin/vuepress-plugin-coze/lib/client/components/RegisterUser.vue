@@ -41,8 +41,8 @@
 </template>
 
 <script>
-import flowers from "../public/js/flowers";
-import AV from 'leancloud-storage'
+import {flowers} from "../public/js/flowers";
+const AV = require('leancloud-storage');
 const { Query, User } = AV;
 let appId = ''
 let appKey = ''
@@ -146,7 +146,7 @@ export default {
       if (document.body.clientWidth < 719) {
         flowersNum = 670
       }
-      flowers.flowers(flowersNum)
+      flowers(flowersNum)
       setTimeout(() => {
         this.registerSuccess = false
       },5000)
