@@ -778,17 +778,12 @@ li {
     overflow: hidden
 }
 
-.box-common {
-    margin-bottom: 3rem
-}
-
 .box {
     background-color: rgba(255, 255, 255, var(--opacity));
     position: relative;
     display: block;
     z-index: 2;
     margin: 0 auto;
-    margin-bottom: 3rem;
     border-radius: var(--borderRadius);
     overflow: hidden
 }
@@ -5555,4 +5550,12 @@ body::-webkit-scrollbar-thumb {
     margin: 0 auto;
     font-family: aurora-time-font;
     height: 5rem;
+}
+
+.box-common {
+    margin-bottom: 3rem
+}
+
+.box {
+    margin-bottom: 3rem;
 }
