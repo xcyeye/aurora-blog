@@ -30,8 +30,7 @@
 </template>
 
 <script>
-const AV = require('leancloud-storage');
-const { Query, User } = AV;
+import { Query, User,Object } from 'leancloud-storage';
 let appId = ''
 let appKey = ''
 let masterKey = ''
@@ -59,7 +58,7 @@ export default {
   emits: ['cozeLoginOut','cozeLogin','cozeRegister'],
   methods: {
     loginIn() {
-      const currentUser = AV.User.current();
+      const currentUser = User.current();
       if (currentUser) {
         this.$emit("cozeLogin",{
           loginStatus: 1,
@@ -85,7 +84,7 @@ export default {
         })
         return;
       }
-      AV.User.logIn(this.username, this.password).then((user) => {
+      User.logIn(this.username, this.password).then((user) => {
         this.$emit("cozeLogin",{
           loginStatus: 1,
           message: '登录成功',
@@ -108,10 +107,10 @@ export default {
       });
     },
     loginOut() {
-      const currentUser = AV.User.current();
+      const currentUser = User.current();
       if (currentUser) {
         this.verifyText = '你已经退出登录(●￣(ｴ)￣●)'
-        AV.User.logOut();
+        User.logOut();
         this.$emit("cozeLoginOut",{
           status: 1,
           message: "成功退出登录"
@@ -125,7 +124,7 @@ export default {
       }
     },
     setMoodClass() {
-      const Talk = AV.Object.extend('Talk');
+      const Talk = Object.extend('Talk');
       const talk = new Talk();
 
       let photoArr = [{
@@ -198,7 +197,7 @@ export default {
         let administrator = 0
         //判断是否存在talk数据
         new Promise((resolve,reject) => {
-          const query = new AV.Query('Talk');
+          const query = new Query('Talk');
           query.count().then((count) => {
             resolve()
           },(err) => {
@@ -207,7 +206,7 @@ export default {
             resolve()
           });
         }).then(() => {
-          const user = new AV.User();
+          const user = new User();
           user.setUsername(this.username);
           user.setPassword(this.password);
           user.setEmail(this.email);

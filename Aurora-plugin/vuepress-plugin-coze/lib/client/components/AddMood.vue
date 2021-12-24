@@ -81,8 +81,7 @@
 </template>
 
 <script>
-const AV = require('leancloud-storage');
-const { Query, User } = AV;
+import { User ,File, Object} from 'leancloud-storage'
 let appId = ''
 let appKey = ''
 let masterKey = ''
@@ -232,7 +231,7 @@ export default {
     changeMoodStatus() {
       //判断当前的用户名是否和发布说说的一样，管理员可以编写所有的说说，但是非管理员只能编写自己的
 
-      const currentUser = AV.User.current();
+      const currentUser = User.current();
       let publishUser = this.currentMoodObj.attributes.mood_user
       let administrator = currentUser.attributes.administrator
       let currentUsername = currentUser.attributes.username
@@ -274,7 +273,7 @@ export default {
       }
     },
     edit() {
-      const currentUser = AV.User.current();
+      const currentUser = User.current();
       if (!currentUser) {
         this.resultText = '你已经退出了(●￣(ｴ)￣●)'
         return;
@@ -345,7 +344,7 @@ export default {
             new Promise((resolveUpload,reject) => {
               for (let i = 0; i < uploadPhotoArr.length; i++) {
                 const localFile = uploadPhotoArr[i];
-                const fileUpload = new AV.File(uploadPhotoArr[i].name, localFile);
+                const fileUpload = new File(uploadPhotoArr[i].name, localFile);
                 fileUpload.save({
                   onprogress: (progress) => {
                     let uploadData = {
@@ -388,7 +387,7 @@ export default {
       }
     },
     updateData() {
-      const talk = AV.Object.createWithoutData('Talk', this.currentMoodObj.id);
+      const talk = Object.createWithoutData('Talk', this.currentMoodObj.id);
       talk.set('mood_title', this.title);
       talk.set('mood_content', this.content);
       talk.set("mood_like",0)
@@ -403,7 +402,7 @@ export default {
       })
     },
     saveData(photoDataArr,originArr) {
-      const currentUser = AV.User.current();
+      const currentUser = User.current();
 
       let administrator = 0
       let username = ""
@@ -413,7 +412,7 @@ export default {
       }
 
       const array  = photoDataArr;
-      const Talk = AV.Object.extend('Talk');
+      const Talk = Object.extend('Talk');
       const talk = new Talk();
       talk.set('mood_title', this.title);
       this.content = this.content.replaceAll("\n","<br>")
@@ -447,7 +446,7 @@ export default {
         this.verifyText = "是不是少点什么 (￣へ￣)"
         return;
       }else {
-        AV.User.logIn(this.username, this.password).then((user) => {
+        User.logIn(this.username, this.password).then((user) => {
           this.verifyText = "欢迎小主(●￣(ｴ)￣●)"
           this.verifyIdentifyStatus_ = true
           this.showMoodControl_ = true

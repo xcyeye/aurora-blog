@@ -52,8 +52,7 @@
 </template>
 
 <script>
-const AV = require('leancloud-storage');
-const { User } = AV;
+import { Query,Object } from 'leancloud-storage'
 let appId = ''
 let appKey = ''
 let masterKey = ''
@@ -182,10 +181,10 @@ export default {
       }).then(() => {
         if (!mood_link_status) {
           //没有点赞
-          const query = new AV.Query('Talk');
+          const query = new Query('Talk');
           query.get(this.moodItem.id).then((data) => {
             const mood_like = data.get('mood_like');
-            const todo = AV.Object.createWithoutData('Talk', this.moodItem.id);
+            const todo = Object.createWithoutData('Talk', this.moodItem.id);
             todo.set('mood_like', mood_like + 1);
             todo.save().then(() => {
               let expiresTime = new Date().getTime() + 864000000;
@@ -198,10 +197,10 @@ export default {
           });
         }else {
           //减赞
-          const query = new AV.Query('Talk');
+          const query = new Query('Talk');
           query.get(this.moodItem.id).then((data) => {
             const mood_like = data.get('mood_like');
-            const todo = AV.Object.createWithoutData('Talk', this.moodItem.id);
+            const todo = Object.createWithoutData('Talk', this.moodItem.id);
             todo.set('mood_like', mood_like - 1);
             todo.save().then(() => {
               let expiresTime = new Date().getTime() + 864000000;

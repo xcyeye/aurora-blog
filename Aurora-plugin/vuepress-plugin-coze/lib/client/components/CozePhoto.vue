@@ -28,7 +28,7 @@
 
  <script>
  import mediumZoom from "medium-zoom";
- const AV = require('leancloud-storage');
+ import { Query } from 'leancloud-storage'
 
  export default {
    name: "v-waterfall",
@@ -59,7 +59,7 @@
    },
    created() {
      //从leanCloud获取所有的数据
-     const query = new AV.Query('Talk');
+     const query = new Query('Talk');
      query.find().then((talks) => {
        this.photoLength = talks.length
        if (talks.length === 0) {

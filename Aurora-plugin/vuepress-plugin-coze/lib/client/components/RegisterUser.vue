@@ -42,8 +42,7 @@
 
 <script>
 import {flowers} from "../public/js/flowers";
-const AV = require('leancloud-storage');
-const { Query, User } = AV;
+import { Query, User,Object } from 'leancloud-storage';
 let appId = ''
 let appKey = ''
 let masterKey = ''
@@ -75,16 +74,16 @@ export default {
   },
   methods: {
     loginOut() {
-      const currentUser = AV.User.current();
+      const currentUser = User.current();
       if (currentUser) {
         this.verifyText = '你已经退出登录(●￣(ｴ)￣●)'
-        AV.User.logOut();
+        User.logOut();
       } else {
         this.verifyText = '你未登录或者注册(●￣(ｴ)￣●)'
       }
     },
     setMoodClass() {
-      const Talk = AV.Object.extend('Talk');
+      const Talk = Object.extend('Talk');
       const talk = new Talk();
 
       let photoArr = [{
@@ -181,7 +180,7 @@ export default {
       let administrator = 0
       //判断是否存在talk数据
       new Promise((resolve,reject) => {
-        const query = new AV.Query('Talk');
+        const query = new Query('Talk');
         query.count().then((count) => {
           resolve()
         },(err) => {
@@ -190,7 +189,7 @@ export default {
           resolve()
         });
       }).then(() => {
-        const user = new AV.User();
+        const user = new User();
         user.setUsername(this.username);
         user.setPassword(this.password);
         user.setEmail(this.email);

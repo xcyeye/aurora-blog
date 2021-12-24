@@ -41,8 +41,7 @@ import {
 } from 'vue'
 import MoodItem from "./MoodItem.vue";
 import AddMood from './AddMood.vue'
-const AV = require('leancloud-storage');
-const { Query, User } = AV;
+import { Query, User } from 'leancloud-storage';
 let appId = ''
 let appKey = ''
 let masterKey = ''
@@ -78,7 +77,7 @@ export default defineComponent({
   },
   emits: ['cozeSuccess','moodEdit','cozeCancelEdit'],
   created() {
-    const query = new AV.Query('Talk');
+    const query = new Query('Talk');
     query.descending('createdAt');
     query.find().then((talks) => {
       if (talks.length === 0) {
@@ -111,7 +110,7 @@ export default defineComponent({
     });
 
     //验证用户是否登录
-    const currentUser = AV.User.current();
+    const currentUser = User.current();
     if (currentUser) {
       this.verifyIdentifyStatus = true
     } else {
@@ -120,7 +119,7 @@ export default defineComponent({
   },
   methods: {
     saveDataSuccess() {
-      const query = new AV.Query('Talk');
+      const query = new Query('Talk');
       query.descending('createdAt');
       query.find().then((talks) => {
         this.moods = talks

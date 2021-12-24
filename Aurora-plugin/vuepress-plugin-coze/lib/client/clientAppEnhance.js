@@ -4,7 +4,8 @@ import RegisterUser from './components/RegisterUser.vue'
 import CozeLogin from "./components/CozeLogin.vue";
 import CozePhoto from "./components/CozePhoto.vue";
 import './style/coze-plugin.css'
-const AV = require('leancloud-storage');
+
+import { init } from "leancloud-storage";
 
 let appId = ''
 let appKey = ''
@@ -33,7 +34,7 @@ export default defineClientAppEnhance(({ app, router }) => {
     })
 
     try {
-        AV.init({
+        init({
             appId: appId,
             appKey: appKey
         });
