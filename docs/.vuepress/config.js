@@ -6,6 +6,9 @@ module.exports = {
 
     },
 
+    // 打开下面注释，使用webpack作为打包工具，注释将使用vite作为打包工具
+    bundler: '@vuepress/bundler-webpack',
+
     //在这里配置插件
     plugins: [
         "@vuepress/plugin-search",
