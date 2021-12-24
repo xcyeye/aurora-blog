@@ -1224,7 +1224,6 @@ module.exports = {
             urlApi: 'https://v1.hitokoto.cn/?encode=text&c=a'
         },
 
-
         /*
         * 一下是v1.11.1版本增加的配置
         * */
