@@ -164,84 +164,81 @@ module.exports = {
             {
                 text: '快速开始',
                 link: '/readme/',
-                iconClass: 'aurora-navbar-si-glyph-game-1'
+                iconClass: 'aurora-navbar-si-glyph-dial-number-1'
             },
             {
-                text: '百度一下',
-                link: 'https://www.baidu.com/',
-                iconClass: 'aurora-navbar-si-glyph-billiard-ball'
-            },
-            /*{
-                text: "所有配置",
-                link: '/home/config.html',
-                iconClass: 'aurora-link'
-            },*/
-            {
-                text: '好用网站',
-                iconClass: 'aurora-navbar-si-glyph-glass-water',
+                text: '所有配置及必读',
+                iconClass: 'aurora-navbar-blaze-line',
                 children: [
                     {
-                        text: 'npm',
+                        text: '问题及必读',
                         children: [
-                            {
-                                text: 'npm',
-                                link: 'https://www.npmjs.com/'
-                            },
-                            {
-                                text: '我自己的包',
-                                link: 'https://www.npmjs.com/settings/qsyyke/packages'
-                            }
+                            '/issue/',
                         ]
                     },
                     {
-                        text: '搜索引擎',
+                        text: "所有配置",
                         children: [
-                            {
-                                text: "百度",
-                                link: 'https://www.baidu.com/',
-                            },
-                            {
-                                text: '谷歌',
-                                link: 'https://www.google.com/'
-                            }
+                            '/home/config.md'
                         ]
                     },
                     {
-                        text: 'icon',
+                        text: "主题样式配置",
                         children: [
-                            {
-                                text: '阿里图标',
-                                link: 'https://www.iconfont.cn/',
-                            },
-                            {
-                                text: '好看网站',
-                                link: 'https://solstice23.top/'
-                            }
+                            '/style/code-style.md',
+                            '/style/icon.md',
+                            '/style/live2d.md',
+                            '/style/style.md',
+                            '/feature/registercom.md'
+                        ]
+                    }
+                ]
+            },
+            {
+                text: '基本知识',
+                iconClass: 'aurora-navbar-si-glyph-billiard-ball',
+                children: [
+                    {
+                        text: '静态文件',
+                        children: [
+                            '/base/public.md',
+                        ]
+                    },
+                    {
+                        text: "插件使用",
+                        children: [
+                            '/base/plugin.md'
+                        ]
+                    },
+                    {
+                        text: "docs目录结构",
+                        children: [
+                            '/base/docs.md'
+                        ]
+                    },
+                    {
+                        text: 'cmd管理员权限',
+                        children: [
+                            '/base/admin.md'
+                        ]
+                    },
+                    {
+                        text: 'npm常见命令',
+                        children: [
+                            '/base/command.md'
                         ]
                     }
                 ]
             },
             {
                 text: '问题和bug',
-                iconClass: 'aurora-navbar-si-glyph-emoticon',
+                iconClass: 'aurora-navbar-shoulijindu-xuanzhong',
                 children: [
                     {
-                        text: 'CHANGELOG',
+                        text: 'node安装教程',
                         children: [
-                            '/issue/CHANGELOG.md'
-                        ]
-                    },
-                    {
-                        text: '主题详细搭建教程',
-                        children: [
-                            '/readme/introduce.md',
-                            '/use/useTheme.md'
-                        ]
-                    },
-                    {
-                        text: '问题',
-                        children: [
-                            '/issue/',
+                            //'/readme/introduce.md',
+                            '/node.md'
                         ]
                     },
                     {
@@ -249,12 +246,25 @@ module.exports = {
                         children: [
                             '/issue/bug.md',
                         ]
+                    },
+                    {
+                        text: '更新日志',
+                        children: [
+                            '/issue/CHANGELOG.md'
+                        ]
+                    },
+                    {
+                        text: '运行常见错误',
+                        children: [
+                            '/issue/common.md'
+                        ]
                     }
+
                 ]
             },
             {
                 text: '其他配置',
-                iconClass: 'aurora-navbar-shoulijindu-xuanzhong',
+                iconClass: 'aurora-navbar-weather',
                 children: [
                     {
                         children: [
@@ -271,48 +281,120 @@ module.exports = {
                         text: "其他配置",
                     },
                     {
+                        text: 'webpack和vite切换',
                         children: [
-                            "/v1.3.0/README.md",
-
-                        ],
-                        text: "V1.3.2",
+                            '/base/vite-webpack.md'
+                        ]
                     }
                 ],
             },
             {
-                text: "about",
-                link: "/about",
-                iconClass: 'aurora-navbar-a-ziyuan107'
+                text: '插件',
+                iconClass: 'aurora-navbar-si-glyph-egg',
+                children: [
+                    {
+                        children: [
+                            "/plugin/archive/readme.md",
+                        ],
+                        text: "时间轴",
+                    },
+                    {
+                        children: [
+                            "/plugin/bubble/readme.md",
+                        ],
+                        text: "浪漫气泡",
+                    },
+                    {
+                        children: [
+                            "/plugin/coze/readme.md",
+                        ],
+                        text: "说说",
+                    },
+                    {
+                        children: [
+                            "/plugin/player/readme.md",
+                        ],
+                        text: "音乐播放器",
+                    },
+                    {
+                        text: '看板娘',
+                        children: [
+                            '/style/live2d.md'
+                        ]
+                    }
+                ],
             },
             {
-                text: 'link',
+                text: 'life',
+                iconClass: 'aurora-navbar-hua2',
+                children: [
+                    {
+                        children: [
+                            {
+                                text: 'Me',
+                                link: "/about",
+                            }
+
+                        ],
+                        text: "我?",
+                    },
+                    {
+                        text: '说说',
+                        children:[
+                            {
+                                text: 'chat',
+                                link: '/mood'
+                            }
+                        ],
+                    },
+                    {
+                        text: "相册",
+                        children: [
+                            {
+                                text: 'photo',
+                                link: '/photo'
+                            }
+                        ],
+                    },
+                ],
+            },
+            {
+                text: 'page',
+                iconClass: 'aurora-navbar-a-ziyuan107',
+                children: [
+                    {
+                        text: '标签',
+                        children: [{
+                            text: 'tag',
+                            link: '/tag'
+                        }],
+                    },
+                    {
+                        text: "时间轴",
+                        children: [
+                            {
+                                text: 'archive',
+                                link: '/archive'
+                            }
+                        ],
+                    },
+                ],
+            },
+
+            {
+                text: '友情链接',
                 link: '/link',
                 iconClass: 'aurora-navbar-guide'
             },
             {
-                text: 'tag',
-                link: '/tag',
-                iconClass: 'aurora-navbar-hua2'
-            },
-            {
-                text: 'chat',
-                link: '/mood',
-                iconClass: 'aurora-navbar-weather'
-            },
-            {
-                text: "photo",
-                link: '/photo',
-                iconClass: 'aurora-navbar-kechengguanli'
-            },
-            {
-                text: "time",
-                link: '/archive',
-                iconClass: 'aurora-navbar-si-glyph-egg'
+                text: '案例',
+                link: '/use.html',
+                iconClass: 'aurora-navbar-si-glyph-load'
             },
             {
                 text: 'Aurora',
                 link: 'https://github.com/vuepress-aurora/vuepress-theme-aurora',
-                iconClass: 'aurora-navbar-github-circle'
+                iconClass: 'aurora-navbar-github1'
             }
         ],
 

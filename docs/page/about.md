@@ -1,6 +1,3 @@
----
-category: [test1,test2]
----
 # 关于页面
 
 ## 社交
