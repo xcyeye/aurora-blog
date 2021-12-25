@@ -1,5 +1,5 @@
-import type { LocaleData } from '@vuepress/shared';
 import type { ThemeData } from '@vuepress/plugin-theme-data';
+import type { LocaleData } from '@vuepress/shared';
 import type { NavbarConfig, SidebarConfig } from './nav';
 export interface DefaultThemePluginsOptions {
     /**
@@ -21,6 +21,10 @@ export interface DefaultThemePluginsOptions {
         codeGroup?: boolean;
         codeGroupItem?: boolean;
     };
+    /**
+     * Enable @vuepress/plugin-external-link-icon or not
+     */
+    externalLinkIcon?: boolean;
     /**
      * Enable @vuepress/plugin-git or not
      */
@@ -59,6 +63,12 @@ export interface DefaultThemeLocaleData extends LocaleData {
      * Logo to display in navbar
      */
     logo?: null | string;
+    /**
+     * Navbar logo config for dark mode
+     *
+     * Logo to display in navbar in dark mode
+     */
+    logoDark?: null | string;
     /**
      * Navbar dark mode button config
      *
@@ -149,7 +159,7 @@ export interface DefaultThemeLocaleData extends LocaleData {
     /**
      * Page meta - edit link config
      *
-     * Set this config if the branch of your docs is not 'master'
+     * Set this config if the branch of your docs is not 'main'
      */
     docsBranch?: string;
     /**
@@ -213,7 +223,15 @@ export interface DefaultThemeLocaleData extends LocaleData {
      */
     backToHome?: string;
     /**
-     * sr-only message in `<OutboundLink>`
+     * A11y text for external link icon
      */
     openInNewWindow?: string;
+    /**
+     * A11y text for dark mode toggle button
+     */
+    toggleDarkMode?: string;
+    /**
+     * A11y text for sidebar toggle button
+     */
+    toggleSidebar?: string;
 }

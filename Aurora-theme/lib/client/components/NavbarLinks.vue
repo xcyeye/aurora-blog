@@ -127,6 +127,9 @@ const resolveNavbarItem = (
     item: NavbarItem | NavbarGroup | string
 ): ResolvedNavbarItem => {
   if (isString(item)) {
+    // console.log(item)
+    // console.log(useNavLink(item))
+    // console.log("----------------------")
     return useNavLink(item)
   }
   if ((item as NavbarGroup).children) {

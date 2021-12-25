@@ -1,7 +1,7 @@
 import type { GitPluginPageData } from '@vuepress/plugin-git';
 import type { NavLink, SidebarConfig } from './nav';
 export interface DefaultThemePageData extends GitPluginPageData {
-    filePathRelative: string;
+    filePathRelative: string | null;
 }
 export interface DefaultThemePageFrontmatter {
     home?: boolean;
@@ -11,9 +11,9 @@ export interface DefaultThemePageFrontmatter {
 export interface DefaultThemeHomePageFrontmatter extends DefaultThemePageFrontmatter {
     home: true;
     heroImage?: string;
+    heroImageDark?: string;
     heroAlt?: string;
     heroText?: string | null;
-    randomSaw?: string | null;
     tagline?: string | null;
     actions?: {
         text: string;
@@ -30,6 +30,7 @@ export interface DefaultThemeHomePageFrontmatter extends DefaultThemePageFrontma
 export interface DefaultThemeNormalPageFrontmatter extends DefaultThemePageFrontmatter {
     home?: false;
     editLink?: boolean;
+    editLinkPattern?: string;
     lastUpdated?: boolean;
     contributors?: boolean;
     sidebar?: 'auto' | false | SidebarConfig;
