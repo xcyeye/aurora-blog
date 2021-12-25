@@ -1,4 +1,27 @@
-# [1.0.0](https://github.com/vuepress-aurora/vuepress-theme-aurora/compare/v1.12.2...v1.0.0) (2021-12-22)
+# [1.0.0](https://github.com/vuepress-aurora/vuepress-theme-aurora/compare/v1.12.4...v1.0.0) (2021-12-25)
+
+
+
+## [1.12.4](https://github.com/vuepress-aurora/vuepress-theme-aurora/compare/v1.12.3...v1.12.4) (2021-12-25)
+
+
+### Bug Fixes
+
+* fix about title not animate ([94f5fcd](https://github.com/vuepress-aurora/vuepress-theme-aurora/commit/94f5fcd6ff5854ddb7f0bfa397d2773324750a72))
+
+
+
+## [1.12.3](https://github.com/vuepress-aurora/vuepress-theme-aurora/compare/v1.12.2...v1.12.3) (2021-12-25)
+
+
+### Bug Fixes
+
+* **coze-plugin:** fix can't use require for leancloud ([76cfaaa](https://github.com/vuepress-aurora/vuepress-theme-aurora/commit/76cfaaa3845be9c3f2ece19b283b5f72e197f2a4))
+* **coze-plugin:** fix use vite as the build tool,coze-plugin warning ([ca03d8a](https://github.com/vuepress-aurora/vuepress-theme-aurora/commit/ca03d8aa77e769777c69bccc6c245fbc406e9054))
+* fix can't show the md file title for navbarLink ([32dadf8](https://github.com/vuepress-aurora/vuepress-theme-aurora/commit/32dadf8e69997297796b58a2ff33f5d8f00a22e6))
+* fix navbar ([1a1c02a](https://github.com/vuepress-aurora/vuepress-theme-aurora/commit/1a1c02aaf13dcfcd41776088e410db0a75a8d694))
+* fix theme-style ([3cf36b0](https://github.com/vuepress-aurora/vuepress-theme-aurora/commit/3cf36b070d8921ec9b955a5b420d9c919ecfef40))
+* **theme:** fix the wrong of li style can't show dot ([d815e44](https://github.com/vuepress-aurora/vuepress-theme-aurora/commit/d815e44eff3f4192dd546bc95d73b3be4806d9e8))
 
 
 ### Features
