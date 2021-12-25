@@ -568,73 +568,18 @@ li {
     bottom: -30%;
     content: "";
     border-radius: 10px;
-    -webkit-animation: aboutTitleLevel .9s;
-    animation: aboutTitleLevel .9s;
-    -webkit-animation-iteration-count: 1;
-    animation-iteration-count: 1;
-    -webkit-animation-fill-mode: forwards;
-    animation-fill-mode: forwards
+    transition: all 900ms;
+    width: 40%;
+    background: rgba(0, 207, 200, .4);
 }
 
 .about-title-single:hover .about-title-single-value:before {
-    -webkit-animation: aboutTitleChange .9s;
-    animation: aboutTitleChange .9s;
-    -webkit-animation-iteration-count: 1;
-    animation-iteration-count: 1;
-    -webkit-animation-fill-mode: forwards;
-    animation-fill-mode: forwards
+    width: 90%;
+    background: rgba(0, 207, 200, .9);
 }
 
 .link-title {
     margin-bottom: 1.5rem
-}
-
-@-webkit-keyframes aboutTitleLevel {
-    0% {
-        background: rgba(0, 207, 200, .9);
-        width: 100%
-    }
-
-    to {
-        background: rgba(0, 207, 200, .4);
-        width: 40%
-    }
-}
-
-@keyframes aboutTitleLevel {
-    0% {
-        background: rgba(0, 207, 200, .9);
-        width: 100%
-    }
-
-    to {
-        background: rgba(0, 207, 200, .4);
-        width: 40%
-    }
-}
-
-@-webkit-keyframes aboutTitleChange {
-    0% {
-        background: rgba(0, 207, 200, .4);
-        width: 40%
-    }
-
-    to {
-        width: 100%;
-        background: rgba(0, 207, 200, .9)
-    }
-}
-
-@keyframes aboutTitleChange {
-    0% {
-        background: rgba(0, 207, 200, .4);
-        width: 40%
-    }
-
-    to {
-        width: 100%;
-        background: rgba(0, 207, 200, .9)
-    }
 }
 
 #page-top {
