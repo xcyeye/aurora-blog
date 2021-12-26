@@ -717,8 +717,6 @@ li {
     display: block;
     z-index: 2;
     margin: 0 auto;
-    margin-top: 3rem;
-    margin-bottom: 3rem;
     border-radius: var(--borderRadius);
     overflow: hidden
 }
@@ -5502,5 +5500,10 @@ body::-webkit-scrollbar-thumb {
 }
 
 .box {
+    margin-bottom: 3rem;
+}
+
+#article-page {
+    margin-top: 3rem;
     margin-bottom: 3rem;
 }

@@ -2,6 +2,10 @@
 
 
 
+![image-20211225213222310]()
+
+
+
 ## [1.12.4](https://github.com/vuepress-aurora/vuepress-theme-aurora/compare/v1.12.3...v1.12.4) (2021-12-25)
 
 
