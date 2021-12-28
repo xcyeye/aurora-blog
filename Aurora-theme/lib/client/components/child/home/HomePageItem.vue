@@ -138,7 +138,7 @@ export default {
 
       if (time === 0) {
         //没有时间戳
-        return ''
+        return '1970-1-1 08:00'
       }
 
       let date = new Date(time);
@@ -148,7 +148,13 @@ export default {
       let hours = date.getHours()
       let min = date.getMinutes()
       let sec = date.getSeconds()
-      return year + "-" + month + "-" + day + " "
+      if (hours < 10) {
+        hours = "0" + hours
+      }
+      if (min < 10) {
+        min = "0" + min
+      }
+      return year + "-" + month + "-" + day + " " + hours + ":" + min
     },
     handleScroll() {
       let clientHeight = document.documentElement.clientHeight

@@ -154,8 +154,8 @@ export default {
         }).then((tempPageArr) => {
 
           new Promise((resolve,reject) => {
-            for (let i = tempPageArr.length; i >0; i--) {
-              this.allPageArr.push(tempPageArr[i -1])
+            for (let i = 0; i < tempPageArr.length; i++) {
+              this.allPageArr.push(tempPageArr[i])
             }
             resolve()
           }).then(() => {
