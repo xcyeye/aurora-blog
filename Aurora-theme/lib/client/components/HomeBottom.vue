@@ -94,16 +94,16 @@ export default {
     cutPageActive(e,index) {
       this.cutPageIndex = index
     },
-    compare(updatedTime) {
+    compare() {
       return  function( object1, object2) {
         let value1  = object1.pageCreateTime;
         let value2  = object2.pageCreateTime;
         if (value2  < value1) {
+          return  -1;
+        } else if (value2  > value1) {
           return  1;
-        }  else  if (value2  > value1) {
-          return  - 1;
-        }  else {
-          return  0;
+        } else {
+          return 0;
         }
       }
     },
@@ -133,6 +133,7 @@ export default {
           let isStick = allPageMaps[i].frontmatter.stick
           if (isStick) {
             this.allPageArr.push(allPageMaps[i])
+            this.allPageArr.sort(this.compare())
           }
         }
         resolve()
@@ -142,16 +143,16 @@ export default {
           for (let i = 0; i < allPageMaps.length; i++) {
             let isStick = allPageMaps[i].frontmatter.stick
             if (!isStick) {
-              // this.allPageArr.push(allPageMaps[i])
               tempPageArr.push(allPageMaps[i])
             }
             if (i === allPageMaps.length -1) {
               //全部完成
-              tempPageArr.sort(this.compare("updatedTime"))
+              tempPageArr.sort(this.compare())
             }
           }
           resolve(tempPageArr)
         }).then((tempPageArr) => {
+
           new Promise((resolve,reject) => {
             for (let i = tempPageArr.length; i >0; i--) {
               this.allPageArr.push(tempPageArr[i -1])
