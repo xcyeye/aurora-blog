@@ -79,7 +79,11 @@ export function setTag(app,themeProperty) {
 
                     articleMap.data = excludeMapArr[i].data
                     let createPageDate = excludeMapArr[i].data.frontmatter.date
-                    let commitPageDate = excludeMapArr[i].data.git.updatedTime
+                    let commitPageDate = undefined
+                    try {
+                        commitPageDate = excludeMapArr[i].data.git.updatedTime
+                    } catch (e) {
+                    }
 
                     if (createPageDate !== undefined) {
                         articleMap.pageCreateTime = new Date(createPageDate).getTime();

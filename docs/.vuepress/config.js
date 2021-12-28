@@ -30,7 +30,7 @@ module.exports = {
                 masterKey: 'eUwfvS3luIPnPiHS5SpEhDYr',
                 //下面这些是可选的
                 avatarPath: '/avatar.jpg',//说说头像url
-                registerPath: '/aurora-register', //自定义插件默认提供的注册页面路由，请在前面加上/
+                registerPath: '/register', //自定义插件默认提供的注册页面路由，请在前面加上/
                 onlyAdministrator: false //是否运行其他注册的用户发布说说，true表示只有管理员可以发布
             }
         ],
