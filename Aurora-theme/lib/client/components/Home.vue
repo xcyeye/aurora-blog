@@ -41,7 +41,7 @@ import { computed, defineComponent } from 'vue'
 import { usePageFrontmatter, useSiteLocaleData, withBase} from '@vuepress/client'
 import { isArray } from '@vuepress/shared'
 import type { DefaultThemeHomePageFrontmatter } from '../../shared'
-import EasyTyper from "easy-typer-js";
+import EasyTyper from 'easy-typer-js'
 import {useThemeLocaleData} from "../composables";
 
 import { req,cors } from "../public/js/network.js";

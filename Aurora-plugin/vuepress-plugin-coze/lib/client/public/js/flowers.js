@@ -65,7 +65,7 @@ export function flowers(flowersNum) {
             },
         });
     }
-    r1 = {
+    let r1 = {
         // x: width / 2 - 150,
         // y: height / 2 - 150,
         // width: 300,

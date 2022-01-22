@@ -7,7 +7,10 @@ module.exports = {
     },
 
     // 打开下面注释，使用webpack作为打包工具，注释将使用vite作为打包工具
-    bundler: '@vuepress/bundler-webpack',
+    //bundler: '@vuepress/bundler-webpack',
+    bundlerConfig: {
+
+    },
 
     //在这里配置插件
     plugins: [
@@ -414,7 +417,7 @@ module.exports = {
         * 到https://github.com/qsyyke/aurora-docs这个仓库中，那么你需要将docsRepo设置为https://github.com/qsyyke/aurora-docs，
         * 那么在文章页面，会根据根据你docsRepo和docsBranch设置正确的edit链接，也就是可以一键打开GitHub仓库中，此篇md文件的编辑
         * */
-        githubActions: true,
+        githubActions: false,
 
         //md文件存放的仓库分支
         docsBranch: 'main',

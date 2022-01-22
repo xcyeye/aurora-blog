@@ -1,8 +1,16 @@
-# [1.0.0](https://github.com/vuepress-aurora/vuepress-theme-aurora/compare/v1.12.4...v1.0.0) (2021-12-25)
+# [1.0.0](https://github.com/vuepress-aurora/vuepress-theme-aurora/compare/v1.12.7...v1.0.0) (2021-12-28)
 
 
 
-![image-20211225213222310]()
+## [1.12.7](https://github.com/vuepress-aurora/vuepress-theme-aurora/compare/v1.12.4...v1.12.7) (2021-12-28)
+
+
+### Bug Fixes
+
+* fix article sorting problem ([6011481](https://github.com/vuepress-aurora/vuepress-theme-aurora/commit/60114817a9016836c04f8c265be70523eef175d1))
+* fix page createTime ([ce245df](https://github.com/vuepress-aurora/vuepress-theme-aurora/commit/ce245df9ca715f8377674083370b5672838bb6c7))
+* fix style ([476591f](https://github.com/vuepress-aurora/vuepress-theme-aurora/commit/476591f07f7474dedca9d798c291e5156bcd25d0))
+* **theme:** fix the bug of get all page data ([0ecaec2](https://github.com/vuepress-aurora/vuepress-theme-aurora/commit/0ecaec2ce0c330cf606000b4b169002e039ad25d))
 
 
 

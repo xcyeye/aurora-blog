@@ -44,6 +44,7 @@ import { resolveEditLink } from '../utils'
 
 import NavLink from './NavLink.vue'
 import Poster from "./global/Poster.vue";
+import myData from'@temp/my-data'
 
 const useEditNavLink = (): ComputedRef<null | NavLinkType> => {
   const themeLocale = useThemeLocaleData()
@@ -154,23 +155,32 @@ export default defineComponent({
   },
   computed: {
     getEditLink() {
+      const page1 = usePageData<DefaultThemePageData>()
       const page = usePageData()
       const themeLocale = useThemeLocaleData()
       let editNavLink = useEditNavLink()
       let githubActions = themeLocale.value.githubActions
       if (githubActions && themeLocale.value.docsRepo !== undefined) {
-        let filePathRelative = page.value.filePathRelative
-        let docsRepo = themeLocale.value.docsRepo
-        let docsBranch = ''
+        new Promise((resolve,reject) => {
+          let path = page.value.path
+          for (let i = 0; i < myData.length; i++) {
+            if (myData[i].path == path) {
+              resolve(myData[i].filePathRelative)
+            }
+          }
+        }).then((filePathRelative) => {
+          let docsRepo = themeLocale.value.docsRepo
+          let docsBranch = ''
 
-        if (themeLocale.value.docsBranch !== undefined) {
-          docsBranch = themeLocale.value.docsBranch
-        }else {
-          docsBranch = 'main'
-        }
+          if (themeLocale.value.docsBranch !== undefined) {
+            docsBranch = themeLocale.value.docsBranch
+          }else {
+            docsBranch = 'main'
+          }
 
-        this.editNavLink.link = docsRepo + "/edit/" + docsBranch + "/docs/" + filePathRelative
-        this.editNavLink.text = editNavLink.value.text
+          this.editNavLink.link = docsRepo + "/edit/" + docsBranch + "/docs/" + filePathRelative
+          this.editNavLink.text = editNavLink.value.text
+        })
       }
     }
   }
