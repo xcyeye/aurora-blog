@@ -1,18 +1,32 @@
 const { path } = require("@vuepress/utils");
+const {navbar} = require("./navbar.js")
+const {friendLinks} = require("./friendLinks")
+const {socials} = require("./socials");
+const {randomColor} = require("./randomColor");
+const {siteInformation} = require("./siteInformation");
+const {message} = require("./message");
+const {donate} = require("./donate");
 module.exports = {
     //base: '/REPO/',//如果你准备发布到 https://<USERNAME>.github.io/<REPO>/ ，也就是说你的仓库地址是 https://github.com/<USERNAME>/<REPO> ，则将 base 设置为 "/<REPO>/"。
-    //https://ooszy.cco.vin/img/blog-note/aurora-loading.gif
+
+    /*
+    * 这里是配置Markdown语法增强的配置，如需配置，请查看官方介绍https://v2.vuepress.vuejs.org/zh/guide/markdown.html
+    * 或者你也可以看过我的配置，使用该配置的文件路径Aurora-theme/lib/node/auroraTheme.js
+    * */
     extendsMarkdown: (md) => {
 
     },
 
-    // 打开下面注释，使用webpack作为打包工具，注释将使用vite作为打包工具
-    //bundler: '@vuepress/bundler-webpack',
+    // 打开下面注释，将使用webpack作为打包工具，如果注释将使用vite作为打包工具[目前主题不能使用vite打包，会报错]
+    bundler: '@vuepress/bundler-webpack',
     bundlerConfig: {
 
     },
 
-    //在这里配置插件
+    /*
+    * 在这里配置插件
+    * 插件plugins是一个数组，官方介绍: https://v2.vuepress.vuejs.org/zh/guide/plugin.html
+    * */
     plugins: [
         "@vuepress/plugin-search",
         {
@@ -25,8 +39,13 @@ module.exports = {
                 },
             },
         },
+        /*
+        * 在主题中，使用path.resolve(__dirname,的地方，都是使用本地的插件或者主题，看位置
+        * 这里是配置说说插件，使用https://aurora.xcye.xyz/plugin/coze/
+        * */
         [
             path.resolve(__dirname, "../../Aurora-plugin/vuepress-plugin-coze/lib/node/index.js"),
+            //"coze",
             {
                 appId: '2A2Dyd2AffrnldhwftlEddVn-MdYXbMMI',
                 appKey: 'qHYTbb91iOPLelyC9lpbXxLH',
@@ -37,15 +56,24 @@ module.exports = {
                 onlyAdministrator: false //是否运行其他注册的用户发布说说，true表示只有管理员可以发布
             }
         ],
+        /*
+        * 该插件是配置时间轴，使用https://aurora.xcye.xyz/plugin/archive/
+        * 请配置一下excludes，否则在时间轴那里，会出现非文件页面链接
+        * */
         [
+            //"archive",
             path.resolve(__dirname, "../../Aurora-plugin/vuepress-plugin-archive/lib/node/index.js"),
             {
                 excludes: ['/footer.html','/404.html','/about/','/mood/','/link/','/tag/','/photo/'],
                 noTitle: '暂时没有标题配置'
             }
         ],
+        /*
+        * 音乐插件，使用：https://aurora.xcye.xyz/plugin/player/
+        * */
         [
             path.resolve(__dirname, "../../Aurora-plugin/vuepress-plugin-player/lib/node/index.js"),
+            //"player",
             {
                 disableSpace: false,
                 //网易云单个歌单id
@@ -61,7 +89,7 @@ module.exports = {
 
                 //本地歌曲
                 localSongs: {
-                    coverUrl: 'https://ooszy.cco.vin/img/blog-public/avatar.jpg',
+                    coverUrl: '/avatar.jpg',
                     songs: [
                         {
                             path: '/song/1.mp3',
@@ -81,12 +109,12 @@ module.exports = {
                 }
             }
         ],
-        /*"vuepress-plugin-archive",{
-            excludes: ['/footer.html','/404.html','/about/','/mood/','/link/','/tag/','/photo/'],
-            noTitle: '暂时没有标题配置'
-        }*/
 
+        /*
+        * 气泡插件，使用：https://aurora.xcye.xyz/plugin/bubble/
+        * */
         [
+            //"bubble",
             path.resolve(__dirname, "../../Aurora-plugin/vuepress-plugin-bubble/lib/node/index.js"),
             {
                 //气泡数量 推荐0(不包括)到1之前的小数，
@@ -114,7 +142,10 @@ module.exports = {
             }
         ],
     ],
-    //设置head 一定要加入<script src="https://at.alicdn.com/t/font_2849934_v6y652peian.js"></script>项配置，否则一些图标不能正常显示
+    /*
+    * 设置head 一定要加入<script src="https://at.alicdn.com/t/font_2849934_v6y652peian.js"></script>项配置，否则一些图标不能正常显示
+    * 如果你需要额外引入css样式或者是js文件，请在head中引入，如何引入，可以参照下面的引入方式
+    * */
     head: [
         [
             "script",
@@ -126,7 +157,7 @@ module.exports = {
         [
             "link",
             {
-                href: "https://ooszy.cco.vin/img/ico/yuan.png",
+                href: "/avatar.png",
                 rel: "icon",
             },
         ],
@@ -154,259 +185,31 @@ module.exports = {
     //站点title
     title: "I do not follow,i lives is always all you want",
 
+    //设置站点语言
     lang: 'zh-CN',
 
     //设置运行npm run dev的端口
     port: 8080,
 
-    //themeConfig的所有配置，都是主题配置，包含默认主题配置项
+    /*
+    * themeConfig是和主题相关的配置项，主题的所有配置，都是在此处进行配置的
+    * */
     themeConfig: {
-        //这里配置导航栏项，建议将navbar提取出，比如navbar.js
-        navbar: [
-
-            {
-                text: '快速开始',
-                link: '/readme/',
-                iconClass: 'aurora-navbar-si-glyph-dial-number-1'
-            },
-            {
-                text: '所有配置及必读',
-                iconClass: 'aurora-navbar-blaze-line',
-                children: [
-                    {
-                        text: '问题及必读',
-                        children: [
-                            '/issue/',
-                        ]
-                    },
-                    {
-                        text: "所有配置",
-                        children: [
-                            '/home/config.md'
-                        ]
-                    },
-                    {
-                        text: "主题样式配置",
-                        children: [
-                            '/style/code-style.md',
-                            '/style/icon.md',
-                            '/style/live2d.md',
-                            '/style/style.md',
-                            '/feature/registercom.md'
-                        ]
-                    }
-                ]
-            },
-            {
-                text: '基本知识',
-                iconClass: 'aurora-navbar-si-glyph-billiard-ball',
-                children: [
-                    {
-                        text: '静态文件',
-                        children: [
-                            '/base/public.md',
-                        ]
-                    },
-                    {
-                        text: "插件使用",
-                        children: [
-                            '/base/plugin.md'
-                        ]
-                    },
-                    {
-                        text: "docs目录结构",
-                        children: [
-                            '/base/docs.md'
-                        ]
-                    },
-                    {
-                        text: 'cmd管理员权限',
-                        children: [
-                            '/base/admin.md'
-                        ]
-                    },
-                    {
-                        text: 'npm常见命令',
-                        children: [
-                            '/base/command.md'
-                        ]
-                    }
-                ]
-            },
-            {
-                text: '问题和bug',
-                iconClass: 'aurora-navbar-shoulijindu-xuanzhong',
-                children: [
-                    {
-                        text: 'node安装教程',
-                        children: [
-                            //'/readme/introduce.md',
-                            '/node.md'
-                        ]
-                    },
-                    {
-                        text: 'bug',
-                        children: [
-                            '/issue/bug.md',
-                        ]
-                    },
-                    {
-                        text: '更新日志',
-                        children: [
-                            '/issue/CHANGELOG.md'
-                        ]
-                    },
-                    {
-                        text: '运行常见错误',
-                        children: [
-                            '/issue/common.md'
-                        ]
-                    }
-
-                ]
-            },
-            {
-                text: '其他配置',
-                iconClass: 'aurora-navbar-weather',
-                children: [
-                    {
-                        children: [
-                            "/home/deploy.md",
-                        ],
-                        text: "home",
-                    },
-                    {
-                        children: [
-                            "/comment/README.md",
-
-                            "/page/README.md",
-                        ],
-                        text: "其他配置",
-                    },
-                    {
-                        text: 'webpack和vite切换',
-                        children: [
-                            '/base/vite-webpack.md'
-                        ]
-                    }
-                ],
-            },
-            {
-                text: '插件',
-                iconClass: 'aurora-navbar-si-glyph-egg',
-                children: [
-                    {
-                        children: [
-                            "/plugin/archive/readme.md",
-                        ],
-                        text: "时间轴",
-                    },
-                    {
-                        children: [
-                            "/plugin/bubble/readme.md",
-                        ],
-                        text: "浪漫气泡",
-                    },
-                    {
-                        children: [
-                            "/plugin/coze/readme.md",
-                        ],
-                        text: "说说",
-                    },
-                    {
-                        children: [
-                            "/plugin/player/readme.md",
-                        ],
-                        text: "音乐播放器",
-                    },
-                    {
-                        text: '看板娘',
-                        children: [
-                            '/style/live2d.md'
-                        ]
-                    }
-                ],
-            },
-            {
-                text: 'life',
-                iconClass: 'aurora-navbar-hua2',
-                children: [
-                    {
-                        children: [
-                            {
-                                text: 'Me',
-                                link: "/about",
-                            }
-
-                        ],
-                        text: "我?",
-                    },
-                    {
-                        text: '说说',
-                        children:[
-                            {
-                                text: 'chat',
-                                link: '/mood'
-                            }
-                        ],
-                    },
-                    {
-                        text: "相册",
-                        children: [
-                            {
-                                text: 'photo',
-                                link: '/photo'
-                            }
-                        ],
-                    },
-                ],
-            },
-            {
-                text: 'page',
-                iconClass: 'aurora-navbar-a-ziyuan107',
-                children: [
-                    {
-                        text: '标签',
-                        children: [{
-                            text: 'tag',
-                            link: '/tag'
-                        }],
-                    },
-                    {
-                        text: "时间轴",
-                        children: [
-                            {
-                                text: 'archive',
-                                link: '/archive'
-                            }
-                        ],
-                    },
-                ],
-            },
-
-            {
-                text: '友情链接',
-                link: '/link',
-                iconClass: 'aurora-navbar-guide'
-            },
-            {
-                text: '案例',
-                link: '/use.html',
-                iconClass: 'aurora-navbar-si-glyph-load'
-            },
-            {
-                text: 'Aurora',
-                link: 'https://github.com/vuepress-aurora/vuepress-theme-aurora',
-                iconClass: 'aurora-navbar-github1'
-            }
-        ],
+        /*
+        * 这里配置导航栏项，建议将navbar提取出，比如navbar.js
+        * 使用：https://aurora.xcye.xyz/homeconfig.html#%E5%AF%BC%E8%88%AA%E6%A0%8F
+        * 因为navbar会存在很多的配置，所以推荐在该目录下，创建一个navbar.js文件，此文件中，使用module.exports = {navbar: XXX}
+        * 可以参照docs/.vuepress/navbar.js使用，然后在config.js的themeConfig处引入该文件
+        * */
+        navbar: navbar,
 
         //禁用黑夜模式，当前版本未提供
         darkMode: false,
 
-        //项目地址
+        //项目地址，会在顶部导航栏和侧边栏显示GitHub的地址
         repo: "https://github.com/qsyyke/vuepress-theme-aurora",
 
+        //自定义GitHub的图标
         repoIconClass: 'aurora-navbar-github',
 
         //md文件的仓库地址
@@ -425,11 +228,13 @@ module.exports = {
         //顶部导航栏，你repo地址的超链接文本
         repoLabel: "Aurora-theme",
 
-        //是否启用文章在线编辑
+        //是否启用文章在线编辑，默认开启，会在每篇文章的底部，创建一个链接，指向该md在GitHub中的edit地址
         editLink: true,
 
-        //在线编辑文字
+        //在线编辑文字，点击编辑该文章的label
         editLinkText: "edit",
+
+        //该md最后更新时间，使用github commit的提交时间
         lastUpdated: true,
         lastUpdatedText: "lastTime",
 
@@ -440,18 +245,17 @@ module.exports = {
         //样式控制面板字体占位符，如果是国内用户，请使用中文
         showFont: "程",
 
-        //首页中间hero图片地址，默认为https://ooszy.cco.vin/img/blog-public/avatar.jpg
-        //heroImg: '/avatar.jpg',
-        heroImg: 'https://ooszy.cco.vin/img/blog-public/avatar.jpg',
+        //首页中间hero图片地址
+        heroImg: '/avatar.jpg',
 
-        //logo图片地址，默认为https://ooszy.cco.vin/img/ico/yuan.png
-        logo: "https://ooszy.cco.vin/img/ico/yuan.png",
+        //logo图片地址
+        logo: "/avatar.png",
 
         //文章懒加载图片 仅限文章，首页文章占位图片并不是这个
-        lazyLoadingImg: "https://ooszy.cco.vin/img/blog-public/ljz.gif",
+        lazyLoadingImg: "/ljz.gif",
 
         //这是首页文章列表懒加载图片
-        homePageLazyLoadingImg: 'https://ooszy.cco.vin/img/blog-note/aurora-loading.gif?name=chuchen',
+        homePageLazyLoadingImg: '/aurora-loading.gif',
 
         //是否启用定制首页随机一言，默认未开启，使用随机一言 接口为https://international.v1.hitokoto.cn/?c=b&max_length=45
         customRandomSay: false,
@@ -459,79 +263,13 @@ module.exports = {
         //定制首页随机一言文字
         customRandomValue: 'Vuepress-theme-Aurora',
 
-        //社交信息，首页PC端至多显示19个，手机端至多显示7个，侧边栏不影响
-        socials: [
-            {
-                //社交链接
-                aHref: "tencent://message/?uin=2291308094",
-                // imgSrc: "https://ooszy.cco.vin/img/ico/qq.svg", 从v1.3.2开始久移除次配置，以前版本用于社交ico图标配置
-
-                //true为在首页显示，反之
-                isHome: true,
-
-                //是否显示此社交信息,如果为false，尽管isHome=true，sidebar=true，也不会显示
-                show: true,
-
-                //是否在侧边栏显示
-                sidebar: true,
-
-                //使用阿里图标 使用的是阿里图标库，我也挑选部分图标，请进入http://ico.cco.vin/theme查看
-                symbol: '#icon-qq',
-
-                //鼠标移入此图标时，显示的图片，适用于微信等通过二维码添加好友
-                // showImgSrc: "https://ooszy.cco.vin/img/blog-public/wechat.jpg",
-            },
-            {
-                aHref: "javascript:;",
-                //imgSrc: /assets/img/ico/wechat.svg,
-                showImgSrc: "https://ooszy.cco.vin/img/blog-public/wechat.jpg",
-                isHome: true,
-                show: true,
-                symbol: '#icon-weixin',
-                sidebar: true
-            },
-            {
-                aHref: "https://github.com/qsyyke/",
-                isHome: true,
-                show: true,
-                sidebar: true,
-                symbol: '#icon-github-fill'
-            },
-            {
-                aHref: "https://stackoverflow.com/",
-                isHome: true,
-                show: true,
-                symbol: '#icon-stackoverflow',
-                sidebar: true
-            },
-            {
-                aHref: "https://space.bilibili.com/483962286",
-                isHome: true,
-                show: true,
-                sidebar: true,
-                symbol: '#icon-bilibili-1'
-            },
-            {
-                aHref: "https://music.163.com/#/user/home?id=1411050784",
-                isHome: true,
-                show: true,
-                symbol: '#icon-wangyiyunyinle',
-                sidebar: true
-            },
-            {
-                aHref: "mailto:2291308094@qq.com",
-                isHome: true,
-                show: true,
-                sidebar: true,
-                symbol: '#icon-email'
-            },
-        ],
-
-        // cancelIcoHref: "https://ooszy.cco.vin/img/ico/quxiao.svg", 在v1.3.2中移除
+        //社交信息，首页PC端至多显示19个，手机端至多显示7个，侧边栏不影响，推荐自己创建一个socials.js
+        socials: socials,
 
         //logo旁文字 默认值为Aurora
         logoTitle: "Aurora",
 
+        //貌似没用的配置项┭┮﹏┭┮
         headTitle: "this is headTitle",
 
         //站点描述
@@ -543,9 +281,12 @@ module.exports = {
         //样式控制面板打开之后，休眠多长时间自动关闭面板，单位毫秒
         slideTime: 300000,
 
-        //随机一言接口
+        //随机一言接口 没用配置
         randomSaw: "https://international.v1.hitokoto.cn/?c=b&max_length=45",
-        //关于页面
+        /*
+        * 关于页面 推荐单独创建一个about.js文件存放关于页面信息
+        * 使用：https://aurora.xcye.xyz/homeconfig.html
+        * */
         about: [
             {
                 bar: false,
@@ -708,7 +449,7 @@ module.exports = {
             {
                 title: "关于主题",
                 describe: [
-                    "theme-ccds主题是我自己独立开发，是一款基于vuepress，对默认主题进行了大量修改，我以前使用的是wordpress的博客主题，但是我对PHP不了解，想改成自己想要的主题，太难了，最近在学vue，正好看到可以使用vuepress来搭建 博客，就将默认主题改成现在这个样，并且喜欢vuepress的最主要原因是，它可以 直接将本地的markdown文档进行编译部署，我原来博客，我记了几个月的笔记，不太想再慢慢从本地复制到WordPress进行发布，以至于博客几个月没有发布文章了，虽然有技术可以解决，但还是喜欢vuepress，简直是懒癌福音，如果你喜欢的话，可以在我的GitHub进行下载，使用文档可以查看https://theme-ccds.cco.vin，该主题已将所有的配置进行抽离，你现在看到的所有信息，都抽离在了一个配置文件中，但是目前还并不能做到开箱即用，如果使用的人多了，我可以进行修改，并且我自己也写了几个组件，包括文章页面看到的顶部图片，友情链接，海报分享功能等等 ，可以在你想使用的地方，直接使用这些组件就可以，该主题我加入了vuex，对前端不太了解，有很多css不对的地方，请大家多多包涵，Thanks♪(･ω･)ﾉ",
+                    "theme-ccds主题是我自己独立开发，是一款基于vuepress，对默认主题进行了大量修改，我以前使用的是wordpress的博客主题，但是我对PHP不了解，想改成自己想要的主题，太难了，最近在学vue，正好看到可以使用vuepress来搭建 博客，就将默认主题改成现在这个样，并且喜欢vuepress的最主要原因是，它可以 直接将本地的markdown文档进行编译部署，我原来博客，我记了几个月的笔记，不太想再慢慢从本地复制到WordPress进行发布，以至于博客几个月没有发布文章了，虽然有技术可以解决，但还是喜欢vuepress，简直是懒癌福音，如果你喜欢的话，可以在我的GitHub进行下载，使用文档可以查看https://aurora.xcye.xyz，该主题已将所有的配置进行抽离，你现在看到的所有信息，都抽离在了一个配置文件中，但是目前还并不能做到开箱即用，如果使用的人多了，我可以进行修改，并且我自己也写了几个组件，包括文章页面看到的顶部图片，友情链接，海报分享功能等等 ，可以在你想使用的地方，直接使用这些组件就可以，该主题我加入了vuex，对前端不太了解，有很多css不对的地方，请大家多多包涵，Thanks♪(･ω･)ﾉ",
                 ],
             },
             {
@@ -737,20 +478,8 @@ module.exports = {
             },
         ],
 
-        //拿取对象 在后续版本中，会对此项进行优化
-        randomSawQuery: "hitokoto",
-        method: "get",
-
-        //这是配置随机背景；颜色 可以不设置，有默认值
-        randomColor: [
-            "#ffcad4", "#d8e2dc", "#8d99ae", "#b8f2e6", "#84c7d0", "#aed9e0", "#00b4d8",
-            "#caf0f8", "#fbc4ab", "#fdc5f5", "#84dcc6", "#a9def9", "#fcf6bd", "#f0a6ca",
-            "#b9faf8", "#42a5f5", "#ff9800", "#b39ddb", "#6d45bb", "#b388ff", "#1565c0",
-            "#26c6da", "#5e548e", "#90f1ef", "#5b5f97", "#bbe6e4", "#42bfdd", "#72ddf7",
-            "#8093f1", "#9ed8d8", "#7ea8be", "#ef90b3", "#b892ef", "#c0b9dd", "#c0d9dd",
-            "#75c9c8", "#ded9e2", "#b5e2fa", "#62b6cb", "#5fa8d3", "#0fa3b1", "#b5e2fa",
-            "#5fa8d3", "#62b6cb", "#b892ff",
-        ],
+        //这是配置随机背景；颜色 可以不设置，有默认值 推荐单独创建一个random.js文件
+        randomColor: randomColor,
 
         //样式控制面板至多显示多少个字体和字体颜色，推荐不超过8个
         maxFontColorArr: 8,
@@ -761,198 +490,14 @@ module.exports = {
             "#3299CC", "#CDCDCD", "#CC3299", "#FF7F00", "#2F4F4F",
         ],
 
-        //友情链接数组
-        friendLinks: [
-            {
-                title: '我的朋友',
-                links: [
-                    {
-                        //网站标题
-                        title: "XI溪",
+        /*
+        * 友情链接数组 推荐单独创建一个friendLinks.js存放友情链接的配置，可以参照navbar项的配置
+        * 使用：https://aurora.xcye.xyz/page/friendlink.html
+        * */
+        friendLinks: friendLinks,
 
-                        //站点链接
-                        url: "http://www.xiaoxuya.top",
-
-                        //站点logo
-                        logo: "https://www.xiaoxuya.top/img/logo.png",
-
-                        //站点描述
-                        describe: "人生若只是初见,何事秋风悲画扇",
-                        cover: 'https://ooszy.cco.vin/img/blog-note/image-20211106100103898.png?x-oss-process=style/pictureProcess1'
-                    },
-                    {
-                        title: "左眼会陪右眼哭の博客",
-                        url: "http://qkongtao.cn/",
-                        logo: "http://qiniu.qkongtao.cn/2020/12/d11-e1628358435552.png",
-                        describe: "干嘛这么想不开，要在脸上贴个输字！",
-                        cover: 'https://ooszy.cco.vin/img/blog-note/image-20211106101057042.png?x-oss-process=style/pictureProcess1'
-                    },
-                    {
-                        title: "[ Blog We]",
-                        url: "https://blogwe.com/",
-                        logo: "https://blogwe.com/favicon.ico",
-                        describe: "博客大全-做最好的博客导航！",
-                        cover: "https://ooszy.cco.vin/img/blog-note/image-20211106100344348.png?x-oss-process=style/pictureProcess1"
-                    },
-                    {
-                        title: "I Am I",
-                        url: "https://5ime.cn",
-                        logo: "https://cdn.jsdelivr.net/gh/5ime/img/avatar.jpg",
-                        describe: "永远相信美好的事情即将发生",
-                        cover: 'https://ooszy.cco.vin/img/blog-note/image-20211106100424035.png?x-oss-process=style/pictureProcess1'
-                    },
-                    {
-                        title: "Davinci的红茶馆",
-                        url: "https://davincievans.top/",
-                        logo: "https://cdn.jsdelivr.net/gh/DavinciEvans/Imgs-bed@master/gallery/avatar.jpg",
-                        describe: "You are all stardust.",
-                        cover: 'https://ooszy.cco.vin/img/blog-note/image-20211106100502873.png?x-oss-process=style/pictureProcess1'
-                    },
-                    {
-                        title: "皮皮凛の小窝",
-                        url: "https://owomoe.net/",
-                        logo: "https://cdn.jsdelivr.net/gh/AyagawaSeirin/Assets/img/logo.jpg",
-                        describe: "永远相信美好的事情即将发生~",
-                        cover: 'https://ooszy.cco.vin/img/blog-note/image-20211106100608395.png?x-oss-process=style/pictureProcess1'
-                    },
-                    {
-                        title: "月月月子喵",
-                        url: "https://haozi.moe",
-                        logo: "https://haozi.moe/css/images/logo_christmas.png",
-                        describe: "可爱的月子酱",
-                        cover: 'https://ooszy.cco.vin/img/blog-note/image-20211106100009647.png?x-oss-process=style/pictureProcess1'
-                    },
-                    {
-                        title: "疫情在线捐款系统",
-                        url: "http://yq.vipblogs.cn/",
-                        logo: "https://ooszy.cco.vin/img/blog-public/avatar.jpg",
-                        describe: "基于echarts的疫情捐款系统",
-                        cover: ''
-                    },
-                    {
-                        title: "疫情在线捐款系统后台登录",
-                        url: "http://admin.vipblogs.cn/",
-                        logo: "https://ooszy.cco.vin/img/blog-public/avatar.jpg",
-                        describe: "该捐款系统后台登录",
-                        cover: ''
-                    },
-                ]
-            },
-            {
-                title: '大佬',
-                links: [
-                    {
-                        //网站标题
-                        title: "XI溪",
-
-                        //站点链接
-                        url: "http://www.xiaoxuya.top",
-
-                        //站点logo
-                        logo: "https://www.xiaoxuya.top/img/logo.png",
-
-                        //站点描述
-                        describe: "人生若只是初见,何事秋风悲画扇",
-                        cover: 'https://ooszy.cco.vin/img/blog-note/image-20211106100103898.png?x-oss-process=style/pictureProcess1'
-                    },
-                    {
-                        title: "左眼会陪右眼哭の博客",
-                        url: "http://qkongtao.cn/",
-                        logo: "http://qiniu.qkongtao.cn/2020/12/d11-e1628358435552.png",
-                        describe: "干嘛这么想不开，要在脸上贴个输字！",
-                        cover: 'https://ooszy.cco.vin/img/blog-note/image-20211106101057042.png?x-oss-process=style/pictureProcess1'
-                    },
-                    {
-                        title: "皮皮凛の小窝",
-                        url: "https://owomoe.net/",
-                        logo: "https://cdn.jsdelivr.net/gh/AyagawaSeirin/Assets/img/logo.jpg",
-                        describe: "永远相信美好的事情即将发生~",
-                        cover: 'https://ooszy.cco.vin/img/blog-note/image-20211106100608395.png?x-oss-process=style/pictureProcess1'
-                    },
-                    {
-                        title: "月月月子喵",
-                        url: "https://haozi.moe",
-                        logo: "https://haozi.moe/css/images/logo_christmas.png",
-                        describe: "可爱的月子酱",
-                        cover: 'https://ooszy.cco.vin/img/blog-note/image-20211106100009647.png?x-oss-process=style/pictureProcess1'
-                    },
-                ]
-            },
-            {
-                title: '小伙伴',
-                links: [
-                    {
-                        //网站标题
-                        title: "XI溪",
-
-                        //站点链接
-                        url: "http://www.xiaoxuya.top",
-
-                        //站点logo
-                        logo: "https://www.xiaoxuya.top/img/logo.png",
-
-                        //站点描述
-                        describe: "人生若只是初见,何事秋风悲画扇",
-                        cover: 'https://ooszy.cco.vin/img/blog-note/image-20211106100103898.png?x-oss-process=style/pictureProcess1'
-                    },
-                    {
-                        title: "[ Blog We]",
-                        url: "https://blogwe.com/",
-                        logo: "https://blogwe.com/favicon.ico",
-                        describe: "博客大全-做最好的博客导航！",
-                        cover: "https://ooszy.cco.vin/img/blog-note/image-20211106100344348.png?x-oss-process=style/pictureProcess1"
-                    },
-                    {
-                        title: "Davinci的红茶馆",
-                        url: "https://davincievans.top/",
-                        logo: "https://cdn.jsdelivr.net/gh/DavinciEvans/Imgs-bed@master/gallery/avatar.jpg",
-                        describe: "You are all stardust.",
-                        cover: 'https://ooszy.cco.vin/img/blog-note/image-20211106100502873.png?x-oss-process=style/pictureProcess1'
-                    },
-                    {
-                        title: "皮皮凛の小窝",
-                        url: "https://owomoe.net/",
-                        logo: "https://cdn.jsdelivr.net/gh/AyagawaSeirin/Assets/img/logo.jpg",
-                        describe: "永远相信美好的事情即将发生~",
-                        cover: 'https://ooszy.cco.vin/img/blog-note/image-20211106100608395.png?x-oss-process=style/pictureProcess1'
-                    },
-                    {
-                        title: "疫情在线捐款系统",
-                        url: "http://yq.vipblogs.cn/",
-                        logo: "https://ooszy.cco.vin/img/blog-public/avatar.jpg",
-                        describe: "基于echarts的疫情捐款系统",
-                        cover: ''
-                    },
-                ]
-            },
-        ],
-
-        //自己的站点信息 我自己的站点描述 会显示在友情链接的底部
-        siteInformation: {
-            //站点标题
-            title: "Aurora-theme",
-
-            //自己站点链接
-            url: "https://aurora.cco.vin",
-
-            //自己站点logo
-            logo: "https://ooszy.cco.vin/img/ico/yuan.png",
-
-            //自己站点描述
-            describe: "vuepress-theme-Aurora是一款简洁，美观，功能强大的静态主题",
-            cover: 'https://ooszy.cco.vin/img/blog-note/image-20211106100103898.png?x-oss-process=style/pictureProcess1',
-
-            //自己的头像
-            contact: "email: cqycco@gmail.com, qq:2291308094",
-            otherDescribe: [
-                '申请友链请按照下面格式，在此页面留言，我看到就会进行添加',
-                '博客名称    博客地址      博客描述      博客logo',
-                '友链申请要求',
-                '拒绝涉政/涉黄/太多广告/盈利性站点',
-                '站点能正常访问',
-                '这是一个html的测试<a href="https://aurora.xcye.xyz" target="_blank">这是一个a标签</a>'
-            ]
-        },
+        //自己的站点信息 我自己的站点描述 会显示在友情链接的底部，推荐单独创建一个文件存放
+        siteInformation: siteInformation,
 
         //需要排除的标签，自动生成的标签中，不会有这个标签，这是一个数组
         //excludeTag: ["note"],
@@ -984,10 +529,7 @@ module.exports = {
         prefixRuntime: "小破站已运行",
 
         //公告，是一个数组，支持图片，HTML
-        message: [
-            '该博客主题为Aurora,<a href="https://github.com/qsyyke/vuepress-theme-aurora">vuepress-theme-Aurora</a>',
-            "主题交流群: 681602026，欢迎各位大佬进群交流",
-        ],
+        message: message,
 
         //文章底部最大推荐文章数 默认值为30
         recommendPageLength: 30,
@@ -1023,59 +565,9 @@ module.exports = {
         split: "~",
 
         //赞赏信息
-        donate: {
+        donate: donate,
 
-            //赞赏页面，支付二维码，推荐放置两张图片链接
-            donateImg: [
-                "https://ooszy.cco.vin/img/blog-public/wxpay.png",
-                "https://ooszy.cco.vin/img/blog-public/zfbpay.jpg",
-            ],
-
-            //是否在文章页面显示赞赏 默认显示
-            articlePage: true,
-
-            //是否在关于页面显示 默认显示
-            aboutPage: true,
-
-            //显示在赞赏页面的信息
-            donateProduct: [
-                {
-                    //名字
-                    name: "奶茶",
-
-                    //图片地址
-                    img: "https://ooszy.cco.vin/img/blog-public/nc.jpeg",
-
-                    //价格
-                    price: 18,
-
-                    //前缀
-                    prefix: "$",
-                },
-                {
-                    name: "全味奶茶",
-                    img: "https://ooszy.cco.vin/img/blog-note/image-20210911233612031.png?",
-                    price: 11,
-                    prefix: "￥",
-                },
-            ],
-
-            //是否显示在线支付的订单信息，如果需要开启，请自己写支付接口，自己修改源码，默认关闭
-            //onlineList: true, v1.11.2已被移除
-
-            //用户赞赏列表数组
-            donateList: [
-                {
-                    name: "初尘",
-                    msg: "主题太棒了",
-                    img: "https://ooszy.cco.vin/img/blog-public/nc.jpeg",
-                    price: 7,
-                    prefix: "￥",
-                }
-            ],
-        },
-
-        //评论配置 请自己查看文档配置 https://aurora.cco.vin/config/comment/
+        //评论配置 请自己查看文档配置 https://aurora.xcye.xyz/comment/
         comment: {
             //是否显示评论
             showComment: true,
@@ -1127,32 +619,30 @@ module.exports = {
 
             //文章顶部图片，数组，每次从数组中随机选择一张
             page: [
-                "https://picoss.cco.vin/animate/wall/555260.png",
-                'https://picoss.cco.vin/animate/wall/404901.png',
-                'https://picoss.cco.vin/animate/wall/734386.png'
+                "/bg/555260.png",
+                '/bg/404901.png',
+                '/bg/734386.png'
             ],
             //友情链接页面
             friend: [
-                "https://picoss.cco.vin/animate/wall/669.png",
-                'https://picoss.cco.vin/animate/wall/5332.png'
+                "/bg/669.png",
+                '/bg/5332.png'
             ],
             //标签页面
             tag: [
-                "https://picoss.cco.vin/animate/wall/763311.png"
+                "/bg/763311.png"
             ],
             //心情页面
             mood: [
-                "https://picoss.cco.vin/animate/wall/5849.png"
+                "/bg/5849.png"
             ],
         },
 
         //首页背景图片数组，考虑到使用随机图片，打开网站速度变慢，所以移除随机图片，使用自己设置的图片链接
         homeWps: [
-            'https://ooszy.cco.vin/img/blog-note/illust_74502138_20211008_183343.png',
-            "https://picoss.cco.vin/animate/wall/404901.png",
-            "https://picoss.cco.vin/animate/wall/734386.png",
-            "https://picoss.cco.vin/animate/wall/5332.png",
-            "https://picoss.cco.vin/animate/wall/6202.png",
+            "/bg/404901.png",
+            "/bg/734386.png",
+            "/bg/5332.png",
             '/bg/2.jpg',
             '/bg/3.jpg',
             '/bg/4.jpg',
