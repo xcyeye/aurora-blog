@@ -17,15 +17,15 @@
   "license": "ISC",
   "devDependencies": {
     "@types/jquery": "^3.5.6",
+    "@vuepress/plugin-external-link-icon": "2.0.0-beta.33",
     "@vuepress/plugin-google-analytics": "2.0.0-beta.33",
     "@vuepress/plugin-register-components": "2.0.0-beta.33",
+    "@vuepress/plugin-search": "2.0.0-beta.33",
     "cz-conventional-changelog": "^3.3.0",
     "jquery": "^3.2.1",
-    "vuepress": "2.0.0-beta.33",
-    "vuepress-webpack": "2.0.0-beta.33",
     "stylus-loader": "^6.1.0",
-    "@vuepress/plugin-search": "2.0.0-beta.33",
-    "@vuepress/plugin-external-link-icon": "2.0.0-beta.33"
+    "vuepress": "2.0.0-beta.33",
+    "vuepress-webpack": "2.0.0-beta.33"
   },
   "dependencies": {
     "@waline/client": "^1.3.10",
@@ -46,6 +46,7 @@
     "qrcode": "^1.4.4",
     "reading-time-estimator": "^1.4.0",
     "smoothscroll-polyfill": "^0.4.4",
+    "swiper": "^8.0.6",
     "vuex": "^4.0.0-0"
   },
   "publishConfig": {

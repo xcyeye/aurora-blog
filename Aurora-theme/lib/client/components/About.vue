@@ -1,153 +1,150 @@
 <template>
-  <common
-      :show-sidebar="false"
-      :is-show-side-bar="false"
-      :is-show-top-img="false"
-      :is-show-head-line="false">
-    <template #center1>
-      <Home :home-height-var="'max-content'" :socials-arr="socialsArr"
-            :sidebar-width-pc-var="'65vw'"
-            :show-random-say="true"
-            :navbar-style="'margin-top: 0;'" :theme-property="themeProperty" />
-    </template>
-    <template #center2>
-      <div class="about">
-        <div :style="$store.state.borderRadiusStyle + $store.state.opacityStyle"
-             v-for="(item) in themeProperty.about" :data="item.title" :key="item.title" class="introduce box">
-          <div class="about-title">
-            <div class="about-title-single">
-              <span class="about-title-single-value">{{item.title}}</span>
-            </div>
-          </div>
-          <div v-if="item.showTag" id="about-tag" class="about-tag">
-            <div class="tag-div" id="tag-div" :key="tagIndex" v-for="(tag,tagIndex) in item.tag">
-              <TagItem
-                  :theme-property="themeProperty"
-                  :show-tag-length="false"
-                  :is-tag-item="false"
-                  :tag="tag"
-                  :padding="5"
-              />
-            </div>
-          </div>
-          <li v-if="!item.bar" :data="desc" :key="desc" v-for="(desc,index) in item.describe"
-              class="about-desc" v-html="desc"></li>
-          <li v-if="item.bar" v-for="desc in item.describe" class="about-desc">
-            <span class="about-bar-title">{{desc.name}}</span>
-            <span :style="setSpanStyle(desc.score)">{{desc.score}}%</span>
-          </li>
+  <div class="aurora-slide-body" :style="slideBodyBg">
+      <div class="aurora-slide-shade aurora-slide-radius">
+        <div class="aurora-slide-box-style-box">
+          <div class="aurora-slide-box-style"></div>
         </div>
+        <swiper
+            :grabCursor="true"
+            :effect="'creative'"
+            :creativeEffect="{
+      prev: {
+        shadow: false,
+        translate: ['-120%', 0, -500],
+      },
+      next: {
+        shadow: false,
+        translate: ['120%', 0, -500],
+      },
+    }"
+            :modules="modules"
+    class="aurora-slide-box aurora-slide-radius"
+  >
+          <AuroraBubble v-if="showAboutPageBubble"/>
+    <swiper-slide v-slot="{ isActive }" v-for="(item,index) in abouts" :key="index" :style="setSlideItemStyle(index)" class="aurora-slide-item aurora-slide-radius">
+      <div :data="updateBgStyle(isActive,item.bgImg,index)" class="aurora-slide-item-son">
+            <div class="aurora-slide-item-top aurora-slide-radius">
+              <div class="aurora-slide-item-top-left aurora-slide-item-top-avatar">
+                <img src="http://localhost:8080/avatar.jpg" alt="">
+              </div>
+              <div class="aurora-slide-item-top-right">
+                <div class="aurora-slide-item-top-title aurora-slide-item-top-common">
+                  <span>{{item.title}}</span>
+                </div>
+                <div v-if="item.tag" class="aurora-slide-item-top-tag aurora-slide-item-top-common">
+                  <span v-for="(tagItem,index) in item.tag" :key="index">{{tagItem}}</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="aurora-slide-item-bottom">
+<!--              <div class="aurora-slide-item-bottom-box">-->
+<!--                -->
+<!--              </div>-->
+              <div v-if="item.bar" class="aurora-slide-item-desc-common aurora-slide-item-desc-bar">
+                <li class="aurora-slide-item-font-common aurora-slide-item-bar-li" v-for="(descItem,index) in item.describe" :key="index">
+                  <span class="about-bar-title aurora-slide-item-bar-title">{{descItem.name}}</span>
+                  <span class="aurora-slide-item-bar-score" :style="setBarStyle(descItem.score)">{{descItem.score}}%</span>
+                </li>
+              </div>
+              <div v-else class="aurora-slide-item-desc-text aurora-slide-item-desc-common">
+                <li class="aurora-slide-item-font-common" v-for="(descItem,index) in item.describe" :key="index" v-html="descItem"></li>
+              </div>
+            </div>
+        </div>
+    </swiper-slide>
+  </swiper>
       </div>
-    </template>
-    <template #center4>
-      <Donate v-if="getDonateAbout"/>
-    </template>
-    <template #center5>
-      <comment :path-name="$route.path"/>
-    </template>
-  </common>
+  </div>
 </template>
-<script lang="ts">
-import {
-  defineComponent,
-  Transition,
-} from 'vue'
-import Home from './Home.vue'
-import TagItem from './child/tag/TagItem.vue'
+<script>
+// Import Swiper Vue.js components
+import { Swiper, SwiperSlide } from "swiper/vue";
+
+// Import Swiper styles
+import "swiper/css";
+
+import "swiper/css/effect-creative";
+
+// import required modules
+import { EffectCreative } from "swiper";
 
 import {useThemeData} from "../composables";
-
-export default defineComponent({
-  name: 'About',
-  components: {
-    Transition,
-    Home,
-    TagItem,
-  },
-  data() {
-    return {
-      windowHeight:0,
-      themeProperty: '',
-      socialsArr: []
-    }
-  },
-  computed: {
-    getDonateAbout() {
-
-      try {
-        return this.themeProperty.donate.aboutPage
-      }catch (e) {
-        return true
-      }
-    },
-    getIndex() {
-      return (index,length)=> {
-        if (index === 0 && length === 1) {
-          return ""
+export default {
+    name: "About",
+    data() {
+        return {
+            themeProperty: {},
+            abouts: [],
+            randomColors: [],
+            hexRgb: '',
+            slideBodyBg: '',
+          showAboutPageBubble: true
         }
-        return index+1 + ". "
-      }
     },
-    setSpanStyle() {
-
-      return (score) => {
-        let newScore = score * 0.8
-        let background_color = ''
-        if (this.themeProperty.randomColor !== undefined) {
-          background_color = this.themeProperty.randomColor[
-              this.getRandomInt(0,this.themeProperty.randomColor.length -1)]
-        }else {
-          background_color = this.$store.state.defaultRandomColors[
-              this.getRandomInt(0,this.$store.state.defaultRandomColors.length -1)]
-        }
-
-        let style = 'width: '+ newScore + "%;" + "background-color: "+background_color + ";"
-        // console.log(style)
-        // return 'width: '+ newScore + "%;"
-        return style
-      }
+    components: {
+        Swiper,
+        SwiperSlide,
     },
-    setIco() {
-      let aboutIco = ''
-      try {
-        aboutIco = this.themeProperty.ico.aboutIco
-      }catch (e) {
-        aboutIco = "https://ooszy.cco.vin/img/ico/cat.svg"
-      }
-      return 'background-image: url('+ aboutIco +');'
-    }
-  },
-  methods: {
-    getRandomInt(min, max) {
-      min = Math.ceil(min);
-      max = Math.floor(max);
-      return Math.floor(Math.random() * (max - min)) + min; //不含最大值，含最小值
-    }
-  },
+    setup() {
+        return {
+        modules: [EffectCreative],
+        };
+    },
+    computed: {
+        setSlideBodyBg() {
 
-  created() {
+        },
+        setSlideItemStyle() {
+            //background-image: linear-gradient(to right top, #fff1eb 0%, #ace0f9 100%);
+            return (index) => {
 
-    //如果手机端侧边栏打开的，那么就关闭
-    if (this.$store.state.openMobileSidebar) {
-      this.$store.commit("setOpenMobileSidebar",{
-        openMobileSidebar: false
-      })
-    }
-    this.themeProperty = useThemeData().value
-
-    let socials = this.themeProperty.socials
-    if (socials !== undefined) {
-      new Promise((resolve, reject) => {
-        for (let i = 0; i < socials.length; i++) {
-          if (socials[i].show) {
-            this.socialsArr.push(socials[i])
-          }
+            }
+        },
+        setBarStyle() {
+            return (score) => {
+                return "background-color:" + this.randomColors[this.getRandomInt(0,this.randomColors.length -1)] + "; width: " + score * 0.85 + "%"
+            }
         }
-        resolve()
-      }).then(() => {
+    },
+    created() {
+        this.themeProperty = useThemeData().value
+        this.abouts = useThemeData().value.about
+        this.randomColors = useThemeData().value.randomColor
+        this.showAboutPageBubble = this.themeProperty.showAboutPageBubble
 
-      })
-    }
-  },
-})
+    },
+    methods: {
+        getInearGradientStyle() {
+            //let hexRgb1 = this.hexToRgb(this.randomColors[this.getRandomInt(0,this.randomColors.length -1)])
+            //let hexRgb2 = this.hexToRgb(this.randomColors[this.getRandomInt(0,this.randomColors.length -1)])
+            return "--aurora-slide-bgImg: linear-gradient(to right top, " + this.randomColors[this.getRandomInt(0,this.randomColors.length -1)] + " 0%, "+ this.randomColors[this.getRandomInt(0,this.randomColors.length -1)] +" 100%);"
+        },
+        updateBgStyle(isActive,bgImg,index) {
+            if(isActive) {
+                if(bgImg !== undefined) {
+                  //将图片设置为背景图片
+                  this.slideBodyBg = "--aurora-slide-bgImg: url(" + bgImg + ");"
+                }else {
+                  //如果没有图片，那么则使用渐变颜色作为背景颜色
+                  this.slideBodyBg = this.getInearGradientStyle()
+                }
+            }
+
+        },
+        hexToRgb(hex) {
+            let result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+            return result ? {
+                r: parseInt(result[1], 16),
+                g: parseInt(result[2], 16),
+                b: parseInt(result[3], 16)
+            } : null;
+        },
+        getRandomInt(min, max) {
+            min = Math.ceil(min);
+            max = Math.floor(max);
+            return Math.floor(Math.random() * (max - min)) + min; //不含最大值，含最小值
+        },
+    },
+};
 </script>

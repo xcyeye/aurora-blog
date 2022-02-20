@@ -289,9 +289,36 @@ module.exports = {
         * */
         about: [
             {
+                bgImg: "http://localhost:8080/bg/about.jpg",
                 bar: false,
                 title: "我?",
                 describe: [
+                    "这是关于页面支持html<a href='https://blog.cco.vin' target='_blank'>这是一个标签</a>",
+                    "目前是一名大三学生,CS专业,坐标西南边陲",
+                    "喜欢安静,不喜社交",
+                    "喜欢听音乐,什么类型都可",
+                    "喜欢技术,coding",
+                    "目前正在学习java后端",
+                    '最喜欢的电影是"忠犬八公的故事",梦想以后独居也能有一只"Hachi"',
+                    "主题是我自己开发的，前端太菜了，如果有bug，希望大家多多包涵`Σ(￣□￣||)` ",
+                    "有点懒",
+                    "目前除了编程没有什么兴趣爱好",
+                    "正在追的番有《百妖谱》,《致不灭的你》,《少年歌行》,《鬼灭之刃》,《关于我转生变成史莱姆这档事》...",
+                    "喜欢小说，喜欢的作者是--十月流年，最喜欢的小说《至尊修罗》,《一念永恒》,《星辰变》",
+
+                    "这是关于页面支持html<a href='https://blog.cco.vin' target='_blank'>这是一个标签</a>",
+                    "目前是一名大三学生,CS专业,坐标西南边陲",
+                    "喜欢安静,不喜社交",
+                    "喜欢听音乐,什么类型都可",
+                    "喜欢技术,coding",
+                    "目前正在学习java后端",
+                    '最喜欢的电影是"忠犬八公的故事",梦想以后独居也能有一只"Hachi"',
+                    "主题是我自己开发的，前端太菜了，如果有bug，希望大家多多包涵`Σ(￣□￣||)` ",
+                    "有点懒",
+                    "目前除了编程没有什么兴趣爱好",
+                    "正在追的番有《百妖谱》,《致不灭的你》,《少年歌行》,《鬼灭之刃》,《关于我转生变成史莱姆这档事》...",
+                    "喜欢小说，喜欢的作者是--十月流年，最喜欢的小说《至尊修罗》,《一念永恒》,《星辰变》",
+
                     "这是关于页面支持html<a href='https://blog.cco.vin' target='_blank'>这是一个标签</a>",
                     "目前是一名大三学生,CS专业,坐标西南边陲",
                     "喜欢安静,不喜社交",
@@ -319,6 +346,7 @@ module.exports = {
                 showTag: true,
             },
             {
+                bgImg: 'http://localhost:8080/bg/1.jpg',
                 bar: false,
                 title: "大三规划",
                 describe: [
@@ -341,6 +369,7 @@ module.exports = {
                 showTag: true,
             },
             {
+                bgImg: 'http://localhost:8080/bg/3.jpg',
                 bar: true,
                 title: "技  能",
                 describe: [
@@ -424,6 +453,7 @@ module.exports = {
                 ],
             },
             {
+                bgImg: 'http://localhost:8080/bg/763311.jpg',
                 bar: true,
                 showTag: false,
                 title: "掌握技能",
@@ -832,5 +862,12 @@ module.exports = {
        * 那么你可以像customCategoriesName: "category"这样自定义类别的字段，此配置仅仅针对于md文件设置的类别并不是使用categories字段，请注意，谨慎使用
        * */
         //customCategoriesName: "category"
+
+        /*
+        * 下面这个是v1.13版本新增的配置项
+        * */
+
+        //是否显示关于页面气泡效果 默认开启
+        showAboutPageBubble: false
     }
 };

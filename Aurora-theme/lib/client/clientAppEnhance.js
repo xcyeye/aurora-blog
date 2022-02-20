@@ -24,8 +24,10 @@ import HomeSidebar from "./components/child/side/HomeSidebar.vue";
 import HomeBottom from "./components/HomeBottom.vue";
 import AuroraGlobal from "./components/global/AuroraGlobal.vue";
 import Archive from './components/Archive.vue'
+
 //主题内置组件
 import Pins from "./components/global/inner/Pins.vue";
+import AuroraBubble from "./components/global/inner/AuroraBubble.vue";
 
 //样式导入
 import './styles/index.scss';
@@ -54,6 +56,9 @@ export default defineClientAppEnhance(({ app, router }) => {
     app.component("AuroraGlobal",AuroraGlobal)
     app.component("Archive",Archive)
     app.component("Pins",Pins)
+    app.component("AuroraBubble",AuroraBubble)
+
+    // 导入测试组件
 
     /*let themeConfig = useThemeData().value
     let isSetLeanCloud = false

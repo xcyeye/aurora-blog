@@ -27,6 +27,7 @@
         "qrcode": "^1.4.4",
         "reading-time-estimator": "^1.4.0",
         "smoothscroll-polyfill": "^0.4.4",
+        "swiper": "^8.0.6",
         "vuex": "^4.0.0-0"
       },
       "devDependencies": {
@@ -3063,6 +3064,14 @@
         "domelementtype": "^2.0.1",
         "domhandler": "^4.2.0",
         "entities": "^2.0.0"
+      }
+    },
+    "node_modules/dom7": {
+      "version": "4.0.4",
+      "resolved": "https://registry.npmmirror.com/dom7/-/dom7-4.0.4.tgz",
+      "integrity": "sha512-DSSgBzQ4rJWQp1u6o+3FVwMNnT5bzQbMb+o31TjYYeRi05uAcpF8koxdfzeoe5ElzPmua7W7N28YJhF7iEKqIw==",
+      "dependencies": {
+        "ssr-window": "^4.0.0"
       }
     },
     "node_modules/domelementtype": {
@@ -7472,6 +7481,11 @@
       "integrity": "sha512-D9cPgkvLlV3t3IzL0D0YLvGA9Ahk4PcvVwUbN0dSGr1aP0Nrt4AEnTUbuGvquEC0mA64Gqt1fzirlRs5ibXx8g==",
       "dev": true
     },
+    "node_modules/ssr-window": {
+      "version": "4.0.2",
+      "resolved": "https://registry.npmmirror.com/ssr-window/-/ssr-window-4.0.2.tgz",
+      "integrity": "sha512-ISv/Ch+ig7SOtw7G2+qkwfVASzazUnvlDTwypdLoPoySv+6MqlOV10VwPSE6EWkGjhW50lUmghPmpYZXMu/+AQ=="
+    },
     "node_modules/statuses": {
       "version": "1.5.0",
       "resolved": "https://registry.npmmirror.com/statuses/-/statuses-1.5.0.tgz",
@@ -7689,6 +7703,19 @@
       "dev": true,
       "engines": {
         "node": ">= 0.4"
+      }
+    },
+    "node_modules/swiper": {
+      "version": "8.0.6",
+      "resolved": "https://registry.npmmirror.com/swiper/-/swiper-8.0.6.tgz",
+      "integrity": "sha512-Ssyu1+FeNATF/G8e84QG+ZUNtUOAZ5vngdgxzczh0oWZPhGUVgkdv+BoePUuaCXLAFXnwVpNjgLIcGnxMdmWPA==",
+      "hasInstallScript": true,
+      "dependencies": {
+        "dom7": "^4.0.4",
+        "ssr-window": "^4.0.2"
+      },
+      "engines": {
+        "node": ">= 4.7.0"
       }
     },
     "node_modules/tapable": {
@@ -11335,6 +11362,14 @@
         "entities": "^2.0.0"
       }
     },
+    "dom7": {
+      "version": "4.0.4",
+      "resolved": "https://registry.npmmirror.com/dom7/-/dom7-4.0.4.tgz",
+      "integrity": "sha512-DSSgBzQ4rJWQp1u6o+3FVwMNnT5bzQbMb+o31TjYYeRi05uAcpF8koxdfzeoe5ElzPmua7W7N28YJhF7iEKqIw==",
+      "requires": {
+        "ssr-window": "^4.0.0"
+      }
+    },
     "domelementtype": {
       "version": "2.2.0",
       "resolved": "https://registry.npmmirror.com/domelementtype/-/domelementtype-2.2.0.tgz",
@@ -14811,6 +14846,11 @@
       "integrity": "sha512-D9cPgkvLlV3t3IzL0D0YLvGA9Ahk4PcvVwUbN0dSGr1aP0Nrt4AEnTUbuGvquEC0mA64Gqt1fzirlRs5ibXx8g==",
       "dev": true
     },
+    "ssr-window": {
+      "version": "4.0.2",
+      "resolved": "https://registry.npmmirror.com/ssr-window/-/ssr-window-4.0.2.tgz",
+      "integrity": "sha512-ISv/Ch+ig7SOtw7G2+qkwfVASzazUnvlDTwypdLoPoySv+6MqlOV10VwPSE6EWkGjhW50lUmghPmpYZXMu/+AQ=="
+    },
     "statuses": {
       "version": "1.5.0",
       "resolved": "https://registry.npmmirror.com/statuses/-/statuses-1.5.0.tgz",
@@ -14969,6 +15009,15 @@
       "resolved": "https://registry.npmmirror.com/supports-preserve-symlinks-flag/-/supports-preserve-symlinks-flag-1.0.0.tgz",
       "integrity": "sha512-ot0WnXS9fgdkgIcePe6RHNk1WA8+muPa6cSjeR3V8K27q9BB1rTE3R1p7Hv0z1ZyAc8s6Vvv8DIyWf681MAt0w==",
       "dev": true
+    },
+    "swiper": {
+      "version": "8.0.6",
+      "resolved": "https://registry.npmmirror.com/swiper/-/swiper-8.0.6.tgz",
+      "integrity": "sha512-Ssyu1+FeNATF/G8e84QG+ZUNtUOAZ5vngdgxzczh0oWZPhGUVgkdv+BoePUuaCXLAFXnwVpNjgLIcGnxMdmWPA==",
+      "requires": {
+        "dom7": "^4.0.4",
+        "ssr-window": "^4.0.2"
+      }
     },
     "tapable": {
       "version": "2.2.1",
