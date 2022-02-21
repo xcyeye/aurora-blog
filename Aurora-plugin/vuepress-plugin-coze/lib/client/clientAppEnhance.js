@@ -3,6 +3,8 @@ import CozeMood from './components/CozeMood.vue'
 import RegisterUser from './components/RegisterUser.vue'
 import CozeLogin from "./components/CozeLogin.vue";
 import CozePhoto from "./components/CozePhoto.vue";
+import AuroraCozeMood from "./components/AuroraCozeMood.vue";
+
 import './style/coze-plugin.css'
 
 import { init } from "leancloud-storage";
@@ -27,6 +29,7 @@ export default defineClientAppEnhance(({ app, router }) => {
     app.component("RegisterUser",RegisterUser)
     app.component("CozeLogin",CozeLogin)
     app.component("CozePhoto",CozePhoto)
+    app.component("AuroraCozeMood",AuroraCozeMood)
 
     router.addRoute({
         path: '/login',
