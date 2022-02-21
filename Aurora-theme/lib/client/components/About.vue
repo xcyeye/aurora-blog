@@ -25,7 +25,7 @@
       <div :data="updateBgStyle(isActive,item.bgImg,index)" class="aurora-slide-item-son">
             <div class="aurora-slide-item-top aurora-slide-radius">
               <div class="aurora-slide-item-top-left aurora-slide-item-top-avatar">
-                <img src="http://localhost:8080/avatar.jpg" alt="">
+                <img src="http://localhost:8080/avatar.jpg" @click="goBackPage" alt="">
               </div>
               <div class="aurora-slide-item-top-right">
                 <div class="aurora-slide-item-top-title aurora-slide-item-top-common">
@@ -115,6 +115,10 @@ export default {
 
     },
     methods: {
+        //点击头像回到上一步网页
+        goBackPage() {
+            this.$router.go(-1)
+        },
         getInearGradientStyle() {
             //let hexRgb1 = this.hexToRgb(this.randomColors[this.getRandomInt(0,this.randomColors.length -1)])
             //let hexRgb2 = this.hexToRgb(this.randomColors[this.getRandomInt(0,this.randomColors.length -1)])

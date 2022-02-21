@@ -5508,6 +5508,7 @@ body::-webkit-scrollbar-thumb {
     margin-bottom: 3rem;
 }
 
+/*v1.13版本增加样式*/
 
 /* 这是幻灯片组件的样式 */
 .aurora-slide-body {

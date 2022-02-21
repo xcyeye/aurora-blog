@@ -28,6 +28,7 @@
         "reading-time-estimator": "^1.4.0",
         "smoothscroll-polyfill": "^0.4.4",
         "swiper": "^8.0.6",
+        "turndown": "^7.1.1",
         "vuex": "^4.0.0-0"
       },
       "devDependencies": {
@@ -3091,6 +3092,11 @@
       "engines": {
         "node": ">= 4"
       }
+    },
+    "node_modules/domino": {
+      "version": "2.1.6",
+      "resolved": "https://registry.npmmirror.com/DOMino/-/DOMino-2.1.6.tgz",
+      "integrity": "sha512-3VdM/SXBZX2omc9JF9nOPCtDaYQ67BGp5CoLpIQlO2KCAPETs8TcDHacF26jXadGbvUteZzRTeos2fhID5+ucQ=="
     },
     "node_modules/domutils": {
       "version": "2.8.0",
@@ -7929,6 +7935,14 @@
         "node": ">=0.6.11 <=0.7.0 || >=0.7.3"
       }
     },
+    "node_modules/turndown": {
+      "version": "7.1.1",
+      "resolved": "https://registry.npmmirror.com/turndown/-/turndown-7.1.1.tgz",
+      "integrity": "sha512-BEkXaWH7Wh7e9bd2QumhfAXk5g34+6QUmmWx+0q6ThaVOLuLUqsnkq35HQ5SBHSaxjSfSM7US5o4lhJNH7B9MA==",
+      "dependencies": {
+        "domino": "^2.1.6"
+      }
+    },
     "node_modules/type-check": {
       "version": "0.3.2",
       "resolved": "https://registry.npmmirror.com/type-check/-/type-check-0.3.2.tgz",
@@ -11384,6 +11398,11 @@
       "requires": {
         "domelementtype": "^2.2.0"
       }
+    },
+    "domino": {
+      "version": "2.1.6",
+      "resolved": "https://registry.npmmirror.com/DOMino/-/DOMino-2.1.6.tgz",
+      "integrity": "sha512-3VdM/SXBZX2omc9JF9nOPCtDaYQ67BGp5CoLpIQlO2KCAPETs8TcDHacF26jXadGbvUteZzRTeos2fhID5+ucQ=="
     },
     "domutils": {
       "version": "2.8.0",
@@ -15158,6 +15177,14 @@
       "version": "0.0.6",
       "resolved": "https://registry.npmmirror.com/tunnel/-/tunnel-0.0.6.tgz",
       "integrity": "sha512-1h/Lnq9yajKY2PEbBadPXj3VxsDDu844OnaAo52UVmIzIvwwtBPIuNvkjuzBlTWpfJyUbG3ez0KSBibQkj4ojg=="
+    },
+    "turndown": {
+      "version": "7.1.1",
+      "resolved": "https://registry.npmmirror.com/turndown/-/turndown-7.1.1.tgz",
+      "integrity": "sha512-BEkXaWH7Wh7e9bd2QumhfAXk5g34+6QUmmWx+0q6ThaVOLuLUqsnkq35HQ5SBHSaxjSfSM7US5o4lhJNH7B9MA==",
+      "requires": {
+        "domino": "^2.1.6"
+      }
     },
     "type-check": {
       "version": "0.3.2",

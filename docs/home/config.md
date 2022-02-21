@@ -3,6 +3,7 @@ tag: [主题配置,配置项,配置总览]
 stick: true
 title: 主题所有配置项速查
 date: 2021/12/1
+coverUrl: https://ooszy.cco.vin/img/blog-note/image-20220220230725821.png
 ---
 
 ::: tip

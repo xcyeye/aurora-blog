@@ -47,6 +47,7 @@
     "reading-time-estimator": "^1.4.0",
     "smoothscroll-polyfill": "^0.4.4",
     "swiper": "^8.0.6",
+    "turndown": "^7.1.1",
     "vuex": "^4.0.0-0"
   },
   "publishConfig": {

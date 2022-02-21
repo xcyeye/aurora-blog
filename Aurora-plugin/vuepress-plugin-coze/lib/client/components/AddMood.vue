@@ -82,6 +82,10 @@
 
 <script>
 import { User ,File, Object} from 'leancloud-storage'
+
+//引入markdown-it
+import MarkdownIt from 'markdown-it'
+import TurndownService from 'turndown'
 let appId = ''
 let appKey = ''
 let masterKey = ''
@@ -250,7 +254,14 @@ export default {
       this.moodUpdateStatus = !this.moodUpdateStatus
       if (this.moodUpdateStatus) {
         this.title = this.currentMoodObj.attributes.mood_title
-        this.content = this.currentMoodObj.attributes.mood_content
+        // this.content = this.currentMoodObj.attributes.mood_content
+
+        //将原始的html转换成markdown
+        let turndownService = new TurndownService({
+          headingStyle: 'atx',
+          bulletListMarker: '-'
+        })
+        this.content = turndownService.turndown(this.currentMoodObj.attributes.mood_content)
       }else {
         this.title = ""
         this.content = ""
@@ -388,6 +399,10 @@ export default {
     },
     updateData() {
       const talk = Object.createWithoutData('Talk', this.currentMoodObj.id);
+
+      let md = new MarkdownIt()
+      this.content = md.render(this.content);
+
       talk.set('mood_title', this.title);
       talk.set('mood_content', this.content);
       talk.set("mood_like",0)
@@ -415,7 +430,11 @@ export default {
       const Talk = Object.extend('Talk');
       const talk = new Talk();
       talk.set('mood_title', this.title);
-      this.content = this.content.replaceAll("\n","<br>")
+
+      let md = new MarkdownIt()
+      this.content = md.render(this.content);
+      console.log(this.content)
+
       talk.set('mood_content', this.content);
       talk.set("mood_like",0)
       talk.set("mood_comment","")
