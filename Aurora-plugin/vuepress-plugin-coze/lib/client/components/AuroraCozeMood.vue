@@ -1,5 +1,10 @@
 <template>
   <div class="aurora-slide-body" :style="slideBodyBg">
+    <div class="coze-image-container" id="coze-image-container"></div>
+    <add-mood :verify-identify-status="verifyIdentifyStatus" :show-mood-control="showMoodControl"
+              :current-mood-obj="currentMoodObj" @save-data-success="saveDataSuccess" @cancel="cancel"
+              :open-edit-status="openEditStatus"/>
+
       <div class="aurora-coze-slide-shade aurora-slide-radius">
         <div class="aurora-slide-box-style-box">
           <div class="aurora-slide-box-style"></div>
@@ -22,7 +27,8 @@
   >
           <AuroraBubble v-if="showAboutPageBubble"/>
           <swiper-slide v-slot="{ isActive }" v-for="(item,index) in moods" :key="index" :style="setSlideItemStyle(index)" class="aurora-slide-item aurora-slide-radius">
-            <slide-coze-mood-item @set-slide-bodyBg="setSlideBodyBg" :data="updateBgStyle(isActive,item)" :mood-item="item" :is-active="isActive" />
+            <slide-coze-mood-item @mood-comment="moodComment" @mood-love="moodLove" @mood-poster="moodPoster"
+                                  @mood-edit="moodEdit" @set-slide-bodyBg="setSlideBodyBg" :data="updateBgStyle(isActive,item)" :mood-item="item" :is-active="isActive" />
           </swiper-slide>
   </swiper>
       </div>
@@ -31,6 +37,7 @@
 <script>
 // Import Swiper Vue.js components
 import { Swiper, SwiperSlide } from "swiper/vue";
+import AddMood from './AddMood.vue'
 
 import SlideCozeMoodItem from "./SlideCozeMoodItem.vue";
 
@@ -92,7 +99,6 @@ export default {
         ]
       }
   },
-
   emits: ['cozeSuccess','moodEdit','cozeCancelEdit'],
   created() {
     const query = new Query('Talk');
@@ -141,7 +147,7 @@ export default {
   },
   methods: {
     setSlideBodyBg(photoUrl) {
-      this.slideBodyBg = "--aurora-slide-bgImg: url(" + photoUrl.photoUrl + ");"
+      this.slideBodyBg = "--aurora-coze-slide-bgImg: url(" + photoUrl.photoUrl + ");"
     },
     saveDataSuccess() {
       const query = new Query('Talk');
@@ -175,7 +181,7 @@ export default {
       })
     },
     moodComment(moodItem) {
-
+      console.log(moodItem)
     },
     moodLove(moodItem) {
 
@@ -204,13 +210,13 @@ export default {
     getInearGradientStyle() {
       //let hexRgb1 = this.hexToRgb(this.randomColors[this.getRandomInt(0,this.randomColors.length -1)])
       //let hexRgb2 = this.hexToRgb(this.randomColors[this.getRandomInt(0,this.randomColors.length -1)])
-      return "--aurora-slide-bgImg: linear-gradient(to right top, " + this.randomColors[this.getRandomInt(0,this.randomColors.length -1)] + " 0%, "+ this.randomColors[this.getRandomInt(0,this.randomColors.length -1)] +" 100%);"
+      return "--aurora-coze-slide-bgImg: linear-gradient(to right top, " + this.randomColors[this.getRandomInt(0,this.randomColors.length -1)] + " 0%, "+ this.randomColors[this.getRandomInt(0,this.randomColors.length -1)] +" 100%);"
     },
     updateBgStyle(isActive,moodItem) {
       if(isActive) {
         if(moodItem.attributes.mood_photos.length !== 0) {
           //将图片设置为背景图片
-          this.slideBodyBg = "--aurora-slide-bgImg: url(" + moodItem.attributes.mood_photos[0].photoUrl + ");"
+          this.slideBodyBg = "--aurora-coze-slide-bgImg: url(" + moodItem.attributes.mood_photos[0].photoUrl + ");"
         }else {
           //如果没有图片，那么则使用渐变颜色作为背景颜色
           this.slideBodyBg = this.getInearGradientStyle()
@@ -235,7 +241,8 @@ export default {
   components: {
     Swiper,
     SwiperSlide,
-    SlideCozeMoodItem
+    SlideCozeMoodItem,
+    AddMood
   },
   setup() {
       return {

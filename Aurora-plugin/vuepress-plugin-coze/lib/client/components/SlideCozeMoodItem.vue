@@ -8,13 +8,14 @@
           <div class="aurora-coze-slide-operation aurora-coze-slide-top-common">
             <div class="aurora-coze-slide-operation-box">
               <div class="mood-edit-single-common">
-                <span class="aurora-coze-font aurora-coze-custom-comment"></span>
+                <span @click="moodComment($event,moodItem)" class="aurora-coze-font aurora-coze-custom-comment"></span>
               </div>
-              <div class="mood_like_active mood-edit-single-common">
-                <span class="mood_like_love_active aurora-coze-font aurora-coze-custom-love"></span>
+              <div :class="getMoodLike" class="mood-edit-single-common">
+                <span :class="{'mood_like_love_active': moodLikeStatus}" @click="moodLove($event,moodItem)" class="aurora-coze-font aurora-coze-custom-love"></span>&nbsp;
+                <span>{{getCozeMoodLink}}</span>
               </div>
               <div class="mood-edit-single-common">
-                <span class="aurora-coze-font aurora-coze-custom-edit"></span>
+                <span @click="moodEdit($event,moodItem)" class="aurora-coze-font aurora-coze-custom-edit"></span>
               </div>
             </div>
           </div>
