@@ -412,6 +412,17 @@ export default {
       talk.set("mood_comment","")
       talk.set("mood_show",this.showMood)
       talk.save().then(() => {
+
+        //将原始的html转换成markdown
+        let turndownService = new TurndownService({
+          headingStyle: 'atx',
+          bulletListMarker: '-',
+          fence: '```',
+          preformattedCode: true,
+          codeBlockStyle: 'fenced'
+        })
+        this.content = turndownService.turndown(this.content)
+
         this.resultText = "修改成功"
         setTimeout(() => {
           this.resultText = ""
@@ -452,6 +463,17 @@ export default {
         }
         this.resultText = message
         this.progressUploadArr = []
+
+        //将原始的html转换成markdown
+        let turndownService = new TurndownService({
+          headingStyle: 'atx',
+          bulletListMarker: '-',
+          fence: '```',
+          preformattedCode: true,
+          codeBlockStyle: 'fenced'
+        })
+        this.content = turndownService.turndown(this.content)
+
         setTimeout(() => {
           this.resultText = ""
         },5000)

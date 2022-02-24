@@ -5607,6 +5607,7 @@ body::-webkit-scrollbar-thumb {
 }
 
 .aurora-slide-item-top {
+    cursor: default;
     height: 7rem;
     width: 100%;
     /*padding-top: 1rem;*/
