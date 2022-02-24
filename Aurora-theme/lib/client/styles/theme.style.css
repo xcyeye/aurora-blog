@@ -1044,21 +1044,24 @@ li {
     position: relative;
     color: #fff;
     font-weight: 700;
-    -webkit-animation: link-bottom .5s;
-    animation: link-bottom .5s;
-    -webkit-animation-iteration-count: 1;
-    animation-iteration-count: 1;
-    -webkit-animation-fill-mode: forwards;
-    animation-fill-mode: forwards
+    /*-webkit-animation: link-bottom .5s;*/
+    /*animation: link-bottom .5s;*/
+    /*-webkit-animation-iteration-count: 1;*/
+    /*animation-iteration-count: 1;*/
+    /*-webkit-animation-fill-mode: forwards;*/
+    /*animation-fill-mode: forwards*/
+    transition: color 900ms;
 }
 
 .link-bottom:hover {
-    -webkit-animation: link-bottom-hover .9s;
-    animation: link-bottom-hover .9s;
-    -webkit-animation-iteration-count: 1;
-    animation-iteration-count: 1;
-    -webkit-animation-fill-mode: forwards;
-    animation-fill-mode: forwards
+    color: var(--aurora-global-active-color);
+    transition: color 0.9s;
+    /*-webkit-animation: link-bottom-hover .9s;*/
+    /*animation: link-bottom-hover .9s;*/
+    /*-webkit-animation-iteration-count: 1;*/
+    /*animation-iteration-count: 1;*/
+    /*-webkit-animation-fill-mode: forwards;*/
+    /*animation-fill-mode: forwards*/
 }
 
 @-webkit-keyframes link-bottom-hover {
@@ -3972,15 +3975,22 @@ body::-webkit-scrollbar-thumb {
     color: var(--fontColor)
 }
 
+.navbar-links-item .aurora-navbar-icon,
+.navbar-links-item .dropdown-wrapper .dropdown-title,
+.navbar-links-item .nav-link-active {
+    transition: color 500ms;
+}
+
 .navbar-links-item:hover .aurora-navbar-icon,
 .navbar-links-item:hover .dropdown-wrapper .dropdown-title,
 .navbar-links-item:hover .nav-link-active {
-    -webkit-animation: navbar-link-item-hover .5s;
-    animation: navbar-link-item-hover .5s;
-    -webkit-animation-iteration-count: 1;
-    animation-iteration-count: 1;
-    -webkit-animation-fill-mode: forwards;
-    animation-fill-mode: forwards;
+    /*-webkit-animation: navbar-link-item-hover .5s;*/
+    /*animation: navbar-link-item-hover .5s;*/
+    /*-webkit-animation-iteration-count: 1;*/
+    /*animation-iteration-count: 1;*/
+    /*-webkit-animation-fill-mode: forwards;*/
+    /*animation-fill-mode: forwards;*/
+    color: var(--aurora-global-active-color);
     cursor: pointer
 }
 
