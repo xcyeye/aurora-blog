@@ -368,8 +368,8 @@ export default defineComponent({
       const themeLocale = useThemeLocaleData()
       let src = themeLocale.value.heroImg
       if (src === undefined) {
-        console.warn("%c you need to set the heroImg field value,the default is: https://ooszy.cco.vin/img/blog-public/avatar.jpg","color: pink;")
-        return "https://ooszy.cco.vin/img/blog-public/avatar.jpg"
+        console.warn("%c you need to set the heroImg field value,the default is: https://pica.zhimg.com/80/v2-0653e99ab7a28223c488c27632526951_720w.jpg","color: pink;")
+        return "https://pica.zhimg.com/80/v2-0653e99ab7a28223c488c27632526951_720w.jpg"
       }else {
         return  withBase(src)
       }
@@ -380,8 +380,8 @@ export default defineComponent({
     getHeroImage() {
       let src = this.themeProperty.heroLogo
       if (src === undefined) {
-        console.log("you need to set the logo field value,the default is: \nhttps://ooszy.cco.vin/img/blog-public/avatar.jpg")
-        return "https://ooszy.cco.vin/img/blog-public/avatar.jpg"
+        console.log("you need to set the logo field value,the default is: \nhttps://pica.zhimg.com/80/v2-0653e99ab7a28223c488c27632526951_720w.jpg")
+        return "https://pica.zhimg.com/80/v2-0653e99ab7a28223c488c27632526951_720w.jpg"
       }else {
         return src
       }

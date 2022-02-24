@@ -1,12 +1,21 @@
 <template>
-    <div class="aurora-slide-item-son">
-      <div class="aurora-coze-slide-item-top aurora-slide-radius">
-        <div class="aurora-slide-item-top-left aurora-slide-item-top-avatar">
-          <img src="http://localhost:8080/avatar.jpg" @click="goBackPage" alt="">
+    <div class="aurora-coze-slide-item-son">
+      <div class="aurora-coze-slide-item-top aurora-coze-slide-radius">
+        <div class="aurora-coze-slide-item-top-left aurora-coze-slide-item-top-avatar">
+          <img :src="$withBase(getAvatar)" @click="goBackPage" alt="">
         </div>
-        <div class="aurora-slide-item-top-right">
+        <div class="aurora-coze-slide-item-top-right">
+<!--          <div class="aurora-coze-slide-info aurora-coze-slide-top-common">-->
+<!--            <span>@{{moodItem.attributes.mood_user}}</span>-->
+<!--            <span :data="getUpdatedTime">&nbsp;&nbsp;发布于: {{cozeYear}}-{{cozeMonth}}-{{cozeDay}}</span>-->
+<!--          </div>-->
           <div class="aurora-coze-slide-operation aurora-coze-slide-top-common">
-            <div class="aurora-coze-slide-operation-box">
+            <div class="aurora-slide-operation-no-need">
+              <span>@{{moodItem.attributes.mood_user}}</span>
+              <span :data="getUpdatedTime">&nbsp;&nbsp;发布于: {{cozeYear}}-{{cozeMonth}}-{{cozeDay}}</span>
+              <span v-if="!hideMin">&nbsp;{{cozeHour}}:{{cozeMinute}}</span>
+            </div>
+            <div class="aurora-slide-operation-box">
               <div class="mood-edit-single-common">
                 <span @click="moodComment($event,moodItem)" class="aurora-coze-font aurora-coze-custom-comment"></span>
               </div>
@@ -19,10 +28,6 @@
               </div>
             </div>
           </div>
-          <div class="aurora-coze-slide-info aurora-coze-slide-top-common">
-            <span>@{{moodItem.attributes.mood_user}}</span>
-            <span :data="getUpdatedTime">&nbsp;&nbsp;发布于: {{cozeYear}}-{{cozeMonth}}-{{cozeDay}}</span>
-          </div>
         </div>
       </div>
 
@@ -33,7 +38,9 @@
 
         <div class="aurora-slide-item-photos" v-if="moodItem.attributes.mood_photos.length">
           <ul class="aurora-coze-slide-photo-box">
-            <li @click="setSlideBodyBg(item.photoUrl)" v-for="(item,index) in moodItem.attributes.mood_photos" :style="setBgUrl(item.photoUrl)" :key="index"></li>
+            <li class="aurora-coze-slide-photo-box-li" @click="setSlideBodyBg(item.photoUrl)" v-for="(item,index) in moodItem.attributes.mood_photos" :style="setBgUrl(item.photoUrl)" :key="index">
+<!--              <img id="aurora-coze-slide-photo-img" :src="item.photoUrl" alt="">-->
+            </li>
           </ul>
         </div>
       </div>
@@ -64,6 +71,7 @@ export default {
   name: "MoodItem",
   data() {
     return {
+      hideMin: false,
       title: '',
       content: '',
       moodLikeStatus: false,
@@ -72,6 +80,9 @@ export default {
       cozeYearTemp: 0,
       cozeMonthTemp: 0,
       cozeDayTemp: 0,
+      cozeHourTemp: 0,
+      cozeMinuteTemp: 0,
+      cozeSecondTemp: 0,
       cozeLikeTemp: 0,
       showImageHeight: false
     }
@@ -83,10 +94,12 @@ export default {
   created() {
     let moodLike = this.moodItem.attributes.mood_like
     gsap.to(this.$data, {duration: 1.5, cozeLikeTemp: moodLike, ease: 'sine'})
-
-    console.log(this.moodItem)
   },
   mounted() {
+    if (document.body.clientWidth < 480) {
+      this.hideMin = true
+    }
+
     let cookie = document.cookie;
     new Promise((resolve,reject) => {
       const cookieList = cookie.split(';')
@@ -127,14 +140,31 @@ export default {
     cozeDay() {
       return this.cozeDayTemp.toFixed(0)
     },
+    cozeMinute() {
+      return this.cozeMinuteTemp.toFixed(0)
+    },
+    cozeSecond() {
+      return this.cozeSecondTemp.toFixed(0)
+    },
+    cozeHour() {
+      return this.cozeHourTemp.toFixed(0)
+    },
     getUpdatedTime() {
-      let updatedAt = this.moodItem.createdAt;
-      let day = new Date(updatedAt).getDate();
-      let month = new Date(updatedAt).getMonth() + 1;
-      let year = new Date(updatedAt).getFullYear();
-      gsap.to(this.$data, {duration: 1.1, cozeYearTemp:year, ease: 'sine'})
-      gsap.to(this.$data, {duration: 2, cozeMonthTemp: month, ease: 'sine'})
-      gsap.to(this.$data, {duration: 2, cozeDayTemp: day, ease: 'sine'})
+      if (this.isActive) {
+        let updatedAt = this.moodItem.createdAt;
+        let minutes = new Date(updatedAt).getMinutes();
+        let seconds = new Date(updatedAt).getSeconds();
+        let day = new Date(updatedAt).getDate();
+        let month = new Date(updatedAt).getMonth() + 1;
+        let year = new Date(updatedAt).getFullYear();
+        let hour = new Date(updatedAt).getHours();
+        gsap.to(this.$data, {duration: 1.1, cozeYearTemp:year, ease: 'sine'})
+        gsap.to(this.$data, {duration: 2, cozeMonthTemp: month, ease: 'sine'})
+        gsap.to(this.$data, {duration: 2, cozeDayTemp: day, ease: 'sine'})
+        gsap.to(this.$data, {duration: 2, cozeMinuteTemp: minutes, ease: 'sine'})
+        gsap.to(this.$data, {duration: 2, cozeSecondTemp: seconds, ease: 'sine'})
+        gsap.to(this.$data, {duration: 2, cozeHourTemp: hour, ease: 'sine'})
+      }
     },
     getMoodLike() {
       if (this.moodLikeStatus) {
@@ -145,11 +175,26 @@ export default {
       if (__AVATAR_PATH__ !== undefined) {
         return __AVATAR_PATH__
       }else {
-        return "https://ooszy.cco.vin/img/ico/yuan.png"
+        return "https://pica.zhimg.com/80/v2-0653e99ab7a28223c488c27632526951_720w.jpg"
       }
     }
   },
   methods: {
+    setUpdatedTime() {
+      let updatedAt = this.moodItem.createdAt;
+      let minutes = new Date(updatedAt).getMinutes();
+      let seconds = new Date(updatedAt).getSeconds();
+      let day = new Date(updatedAt).getDate();
+      let month = new Date(updatedAt).getMonth() + 1;
+      let year = new Date(updatedAt).getFullYear();
+      let hour = new Date(updatedAt).getHours();
+      gsap.to(this.$data, {duration: 1.1, cozeYearTemp:year, ease: 'sine'})
+      gsap.to(this.$data, {duration: 2, cozeMonthTemp: month, ease: 'sine'})
+      gsap.to(this.$data, {duration: 2, cozeDayTemp: day, ease: 'sine'})
+      gsap.to(this.$data, {duration: 2, cozeMinuteTemp: minutes, ease: 'sine'})
+      gsap.to(this.$data, {duration: 2, cozeSecondTemp: seconds, ease: 'sine'})
+      gsap.to(this.$data, {duration: 2, cozeHourTemp: hour, ease: 'sine'})
+    },
     setSlideBodyBg(photoUrl) {
       this.$emit("setSlideBodyBg",{
         photoUrl: photoUrl
@@ -160,7 +205,6 @@ export default {
       this.$router.go(-1)
     },
     updateBgStyle(isActive,bgImg) {
-      console.log(isActive)
     },
     getLocalTime(time) {
       let date = new Date(time);
@@ -259,8 +303,7 @@ export default {
       this.$emit("moodEdit",moodItem)
     },
     openImg(e) {
-      console.log(e)
-      const zoom = mediumZoom(e.target)
+      const zoom = mediumZoom(document.querySelector("#aurora-coze-slide-photo-img"))
       zoom.open()
     }
   }

@@ -25,7 +25,7 @@
       <div :data="updateBgStyle(isActive,item.bgImg,index)" class="aurora-slide-item-son">
             <div class="aurora-slide-item-top aurora-slide-radius">
               <div class="aurora-slide-item-top-left aurora-slide-item-top-avatar">
-                <img src="http://localhost:8080/avatar.jpg" @click="goBackPage" alt="">
+                <img :src="getAvatar" @click="goBackPage" alt="">
               </div>
               <div class="aurora-slide-item-top-right">
                 <div class="aurora-slide-item-top-title aurora-slide-item-top-common">
@@ -69,7 +69,8 @@ import "swiper/css/effect-creative";
 // import required modules
 import { EffectCreative } from "swiper";
 
-import {useThemeData} from "../composables";
+import {useThemeData, useThemeLocaleData} from "../composables";
+import {withBase} from "@vuepress/client";
 export default {
     name: "About",
     data() {
@@ -92,6 +93,16 @@ export default {
         };
     },
     computed: {
+      getAvatar() {
+        const themeLocale = useThemeLocaleData()
+        let src = themeLocale.value.heroImg
+        if (src === undefined) {
+          console.warn("%c you need to set the heroImg field value,the default is: https://pica.zhimg.com/80/v2-0653e99ab7a28223c488c27632526951_720w.jpg","color: pink;")
+          return "https://pica.zhimg.com/80/v2-0653e99ab7a28223c488c27632526951_720w.jpg"
+        }else {
+          return  withBase(src)
+        }
+      },
         setSlideBodyBg() {
 
         },
@@ -128,7 +139,7 @@ export default {
             if(isActive) {
                 if(bgImg !== undefined) {
                   //将图片设置为背景图片
-                  this.slideBodyBg = "--aurora-slide-bgImg: url(" + bgImg + ");"
+                  this.slideBodyBg = "--aurora-slide-bgImg: url(" + withBase(bgImg) + ");"
                 }else {
                   //如果没有图片，那么则使用渐变颜色作为背景颜色
                   this.slideBodyBg = this.getInearGradientStyle()

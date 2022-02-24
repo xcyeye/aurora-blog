@@ -75,7 +75,7 @@ module.exports = {
             path.resolve(__dirname, "../../Aurora-plugin/vuepress-plugin-player/lib/node/index.js"),
             //"player",
             {
-                disableSpace: false,
+                // disableSpace: false,
                 //网易云单个歌单id
                 songIds: ['29723011','1887893189','1421069053'],
                 //网易云歌单
@@ -289,7 +289,7 @@ module.exports = {
         * */
         about: [
             {
-                bgImg: "http://localhost:8080/bg/about.jpg",
+                bgImg: "/bg/about.jpg",
                 bar: false,
                 title: "我?",
                 describe: [
@@ -346,7 +346,7 @@ module.exports = {
                 showTag: true,
             },
             {
-                bgImg: 'http://localhost:8080/bg/1.jpg',
+                bgImg: '/bg/1.jpg',
                 bar: false,
                 title: "大三规划",
                 describe: [
@@ -369,7 +369,7 @@ module.exports = {
                 showTag: true,
             },
             {
-                bgImg: 'http://localhost:8080/bg/3.jpg',
+                bgImg: '/bg/3.jpg',
                 bar: true,
                 title: "技  能",
                 describe: [
@@ -422,6 +422,7 @@ module.exports = {
             },
 
             {
+                bgImg: 'https://pica.zhimg.com/80/v2-879728aa9d88d75de8ffe375c123de74_720w.jpg',
                 showTag: false,
                 bar: true,
                 title: "掌握框架",

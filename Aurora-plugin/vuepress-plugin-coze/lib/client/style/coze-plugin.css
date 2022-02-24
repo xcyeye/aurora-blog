@@ -964,7 +964,7 @@ body {
 /*v1.13版本增加样式*/
 
 /* 这是幻灯片组件的样式 */
-.aurora-slide-body {
+.aurora-coze-slide-body {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -973,7 +973,7 @@ body {
     /* background-color: rgb(148, 85, 85); */
 }
 
-.aurora-slide-body::before {
+.aurora-coze-slide-body::before {
     content: "";
     position: fixed;
     left: 0;
@@ -989,11 +989,11 @@ body {
     background-attachment:fixed;
 
 }
-.aurora-slide-body {
+.aurora-coze-slide-body {
     transition: all 2s;
 }
 
-.aurora-slide-radius {
+.aurora-coze-slide-radius {
     border-radius: var(--aurora-sliid-border-radius);
 }
 
@@ -1007,7 +1007,7 @@ body {
     background-color: rgba(236, 228, 228,0);
 }
 
-.aurora-slide-box {
+.aurora-coze-slide-box {
     position: relative;
     z-index: 1;
     width: 90%;
@@ -1015,7 +1015,7 @@ body {
     box-shadow: rgba(0, 0, 0, 0.1) 0px 20px 25px -5px, rgba(0, 0, 0, 0.04) 0px 10px 10px -5px;
 }
 
-.aurora-slide-box-style-box {
+.aurora-coze-slide-box-style-box {
     position: absolute;
     z-index: 1;
     width: 90%;
@@ -1025,7 +1025,7 @@ body {
     filter: drop-shadow(5px 10px 20px rgba(0,0,0,.3))
 }
 
-.aurora-slide-box-style {
+.aurora-coze-slide-box-style {
     transition: all 500ms;
     width: 100%;
     height: 100%;
@@ -1039,7 +1039,7 @@ body {
 
 }
 
-.aurora-slide-box:before {
+.aurora-coze-slide-box:before {
     content: "";
     position: absolute;
     left: 0;
@@ -1048,19 +1048,20 @@ body {
     width: 100%;
 }
 
-.aurora-slide-item {
+.aurora-coze-slide-item {
     width: 100%;
     height: 100%;
     /*background-image: linear-gradient(to right top, #fff1eb 0%, #ace0f9 100%);*/
 }
 
-.aurora-slide-item-son {
+.aurora-coze-slide-item-son {
     width: 90%;
     height: 100%;
     margin: 0 auto;
 }
 
 .aurora-coze-slide-item-top {
+    cursor: default;
     height: calc(14vh);
     width: 100%;
     /*padding-top: 1rem;*/
@@ -1069,14 +1070,14 @@ body {
     display: flex;
 }
 
-.aurora-slide-item-top-left {
+.aurora-coze-slide-item-top-left {
     width: 8.5rem;
     height: 7rem;
     display: flex;
     align-items: center;
 }
 
-.aurora-slide-item-top-avatar img {
+.aurora-coze-slide-item-top-avatar img {
     height: 5.5rem;
     width: 5.5rem;
     border-radius: 50rem;
@@ -1084,30 +1085,31 @@ body {
     transition: all 500ms;
 }
 
-.aurora-slide-item-top-avatar img:hover {
+.aurora-coze-slide-item-top-avatar img:hover {
     transform: rotate(360deg);
 }
 
-.aurora-slide-item-top-right {
+.aurora-coze-slide-item-top-right {
     height: 7rem;
     width: 100%;
 }
 
 .aurora-coze-slide-top-common {
-    height: 50%;
+    height: 100%;
     display: flex;
     align-items: center;
+    text-align: left;
 }
 
-.aurora-coze-slide-operation-box {
+.aurora-slide-operation-box {
     width: 40%;
     display: flex;
-    text-align: center;
-    transform: translateY(-200%);
-    transition: all 500ms;
+    /*text-align: center;*/
+    transform: translateY(-600%);
+    transition: all 1s;
 }
 
-.aurora-slide-item:hover .aurora-coze-slide-operation-box {
+.aurora-coze-slide-item:hover .aurora-slide-operation-box {
     transform: translateX(0%);
 }
 
@@ -1226,15 +1228,15 @@ body {
         width: 100%;
     }
 
-    .aurora-slide-box-style-box {
+    .aurora-coze-slide-box-style-box {
         width: 93%;
     }
 
-    .aurora-slide-box {
+    .aurora-coze-slide-box {
         width: 93%;
     }
 
-    .aurora-slide-item-top-right {
+    .aurora-coze-slide-item-top-right {
         overflow: hidden;
     }
 
@@ -1281,14 +1283,14 @@ body {
 }
 
 
-ul{
+.aurora-coze-slide-photo-box{
     text-decoration: none;
     list-style-type: none;
     margin: 0;
 }
 
 
-.aurora-coze-slide-photo-box>li{
+.aurora-coze-slide-photo-box-li{
     float: left;
     width: calc(95.5% / 3);
     height: 13rem;
@@ -1300,9 +1302,58 @@ ul{
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
+    cursor: default;
 }
 
 .aurora-coze-slide-photo-box img {
     width: 0;
     height: 0;
+}
+
+.aurora-slide-operation-no-need {
+    flex: 1;
+}
+
+.aurora-slide-operation-box {
+    flex: 1;
+}
+
+@media screen and (max-width:719px) {
+    .aurora-coze-slide-photo-box-li {
+        width: calc(96% / 2);
+        height: 13rem;
+        margin-left: 1%;
+        margin-right: 1%;
+    }
+
+    .aurora-slide-operation-box {
+        width: 100%;
+        height: 50%;
+        display: flex;
+        align-items: center;
+    }
+
+    .aurora-coze-slide-top-common {
+        display: block;
+    }
+    .aurora-slide-operation-no-need {
+        height: 50%;
+        display: flex;
+        align-items: center;
+    }
+
+    .aurora-slide-operation-no-need span {
+        font-size: 13px;
+    }
+
+    .aurora-coze-slide-body {
+        height: 100%;
+        position: relative;
+    }
+    .aurora-coze-slide-shade {
+        height: 100%;
+        position: fixed;
+        right: 0;
+        top: 0;
+    }
 }

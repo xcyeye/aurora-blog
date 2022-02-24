@@ -5748,6 +5748,10 @@ body::-webkit-scrollbar-thumb {
 @media screen and (max-width:719px) {
     .aurora-slide-shade {
         width: 100%;
+        position: fixed;
+        height: 100%;
+        right: 0;
+        top: 0;
     }
 
     .aurora-slide-box-style-box {
@@ -5779,4 +5783,6 @@ body::-webkit-scrollbar-thumb {
     .aurora-slide-item-font-common {
         font-size: 15px;
     }
+
+
 }

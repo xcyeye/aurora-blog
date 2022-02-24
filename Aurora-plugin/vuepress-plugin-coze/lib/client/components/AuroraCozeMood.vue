@@ -1,13 +1,13 @@
 <template>
-  <div class="aurora-slide-body" :style="slideBodyBg">
+  <div class="aurora-coze-slide-body" :style="slideBodyBg">
     <div class="coze-image-container" id="coze-image-container"></div>
     <add-mood :verify-identify-status="verifyIdentifyStatus" :show-mood-control="showMoodControl"
               :current-mood-obj="currentMoodObj" @save-data-success="saveDataSuccess" @cancel="cancel"
               :open-edit-status="openEditStatus"/>
 
-      <div class="aurora-coze-slide-shade aurora-slide-radius">
-        <div class="aurora-slide-box-style-box">
-          <div class="aurora-slide-box-style"></div>
+      <div class="aurora-coze-slide-shade aurora-coze-slide-radius">
+        <div class="aurora-coze-slide-box-style-box">
+          <div class="aurora-coze-slide-box-style"></div>
         </div>
         <swiper
             :grabCursor="true"
@@ -23,10 +23,9 @@
       },
     }"
             :modules="modules"
-    class="aurora-slide-box aurora-slide-radius"
+    class="aurora-coze-slide-box aurora-coze-slide-radius"
   >
-          <AuroraBubble v-if="showAboutPageBubble"/>
-          <swiper-slide v-slot="{ isActive }" v-for="(item,index) in moods" :key="index" :style="setSlideItemStyle(index)" class="aurora-slide-item aurora-slide-radius">
+          <swiper-slide v-slot="{ isActive }" v-for="(item,index) in moods" :key="index" :style="setSlideItemStyle(index)" class="aurora-coze-slide-item aurora-coze-slide-radius">
             <slide-coze-mood-item @mood-comment="moodComment" @mood-love="moodLove" @mood-poster="moodPoster"
                                   @mood-edit="moodEdit" @set-slide-bodyBg="setSlideBodyBg" :data="updateBgStyle(isActive,item)" :mood-item="item" :is-active="isActive" />
           </swiper-slide>
@@ -131,8 +130,6 @@ export default {
           cozeMoods: this.moods
         })
       }
-
-      console.log(this.moods)
     });
 
     //验证用户是否登录
@@ -142,8 +139,6 @@ export default {
     } else {
       this.verifyIdentifyStatus = false
     }
-
-    console.log("用户是否登录: " + this.verifyIdentifyStatus)
   },
   methods: {
     setSlideBodyBg(photoUrl) {
@@ -181,7 +176,7 @@ export default {
       })
     },
     moodComment(moodItem) {
-      console.log(moodItem)
+
     },
     moodLove(moodItem) {
 
@@ -237,7 +232,6 @@ export default {
       return Math.floor(Math.random() * (max - min)) + min; //不含最大值，含最小值
     },
   },
-
   components: {
     Swiper,
     SwiperSlide,
@@ -272,5 +266,6 @@ export default {
       }
     }
   },
+
 };
 </script>

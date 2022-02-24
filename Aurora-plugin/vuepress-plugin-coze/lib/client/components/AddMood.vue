@@ -259,7 +259,10 @@ export default {
         //将原始的html转换成markdown
         let turndownService = new TurndownService({
           headingStyle: 'atx',
-          bulletListMarker: '-'
+          bulletListMarker: '-',
+          fence: '```',
+          preformattedCode: true,
+          codeBlockStyle: 'fenced'
         })
         this.content = turndownService.turndown(this.currentMoodObj.attributes.mood_content)
       }else {
@@ -431,9 +434,9 @@ export default {
       const talk = new Talk();
       talk.set('mood_title', this.title);
 
+      //将Markdown格式的内容转换为html
       let md = new MarkdownIt()
       this.content = md.render(this.content);
-      console.log(this.content)
 
       talk.set('mood_content', this.content);
       talk.set("mood_like",0)

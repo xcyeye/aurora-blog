@@ -64,7 +64,7 @@ let showPlaylist = false
 let disabledNetEaseMusic = false
 let localSongs = {}
 let serverUrl = ''
-let disabledSpace = false
+let disabledSpace = true
 try {
   songIds = __SONG_IDS__
   playlist = __PLAYLIST__
@@ -178,7 +178,7 @@ export default {
       }
     },3500)
 
-    if (!disabledSpace) {
+    if (!disabledSpace && disabledSpace !== undefined) {
       window.addEventListener('keyup',this.keyListener)
     }
   },
