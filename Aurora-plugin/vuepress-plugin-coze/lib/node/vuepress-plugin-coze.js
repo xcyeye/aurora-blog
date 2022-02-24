@@ -33,6 +33,17 @@ const vuepressPluginCoze = ({appId,appKey,masterKey,avatarPath,registerPath,only
                 content: "",
             })
 
+            const AuroraCozeMood = await createPage(app, {
+                path: '/next-mood',
+                // 设置 frontmatter
+                frontmatter: {
+                    layout: 'AuroraCozeMood',
+                    slug: 'aurora-AuroraCozeMood',
+                },
+                // 设置 markdown 内容
+                content: "",
+            })
+
             const RegisterUserPage = await createPage(app, {
                 //说说页面，默认
                 path: registerPath,
@@ -48,6 +59,7 @@ const vuepressPluginCoze = ({appId,appKey,masterKey,avatarPath,registerPath,only
             app.pages.push(AuroraCozePage)
             app.pages.push(RegisterUserPage)
             app.pages.push(photoPage)
+            app.pages.push(AuroraCozeMood)
         },
         define: {
             __APP_ID__: appId,

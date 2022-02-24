@@ -83,17 +83,6 @@ const auroraTheme = ({ themePlugins = {},...localeOptions }) => {
                 content: "",
             })
 
-            const AuroraCozeMood = await createPage(app, {
-                path: '/auroraMood',
-                // 设置 frontmatter
-                frontmatter: {
-                    layout: 'AuroraCozeMood',
-                    slug: 'aurora-AuroraCozeMood',
-                },
-                // 设置 markdown 内容
-                content: "",
-            })
-
             if (app.pages.every((page) => page.path !== '/')) {
                 const homepage = await createPage(app, {
                     path: '/',
@@ -114,7 +103,6 @@ const auroraTheme = ({ themePlugins = {},...localeOptions }) => {
             app.pages.push(linkPage)
             app.pages.push(tagPhoto)
             app.pages.push(ArchivePage)
-            app.pages.push(AuroraCozeMood)
         },
         onGenerated: (app) => {
             console.log("\x1B[32m\x1B[1m","\n博客部署请看: https://aurora.xcye.xyz/home/deploy.html\n")
