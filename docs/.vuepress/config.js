@@ -646,7 +646,7 @@ module.exports = {
         //自定义顶部图片
         customTopImg: {
             //是否启用定制顶部图片，控制全局，如果关闭，那么将使用随机图片，随机图片接口可以自己设置
-            custom: false,
+            custom: true,
 
             //文章顶部图片，数组，每次从数组中随机选择一张
             page: [
