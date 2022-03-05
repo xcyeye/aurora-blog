@@ -48,7 +48,7 @@
           </div>
         </div>
         <div class="aurora-common-bottom-right aurora-common-bottom-com">
-          <div class="aurora-common-bottom-right-container" :class="getIsSidebarScroll">
+          <div class="aurora-common-bottom-right-container" :class="getIsSidebarScroll(frontmatter.home)">
             <div v-if="mobilePageSidebar">
               <HomeSidebar :show-navbar="true"
                            :sidebar-width-var="0.92"
@@ -66,7 +66,6 @@
 
       <div class="aurora-common-footer">
         <Footer :theme-property="themeProperty"
-                :is-home="frontmatter.home"
                 :is-show-footer="isShowFooter">
         </Footer>
       </div>
@@ -526,8 +525,12 @@ export default defineComponent({
       }
     }
 
-    if (document.body.clientWidth < 550 && this.themeProperty.mobilePageSidebar !== undefined) {
-      this.mobilePageSidebar = this.themeProperty.mobilePageSidebar
+    if (document.body.clientWidth < 550) {
+      if (this.themeProperty.mobilePageSidebar !== undefined) {
+        this.mobilePageSidebar = this.themeProperty.mobilePageSidebar
+      }else {
+        this.mobilePageSidebar = false
+      }
     }
   }
 })

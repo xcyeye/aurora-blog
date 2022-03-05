@@ -2821,7 +2821,7 @@ body::-webkit-scrollbar-thumb {
     }
 
     #home-bottom {
-        width: 93%
+        /*width: 93%*/
     }
 
     #home-page-tag,
@@ -5517,7 +5517,7 @@ body::-webkit-scrollbar-thumb {
 
 #article-page {
     margin-top: 3rem;
-    margin-bottom: 3rem;
+    /*margin-bottom: 3rem;*/
 }
 
 /*v1.13版本增加样式*/
@@ -5893,6 +5893,15 @@ body::-webkit-scrollbar-thumb {
     margin-bottom: var(--aurora-article-margin-bottom);
 }
 
+.aurora-common-bottom-right-container-scroll {
+    max-height: calc(88vh);
+    overflow-y: scroll;
+}
+
+.aurora-common-bottom-right-container-scroll::-webkit-scrollbar {
+    display: none;
+}
+
 
 @media screen and (max-width:719px)  {
     .aurora-common-bottom {
@@ -5909,7 +5918,7 @@ body::-webkit-scrollbar-thumb {
     }
 
     .aurora-common-bottom-left {
-        margin-bottom: 3rem;
+        /*margin-bottom: 3rem;*/
     }
 
     .aurora-common-bottom-right-container {
@@ -5918,6 +5927,10 @@ body::-webkit-scrollbar-thumb {
 
     .aurora-common-bottom-left-container {
         width: 100%;
+    }
+
+    .aurora-mobile-tag {
+        margin-bottom: 0;
     }
 }
 

@@ -1,11 +1,11 @@
 <template>
   <aurora-app :is-sticky-sidebar="true" :is-show-side-bar="false"
-          :show-sidebar-link="false"
+          :show-sidebar-link="false" :is-sidebar-scroll="false"
           :is-show-top-img="true" :is-show-head-line="false">
     <template #center1>
       <div class="link">
         <div :style="$store.state.borderRadiusStyle + $store.state.opacityStyle"
-             class="box link-common" id="c-link">
+             class="box link-common aurora-mobile-link" id="c-link">
           <div class="aurora-theme-archive">
             <AuroraArchive/>
           </div>

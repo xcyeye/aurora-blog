@@ -1,8 +1,8 @@
 <template>
-  <aurora-app :is-sticky-sidebar="true" :is-show-top-img="true"
+  <aurora-app :is-sticky-sidebar="true" :is-show-top-img="true" :is-sidebar-scroll="false"
           :show-tag-cloud="false" :is-show-side-bar="false">
     <template #center1>
-      <BCenter>
+      <BCenter class="aurora-mobile-tag">
         <template #page-center1>
           <div class="tag tag-list" id="tag">
             <div class="tag-top">
