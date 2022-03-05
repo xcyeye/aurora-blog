@@ -37,8 +37,8 @@
       <div class="aurora-common-bottom" :style="'--opacity: ' + $store.state.varOpacity +
          '; --borderRadius: ' + $store.state.varBorderRadius +
          'px;'" :class="frontmatter.home ? 'aurora-common-bottom-home' : 'aurora-common-bottom-content'">
-        <div class="aurora-common-bottom-left aurora-common-bottom-com" :style="bottomContainerBgStyle" :class="frontmatter.home ? 'aurora-common-bottom-left-container-home' : 'aurora-common-bottom-left-container-content'">
-          <div class="aurora-common-bottom-left-container" :style="bottomContainerWidthStyle">
+        <div class="aurora-common-bottom-left aurora-common-bottom-com" :class="frontmatter.home ? 'aurora-common-bottom-left-container-home' : 'aurora-common-bottom-left-container-content'">
+          <div class="aurora-common-bottom-left-container">
             <home-bottom v-if="frontmatter.home"/>
             <div v-else class="aurora-common-bottom-view">
               <slot name="center1"></slot>
@@ -83,6 +83,7 @@ import MobileSidebar from "../child/side/MobileSidebar.vue";
 import SocialSpin from '../SocialSpin.vue'
 import HomeBottom from '../HomeBottom.vue'
 import Page from '../Page.vue'
+import PageContainer from '../PageContainer.vue'
 
 
 //配置导入
@@ -105,7 +106,8 @@ export default defineComponent({
     Home,
     MobileSidebar,
     HomeBottom,
-    Page
+    Page,
+    PageContainer
   },
   data() {
     return {
@@ -142,18 +144,6 @@ export default defineComponent({
       type: Boolean,
       default() {
         return true
-      }
-    },
-    bottomContainerWidthStyle: {
-      type: String,
-      default() {
-        return ""
-      }
-    },
-    bottomContainerBgStyle: {
-      type: String,
-      default() {
-        return ""
       }
     },
     showSidebarAnimateClass: {
@@ -395,11 +385,20 @@ export default defineComponent({
     }
   },
   created() {
-    let frontmatter = this.$frontmatter;
-    if (frontmatter.auroraLayout !== 'vuepress-aurora') {
+    if (this.$frontmatter.auroraLayout === "vuepress-aurora") {
+      this.showPageContent = false
+    }else {
       this.showPageContent = true
     }
 
+    this.$router.afterEach((to,from,next) => {
+      let auroraLayout =this.$frontmatter.auroraLayout
+      if (auroraLayout === "vuepress-aurora") {
+        this.showPageContent = false
+      }else {
+        this.showPageContent = true
+      }
+    })
     if (this.$store.state.printRightIndex === 0) {
       console.log("%c vuepress-theme-Aurora %c by qsyyke","font-weight: bold;color: white;display: inline-block;text-align: center;height: 1.5rem;line-height: 1.5rem;background-color: rgba(255,202,212,.8);padding: 10px;border-bottom-left-radius: 13px;border-top-left-radius: 13px;","font-weight: bold;color: white;display: inline-block;text-align: center;height: 1.5rem;line-height: 1.5rem;background-color: rgba(178,247,239,.85);padding: 10px;border-bottom-right-radius: 13px;border-top-right-radius: 13px;")
       console.log("%c Version %c "+ this.$store.state.latestVersion + "","font-weight: bold;color: white;display: inline-block;text-align: center;height: 1.5rem;line-height: 1.5rem;background-color: rgba(255,202,212,.8);padding: 10px;border-bottom-left-radius: 13px;border-top-left-radius: 13px;","font-weight: bold;color: white;display: inline-block;text-align: center;height: 1.5rem;line-height: 1.5rem;background-color: rgba(178,247,239,.85);padding: 10px;border-bottom-right-radius: 13px;border-top-right-radius: 13px;")

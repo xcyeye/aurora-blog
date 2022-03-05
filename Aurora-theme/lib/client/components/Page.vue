@@ -1,6 +1,8 @@
 <template>
   <div>
-    <div>
+    <div class="aurora-article-box" :style="'--opacity: ' + $store.state.varOpacity +
+         '; --borderRadius: ' + $store.state.varBorderRadius +
+         'px;'">
       <div id="theme-default-content" :class="!isHideH1 ? 'hide-h1-tag' : 'show-h1-tag'" class="theme-default-content pageContent medium-zoom-content">
         <div class="page-top-share">
           <div class="page-top-share-next">
@@ -75,6 +77,7 @@ export default defineComponent({
   },
   emits: ['getHeadLine'],
   created() {
+
     if (this.$route.hash !== "") {
       this.$router.push(this.$route.hash)
     }

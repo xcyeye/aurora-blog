@@ -1,5 +1,5 @@
 <template>
-  <aurora-app :is-sticky-sidebar="true" :is-show-top-img="true" :bottom-container-width-style="'width: 100%;'"
+  <aurora-app :is-sticky-sidebar="true" :is-show-top-img="true"
           :show-tag-cloud="false" :is-show-side-bar="false">
     <template #center1>
       <BCenter>

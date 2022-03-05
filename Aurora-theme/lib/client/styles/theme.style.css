@@ -5836,7 +5836,7 @@ body::-webkit-scrollbar-thumb {
     flex: 4.5;
     overflow: hidden;
     max-width: 68%;
-    border-radius: var(--borderRadius);
+    /*border-radius: var(--borderRadius);*/
 }
 
 .aurora-common-bottom-right {
@@ -5852,12 +5852,12 @@ body::-webkit-scrollbar-thumb {
 }
 
 .aurora-common-bottom-left-container-content {
-    background-color: rgba(255,255,255,var(--opacity));
+    /*background-color: rgba(255,255,255,var(--opacity));*/
     /*padding-left: ;*/
 }
 
 .aurora-common-bottom-left-container-content .aurora-common-bottom-left-container {
-    width: 90%;
+    /*width: 90%;*/
     margin: 0 auto;
 }
 
@@ -5883,6 +5883,14 @@ body::-webkit-scrollbar-thumb {
 .aurora-common-bottom-right-container {
     position: sticky;
     top: 6%;
+}
+
+.aurora-article-box {
+    margin: 0 auto;
+    background-color: rgba(255,255,255,var(--opacity));
+    border-radius: var(--borderRadius);
+    overflow: hidden;
+    margin-bottom: var(--aurora-article-margin-bottom);
 }
 
 

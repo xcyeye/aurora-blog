@@ -1,6 +1,5 @@
 <template>
   <aurora-app :is-sticky-sidebar="true" :show-sidebar-animate-class="false"
-              :bottom-container-bg-style="'background-color: rgba(255,255,255,0);'" :bottom-container-width-style="'width: 100%;'"
           :is-show-side-bar="false" :is-show-top-img="true" :is-show-head-line="false">
     <template #center1>
       <!--<CozeLogin @coze-login="cozeLogin"></CozeLogin>-->
