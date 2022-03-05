@@ -61,6 +61,17 @@ const auroraTheme = ({ themePlugins = {},...localeOptions }) => {
                 content: "",
             })
 
+            const moodPage2 = await createPage(app, {
+                path: '/mood2',
+                // 设置 frontmatter
+                frontmatter: {
+                    layout: 'Mood2',
+                    slug: 'aurora-mood2',
+                },
+                // 设置 markdown 内容
+                content: "",
+            })
+
             const tagPhoto = await createPage(app, {
                 path: '/tag',
                 // 设置 frontmatter
@@ -103,6 +114,7 @@ const auroraTheme = ({ themePlugins = {},...localeOptions }) => {
             app.pages.push(linkPage)
             app.pages.push(tagPhoto)
             app.pages.push(ArchivePage)
+            app.pages.push(moodPage2)
         },
         onGenerated: (app) => {
             console.log("\x1B[32m\x1B[1m","\n博客部署请看: https://aurora.xcye.xyz/home/deploy.html\n")

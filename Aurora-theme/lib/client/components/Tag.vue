@@ -1,5 +1,5 @@
 <template>
-  <Common :is-sticky-sidebar="true" :is-show-top-img="true"
+  <aurora-app :is-sticky-sidebar="true" :is-show-top-img="true" :bottom-container-width-style="'width: 100%;'"
           :show-tag-cloud="false" :is-show-side-bar="false">
     <template #center1>
       <BCenter>
@@ -78,7 +78,7 @@
         </template>
       </BCenter>
     </template>
-  </Common>
+  </aurora-app>
 </template>
 
 <script>

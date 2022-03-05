@@ -43,7 +43,7 @@ import { useThemeLocaleData } from '../composables'
 import { resolveEditLink } from '../utils'
 
 import NavLink from './NavLink.vue'
-import Poster from "./global/Poster.vue";
+import Poster from "./common/Poster.vue";
 import myData from'@temp/my-data'
 
 const useEditNavLink = (): ComputedRef<null | NavLinkType> => {

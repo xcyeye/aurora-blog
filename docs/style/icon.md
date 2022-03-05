@@ -70,7 +70,7 @@ navbar: [
     {
         //这里是一级导航
         text: '问题和bug',
-        iconClass: 'aurora-si-glyph-global',
+        iconClass: 'aurora-si-glyph-common',
         
         //children中配置的是二级导航
         children: [

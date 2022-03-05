@@ -59,7 +59,7 @@ categories: [教程]
 - yarn
 
   ```sh
-  yarn global vuepress-theme-cli
+  yarn common vuepress-theme-cli
   ```
 
 - [视频教程](https://ooszy.cco.vin/theme-template/%E6%9C%80%E7%BB%88%E7%89%88%E6%9C%AC.mp4)

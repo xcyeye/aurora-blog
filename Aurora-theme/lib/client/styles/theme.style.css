@@ -3553,7 +3553,7 @@ body::-webkit-scrollbar-thumb {
 
 .home-bottom {
     display: flex;
-    width: 70%;
+    /*width: 70%;*/
     margin: 0 auto;
     color: var(--fontColor);
     font-family: var(--fontFamily)
@@ -3581,9 +3581,10 @@ body::-webkit-scrollbar-thumb {
     height: -webkit-max-content;
     height: -moz-max-content;
     height: max-content;
-    margin: 0 auto;
+    /*margin: 0 auto;*/
     margin-bottom: 3rem;
-    width: 90%;
+    width: 95%;
+    margin-right: auto;
     border-radius: var(--borderRadius);
 }
 
@@ -4050,7 +4051,8 @@ body::-webkit-scrollbar-thumb {
     position: -webkit-sticky;
     position: sticky;
     top: 6%;
-    overflow: hidden
+    overflow: hidden;
+    margin-left: auto;
 }
 
 .home-sidebar::-webkit-scrollbar {
@@ -4189,7 +4191,7 @@ body::-webkit-scrollbar-thumb {
     height: max-content;
     border-radius: var(--borderRadius);
     padding-bottom: 1rem;
-    padding-top: 1rem
+    padding-top: 1rem;
 }
 
 .sidebar-page {
@@ -4623,7 +4625,7 @@ body::-webkit-scrollbar-thumb {
     width: 100%;
     flex: 2;
     position: relative;
-    margin-left: 1.5rem;
+    /*margin-left: 1.5rem;*/
     display: flex;
     align-items: flex-start
 }
@@ -5794,6 +5796,122 @@ body::-webkit-scrollbar-thumb {
     .aurora-slide-item-font-common {
         font-size: 15px;
     }
+}
 
+
+/*测试部分*/
+.aurora-common-box {
+    height: 100%;
+    width: calc(100vw);
+}
+
+.aurora-common-top {
+    height: 100%;
+    width: 100%;
+}
+
+.aurora-common-page {
+    height: 20rem;
 
 }
+
+.aurora-common-bottom {
+    width: 70%;
+    margin: 0 auto;
+    height: auto;
+    display: flex;
+    /*background: #42a5f5;*/
+    position: relative;
+}
+
+.aurora-common-bottom-content {
+    margin-top: 3rem;
+}
+
+.aurora-common-bottom-com {
+    display: inline-block;
+}
+
+.aurora-common-bottom-left {
+    flex: 4.5;
+    overflow: hidden;
+    max-width: 68%;
+    border-radius: var(--borderRadius);
+}
+
+.aurora-common-bottom-right {
+    flex: 2;
+    max-width: 32%;
+}
+
+.aurora-common-bottom-left-container {
+    width: 100%;
+    height: auto;
+    /*background: red;*/
+
+}
+
+.aurora-common-bottom-left-container-content {
+    background-color: rgba(255,255,255,var(--opacity));
+    /*padding-left: ;*/
+}
+
+.aurora-common-bottom-left-container-content .aurora-common-bottom-left-container {
+    width: 90%;
+    margin: 0 auto;
+}
+
+.aurora-common-bottom-right-container {
+    width: 90%;
+    height: auto;
+    /*background: #981cb9;*/
+    margin-left: auto;
+}
+
+.aurora-common-footer {
+    margin-top: 3rem;
+}
+
+.stickSidebar {
+
+}
+
+#stickSidebar {
+
+}
+
+.aurora-common-bottom-right-container {
+    position: sticky;
+    top: 6%;
+}
+
+
+@media screen and (max-width:719px)  {
+    .aurora-common-bottom {
+        width: 93%;
+        display: block;
+    }
+
+    .aurora-common-bottom-com {
+        display: block;
+    }
+
+    .aurora-common-bottom-left,.aurora-common-bottom-right {
+        max-width: 100%;
+    }
+
+    .aurora-common-bottom-left {
+        margin-bottom: 3rem;
+    }
+
+    .aurora-common-bottom-right-container {
+        width: 100%;
+    }
+
+    .aurora-common-bottom-left-container {
+        width: 100%;
+    }
+}
+
+
+

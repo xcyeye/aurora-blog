@@ -82,7 +82,7 @@ module.exports = {
             },
             {
                 text: '问题和bug',
-                iconClass: 'aurora-si-glyph-global',
+                iconClass: 'aurora-si-glyph-common',
                 children: [
                     {
                         text: 'CHANGELOG',

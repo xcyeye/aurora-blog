@@ -1,6 +1,7 @@
 <template>
-  <common :is-sticky-sidebar="true" :is-show-side-bar="false"
+  <aurora-app :is-sticky-sidebar="true" :is-show-side-bar="false"
           :show-sidebar-link="false"
+              :bottom-container-bg-style="'background-color: rgba(255,255,255,0);'" :bottom-container-width-style="'width: 100%;'"
           :is-show-top-img="true" :is-show-head-line="false">
     <template #center1>
       <div class="link" :data="linkItem.title" :key="linkItem.title" v-for="(linkItem,linkIndex) in themeProperty.friendLinks">
@@ -46,7 +47,7 @@
       </BCenter>
       <comment :path-name="$route.path" />
     </template>
-  </common>
+  </aurora-app>
 </template>
 
 <script lang="ts">

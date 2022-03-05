@@ -12,11 +12,7 @@
                   :page-size="pageSize"/>
 
     </div>
-    <div class="home-page-fun" id="home-page-fun">
-      <HomeSidebar></HomeSidebar>
-    </div>
   </div>
-  <slot name="home-footer"/>
 </template>
 
 <script>

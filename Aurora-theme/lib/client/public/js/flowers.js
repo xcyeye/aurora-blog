@@ -1,7 +1,7 @@
 module.exports = {
     flowers: function (flowersNum) {
         let i;
-        let canvas = document.getElementById("aurora-global-flowers-canvas");
+        let canvas = document.getElementById("aurora-common-flowers-canvas");
         let context = canvas.getContext("2d");
         let width = canvas.width = window.innerWidth;
         let height = canvas.height = window.innerHeight;

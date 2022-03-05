@@ -71,7 +71,7 @@ module.exports = {
         /*
         * 音乐插件，使用：https://aurora.xcye.xyz/plugin/player/
         * */
-        [
+        /*[
             path.resolve(__dirname, "../../Aurora-plugin/vuepress-plugin-player/lib/node/index.js"),
             //"player",
             {
@@ -108,12 +108,12 @@ module.exports = {
                     ]
                 }
             }
-        ],
+        ],*/
 
         /*
         * 气泡插件，使用：https://aurora.xcye.xyz/plugin/bubble/
         * */
-        [
+        /*[
             //"bubble",
             path.resolve(__dirname, "../../Aurora-plugin/vuepress-plugin-bubble/lib/node/index.js"),
             {
@@ -140,7 +140,7 @@ module.exports = {
 
                 zIndex: -2
             }
-        ],
+        ],*/
     ],
     /*
     * 设置head 一定要加入<script src="https://at.alicdn.com/t/font_2849934_v6y652peian.js"></script>项配置，否则一些图标不能正常显示

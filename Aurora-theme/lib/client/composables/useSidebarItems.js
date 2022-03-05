@@ -5,7 +5,7 @@ import { isArray, isPlainObject, isString, resolveLocalePath, } from '@vuepress/
 import { useNavLink } from './useNavLink';
 export const sidebarItemsSymbol = Symbol('sidebarItems');
 /**
- * Inject sidebar items global computed
+ * Inject sidebar items common computed
  */
 export const useSidebarItems = () => {
     const sidebarItems = inject(sidebarItemsSymbol);
@@ -15,7 +15,7 @@ export const useSidebarItems = () => {
     return sidebarItems;
 };
 /**
- * Resolve sidebar items global computed
+ * Resolve sidebar items common computed
  *
  * It should only be resolved and provided once
  */

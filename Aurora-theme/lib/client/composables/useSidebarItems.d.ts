@@ -4,11 +4,11 @@ import type { DefaultThemeData, DefaultThemeNormalPageFrontmatter, SidebarConfig
 export declare type SidebarItemsRef = ComputedRef<ResolvedSidebarItem[]>;
 export declare const sidebarItemsSymbol: InjectionKey<SidebarItemsRef>;
 /**
- * Inject sidebar items global computed
+ * Inject sidebar items common computed
  */
 export declare const useSidebarItems: () => SidebarItemsRef;
 /**
- * Resolve sidebar items global computed
+ * Resolve sidebar items common computed
  *
  * It should only be resolved and provided once
  */

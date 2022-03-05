@@ -5,29 +5,32 @@ import 'default-passive-events'
 import store from './public/js/store'
 
 //组件导入
-import CodeGroup from "./components/global/CodeGroup";
-import Badge from './components/global/Badge.vue';
-import CodeGroupItem from './components/global/CodeGroupItem.vue';
-import TopImage from './components/global/TopImage.vue';
-import BCenter from './components/global/BCenter.vue';
-import Common from './components/global/Common.vue';
-import Footer from './components/global/Footer.vue';
-import Message from './components/global/Message.vue';
-import Donate from "./components/global/Donate.vue";
-import Comment from "./components/global/Comment.vue";
+import CodeGroup from "./components/common/CodeGroup";
+import Badge from './components/common/Badge.vue';
+import CodeGroupItem from './components/common/CodeGroupItem.vue';
+import TopImage from './components/common/TopImage.vue';
+import BCenter from './components/common/BCenter.vue';
+import Common from './components/common/Common.vue';
+import Footer from './components/common/Footer.vue';
+import Message from './components/common/Message.vue';
+import Donate from "./components/common/Donate.vue";
+import Comment from "./components/common/Comment.vue";
 import Mood from "./components/Mood.vue";
 import About from './components/About.vue';
 import Tag from './components/Tag.vue';
 import Link from './components/Link.vue';
-import Poster from "./components/global/Poster.vue";
+import Poster from "./components/common/Poster.vue";
 import HomeSidebar from "./components/child/side/HomeSidebar.vue";
 import HomeBottom from "./components/HomeBottom.vue";
-import AuroraGlobal from "./components/global/AuroraGlobal.vue";
+import AuroraGlobal from "./components/common/AuroraGlobal.vue";
 import Archive from './components/Archive.vue'
 
+import Mood2 from "./components/Mood2.vue";
+import AuroraApp from "./components/common/AuroraApp.vue";
+
 //主题内置组件
-import Pins from "./components/global/inner/Pins.vue";
-import AuroraBubble from "./components/global/inner/AuroraBubble.vue";
+import Pins from "./components/common/inner/Pins.vue";
+import AuroraBubble from "./components/common/inner/AuroraBubble.vue";
 
 //样式导入
 import './styles/index.scss';
@@ -57,6 +60,9 @@ export default defineClientAppEnhance(({ app, router }) => {
     app.component("Archive",Archive)
     app.component("Pins",Pins)
     app.component("AuroraBubble",AuroraBubble)
+    app.component("Mood2",Mood2)
+    app.component("AuroraApp",AuroraApp)
+
 
     // 导入测试组件
 

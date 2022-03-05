@@ -3,7 +3,7 @@ import { defineClientAppSetup, usePageFrontmatter } from '@vuepress/client';
 import {resolveSidebarItems, sidebarItemsSymbol, useThemeData, useThemeLocaleData,} from './composables';
 export default defineClientAppSetup(() => {
     // we need to access sidebar items in multiple components
-    // so we make it global computed
+    // so we make it common computed
     const themeLocale = useThemeLocaleData();
     const frontmatter = usePageFrontmatter();
     const sidebarItems = computed(() => resolveSidebarItems(frontmatter.value, themeLocale.value));
