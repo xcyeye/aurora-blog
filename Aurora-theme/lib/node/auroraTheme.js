@@ -32,6 +32,7 @@ const auroraTheme = ({ themePlugins = {},...localeOptions }) => {
                 frontmatter: {
                     layout: 'About',
                     slug: 'aurora-about',
+                    auroraLayout: 'vuepress-aurora'
                 },
                 permalink: '/about',
                 // 设置 markdown 内容
@@ -44,6 +45,7 @@ const auroraTheme = ({ themePlugins = {},...localeOptions }) => {
                 frontmatter: {
                     layout: 'Link',
                     slug: 'aurora-link',
+                    auroraLayout: 'vuepress-aurora'
                 },
 
                 // 设置 markdown 内容
@@ -56,6 +58,7 @@ const auroraTheme = ({ themePlugins = {},...localeOptions }) => {
                 frontmatter: {
                     layout: 'Mood',
                     slug: 'aurora-mood',
+                    auroraLayout: 'vuepress-aurora'
                 },
                 // 设置 markdown 内容
                 content: "",
@@ -67,6 +70,7 @@ const auroraTheme = ({ themePlugins = {},...localeOptions }) => {
                 frontmatter: {
                     layout: 'Mood2',
                     slug: 'aurora-mood2',
+                    auroraLayout: 'vuepress-aurora'
                 },
                 // 设置 markdown 内容
                 content: "",
@@ -78,6 +82,7 @@ const auroraTheme = ({ themePlugins = {},...localeOptions }) => {
                 frontmatter: {
                     layout: 'Tag',
                     slug: 'aurora-tag',
+                    auroraLayout: 'vuepress-aurora'
                 },
                 // 设置 markdown 内容
                 content: "",
@@ -89,6 +94,7 @@ const auroraTheme = ({ themePlugins = {},...localeOptions }) => {
                 frontmatter: {
                     layout: 'Archive',
                     slug: 'aurora-archive',
+                    auroraLayout: 'vuepress-aurora'
                 },
                 // 设置 markdown 内容
                 content: "",
@@ -100,7 +106,8 @@ const auroraTheme = ({ themePlugins = {},...localeOptions }) => {
                     // 设置 frontmatter
                     frontmatter: {
                         layout: 'Layout',
-                        home: true
+                        home: true,
+                        auroraLayout: 'vuepress-aurora'
                     },
                     // 设置 markdown 内容
                     content: ""

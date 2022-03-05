@@ -1,30 +1,30 @@
 <template>
-  <main :style="$store.state.borderRadiusStyle + $store.state.opacityStyle"
-        class="page sidebar-single-enter-animate" id="article-page">
-    <slot name="top" />
-    <div id="theme-default-content" :class="!isHideH1 ? 'hide-h1-tag' : 'show-h1-tag'" class="theme-default-content pageContent medium-zoom-content">
-      <div class="page-top-share">
-        <div class="page-top-share-next">
-          <poster :title="originPageData.title" :content="posterContent"/>
-        </div>
-      </div>
-      <Content />
-    </div>
-    <PageMeta v-if="showPageMeta" />
-    <slot name="bottom" />
-  </main>
-  <b-center v-if="themeProperty.articlePagination === undefined ? true : themeProperty.articlePagination">
-    <template #page-center1>
-      <page-next/>
-    </template>
-  </b-center>
   <div>
-    <donate v-if="showDonate" />
+    <div>
+      <div id="theme-default-content" :class="!isHideH1 ? 'hide-h1-tag' : 'show-h1-tag'" class="theme-default-content pageContent medium-zoom-content">
+        <div class="page-top-share">
+          <div class="page-top-share-next">
+            <poster :title="originPageData.title" :content="posterContent"/>
+          </div>
+        </div>
+        <Content />
+      </div>
+      <PageMeta v-if="showPageMeta" />
+    </div>
+
+    <b-center v-if="themeProperty.articlePagination === undefined ? true : themeProperty.articlePagination">
+      <template #page-center1>
+        <page-next/>
+      </template>
+    </b-center>
+    <div>
+      <donate v-if="showDonate" />
+    </div>
+    <div class="recommend-page">
+      <RecommendPage :theme-property="themeProperty"/>
+    </div>
+    <comment :path-name="pathName"/>
   </div>
-  <div class="recommend-page">
-    <RecommendPage :theme-property="themeProperty"/>
-  </div>
-  <comment :path-name="pathName"/>
 </template>
 
 <script>

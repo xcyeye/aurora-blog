@@ -43,14 +43,7 @@
             <div v-else class="aurora-common-bottom-view">
               <slot name="center1"></slot>
               <slot name="center2"></slot>
-              <slot name="center3"></slot>
-              <slot name="center4"></slot>
-              <slot name="center5"></slot>
-              <slot name="center6"></slot>
-              <slot name="center7"></slot>
-              <slot name="center8"></slot>
-              <slot name="center9"></slot>
-              <content/>
+              <page v-if="showPageContent" :theme-property="themeProperty"/>
             </div>
           </div>
         </div>
@@ -89,6 +82,7 @@ import Home from '../Home.vue'
 import MobileSidebar from "../child/side/MobileSidebar.vue";
 import SocialSpin from '../SocialSpin.vue'
 import HomeBottom from '../HomeBottom.vue'
+import Page from '../Page.vue'
 
 
 //配置导入
@@ -110,10 +104,12 @@ export default defineComponent({
     StyleMenu,
     Home,
     MobileSidebar,
-    HomeBottom
+    HomeBottom,
+    Page
   },
   data() {
     return {
+      showPageContent: false,
       showHeaderBg: true,
       aboutOption: [],
       sidebarRowVar: 5,
@@ -399,6 +395,11 @@ export default defineComponent({
     }
   },
   created() {
+    let frontmatter = this.$frontmatter;
+    if (frontmatter.auroraLayout !== 'vuepress-aurora') {
+      this.showPageContent = true
+    }
+
     if (this.$store.state.printRightIndex === 0) {
       console.log("%c vuepress-theme-Aurora %c by qsyyke","font-weight: bold;color: white;display: inline-block;text-align: center;height: 1.5rem;line-height: 1.5rem;background-color: rgba(255,202,212,.8);padding: 10px;border-bottom-left-radius: 13px;border-top-left-radius: 13px;","font-weight: bold;color: white;display: inline-block;text-align: center;height: 1.5rem;line-height: 1.5rem;background-color: rgba(178,247,239,.85);padding: 10px;border-bottom-right-radius: 13px;border-top-right-radius: 13px;")
       console.log("%c Version %c "+ this.$store.state.latestVersion + "","font-weight: bold;color: white;display: inline-block;text-align: center;height: 1.5rem;line-height: 1.5rem;background-color: rgba(255,202,212,.8);padding: 10px;border-bottom-left-radius: 13px;border-top-left-radius: 13px;","font-weight: bold;color: white;display: inline-block;text-align: center;height: 1.5rem;line-height: 1.5rem;background-color: rgba(178,247,239,.85);padding: 10px;border-bottom-right-radius: 13px;border-top-right-radius: 13px;")
@@ -458,8 +459,6 @@ export default defineComponent({
     this.colorFontStyle = this.colorStyle + " "+ this.fontStyle
   },
   mounted() {
-    console.log(this.$router.getRoutes())
-
     this.width = document.body.clientWidth
 
     if (document.documentElement.clientWidth < 719) {
