@@ -3,8 +3,8 @@ module.exports = {
 
         //赞赏页面，支付二维码，推荐放置两张图片链接
         donateImg: [
-            "https://ooszy.cco.vin/img/blog-public/wxpay.png",
-            "https://ooszy.cco.vin/img/blog-public/zfbpay.jpg",
+            "/aurora/wxpay.png",
+            "/aurora/zfbpay.jpg",
         ],
 
         //是否在文章页面显示赞赏 默认显示
@@ -20,7 +20,7 @@ module.exports = {
                 name: "奶茶",
 
                 //图片地址
-                img: "https://ooszy.cco.vin/img/blog-public/nc.jpeg",
+                img: "/aurora/nc.jpeg",
 
                 //价格
                 price: 18,
@@ -30,7 +30,7 @@ module.exports = {
             },
             {
                 name: "全味奶茶",
-                img: "https://ooszy.cco.vin/img/blog-note/image-20210911233612031.png?",
+                img: "/aurora/image-20210911233612031.png",
                 price: 11,
                 prefix: "￥",
             },
@@ -44,7 +44,7 @@ module.exports = {
             {
                 name: "初尘",
                 msg: "主题太棒了",
-                img: "https://ooszy.cco.vin/img/blog-public/nc.jpeg",
+                img: "/aurora/nc.jpeg",
                 price: 7,
                 prefix: "￥",
             }

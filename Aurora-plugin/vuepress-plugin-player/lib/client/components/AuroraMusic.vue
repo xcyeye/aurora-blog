@@ -107,7 +107,7 @@ export default {
 
       firstSongStatus: false,
 
-      defaultCover: 'https://ooszy.cco.vin/img/blog-public/avatar.jpg',
+      defaultCover: '/avatar.jpg',
       defaultSonger: '默认歌手',
       defaultSongName: '默认歌曲名',
 

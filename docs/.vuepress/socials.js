@@ -4,7 +4,7 @@ module.exports = {
         {
             //社交链接
             aHref: "tencent://message/?uin=2291308094",
-            // imgSrc: "https://ooszy.cco.vin/img/ico/qq.svg", 从v1.3.2开始久移除次配置，以前版本用于社交ico图标配置
+            // imgSrc: "/img/ico/qq.svg", 从v1.3.2开始久移除次配置，以前版本用于社交ico图标配置
 
             //true为在首页显示，反之
             isHome: true,

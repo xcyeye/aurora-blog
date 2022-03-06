@@ -266,58 +266,38 @@ li {
 
 @font-face {
     font-family: lf;
-    src: url(https://ooszy.cco.vin/font/lf/lf.eot);
-    src: url(https://ooszy.cco.vin/font/lf/lf.eot#iefix) format("embedded-opentype"), url(https://ooszy.cco.vin/font/lf/lf.woff) format("woff"), url(https://ooszy.cco.vin/font/lf/lf.ttf) format("truetype"), url(https://ooszy.cco.vin/font/lf/lf.svg?x-oss-process=style%2FpictureProcess1) format("svg");
-    font-style: normal;
-    font-weight: 400
+    src: url(../public/fonts/style-menu/lf.ttf);
 }
 
 @font-face {
     font-family: cgt;
-    src: url(https://ooszy.cco.vin/font/cgt/cgt.eot);
-    src: url(https://ooszy.cco.vin/font/cgt/cgt.eot#iefix) format("embedded-opentype"), url(https://ooszy.cco.vin/font/cgt/cgt.woff) format("woff"), url(https://ooszy.cco.vin/font/cgt/cgt.ttf) format("truetype"), url(https://ooszy.cco.vin/font/cgt/cgt.svg#cgt) format("svg");
-    font-style: normal;
-    font-weight: 400
+    src: url(../public/fonts/style-menu/cgt.ttf);
+
 }
 
 @font-face {
     font-family: xsf;
-    src: url(https://ooszy.cco.vin/font/xsf/xsf.eot);
-    src: url(https://ooszy.cco.vin/font/xsf/xsf.eot#iefix) format("embedded-opentype"), url(https://ooszy.cco.vin/font/xsf/xsf.woff) format("woff"), url(https://ooszy.cco.vin/font/xsf/xsf.ttf) format("truetype"), url(https://ooszy.cco.vin/font/xsf/xsf.svg#xsf) format("svg");
-    font-style: normal;
-    font-weight: 400
+    src: url(../public/fonts/style-menu/xsf.ttf);
 }
 
 @font-face {
     font-family: lsf;
-    src: url(https://ooszy.cco.vin/font/lsf/lsf.eot);
-    src: url(https://ooszy.cco.vin/font/lsf/lsf.eot#iefix) format("embedded-opentype"), url(https://ooszy.cco.vin/font/lsf/lsf.woff) format("woff"), url(https://ooszy.cco.vin/font/lsf/lsf.ttf) format("truetype"), url(https://ooszy.cco.vin/font/lsf/lsf.svg#lsf) format("svg");
-    font-style: normal;
-    font-weight: 400
+    src: url(../public/fonts/style-menu/lsf.ttf);
 }
 
 @font-face {
     font-family: sst;
-    src: url(https://ooszy.cco.vin/font/sst/sst.eot);
-    src: url(https://ooszy.cco.vin/font/sst/sst.eot#iefix) format("embedded-opentype"), url(https://ooszy.cco.vin/font/sst/sst.woff) format("woff"), url(https://ooszy.cco.vin/font/sst/sst.ttf) format("truetype"), url(https://ooszy.cco.vin/font/sst/sst.svg#sst) format("svg");
-    font-style: normal;
-    font-weight: 400
+    src: url(../public/fonts/style-menu/sst.ttf);
 }
 
 @font-face {
     font-family: tzt;
-    src: url(https://ooszy.cco.vin/font/tzt/tzt.eot);
-    src: url(https://ooszy.cco.vin/font/tzt/tzt.eot#iefix) format("embedded-opentype"), url(https://ooszy.cco.vin/font/tzt/tzt.woff) format("woff"), url(https://ooszy.cco.vin/font/tzt/tzt.ttf) format("truetype"), url(https://ooszy.cco.vin/font/tzt/tzt.svg#tzt) format("svg");
-    font-style: normal;
-    font-weight: 400
+    src: url(../public/fonts/style-menu/tzt.ttf);
 }
 
 @font-face {
     font-family: hlt;
-    src: url(https://ooszy.cco.vin/font/hlt/hlt.eot);
-    src: url(https://ooszy.cco.vin/font/hlt/hlt.eot#iefix) format("embedded-opentype"), url(https://ooszy.cco.vin/font/hlt/hlt.woff) format("woff"), url(https://ooszy.cco.vin/font/hlt/hlt.ttf) format("truetype"), url(https://ooszy.cco.vin/font/hlt/hlt.svg#hlt) format("svg");
-    font-style: normal;
-    font-weight: 400
+    src: url(../public/fonts/style-menu/hlt.ttf);
 }
 
 #app a {
@@ -426,7 +406,7 @@ li {
     right: 2.5rem;
     cursor: pointer;
     z-index: 9;
-    background-image: url(https://ooszy.cco.vin/img/blog-note/color-filling.svg);
+    background-image: url(../public/fonts/style-menu/color-filling.svg);
     background-repeat: no-repeat;
     background-size: 70%;
     background-position: 50%
