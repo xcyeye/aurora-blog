@@ -65,7 +65,7 @@ export default {
     defaultPostImgApi: 'https://unsplash.it/1600/900?random',
 
     //版权信息
-    latestVersion: 'V1.12.x',
+    latestVersion: 'V1.13.x',
     printRightIndex: 0,
     mobileOpenStatus: false,
     currentTagNum: 1
