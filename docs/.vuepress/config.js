@@ -7,7 +7,7 @@ const {siteInformation} = require("./siteInformation");
 const {message} = require("./message");
 const {donate} = require("./donate");
 module.exports = {
-    base: '/REPO/',//如果你准备发布到 https://<USERNAME>.github.io/<REPO>/ ，也就是说你的仓库地址是 https://github.com/<USERNAME>/<REPO> ，则将 base 设置为 "/<REPO>/"。
+    // base: '/REPO/',//如果你准备发布到 https://<USERNAME>.github.io/<REPO>/ ，也就是说你的仓库地址是 https://github.com/<USERNAME>/<REPO> ，则将 base 设置为 "/<REPO>/"。
 
     /*
     * 这里是配置Markdown语法增强的配置，如需配置，请查看官方介绍https://v2.vuepress.vuejs.org/zh/guide/markdown.html
@@ -676,13 +676,13 @@ module.exports = {
 
         //首页背景图片数组，考虑到使用随机图片，打开网站速度变慢，所以移除随机图片，使用自己设置的图片链接
         homeWps: [
-            /*"/bg/404901.png",
+            "/bg/404901.png",
             "/bg/734386.png",
             "/bg/5332.png",
             '/bg/2.jpg',
             '/bg/3.jpg',
             '/bg/4.jpg',
-            '/bg/5.jpg',*/
+            '/bg/5.jpg',
 
             "https://w.wallhaven.cc/full/v9/wallhaven-v9v3r5.jpg",
             "https://w.wallhaven.cc/full/z8/wallhaven-z8dg9y.png",
