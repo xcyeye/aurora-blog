@@ -1,3 +1,5 @@
+import {withBase} from "@vuepress/client";
+
 export default {
     setAnimeImg(state,imgUrl) {
         this.state.animeImg = imgUrl.imgUrl

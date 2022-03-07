@@ -274,11 +274,17 @@ export default defineComponent({
       if (this.$site.base !== "/") {
         base = this.$site.base
       }
+
       new Promise((resolve,reject) => {
         let homeWpsSet = new Set()
         for (let i = 0; i < this.homeWps.length; i++) {
           // homeWpsSet.add(withBase(this.homeWps[i]))
-          homeWpsSet.add(base + this.homeWps[i])
+          let reg=/(http|https):\/\/([\w.]+\/?)\S*/;
+          if (!reg.test(this.homeWps[i])) {
+            homeWpsSet.add(base + this.homeWps[i])
+          }else {
+            homeWpsSet.add(this.homeWps[i])
+          }
         }
         resolve(homeWpsSet)
       }).then((homeWpsSet) => {
@@ -391,13 +397,13 @@ export default defineComponent({
     //从配置文件中，获取首页壁纸
     let homeWps = []
     if (this.themeProperty.homeWps === undefined || this.themeProperty.homeWps == null) {
-      homeWps.push("https://picoss.cco.vin/animate/wall/404901.png")
+      homeWps.push("https://w.wallhaven.cc/full/pk/wallhaven-pkvw9p.jpg")
     }else {
       homeWps = this.themeProperty.homeWps
     }
 
     if (homeWps.length === 0) {
-      homeWps.push("https://picoss.cco.vin/animate/wall/404901.png")
+      homeWps.push("https://w.wallhaven.cc/full/6o/wallhaven-6ogy5w.png")
     }
 
     this.homeWps = homeWps
@@ -406,11 +412,13 @@ export default defineComponent({
       this.aboutOption = this.themeProperty.about
     }
 
-    try {
-      this.ico = this.themeProperty.ico.aboutIco
-    }catch (e) {
-      this.ico = "https://ooszy.cco.vin/img/ico/cat.svg"
-    }
+    /*
+    不要的东西
+    if (this.themeProperty.icon.aboutIcon !== undefined) {
+      this.ico = this.themeProperty.ico.aboutIcon
+    }else {
+      this.ico = "../../public/svg/cat.svg"
+    }*/
 
     setTag(this,this.themeProperty).then(() => {
       this.$store.commit('setTagStatus',{

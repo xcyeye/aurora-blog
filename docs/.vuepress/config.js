@@ -7,7 +7,7 @@ const {siteInformation} = require("./siteInformation");
 const {message} = require("./message");
 const {donate} = require("./donate");
 module.exports = {
-    //base: '/REPO/',//如果你准备发布到 https://<USERNAME>.github.io/<REPO>/ ，也就是说你的仓库地址是 https://github.com/<USERNAME>/<REPO> ，则将 base 设置为 "/<REPO>/"。
+    base: '/REPO/',//如果你准备发布到 https://<USERNAME>.github.io/<REPO>/ ，也就是说你的仓库地址是 https://github.com/<USERNAME>/<REPO> ，则将 base 设置为 "/<REPO>/"。
 
     /*
     * 这里是配置Markdown语法增强的配置，如需配置，请查看官方介绍https://v2.vuepress.vuejs.org/zh/guide/markdown.html
@@ -82,7 +82,7 @@ module.exports = {
                 playlist: '7082462754',
                 showPlaylist: true,
                 //是否禁用网易云音乐，如果你选择禁用，那么就将使用本地的歌曲，请传入链接
-                disabledNetEaseMusic: false,
+                disabledNetEaseMusic: true,
 
                 //请求接口的baseURL
                 serverUrl: 'https://netease-cloud-music-api-teal-psi.vercel.app/',
@@ -96,10 +96,15 @@ module.exports = {
                             songName: '12',
                             cover: 'https://p1.music.126.net/Rg1x9LeUacIDqtvUzL35Cw==/109951163688517312.jpg'
                         },
+                        // {
+                        //     path: 'http://m7.music.126.net/20211120155029/f99e2fe5f557455fd37b7bfd0c0d6c3e/ymusic/545a/005e/025f/c03ab3077e74b9d50e07557d82ca472b.flac',
+                        //     songName: '23',
+                        //     cover: 'https://p2.music.126.net/8mnn6YiQldsRIHe_nER8wg==/109951162894925733.jpg'
+                        // },
+
                         {
-                            path: 'http://m7.music.126.net/20211120155029/f99e2fe5f557455fd37b7bfd0c0d6c3e/ymusic/545a/005e/025f/c03ab3077e74b9d50e07557d82ca472b.flac',
-                            songName: '23',
-                            cover: 'https://p2.music.126.net/8mnn6YiQldsRIHe_nER8wg==/109951162894925733.jpg'
+                            path: '/song/2.mp3',
+                            songName: 'sdf'
                         },
                         {
                             path: '/song/3.mp3',
@@ -671,13 +676,20 @@ module.exports = {
 
         //首页背景图片数组，考虑到使用随机图片，打开网站速度变慢，所以移除随机图片，使用自己设置的图片链接
         homeWps: [
-            "/bg/404901.png",
+            /*"/bg/404901.png",
             "/bg/734386.png",
             "/bg/5332.png",
             '/bg/2.jpg',
             '/bg/3.jpg',
             '/bg/4.jpg',
-            '/bg/5.jpg',
+            '/bg/5.jpg',*/
+
+            "https://w.wallhaven.cc/full/v9/wallhaven-v9v3r5.jpg",
+            "https://w.wallhaven.cc/full/z8/wallhaven-z8dg9y.png",
+            "https://w.wallhaven.cc/full/6o/wallhaven-6op786.jpg",
+            "https://w.wallhaven.cc/full/8o/wallhaven-8oky1j.jpg",
+            "https://w.wallhaven.cc/full/pk/wallhaven-pkvw9p.jpg",
+            "https://w.wallhaven.cc/full/9m/wallhaven-9m7kwd.png"
         ],
         /* homeWps: [
              '/bg/1.jpg',
