@@ -8,17 +8,140 @@
     <artifactId>aurora-theme</artifactId>
     <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
+
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.6.4</version>
+        <relativePath/>
+    </parent>
+
     <modules>
         <module>aurora-base</module>
         <module>aurora-file</module>
         <module>aurora-comment</module>
         <module>aurora-gateway</module>
         <module>aurora-admin</module>
+        <module>aurora-message</module>
+        <module>aurora-common</module>
+        <module>aurora-config</module>
     </modules>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+        <mysql.version>8.0.21</mysql.version>
+        <jjwt.version>0.9.1</jjwt.version>
+        <!--mybatis-spring-boot-starter-->
+        <mybatis.version>2.2.1</mybatis.version>
+        <!--spring-boot-starter-data-redis-->
+        <redis.version>2.6.4</redis.version>
+        <lombok.version>1.18.20</lombok.version>
+        <aop.version>2.6.4</aop.version>
+        <amqp.version>2.6.4</amqp.version>
+        <jdbc.version>2.6.4</jdbc.version>
+        <json.version>2.6.4</json.version>
+        <mail.version>2.6.4</mail.version>
+        <security.version>2.6.4</security.version>
+        <actuator.version>2.6.4</actuator.version>
+
+        <spring.cloud-version>2021.0.1</spring.cloud-version>
+        <alibaba-cloud.version>2021.1</alibaba-cloud.version>
+        <hutool.version>5.7.22</hutool.version>
     </properties>
 
+    <!--统一依赖管理-->
+    <dependencyManagement>
+        <dependencies>
+
+            <!--spring相关-->
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring.cloud-version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-test</artifactId>
+                <scope>test</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-web</artifactId>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-aop</artifactId>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-amqp</artifactId>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-data-jdbc</artifactId>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-data-redis</artifactId>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-json</artifactId>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-mail</artifactId>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-security</artifactId>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-actuator</artifactId>
+            </dependency>
+
+            <!--阿里巴巴相关-->
+            <!-- https://mvnrepository.com/artifact/com.alibaba.cloud/spring-cloud-alibaba-dependencies -->
+            <dependency>
+                <groupId>com.alibaba.cloud</groupId>
+                <artifactId>spring-cloud-alibaba-dependencies</artifactId>
+                <version>2.2.7.RELEASE</version>
+                <type>pom</type>
+            </dependency>
+
+
+            <!--其他依赖-->
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>${lombok.version}</version>
+                <optional>true</optional>
+            </dependency>
+
+            <!--工具类-->
+            <dependency>
+                <groupId>cn.hutool</groupId>
+                <artifactId>hutool-all</artifactId>
+                <version>${hutool.version}</version>
+            </dependency>
+
+        </dependencies>
+    </dependencyManagement>
 </project>

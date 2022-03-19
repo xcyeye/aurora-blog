@@ -9,13 +9,12 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>aurora-admin</artifactId>
+    <artifactId>aurora-message</artifactId>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
     </properties>
-
 
     <build>
         <plugins>
@@ -25,4 +24,5 @@
             </plugin>
         </plugins>
     </build>
+
 </project>
