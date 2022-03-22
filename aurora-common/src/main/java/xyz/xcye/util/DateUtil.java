@@ -1,6 +1,6 @@
 package xyz.xcye.util;
 
-import xyz.xcye.enums.ECommonFormat;
+import xyz.xcye.enums.CommonFormatEnum;
 import java.util.Date;
 
 /**
@@ -156,6 +156,6 @@ public class DateUtil {
      * @return
      */
     public static String format(Date date) {
-        return cn.hutool.core.date.DateUtil.format(date,ECommonFormat.DATE_FORMAT.getFormat());
+        return cn.hutool.core.date.DateUtil.format(date, CommonFormatEnum.DATE_FORMAT.getFormat());
     }
 }

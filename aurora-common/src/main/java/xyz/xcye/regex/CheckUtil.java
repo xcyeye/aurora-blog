@@ -1,8 +1,7 @@
 package xyz.xcye.regex;
 
-import xyz.xcye.enums.ERegex;
+import xyz.xcye.enums.RegexEnum;
 
-import java.util.Date;
 import java.util.regex.Pattern;
 
 /**
@@ -18,8 +17,8 @@ public class CheckUtil {
      * @param mail 待检查的邮箱号
      * @return boolean
      */
-    public static boolean checkMail(String mail) {
-        return Pattern.matches(ERegex.MAIL_REGEX.getRegex(),mail);
+    public static boolean isMail(String mail) {
+        return Pattern.matches(RegexEnum.MAIL_REGEX.getRegex(),mail);
     }
 
     /**
@@ -27,8 +26,8 @@ public class CheckUtil {
      * @param photoNumber 电话号码，不能为空，调用前先判断
      * @return boolean
      */
-    public static boolean checkPhotoNumber(String photoNumber) {
-        return Pattern.matches(ERegex.PHOTO_NUMBER_REGEX.getRegex(), photoNumber);
+    public static boolean isPhotoNumber(String photoNumber) {
+        return Pattern.matches(RegexEnum.PHOTO_NUMBER_REGEX.getRegex(), photoNumber);
     }
 
     /**
@@ -36,8 +35,8 @@ public class CheckUtil {
      * @param domainName 域名
      * @return boolean
      */
-    public static boolean checkDomainName(String domainName) {
-        return Pattern.matches(ERegex.DOMAIN_REGEX.getRegex(), domainName);
+    public static boolean isDomainName(String domainName) {
+        return Pattern.matches(RegexEnum.DOMAIN_REGEX.getRegex(), domainName);
     }
 
     /**
@@ -45,8 +44,8 @@ public class CheckUtil {
      * @param ip ip地址 127.0.0.1
      * @return boolean
      */
-    public static boolean checkIp(String ip) {
-        return Pattern.matches(ERegex.IP_REGEX.getRegex(), ip);
+    public static boolean isIp(String ip) {
+        return Pattern.matches(RegexEnum.IP_REGEX.getRegex(), ip);
     }
 
     /**
@@ -54,8 +53,8 @@ public class CheckUtil {
      * @param username 用户名
      * @return boolean
      */
-    public static boolean checkUsername(String username) {
-        return Pattern.matches(ERegex.USERNAME_REGEX.getRegex(), username);
+    public static boolean isUsername(String username) {
+        return Pattern.matches(RegexEnum.USERNAME_REGEX.getRegex(), username);
     }
 
     /**
@@ -63,8 +62,8 @@ public class CheckUtil {
      * @param number 数字
      * @return boolean
      */
-    public static boolean checkInteger(int number) {
+    public static boolean ischeckInteger(int number) {
         String numberStr = number + "";
-        return Pattern.matches(ERegex.INTEGER_REGEX.getRegex(), numberStr);
+        return Pattern.matches(RegexEnum.INTEGER_REGEX.getRegex(), numberStr);
     }
 }

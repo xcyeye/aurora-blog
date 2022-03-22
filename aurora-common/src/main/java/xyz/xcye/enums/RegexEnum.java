@@ -6,7 +6,7 @@ package xyz.xcye.enums;
  * @author qsyyke
  */
 
-public enum ERegex {
+public enum RegexEnum {
 
     /**
      * 验证邮箱 只允许英文字母、数字、下划线、英文句号、以及中划线组成
@@ -43,7 +43,7 @@ public enum ERegex {
      */
     private final String regex;
 
-    private ERegex(String regex) {
+    private RegexEnum(String regex) {
         this.regex = regex;
     }
 

@@ -17,7 +17,6 @@
     </parent>
 
     <modules>
-        <module>aurora-base</module>
         <module>aurora-file</module>
         <module>aurora-comment</module>
         <module>aurora-gateway</module>
@@ -144,4 +143,12 @@
 
         </dependencies>
     </dependencyManagement>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+            <version>2.6.4</version>
+        </dependency>
+    </dependencies>
 </project>
