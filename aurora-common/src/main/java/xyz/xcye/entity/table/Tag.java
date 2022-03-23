@@ -1,7 +1,14 @@
 package xyz.xcye.entity.table;
 
 import lombok.Data;
+import org.hibernate.validator.constraints.Length;
+import xyz.xcye.enums.FieldLengthEnum;
+import xyz.xcye.valid.Delete;
+import xyz.xcye.valid.Update;
+import xyz.xcye.valid.validator.Status;
+import xyz.xcye.valid.validator.ValidateString;
 
+import javax.validation.constraints.NotNull;
 import java.math.BigInteger;
 
 /**
@@ -15,27 +22,32 @@ public class Tag {
     /**
      * 唯一uid 不能为null 主键
      */
+    @NotNull(groups = {Update.class, Delete.class})
     private BigInteger uid;
 
     /**
      * 标签的标题 长度<100 不能为null
      */
+    @ValidateString(value = "标签-标题",max = FieldLengthEnum.TITLE)
     private String title;
 
     /**
      * 标签的简介 长度<500 可以为null
      */
+    @Length(max = FieldLengthEnum.SUMMARY,message = "标签-简介不能超过{max}")
     private String summary;
 
     /**
      * 该标签的删除状态 1：已删除 0：未删除 不能为null
      */
+    @Status(value = "标签-删除")
     private int deleteStatus;
 
     /**
      * 标签的创建时间 不能为null
      * <p>mysql -> datetime</p>
      */
+    @ValidateString(value = "标签-创建时间",max = FieldLengthEnum.TIME_FORMAT)
     private String createdAt;
 
     /**
@@ -45,7 +57,9 @@ public class Tag {
     private String updatedAt;
 
     /**
-     * 该标签的封面图片uid 因为图片是从文件服务里面获取的，所以可以为null
+     * 该标签的封面图片地址 因为图片是从文件服务里面获取的，所以可以为null
+     * <p>length < 255</p>
      */
-    private BigInteger coverUid;
+    @Length(max = FieldLengthEnum.URL,message = "标签-封面图片地址不能超过{max}")
+    private String coverUrl;
 }

@@ -36,95 +36,33 @@
         <jjwt.version>0.9.1</jjwt.version>
         <!--mybatis-spring-boot-starter-->
         <mybatis.version>2.2.1</mybatis.version>
-        <!--spring-boot-starter-data-redis-->
-        <redis.version>2.6.4</redis.version>
         <lombok.version>1.18.20</lombok.version>
-        <aop.version>2.6.4</aop.version>
-        <amqp.version>2.6.4</amqp.version>
-        <jdbc.version>2.6.4</jdbc.version>
-        <json.version>2.6.4</json.version>
-        <mail.version>2.6.4</mail.version>
-        <security.version>2.6.4</security.version>
-        <actuator.version>2.6.4</actuator.version>
 
-        <spring.cloud-version>2021.0.1</spring.cloud-version>
-        <alibaba-cloud.version>2021.1</alibaba-cloud.version>
+        <spring-cloud.version>2021.0.1</spring-cloud.version>
+        <spring-alibaba-cloud.version>2021.1</spring-alibaba-cloud.version>
         <hutool.version>5.7.22</hutool.version>
     </properties>
 
     <!--统一依赖管理-->
     <dependencyManagement>
         <dependencies>
-
             <!--spring相关-->
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-dependencies</artifactId>
-                <version>${spring.cloud-version}</version>
+                <version>${spring-cloud.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
 
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-starter-test</artifactId>
-                <scope>test</scope>
-            </dependency>
-
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-starter-web</artifactId>
-            </dependency>
-
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-starter-aop</artifactId>
-            </dependency>
-
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-starter-amqp</artifactId>
-            </dependency>
-
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-starter-data-jdbc</artifactId>
-            </dependency>
-
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-starter-data-redis</artifactId>
-            </dependency>
-
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-starter-json</artifactId>
-            </dependency>
-
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-starter-mail</artifactId>
-            </dependency>
-
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-starter-security</artifactId>
-            </dependency>
-
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-starter-actuator</artifactId>
-            </dependency>
-
             <!--阿里巴巴相关-->
-            <!-- https://mvnrepository.com/artifact/com.alibaba.cloud/spring-cloud-alibaba-dependencies -->
             <dependency>
                 <groupId>com.alibaba.cloud</groupId>
                 <artifactId>spring-cloud-alibaba-dependencies</artifactId>
-                <version>2.2.7.RELEASE</version>
+                <version>${spring-alibaba-cloud.version}</version>
                 <type>pom</type>
+                <scope>import</scope>
             </dependency>
-
 
             <!--其他依赖-->
             <dependency>
@@ -141,14 +79,12 @@
                 <version>${hutool.version}</version>
             </dependency>
 
+            <dependency>
+                <groupId>io.jsonwebtoken</groupId>
+                <artifactId>jjwt</artifactId>
+                <version>${jjwt.version}</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
-
-    <dependencies>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-            <version>2.6.4</version>
-        </dependency>
-    </dependencies>
 </project>
