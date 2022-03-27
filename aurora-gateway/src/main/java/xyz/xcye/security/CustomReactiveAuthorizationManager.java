@@ -3,6 +3,7 @@ package xyz.xcye.security;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.auth.AuthenticationException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.http.server.PathContainer;
 import org.springframework.http.server.reactive.ServerHttpRequest;
@@ -18,9 +19,12 @@ import org.springframework.util.AntPathMatcher;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+import xyz.xcye.entity.table.Permission;
+import xyz.xcye.service.PermissionService;
 
 import java.net.URI;
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -34,7 +38,10 @@ import java.util.Map;
 @Component
 public class CustomReactiveAuthorizationManager implements ReactiveAuthorizationManager<AuthorizationContext> {
 
-    private AntPathMatcher antPathMatcher = new AntPathMatcher();
+    private final AntPathMatcher antPathMatcher = new AntPathMatcher();
+
+    @Autowired
+    private PermissionService permissionService;
 
     @Override
     public Mono<AuthorizationDecision> check(Mono<Authentication> contextAuthentication, AuthorizationContext authorizationContext) {
@@ -45,8 +52,9 @@ public class CustomReactiveAuthorizationManager implements ReactiveAuthorization
         ServerHttpRequest request = exchange.getRequest();
 
         PathContainer pathContainer = request.getPath().pathWithinApplication();
-        String value = pathContainer.value();
-        URI uri = request.getURI();
+
+        //访问的路径 uri，不包含host 此uri需要验证
+        String needVerifyUrl = pathContainer.value();
 
         //获取SecurityContext对象
         SecurityContext securityContext = SecurityContextHolder.getContext();
@@ -58,19 +66,35 @@ public class CustomReactiveAuthorizationManager implements ReactiveAuthorization
             return Mono.just(new AuthorizationDecision(false));
         }
 
-        //1.对用户的账户信息进行鉴权
-        verify(contextAuthentication,authorizationContext);
+        //1.从数据库中，查询所有的url需要的权限信息 然后逐一和当前的uri进行匹配
+        List<Permission> permissions = permissionService.queryAllRole();
+        for (Permission permission : permissions) {
+
+            //需要某个角色或者权限访问的路径
+            String permissionPath = permission.getPath();
+
+            //此permissionPath路径需要什么角色
+            String role = permission.getRole();
+
+            //此permissionPath路径需要什么权限
+            String[] permissionArr = permission.getPermission().split(",");
+
+            //只要角色和权限满足其中一个就行，但是优先角色
+            boolean match = antPathMatcher.match(needVerifyUrl, permissionPath);
+            if (match) {
+                return Mono.just(new AuthorizationDecision(true));
+            }
+        }
 
 
         //验证权限 设置为true，就是鉴权成功
-        return Mono.just(new AuthorizationDecision(true));
+        return Mono.just(new AuthorizationDecision(false));
 
     }
 
     @Override
     public Mono<Void> verify(Mono<Authentication> authentication, AuthorizationContext object) {
-        System.out.println(234);
-        return ReactiveAuthorizationManager.super.verify(authentication, object);
+        return null;
     }
 
 

@@ -95,4 +95,9 @@ public class FieldLengthEnum {
     //-----------------------------------文件相关
     public static final int FILE_NAME = 50;
     public static final int FILE_PATH = 255;
+
+
+    //-----------------------------------时间相关
+    /** token默认失效时间，毫秒 默认为30分钟 **/
+    public static final long TOKEN_EXPIRATION_Time = 1800000L;
 }
