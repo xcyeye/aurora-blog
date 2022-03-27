@@ -1,6 +1,6 @@
 package xyz.xcye.entity;
 
-import lombok.Builder;
+import lombok.Data;
 import xyz.xcye.enums.ResultCode;
 
 import java.util.HashMap;
@@ -11,7 +11,7 @@ import java.util.Map;
  * @author qsyyke
  */
 
-@Builder
+@Data
 public class R {
 
     /**
@@ -33,11 +33,8 @@ public class R {
      * 成功，不携带任何数据
      * @return R对象
      */
-    private static R success() {
-        return R.builder()
-                .code(ResultCode.SUCCESS.getCode())
-                .message(ResultCode.SUCCESS.getMessage())
-                .build();
+    public static R success() {
+        return new R(ResultCode.SUCCESS.getCode(),ResultCode.SUCCESS.getMessage());
     }
 
     /**
@@ -46,9 +43,8 @@ public class R {
      * @param message 消息
      * @return R对象
      */
-    private static R success(Integer code,String message) {
-        return R.builder()
-                .code(code).message(message).build();
+    public static R success(Integer code,String message) {
+        return new R(code,message);
     }
 
     /**
@@ -58,21 +54,16 @@ public class R {
      * @param data 需要返回的数据，不需要传入map对象，会自动放在data里
      * @return R对象
      */
-    private static R success(Integer code,String message,Object data) {
-        return R.builder()
-                .code(code).message(message)
-                .data(getDataMap(data)).build();
+    public static R success(Integer code,String message,Object data) {
+        return new R(code,message,data);
     }
 
     /**
      * 失败，不携带任何数据
      * @return R对象
      */
-    private static R failure() {
-        return R.builder()
-                .code(ResultCode.UNKNOWN.getCode())
-                .message(ResultCode.UNKNOWN.getMessage())
-                .build();
+    public static R failure() {
+        return new R(ResultCode.UNKNOWN.getCode(),ResultCode.UNKNOWN.getMessage());
     }
 
     /**
@@ -81,9 +72,8 @@ public class R {
      * @param message 消息
      * @return R对象
      */
-    private static R failure(Integer code,String message) {
-        return R.builder()
-                .code(code).message(message).build();
+    public static R failure(Integer code,String message) {
+        return new R(code,message);
     }
 
     /**
@@ -93,10 +83,8 @@ public class R {
      * @param data 数据
      * @return R对象
      */
-    private static R failure(Integer code,String message,Object data) {
-        return R.builder()
-                .code(code).message(message)
-                .data(getDataMap(data)).build();
+    public static R failure(Integer code,String message,Object data) {
+        return new R(code,message,data);
     }
 
     private R(Integer code, String message) {
@@ -115,11 +103,11 @@ public class R {
      * @param data Object对象
      * @return {"data",Object对象}
      */
-    private static Map<String,Object> getDataMap(Object data) {
+   /* private static Map<String,Object> getDataMap(Object data) {
         Map<String,Object> dataMap = new HashMap<>();
         dataMap.put("data",data);
         return dataMap;
-    }
+    }*/
 
     private R() {}
 }

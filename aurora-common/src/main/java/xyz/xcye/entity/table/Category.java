@@ -38,10 +38,9 @@ public class Category {
     private String summary;
 
     /**
-     * 1：已删除 0：未删除 不能为null
+     * true：已删除 false：未删除 不能为null
      */
-    @Status("类别-删除")
-    private int deleteStatus;
+    private boolean deleteStatus;
 
     /**
      * 创建时间 不能为null

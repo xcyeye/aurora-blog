@@ -29,7 +29,6 @@ import java.util.List;
 
 public class Main {
     public static void main(String[] args) throws Exception {
-        FileUtil.writeByStream(FileUtil.getInputStream("/Users/aurora/Documents/aurora主题文件/aurora-study.mp4"),
-                "D:/Users/aurora/Documents/aurora主题文件/bb/aa//aurora-back.mp4");
+
     }
 }

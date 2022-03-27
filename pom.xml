@@ -24,6 +24,7 @@
         <module>aurora-message</module>
         <module>aurora-common</module>
         <module>aurora-config</module>
+        <module>aurora-consumer</module>
     </modules>
 
     <properties>
@@ -32,15 +33,19 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
-        <mysql.version>8.0.21</mysql.version>
+        <mysql.version>8.0.27</mysql.version>
         <jjwt.version>0.9.1</jjwt.version>
         <!--mybatis-spring-boot-starter-->
-        <mybatis.version>2.2.1</mybatis.version>
+        <mybatis.version>2.2.2</mybatis.version>
         <lombok.version>1.18.20</lombok.version>
 
         <spring-cloud.version>2021.0.1</spring-cloud.version>
-        <spring-alibaba-cloud.version>2021.1</spring-alibaba-cloud.version>
+        <spring-alibaba-cloud.version>2021.0.1.0</spring-alibaba-cloud.version>
         <hutool.version>5.7.22</hutool.version>
+        <spring-cloud-gateway.version>3.1.1</spring-cloud-gateway.version>
+        <druid.version>1.2.6</druid.version>
+        <springfox.version>3.0.0</springfox.version>
+        <springfox-data-rest.version>3.0.0</springfox-data-rest.version>
     </properties>
 
     <!--统一依赖管理-->
@@ -64,7 +69,7 @@
                 <scope>import</scope>
             </dependency>
 
-            <!--其他依赖-->
+            <!--工具类-->
             <dependency>
                 <groupId>org.projectlombok</groupId>
                 <artifactId>lombok</artifactId>
@@ -72,7 +77,6 @@
                 <optional>true</optional>
             </dependency>
 
-            <!--工具类-->
             <dependency>
                 <groupId>cn.hutool</groupId>
                 <artifactId>hutool-all</artifactId>
@@ -85,6 +89,42 @@
                 <version>${jjwt.version}</version>
             </dependency>
 
+            <!--需要手动引入的数据访问相关依赖-->
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>druid</artifactId>
+                <version>${druid.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.mybatis.spring.boot</groupId>
+                <artifactId>mybatis-spring-boot-starter</artifactId>
+                <version>${mybatis.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>mysql</groupId>
+                <artifactId>mysql-connector-java</artifactId>
+                <version>${mysql.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-boot-starter</artifactId>
+                <version>${springfox.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-data-rest</artifactId>
+                <version>${springfox-data-rest.version}</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
+
+    <dependencies>
+
+    </dependencies>
+
 </project>

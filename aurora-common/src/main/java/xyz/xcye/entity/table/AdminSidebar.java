@@ -52,10 +52,9 @@ public class AdminSidebar {
     private String path;
 
     /**
-     * 是否是外部地址 1：链接到外部 0：本站地址
+     * 是否是外部地址 true：链接到外部 false：本站地址
      */
-    @Status(value = "后台-判断外部链接")
-    private int isExternal;
+    private boolean isExternal;
 
     /**
      * 此导航的类名 用户设置图标 可以为null

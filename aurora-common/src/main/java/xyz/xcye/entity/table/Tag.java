@@ -38,10 +38,9 @@ public class Tag {
     private String summary;
 
     /**
-     * 该标签的删除状态 1：已删除 0：未删除 不能为null
+     * 该标签的删除状态 true：已删除 false：未删除 不能为null
      */
-    @Status(value = "标签-删除")
-    private int deleteStatus;
+    private boolean deleteStatus;
 
     /**
      * 标签的创建时间 不能为null

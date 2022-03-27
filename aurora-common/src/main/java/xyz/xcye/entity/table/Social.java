@@ -49,14 +49,12 @@ public class Social {
     private BigInteger userUid;
 
     /**
-     * 1：显示此社交 0：不显示
+     * true：显示此社交 false：不显示
      */
-    @Status("社交-社交图标展示")
-    private int showStatus;
+    private boolean showStatus;
 
     /**
-     * 删除状态 1：已删除 0：未删除
+     * 删除状态 true：已删除 false：未删除
      */
-    @Status("社交-社交的删除")
-    private int deleteStatus;
+    private boolean deleteStatus;
 }

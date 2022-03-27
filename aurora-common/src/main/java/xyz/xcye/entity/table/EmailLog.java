@@ -53,8 +53,7 @@ public class EmailLog {
     private String createdAt;
 
     /**
-     * 邮件发送的状态 1：已成功发送 0：未发送成功
+     * 邮件发送的状态 true：已成功发送 false：未发送成功
      */
-    @Status(value = "邮件日志-发送成功的状态")
-    private int sendStatus;
+    private boolean sendStatus;
 }

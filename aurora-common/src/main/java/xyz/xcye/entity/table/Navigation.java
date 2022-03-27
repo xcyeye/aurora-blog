@@ -48,10 +48,9 @@ public class Navigation {
     private String path;
 
     /**
-     * 1：链接到外部地址 0：链接地址就是本站地址，不需要新标签中打开 不能为null
+     * true：链接到外部地址 false：链接地址就是本站地址，不需要新标签中打开 不能为null
      */
-    @Status(value = "前台导航-链接到外部地址")
-    private int isExternal;
+    private boolean isExternal;
 
     /**
      * 此导航的类名，用户设置图标

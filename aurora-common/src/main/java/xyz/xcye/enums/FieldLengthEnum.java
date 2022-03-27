@@ -38,9 +38,14 @@ public class FieldLengthEnum {
     /** 性别 **/
     public static final int GENDER = 2;
     /** 登录密码 **/
-    public static final int PASSWORD = 60;
+    public static final int PASSWORD = 100;
     /** 专业 **/
     public static final int PROFESSION = 100;
+
+    /** 用户权限长度 **/
+    public static final int USER_PERMISSION = 50;
+
+    public static final int USER_ROLE = 15;
 
 
     //-----------------------------------文章相关

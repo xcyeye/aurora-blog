@@ -1,0 +1,32 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="xyz.xcye.dao.UserDao">
+
+    <resultMap id="permission" type="xyz.xcye.entity.table.User">
+        <result property="password" column="password" />
+        <result property="username" column="username"/>
+        <result property="deleteStatus" column="delete_status"/>
+        <result property="noLoginDay" column="no_login_day" javaType="_int"/>
+
+        <association property="userPermission" javaType="xyz.xcye.entity.table.UserPermission">
+            <result property="role" column="role"/>
+            <result property="permission" column="permission"/>
+            <result property="accountNonExpired" column="account-non-expired"/>
+            <result property="accountNonLocked" column="account-non-locked"/>
+        </association>
+    </resultMap>
+
+    <select id="queryUserByUsername" resultMap="permission" >
+        select role,permission,`account-non-locked`,`account-non-expired`,
+               username,`password`,no_login_day,delete_status,
+               is_verify_email
+        FROM
+            au_user as user,au_user_permission as user_permission
+        where
+            user.uid=user_permission.user_uid
+        and
+            user.username=#{username}
+    </select>
+</mapper>

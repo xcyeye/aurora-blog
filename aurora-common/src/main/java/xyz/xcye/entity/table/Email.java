@@ -88,4 +88,6 @@ public class Email {
      */
     @ValidateString(value = "邮箱-配置中的有用户评论的模板",max = FieldLengthEnum.EMAIL_TEMPLATE)
     private String receiveCommentTemplate;
+
+    private boolean deleteStatus;
 }

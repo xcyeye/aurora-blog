@@ -1,0 +1,41 @@
+spring:
+  application:
+    name: aurora-gateway
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/aurora_blog?characterEncoding=utf8&connectTimeout=1000&socketTimeout=3000&autoReconnect=true&useUnicode=true&useSSL=false&serverTimezone=UTC
+    username: root
+    password: Cqy19981202
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+        service: aurora-gateway
+    gateway:
+      discovery:
+        locator:
+          enabled: true #开启从注册中心动态创建路由的功能，利用微服务名进行路由
+#      routes:
+#        - id: payment_routh #payment_route    #路由的ID，没有固定规则但要求唯一，建议配合服务名
+#          uri: http://localhost:8888          #匹配后提供服务的路由地址
+#          predicates:
+##            - Header=X-Request-Id, \d+
+#            - Token=aurora,chuchen,aslkdfjh
+#          filters:
+#            - Aurora=qsyyke,sdfk,https
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+mybatis:
+  mapper-locations: classpath:mapper/**
+  configuration:
+    map-underscore-to-camel-case: true
+
+
+#aurora:
+#  account:
+#    enable:

@@ -11,6 +11,7 @@ import javax.validation.constraints.NotNull;
 import java.math.BigInteger;
 
 /**
+ * 数据表 au_logo_info
  * @author qsyyke
  */
 

@@ -30,10 +30,9 @@ public class Link {
     private BigInteger userUid;
 
     /**
-     * 删除状态 1：已删除 0：未删除 不能为null
+     * 删除状态 true：已删除 false：未删除 不能为null
      */
-    @Status("友情链接-删除")
-    private int deleteStatus;
+    private boolean deleteStatus;
 
     /**
      * 此条友情链接属于哪个分类 不能为null
@@ -76,10 +75,9 @@ public class Link {
     private String linkCover;
 
     /**
-     * 是否展示此条友情链接 1：展示 0：不展示 不能为null
+     * 是否展示此条友情链接 true：展示 false：不展示 不能为null
      */
-    @Status(value = "友情链接-展示")
-    private int publishStatus;
+    private boolean publishStatus;
 
     /**
      * 邮箱 不能为null

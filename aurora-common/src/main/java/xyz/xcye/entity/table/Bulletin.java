@@ -58,22 +58,19 @@ public class Bulletin {
     private BigInteger userUid;
 
     /**
-     * 公告的状态 不能为null 1：已删除 0：未删除
+     * 公告的状态 不能为null true：已删除 false：未删除
      */
-    @Status("公告-删除")
-    private int deleteStatus;
+    private boolean deleteStatus;
 
     /**
-     * 公告展示状态 1：显示公告 0：不显示
+     * 公告展示状态 true：显示公告 false：不显示
      */
-    @Status("公告-展示")
-    private int showStatus;
+    private boolean showStatus;
 
     /**
-     * 是否定时发布 不能为null 1：定时发布 0：不定时发布
+     * 是否定时发布 不能为null true：定时发布 false：不定时发布
      */
-    @Status("公告-定时发布")
-    private int timingStatus;
+    private boolean timingStatus;
 
     /**
      * 定时发布时间 可以为null

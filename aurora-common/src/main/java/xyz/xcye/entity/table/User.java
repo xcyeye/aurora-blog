@@ -9,7 +9,9 @@ import xyz.xcye.valid.validator.Status;
 import xyz.xcye.valid.validator.ValidateString;
 
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import java.math.BigInteger;
+import java.util.List;
 
 /**
  * 数据库中的aurora_user表的映射
@@ -48,10 +50,9 @@ public class User {
     private int noLoginDay;
 
     /**
-     * 用户的删除状态 1：已删除 0：未删除
+     * 用户的删除状态 true：已删除 false：未删除
      */
-    @Status("用户-删除")
-    private int deleteStatus;
+    private boolean deleteStatus;
 
     /**
      * 该用户对应的网站设置的uid
@@ -88,13 +89,80 @@ public class User {
     private String profession;
 
     /**
-     * 用户的邮箱是否验证过 1：已验证 0：未验证
+     * 用户的邮箱是否验证过 true：已验证 false：未验证
      */
-    @Status("用户-邮箱验证")
-    private int isVerifyEmail;
+    private boolean isVerifyEmail;
 
     /**
      * 该用户对应的邮箱设置uid
      */
     private BigInteger emailUid;
+
+    /**
+     * 角色 角色的命名必须遵循spring security规范，以ROLE_XXX，一个用户只能有一个角色
+     */
+    @Pattern(regexp = "^(ROLE_)[a-zA-Z]{1,10}",message = "角色命名必须ROLE_XXX，并且总长度不能大于15")
+    private String role;
+
+    /**
+     * 用户权限集合，可以有多个，使用,分割开
+     */
+    @ValidateString(value = "用户权限集合",max = FieldLengthEnum.USER_PERMISSION)
+    private String permission;
+
+
+    /**
+     * 每个用户都对应一个或者多个登录日志
+     */
+    private List<LoginInfo> loginInfos;
+
+    /**
+     * 每个用户都对应一个site
+     */
+    private Site site;
+
+    /**
+     * 该用户对应的权限信息
+     */
+    private UserPermission userPermission;
+
+    /**
+     * 对应的邮箱信息
+     */
+    private Email email;
+
+    /**
+     * 一个用户拥有多条友情链接
+     */
+    private List<Link> links;
+
+    /**
+     * 一个用户拥有多个前台导航设置
+     */
+    private List<Navigation> navigations;
+
+    /**
+     * 一个用户拥有多个社交信息
+     */
+    private List<Social> socials;
+
+    /**
+     * 一个用户拥有多条说说
+     */
+    private List<Talk> talks;
+
+    /**
+     * 一个用户会发布多条公告
+     */
+    private List<Bulletin> bulletins;
+
+    /**
+     * 一个用户会存在多个管理端的侧边栏
+     */
+    private List<AdminSidebar> adminSidebars;
+
+    /**
+     * 一个用户发布多篇文章
+     */
+    private List<Article> articles;
 }

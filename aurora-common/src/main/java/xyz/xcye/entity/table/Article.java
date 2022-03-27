@@ -27,10 +27,9 @@ public class Article {
     private BigInteger uid;
 
     /**
-     * 1：展示评论 0：不显示评论
+     * true：展示评论 false：不显示评论
      */
-    @Status(value = "文章-展示评论")
-    private int showComment;
+    private boolean showComment;
 
     /**
      * 文章中如果有附件的话，存放附件集合 可以为null
@@ -54,10 +53,9 @@ public class Article {
     private String tagArr;
 
     /**
-     * 文章是否发布 1：已发布 0：未发布 不能为null
+     * 文章是否发布 true：已发布 false：未发布 不能为null
      */
-    @Status(value = "文章-发布")
-    private int publishStatus;
+    private boolean publishStatus;
 
     /**
      * 该篇文章是哪个用户发布的 可以为null
@@ -65,10 +63,9 @@ public class Article {
     private BigInteger userUid;
 
     /**
-     * 是否是原创 1：原创 0：不是原创
+     * 是否是原创 true：原创 false：不是原创
      */
-    @Status("文章-原创")
-    private int originalArticle;
+    private boolean originalArticle;
 
     /**
      * 如果不是原创的话 该篇文章的真是地址
@@ -126,10 +123,9 @@ public class Article {
     private String summary;
 
     /**
-     * 是否定时发布 1：定时 0：不定时 不能为null
+     * 是否定时发布 true：定时 false：不定时 不能为null
      */
-    @Status("文章-开启定时发布功能的")
-    private int isTiming;
+    private boolean isTiming;
 
     /**
      * 如果是定时发布的话，定时发布的时间 可以为null
@@ -139,10 +135,9 @@ public class Article {
     private String timingPublish;
 
     /**
-     * 文章的状态 1：已删除 0：未删除
+     * 文章的状态 true：已删除 false：未删除
      */
-    @Status("文章-删除")
-    private int deleteStatus;
+    private boolean deleteStatus;
 
     /**
      * 文章的封面url 不可以为null

@@ -33,10 +33,9 @@ public class File {
     private String createdAt;
 
     /**
-     * 此文件的删除状态 1：已删除 0：未删除
+     * 此文件的删除状态 true：已删除 false：未删除
      */
-    @Status(value = "文件-删除")
-    private int deleteStatus;
+    private boolean deleteStatus;
 
     /**
      * 此文件的名字，含后缀

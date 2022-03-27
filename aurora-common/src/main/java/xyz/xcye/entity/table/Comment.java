@@ -54,10 +54,9 @@ public class Comment {
     private String email;
 
     /**
-     * 删除状态 1：已删除 0：未删除
+     * 删除状态 true：已删除 false：未删除
      */
-    @Status(value = "评论-删除")
-    private int deleteStatus;
+    private boolean deleteStatus;
 
     /**
      * 创建时间 不能为null
@@ -87,10 +86,9 @@ public class Comment {
     private String operationSystemInfo;
 
     /**
-     * 是否显示此条评论 1：显示 0：不显示
+     * 是否显示此条评论 true：显示 false：不显示
      */
-    @Status(value = "评论-显示")
-    private int showComment;
+    private boolean showComment;
 
     /**
      * 此条评论是回复哪条评论的 不能为null
@@ -98,14 +96,12 @@ public class Comment {
     private BigInteger replyCommentUid;
 
     /**
-     * 如果此评论是回复某条评论 则1：体发送邮件通知对方 0：未发送邮件通知对方 如果不是回复评论 比如新评论
+     * 如果此评论是回复某条评论 则true：体发送邮件通知对方 false：未发送邮件通知对方 如果不是回复评论 比如新评论
      */
-    @Status(value = "评论-回复某条评论是否通知对方")
-    private int replyNoticeStatus;
+    private boolean replyNoticeStatus;
 
     /**
-     * 如果用户发布评论，1：已邮件通知该用户 0：未发送邮件通知该用户
+     * 如果用户发布评论，true：已邮件通知该用户 false：未发送邮件通知该用户
      */
-    @Status(value = "评论-用户发布评论是否邮件通知站长")
-    private int publishNoticeStatus;
+    private boolean publishNoticeStatus;
 }

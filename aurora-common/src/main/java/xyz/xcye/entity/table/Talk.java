@@ -30,16 +30,14 @@ public class Talk {
     private String pictureArr;
 
     /**
-     * 该条说说是否显示评论 1：显示 0：不显示 不能为null
+     * 该条说说是否显示评论 true：显示 false：不显示 不能为null
      */
-    @Status(value = "说说-显示")
-    private int show_comment;
+    private boolean show_comment;
 
     /**
-     * 删除状态 1：已删除 0：未删除 不能为null
+     * 删除状态 true：已删除 false：未删除 不能为null
      */
-    @Status("说书-删除")
-    private int deleteStatus;
+    private boolean deleteStatus;
 
     /**
      * 最后更新时间 数据库中的类型为datetime 可以为null
@@ -65,10 +63,9 @@ public class Talk {
     private String title;
 
     /**
-     * 该条说说显示状态 1：显示 0：不显示 不能为null
+     * 该条说说显示状态 true：显示 false：不显示 不能为null
      */
-    @Status(value = "说说-显示")
-    private int showStatus;
+    private boolean showStatus;
 
     /**
      * 如果有评论 commentArray保存该条说说对应的所有评论的父uid集合
