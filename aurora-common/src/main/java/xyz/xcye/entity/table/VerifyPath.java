@@ -11,7 +11,7 @@ import javax.validation.constraints.Pattern;
  */
 
 @Data
-public class Permission {
+public class VerifyPath {
 
     /**
      * 唯一uid，没有使用雪花算法
@@ -36,4 +36,12 @@ public class Permission {
     @ValidateString(value = "用户权限集合",max = 15)
     private String permission;
 
+    /**
+     * 此path的访问是否必须拥有此role的用户才能访问
+     */
+    private boolean isRole;
+
+    public boolean getIsRole() {
+        return isRole;
+    }
 }

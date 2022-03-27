@@ -1,16 +1,34 @@
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
+
+import com.alibaba.fastjson.JSON;
+import lombok.Data;
+import xyz.xcye.entity.ExceptionResultEntity;
+import xyz.xcye.entity.R;
+import xyz.xcye.enums.ResultStatusCode;
 
 /**
  * @author qsyyke
  */
 
-
+@Data
 public class Test {
     public static void main(String[] args) {
-        PasswordEncoder pa = new BCryptPasswordEncoder();
-        String encode = pa.encode("123456");
-        System.out.println(encode);
-        System.out.println(pa.matches("123456", encode));
+
+        ExceptionResultEntity result = new ExceptionResultEntity();
+        result.setMessage("sdfkjhdsf");
+        result.setErrorUrl("/login");
+        result.setData(null);
+
+        R failure = R.failure(ResultStatusCode.PERMISSION_DENIED.getCode(), ResultStatusCode.PERMISSION_DENIED.getMessage());
+
+
+        failure.setData(result);
+
+        String s1 = JSON.toJSONString(failure);
+
+        String s = JSON.toJSONString(result);
+
+        System.out.println(s1);
+        System.out.println(s);
+
     }
 }

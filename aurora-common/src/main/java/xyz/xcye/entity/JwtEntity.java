@@ -62,4 +62,9 @@ public class JwtEntity {
         this.issuedAt = issuedAt;
         this.expirationAt = expirationAt;
     }
+
+    /**
+     * 是否过期 true表示过期，false反之
+     */
+    private boolean isExpiration;
 }

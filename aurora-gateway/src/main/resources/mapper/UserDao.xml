@@ -4,7 +4,7 @@
 
 <mapper namespace="xyz.xcye.dao.UserDao">
 
-    <resultMap id="permission" type="xyz.xcye.entity.table.User">
+    <resultMap id="verifyPath" type="xyz.xcye.entity.table.User">
         <result property="password" column="password" />
         <result property="username" column="username"/>
         <result property="deleteStatus" column="delete_status"/>
@@ -18,7 +18,7 @@
         </association>
     </resultMap>
 
-    <select id="queryUserByUsername" resultMap="permission" >
+    <select id="queryUserByUsername" resultMap="verifyPath" >
         select role,permission,`account-non-locked`,`account-non-expired`,
                username,`password`,no_login_day,delete_status,
                is_verify_email

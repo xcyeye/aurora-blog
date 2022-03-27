@@ -4,7 +4,7 @@ package xyz.xcye.enums;
  * @author qsyyke
  */
 
-public enum ResultCode {
+public enum ResultStatusCode {
 
     //----------------------成功相关的响应码
     SUCCESS(20000,"成功"),
@@ -43,6 +43,7 @@ public enum ResultCode {
     //----------------------权限相关的响应码
     PERMISSION_DENIED(41000,"用户权限不足"),
     PERMISSION_UNAUTHORIZED(42000,"用户未认证"),
+    PERMISSION_AUTHORIZED_FAIL(42100,"认证失败"),
     PERMISSION_TOKEN_CREATE_FAILURE(43100,"token创建失败"),
     PERMISSION_TOKEN_EXPIRATION(43200,"token过期"),
     PERMISSION_USER_NOT_LOGIN(44100,"未登录"),
@@ -66,7 +67,7 @@ public enum ResultCode {
      */
     private String message;
 
-    ResultCode(Integer code, String message) {
+    ResultStatusCode(Integer code, String message) {
         this.code = code;
         this.message = message;
     }

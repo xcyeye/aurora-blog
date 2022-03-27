@@ -1,6 +1,8 @@
 package xyz.xcye.entity.table;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import xyz.xcye.enums.FieldLengthEnum;
 import xyz.xcye.valid.validator.ValidateString;
 
@@ -11,6 +13,8 @@ import java.math.BigInteger;
  * @author qsyyke
  */
 
+@AllArgsConstructor
+@NoArgsConstructor
 @Data
 public class UserPermission {
 
@@ -26,7 +30,7 @@ public class UserPermission {
     private String role;
 
     /**
-     * 用户权限
+     * 用户权限 多个权限之间，使用,分隔开
      */
     @ValidateString(value = "用户权限",max = FieldLengthEnum.USER_PERMISSION)
     private String permission;

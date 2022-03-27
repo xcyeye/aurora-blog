@@ -68,7 +68,7 @@ public class SecurityConfig {
                 //对/login路径放行
                 .pathMatchers("/login").permitAll()
                 //对所有的get请求放行
-                //.pathMatchers(HttpMethod.GET).permitAll()
+                .pathMatchers(HttpMethod.GET).permitAll()
                 //自定义鉴权逻辑处理类
                 .anyExchange().access(customReactiveAuthorizationManager);
 

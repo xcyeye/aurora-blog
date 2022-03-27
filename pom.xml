@@ -46,6 +46,7 @@
         <druid.version>1.2.6</druid.version>
         <springfox.version>3.0.0</springfox.version>
         <springfox-data-rest.version>3.0.0</springfox-data-rest.version>
+        <fastjson.version>1.2.79</fastjson.version>
     </properties>
 
     <!--统一依赖管理-->
@@ -67,6 +68,12 @@
                 <version>${spring-alibaba-cloud.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>fastjson</artifactId>
+                <version>1.2.79</version>
             </dependency>
 
             <!--工具类-->

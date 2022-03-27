@@ -36,6 +36,5 @@ mybatis:
     map-underscore-to-camel-case: true
 
 
-#aurora:
-#  account:
-#    enable:
+aurora:
+  secretKey: aurora.xcye.xyz

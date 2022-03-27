@@ -1,8 +1,6 @@
 package xyz.xcye.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 /**
  * 发生异常的时候，返回的实体
@@ -28,4 +26,9 @@ public class ExceptionResultEntity {
      * 额外的数据
      */
     private Object data;
+
+    public ExceptionResultEntity(String message, String errorUrl) {
+        this.message = message;
+        this.errorUrl = errorUrl;
+    }
 }

@@ -1,10 +1,8 @@
 package xyz.xcye.entity;
 
 import lombok.Data;
-import xyz.xcye.enums.ResultCode;
+import xyz.xcye.enums.ResultStatusCode;
 
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * 统一返回体
@@ -34,7 +32,7 @@ public class R {
      * @return R对象
      */
     public static R success() {
-        return new R(ResultCode.SUCCESS.getCode(),ResultCode.SUCCESS.getMessage());
+        return new R(ResultStatusCode.SUCCESS.getCode(),ResultStatusCode.SUCCESS.getMessage());
     }
 
     /**
@@ -63,7 +61,7 @@ public class R {
      * @return R对象
      */
     public static R failure() {
-        return new R(ResultCode.UNKNOWN.getCode(),ResultCode.UNKNOWN.getMessage());
+        return new R(ResultStatusCode.UNKNOWN.getCode(),ResultStatusCode.UNKNOWN.getMessage());
     }
 
     /**
@@ -98,16 +96,22 @@ public class R {
         this.data = data;
     }
 
-    /**
-     * 根据传入的Object对象，返回一个map集合
-     * @param data Object对象
-     * @return {"data",Object对象}
-     */
-   /* private static Map<String,Object> getDataMap(Object data) {
-        Map<String,Object> dataMap = new HashMap<>();
-        dataMap.put("data",data);
-        return dataMap;
-    }*/
-
     private R() {}
+
+    @Override
+    public String toString() {
+
+        if (data == null) {
+            return "R{" +
+                    "code=" + code +
+                    ", message='" + message + '\'' +
+                    '}';
+        }
+
+        return "R{" +
+                "code=" + code +
+                ", message='" + message + '\'' +
+                ", data=" + data +
+                '}';
+    }
 }
