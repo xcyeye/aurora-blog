@@ -2,11 +2,13 @@ package xyz.xcye.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 import xyz.xcye.entity.table.User;
+import xyz.xcye.enums.ResultStatusCode;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
@@ -25,6 +27,12 @@ public class CustomUserDetailsService implements UserDetailsService {
     @Qualifier(value = "userServiceImpl")
     private UserService userService;
 
+    @Value("${aurora.userAcount.enable}")
+    private boolean enable;
+
+    @Value("${aurora.userAcount.credentialsNonExpired}")
+    private boolean credentialsNonExpired;
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
@@ -32,7 +40,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 
         if (user == null) {
             //用户不存在
-            throw new UsernameNotFoundException(username + "用户不存在");
+            throw new UsernameNotFoundException(username + ResultStatusCode.PERMISSION_USER_NOT_EXIST.getMessage());
         }
 
         List<String> grantedAuthorities = new ArrayList<>();
@@ -44,7 +52,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 
         //用户存在，封装UserDetails
         CustomUserDetails userDetails = new CustomUserDetails(
-                username,user.getPassword(),true,true,
+                username,user.getPassword(),enable,credentialsNonExpired,
                 user.getUserPermission().isAccountNonLocked(),
                 user.getUserPermission().isAccountNonExpired(),null);
         //将权限集合放入userDetails对象中

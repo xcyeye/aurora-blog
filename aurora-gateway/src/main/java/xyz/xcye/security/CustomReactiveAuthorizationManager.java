@@ -1,27 +1,38 @@
 package xyz.xcye.security;
 
 
+import com.oracle.jrockit.jfr.management.NoSuchRecordingException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.server.PathContainer;
 import org.springframework.http.server.reactive.ServerHttpRequest;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authorization.AuthorizationDecision;
 import org.springframework.security.authorization.ReactiveAuthorizationManager;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.web.server.authorization.AuthorizationContext;
+import org.springframework.security.web.server.authorization.HttpStatusServerAccessDeniedHandler;
 import org.springframework.stereotype.Component;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
+import xyz.xcye.annotaion.Log;
 import xyz.xcye.entity.JwtEntity;
 import xyz.xcye.entity.table.VerifyPath;
+import xyz.xcye.enums.ResultStatusCode;
 import xyz.xcye.enums.TokenEnum;
+import xyz.xcye.exception.SecurityAuthenticationException;
 import xyz.xcye.service.VerifyPathService;
+import xyz.xcye.util.SecurityUtil;
 import xyz.xcye.util.jwt.JwtUtil;
 
+import javax.security.sasl.AuthenticationException;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
+import java.util.function.Supplier;
 
 /**
  * 自定义鉴权逻辑处理类 在这里判断用户的账户是否过期等等操作,这个类的执行，在登录的时候，不会执行，只有登录成功或者没有登录的时候，进行鉴权
@@ -30,7 +41,6 @@ import java.util.List;
  * @author qsyyke
  */
 
-@Slf4j
 @Component
 public class CustomReactiveAuthorizationManager implements ReactiveAuthorizationManager<AuthorizationContext> {
 
@@ -39,12 +49,9 @@ public class CustomReactiveAuthorizationManager implements ReactiveAuthorization
     @Autowired
     private VerifyPathService verifyPathService;
 
+    @Log
     @Override
     public Mono<AuthorizationDecision> check(Mono<Authentication> contextAuthentication, AuthorizationContext authorizationContext) {
-
-        log.error("CustomReactiveAuthorizationManager执行-自定义鉴权逻辑处理类");
-
-
         /**
          * 1. 从请求头中获取token
          * 2. 从数据库中查询所有需要不同权限，不同角色才能访问的路径
@@ -84,28 +91,29 @@ public class CustomReactiveAuthorizationManager implements ReactiveAuthorization
 
         //matchedVerifyPath 当前uri不需要特定角色才能访问
         if (matchedVerifyPath == null) {
-            //如果没有token的话，则返回请登录
-            if (token == null || jwtEntity.isExpiration()) {
-                return getAuthorizationDecision(jwtEntity);
-            }
-
-            //存在token，并且没有过期
-            return getAuthorizationDecision(jwtEntity);
+            //如果没有token的话，则返回请登录， 存在token，并且没有过期
+            return getAuthorizationDecision(jwtEntity,exchange);
         }
 
         //判断用户当前用户是否拥有访问的权限
         return Mono.just(new AuthorizationDecision(hasRole(jwtEntity, matchedVerifyPath)));
     }
 
-    public static Mono<AuthorizationDecision> getAuthorizationDecision(JwtEntity jwtEntity) {
+    public static Mono<AuthorizationDecision> getAuthorizationDecision(JwtEntity jwtEntity,ServerWebExchange exchange) {
         if (jwtEntity.isExpiration()) {
             //token已经过期
-            return Mono.just(new AuthorizationDecision(false));
+            //return Mono.error(new AccessDeniedException(ResultStatusCode.PERMISSION_DENIED.getMessage()));
+            return Mono.error(new UsernameNotFoundException(ResultStatusCode.PERMISSION_TOKEN_EXPIRATION.getMessage()));
         }
 
         return Mono.just(new AuthorizationDecision(true));
     }
 
+    /**
+     * 解析token，返回一个jwt实体
+     * @param token
+     * @return
+     */
     private static JwtEntity parseToken(String token) {
         JwtEntity jwtEntity = null;
         try {
@@ -132,6 +140,13 @@ public class CustomReactiveAuthorizationManager implements ReactiveAuthorization
         }
         return token;
     }
+
+    /**
+     * 验证当前用户是否拥有访问请求的权限
+     * @param jwtEntity 当前用户的身份信息
+     * @param matchedVerifyPath 数据库中存放的该uri所需要的权限信息
+     * @return
+     */
     public static boolean hasRole(JwtEntity jwtEntity,VerifyPath matchedVerifyPath) {
         if (matchedVerifyPath.getRole().equals(jwtEntity.getRole())) {
             return true;

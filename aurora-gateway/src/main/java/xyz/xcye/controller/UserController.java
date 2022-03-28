@@ -24,6 +24,6 @@ public class UserController {
     public void test() {
         User qsyyke = userService.queryUserByUsername("qsyyke");
         System.out.println(qsyyke);
-
+        int i = 10 / 0;
     }
 }

@@ -40,18 +40,23 @@ public enum ResultStatusCode {
     EXCEPTION_TIMEOUT(14000,"超时啦♪(^∇^*)"),
 
 
+    //----------------------异常相关的响应码--------转换异常
+    EXCEPTION_CONVERT_JSON_FAILURE(15100,"json转换失败了"),
+
+
     //----------------------权限相关的响应码
     PERMISSION_DENIED(41000,"用户权限不足"),
     PERMISSION_UNAUTHORIZED(42000,"用户未认证"),
     PERMISSION_AUTHORIZED_FAIL(42100,"认证失败"),
     PERMISSION_TOKEN_CREATE_FAILURE(43100,"token创建失败"),
-    PERMISSION_TOKEN_EXPIRATION(43200,"token过期"),
+    PERMISSION_TOKEN_EXPIRATION(43200,"token过期或者无效"),
     PERMISSION_USER_NOT_LOGIN(44100,"未登录"),
     PERMISSION_USER_MISTAKE(44200,"账号不存在或者密码错误"),
     PERMISSION_USER_IS_DISABLE(44300,"账户已被禁用"),
     PERMISSION_USER_NOT_EXIST(44400,"用户不存在"),
     PERMISSION_USER_EXIST(44500,"用户已存在"),
     PERMISSION_USER_NOT_EMAIL_UNAUTHORIZED(44610,"邮箱未验证"),
+    PERMISSION_USER_IS_LOCKED(44710,"用户已被锁住"),
 
 
     //----------------------未知错误相关的响应码

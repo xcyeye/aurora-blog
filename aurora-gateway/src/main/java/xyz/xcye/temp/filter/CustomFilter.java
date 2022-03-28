@@ -1,5 +1,4 @@
-/*
-package xyz.xcye.xyz.xcye.temp.filter;
+package xyz.xcye.temp.filter;
 
 import lombok.extern.slf4j.Slf4j;
 import org.reactivestreams.Publisher;
@@ -16,13 +15,12 @@ import reactor.core.publisher.Mono;
 
 import java.nio.charset.StandardCharsets;
 
-*/
 /**
  * @author qsyyke
- *//*
+ */
 
 
-//@Component
+/*@Component
 @Slf4j
 public class CustomFilter implements GlobalFilter, Ordered {
     @Override
@@ -37,5 +35,5 @@ public class CustomFilter implements GlobalFilter, Ordered {
     public int getOrder() {
         return 0;
     }
-}
-*/
+}*/
+

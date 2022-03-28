@@ -1,5 +1,4 @@
-/*
-package xyz.xcye.xyz.xcye.temp;
+package xyz.xcye.temp;
 
 import org.springframework.cloud.gateway.handler.predicate.AbstractRoutePredicateFactory;
 import org.springframework.cloud.gateway.handler.predicate.GatewayPredicate;
@@ -12,20 +11,10 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.function.Predicate;
 
-*/
-/**
- * @author qsyyke
- *//*
 
-
-//@Component
+@Component
 public class TokenRoutePredicateFactory extends AbstractRoutePredicateFactory<TokenRoutePredicateFactory.Config> {
     public static final String PARAM_KEY = "param";
-
-    */
-/**
-     * Regexp key.
-     *//*
 
     public static final String REGEXP_KEY = "regexp";
     public static final String NAME = "name";
@@ -112,4 +101,3 @@ public class TokenRoutePredicateFactory extends AbstractRoutePredicateFactory<To
 
     }
 }
-*/

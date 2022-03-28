@@ -25,14 +25,11 @@ import java.util.List;
  * @author qsyyke
  */
 
-@Slf4j
 @Component
 public class CustomAuthenticationConverter implements ServerAuthenticationConverter {
 
     @Override
     public Mono<Authentication> convert(ServerWebExchange exchange) {
-
-        log.error("CustomServerAuthenticationConverter执行");
 
         ServerHttpRequest request = exchange.getRequest();
 

@@ -25,13 +25,10 @@ import java.nio.charset.StandardCharsets;
  */
 
 
-@Slf4j
 @Component
 public class CustomAccessDeniedHandler implements ServerAccessDeniedHandler {
     @Override
     public Mono<Void> handle(ServerWebExchange exchange, AccessDeniedException denied) {
-        log.error("访问被拒绝时处理类 -CustomAccessDeniedHandler");
-
         return SecurityResultHandler.failure(exchange,denied,ResultStatusCode.PERMISSION_DENIED.getCode());
     }
 }

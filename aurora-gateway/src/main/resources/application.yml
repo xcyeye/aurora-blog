@@ -1,3 +1,5 @@
+server:
+  port: 7777
 spring:
   application:
     name: aurora-gateway
@@ -15,11 +17,12 @@ spring:
       discovery:
         locator:
           enabled: true #开启从注册中心动态创建路由的功能，利用微服务名进行路由
-#      routes:
-#        - id: payment_routh #payment_route    #路由的ID，没有固定规则但要求唯一，建议配合服务名
-#          uri: http://localhost:8888          #匹配后提供服务的路由地址
-#          predicates:
-##            - Header=X-Request-Id, \d+
+      routes:
+        - id: payment_routh #payment_route    #路由的ID，没有固定规则但要求唯一，建议配合服务名
+          uri: lb://aurora-admin        #匹配后提供服务的路由地址
+          predicates:
+            - Path=/admin/**
+#            - Header=X-Request-Id, \d+
 #            - Token=aurora,chuchen,aslkdfjh
 #          filters:
 #            - Aurora=qsyyke,sdfk,https
@@ -38,3 +41,7 @@ mybatis:
 
 aurora:
   secretKey: aurora.xcye.xyz
+  userAcount:
+    # 因为下面两个未在数据库中添加字段，所以避免写死，在此处进行设置，任意一个为false都会导致登录失败
+    enable: true
+    credentialsNonExpired: true

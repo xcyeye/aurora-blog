@@ -29,7 +29,7 @@ public class JwtUtil {
      */
     public static String generateToken(String subject,String issuer, long expirationTime,
                                        String username, String role,
-                                       String permission, byte[] secretKey) {
+                                       String permission, byte[] secretKey) throws Exception {
         //当前时间
         Date currentDate = new Date();
 

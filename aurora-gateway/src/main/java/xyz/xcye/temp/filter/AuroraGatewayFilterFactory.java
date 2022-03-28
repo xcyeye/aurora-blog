@@ -1,10 +1,10 @@
-/*
-package xyz.xcye.xyz.xcye.temp.filter;
+package xyz.xcye.temp.filter;
 
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
 import org.springframework.http.server.reactive.ServerHttpRequest;
+import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
@@ -13,13 +13,12 @@ import java.util.List;
 
 import static org.springframework.cloud.gateway.support.GatewayToStringStyler.filterToStringCreator;
 
-*/
 /**
  * @author qsyyke
- *//*
+ */
 
 
-//@Component
+@Component
 public class AuroraGatewayFilterFactory extends AbstractGatewayFilterFactory<AbstractGatewayFilterFactory.NameConfig> {
     public AuroraGatewayFilterFactory() {
         super(NameConfig.class);
@@ -83,4 +82,3 @@ public class AuroraGatewayFilterFactory extends AbstractGatewayFilterFactory<Abs
         }
     }
 }
-*/

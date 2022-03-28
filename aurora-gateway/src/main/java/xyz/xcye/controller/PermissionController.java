@@ -15,6 +15,7 @@ import xyz.xcye.service.VerifyPathService;
  * @author qsyyke
  */
 
+/*
 @Slf4j
 @RequestMapping("/permission")
 @RestController
@@ -33,3 +34,4 @@ public class PermissionController {
         return success;
     }
 }
+*/

@@ -19,6 +19,7 @@ import xyz.xcye.entity.R;
 import xyz.xcye.entity.table.UserPermission;
 import xyz.xcye.enums.ResultStatusCode;
 import xyz.xcye.enums.TokenEnum;
+import xyz.xcye.exception.SecurityConvertException;
 import xyz.xcye.util.jwt.JwtUtil;
 
 import java.nio.charset.StandardCharsets;
@@ -33,7 +34,6 @@ import java.util.Map;
  */
 
 @Component
-@Slf4j
 public class SecurityResultHandler {
 
     public static Mono<Void> success(ServerWebExchange exchange, Authentication authentication) {
@@ -50,9 +50,16 @@ public class SecurityResultHandler {
         Integer rememberMeSecond = getRememberMeSecond(exchange);
 
         //2. 获取一个token
-        String token = JwtUtil.generateToken(TokenEnum.JWT_SUBJECT, username,
-                rememberMeSecond, username, userPermission.getRole(), userPermission.getPermission(),
-                TokenEnum.JWT_SECRET_KEY.getBytes(StandardCharsets.UTF_8));
+        String token = null;
+        try {
+            token = JwtUtil.generateToken(TokenEnum.JWT_SUBJECT, username,
+                    rememberMeSecond, username, userPermission.getRole(), userPermission.getPermission(),
+                    TokenEnum.JWT_SECRET_KEY.getBytes(StandardCharsets.UTF_8));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Mono.error(new SecurityConvertException(ResultStatusCode.PERMISSION_TOKEN_CREATE_FAILURE.getCode(),
+                    SecurityUtil.getRequestUri(exchange),ResultStatusCode.PERMISSION_TOKEN_CREATE_FAILURE.getMessage()));
+        }
 
         //3. 将此token放入header中
         ServerHttpResponse response = exchange.getResponse();
@@ -69,6 +76,10 @@ public class SecurityResultHandler {
             s = ObjectConvertJson.jsonToString(success);
         } catch (Exception e) {
             e.printStackTrace();
+            return Mono.error(new SecurityConvertException(
+                    ResultStatusCode.EXCEPTION_CONVERT_JSON_FAILURE.getCode(),
+                    SecurityUtil.getRequestUri(exchange),
+                    ResultStatusCode.EXCEPTION_CONVERT_JSON_FAILURE.getMessage()));
         }
 
         return getMonoTypeResult(s,exchange);
@@ -88,7 +99,7 @@ public class SecurityResultHandler {
         //1000 * 60 * 60 * 24 一天的秒数
         int rememberMeDayNum = Integer.parseInt(rememberMeDay);
 
-        return rememberMeDayNum * 1000 * 60 * 60 * 24;
+        return rememberMeDayNum * 60 * 60 * 24;
     }
 
     public static UserPermission getPermission(List<GrantedAuthority> grantedAuthorities) {
