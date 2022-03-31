@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.function.Predicate;
 
 
+/*
 @Component
 public class TokenRoutePredicateFactory extends AbstractRoutePredicateFactory<TokenRoutePredicateFactory.Config> {
     public static final String PARAM_KEY = "param";
@@ -101,3 +102,4 @@ public class TokenRoutePredicateFactory extends AbstractRoutePredicateFactory<To
 
     }
 }
+*/

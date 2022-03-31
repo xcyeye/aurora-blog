@@ -1,7 +1,7 @@
 package xyz.xcye.dao;
 
 import org.apache.ibatis.annotations.Mapper;
-import xyz.xcye.entity.table.VerifyPath;
+import xyz.xcye.common.entity.table.VerifyPath;
 
 import java.util.List;
 

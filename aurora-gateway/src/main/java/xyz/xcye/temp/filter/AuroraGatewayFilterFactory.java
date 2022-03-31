@@ -18,7 +18,7 @@ import static org.springframework.cloud.gateway.support.GatewayToStringStyler.fi
  */
 
 
-@Component
+/*@Component
 public class AuroraGatewayFilterFactory extends AbstractGatewayFilterFactory<AbstractGatewayFilterFactory.NameConfig> {
     public AuroraGatewayFilterFactory() {
         super(NameConfig.class);
@@ -81,4 +81,4 @@ public class AuroraGatewayFilterFactory extends AbstractGatewayFilterFactory<Abs
             this.sex = sex;
         }
     }
-}
+}*/

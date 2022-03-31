@@ -4,13 +4,13 @@
 
 <mapper namespace="xyz.xcye.dao.UserDao">
 
-    <resultMap id="verifyPath" type="xyz.xcye.entity.table.User">
+    <resultMap id="verifyPath" type="xyz.xcye.common.entity.table.User">
         <result property="password" column="password" />
         <result property="username" column="username"/>
         <result property="deleteStatus" column="delete_status"/>
         <result property="noLoginDay" column="no_login_day" javaType="_int"/>
 
-        <association property="userPermission" javaType="xyz.xcye.entity.table.UserPermission">
+        <association property="userPermission" javaType="xyz.xcye.common.entity.table.UserPermission">
             <result property="role" column="role"/>
             <result property="permission" column="permission"/>
             <result property="accountNonExpired" column="account-non-expired"/>

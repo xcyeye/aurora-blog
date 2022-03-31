@@ -3,7 +3,7 @@ package xyz.xcye.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import xyz.xcye.dao.UserDao;
-import xyz.xcye.entity.table.User;
+import xyz.xcye.common.entity.table.User;
 import xyz.xcye.service.UserService;
 
 /**

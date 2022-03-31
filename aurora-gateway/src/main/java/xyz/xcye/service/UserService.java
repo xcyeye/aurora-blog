@@ -1,8 +1,6 @@
 package xyz.xcye.service;
 
-import xyz.xcye.entity.table.User;
-
-import java.math.BigInteger;
+import xyz.xcye.common.entity.table.User;
 
 /**
  * 用户service层，在网关中，只有查询用户的操作

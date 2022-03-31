@@ -1,13 +1,12 @@
 package xyz.xcye.security.handler;
 
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.server.WebFilterExchange;
 import org.springframework.security.web.server.authentication.ServerAuthenticationFailureHandler;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
-import xyz.xcye.enums.ResultStatusCode;
+import xyz.xcye.common.enums.ResultStatusCode;
 import xyz.xcye.util.SecurityResultHandler;
 
 /**

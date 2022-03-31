@@ -1,9 +1,9 @@
 
 import com.alibaba.fastjson.JSON;
 import lombok.Data;
-import xyz.xcye.entity.ExceptionResultEntity;
-import xyz.xcye.entity.R;
-import xyz.xcye.enums.ResultStatusCode;
+import xyz.xcye.common.entity.ExceptionResultEntity;
+import xyz.xcye.common.entity.R;
+import xyz.xcye.common.enums.ResultStatusCode;
 
 /**
  * @author qsyyke

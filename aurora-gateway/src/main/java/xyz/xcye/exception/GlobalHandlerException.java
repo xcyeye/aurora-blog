@@ -5,6 +5,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
+import xyz.xcye.common.entity.R;
+import xyz.xcye.common.enums.ResultStatusCode;
 
 /**
  * 这是一个全局异常处理
@@ -17,9 +19,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class GlobalHandlerException {
 
     @ResponseBody
-    @ExceptionHandler(value = {ArithmeticException.class})
-    public Object test(ArithmeticException exception) {
-        log.error("全局异常处理执行");
-        return "sdlkfjsdf";
+    @ExceptionHandler(value = {Exception.class})
+    public Object test(Exception exception) {
+        log.error("发生异常了: 时间{},异常信息: {}",System.currentTimeMillis(),exception.getMessage());
+
+        return R.failure(ResultStatusCode.UNKNOWN.getCode(), exception.getMessage(),exception.getStackTrace());
     }
 }

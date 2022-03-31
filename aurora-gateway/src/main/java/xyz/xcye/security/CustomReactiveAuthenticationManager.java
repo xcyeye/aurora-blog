@@ -1,6 +1,5 @@
 package xyz.xcye.security;
 
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.*;
 import org.springframework.security.core.Authentication;
@@ -9,9 +8,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
-import xyz.xcye.enums.LoginEnum;
-import xyz.xcye.enums.ResultStatusCode;
-import xyz.xcye.exception.SecurityAccountException;
+import xyz.xcye.common.enums.ResultStatusCode;
 import xyz.xcye.service.CustomUserDetailsService;
 
 /**

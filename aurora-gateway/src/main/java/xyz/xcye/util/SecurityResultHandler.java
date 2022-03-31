@@ -1,29 +1,23 @@
 package xyz.xcye.util;
 
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.buffer.DataBuffer;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
-import xyz.xcye.entity.R;
-import xyz.xcye.entity.table.UserPermission;
-import xyz.xcye.enums.ResultStatusCode;
+import xyz.xcye.common.entity.R;
+import xyz.xcye.common.entity.table.UserPermission;
+import xyz.xcye.common.enums.ResultStatusCode;
+import xyz.xcye.common.util.ObjectConvertJson;
 import xyz.xcye.enums.TokenEnum;
-import xyz.xcye.exception.SecurityConvertException;
-import xyz.xcye.util.jwt.JwtUtil;
+import xyz.xcye.common.util.jwt.JwtUtil;
 
 import java.nio.charset.StandardCharsets;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -50,16 +44,9 @@ public class SecurityResultHandler {
         Integer rememberMeSecond = getRememberMeSecond(exchange);
 
         //2. 获取一个token
-        String token = null;
-        try {
-            token = JwtUtil.generateToken(TokenEnum.JWT_SUBJECT, username,
-                    rememberMeSecond, username, userPermission.getRole(), userPermission.getPermission(),
-                    TokenEnum.JWT_SECRET_KEY.getBytes(StandardCharsets.UTF_8));
-        } catch (Exception e) {
-            e.printStackTrace();
-            return Mono.error(new SecurityConvertException(ResultStatusCode.PERMISSION_TOKEN_CREATE_FAILURE.getCode(),
-                    SecurityUtil.getRequestUri(exchange),ResultStatusCode.PERMISSION_TOKEN_CREATE_FAILURE.getMessage()));
-        }
+        String token = JwtUtil.generateToken(TokenEnum.JWT_SUBJECT, username,
+                rememberMeSecond, username, userPermission.getRole(), userPermission.getPermission(),
+                TokenEnum.JWT_SECRET_KEY.getBytes(StandardCharsets.UTF_8));
 
         //3. 将此token放入header中
         ServerHttpResponse response = exchange.getResponse();
@@ -71,16 +58,7 @@ public class SecurityResultHandler {
         grantedAuthoritiesMap.put("permission",grantedAuthorities);
         R success = R.success(ResultStatusCode.SUCCESS.getCode(), ResultStatusCode.SUCCESS.getMessage(),grantedAuthoritiesMap);
 
-        String s = null;
-        try {
-            s = ObjectConvertJson.jsonToString(success);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return Mono.error(new SecurityConvertException(
-                    ResultStatusCode.EXCEPTION_CONVERT_JSON_FAILURE.getCode(),
-                    SecurityUtil.getRequestUri(exchange),
-                    ResultStatusCode.EXCEPTION_CONVERT_JSON_FAILURE.getMessage()));
-        }
+        String s = ObjectConvertJson.jsonToString(success);
 
         return getMonoTypeResult(s,exchange);
     }

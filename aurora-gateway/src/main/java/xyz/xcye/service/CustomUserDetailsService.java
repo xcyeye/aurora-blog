@@ -7,10 +7,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
-import xyz.xcye.entity.table.User;
-import xyz.xcye.enums.ResultStatusCode;
+import xyz.xcye.common.entity.table.User;
+import xyz.xcye.common.enums.ResultStatusCode;
 
-import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;

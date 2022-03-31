@@ -1,6 +1,6 @@
 package xyz.xcye.service;
 
-import xyz.xcye.entity.table.VerifyPath;
+import xyz.xcye.common.entity.table.VerifyPath;
 
 import java.util.List;
 

@@ -1,0 +1,96 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="xyz.xcye.dao.FileDao">
+
+
+    <insert id="insertFile"
+            parameterType="xyz.xcye.common.entity.table.File"
+    >
+        INSERT INTO au_file
+            (uid,created_at,deleted_at,file_name,size,delete_status,summary,path,storage_mode,storage_path)
+        VALUES(
+             #{file.uid},#{file.createdAt},#{file.deletedAt},#{file.fileName},
+               #{file.size},#{file.deleteStatus},#{file.summary},#{file.path},#{file.storageMode},#{file.storagePath}
+            )
+    </insert>
+
+    <update id="updateFile"
+            parameterType="xyz.xcye.common.entity.table.File"
+            keyProperty=""
+            keyColumn="uid"
+    >
+        update au_file
+            -- 修改au_file的时候，因为删除状态和size的值有默认值，所以就不适用if进行判断了
+            <set>
+                <if test="file.createdAt != null and file.createdAt != ''">
+                    created_at=#{file.createdAt},
+                </if>
+                <if test="file.fileName != null and file.fileName != ''">
+                    file_name=#{file.fileName},
+                </if>
+                -- &gt;是大于零
+                <if test="file.size &gt; 0">
+                    `size`=#{file.size},
+                </if>
+                <if test="file.deleteAt != null and file.deleteAt != ''">
+                    deleted_at=#{file.deleteAt},
+                </if>
+                <if test="file.summary != null and file.summary != ''">
+                    summary=#{file.summary},
+                </if>
+                <if test="file.path != null and file.path != ''">
+                    `path`=#{file.path}
+                </if>
+            </set>
+            where uid=#{file.uid}
+    </update>
+
+    <delete id="deleteFile">
+        delete from au_file where uid=#{file.uid}
+    </delete>
+
+    <select id="query" resultMap="fileResult">
+        select * from au_file
+        <where>
+            <!--<if test="file.uid != 0">-->
+            <!--    uid=#{file.uid}-->
+            <!--</if>-->
+            <if test="file.createdAt != null and file.createdAt != ''">
+                and created_at=#{file.createdAt}
+            </if>
+            <if test="file.deletedAt != null and file.deletedAt != ''">
+                and deleted_at=#{file.deletedAt}
+            </if>
+            <if test="file.fileName != null and file.fileName != ''">
+                and file_name=#{file.fileName}
+            </if>
+            <if test="file.size &gt; 0">
+                and size=#{file.size}
+            </if>
+            <if test="file.summary != null and file.summary != ''">
+                and summary=#{file.summary}
+            </if>
+            <if test="file.path != null and file.path != ''">
+                and path=#{file.path}
+            </if>
+
+            and delete_status=#{file.deleteStatus}
+
+        </where>
+
+limit 30,50
+    </select>
+
+    <resultMap id="fileResult" type="xyz.xcye.common.entity.table.File">
+        <id column="uid" property="uid"/>
+        <result column="created_at" property="createdAt"/>
+        <result column="delete_status" property="deleteStatus"/>
+        <result column="file_name" property="fileName"/>
+        <result column="size" property="size"/>
+        <result column="deleted_at" property="deletedAt"/>
+        <result column="summary" property="summary"/>
+        <result column="path" property="path"/>
+    </resultMap>
+</mapper>

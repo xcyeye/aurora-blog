@@ -1,38 +1,29 @@
 package xyz.xcye.security;
 
 
-import com.oracle.jrockit.jfr.management.NoSuchRecordingException;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.server.PathContainer;
 import org.springframework.http.server.reactive.ServerHttpRequest;
-import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authorization.AuthorizationDecision;
 import org.springframework.security.authorization.ReactiveAuthorizationManager;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.web.server.authorization.AuthorizationContext;
-import org.springframework.security.web.server.authorization.HttpStatusServerAccessDeniedHandler;
 import org.springframework.stereotype.Component;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
-import xyz.xcye.annotaion.Log;
-import xyz.xcye.entity.JwtEntity;
-import xyz.xcye.entity.table.VerifyPath;
-import xyz.xcye.enums.ResultStatusCode;
+import xyz.xcye.common.annotaion.Log;
+import xyz.xcye.common.entity.JwtEntity;
+import xyz.xcye.common.entity.table.VerifyPath;
+import xyz.xcye.common.enums.ResultStatusCode;
 import xyz.xcye.enums.TokenEnum;
-import xyz.xcye.exception.SecurityAuthenticationException;
 import xyz.xcye.service.VerifyPathService;
-import xyz.xcye.util.SecurityUtil;
-import xyz.xcye.util.jwt.JwtUtil;
+import xyz.xcye.common.util.jwt.JwtUtil;
 
-import javax.security.sasl.AuthenticationException;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
-import java.util.function.Supplier;
 
 /**
  * 自定义鉴权逻辑处理类 在这里判断用户的账户是否过期等等操作,这个类的执行，在登录的时候，不会执行，只有登录成功或者没有登录的时候，进行鉴权

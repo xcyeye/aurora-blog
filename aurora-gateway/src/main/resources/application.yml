@@ -19,9 +19,12 @@ spring:
           enabled: true #开启从注册中心动态创建路由的功能，利用微服务名进行路由
       routes:
         - id: payment_routh #payment_route    #路由的ID，没有固定规则但要求唯一，建议配合服务名
-          uri: lb://aurora-admin        #匹配后提供服务的路由地址
+          uri: lb://aurora-admin       #匹配后提供服务的路由地址
+#          uri: http://localhost:8888      #匹配后提供服务的路由地址
           predicates:
             - Path=/admin/**
+          filters:
+            - AddRequestHeader=authentication_token, eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiIxNTA4MzgzNzMwMzUxNTEzNjAwIiwic3ViIjoiaHR0cHM6Ly9hdXJvcmEueGN5ZS54eXoiLCJpc3MiOiJxc3l5a2UiLCJpYXQiOjE2NDg0NjE2ODAsImV4cCI6MTY0ODU0ODA4MCwidXNlcm5hbWUiOiJxc3l5a2UiLCJyb2xlIjoiUk9MRV9zZGYiLCJwZXJtaXNzaW9uIjoic2FmZGRnLGRmZ2hsa2pnaCxzZGZnIn0.l_BTJ_yGJwq9Gx3feyXtdx749aNvwQNnZisrdTmxVRI
 #            - Header=X-Request-Id, \d+
 #            - Token=aurora,chuchen,aslkdfjh
 #          filters:

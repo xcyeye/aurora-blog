@@ -3,7 +3,7 @@ package xyz.xcye.dao;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import xyz.xcye.entity.table.User;
+import xyz.xcye.common.entity.table.User;
 
 /**
  * @author qsyyke

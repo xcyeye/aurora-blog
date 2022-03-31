@@ -1,8 +1,8 @@
 package xyz.xcye.test;
 
 import lombok.Data;
-import xyz.xcye.valid.validator.ValidateString;
-import xyz.xcye.valid.validator.Status;
+import xyz.xcye.common.valid.validator.ValidateString;
+import xyz.xcye.common.valid.validator.Status;
 
 /**
  * @author qsyyke

@@ -3,7 +3,7 @@ package xyz.xcye.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import xyz.xcye.dao.VerifyPathDao;
-import xyz.xcye.entity.table.VerifyPath;
+import xyz.xcye.common.entity.table.VerifyPath;
 import xyz.xcye.service.VerifyPathService;
 
 import java.util.List;
