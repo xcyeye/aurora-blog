@@ -16,6 +16,6 @@ public class GlobalExceptionHandler {
     @ExceptionHandler
     public Object test(Exception e) {
         System.out.println(e.getMessage());
-        return e.getMessage();
+        return "sdfklhj";
     }
 }

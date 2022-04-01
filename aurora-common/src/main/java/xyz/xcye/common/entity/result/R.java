@@ -1,4 +1,4 @@
-package xyz.xcye.common.entity;
+package xyz.xcye.common.entity.result;
 
 import lombok.Data;
 import xyz.xcye.common.enums.ResultStatusCode;

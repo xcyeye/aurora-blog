@@ -1,6 +1,7 @@
 package xyz.xcye.interfaces;
 
 import xyz.xcye.common.entity.FileEntity;
+import xyz.xcye.exception.CustomFileException;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -17,7 +18,7 @@ public interface FileStorageService {
      * @return 文件实体
      * @throws IOException 异常
      */
-    FileEntity upload(InputStream inputStream,FileEntity fileEntity) throws IOException;
+    FileEntity upload(InputStream inputStream,FileEntity fileEntity) throws CustomFileException;
 
     /**
      * 将文件从存储服务上下载下来
@@ -41,5 +42,5 @@ public interface FileStorageService {
      * @return true表示删除成功，false表示删除失败
      * @throws IOException 异常
      */
-    boolean delete(String objectName) throws IOException;
+    boolean delete(String objectName);
 }

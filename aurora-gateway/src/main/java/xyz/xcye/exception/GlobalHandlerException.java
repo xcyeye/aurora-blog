@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
-import xyz.xcye.common.entity.R;
+import xyz.xcye.common.entity.result.R;
 import xyz.xcye.common.enums.ResultStatusCode;
 
 /**

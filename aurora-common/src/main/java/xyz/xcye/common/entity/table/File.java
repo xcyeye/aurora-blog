@@ -76,10 +76,10 @@ public class File {
     private String summary;
 
     /**
-     * 此文件的存放路径 不能为null 如果是对象存储，则表示objectName
+     * 此文件的访问路径
      */
     @ApiModelProperty(value = "文件路径")
-    @ValidateString(value = "文件-路径",max = FieldLengthEnum.FILE_PATH,groups = Update.class)
+    @Length(max = FieldLengthEnum.FILE_PATH,message = "文件的访问路径长度不能超过{max}")
     private String path;
 
     /**
@@ -88,6 +88,9 @@ public class File {
     @ApiModelProperty(value = "文件存储模式 0：本地存储")
     private int storageMode;
 
-    @ValidateString(value = "文件存储路径",max = FieldLengthEnum.FILE_PATH,groups = Update.class)
+    /**
+     * 此文件的存储位置
+     */
+    @Length(message = "文件存储路径长度不能超过{max}",max = FieldLengthEnum.FILE_PATH)
     private String storagePath;
 }

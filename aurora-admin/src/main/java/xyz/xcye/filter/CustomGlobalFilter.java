@@ -4,7 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
-import xyz.xcye.common.entity.R;
+import xyz.xcye.common.entity.result.R;
 import xyz.xcye.common.enums.ResultStatusCode;
 import xyz.xcye.myenums.TokenEnum;
 import xyz.xcye.common.util.ObjectConvertJson;

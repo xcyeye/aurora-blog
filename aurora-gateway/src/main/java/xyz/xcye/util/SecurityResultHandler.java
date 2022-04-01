@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
-import xyz.xcye.common.entity.R;
+import xyz.xcye.common.entity.result.R;
 import xyz.xcye.common.entity.table.UserPermission;
 import xyz.xcye.common.enums.ResultStatusCode;
 import xyz.xcye.common.util.ObjectConvertJson;

@@ -48,6 +48,7 @@
         <springfox-data-rest.version>3.0.0</springfox-data-rest.version>
         <fastjson.version>1.2.79</fastjson.version>
         <jedis.version>3.7.1</jedis.version>
+        <pagehelper.version>1.4.0</pagehelper.version>
     </properties>
 
     <!--统一依赖管理-->
@@ -95,6 +96,12 @@
                 <groupId>io.jsonwebtoken</groupId>
                 <artifactId>jjwt</artifactId>
                 <version>${jjwt.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.github.pagehelper</groupId>
+                <artifactId>pagehelper-spring-boot-starter</artifactId>
+                <version>${pagehelper.version}</version>
             </dependency>
 
             <!--需要手动引入的数据访问相关依赖-->

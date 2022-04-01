@@ -12,6 +12,6 @@ import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target(value = {ElementType.METHOD,ElementType.TYPE})
-public @interface Result {
+public @interface ResponseResult {
     String value() default "发生异常了~~";
 }

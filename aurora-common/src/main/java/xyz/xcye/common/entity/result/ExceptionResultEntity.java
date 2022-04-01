@@ -1,4 +1,4 @@
-package xyz.xcye.common.entity;
+package xyz.xcye.common.entity.result;
 
 import lombok.*;
 
@@ -18,6 +18,11 @@ public class ExceptionResultEntity {
     private String message;
 
     /**
+     * 异常响应码
+     */
+    private Integer code;
+
+    /**
      * 发生异常的请求路径
      */
     private String errorUrl;
@@ -27,8 +32,9 @@ public class ExceptionResultEntity {
      */
     private Object data;
 
-    public ExceptionResultEntity(String message, String errorUrl) {
+    public ExceptionResultEntity(String message, String errorUrl,int code) {
         this.message = message;
         this.errorUrl = errorUrl;
+        this.code = code;
     }
 }

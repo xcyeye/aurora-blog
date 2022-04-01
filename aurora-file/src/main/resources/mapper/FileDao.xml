@@ -18,31 +18,21 @@
 
     <update id="updateFile"
             parameterType="xyz.xcye.common.entity.table.File"
-            keyProperty=""
             keyColumn="uid"
     >
         update au_file
             -- 修改au_file的时候，因为删除状态和size的值有默认值，所以就不适用if进行判断了
+            /*
+            不提供修改的字段有（因为没有意义）:createdAt,size,file_name,path
+            */
             <set>
-                <if test="file.createdAt != null and file.createdAt != ''">
-                    created_at=#{file.createdAt},
+                <if test="file.deletedAt != null">
+                    deleted_at=#{file.deletedAt},
                 </if>
-                <if test="file.fileName != null and file.fileName != ''">
-                    file_name=#{file.fileName},
-                </if>
-                -- &gt;是大于零
-                <if test="file.size &gt; 0">
-                    `size`=#{file.size},
-                </if>
-                <if test="file.deleteAt != null and file.deleteAt != ''">
-                    deleted_at=#{file.deleteAt},
-                </if>
-                <if test="file.summary != null and file.summary != ''">
+                <if test="file.summary != null">
                     summary=#{file.summary},
                 </if>
-                <if test="file.path != null and file.path != ''">
-                    `path`=#{file.path}
-                </if>
+                delete_status=#{file.deleteStatus}
             </set>
             where uid=#{file.uid}
     </update>
@@ -54,33 +44,30 @@
     <select id="query" resultMap="fileResult">
         select * from au_file
         <where>
-            <!--<if test="file.uid != 0">-->
-            <!--    uid=#{file.uid}-->
-            <!--</if>-->
-            <if test="file.createdAt != null and file.createdAt != ''">
+            <if test="file.uid != null">
+                uid=#{file.uid}
+            </if>
+            <if test="file.createdAt != null">
                 and created_at=#{file.createdAt}
             </if>
-            <if test="file.deletedAt != null and file.deletedAt != ''">
+            <if test="file.deletedAt != null">
                 and deleted_at=#{file.deletedAt}
             </if>
-            <if test="file.fileName != null and file.fileName != ''">
+            <if test="file.fileName != null">
                 and file_name=#{file.fileName}
             </if>
-            <if test="file.size &gt; 0">
+            <if test="file.size != 0">
                 and size=#{file.size}
             </if>
-            <if test="file.summary != null and file.summary != ''">
+            <if test="file.summary != null">
                 and summary=#{file.summary}
             </if>
-            <if test="file.path != null and file.path != ''">
+            <if test="file.path != null">
                 and path=#{file.path}
             </if>
 
             and delete_status=#{file.deleteStatus}
-
         </where>
-
-limit 30,50
     </select>
 
     <resultMap id="fileResult" type="xyz.xcye.common.entity.table.File">

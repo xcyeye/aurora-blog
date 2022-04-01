@@ -14,7 +14,6 @@ import springfox.documentation.oas.annotations.EnableOpenApi;
 
 
 @EnableOpenApi
-//@EnableWebMvc
 @EnableDiscoveryClient
 @SpringBootApplication
 public class AuroraFileRun {

@@ -2,6 +2,8 @@ server:
   port: 6767
 
 spring:
+  main:
+    allow-circular-references: true
   servlet:
     multipart:
       max-file-size: 30MB
@@ -37,6 +39,7 @@ mybatis:
   mapper-locations: classpath:mapper/**
   configuration:
     map-underscore-to-camel-case: true
+#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
 management:
   endpoints:
@@ -51,7 +54,17 @@ aurora:
     nginx-root-path: /Users/aurora/nginx-upload
     host: http://localhost
     upload-folder-name: aurora-upload
-
   snow-flake:
     workerId: 12
     datacenterId: 20
+  pagination:
+    pageNum: 1
+    pageSize: 10
+
+
+# 分页插件
+pagehelper:
+  helperDialect: mysql
+  reasonable: true
+  supportMethodsArguments: true
+  params: count=countSql

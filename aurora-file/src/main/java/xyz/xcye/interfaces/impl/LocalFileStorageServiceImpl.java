@@ -5,8 +5,7 @@ import org.springframework.stereotype.Component;
 import xyz.xcye.common.entity.FileEntity;
 import xyz.xcye.common.enums.ResultStatusCode;
 import xyz.xcye.common.util.DateUtil;
-import xyz.xcye.exception.CreateFileException;
-import xyz.xcye.exception.UploadFileException;
+import xyz.xcye.exception.CustomFileException;
 import xyz.xcye.interfaces.FileStorageService;
 import xyz.xcye.common.util.FileUtil;
 
@@ -61,7 +60,7 @@ public class LocalFileStorageServiceImpl implements FileStorageService {
      * @throws IOException
      */
     @Override
-    public FileEntity upload(InputStream inputStream, FileEntity fileEntity) throws IOException {
+    public FileEntity upload(InputStream inputStream, FileEntity fileEntity) throws CustomFileException {
         //获取上传文件的扩展名
         String extName = FileUtil.getExtName(fileEntity.getName());
 
@@ -88,7 +87,7 @@ public class LocalFileStorageServiceImpl implements FileStorageService {
             writeFile = FileUtil.writeByStream(inputStream, filePath);
         } catch (IOException e) {
             e.printStackTrace();
-            throw new UploadFileException(ResultStatusCode.EXCEPTION_FILE_FAIL_UPLOAD.getMessage(),filePath);
+            throw new CustomFileException(ResultStatusCode.EXCEPTION_FILE_FAIL_UPLOAD.getMessage(),ResultStatusCode.EXCEPTION_FILE_FAIL_UPLOAD.getCode());
         }
 
         String fileRemoteUrl = host + FileUtil.getFileSplitPath(nginxRootPath,writeFile.getAbsolutePath());
@@ -107,9 +106,14 @@ public class LocalFileStorageServiceImpl implements FileStorageService {
         return null;
     }
 
+    /**
+     * 从本地删除指定文件
+     * @param objectName objectName
+     * @return 删除成功 true 失败 false
+     */
     @Override
-    public boolean delete(String objectName) throws IOException {
-        return false;
+    public boolean delete(String objectName) {
+        return FileUtil.deleteFile(objectName);
     }
 
     /**
@@ -130,7 +134,14 @@ public class LocalFileStorageServiceImpl implements FileStorageService {
         return filePath;
     }
 
-    private boolean createFile(String filePath,String folderPath) throws CreateFileException {
+    /**
+     * 在指定目录中，创建指定文件
+     * @param filePath 指定文件
+     * @param folderPath 指定目录
+     * @return true创建成功，反之
+     * @throws CustomFileException
+     */
+    private boolean createFile(String filePath,String folderPath) throws CustomFileException {
         //文件夹是否存在
         boolean folderExists = new File(folderPath).exists();
 
@@ -138,7 +149,7 @@ public class LocalFileStorageServiceImpl implements FileStorageService {
             //创建文件夹
             if (!FileUtil.createFile(folderPath, true)) {
                 //创建文件夹失败
-                throw new CreateFileException(ResultStatusCode.EXCEPTION_FILE_FAIL_CREATE.getMessage(),filePath);
+                throw new CustomFileException(ResultStatusCode.EXCEPTION_FILE_FAIL_CREATE.getMessage(),ResultStatusCode.EXCEPTION_FILE_FAIL_CREATE.getCode());
             }
         }
 
@@ -148,7 +159,7 @@ public class LocalFileStorageServiceImpl implements FileStorageService {
         boolean isCreateFile = FileUtil.createFile(filePath, false);
         if (!isCreateFile) {
             //创建文件夹失败
-            throw new CreateFileException(ResultStatusCode.EXCEPTION_FILE_FAIL_CREATE.getMessage(),filePath);
+            throw new CustomFileException(ResultStatusCode.EXCEPTION_FILE_FAIL_CREATE.getMessage(),ResultStatusCode.EXCEPTION_FILE_FAIL_CREATE.getCode());
         }
 
         return isCreateFile;
