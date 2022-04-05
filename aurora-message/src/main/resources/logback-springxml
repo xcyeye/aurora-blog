@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <!-- 日志存放路径 -->
+    <property name="log_path" value="/Volumes/Code/Java-code/aurora-theme/log" />
+    <!-- 控制台打印 -->
+    <property name="log_pattern" value="%d{yyyy-MM-dd HH:mm:ss:SSS}  %highlight(%-5level) ${PID:-} --- [%t] %logger{40} - %blue(%method)  : %msg%n" />
+    <!-- 文件中打印 -->
+    <property name="log_note" value="%d{yyyy-MM-dd HH:mm:ss:SSS} %-5level ${PID:-} -- %t %logger{50}--%method  -%msg%n"/>
+    <!-- 当前项目的日志存放在哪个文件夹中 -->
+    <property name="log_folder" value="aurora-message"/>
+    <!-- 控制台输出 -->
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <!--
+            %-5level是日志级别
+            ${PID:-}进程号
+            %t线程名称
+            %logger{50}会打印类名
+            -->
+            <pattern>${log_pattern}</pattern>
+        </encoder>
+    </appender>
+
+    <!--系统控制台的打印日志-->
+    <appender name="operation-info" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${log_path}/${log_folder}/sys-info.log</file>
+        <!-- 循环政策：基于时间创建日志文件 -->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- 日志文件名格式 -->
+            <fileNamePattern>${log_path}/${log_folder}/sys-info-rolling/sys-info-%d{yyyy-MM-dd}.log</fileNamePattern>
+            <!-- 日志最大的历史 60天 -->
+            <maxHistory>0.1</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>${log_note}</pattern>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+           <!--  过滤的级别
+            <level>ERROR</level>
+            &lt;!&ndash; 匹配时的操作：接收（记录） &ndash;&gt;
+            <onMatch>ACCEPT</onMatch>
+            &lt;!&ndash; 不匹配时的操作：拒绝（不记录） &ndash;&gt;
+            <onMismatch>DENY</onMismatch>-->
+        </filter>
+    </appender>
+
+    <!-- 用户访问日志输出  -->
+    <appender name="sys-user" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${log_path}/${log_folder}/sys-user.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- 按天回滚 daily -->
+            <fileNamePattern>${log_path}/${log_folder}/sys-user-rolling/sys-user-%d{yyyy-MM-dd}.log</fileNamePattern>
+            <!-- 日志最大的历史 60天 -->
+            <maxHistory>0.01</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>${log_note}</pattern>
+        </encoder>
+    </appender>
+
+
+    <!-- 发生异常日志输出  -->
+    <appender name="sys-exception" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${log_path}/${log_folder}/sys-exception.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- 按天回滚 daily -->
+            <fileNamePattern>${log_path}/${log_folder}/sys-exception-rolling/sys-exception-%d{yyyy-MM-dd}.log</fileNamePattern>
+            <!-- 日志最大的历史 60天 -->
+            <maxHistory>0.01</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>${log_note}</pattern>
+        </encoder>
+    </appender>
+
+    <!-- 用户访问controller时打印的日志xyz.xcye.aop.LogAop  -->
+    <logger name="xyz.xcye.file.aop.LogAop" level="INFO" additivity="false">
+        <appender-ref ref="sys-user"/>
+    </logger>
+
+    <!--sys-exception-->
+    <!-- 全局异常处理里面的异常信息  -->
+    <logger name="xyz.xcye.file.exception.GlobalExceptionHandler" level="WARN" additivity="false">
+        <appender-ref ref="sys-exception"/>
+    </logger>
+
+    <!--指定基础的日志输出级别-->
+    <root level="info">
+        <appender-ref ref="console"/>
+        <appender-ref ref="operation-info"/>
+    </root>
+
+    <!--将控制台打印的信息，放入到文件中-->
+
+</configuration>

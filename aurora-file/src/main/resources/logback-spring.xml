@@ -74,13 +74,13 @@
     </appender>
 
     <!-- 用户访问controller时打印的日志xyz.xcye.aop.LogAop  -->
-    <logger name="xyz.xcye.aop.LogAop" level="INFO" additivity="false">
+    <logger name="xyz.xcye.file.aop.LogAop" level="INFO" additivity="false">
         <appender-ref ref="sys-user"/>
     </logger>
 
     <!--sys-exception-->
     <!-- 全局异常处理里面的异常信息  -->
-    <logger name="xyz.xcye.exception.GlobalExceptionHandler" level="WARN" additivity="false">
+    <logger name="xyz.xcye.file.exception.GlobalExceptionHandler" level="WARN" additivity="false">
         <appender-ref ref="sys-exception"/>
     </logger>
 

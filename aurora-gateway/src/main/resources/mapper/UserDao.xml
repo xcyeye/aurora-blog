@@ -2,7 +2,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="xyz.xcye.dao.UserDao">
+<mapper namespace="xyz.xcye.wg.dao.UserDao">
 
     <resultMap id="verifyPath" type="xyz.xcye.common.entity.table.User">
         <result property="password" column="password" />

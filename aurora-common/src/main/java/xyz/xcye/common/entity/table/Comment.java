@@ -4,6 +4,7 @@ import lombok.Data;
 import org.hibernate.validator.constraints.Length;
 import xyz.xcye.common.enums.FieldLengthEnum;
 import xyz.xcye.common.valid.Delete;
+import xyz.xcye.common.valid.Insert;
 import xyz.xcye.common.valid.Update;
 import xyz.xcye.common.valid.validator.ValidateString;
 
@@ -103,4 +104,10 @@ public class Comment {
      * 如果用户发布评论，true：已邮件通知该用户 false：未发送邮件通知该用户
      */
     private boolean publishNoticeStatus;
+
+    @ValidateString(value = "评论的内容",max = FieldLengthEnum.CONTENT)
+    private String content;
+
+    @ValidateString(value = "评论 评论的地址",max = FieldLengthEnum.URL,groups = {Insert.class})
+    private String path;
 }

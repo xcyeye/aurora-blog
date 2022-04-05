@@ -1,0 +1,490 @@
+2022-04-02 14:38:23:293 INFO  49022 -- background-preinit org.hibernate.validator.internal.util.Version--<clinit>  -HV000001: Hibernate Validator 6.2.2.Final
+2022-04-02 14:38:28:402 WARN  49022 -- main org.springframework.boot.StartupInfoLogger--appendOn  -InetAddress.getLocalHost().getHostName() took 5004 milliseconds to respond. Please verify your network configuration (macOS machines may need to add entries to /etc/hosts).
+2022-04-02 14:38:33:411 INFO  49022 -- main xyz.xcye.file.AuroraFileRun--logStarting  -Starting AuroraFileRun using Java 1.8.0_202 on auroradeMacBook-Pro.local with PID 49022 (/Volumes/Code/Java-code/aurora-theme/aurora-file/target/classes started by aurora in /Volumes/Code/Java-code/aurora-theme)
+2022-04-02 14:38:33:413 INFO  49022 -- main xyz.xcye.file.AuroraFileRun--logStartupProfileInfo  -No active profile set, falling back to 1 default profile: "default"
+2022-04-02 14:38:36:124 INFO  49022 -- main o.s.d.r.config.RepositoryConfigurationDelegate--multipleStoresDetected  -Multiple Spring Data modules found, entering strict repository configuration mode!
+2022-04-02 14:38:36:127 INFO  49022 -- main o.s.d.r.config.RepositoryConfigurationDelegate--registerRepositoriesIn  -Bootstrapping Spring Data JDBC repositories in DEFAULT mode.
+2022-04-02 14:38:36:149 INFO  49022 -- main o.s.d.r.config.RepositoryConfigurationDelegate--registerRepositoriesIn  -Finished Spring Data repository scanning in 12 ms. Found 0 JDBC repository interfaces.
+2022-04-02 14:38:36:170 INFO  49022 -- main o.s.d.r.config.RepositoryConfigurationDelegate--multipleStoresDetected  -Multiple Spring Data modules found, entering strict repository configuration mode!
+2022-04-02 14:38:36:172 INFO  49022 -- main o.s.d.r.config.RepositoryConfigurationDelegate--registerRepositoriesIn  -Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2022-04-02 14:38:36:195 INFO  49022 -- main o.s.d.r.config.RepositoryConfigurationDelegate--registerRepositoriesIn  -Finished Spring Data repository scanning in 3 ms. Found 0 Redis repository interfaces.
+2022-04-02 14:38:36:517 INFO  49022 -- main o.s.i.c.DefaultConfiguringBeanFactoryPostProcessor--info  -No bean named 'errorChannel' has been explicitly defined. Therefore, a default PublishSubscribeChannel will be created.
+2022-04-02 14:38:36:642 INFO  49022 -- main o.s.i.c.DefaultConfiguringBeanFactoryPostProcessor--info  -No bean named 'integrationHeaderChannelRegistry' has been explicitly defined. Therefore, a default DefaultHeaderChannelRegistry will be created.
+2022-04-02 14:38:36:887 INFO  49022 -- main o.springframework.cloud.context.scope.GenericScope--setSerializationId  -BeanFactory id=5615f3a8-7ad1-3b7d-8b9d-76827a8e2e8a
+2022-04-02 14:38:37:348 INFO  49022 -- main o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker--postProcessAfterInitialization  -Bean 'fileWebConfig' of type [xyz.xcye.file.config.FileWebConfig$$EnhancerBySpringCGLIB$$1] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-04-02 14:38:37:385 INFO  49022 -- main o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker--postProcessAfterInitialization  -Bean 'integrationChannelResolver' of type [org.springframework.integration.support.channel.BeanFactoryChannelResolver] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-04-02 14:38:37:433 INFO  49022 -- main o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker--postProcessAfterInitialization  -Bean 'org.springframework.integration.config.IntegrationManagementConfiguration' of type [org.springframework.integration.config.IntegrationManagementConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-04-02 14:38:37:445 INFO  49022 -- main o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker--postProcessAfterInitialization  -Bean 'org.springframework.boot.autoconfigure.integration.IntegrationAutoConfiguration$IntegrationJmxConfiguration' of type [org.springframework.boot.autoconfigure.integration.IntegrationAutoConfiguration$IntegrationJmxConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-04-02 14:38:37:460 INFO  49022 -- main o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker--postProcessAfterInitialization  -Bean 'org.springframework.boot.autoconfigure.jmx.JmxAutoConfiguration' of type [org.springframework.boot.autoconfigure.jmx.JmxAutoConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-04-02 14:38:37:467 INFO  49022 -- main o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker--postProcessAfterInitialization  -Bean 'mbeanServer' of type [com.sun.jmx.mbeanserver.JmxMBeanServer] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-04-02 14:38:38:139 INFO  49022 -- main o.s.boot.web.embedded.tomcat.TomcatWebServer--initialize  -Tomcat initialized with port(s): 6767 (http)
+2022-04-02 14:38:38:160 INFO  49022 -- main org.apache.coyote.http11.Http11NioProtocol--log  -Initializing ProtocolHandler ["http-nio-6767"]
+2022-04-02 14:38:38:162 INFO  49022 -- main org.apache.catalina.core.StandardService--log  -Starting service [Tomcat]
+2022-04-02 14:38:38:162 INFO  49022 -- main org.apache.catalina.core.StandardEngine--log  -Starting Servlet engine: [Apache Tomcat/9.0.58]
+2022-04-02 14:38:38:343 INFO  49022 -- main o.a.c.core.ContainerBase.[Tomcat].[localhost].[/]--log  -Initializing Spring embedded WebApplicationContext
+2022-04-02 14:38:38:343 INFO  49022 -- main o.s.b.w.s.c.ServletWebServerApplicationContext--prepareWebApplicationContext  -Root WebApplicationContext: initialization completed in 4836 ms
+2022-04-02 14:38:55:160 ERROR 49022 -- main xyz.xcye.file.cache.RedisCache--getId  -34
+2022-04-02 14:38:55:160 ERROR 49022 -- main xyz.xcye.file.cache.RedisCache--getId  -34
+2022-04-02 14:38:57:963 INFO  49022 -- main o.s.b.actuate.endpoint.web.EndpointLinksResolver--<init>  -Exposing 22 endpoint(s) beneath base path '/actuator'
+2022-04-02 14:38:59:241 INFO  49022 -- main o.s.c.s.f.FunctionConfiguration$FunctionBindingRegistrar--afterPropertiesSet  -Functional binding is disabled due to the presense of @EnableBinding annotation in your configuration
+2022-04-02 14:38:59:625 INFO  49022 -- main com.alibaba.druid.pool.DruidDataSource--init  -{dataSource-1} inited
+2022-04-02 14:39:00:387 WARN  49022 -- main o.s.c.l.c.LoadBalancerCacheAutoConfiguration$LoadBalancerCaffeineWarnLogger--logWarning  -Spring Cloud LoadBalancer is currently working with the default cache. While this cache implementation is useful for development and tests, it's recommended to use Caffeine cache in production.You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
+2022-04-02 14:39:00:775 INFO  49022 -- main o.s.integration.monitor.IntegrationMBeanExporter--registerChannel  -Registering MessageChannel output
+2022-04-02 14:39:00:847 INFO  49022 -- main o.s.integration.monitor.IntegrationMBeanExporter--registerChannel  -Registering MessageChannel errorChannel
+2022-04-02 14:39:00:868 INFO  49022 -- main o.s.integration.monitor.IntegrationMBeanExporter--registerChannel  -Registering MessageChannel nullChannel
+2022-04-02 14:39:00:880 INFO  49022 -- main o.s.integration.monitor.IntegrationMBeanExporter--registerHandler  -Registering MessageHandler _org.springframework.integration.errorLogger
+2022-04-02 14:39:00:936 INFO  49022 -- main o.s.integration.endpoint.EventDrivenConsumer--info  -Adding {logging-channel-adapter:_org.springframework.integration.errorLogger} as a subscriber to the 'errorChannel' channel
+2022-04-02 14:39:00:937 INFO  49022 -- main o.s.integration.channel.PublishSubscribeChannel--info  -Channel 'aurora-file.errorChannel' has 1 subscriber(s).
+2022-04-02 14:39:00:938 INFO  49022 -- main o.s.integration.endpoint.EventDrivenConsumer--info  -started bean '_org.springframework.integration.errorLogger'
+2022-04-02 14:39:00:940 INFO  49022 -- main o.s.cloud.stream.binder.DefaultBinderFactory--getBinderInstance  -Creating binder: defaultRabbit
+2022-04-02 14:39:01:134 INFO  49022 -- main o.s.cloud.stream.binder.DefaultBinderFactory--getBinderInstance  -Caching the binder: defaultRabbit
+2022-04-02 14:39:01:134 INFO  49022 -- main o.s.cloud.stream.binder.DefaultBinderFactory--getBinderInstance  -Retrieving cached binder: defaultRabbit
+2022-04-02 14:39:01:311 INFO  49022 -- main o.s.a.rabbit.connection.CachingConnectionFactory--connectAddresses  -Attempting to connect to: [127.0.0.1:5672]
+2022-04-02 14:39:01:412 WARN  49022 -- AMQP Connection 127.0.0.1:5672 com.rabbitmq.client.impl.ForgivingExceptionHandler--log  -An unexpected connection driver error occurred (Exception message: Socket closed)
+2022-04-02 14:39:01:428 INFO  49022 -- main o.s.c.stream.messaging.DirectWithAttributesChannel--info  -Channel 'aurora-file.output' has 1 subscriber(s).
+2022-04-02 14:39:06:636 INFO  49022 -- main org.apache.coyote.http11.Http11NioProtocol--log  -Starting ProtocolHandler ["http-nio-6767"]
+2022-04-02 14:39:06:672 INFO  49022 -- main o.s.boot.web.embedded.tomcat.TomcatWebServer--start  -Tomcat started on port(s): 6767 (http) with context path ''
+2022-04-02 14:39:06:691 INFO  49022 -- main c.a.cloud.nacos.registry.NacosServiceRegistry--register  -nacos registry, DEFAULT_GROUP aurora-file 100.64.83.44:6767 register finished
+2022-04-02 14:39:07:124 INFO  49022 -- main xyz.xcye.file.AuroraFileRun--logStarted  -Started AuroraFileRun in 54.961 seconds (JVM running for 66.763)
+2022-04-02 14:39:07:372 INFO  49022 -- RMI TCP Connection(2)-100.64.83.44 o.a.c.core.ContainerBase.[Tomcat].[localhost].[/]--log  -Initializing Spring DispatcherServlet 'dispatcherServlet'
+2022-04-02 14:39:07:372 INFO  49022 -- RMI TCP Connection(2)-100.64.83.44 org.springframework.web.servlet.DispatcherServlet--initServletBean  -Initializing Servlet 'dispatcherServlet'
+2022-04-02 14:39:07:377 INFO  49022 -- RMI TCP Connection(2)-100.64.83.44 org.springframework.web.servlet.DispatcherServlet--initServletBean  -Completed initialization in 4 ms
+2022-04-02 14:39:07:377 INFO  49022 -- RMI TCP Connection(3)-100.64.83.44 o.s.a.rabbit.connection.CachingConnectionFactory--connectAddresses  -Attempting to connect to: [localhost:5672]
+2022-04-02 14:39:07:395 INFO  49022 -- RMI TCP Connection(3)-100.64.83.44 o.s.a.rabbit.connection.CachingConnectionFactory--createBareConnection  -Created new connection: rabbitConnectionFactory#11cac750:0/SimpleConnection@52d880be [delegate=amqp://guest@127.0.0.1:5672/, localPort= 56171]
+2022-04-02 14:39:07:465 INFO  49022 -- RMI TCP Connection(3)-100.64.83.44 o.s.a.rabbit.connection.CachingConnectionFactory--connectAddresses  -Attempting to connect to: [127.0.0.1:5672]
+2022-04-02 14:39:07:473 WARN  49022 -- AMQP Connection 127.0.0.1:5672 com.rabbitmq.client.impl.ForgivingExceptionHandler--log  -An unexpected connection driver error occurred (Exception message: Socket closed)
+2022-04-02 14:39:07:484 WARN  49022 -- RMI TCP Connection(3)-100.64.83.44 o.s.boot.actuate.amqp.RabbitHealthIndicator--logExceptionIfPresent  -Rabbit health check failed
+org.springframework.amqp.AmqpIOException: java.io.IOException
+	at org.springframework.amqp.rabbit.support.RabbitExceptionTranslator.convertRabbitAccessException(RabbitExceptionTranslator.java:70)
+	at org.springframework.amqp.rabbit.connection.AbstractConnectionFactory.createBareConnection(AbstractConnectionFactory.java:602)
+	at org.springframework.amqp.rabbit.connection.CachingConnectionFactory.createConnection(CachingConnectionFactory.java:724)
+	at org.springframework.amqp.rabbit.connection.ConnectionFactoryUtils.createConnection(ConnectionFactoryUtils.java:252)
+	at org.springframework.amqp.rabbit.core.RabbitTemplate.doExecute(RabbitTemplate.java:2175)
+	at org.springframework.amqp.rabbit.core.RabbitTemplate.execute(RabbitTemplate.java:2148)
+	at org.springframework.amqp.rabbit.core.RabbitTemplate.execute(RabbitTemplate.java:2128)
+	at org.springframework.boot.actuate.amqp.RabbitHealthIndicator.getVersion(RabbitHealthIndicator.java:49)
+	at org.springframework.boot.actuate.amqp.RabbitHealthIndicator.doHealthCheck(RabbitHealthIndicator.java:44)
+	at org.springframework.boot.actuate.health.AbstractHealthIndicator.health(AbstractHealthIndicator.java:82)
+	at org.springframework.boot.actuate.health.HealthIndicator.getHealth(HealthIndicator.java:37)
+	at org.springframework.boot.actuate.health.HealthEndpoint.getHealth(HealthEndpoint.java:77)
+	at org.springframework.boot.actuate.health.HealthEndpoint.getHealth(HealthEndpoint.java:40)
+	at org.springframework.boot.actuate.health.HealthEndpointSupport.getContribution(HealthEndpointSupport.java:130)
+	at org.springframework.boot.actuate.health.HealthEndpointSupport.getAggregateContribution(HealthEndpointSupport.java:141)
+	at org.springframework.boot.actuate.health.HealthEndpointSupport.getContribution(HealthEndpointSupport.java:126)
+	at org.springframework.boot.actuate.health.HealthEndpointSupport.getAggregateContribution(HealthEndpointSupport.java:141)
+	at org.springframework.boot.actuate.health.HealthEndpointSupport.getContribution(HealthEndpointSupport.java:126)
+	at org.springframework.boot.actuate.health.HealthEndpointSupport.getHealth(HealthEndpointSupport.java:95)
+	at org.springframework.boot.actuate.health.HealthEndpointSupport.getHealth(HealthEndpointSupport.java:66)
+	at org.springframework.boot.actuate.health.HealthEndpoint.health(HealthEndpoint.java:71)
+	at org.springframework.boot.actuate.health.HealthEndpoint.health(HealthEndpoint.java:61)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.springframework.util.ReflectionUtils.invokeMethod(ReflectionUtils.java:282)
+	at org.springframework.boot.actuate.endpoint.invoke.reflect.ReflectiveOperationInvoker.invoke(ReflectiveOperationInvoker.java:74)
+	at org.springframework.boot.actuate.endpoint.annotation.AbstractDiscoveredOperation.invoke(AbstractDiscoveredOperation.java:60)
+	at org.springframework.boot.actuate.endpoint.jmx.EndpointMBean.invoke(EndpointMBean.java:121)
+	at org.springframework.boot.actuate.endpoint.jmx.EndpointMBean.invoke(EndpointMBean.java:96)
+	at com.sun.jmx.interceptor.DefaultMBeanServerInterceptor.invoke(DefaultMBeanServerInterceptor.java:819)
+	at com.sun.jmx.mbeanserver.JmxMBeanServer.invoke(JmxMBeanServer.java:801)
+	at javax.management.remote.rmi.RMIConnectionImpl.doOperation(RMIConnectionImpl.java:1468)
+	at javax.management.remote.rmi.RMIConnectionImpl.access$300(RMIConnectionImpl.java:76)
+	at javax.management.remote.rmi.RMIConnectionImpl$PrivilegedOperation.run(RMIConnectionImpl.java:1309)
+	at javax.management.remote.rmi.RMIConnectionImpl.doPrivilegedOperation(RMIConnectionImpl.java:1401)
+	at javax.management.remote.rmi.RMIConnectionImpl.invoke(RMIConnectionImpl.java:829)
+	at sun.reflect.GeneratedMethodAccessor137.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at sun.rmi.server.UnicastServerRef.dispatch(UnicastServerRef.java:357)
+	at sun.rmi.transport.Transport$1.run(Transport.java:200)
+	at sun.rmi.transport.Transport$1.run(Transport.java:197)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at sun.rmi.transport.Transport.serviceCall(Transport.java:196)
+	at sun.rmi.transport.tcp.TCPTransport.handleMessages(TCPTransport.java:573)
+	at sun.rmi.transport.tcp.TCPTransport$ConnectionHandler.run0(TCPTransport.java:834)
+	at sun.rmi.transport.tcp.TCPTransport$ConnectionHandler.lambda$run$0(TCPTransport.java:688)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at sun.rmi.transport.tcp.TCPTransport$ConnectionHandler.run(TCPTransport.java:687)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+Caused by: java.io.IOException: null
+	at com.rabbitmq.client.impl.AMQChannel.wrap(AMQChannel.java:129)
+	at com.rabbitmq.client.impl.AMQChannel.wrap(AMQChannel.java:125)
+	at com.rabbitmq.client.impl.AMQChannel.exnWrappingRpc(AMQChannel.java:147)
+	at com.rabbitmq.client.impl.AMQConnection.start(AMQConnection.java:439)
+	at com.rabbitmq.client.ConnectionFactory.newConnection(ConnectionFactory.java:1225)
+	at com.rabbitmq.client.ConnectionFactory.newConnection(ConnectionFactory.java:1173)
+	at org.springframework.amqp.rabbit.connection.AbstractConnectionFactory.connectAddresses(AbstractConnectionFactory.java:640)
+	at org.springframework.amqp.rabbit.connection.AbstractConnectionFactory.connect(AbstractConnectionFactory.java:615)
+	at org.springframework.amqp.rabbit.connection.AbstractConnectionFactory.createBareConnection(AbstractConnectionFactory.java:565)
+	... 52 common frames omitted
+Caused by: com.rabbitmq.client.ShutdownSignalException: connection error; protocol method: #method<connection.close>(reply-code=530, reply-text=NOT_ALLOWED - access to vhost '/' refused for user 'admin', class-id=10, method-id=40)
+	at com.rabbitmq.utility.ValueOrException.getValue(ValueOrException.java:66)
+	at com.rabbitmq.utility.BlockingValueOrException.uninterruptibleGetValue(BlockingValueOrException.java:36)
+	at com.rabbitmq.client.impl.AMQChannel$BlockingRpcContinuation.getReply(AMQChannel.java:502)
+	at com.rabbitmq.client.impl.AMQChannel.privateRpc(AMQChannel.java:293)
+	at com.rabbitmq.client.impl.AMQChannel.exnWrappingRpc(AMQChannel.java:141)
+	... 58 common frames omitted
+2022-04-02 14:42:37:036 WARN  49022 -- Thread-72 com.alibaba.nacos.common.http.HttpClientBeanHolder--shutdown  -[HttpClientBeanHolder] Start destroying common HttpClient
+2022-04-02 14:42:37:036 WARN  49022 -- Thread-82 com.alibaba.nacos.common.notify.NotifyCenter--shutdown  -[NotifyCenter] Start destroying Publisher
+2022-04-02 14:42:37:036 WARN  49022 -- Thread-82 com.alibaba.nacos.common.notify.NotifyCenter--shutdown  -[NotifyCenter] Destruction of the end
+2022-04-02 14:42:37:040 WARN  49022 -- Thread-72 com.alibaba.nacos.common.http.HttpClientBeanHolder--shutdown  -[HttpClientBeanHolder] Destruction of the end
+2022-04-02 14:42:37:101 INFO  49022 -- SpringApplicationShutdownHook o.s.integration.endpoint.EventDrivenConsumer--info  -Removing {logging-channel-adapter:_org.springframework.integration.errorLogger} as a subscriber to the 'errorChannel' channel
+2022-04-02 14:42:37:103 INFO  49022 -- SpringApplicationShutdownHook o.s.integration.channel.PublishSubscribeChannel--info  -Channel 'aurora-file.errorChannel' has 0 subscriber(s).
+2022-04-02 14:42:37:104 INFO  49022 -- SpringApplicationShutdownHook o.s.integration.endpoint.EventDrivenConsumer--info  -stopped bean '_org.springframework.integration.errorLogger'
+2022-04-02 14:42:37:142 INFO  49022 -- SpringApplicationShutdownHook c.a.cloud.nacos.registry.NacosServiceRegistry--deregister  -De-registering from Nacos Server now...
+2022-04-02 14:42:37:146 INFO  49022 -- SpringApplicationShutdownHook c.a.cloud.nacos.registry.NacosServiceRegistry--deregister  -De-registration finished.
+2022-04-02 14:43:09:762 INFO  51864 -- background-preinit org.hibernate.validator.internal.util.Version--<clinit>  -HV000001: Hibernate Validator 6.2.2.Final
+2022-04-02 14:43:14:866 WARN  51864 -- main org.springframework.boot.StartupInfoLogger--appendOn  -InetAddress.getLocalHost().getHostName() took 5005 milliseconds to respond. Please verify your network configuration (macOS machines may need to add entries to /etc/hosts).
+2022-04-02 14:43:19:874 INFO  51864 -- main xyz.xcye.file.AuroraFileRun--logStarting  -Starting AuroraFileRun using Java 1.8.0_202 on auroradeMacBook-Pro.local with PID 51864 (/Volumes/Code/Java-code/aurora-theme/aurora-file/target/classes started by aurora in /Volumes/Code/Java-code/aurora-theme)
+2022-04-02 14:43:19:876 INFO  51864 -- main xyz.xcye.file.AuroraFileRun--logStartupProfileInfo  -No active profile set, falling back to 1 default profile: "default"
+2022-04-02 14:43:21:917 INFO  51864 -- main o.s.d.r.config.RepositoryConfigurationDelegate--multipleStoresDetected  -Multiple Spring Data modules found, entering strict repository configuration mode!
+2022-04-02 14:43:21:919 INFO  51864 -- main o.s.d.r.config.RepositoryConfigurationDelegate--registerRepositoriesIn  -Bootstrapping Spring Data JDBC repositories in DEFAULT mode.
+2022-04-02 14:43:21:938 INFO  51864 -- main o.s.d.r.config.RepositoryConfigurationDelegate--registerRepositoriesIn  -Finished Spring Data repository scanning in 11 ms. Found 0 JDBC repository interfaces.
+2022-04-02 14:43:21:955 INFO  51864 -- main o.s.d.r.config.RepositoryConfigurationDelegate--multipleStoresDetected  -Multiple Spring Data modules found, entering strict repository configuration mode!
+2022-04-02 14:43:21:957 INFO  51864 -- main o.s.d.r.config.RepositoryConfigurationDelegate--registerRepositoriesIn  -Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2022-04-02 14:43:21:974 INFO  51864 -- main o.s.d.r.config.RepositoryConfigurationDelegate--registerRepositoriesIn  -Finished Spring Data repository scanning in 3 ms. Found 0 Redis repository interfaces.
+2022-04-02 14:43:22:218 INFO  51864 -- main o.s.i.c.DefaultConfiguringBeanFactoryPostProcessor--info  -No bean named 'errorChannel' has been explicitly defined. Therefore, a default PublishSubscribeChannel will be created.
+2022-04-02 14:43:22:245 INFO  51864 -- main o.s.i.c.DefaultConfiguringBeanFactoryPostProcessor--info  -No bean named 'integrationHeaderChannelRegistry' has been explicitly defined. Therefore, a default DefaultHeaderChannelRegistry will be created.
+2022-04-02 14:43:22:428 INFO  51864 -- main o.springframework.cloud.context.scope.GenericScope--setSerializationId  -BeanFactory id=5615f3a8-7ad1-3b7d-8b9d-76827a8e2e8a
+2022-04-02 14:43:22:843 INFO  51864 -- main o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker--postProcessAfterInitialization  -Bean 'fileWebConfig' of type [xyz.xcye.file.config.FileWebConfig$$EnhancerBySpringCGLIB$$1] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-04-02 14:43:22:873 INFO  51864 -- main o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker--postProcessAfterInitialization  -Bean 'integrationChannelResolver' of type [org.springframework.integration.support.channel.BeanFactoryChannelResolver] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-04-02 14:43:22:914 INFO  51864 -- main o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker--postProcessAfterInitialization  -Bean 'org.springframework.integration.config.IntegrationManagementConfiguration' of type [org.springframework.integration.config.IntegrationManagementConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-04-02 14:43:22:926 INFO  51864 -- main o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker--postProcessAfterInitialization  -Bean 'org.springframework.boot.autoconfigure.integration.IntegrationAutoConfiguration$IntegrationJmxConfiguration' of type [org.springframework.boot.autoconfigure.integration.IntegrationAutoConfiguration$IntegrationJmxConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-04-02 14:43:22:939 INFO  51864 -- main o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker--postProcessAfterInitialization  -Bean 'org.springframework.boot.autoconfigure.jmx.JmxAutoConfiguration' of type [org.springframework.boot.autoconfigure.jmx.JmxAutoConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-04-02 14:43:22:948 INFO  51864 -- main o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker--postProcessAfterInitialization  -Bean 'mbeanServer' of type [com.sun.jmx.mbeanserver.JmxMBeanServer] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-04-02 14:43:23:542 INFO  51864 -- main o.s.boot.web.embedded.tomcat.TomcatWebServer--initialize  -Tomcat initialized with port(s): 6767 (http)
+2022-04-02 14:43:23:557 INFO  51864 -- main org.apache.coyote.http11.Http11NioProtocol--log  -Initializing ProtocolHandler ["http-nio-6767"]
+2022-04-02 14:43:23:558 INFO  51864 -- main org.apache.catalina.core.StandardService--log  -Starting service [Tomcat]
+2022-04-02 14:43:23:558 INFO  51864 -- main org.apache.catalina.core.StandardEngine--log  -Starting Servlet engine: [Apache Tomcat/9.0.58]
+2022-04-02 14:43:23:720 INFO  51864 -- main o.a.c.core.ContainerBase.[Tomcat].[localhost].[/]--log  -Initializing Spring embedded WebApplicationContext
+2022-04-02 14:43:23:720 INFO  51864 -- main o.s.b.w.s.c.ServletWebServerApplicationContext--prepareWebApplicationContext  -Root WebApplicationContext: initialization completed in 3770 ms
+2022-04-02 14:43:24:304 ERROR 51864 -- main xyz.xcye.file.cache.RedisCache--getId  -34
+2022-04-02 14:43:24:305 ERROR 51864 -- main xyz.xcye.file.cache.RedisCache--getId  -34
+2022-04-02 14:43:26:030 INFO  51864 -- main o.s.b.actuate.endpoint.web.EndpointLinksResolver--<init>  -Exposing 22 endpoint(s) beneath base path '/actuator'
+2022-04-02 14:43:27:058 INFO  51864 -- main o.s.c.s.f.FunctionConfiguration$FunctionBindingRegistrar--afterPropertiesSet  -Functional binding is disabled due to the presense of @EnableBinding annotation in your configuration
+2022-04-02 14:43:27:328 INFO  51864 -- main com.alibaba.druid.pool.DruidDataSource--init  -{dataSource-1} inited
+2022-04-02 14:43:27:995 WARN  51864 -- main o.s.c.l.c.LoadBalancerCacheAutoConfiguration$LoadBalancerCaffeineWarnLogger--logWarning  -Spring Cloud LoadBalancer is currently working with the default cache. While this cache implementation is useful for development and tests, it's recommended to use Caffeine cache in production.You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
+2022-04-02 14:43:28:330 INFO  51864 -- main o.s.integration.monitor.IntegrationMBeanExporter--registerChannel  -Registering MessageChannel output
+2022-04-02 14:43:28:397 INFO  51864 -- main o.s.integration.monitor.IntegrationMBeanExporter--registerChannel  -Registering MessageChannel errorChannel
+2022-04-02 14:43:28:420 INFO  51864 -- main o.s.integration.monitor.IntegrationMBeanExporter--registerChannel  -Registering MessageChannel nullChannel
+2022-04-02 14:43:28:432 INFO  51864 -- main o.s.integration.monitor.IntegrationMBeanExporter--registerHandler  -Registering MessageHandler _org.springframework.integration.errorLogger
+2022-04-02 14:43:28:482 INFO  51864 -- main o.s.integration.endpoint.EventDrivenConsumer--info  -Adding {logging-channel-adapter:_org.springframework.integration.errorLogger} as a subscriber to the 'errorChannel' channel
+2022-04-02 14:43:28:483 INFO  51864 -- main o.s.integration.channel.PublishSubscribeChannel--info  -Channel 'aurora-file.errorChannel' has 1 subscriber(s).
+2022-04-02 14:43:28:484 INFO  51864 -- main o.s.integration.endpoint.EventDrivenConsumer--info  -started bean '_org.springframework.integration.errorLogger'
+2022-04-02 14:43:28:486 INFO  51864 -- main o.s.cloud.stream.binder.DefaultBinderFactory--getBinderInstance  -Creating binder: defaultRabbit
+2022-04-02 14:43:28:633 INFO  51864 -- main o.s.cloud.stream.binder.DefaultBinderFactory--getBinderInstance  -Caching the binder: defaultRabbit
+2022-04-02 14:43:28:633 INFO  51864 -- main o.s.cloud.stream.binder.DefaultBinderFactory--getBinderInstance  -Retrieving cached binder: defaultRabbit
+2022-04-02 14:43:28:787 INFO  51864 -- main o.s.a.rabbit.connection.CachingConnectionFactory--connectAddresses  -Attempting to connect to: [127.0.0.1:5672]
+2022-04-02 14:43:28:841 INFO  51864 -- main o.s.a.rabbit.connection.CachingConnectionFactory--createBareConnection  -Created new connection: rabbitConnectionFactory#7aead7d9:0/SimpleConnection@741cb82c [delegate=amqp://admin@127.0.0.1:5672/, localPort= 56309]
+2022-04-02 14:43:28:895 INFO  51864 -- main o.s.c.stream.messaging.DirectWithAttributesChannel--info  -Channel 'aurora-file.output' has 1 subscriber(s).
+2022-04-02 14:43:34:063 INFO  51864 -- main org.apache.coyote.http11.Http11NioProtocol--log  -Starting ProtocolHandler ["http-nio-6767"]
+2022-04-02 14:43:34:097 INFO  51864 -- main o.s.boot.web.embedded.tomcat.TomcatWebServer--start  -Tomcat started on port(s): 6767 (http) with context path ''
+2022-04-02 14:43:34:113 INFO  51864 -- main c.a.cloud.nacos.registry.NacosServiceRegistry--register  -nacos registry, DEFAULT_GROUP aurora-file 100.64.83.44:6767 register finished
+2022-04-02 14:43:34:605 INFO  51864 -- main xyz.xcye.file.AuroraFileRun--logStarted  -Started AuroraFileRun in 35.761 seconds (JVM running for 48.357)
+2022-04-02 14:43:34:904 INFO  51864 -- RMI TCP Connection(5)-100.64.83.44 o.a.c.core.ContainerBase.[Tomcat].[localhost].[/]--log  -Initializing Spring DispatcherServlet 'dispatcherServlet'
+2022-04-02 14:43:34:904 INFO  51864 -- RMI TCP Connection(5)-100.64.83.44 org.springframework.web.servlet.DispatcherServlet--initServletBean  -Initializing Servlet 'dispatcherServlet'
+2022-04-02 14:43:34:909 INFO  51864 -- RMI TCP Connection(5)-100.64.83.44 org.springframework.web.servlet.DispatcherServlet--initServletBean  -Completed initialization in 4 ms
+2022-04-02 14:43:34:909 INFO  51864 -- RMI TCP Connection(4)-100.64.83.44 o.s.a.rabbit.connection.CachingConnectionFactory--connectAddresses  -Attempting to connect to: [localhost:5672]
+2022-04-02 14:43:34:916 INFO  51864 -- RMI TCP Connection(4)-100.64.83.44 o.s.a.rabbit.connection.CachingConnectionFactory--createBareConnection  -Created new connection: rabbitConnectionFactory#1ecbb787:0/SimpleConnection@5fbc0090 [delegate=amqp://guest@127.0.0.1:5672/, localPort= 56316]
+2022-04-02 14:44:17:648 WARN  51864 -- Thread-77 com.alibaba.nacos.common.notify.NotifyCenter--shutdown  -[NotifyCenter] Start destroying Publisher
+2022-04-02 14:44:17:649 WARN  51864 -- Thread-77 com.alibaba.nacos.common.notify.NotifyCenter--shutdown  -[NotifyCenter] Destruction of the end
+2022-04-02 14:44:17:649 WARN  51864 -- Thread-68 com.alibaba.nacos.common.http.HttpClientBeanHolder--shutdown  -[HttpClientBeanHolder] Start destroying common HttpClient
+2022-04-02 14:44:17:653 WARN  51864 -- Thread-68 com.alibaba.nacos.common.http.HttpClientBeanHolder--shutdown  -[HttpClientBeanHolder] Destruction of the end
+2022-04-02 14:44:17:711 INFO  51864 -- SpringApplicationShutdownHook o.s.integration.endpoint.EventDrivenConsumer--info  -Removing {logging-channel-adapter:_org.springframework.integration.errorLogger} as a subscriber to the 'errorChannel' channel
+2022-04-02 14:44:17:713 INFO  51864 -- SpringApplicationShutdownHook o.s.integration.channel.PublishSubscribeChannel--info  -Channel 'aurora-file.errorChannel' has 0 subscriber(s).
+2022-04-02 14:44:17:714 INFO  51864 -- SpringApplicationShutdownHook o.s.integration.endpoint.EventDrivenConsumer--info  -stopped bean '_org.springframework.integration.errorLogger'
+2022-04-02 14:44:17:748 INFO  51864 -- SpringApplicationShutdownHook c.a.cloud.nacos.registry.NacosServiceRegistry--deregister  -De-registering from Nacos Server now...
+2022-04-02 14:44:17:752 INFO  51864 -- SpringApplicationShutdownHook c.a.cloud.nacos.registry.NacosServiceRegistry--deregister  -De-registration finished.
+2022-04-02 14:44:49:951 INFO  52886 -- background-preinit org.hibernate.validator.internal.util.Version--<clinit>  -HV000001: Hibernate Validator 6.2.2.Final
+2022-04-02 14:44:55:046 WARN  52886 -- main org.springframework.boot.StartupInfoLogger--appendOn  -InetAddress.getLocalHost().getHostName() took 5003 milliseconds to respond. Please verify your network configuration (macOS machines may need to add entries to /etc/hosts).
+2022-04-02 14:45:00:056 INFO  52886 -- main xyz.xcye.file.AuroraFileRun--logStarting  -Starting AuroraFileRun using Java 1.8.0_202 on auroradeMacBook-Pro.local with PID 52886 (/Volumes/Code/Java-code/aurora-theme/aurora-file/target/classes started by aurora in /Volumes/Code/Java-code/aurora-theme)
+2022-04-02 14:45:00:057 INFO  52886 -- main xyz.xcye.file.AuroraFileRun--logStartupProfileInfo  -No active profile set, falling back to 1 default profile: "default"
+2022-04-02 14:45:02:423 INFO  52886 -- main o.s.d.r.config.RepositoryConfigurationDelegate--multipleStoresDetected  -Multiple Spring Data modules found, entering strict repository configuration mode!
+2022-04-02 14:45:02:424 INFO  52886 -- main o.s.d.r.config.RepositoryConfigurationDelegate--registerRepositoriesIn  -Bootstrapping Spring Data JDBC repositories in DEFAULT mode.
+2022-04-02 14:45:02:443 INFO  52886 -- main o.s.d.r.config.RepositoryConfigurationDelegate--registerRepositoriesIn  -Finished Spring Data repository scanning in 11 ms. Found 0 JDBC repository interfaces.
+2022-04-02 14:45:02:458 INFO  52886 -- main o.s.d.r.config.RepositoryConfigurationDelegate--multipleStoresDetected  -Multiple Spring Data modules found, entering strict repository configuration mode!
+2022-04-02 14:45:02:460 INFO  52886 -- main o.s.d.r.config.RepositoryConfigurationDelegate--registerRepositoriesIn  -Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2022-04-02 14:45:02:476 INFO  52886 -- main o.s.d.r.config.RepositoryConfigurationDelegate--registerRepositoriesIn  -Finished Spring Data repository scanning in 3 ms. Found 0 Redis repository interfaces.
+2022-04-02 14:45:02:720 INFO  52886 -- main o.s.i.c.DefaultConfiguringBeanFactoryPostProcessor--info  -No bean named 'errorChannel' has been explicitly defined. Therefore, a default PublishSubscribeChannel will be created.
+2022-04-02 14:45:02:747 INFO  52886 -- main o.s.i.c.DefaultConfiguringBeanFactoryPostProcessor--info  -No bean named 'integrationHeaderChannelRegistry' has been explicitly defined. Therefore, a default DefaultHeaderChannelRegistry will be created.
+2022-04-02 14:45:02:941 INFO  52886 -- main o.springframework.cloud.context.scope.GenericScope--setSerializationId  -BeanFactory id=5615f3a8-7ad1-3b7d-8b9d-76827a8e2e8a
+2022-04-02 14:45:03:324 INFO  52886 -- main o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker--postProcessAfterInitialization  -Bean 'fileWebConfig' of type [xyz.xcye.file.config.FileWebConfig$$EnhancerBySpringCGLIB$$1] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-04-02 14:45:03:356 INFO  52886 -- main o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker--postProcessAfterInitialization  -Bean 'integrationChannelResolver' of type [org.springframework.integration.support.channel.BeanFactoryChannelResolver] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-04-02 14:45:03:394 INFO  52886 -- main o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker--postProcessAfterInitialization  -Bean 'org.springframework.integration.config.IntegrationManagementConfiguration' of type [org.springframework.integration.config.IntegrationManagementConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-04-02 14:45:03:405 INFO  52886 -- main o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker--postProcessAfterInitialization  -Bean 'org.springframework.boot.autoconfigure.integration.IntegrationAutoConfiguration$IntegrationJmxConfiguration' of type [org.springframework.boot.autoconfigure.integration.IntegrationAutoConfiguration$IntegrationJmxConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-04-02 14:45:03:415 INFO  52886 -- main o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker--postProcessAfterInitialization  -Bean 'org.springframework.boot.autoconfigure.jmx.JmxAutoConfiguration' of type [org.springframework.boot.autoconfigure.jmx.JmxAutoConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-04-02 14:45:03:423 INFO  52886 -- main o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker--postProcessAfterInitialization  -Bean 'mbeanServer' of type [com.sun.jmx.mbeanserver.JmxMBeanServer] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-04-02 14:45:04:008 INFO  52886 -- main o.s.boot.web.embedded.tomcat.TomcatWebServer--initialize  -Tomcat initialized with port(s): 6767 (http)
+2022-04-02 14:45:04:026 INFO  52886 -- main org.apache.coyote.http11.Http11NioProtocol--log  -Initializing ProtocolHandler ["http-nio-6767"]
+2022-04-02 14:45:04:027 INFO  52886 -- main org.apache.catalina.core.StandardService--log  -Starting service [Tomcat]
+2022-04-02 14:45:04:028 INFO  52886 -- main org.apache.catalina.core.StandardEngine--log  -Starting Servlet engine: [Apache Tomcat/9.0.58]
+2022-04-02 14:45:04:198 INFO  52886 -- main o.a.c.core.ContainerBase.[Tomcat].[localhost].[/]--log  -Initializing Spring embedded WebApplicationContext
+2022-04-02 14:45:04:199 INFO  52886 -- main o.s.b.w.s.c.ServletWebServerApplicationContext--prepareWebApplicationContext  -Root WebApplicationContext: initialization completed in 4063 ms
+2022-04-02 14:45:04:877 ERROR 52886 -- main xyz.xcye.file.cache.RedisCache--getId  -34
+2022-04-02 14:45:04:877 ERROR 52886 -- main xyz.xcye.file.cache.RedisCache--getId  -34
+2022-04-02 14:45:06:635 INFO  52886 -- main o.s.b.actuate.endpoint.web.EndpointLinksResolver--<init>  -Exposing 22 endpoint(s) beneath base path '/actuator'
+2022-04-02 14:45:07:919 INFO  52886 -- main o.s.c.s.f.FunctionConfiguration$FunctionBindingRegistrar--afterPropertiesSet  -Functional binding is disabled due to the presense of @EnableBinding annotation in your configuration
+2022-04-02 14:45:08:212 INFO  52886 -- main com.alibaba.druid.pool.DruidDataSource--init  -{dataSource-1} inited
+2022-04-02 14:45:09:283 WARN  52886 -- main o.s.c.l.c.LoadBalancerCacheAutoConfiguration$LoadBalancerCaffeineWarnLogger--logWarning  -Spring Cloud LoadBalancer is currently working with the default cache. While this cache implementation is useful for development and tests, it's recommended to use Caffeine cache in production.You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
+2022-04-02 14:45:09:936 INFO  52886 -- main o.s.integration.monitor.IntegrationMBeanExporter--registerChannel  -Registering MessageChannel output
+2022-04-02 14:45:10:007 INFO  52886 -- main o.s.integration.monitor.IntegrationMBeanExporter--registerChannel  -Registering MessageChannel errorChannel
+2022-04-02 14:45:10:029 INFO  52886 -- main o.s.integration.monitor.IntegrationMBeanExporter--registerChannel  -Registering MessageChannel nullChannel
+2022-04-02 14:45:10:042 INFO  52886 -- main o.s.integration.monitor.IntegrationMBeanExporter--registerHandler  -Registering MessageHandler _org.springframework.integration.errorLogger
+2022-04-02 14:45:10:093 INFO  52886 -- main o.s.integration.endpoint.EventDrivenConsumer--info  -Adding {logging-channel-adapter:_org.springframework.integration.errorLogger} as a subscriber to the 'errorChannel' channel
+2022-04-02 14:45:10:094 INFO  52886 -- main o.s.integration.channel.PublishSubscribeChannel--info  -Channel 'aurora-file.errorChannel' has 1 subscriber(s).
+2022-04-02 14:45:10:094 INFO  52886 -- main o.s.integration.endpoint.EventDrivenConsumer--info  -started bean '_org.springframework.integration.errorLogger'
+2022-04-02 14:45:10:096 INFO  52886 -- main o.s.cloud.stream.binder.DefaultBinderFactory--getBinderInstance  -Creating binder: defaultRabbit
+2022-04-02 14:45:10:269 INFO  52886 -- main o.s.cloud.stream.binder.DefaultBinderFactory--getBinderInstance  -Caching the binder: defaultRabbit
+2022-04-02 14:45:10:269 INFO  52886 -- main o.s.cloud.stream.binder.DefaultBinderFactory--getBinderInstance  -Retrieving cached binder: defaultRabbit
+2022-04-02 14:45:10:457 INFO  52886 -- main o.s.a.rabbit.connection.CachingConnectionFactory--connectAddresses  -Attempting to connect to: [127.0.0.1:5672]
+2022-04-02 14:45:10:526 INFO  52886 -- main o.s.a.rabbit.connection.CachingConnectionFactory--createBareConnection  -Created new connection: rabbitConnectionFactory#151ce559:0/SimpleConnection@380ea757 [delegate=amqp://admin@127.0.0.1:5672/, localPort= 56375]
+2022-04-02 14:45:10:581 INFO  52886 -- main o.s.c.stream.messaging.DirectWithAttributesChannel--info  -Channel 'aurora-file.output' has 1 subscriber(s).
+2022-04-02 14:45:15:748 INFO  52886 -- main org.apache.coyote.http11.Http11NioProtocol--log  -Starting ProtocolHandler ["http-nio-6767"]
+2022-04-02 14:45:15:779 INFO  52886 -- main o.s.boot.web.embedded.tomcat.TomcatWebServer--start  -Tomcat started on port(s): 6767 (http) with context path ''
+2022-04-02 14:45:15:794 INFO  52886 -- main c.a.cloud.nacos.registry.NacosServiceRegistry--register  -nacos registry, DEFAULT_GROUP aurora-file 100.64.83.44:6767 register finished
+2022-04-02 14:45:16:250 INFO  52886 -- main xyz.xcye.file.AuroraFileRun--logStarted  -Started AuroraFileRun in 37.313 seconds (JVM running for 47.208)
+2022-04-02 14:45:16:497 INFO  52886 -- RMI TCP Connection(5)-100.64.83.44 o.a.c.core.ContainerBase.[Tomcat].[localhost].[/]--log  -Initializing Spring DispatcherServlet 'dispatcherServlet'
+2022-04-02 14:45:16:498 INFO  52886 -- RMI TCP Connection(5)-100.64.83.44 org.springframework.web.servlet.DispatcherServlet--initServletBean  -Initializing Servlet 'dispatcherServlet'
+2022-04-02 14:45:16:501 INFO  52886 -- RMI TCP Connection(6)-100.64.83.44 o.s.a.rabbit.connection.CachingConnectionFactory--connectAddresses  -Attempting to connect to: [localhost:5672]
+2022-04-02 14:45:16:503 INFO  52886 -- RMI TCP Connection(5)-100.64.83.44 org.springframework.web.servlet.DispatcherServlet--initServletBean  -Completed initialization in 5 ms
+2022-04-02 14:45:16:508 INFO  52886 -- RMI TCP Connection(6)-100.64.83.44 o.s.a.rabbit.connection.CachingConnectionFactory--createBareConnection  -Created new connection: rabbitConnectionFactory#2dedde74:0/SimpleConnection@7a537a28 [delegate=amqp://guest@127.0.0.1:5672/, localPort= 56382]
+2022-04-02 14:45:49:060 INFO  52886 -- http-nio-6767-exec-1 o.s.a.rabbit.connection.CachingConnectionFactory--connectAddresses  -Attempting to connect to: [127.0.0.1:5672]
+2022-04-02 14:45:49:065 INFO  52886 -- http-nio-6767-exec-1 o.s.a.rabbit.connection.CachingConnectionFactory--createBareConnection  -Created new connection: rabbitConnectionFactory.publisher#b936e83:0/SimpleConnection@1aadb1d3 [delegate=amqp://admin@127.0.0.1:5672/, localPort= 56410]
+2022-04-02 14:55:54:620 WARN  52886 -- Thread-69 com.alibaba.nacos.common.http.HttpClientBeanHolder--shutdown  -[HttpClientBeanHolder] Start destroying common HttpClient
+2022-04-02 14:55:54:620 WARN  52886 -- Thread-78 com.alibaba.nacos.common.notify.NotifyCenter--shutdown  -[NotifyCenter] Start destroying Publisher
+2022-04-02 14:55:54:622 WARN  52886 -- Thread-78 com.alibaba.nacos.common.notify.NotifyCenter--shutdown  -[NotifyCenter] Destruction of the end
+2022-04-02 14:55:54:623 WARN  52886 -- Thread-69 com.alibaba.nacos.common.http.HttpClientBeanHolder--shutdown  -[HttpClientBeanHolder] Destruction of the end
+2022-04-02 14:55:54:667 INFO  52886 -- SpringApplicationShutdownHook o.s.integration.endpoint.EventDrivenConsumer--info  -Removing {logging-channel-adapter:_org.springframework.integration.errorLogger} as a subscriber to the 'errorChannel' channel
+2022-04-02 14:55:54:667 INFO  52886 -- SpringApplicationShutdownHook o.s.integration.channel.PublishSubscribeChannel--info  -Channel 'aurora-file.errorChannel' has 0 subscriber(s).
+2022-04-02 14:55:54:668 INFO  52886 -- SpringApplicationShutdownHook o.s.integration.endpoint.EventDrivenConsumer--info  -stopped bean '_org.springframework.integration.errorLogger'
+2022-04-02 14:55:54:694 INFO  52886 -- SpringApplicationShutdownHook c.a.cloud.nacos.registry.NacosServiceRegistry--deregister  -De-registering from Nacos Server now...
+2022-04-02 14:55:54:697 INFO  52886 -- SpringApplicationShutdownHook c.a.cloud.nacos.registry.NacosServiceRegistry--deregister  -De-registration finished.
+2022-04-02 14:56:18:226 INFO  59768 -- background-preinit org.hibernate.validator.internal.util.Version--<clinit>  -HV000001: Hibernate Validator 6.2.2.Final
+2022-04-02 14:56:23:258 WARN  59768 -- main org.springframework.boot.StartupInfoLogger--appendOn  -InetAddress.getLocalHost().getHostName() took 5002 milliseconds to respond. Please verify your network configuration (macOS machines may need to add entries to /etc/hosts).
+2022-04-02 14:56:28:264 INFO  59768 -- main xyz.xcye.file.AuroraFileRun--logStarting  -Starting AuroraFileRun using Java 1.8.0_202 on auroradeMacBook-Pro.local with PID 59768 (/Volumes/Code/Java-code/aurora-theme/aurora-file/target/classes started by aurora in /Volumes/Code/Java-code/aurora-theme)
+2022-04-02 14:56:28:266 INFO  59768 -- main xyz.xcye.file.AuroraFileRun--logStartupProfileInfo  -No active profile set, falling back to 1 default profile: "default"
+2022-04-02 14:56:29:451 INFO  59768 -- main o.s.d.r.config.RepositoryConfigurationDelegate--multipleStoresDetected  -Multiple Spring Data modules found, entering strict repository configuration mode!
+2022-04-02 14:56:29:452 INFO  59768 -- main o.s.d.r.config.RepositoryConfigurationDelegate--registerRepositoriesIn  -Bootstrapping Spring Data JDBC repositories in DEFAULT mode.
+2022-04-02 14:56:29:462 INFO  59768 -- main o.s.d.r.config.RepositoryConfigurationDelegate--registerRepositoriesIn  -Finished Spring Data repository scanning in 6 ms. Found 0 JDBC repository interfaces.
+2022-04-02 14:56:29:471 INFO  59768 -- main o.s.d.r.config.RepositoryConfigurationDelegate--multipleStoresDetected  -Multiple Spring Data modules found, entering strict repository configuration mode!
+2022-04-02 14:56:29:473 INFO  59768 -- main o.s.d.r.config.RepositoryConfigurationDelegate--registerRepositoriesIn  -Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2022-04-02 14:56:29:484 INFO  59768 -- main o.s.d.r.config.RepositoryConfigurationDelegate--registerRepositoriesIn  -Finished Spring Data repository scanning in 2 ms. Found 0 Redis repository interfaces.
+2022-04-02 14:56:29:629 INFO  59768 -- main o.s.i.c.DefaultConfiguringBeanFactoryPostProcessor--info  -No bean named 'errorChannel' has been explicitly defined. Therefore, a default PublishSubscribeChannel will be created.
+2022-04-02 14:56:29:642 INFO  59768 -- main o.s.i.c.DefaultConfiguringBeanFactoryPostProcessor--info  -No bean named 'integrationHeaderChannelRegistry' has been explicitly defined. Therefore, a default DefaultHeaderChannelRegistry will be created.
+2022-04-02 14:56:29:813 INFO  59768 -- main o.springframework.cloud.context.scope.GenericScope--setSerializationId  -BeanFactory id=5615f3a8-7ad1-3b7d-8b9d-76827a8e2e8a
+2022-04-02 14:56:30:086 INFO  59768 -- main o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker--postProcessAfterInitialization  -Bean 'fileWebConfig' of type [xyz.xcye.file.config.FileWebConfig$$EnhancerBySpringCGLIB$$be755b9] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-04-02 14:56:30:101 INFO  59768 -- main o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker--postProcessAfterInitialization  -Bean 'integrationChannelResolver' of type [org.springframework.integration.support.channel.BeanFactoryChannelResolver] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-04-02 14:56:30:124 INFO  59768 -- main o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker--postProcessAfterInitialization  -Bean 'org.springframework.integration.config.IntegrationManagementConfiguration' of type [org.springframework.integration.config.IntegrationManagementConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-04-02 14:56:30:131 INFO  59768 -- main o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker--postProcessAfterInitialization  -Bean 'org.springframework.boot.autoconfigure.integration.IntegrationAutoConfiguration$IntegrationJmxConfiguration' of type [org.springframework.boot.autoconfigure.integration.IntegrationAutoConfiguration$IntegrationJmxConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-04-02 14:56:30:138 INFO  59768 -- main o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker--postProcessAfterInitialization  -Bean 'org.springframework.boot.autoconfigure.jmx.JmxAutoConfiguration' of type [org.springframework.boot.autoconfigure.jmx.JmxAutoConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-04-02 14:56:30:142 INFO  59768 -- main o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker--postProcessAfterInitialization  -Bean 'mbeanServer' of type [com.sun.jmx.mbeanserver.JmxMBeanServer] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-04-02 14:56:30:457 INFO  59768 -- main o.s.boot.web.embedded.tomcat.TomcatWebServer--initialize  -Tomcat initialized with port(s): 6767 (http)
+2022-04-02 14:56:30:467 INFO  59768 -- main org.apache.coyote.http11.Http11NioProtocol--log  -Initializing ProtocolHandler ["http-nio-6767"]
+2022-04-02 14:56:30:468 INFO  59768 -- main org.apache.catalina.core.StandardService--log  -Starting service [Tomcat]
+2022-04-02 14:56:30:469 INFO  59768 -- main org.apache.catalina.core.StandardEngine--log  -Starting Servlet engine: [Apache Tomcat/9.0.58]
+2022-04-02 14:56:30:599 INFO  59768 -- main o.a.c.core.ContainerBase.[Tomcat].[localhost].[/]--log  -Initializing Spring embedded WebApplicationContext
+2022-04-02 14:56:30:600 INFO  59768 -- main o.s.b.w.s.c.ServletWebServerApplicationContext--prepareWebApplicationContext  -Root WebApplicationContext: initialization completed in 2290 ms
+2022-04-02 14:56:31:014 ERROR 59768 -- main xyz.xcye.file.cache.RedisCache--getId  -34
+2022-04-02 14:56:31:014 ERROR 59768 -- main xyz.xcye.file.cache.RedisCache--getId  -34
+2022-04-02 14:56:32:748 INFO  59768 -- main o.s.b.actuate.endpoint.web.EndpointLinksResolver--<init>  -Exposing 22 endpoint(s) beneath base path '/actuator'
+2022-04-02 14:56:33:735 INFO  59768 -- main o.s.c.s.f.FunctionConfiguration$FunctionBindingRegistrar--afterPropertiesSet  -Functional binding is disabled due to the presense of @EnableBinding annotation in your configuration
+2022-04-02 14:56:33:924 WARN  59768 -- Thread-60 com.alibaba.nacos.common.notify.NotifyCenter--shutdown  -[NotifyCenter] Start destroying Publisher
+2022-04-02 14:56:33:924 WARN  59768 -- Thread-51 com.alibaba.nacos.common.http.HttpClientBeanHolder--shutdown  -[HttpClientBeanHolder] Start destroying common HttpClient
+2022-04-02 14:56:33:924 WARN  59768 -- Thread-60 com.alibaba.nacos.common.notify.NotifyCenter--shutdown  -[NotifyCenter] Destruction of the end
+2022-04-02 14:56:33:924 WARN  59768 -- Thread-51 com.alibaba.nacos.common.http.HttpClientBeanHolder--shutdown  -[HttpClientBeanHolder] Destruction of the end
+2022-04-02 14:56:33:987 INFO  59768 -- main com.alibaba.druid.pool.DruidDataSource--init  -{dataSource-1} inited
+2022-04-02 14:57:57:924 INFO  60768 -- background-preinit org.hibernate.validator.internal.util.Version--<clinit>  -HV000001: Hibernate Validator 6.2.2.Final
+2022-04-02 14:58:02:953 WARN  60768 -- main org.springframework.boot.StartupInfoLogger--appendOn  -InetAddress.getLocalHost().getHostName() took 5001 milliseconds to respond. Please verify your network configuration (macOS machines may need to add entries to /etc/hosts).
+2022-04-02 14:58:07:957 INFO  60768 -- main xyz.xcye.file.AuroraFileRun--logStarting  -Starting AuroraFileRun using Java 1.8.0_202 on auroradeMacBook-Pro.local with PID 60768 (/Volumes/Code/Java-code/aurora-theme/aurora-file/target/classes started by aurora in /Volumes/Code/Java-code/aurora-theme)
+2022-04-02 14:58:07:958 INFO  60768 -- main xyz.xcye.file.AuroraFileRun--logStartupProfileInfo  -No active profile set, falling back to 1 default profile: "default"
+2022-04-02 14:58:09:940 INFO  60768 -- main o.s.d.r.config.RepositoryConfigurationDelegate--multipleStoresDetected  -Multiple Spring Data modules found, entering strict repository configuration mode!
+2022-04-02 14:58:09:941 INFO  60768 -- main o.s.d.r.config.RepositoryConfigurationDelegate--registerRepositoriesIn  -Bootstrapping Spring Data JDBC repositories in DEFAULT mode.
+2022-04-02 14:58:09:955 INFO  60768 -- main o.s.d.r.config.RepositoryConfigurationDelegate--registerRepositoriesIn  -Finished Spring Data repository scanning in 9 ms. Found 0 JDBC repository interfaces.
+2022-04-02 14:58:09:971 INFO  60768 -- main o.s.d.r.config.RepositoryConfigurationDelegate--multipleStoresDetected  -Multiple Spring Data modules found, entering strict repository configuration mode!
+2022-04-02 14:58:09:974 INFO  60768 -- main o.s.d.r.config.RepositoryConfigurationDelegate--registerRepositoriesIn  -Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2022-04-02 14:58:09:996 INFO  60768 -- main o.s.d.r.config.RepositoryConfigurationDelegate--registerRepositoriesIn  -Finished Spring Data repository scanning in 5 ms. Found 0 Redis repository interfaces.
+2022-04-02 14:58:10:243 INFO  60768 -- main o.s.i.c.DefaultConfiguringBeanFactoryPostProcessor--info  -No bean named 'errorChannel' has been explicitly defined. Therefore, a default PublishSubscribeChannel will be created.
+2022-04-02 14:58:10:265 INFO  60768 -- main o.s.i.c.DefaultConfiguringBeanFactoryPostProcessor--info  -No bean named 'integrationHeaderChannelRegistry' has been explicitly defined. Therefore, a default DefaultHeaderChannelRegistry will be created.
+2022-04-02 14:58:10:503 INFO  60768 -- main o.springframework.cloud.context.scope.GenericScope--setSerializationId  -BeanFactory id=5615f3a8-7ad1-3b7d-8b9d-76827a8e2e8a
+2022-04-02 14:58:10:795 INFO  60768 -- main o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker--postProcessAfterInitialization  -Bean 'fileWebConfig' of type [xyz.xcye.file.config.FileWebConfig$$EnhancerBySpringCGLIB$$f3404d07] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-04-02 14:58:10:817 INFO  60768 -- main o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker--postProcessAfterInitialization  -Bean 'integrationChannelResolver' of type [org.springframework.integration.support.channel.BeanFactoryChannelResolver] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-04-02 14:58:10:846 INFO  60768 -- main o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker--postProcessAfterInitialization  -Bean 'org.springframework.integration.config.IntegrationManagementConfiguration' of type [org.springframework.integration.config.IntegrationManagementConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-04-02 14:58:10:856 INFO  60768 -- main o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker--postProcessAfterInitialization  -Bean 'org.springframework.boot.autoconfigure.integration.IntegrationAutoConfiguration$IntegrationJmxConfiguration' of type [org.springframework.boot.autoconfigure.integration.IntegrationAutoConfiguration$IntegrationJmxConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-04-02 14:58:10:866 INFO  60768 -- main o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker--postProcessAfterInitialization  -Bean 'org.springframework.boot.autoconfigure.jmx.JmxAutoConfiguration' of type [org.springframework.boot.autoconfigure.jmx.JmxAutoConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-04-02 14:58:10:872 INFO  60768 -- main o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker--postProcessAfterInitialization  -Bean 'mbeanServer' of type [com.sun.jmx.mbeanserver.JmxMBeanServer] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-04-02 14:58:11:361 INFO  60768 -- main o.s.boot.web.embedded.tomcat.TomcatWebServer--initialize  -Tomcat initialized with port(s): 6767 (http)
+2022-04-02 14:58:11:375 INFO  60768 -- main org.apache.coyote.http11.Http11NioProtocol--log  -Initializing ProtocolHandler ["http-nio-6767"]
+2022-04-02 14:58:11:376 INFO  60768 -- main org.apache.catalina.core.StandardService--log  -Starting service [Tomcat]
+2022-04-02 14:58:11:377 INFO  60768 -- main org.apache.catalina.core.StandardEngine--log  -Starting Servlet engine: [Apache Tomcat/9.0.58]
+2022-04-02 14:58:11:539 INFO  60768 -- main o.a.c.core.ContainerBase.[Tomcat].[localhost].[/]--log  -Initializing Spring embedded WebApplicationContext
+2022-04-02 14:58:11:539 INFO  60768 -- main o.s.b.w.s.c.ServletWebServerApplicationContext--prepareWebApplicationContext  -Root WebApplicationContext: initialization completed in 3531 ms
+2022-04-02 14:58:12:225 ERROR 60768 -- main xyz.xcye.file.cache.RedisCache--getId  -34
+2022-04-02 14:58:12:225 ERROR 60768 -- main xyz.xcye.file.cache.RedisCache--getId  -34
+2022-04-02 14:58:14:403 INFO  60768 -- main o.s.b.actuate.endpoint.web.EndpointLinksResolver--<init>  -Exposing 22 endpoint(s) beneath base path '/actuator'
+2022-04-02 14:58:15:526 INFO  60768 -- main o.s.c.s.f.FunctionConfiguration$FunctionBindingRegistrar--afterPropertiesSet  -Functional binding is disabled due to the presense of @EnableBinding annotation in your configuration
+2022-04-02 14:58:15:759 INFO  60768 -- main com.alibaba.druid.pool.DruidDataSource--init  -{dataSource-1} inited
+2022-04-02 14:58:16:104 WARN  60768 -- main o.s.c.l.c.LoadBalancerCacheAutoConfiguration$LoadBalancerCaffeineWarnLogger--logWarning  -Spring Cloud LoadBalancer is currently working with the default cache. While this cache implementation is useful for development and tests, it's recommended to use Caffeine cache in production.You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
+2022-04-02 14:58:16:457 INFO  60768 -- main o.s.integration.monitor.IntegrationMBeanExporter--registerChannel  -Registering MessageChannel output
+2022-04-02 14:58:16:520 INFO  60768 -- main o.s.integration.monitor.IntegrationMBeanExporter--registerChannel  -Registering MessageChannel errorChannel
+2022-04-02 14:58:16:541 INFO  60768 -- main o.s.integration.monitor.IntegrationMBeanExporter--registerChannel  -Registering MessageChannel nullChannel
+2022-04-02 14:58:16:556 INFO  60768 -- main o.s.integration.monitor.IntegrationMBeanExporter--registerHandler  -Registering MessageHandler _org.springframework.integration.errorLogger
+2022-04-02 14:58:16:615 INFO  60768 -- main o.s.integration.endpoint.EventDrivenConsumer--info  -Adding {logging-channel-adapter:_org.springframework.integration.errorLogger} as a subscriber to the 'errorChannel' channel
+2022-04-02 14:58:16:616 INFO  60768 -- main o.s.integration.channel.PublishSubscribeChannel--info  -Channel 'aurora-file.errorChannel' has 1 subscriber(s).
+2022-04-02 14:58:16:617 INFO  60768 -- main o.s.integration.endpoint.EventDrivenConsumer--info  -started bean '_org.springframework.integration.errorLogger'
+2022-04-02 14:58:16:618 INFO  60768 -- main o.s.cloud.stream.binder.DefaultBinderFactory--getBinderInstance  -Creating binder: defaultRabbit
+2022-04-02 14:58:16:735 INFO  60768 -- main o.s.cloud.stream.binder.DefaultBinderFactory--getBinderInstance  -Caching the binder: defaultRabbit
+2022-04-02 14:58:16:736 INFO  60768 -- main o.s.cloud.stream.binder.DefaultBinderFactory--getBinderInstance  -Retrieving cached binder: defaultRabbit
+2022-04-02 14:58:16:942 INFO  60768 -- main o.s.a.rabbit.connection.CachingConnectionFactory--connectAddresses  -Attempting to connect to: [127.0.0.1:5672]
+2022-04-02 14:58:16:992 INFO  60768 -- main o.s.a.rabbit.connection.CachingConnectionFactory--createBareConnection  -Created new connection: rabbitConnectionFactory#7646c9f5:0/SimpleConnection@f5167f0 [delegate=amqp://admin@127.0.0.1:5672/, localPort= 56722]
+2022-04-02 14:58:17:034 INFO  60768 -- main o.s.c.stream.messaging.DirectWithAttributesChannel--info  -Channel 'aurora-file.output' has 1 subscriber(s).
+2022-04-02 14:58:22:182 INFO  60768 -- main org.apache.coyote.http11.Http11NioProtocol--log  -Starting ProtocolHandler ["http-nio-6767"]
+2022-04-02 14:58:22:220 INFO  60768 -- main o.s.boot.web.embedded.tomcat.TomcatWebServer--start  -Tomcat started on port(s): 6767 (http) with context path ''
+2022-04-02 14:58:22:234 INFO  60768 -- main c.a.cloud.nacos.registry.NacosServiceRegistry--register  -nacos registry, DEFAULT_GROUP aurora-file 100.64.83.44:6767 register finished
+2022-04-02 14:58:22:633 INFO  60768 -- main xyz.xcye.file.AuroraFileRun--logStarted  -Started AuroraFileRun in 35.18 seconds (JVM running for 41.142)
+2022-04-02 14:58:22:916 INFO  60768 -- RMI TCP Connection(7)-100.64.83.44 o.a.c.core.ContainerBase.[Tomcat].[localhost].[/]--log  -Initializing Spring DispatcherServlet 'dispatcherServlet'
+2022-04-02 14:58:22:917 INFO  60768 -- RMI TCP Connection(7)-100.64.83.44 org.springframework.web.servlet.DispatcherServlet--initServletBean  -Initializing Servlet 'dispatcherServlet'
+2022-04-02 14:58:22:923 INFO  60768 -- RMI TCP Connection(7)-100.64.83.44 org.springframework.web.servlet.DispatcherServlet--initServletBean  -Completed initialization in 5 ms
+2022-04-02 14:58:22:925 INFO  60768 -- RMI TCP Connection(6)-100.64.83.44 o.s.a.rabbit.connection.CachingConnectionFactory--connectAddresses  -Attempting to connect to: [localhost:5672]
+2022-04-02 14:58:22:937 INFO  60768 -- RMI TCP Connection(6)-100.64.83.44 o.s.a.rabbit.connection.CachingConnectionFactory--createBareConnection  -Created new connection: rabbitConnectionFactory#14292d71:0/SimpleConnection@58d07276 [delegate=amqp://guest@127.0.0.1:5672/, localPort= 56727]
+2022-04-02 14:58:53:188 INFO  60768 -- http-nio-6767-exec-1 o.s.a.rabbit.connection.CachingConnectionFactory--connectAddresses  -Attempting to connect to: [127.0.0.1:5672]
+2022-04-02 14:58:53:195 INFO  60768 -- http-nio-6767-exec-1 o.s.a.rabbit.connection.CachingConnectionFactory--createBareConnection  -Created new connection: rabbitConnectionFactory.publisher#22969346:0/SimpleConnection@3f8b97bd [delegate=amqp://admin@127.0.0.1:5672/, localPort= 56756]
+2022-04-02 15:15:44:156 WARN  60768 -- Thread-54 com.alibaba.nacos.common.http.HttpClientBeanHolder--shutdown  -[HttpClientBeanHolder] Start destroying common HttpClient
+2022-04-02 15:15:44:157 WARN  60768 -- Thread-63 com.alibaba.nacos.common.notify.NotifyCenter--shutdown  -[NotifyCenter] Start destroying Publisher
+2022-04-02 15:15:44:157 WARN  60768 -- Thread-63 com.alibaba.nacos.common.notify.NotifyCenter--shutdown  -[NotifyCenter] Destruction of the end
+2022-04-02 15:15:44:158 WARN  60768 -- Thread-54 com.alibaba.nacos.common.http.HttpClientBeanHolder--shutdown  -[HttpClientBeanHolder] Destruction of the end
+2022-04-02 15:15:44:177 INFO  60768 -- SpringApplicationShutdownHook o.s.integration.endpoint.EventDrivenConsumer--info  -Removing {logging-channel-adapter:_org.springframework.integration.errorLogger} as a subscriber to the 'errorChannel' channel
+2022-04-02 15:15:44:178 INFO  60768 -- SpringApplicationShutdownHook o.s.integration.channel.PublishSubscribeChannel--info  -Channel 'aurora-file.errorChannel' has 0 subscriber(s).
+2022-04-02 15:15:44:178 INFO  60768 -- SpringApplicationShutdownHook o.s.integration.endpoint.EventDrivenConsumer--info  -stopped bean '_org.springframework.integration.errorLogger'
+2022-04-02 15:15:44:190 INFO  60768 -- SpringApplicationShutdownHook c.a.cloud.nacos.registry.NacosServiceRegistry--deregister  -De-registering from Nacos Server now...
+2022-04-02 15:15:44:193 INFO  60768 -- SpringApplicationShutdownHook c.a.cloud.nacos.registry.NacosServiceRegistry--deregister  -De-registration finished.
+2022-04-02 15:16:29:406 INFO  71942 -- background-preinit org.hibernate.validator.internal.util.Version--<clinit>  -HV000001: Hibernate Validator 6.2.2.Final
+2022-04-02 15:16:34:436 WARN  71942 -- main org.springframework.boot.StartupInfoLogger--appendOn  -InetAddress.getLocalHost().getHostName() took 5003 milliseconds to respond. Please verify your network configuration (macOS machines may need to add entries to /etc/hosts).
+2022-04-02 15:16:39:443 INFO  71942 -- main xyz.xcye.file.AuroraFileRun--logStarting  -Starting AuroraFileRun using Java 1.8.0_202 on auroradeMacBook-Pro.local with PID 71942 (/Volumes/Code/Java-code/aurora-theme/aurora-file/target/classes started by aurora in /Volumes/Code/Java-code/aurora-theme)
+2022-04-02 15:16:39:444 INFO  71942 -- main xyz.xcye.file.AuroraFileRun--logStartupProfileInfo  -No active profile set, falling back to 1 default profile: "default"
+2022-04-02 15:16:40:837 INFO  71942 -- main o.s.d.r.config.RepositoryConfigurationDelegate--multipleStoresDetected  -Multiple Spring Data modules found, entering strict repository configuration mode!
+2022-04-02 15:16:40:838 INFO  71942 -- main o.s.d.r.config.RepositoryConfigurationDelegate--registerRepositoriesIn  -Bootstrapping Spring Data JDBC repositories in DEFAULT mode.
+2022-04-02 15:16:40:850 INFO  71942 -- main o.s.d.r.config.RepositoryConfigurationDelegate--registerRepositoriesIn  -Finished Spring Data repository scanning in 7 ms. Found 0 JDBC repository interfaces.
+2022-04-02 15:16:40:860 INFO  71942 -- main o.s.d.r.config.RepositoryConfigurationDelegate--multipleStoresDetected  -Multiple Spring Data modules found, entering strict repository configuration mode!
+2022-04-02 15:16:40:861 INFO  71942 -- main o.s.d.r.config.RepositoryConfigurationDelegate--registerRepositoriesIn  -Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2022-04-02 15:16:40:873 INFO  71942 -- main o.s.d.r.config.RepositoryConfigurationDelegate--registerRepositoriesIn  -Finished Spring Data repository scanning in 2 ms. Found 0 Redis repository interfaces.
+2022-04-02 15:16:41:032 INFO  71942 -- main o.s.i.c.DefaultConfiguringBeanFactoryPostProcessor--info  -No bean named 'errorChannel' has been explicitly defined. Therefore, a default PublishSubscribeChannel will be created.
+2022-04-02 15:16:41:046 INFO  71942 -- main o.s.i.c.DefaultConfiguringBeanFactoryPostProcessor--info  -No bean named 'integrationHeaderChannelRegistry' has been explicitly defined. Therefore, a default DefaultHeaderChannelRegistry will be created.
+2022-04-02 15:16:41:191 INFO  71942 -- main o.springframework.cloud.context.scope.GenericScope--setSerializationId  -BeanFactory id=5615f3a8-7ad1-3b7d-8b9d-76827a8e2e8a
+2022-04-02 15:16:41:391 INFO  71942 -- main o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker--postProcessAfterInitialization  -Bean 'fileWebConfig' of type [xyz.xcye.file.config.FileWebConfig$$EnhancerBySpringCGLIB$$f3404d07] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-04-02 15:16:41:406 INFO  71942 -- main o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker--postProcessAfterInitialization  -Bean 'integrationChannelResolver' of type [org.springframework.integration.support.channel.BeanFactoryChannelResolver] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-04-02 15:16:41:429 INFO  71942 -- main o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker--postProcessAfterInitialization  -Bean 'org.springframework.integration.config.IntegrationManagementConfiguration' of type [org.springframework.integration.config.IntegrationManagementConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-04-02 15:16:41:436 INFO  71942 -- main o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker--postProcessAfterInitialization  -Bean 'org.springframework.boot.autoconfigure.integration.IntegrationAutoConfiguration$IntegrationJmxConfiguration' of type [org.springframework.boot.autoconfigure.integration.IntegrationAutoConfiguration$IntegrationJmxConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-04-02 15:16:41:444 INFO  71942 -- main o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker--postProcessAfterInitialization  -Bean 'org.springframework.boot.autoconfigure.jmx.JmxAutoConfiguration' of type [org.springframework.boot.autoconfigure.jmx.JmxAutoConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-04-02 15:16:41:448 INFO  71942 -- main o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker--postProcessAfterInitialization  -Bean 'mbeanServer' of type [com.sun.jmx.mbeanserver.JmxMBeanServer] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-04-02 15:16:41:719 INFO  71942 -- main o.s.boot.web.embedded.tomcat.TomcatWebServer--initialize  -Tomcat initialized with port(s): 6767 (http)
+2022-04-02 15:16:41:729 INFO  71942 -- main org.apache.coyote.http11.Http11NioProtocol--log  -Initializing ProtocolHandler ["http-nio-6767"]
+2022-04-02 15:16:41:730 INFO  71942 -- main org.apache.catalina.core.StandardService--log  -Starting service [Tomcat]
+2022-04-02 15:16:41:730 INFO  71942 -- main org.apache.catalina.core.StandardEngine--log  -Starting Servlet engine: [Apache Tomcat/9.0.58]
+2022-04-02 15:16:41:825 INFO  71942 -- main o.a.c.core.ContainerBase.[Tomcat].[localhost].[/]--log  -Initializing Spring embedded WebApplicationContext
+2022-04-02 15:16:41:826 INFO  71942 -- main o.s.b.w.s.c.ServletWebServerApplicationContext--prepareWebApplicationContext  -Root WebApplicationContext: initialization completed in 2347 ms
+2022-04-02 15:16:42:158 ERROR 71942 -- main xyz.xcye.file.cache.RedisCache--getId  -34
+2022-04-02 15:16:42:159 ERROR 71942 -- main xyz.xcye.file.cache.RedisCache--getId  -34
+2022-04-02 15:16:43:361 INFO  71942 -- main o.s.b.actuate.endpoint.web.EndpointLinksResolver--<init>  -Exposing 22 endpoint(s) beneath base path '/actuator'
+2022-04-02 15:16:44:048 INFO  71942 -- main o.s.c.s.f.FunctionConfiguration$FunctionBindingRegistrar--afterPropertiesSet  -Functional binding is disabled due to the presense of @EnableBinding annotation in your configuration
+2022-04-02 15:16:44:220 INFO  71942 -- main com.alibaba.druid.pool.DruidDataSource--init  -{dataSource-1} inited
+2022-04-02 15:16:44:526 WARN  71942 -- main o.s.c.l.c.LoadBalancerCacheAutoConfiguration$LoadBalancerCaffeineWarnLogger--logWarning  -Spring Cloud LoadBalancer is currently working with the default cache. While this cache implementation is useful for development and tests, it's recommended to use Caffeine cache in production.You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
+2022-04-02 15:16:44:792 INFO  71942 -- main o.s.integration.monitor.IntegrationMBeanExporter--registerChannel  -Registering MessageChannel output
+2022-04-02 15:16:44:862 INFO  71942 -- main o.s.integration.monitor.IntegrationMBeanExporter--registerChannel  -Registering MessageChannel errorChannel
+2022-04-02 15:16:44:881 INFO  71942 -- main o.s.integration.monitor.IntegrationMBeanExporter--registerChannel  -Registering MessageChannel nullChannel
+2022-04-02 15:16:44:892 INFO  71942 -- main o.s.integration.monitor.IntegrationMBeanExporter--registerHandler  -Registering MessageHandler _org.springframework.integration.errorLogger
+2022-04-02 15:16:44:941 INFO  71942 -- main o.s.integration.endpoint.EventDrivenConsumer--info  -Adding {logging-channel-adapter:_org.springframework.integration.errorLogger} as a subscriber to the 'errorChannel' channel
+2022-04-02 15:16:44:942 INFO  71942 -- main o.s.integration.channel.PublishSubscribeChannel--info  -Channel 'aurora-file.errorChannel' has 1 subscriber(s).
+2022-04-02 15:16:44:942 INFO  71942 -- main o.s.integration.endpoint.EventDrivenConsumer--info  -started bean '_org.springframework.integration.errorLogger'
+2022-04-02 15:16:44:944 INFO  71942 -- main o.s.cloud.stream.binder.DefaultBinderFactory--getBinderInstance  -Creating binder: defaultRabbit
+2022-04-02 15:16:45:046 INFO  71942 -- main o.s.cloud.stream.binder.DefaultBinderFactory--getBinderInstance  -Caching the binder: defaultRabbit
+2022-04-02 15:16:45:046 INFO  71942 -- main o.s.cloud.stream.binder.DefaultBinderFactory--getBinderInstance  -Retrieving cached binder: defaultRabbit
+2022-04-02 15:16:45:165 INFO  71942 -- main o.s.a.rabbit.connection.CachingConnectionFactory--connectAddresses  -Attempting to connect to: [127.0.0.1:5672]
+2022-04-02 15:16:45:206 INFO  71942 -- main o.s.a.rabbit.connection.CachingConnectionFactory--createBareConnection  -Created new connection: rabbitConnectionFactory#687f62a5:0/SimpleConnection@6ad26381 [delegate=amqp://admin@127.0.0.1:5672/, localPort= 57030]
+2022-04-02 15:16:45:251 INFO  71942 -- main o.s.c.stream.messaging.DirectWithAttributesChannel--info  -Channel 'aurora-file.output' has 1 subscriber(s).
+2022-04-02 15:16:50:397 INFO  71942 -- main org.apache.coyote.http11.Http11NioProtocol--log  -Starting ProtocolHandler ["http-nio-6767"]
+2022-04-02 15:16:50:429 INFO  71942 -- main o.s.boot.web.embedded.tomcat.TomcatWebServer--start  -Tomcat started on port(s): 6767 (http) with context path ''
+2022-04-02 15:16:50:439 INFO  71942 -- main c.a.cloud.nacos.registry.NacosServiceRegistry--register  -nacos registry, DEFAULT_GROUP aurora-file 100.64.83.44:6767 register finished
+2022-04-02 15:16:50:761 INFO  71942 -- main xyz.xcye.file.AuroraFileRun--logStarted  -Started AuroraFileRun in 32.09 seconds (JVM running for 38.237)
+2022-04-02 15:16:51:103 INFO  71942 -- RMI TCP Connection(3)-100.64.83.44 o.a.c.core.ContainerBase.[Tomcat].[localhost].[/]--log  -Initializing Spring DispatcherServlet 'dispatcherServlet'
+2022-04-02 15:16:51:103 INFO  71942 -- RMI TCP Connection(3)-100.64.83.44 org.springframework.web.servlet.DispatcherServlet--initServletBean  -Initializing Servlet 'dispatcherServlet'
+2022-04-02 15:16:51:106 INFO  71942 -- RMI TCP Connection(2)-100.64.83.44 o.s.a.rabbit.connection.CachingConnectionFactory--connectAddresses  -Attempting to connect to: [localhost:5672]
+2022-04-02 15:16:51:107 INFO  71942 -- RMI TCP Connection(3)-100.64.83.44 org.springframework.web.servlet.DispatcherServlet--initServletBean  -Completed initialization in 3 ms
+2022-04-02 15:16:51:114 INFO  71942 -- RMI TCP Connection(2)-100.64.83.44 o.s.a.rabbit.connection.CachingConnectionFactory--createBareConnection  -Created new connection: rabbitConnectionFactory#48e74764:0/SimpleConnection@1607443 [delegate=amqp://guest@127.0.0.1:5672/, localPort= 57041]
+2022-04-02 15:17:30:856 INFO  71942 -- http-nio-6767-exec-2 o.s.a.rabbit.connection.CachingConnectionFactory--connectAddresses  -Attempting to connect to: [127.0.0.1:5672]
+2022-04-02 15:17:30:863 INFO  71942 -- http-nio-6767-exec-2 o.s.a.rabbit.connection.CachingConnectionFactory--createBareConnection  -Created new connection: rabbitConnectionFactory.publisher#3fb97dee:0/SimpleConnection@15605960 [delegate=amqp://admin@127.0.0.1:5672/, localPort= 57067]
+2022-04-02 15:45:54:883 WARN  71942 -- Thread-41 com.alibaba.nacos.common.http.HttpClientBeanHolder--shutdown  -[HttpClientBeanHolder] Start destroying common HttpClient
+2022-04-02 15:45:54:883 WARN  71942 -- Thread-50 com.alibaba.nacos.common.notify.NotifyCenter--shutdown  -[NotifyCenter] Start destroying Publisher
+2022-04-02 15:45:54:885 WARN  71942 -- Thread-50 com.alibaba.nacos.common.notify.NotifyCenter--shutdown  -[NotifyCenter] Destruction of the end
+2022-04-02 15:45:54:886 WARN  71942 -- Thread-41 com.alibaba.nacos.common.http.HttpClientBeanHolder--shutdown  -[HttpClientBeanHolder] Destruction of the end
+2022-04-02 15:45:54:921 INFO  71942 -- SpringApplicationShutdownHook o.s.integration.endpoint.EventDrivenConsumer--info  -Removing {logging-channel-adapter:_org.springframework.integration.errorLogger} as a subscriber to the 'errorChannel' channel
+2022-04-02 15:45:54:922 INFO  71942 -- SpringApplicationShutdownHook o.s.integration.channel.PublishSubscribeChannel--info  -Channel 'aurora-file.errorChannel' has 0 subscriber(s).
+2022-04-02 15:45:54:923 INFO  71942 -- SpringApplicationShutdownHook o.s.integration.endpoint.EventDrivenConsumer--info  -stopped bean '_org.springframework.integration.errorLogger'
+2022-04-02 15:45:54:942 INFO  71942 -- SpringApplicationShutdownHook c.a.cloud.nacos.registry.NacosServiceRegistry--deregister  -De-registering from Nacos Server now...
+2022-04-02 15:45:54:946 INFO  71942 -- SpringApplicationShutdownHook c.a.cloud.nacos.registry.NacosServiceRegistry--deregister  -De-registration finished.
+2022-04-02 15:51:24:420 INFO  93014 -- background-preinit org.hibernate.validator.internal.util.Version--<clinit>  -HV000001: Hibernate Validator 6.2.2.Final
+2022-04-02 15:51:29:475 WARN  93014 -- main org.springframework.boot.StartupInfoLogger--appendOn  -InetAddress.getLocalHost().getHostName() took 5006 milliseconds to respond. Please verify your network configuration (macOS machines may need to add entries to /etc/hosts).
+2022-04-02 15:51:34:483 INFO  93014 -- main xyz.xcye.file.AuroraFileRun--logStarting  -Starting AuroraFileRun using Java 1.8.0_202 on auroradeMacBook-Pro.local with PID 93014 (/Volumes/Code/Java-code/aurora-theme/aurora-file/target/classes started by aurora in /Volumes/Code/Java-code/aurora-theme)
+2022-04-02 15:51:34:484 INFO  93014 -- main xyz.xcye.file.AuroraFileRun--logStartupProfileInfo  -No active profile set, falling back to 1 default profile: "default"
+2022-04-02 15:51:36:332 INFO  93014 -- main o.s.d.r.config.RepositoryConfigurationDelegate--multipleStoresDetected  -Multiple Spring Data modules found, entering strict repository configuration mode!
+2022-04-02 15:51:36:334 INFO  93014 -- main o.s.d.r.config.RepositoryConfigurationDelegate--registerRepositoriesIn  -Bootstrapping Spring Data JDBC repositories in DEFAULT mode.
+2022-04-02 15:51:36:405 INFO  93014 -- main o.s.d.r.config.RepositoryConfigurationDelegate--registerRepositoriesIn  -Finished Spring Data repository scanning in 50 ms. Found 0 JDBC repository interfaces.
+2022-04-02 15:51:36:429 INFO  93014 -- main o.s.d.r.config.RepositoryConfigurationDelegate--multipleStoresDetected  -Multiple Spring Data modules found, entering strict repository configuration mode!
+2022-04-02 15:51:36:444 INFO  93014 -- main o.s.d.r.config.RepositoryConfigurationDelegate--registerRepositoriesIn  -Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2022-04-02 15:51:36:486 INFO  93014 -- main o.s.d.r.config.RepositoryConfigurationDelegate--registerRepositoriesIn  -Finished Spring Data repository scanning in 10 ms. Found 0 Redis repository interfaces.
+2022-04-02 15:51:36:984 INFO  93014 -- main o.s.i.c.DefaultConfiguringBeanFactoryPostProcessor--info  -No bean named 'errorChannel' has been explicitly defined. Therefore, a default PublishSubscribeChannel will be created.
+2022-04-02 15:51:37:025 INFO  93014 -- main o.s.i.c.DefaultConfiguringBeanFactoryPostProcessor--info  -No bean named 'integrationHeaderChannelRegistry' has been explicitly defined. Therefore, a default DefaultHeaderChannelRegistry will be created.
+2022-04-02 15:51:37:388 INFO  93014 -- main o.springframework.cloud.context.scope.GenericScope--setSerializationId  -BeanFactory id=5615f3a8-7ad1-3b7d-8b9d-76827a8e2e8a
+2022-04-02 15:51:37:822 INFO  93014 -- main o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker--postProcessAfterInitialization  -Bean 'fileWebConfig' of type [xyz.xcye.file.config.FileWebConfig$$EnhancerBySpringCGLIB$$be755b9] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-04-02 15:51:37:845 INFO  93014 -- main o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker--postProcessAfterInitialization  -Bean 'integrationChannelResolver' of type [org.springframework.integration.support.channel.BeanFactoryChannelResolver] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-04-02 15:51:37:882 INFO  93014 -- main o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker--postProcessAfterInitialization  -Bean 'org.springframework.integration.config.IntegrationManagementConfiguration' of type [org.springframework.integration.config.IntegrationManagementConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-04-02 15:51:37:894 INFO  93014 -- main o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker--postProcessAfterInitialization  -Bean 'org.springframework.boot.autoconfigure.integration.IntegrationAutoConfiguration$IntegrationJmxConfiguration' of type [org.springframework.boot.autoconfigure.integration.IntegrationAutoConfiguration$IntegrationJmxConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-04-02 15:51:37:905 INFO  93014 -- main o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker--postProcessAfterInitialization  -Bean 'org.springframework.boot.autoconfigure.jmx.JmxAutoConfiguration' of type [org.springframework.boot.autoconfigure.jmx.JmxAutoConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-04-02 15:51:37:911 INFO  93014 -- main o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker--postProcessAfterInitialization  -Bean 'mbeanServer' of type [com.sun.jmx.mbeanserver.JmxMBeanServer] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-04-02 15:51:38:357 INFO  93014 -- main o.s.boot.web.embedded.tomcat.TomcatWebServer--initialize  -Tomcat initialized with port(s): 6767 (http)
+2022-04-02 15:51:38:368 INFO  93014 -- main org.apache.coyote.http11.Http11NioProtocol--log  -Initializing ProtocolHandler ["http-nio-6767"]
+2022-04-02 15:51:38:369 INFO  93014 -- main org.apache.catalina.core.StandardService--log  -Starting service [Tomcat]
+2022-04-02 15:51:38:369 INFO  93014 -- main org.apache.catalina.core.StandardEngine--log  -Starting Servlet engine: [Apache Tomcat/9.0.58]
+2022-04-02 15:51:38:533 INFO  93014 -- main o.a.c.core.ContainerBase.[Tomcat].[localhost].[/]--log  -Initializing Spring embedded WebApplicationContext
+2022-04-02 15:51:38:534 INFO  93014 -- main o.s.b.w.s.c.ServletWebServerApplicationContext--prepareWebApplicationContext  -Root WebApplicationContext: initialization completed in 4016 ms
+2022-04-02 15:51:39:815 ERROR 93014 -- main xyz.xcye.file.cache.RedisCache--getId  -34
+2022-04-02 15:51:39:819 ERROR 93014 -- main xyz.xcye.file.cache.RedisCache--getId  -34
+2022-04-02 15:51:44:048 INFO  93014 -- main o.s.b.actuate.endpoint.web.EndpointLinksResolver--<init>  -Exposing 22 endpoint(s) beneath base path '/actuator'
+2022-04-02 15:51:45:172 INFO  93014 -- main o.s.c.s.f.FunctionConfiguration$FunctionBindingRegistrar--afterPropertiesSet  -Functional binding is disabled due to the presense of @EnableBinding annotation in your configuration
+2022-04-02 15:51:45:466 INFO  93014 -- main com.alibaba.druid.pool.DruidDataSource--init  -{dataSource-1} inited
+2022-04-02 15:51:46:480 WARN  93014 -- main o.s.c.l.c.LoadBalancerCacheAutoConfiguration$LoadBalancerCaffeineWarnLogger--logWarning  -Spring Cloud LoadBalancer is currently working with the default cache. While this cache implementation is useful for development and tests, it's recommended to use Caffeine cache in production.You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
+2022-04-02 15:51:47:525 INFO  93014 -- main o.s.integration.monitor.IntegrationMBeanExporter--registerChannel  -Registering MessageChannel output
+2022-04-02 15:51:47:784 INFO  93014 -- main o.s.integration.monitor.IntegrationMBeanExporter--registerChannel  -Registering MessageChannel errorChannel
+2022-04-02 15:51:47:903 INFO  93014 -- main o.s.integration.monitor.IntegrationMBeanExporter--registerChannel  -Registering MessageChannel nullChannel
+2022-04-02 15:51:47:936 INFO  93014 -- main o.s.integration.monitor.IntegrationMBeanExporter--registerHandler  -Registering MessageHandler _org.springframework.integration.errorLogger
+2022-04-02 15:51:48:038 INFO  93014 -- main o.s.integration.endpoint.EventDrivenConsumer--info  -Adding {logging-channel-adapter:_org.springframework.integration.errorLogger} as a subscriber to the 'errorChannel' channel
+2022-04-02 15:51:48:039 INFO  93014 -- main o.s.integration.channel.PublishSubscribeChannel--info  -Channel 'aurora-file.errorChannel' has 1 subscriber(s).
+2022-04-02 15:51:48:040 INFO  93014 -- main o.s.integration.endpoint.EventDrivenConsumer--info  -started bean '_org.springframework.integration.errorLogger'
+2022-04-02 15:51:48:042 INFO  93014 -- main o.s.cloud.stream.binder.DefaultBinderFactory--getBinderInstance  -Creating binder: defaultRabbit
+2022-04-02 15:51:48:185 INFO  93014 -- main o.s.cloud.stream.binder.DefaultBinderFactory--getBinderInstance  -Caching the binder: defaultRabbit
+2022-04-02 15:51:48:185 INFO  93014 -- main o.s.cloud.stream.binder.DefaultBinderFactory--getBinderInstance  -Retrieving cached binder: defaultRabbit
+2022-04-02 15:51:48:762 INFO  93014 -- main o.s.a.rabbit.connection.CachingConnectionFactory--connectAddresses  -Attempting to connect to: [127.0.0.1:5672]
+2022-04-02 15:51:48:898 INFO  93014 -- main o.s.a.rabbit.connection.CachingConnectionFactory--createBareConnection  -Created new connection: rabbitConnectionFactory#5a99543b:0/SimpleConnection@66a8ff6d [delegate=amqp://admin@127.0.0.1:5672/, localPort= 58099]
+2022-04-02 15:51:49:032 INFO  93014 -- main o.s.c.stream.messaging.DirectWithAttributesChannel--info  -Channel 'aurora-file.output' has 1 subscriber(s).
+2022-04-02 15:51:54:280 INFO  93014 -- main org.apache.coyote.http11.Http11NioProtocol--log  -Starting ProtocolHandler ["http-nio-6767"]
+2022-04-02 15:51:54:358 INFO  93014 -- main o.s.boot.web.embedded.tomcat.TomcatWebServer--start  -Tomcat started on port(s): 6767 (http) with context path ''
+2022-04-02 15:51:54:396 INFO  93014 -- main c.a.cloud.nacos.registry.NacosServiceRegistry--register  -nacos registry, DEFAULT_GROUP aurora-file 100.64.83.44:6767 register finished
+2022-04-02 15:51:54:990 INFO  93014 -- main xyz.xcye.file.AuroraFileRun--logStarted  -Started AuroraFileRun in 41.221 seconds (JVM running for 47.447)
+2022-04-02 15:51:55:211 INFO  93014 -- RMI TCP Connection(41)-100.64.83.44 o.a.c.core.ContainerBase.[Tomcat].[localhost].[/]--log  -Initializing Spring DispatcherServlet 'dispatcherServlet'
+2022-04-02 15:51:55:212 INFO  93014 -- RMI TCP Connection(41)-100.64.83.44 org.springframework.web.servlet.DispatcherServlet--initServletBean  -Initializing Servlet 'dispatcherServlet'
+2022-04-02 15:51:55:216 INFO  93014 -- RMI TCP Connection(40)-100.64.83.44 o.s.a.rabbit.connection.CachingConnectionFactory--connectAddresses  -Attempting to connect to: [localhost:5672]
+2022-04-02 15:51:55:217 INFO  93014 -- RMI TCP Connection(41)-100.64.83.44 org.springframework.web.servlet.DispatcherServlet--initServletBean  -Completed initialization in 4 ms
+2022-04-02 15:51:55:227 INFO  93014 -- RMI TCP Connection(40)-100.64.83.44 o.s.a.rabbit.connection.CachingConnectionFactory--createBareConnection  -Created new connection: rabbitConnectionFactory#75452aea:0/SimpleConnection@1fd0f5cd [delegate=amqp://guest@127.0.0.1:5672/, localPort= 58109]
+2022-04-02 15:53:16:967 INFO  93014 -- http-nio-6767-exec-1 o.s.a.rabbit.connection.CachingConnectionFactory--connectAddresses  -Attempting to connect to: [127.0.0.1:5672]
+2022-04-02 15:53:16:973 INFO  93014 -- http-nio-6767-exec-1 o.s.a.rabbit.connection.CachingConnectionFactory--createBareConnection  -Created new connection: rabbitConnectionFactory.publisher#6079e989:0/SimpleConnection@305b3daf [delegate=amqp://admin@127.0.0.1:5672/, localPort= 58162]
+2022-04-02 16:16:51:594 WARN  93014 -- Thread-69 com.alibaba.nacos.common.notify.NotifyCenter--shutdown  -[NotifyCenter] Start destroying Publisher
+2022-04-02 16:16:51:596 WARN  93014 -- Thread-69 com.alibaba.nacos.common.notify.NotifyCenter--shutdown  -[NotifyCenter] Destruction of the end
+2022-04-02 16:16:51:608 WARN  93014 -- Thread-59 com.alibaba.nacos.common.http.HttpClientBeanHolder--shutdown  -[HttpClientBeanHolder] Start destroying common HttpClient
+2022-04-02 16:16:51:610 WARN  93014 -- Thread-59 com.alibaba.nacos.common.http.HttpClientBeanHolder--shutdown  -[HttpClientBeanHolder] Destruction of the end
+2022-04-02 16:16:51:688 INFO  93014 -- SpringApplicationShutdownHook o.s.integration.endpoint.EventDrivenConsumer--info  -Removing {logging-channel-adapter:_org.springframework.integration.errorLogger} as a subscriber to the 'errorChannel' channel
+2022-04-02 16:16:51:690 INFO  93014 -- SpringApplicationShutdownHook o.s.integration.channel.PublishSubscribeChannel--info  -Channel 'aurora-file.errorChannel' has 0 subscriber(s).
+2022-04-02 16:16:51:691 INFO  93014 -- SpringApplicationShutdownHook o.s.integration.endpoint.EventDrivenConsumer--info  -stopped bean '_org.springframework.integration.errorLogger'
+2022-04-02 16:16:51:729 INFO  93014 -- SpringApplicationShutdownHook c.a.cloud.nacos.registry.NacosServiceRegistry--deregister  -De-registering from Nacos Server now...
+2022-04-02 16:16:51:734 INFO  93014 -- SpringApplicationShutdownHook c.a.cloud.nacos.registry.NacosServiceRegistry--deregister  -De-registration finished.

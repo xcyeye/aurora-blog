@@ -1,0 +1,64 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="xyz.xcye.message.dao.EmailLogDao">
+
+
+    <insert id="insertEmailLog" keyProperty="uid" keyColumn="uid" useGeneratedKeys="true">
+        insert  into au_email_log
+        (sender,subject,content,receiver,created_at,send_status)
+        values (
+        #{emailLog.sender},#{emailLog.subject},#{emailLog.content},#{emailLog.receiver},#{emailLog.createdAt},#{emailLog.sendStatus}
+        )
+    </insert>
+
+    <update id="updateEmailLog">
+        update au_email_log
+        <set>
+            <if test="emailLog.sender != null">
+                sender=#{emailLog.sender},
+            </if>
+            <if test="emailLog.subject != null">
+                subject=#{emailLog.subject},
+            </if>
+            <if test="emailLog.content != null">
+                content=#{emailLog.content},
+            </if>
+            <if test="emailLog.receiver != null">
+                receiver=#{emailLog.receiver},
+            </if>
+            send_status=#{emailLog.sendStatus}
+        </set>
+        where uid=#{emailLog.uid}
+    </update>
+
+    <delete id="deleteEmailLog">
+        delete from au_email_log where uid=#{uid}
+    </delete>
+
+    <select id="queryAll" resultType="xyz.xcye.common.entity.table.EmailLog">
+        select * from au_email_log
+        <where>
+            <if test="emailLog.sender != null">
+                sender like contact('%',#{emailLog.sender} ,'%')
+            </if>
+            <if test="emailLog.subject != null">
+                and subject like contact('%',#{emailLog.subject},'%')
+            </if>
+            <if test="emailLog.content != null">
+                and content like contact('%',#{emailLog.content},'%')
+            </if>
+            <if test="emailLog.receiver != null">
+                and receiver like contact('%',#{emailLog.receiver},'%')
+            </if>
+            <if test="emailLog.createdAt != null">
+                and created_at like contact('%',#{emailLog.createdAt},'%')
+            </if>
+            and send_status=#{emailLog.sendStatus}
+        </where>
+    </select>
+    <select id="queryByUid" resultType="xyz.xcye.common.entity.table.EmailLog">
+        select * from au_email_log where uid=#{uid}
+    </select>
+</mapper>

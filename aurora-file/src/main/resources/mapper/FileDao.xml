@@ -2,9 +2,9 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="xyz.xcye.dao.FileDao">
+<mapper namespace="xyz.xcye.file.dao.FileDao">
 
-
+    <cache type="xyz.xcye.file.cache.RedisCache"/>
     <insert id="insertFile"
             parameterType="xyz.xcye.common.entity.table.File"
     >
@@ -54,13 +54,13 @@
                 and deleted_at=#{file.deletedAt}
             </if>
             <if test="file.fileName != null">
-                and file_name=#{file.fileName}
+                and file_name like concat('%', #{file.fileName},'%')
             </if>
             <if test="file.size != 0">
                 and size=#{file.size}
             </if>
             <if test="file.summary != null">
-                and summary=#{file.summary}
+                and summary like concat ('%', #{file.summary}, '%')
             </if>
             <if test="file.path != null">
                 and path=#{file.path}

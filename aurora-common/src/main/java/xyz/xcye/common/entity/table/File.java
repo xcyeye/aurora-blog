@@ -12,6 +12,7 @@ import xyz.xcye.common.valid.Update;
 import xyz.xcye.common.valid.validator.ValidateString;
 
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.math.BigInteger;
 
 /**
@@ -23,7 +24,9 @@ import java.math.BigInteger;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class File {
+public class File implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     /**
      * 唯一uid 不能为null 主键

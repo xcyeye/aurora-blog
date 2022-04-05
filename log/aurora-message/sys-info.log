@@ -1,0 +1,105 @@
+2022-04-02 12:23:27:835 INFO  74255 -- background-preinit org.hibernate.validator.internal.util.Version--<clinit>  -HV000001: Hibernate Validator 6.2.2.Final
+2022-04-02 12:23:32:865 WARN  74255 -- main org.springframework.boot.StartupInfoLogger--appendOn  -InetAddress.getLocalHost().getHostName() took 5003 milliseconds to respond. Please verify your network configuration (macOS machines may need to add entries to /etc/hosts).
+2022-04-02 12:23:37:876 INFO  74255 -- main xyz.xcye.message.AuroraMessageRun--logStarting  -Starting AuroraMessageRun using Java 1.8.0_202 on auroradeMacBook-Pro.local with PID 74255 (/Volumes/Code/Java-code/aurora-theme/aurora-message/target/classes started by aurora in /Volumes/Code/Java-code/aurora-theme)
+2022-04-02 12:23:37:877 INFO  74255 -- main xyz.xcye.message.AuroraMessageRun--logStartupProfileInfo  -No active profile set, falling back to 1 default profile: "default"
+2022-04-02 12:23:38:801 INFO  74255 -- main o.s.d.r.config.RepositoryConfigurationDelegate--multipleStoresDetected  -Multiple Spring Data modules found, entering strict repository configuration mode!
+2022-04-02 12:23:38:802 INFO  74255 -- main o.s.d.r.config.RepositoryConfigurationDelegate--registerRepositoriesIn  -Bootstrapping Spring Data JDBC repositories in DEFAULT mode.
+2022-04-02 12:23:38:810 INFO  74255 -- main o.s.d.r.config.RepositoryConfigurationDelegate--registerRepositoriesIn  -Finished Spring Data repository scanning in 4 ms. Found 0 JDBC repository interfaces.
+2022-04-02 12:23:38:818 INFO  74255 -- main o.s.d.r.config.RepositoryConfigurationDelegate--multipleStoresDetected  -Multiple Spring Data modules found, entering strict repository configuration mode!
+2022-04-02 12:23:38:819 INFO  74255 -- main o.s.d.r.config.RepositoryConfigurationDelegate--registerRepositoriesIn  -Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2022-04-02 12:23:38:827 INFO  74255 -- main o.s.d.r.config.RepositoryConfigurationDelegate--registerRepositoriesIn  -Finished Spring Data repository scanning in 1 ms. Found 0 Redis repository interfaces.
+2022-04-02 12:23:38:946 WARN  74255 -- main org.mybatis.spring.mapper.ClassPathMapperScanner--warn  -No MyBatis mapper was found in '[xyz.xcye.message]' package. Please check your configuration.
+2022-04-02 12:23:39:013 INFO  74255 -- main o.springframework.cloud.context.scope.GenericScope--setSerializationId  -BeanFactory id=d445e51b-7100-3cae-bf37-6d4314c0d7a8
+2022-04-02 12:23:39:138 INFO  74255 -- main o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker--postProcessAfterInitialization  -Bean 'fileWebConfig' of type [xyz.xcye.message.config.FileWebConfig$$EnhancerBySpringCGLIB$$5745d8c4] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-04-02 12:23:39:356 INFO  74255 -- main o.s.boot.web.embedded.tomcat.TomcatWebServer--initialize  -Tomcat initialized with port(s): 7070 (http)
+2022-04-02 12:23:39:363 INFO  74255 -- main org.apache.coyote.http11.Http11NioProtocol--log  -Initializing ProtocolHandler ["http-nio-7070"]
+2022-04-02 12:23:39:363 INFO  74255 -- main org.apache.catalina.core.StandardService--log  -Starting service [Tomcat]
+2022-04-02 12:23:39:364 INFO  74255 -- main org.apache.catalina.core.StandardEngine--log  -Starting Servlet engine: [Apache Tomcat/9.0.58]
+2022-04-02 12:23:39:434 INFO  74255 -- main o.a.c.core.ContainerBase.[Tomcat].[localhost].[/]--log  -Initializing Spring embedded WebApplicationContext
+2022-04-02 12:23:39:434 INFO  74255 -- main o.s.b.w.s.c.ServletWebServerApplicationContext--prepareWebApplicationContext  -Root WebApplicationContext: initialization completed in 1516 ms
+2022-04-02 12:23:40:068 INFO  74255 -- main o.s.b.actuate.endpoint.web.EndpointLinksResolver--<init>  -Exposing 18 endpoint(s) beneath base path '/actuator'
+2022-04-02 12:23:40:650 INFO  74255 -- main com.alibaba.druid.pool.DruidDataSource--init  -{dataSource-1} inited
+2022-04-02 12:23:40:882 WARN  74255 -- main o.s.c.l.c.LoadBalancerCacheAutoConfiguration$LoadBalancerCaffeineWarnLogger--logWarning  -Spring Cloud LoadBalancer is currently working with the default cache. While this cache implementation is useful for development and tests, it's recommended to use Caffeine cache in production.You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
+2022-04-02 12:23:46:029 INFO  74255 -- main org.apache.coyote.http11.Http11NioProtocol--log  -Starting ProtocolHandler ["http-nio-7070"]
+2022-04-02 12:23:46:054 INFO  74255 -- main o.s.boot.web.embedded.tomcat.TomcatWebServer--start  -Tomcat started on port(s): 7070 (http) with context path ''
+2022-04-02 12:23:46:064 INFO  74255 -- main c.a.cloud.nacos.registry.NacosServiceRegistry--register  -nacos registry, DEFAULT_GROUP aurora-file 100.64.83.44:7070 register finished
+2022-04-02 12:23:46:221 INFO  74255 -- main xyz.xcye.message.AuroraMessageRun--logStarted  -Started AuroraMessageRun in 28.815 seconds (JVM running for 34.501)
+2022-04-02 12:23:46:522 INFO  74255 -- RMI TCP Connection(2)-100.64.83.44 o.a.c.core.ContainerBase.[Tomcat].[localhost].[/]--log  -Initializing Spring DispatcherServlet 'dispatcherServlet'
+2022-04-02 12:23:46:522 INFO  74255 -- RMI TCP Connection(2)-100.64.83.44 org.springframework.web.servlet.DispatcherServlet--initServletBean  -Initializing Servlet 'dispatcherServlet'
+2022-04-02 12:23:46:524 INFO  74255 -- RMI TCP Connection(2)-100.64.83.44 org.springframework.web.servlet.DispatcherServlet--initServletBean  -Completed initialization in 1 ms
+2022-04-02 12:24:32:750 WARN  74255 -- Thread-57 com.alibaba.nacos.common.notify.NotifyCenter--shutdown  -[NotifyCenter] Start destroying Publisher
+2022-04-02 12:24:32:750 WARN  74255 -- Thread-47 com.alibaba.nacos.common.http.HttpClientBeanHolder--shutdown  -[HttpClientBeanHolder] Start destroying common HttpClient
+2022-04-02 12:24:32:751 WARN  74255 -- Thread-57 com.alibaba.nacos.common.notify.NotifyCenter--shutdown  -[NotifyCenter] Destruction of the end
+2022-04-02 12:24:32:751 WARN  74255 -- Thread-47 com.alibaba.nacos.common.http.HttpClientBeanHolder--shutdown  -[HttpClientBeanHolder] Destruction of the end
+2022-04-02 12:24:32:800 INFO  74255 -- SpringApplicationShutdownHook c.a.cloud.nacos.registry.NacosServiceRegistry--deregister  -De-registering from Nacos Server now...
+2022-04-02 12:24:32:802 INFO  74255 -- SpringApplicationShutdownHook c.a.cloud.nacos.registry.NacosServiceRegistry--deregister  -De-registration finished.
+2022-04-02 12:24:56:395 INFO  74862 -- background-preinit org.hibernate.validator.internal.util.Version--<clinit>  -HV000001: Hibernate Validator 6.2.2.Final
+2022-04-02 12:25:01:426 WARN  74862 -- main org.springframework.boot.StartupInfoLogger--appendOn  -InetAddress.getLocalHost().getHostName() took 5006 milliseconds to respond. Please verify your network configuration (macOS machines may need to add entries to /etc/hosts).
+2022-04-02 12:25:06:436 INFO  74862 -- main xyz.xcye.message.AuroraMessageRun--logStarting  -Starting AuroraMessageRun using Java 1.8.0_202 on auroradeMacBook-Pro.local with PID 74862 (/Volumes/Code/Java-code/aurora-theme/aurora-message/target/classes started by aurora in /Volumes/Code/Java-code/aurora-theme)
+2022-04-02 12:25:06:438 INFO  74862 -- main xyz.xcye.message.AuroraMessageRun--logStartupProfileInfo  -No active profile set, falling back to 1 default profile: "default"
+2022-04-02 12:25:07:356 INFO  74862 -- main o.s.d.r.config.RepositoryConfigurationDelegate--multipleStoresDetected  -Multiple Spring Data modules found, entering strict repository configuration mode!
+2022-04-02 12:25:07:356 INFO  74862 -- main o.s.d.r.config.RepositoryConfigurationDelegate--registerRepositoriesIn  -Bootstrapping Spring Data JDBC repositories in DEFAULT mode.
+2022-04-02 12:25:07:363 INFO  74862 -- main o.s.d.r.config.RepositoryConfigurationDelegate--registerRepositoriesIn  -Finished Spring Data repository scanning in 3 ms. Found 0 JDBC repository interfaces.
+2022-04-02 12:25:07:371 INFO  74862 -- main o.s.d.r.config.RepositoryConfigurationDelegate--multipleStoresDetected  -Multiple Spring Data modules found, entering strict repository configuration mode!
+2022-04-02 12:25:07:372 INFO  74862 -- main o.s.d.r.config.RepositoryConfigurationDelegate--registerRepositoriesIn  -Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2022-04-02 12:25:07:380 INFO  74862 -- main o.s.d.r.config.RepositoryConfigurationDelegate--registerRepositoriesIn  -Finished Spring Data repository scanning in 1 ms. Found 0 Redis repository interfaces.
+2022-04-02 12:25:07:497 WARN  74862 -- main org.mybatis.spring.mapper.ClassPathMapperScanner--warn  -No MyBatis mapper was found in '[xyz.xcye.message]' package. Please check your configuration.
+2022-04-02 12:25:07:562 INFO  74862 -- main o.springframework.cloud.context.scope.GenericScope--setSerializationId  -BeanFactory id=d445e51b-7100-3cae-bf37-6d4314c0d7a8
+2022-04-02 12:25:07:689 INFO  74862 -- main o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker--postProcessAfterInitialization  -Bean 'fileWebConfig' of type [xyz.xcye.message.config.FileWebConfig$$EnhancerBySpringCGLIB$$e7fbe31a] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-04-02 12:25:07:912 INFO  74862 -- main o.s.boot.web.embedded.tomcat.TomcatWebServer--initialize  -Tomcat initialized with port(s): 7070 (http)
+2022-04-02 12:25:07:919 INFO  74862 -- main org.apache.coyote.http11.Http11NioProtocol--log  -Initializing ProtocolHandler ["http-nio-7070"]
+2022-04-02 12:25:07:920 INFO  74862 -- main org.apache.catalina.core.StandardService--log  -Starting service [Tomcat]
+2022-04-02 12:25:07:920 INFO  74862 -- main org.apache.catalina.core.StandardEngine--log  -Starting Servlet engine: [Apache Tomcat/9.0.58]
+2022-04-02 12:25:07:987 INFO  74862 -- main o.a.c.core.ContainerBase.[Tomcat].[localhost].[/]--log  -Initializing Spring embedded WebApplicationContext
+2022-04-02 12:25:07:988 INFO  74862 -- main o.s.b.w.s.c.ServletWebServerApplicationContext--prepareWebApplicationContext  -Root WebApplicationContext: initialization completed in 1510 ms
+2022-04-02 12:25:08:594 INFO  74862 -- main o.s.b.actuate.endpoint.web.EndpointLinksResolver--<init>  -Exposing 18 endpoint(s) beneath base path '/actuator'
+2022-04-02 12:25:09:177 INFO  74862 -- main com.alibaba.druid.pool.DruidDataSource--init  -{dataSource-1} inited
+2022-04-02 12:25:09:398 WARN  74862 -- main o.s.c.l.c.LoadBalancerCacheAutoConfiguration$LoadBalancerCaffeineWarnLogger--logWarning  -Spring Cloud LoadBalancer is currently working with the default cache. While this cache implementation is useful for development and tests, it's recommended to use Caffeine cache in production.You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
+2022-04-02 12:25:14:541 INFO  74862 -- main org.apache.coyote.http11.Http11NioProtocol--log  -Starting ProtocolHandler ["http-nio-7070"]
+2022-04-02 12:25:14:567 INFO  74862 -- main o.s.boot.web.embedded.tomcat.TomcatWebServer--start  -Tomcat started on port(s): 7070 (http) with context path ''
+2022-04-02 12:25:14:578 INFO  74862 -- main c.a.cloud.nacos.registry.NacosServiceRegistry--register  -nacos registry, DEFAULT_GROUP aurora-file 100.64.83.44:7070 register finished
+2022-04-02 12:25:14:760 INFO  74862 -- main xyz.xcye.message.AuroraMessageRun--logStarted  -Started AuroraMessageRun in 28.775 seconds (JVM running for 34.372)
+2022-04-02 12:25:14:971 INFO  74862 -- RMI TCP Connection(4)-100.64.83.44 o.a.c.core.ContainerBase.[Tomcat].[localhost].[/]--log  -Initializing Spring DispatcherServlet 'dispatcherServlet'
+2022-04-02 12:25:14:971 INFO  74862 -- RMI TCP Connection(4)-100.64.83.44 org.springframework.web.servlet.DispatcherServlet--initServletBean  -Initializing Servlet 'dispatcherServlet'
+2022-04-02 12:25:14:974 INFO  74862 -- RMI TCP Connection(4)-100.64.83.44 org.springframework.web.servlet.DispatcherServlet--initServletBean  -Completed initialization in 2 ms
+2022-04-02 12:25:20:304 WARN  74862 -- Thread-47 com.alibaba.nacos.common.http.HttpClientBeanHolder--shutdown  -[HttpClientBeanHolder] Start destroying common HttpClient
+2022-04-02 12:25:20:305 WARN  74862 -- Thread-56 com.alibaba.nacos.common.notify.NotifyCenter--shutdown  -[NotifyCenter] Start destroying Publisher
+2022-04-02 12:25:20:305 WARN  74862 -- Thread-56 com.alibaba.nacos.common.notify.NotifyCenter--shutdown  -[NotifyCenter] Destruction of the end
+2022-04-02 12:25:20:305 WARN  74862 -- Thread-47 com.alibaba.nacos.common.http.HttpClientBeanHolder--shutdown  -[HttpClientBeanHolder] Destruction of the end
+2022-04-02 12:25:20:334 INFO  74862 -- SpringApplicationShutdownHook c.a.cloud.nacos.registry.NacosServiceRegistry--deregister  -De-registering from Nacos Server now...
+2022-04-02 12:25:20:336 INFO  74862 -- SpringApplicationShutdownHook c.a.cloud.nacos.registry.NacosServiceRegistry--deregister  -De-registration finished.
+2022-04-02 12:25:39:673 INFO  75164 -- background-preinit org.hibernate.validator.internal.util.Version--<clinit>  -HV000001: Hibernate Validator 6.2.2.Final
+2022-04-02 12:25:44:704 WARN  75164 -- main org.springframework.boot.StartupInfoLogger--appendOn  -InetAddress.getLocalHost().getHostName() took 5004 milliseconds to respond. Please verify your network configuration (macOS machines may need to add entries to /etc/hosts).
+2022-04-02 12:25:49:716 INFO  75164 -- main xyz.xcye.message.AuroraMessageRun--logStarting  -Starting AuroraMessageRun using Java 1.8.0_202 on auroradeMacBook-Pro.local with PID 75164 (/Volumes/Code/Java-code/aurora-theme/aurora-message/target/classes started by aurora in /Volumes/Code/Java-code/aurora-theme)
+2022-04-02 12:25:49:718 INFO  75164 -- main xyz.xcye.message.AuroraMessageRun--logStartupProfileInfo  -No active profile set, falling back to 1 default profile: "default"
+2022-04-02 12:25:50:785 INFO  75164 -- main o.s.d.r.config.RepositoryConfigurationDelegate--multipleStoresDetected  -Multiple Spring Data modules found, entering strict repository configuration mode!
+2022-04-02 12:25:50:787 INFO  75164 -- main o.s.d.r.config.RepositoryConfigurationDelegate--registerRepositoriesIn  -Bootstrapping Spring Data JDBC repositories in DEFAULT mode.
+2022-04-02 12:25:50:803 INFO  75164 -- main o.s.d.r.config.RepositoryConfigurationDelegate--registerRepositoriesIn  -Finished Spring Data repository scanning in 8 ms. Found 0 JDBC repository interfaces.
+2022-04-02 12:25:50:825 INFO  75164 -- main o.s.d.r.config.RepositoryConfigurationDelegate--multipleStoresDetected  -Multiple Spring Data modules found, entering strict repository configuration mode!
+2022-04-02 12:25:50:828 INFO  75164 -- main o.s.d.r.config.RepositoryConfigurationDelegate--registerRepositoriesIn  -Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2022-04-02 12:25:50:846 INFO  75164 -- main o.s.d.r.config.RepositoryConfigurationDelegate--registerRepositoriesIn  -Finished Spring Data repository scanning in 1 ms. Found 0 Redis repository interfaces.
+2022-04-02 12:25:51:011 WARN  75164 -- main org.mybatis.spring.mapper.ClassPathMapperScanner--warn  -No MyBatis mapper was found in '[xyz.xcye.message]' package. Please check your configuration.
+2022-04-02 12:25:51:096 INFO  75164 -- main o.springframework.cloud.context.scope.GenericScope--setSerializationId  -BeanFactory id=d445e51b-7100-3cae-bf37-6d4314c0d7a8
+2022-04-02 12:25:51:222 INFO  75164 -- main o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker--postProcessAfterInitialization  -Bean 'fileWebConfig' of type [xyz.xcye.message.config.FileWebConfig$$EnhancerBySpringCGLIB$$5745d8c4] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-04-02 12:25:51:493 INFO  75164 -- main o.s.boot.web.embedded.tomcat.TomcatWebServer--initialize  -Tomcat initialized with port(s): 7070 (http)
+2022-04-02 12:25:51:501 INFO  75164 -- main org.apache.coyote.http11.Http11NioProtocol--log  -Initializing ProtocolHandler ["http-nio-7070"]
+2022-04-02 12:25:51:502 INFO  75164 -- main org.apache.catalina.core.StandardService--log  -Starting service [Tomcat]
+2022-04-02 12:25:51:502 INFO  75164 -- main org.apache.catalina.core.StandardEngine--log  -Starting Servlet engine: [Apache Tomcat/9.0.58]
+2022-04-02 12:25:51:596 INFO  75164 -- main o.a.c.core.ContainerBase.[Tomcat].[localhost].[/]--log  -Initializing Spring embedded WebApplicationContext
+2022-04-02 12:25:51:597 INFO  75164 -- main o.s.b.w.s.c.ServletWebServerApplicationContext--prepareWebApplicationContext  -Root WebApplicationContext: initialization completed in 1830 ms
+2022-04-02 12:25:52:263 INFO  75164 -- main o.s.b.actuate.endpoint.web.EndpointLinksResolver--<init>  -Exposing 18 endpoint(s) beneath base path '/actuator'
+2022-04-02 12:25:52:873 INFO  75164 -- main com.alibaba.druid.pool.DruidDataSource--init  -{dataSource-1} inited
+2022-04-02 12:25:53:062 WARN  75164 -- main o.s.c.l.c.LoadBalancerCacheAutoConfiguration$LoadBalancerCaffeineWarnLogger--logWarning  -Spring Cloud LoadBalancer is currently working with the default cache. While this cache implementation is useful for development and tests, it's recommended to use Caffeine cache in production.You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
+2022-04-02 12:25:58:219 INFO  75164 -- main org.apache.coyote.http11.Http11NioProtocol--log  -Starting ProtocolHandler ["http-nio-7070"]
+2022-04-02 12:25:58:245 INFO  75164 -- main o.s.boot.web.embedded.tomcat.TomcatWebServer--start  -Tomcat started on port(s): 7070 (http) with context path ''
+2022-04-02 12:25:58:255 INFO  75164 -- main c.a.cloud.nacos.registry.NacosServiceRegistry--register  -nacos registry, DEFAULT_GROUP aurora-file 100.64.83.44:7070 register finished
+2022-04-02 12:25:58:413 INFO  75164 -- main xyz.xcye.message.AuroraMessageRun--logStarted  -Started AuroraMessageRun in 29.166 seconds (JVM running for 34.732)
+2022-04-02 12:25:58:785 INFO  75164 -- RMI TCP Connection(3)-100.64.83.44 o.a.c.core.ContainerBase.[Tomcat].[localhost].[/]--log  -Initializing Spring DispatcherServlet 'dispatcherServlet'
+2022-04-02 12:25:58:786 INFO  75164 -- RMI TCP Connection(3)-100.64.83.44 org.springframework.web.servlet.DispatcherServlet--initServletBean  -Initializing Servlet 'dispatcherServlet'
+2022-04-02 12:25:58:788 INFO  75164 -- RMI TCP Connection(3)-100.64.83.44 org.springframework.web.servlet.DispatcherServlet--initServletBean  -Completed initialization in 2 ms
+2022-04-02 12:26:08:843 WARN  75164 -- Thread-57 com.alibaba.nacos.common.notify.NotifyCenter--shutdown  -[NotifyCenter] Start destroying Publisher
+2022-04-02 12:26:08:843 WARN  75164 -- Thread-48 com.alibaba.nacos.common.http.HttpClientBeanHolder--shutdown  -[HttpClientBeanHolder] Start destroying common HttpClient
+2022-04-02 12:26:08:844 WARN  75164 -- Thread-57 com.alibaba.nacos.common.notify.NotifyCenter--shutdown  -[NotifyCenter] Destruction of the end
+2022-04-02 12:26:08:844 WARN  75164 -- Thread-48 com.alibaba.nacos.common.http.HttpClientBeanHolder--shutdown  -[HttpClientBeanHolder] Destruction of the end
+2022-04-02 12:26:08:872 INFO  75164 -- SpringApplicationShutdownHook c.a.cloud.nacos.registry.NacosServiceRegistry--deregister  -De-registering from Nacos Server now...
+2022-04-02 12:26:08:874 INFO  75164 -- SpringApplicationShutdownHook c.a.cloud.nacos.registry.NacosServiceRegistry--deregister  -De-registration finished.
