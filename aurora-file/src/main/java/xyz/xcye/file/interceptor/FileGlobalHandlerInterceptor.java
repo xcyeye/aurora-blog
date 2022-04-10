@@ -19,7 +19,7 @@ public class FileGlobalHandlerInterceptor implements HandlerInterceptor {
         //判断此token是否失效
         boolean expiration = false;
         try {
-            expiration = JwtUtil.isExpiration(authenticationToken,
+            expiration = JwtUtils.isExpiration(authenticationToken,
                     TokenEnum.JWT_SECRET_KEY.getBytes(StandardCharsets.UTF_8));
         } catch (RuntimeException e) {
             e.printStackTrace();

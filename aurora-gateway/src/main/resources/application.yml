@@ -1,6 +1,19 @@
 server:
   port: 7777
 spring:
+  redis:
+    database: 1
+    host: localhost
+    password: ''
+    port: 6379
+    jedis:
+      pool:
+        max-active: 15
+        max-idle: 10
+        min-idle: 0
+        max-wait: -1ms
+  main:
+    allow-circular-references: true
   application:
     name: aurora-gateway
   datasource:
@@ -43,6 +56,7 @@ mybatis:
 
 
 aurora:
+  remember-me-day: 7
   secretKey: aurora.xcye.xyz
   userAcount:
     # 因为下面两个未在数据库中添加字段，所以避免写死，在此处进行设置，任意一个为false都会导致登录失败

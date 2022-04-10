@@ -6,20 +6,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindException;
-import org.springframework.validation.annotation.Validated;
-import xyz.xcye.common.entity.Pagination;
+import xyz.xcye.common.dos.EmailLogDO;
+import xyz.xcye.common.dto.PaginationDTO;
 import xyz.xcye.common.entity.result.ModifyResult;
-import xyz.xcye.common.entity.table.Email;
-import xyz.xcye.common.entity.table.EmailLog;
-import xyz.xcye.common.util.DateUtil;
-import xyz.xcye.common.util.NameUtil;
-import xyz.xcye.common.util.ValidationUtil;
+import xyz.xcye.common.util.DateUtils;
+import xyz.xcye.common.util.ValidationUtils;
 import xyz.xcye.common.valid.Insert;
-import xyz.xcye.message.dao.EmailDao;
 import xyz.xcye.message.dao.EmailLogDao;
 import xyz.xcye.message.service.EmailLogService;
 
-import javax.validation.Valid;
 import javax.validation.groups.Default;
 import java.math.BigInteger;
 import java.util.Date;
@@ -48,56 +43,46 @@ public class EmailLogServiceImpl implements EmailLogService {
     private EmailLogDao emailLogDao;
 
     @Override
-    public ModifyResult insertEmailLog(EmailLog emailLog) {
+    public ModifyResult insertEmailLog(EmailLogDO emailLog) {
         //因为au_email_log表中的uid是自增的，可以不用设置uid
-
         //设置创建时间
-        emailLog.setCreatedAt(DateUtil.format(new Date()));
+        emailLog.setCreateTime(DateUtils.format(new Date()));
         int insertEmailLogNum = emailLogDao.insertEmailLog(emailLog);
-
-        String msg = insertEmailLogNum == 1 ? "插入数据成功" : "插入数据失败";
-
-        return new ModifyResult(insertEmailLogNum,insertEmailLogNum == 1,
-                msg,insertEmailLogNum == 1 ? emailLog : null);
+        return ModifyResult.operateResult(insertEmailLogNum,"插入邮件发送日志",emailLog);
     }
 
     @Override
-    public ModifyResult updateEmailLog(EmailLog emailLog) throws BindException {
-
+    public ModifyResult updateEmailLog(EmailLogDO emailLog) throws BindException {
         //参数验证
-        ValidationUtil.valid(emailLog, Insert.class, Default.class);
+        ValidationUtils.valid(emailLog, Insert.class, Default.class);
 
         int updateEmailLogNum = emailLogDao.updateEmailLog(emailLog);
-
-        String msg = updateEmailLogNum == 1 ? "修改数据成功" : "修改数据失败";
 
         if (updateEmailLogNum == 1) {
             //修改数据成功，调用查询，返回最新的数据
             emailLog = queryByUid(emailLog.getUid());
         }
-        return new ModifyResult(updateEmailLogNum,updateEmailLogNum == 1,msg,emailLog);
+        return ModifyResult.operateResult(updateEmailLogNum,"修改邮件发送日志",emailLog);
     }
 
     @Override
-    public ModifyResult deleteEmailLog(BigInteger uid) {
+    public ModifyResult deleteEmailLog(long uid) {
         int deleteEmailLogNum = emailLogDao.deleteEmailLog(uid);
-        String msg = deleteEmailLogNum == 1 ? "删除成功" : "删除失败";
-
-        return new ModifyResult(deleteEmailLogNum,deleteEmailLogNum == 1,msg,null);
+        return ModifyResult.operateResult(deleteEmailLogNum,"删除" + uid + "对应的邮件发送日志",null);
     }
 
     @Override
-    public List<EmailLog> queryAll(EmailLog emailLog, Pagination pagination) {
-        pagination = Pagination.initPagination(pagination,defaultPageNum,defaultPageSize);
+    public List<EmailLogDO> queryAll(EmailLogDO emailLog, PaginationDTO pagination) {
+        pagination = PaginationDTO.initPagination(pagination,defaultPageNum,defaultPageSize);
         PageHelper.startPage(pagination.getPageNum(),pagination.getPageSize(),pagination.getOrderBy());
 
-        List<EmailLog> emailLogs = emailLogDao.queryAll(emailLog);
-        PageInfo<EmailLog> emailLogPageInfo = new PageInfo<>(emailLogs);
+        List<EmailLogDO> emailLogs = emailLogDao.queryAll(emailLog);
+        PageInfo<EmailLogDO> emailLogPageInfo = new PageInfo<>(emailLogs);
         return emailLogPageInfo.getList();
     }
 
     @Override
-    public EmailLog queryByUid(BigInteger uid) {
+    public EmailLogDO queryByUid(long uid) {
         return emailLogDao.queryByUid(uid);
     }
 }

@@ -4,35 +4,35 @@
 
 <mapper namespace="xyz.xcye.file.dao.FileDao">
 
-    <cache type="xyz.xcye.file.cache.RedisCache"/>
+    <cache type="xyz.xcye.file.manager.cache.RedisCache"/>
     <insert id="insertFile"
-            parameterType="xyz.xcye.common.entity.table.File"
+            parameterType="xyz.xcye.common.dos.FileDO"
     >
         INSERT INTO au_file
-            (uid,created_at,deleted_at,file_name,size,delete_status,summary,path,storage_mode,storage_path)
+            (uid,create_time,delete_time,file_name,size,is_delete,summary,path,storage_mode,storage_path)
         VALUES(
-             #{file.uid},#{file.createdAt},#{file.deletedAt},#{file.fileName},
-               #{file.size},#{file.deleteStatus},#{file.summary},#{file.path},#{file.storageMode},#{file.storagePath}
+             #{file.uid},#{file.createTime},#{file.deleteTime},#{file.fileName},
+               #{file.size},#{file.delete},#{file.summary},#{file.path},#{file.storageMode},#{file.storagePath}
             )
     </insert>
 
+    <!--
+    修改au_file的时候，因为删除状态和size的值有默认值，所以就不适用if进行判断了
+    不提供修改的字段有（因为没有意义）:createdAt,size,file_name,path
+    -->
     <update id="updateFile"
-            parameterType="xyz.xcye.common.entity.table.File"
+            parameterType="xyz.xcye.common.dos.FileDO"
             keyColumn="uid"
     >
         update au_file
-            -- 修改au_file的时候，因为删除状态和size的值有默认值，所以就不适用if进行判断了
-            /*
-            不提供修改的字段有（因为没有意义）:createdAt,size,file_name,path
-            */
             <set>
-                <if test="file.deletedAt != null">
-                    deleted_at=#{file.deletedAt},
+                <if test="file.deleteTime != null">
+                    delete_time=#{file.deleteTime},
                 </if>
                 <if test="file.summary != null">
                     summary=#{file.summary},
                 </if>
-                delete_status=#{file.deleteStatus}
+                is_delete=#{file.delete}
             </set>
             where uid=#{file.uid}
     </update>
@@ -42,22 +42,19 @@
     </delete>
 
     <select id="query" resultMap="fileResult">
-        select * from au_file
+        select uid,create_time,delete_time,file_name,size,is_delete,summary,path,storage_mode,storage_path from au_file
         <where>
             <if test="file.uid != null">
                 uid=#{file.uid}
             </if>
-            <if test="file.createdAt != null">
-                and created_at=#{file.createdAt}
+            <if test="file.createTime != null">
+                and create_time=#{file.createTime}
             </if>
-            <if test="file.deletedAt != null">
-                and deleted_at=#{file.deletedAt}
+            <if test="file.deleteTime != null">
+                and delete_time=#{file.deleteTime}
             </if>
             <if test="file.fileName != null">
                 and file_name like concat('%', #{file.fileName},'%')
-            </if>
-            <if test="file.size != 0">
-                and size=#{file.size}
             </if>
             <if test="file.summary != null">
                 and summary like concat ('%', #{file.summary}, '%')
@@ -65,18 +62,19 @@
             <if test="file.path != null">
                 and path=#{file.path}
             </if>
-
-            and delete_status=#{file.deleteStatus}
+            <if test="file.delete != null">
+                and is_delete=#{file.delete}
+            </if>
         </where>
     </select>
 
-    <resultMap id="fileResult" type="xyz.xcye.common.entity.table.File">
+    <resultMap id="fileResult" type="xyz.xcye.common.dos.FileDO">
         <id column="uid" property="uid"/>
-        <result column="created_at" property="createdAt"/>
-        <result column="delete_status" property="deleteStatus"/>
+        <result column="create_time" property="createTime"/>
+        <result column="is_delete" property="delete"/>
         <result column="file_name" property="fileName"/>
         <result column="size" property="size"/>
-        <result column="deleted_at" property="deletedAt"/>
+        <result column="delete_time" property="deleteTime"/>
         <result column="summary" property="summary"/>
         <result column="path" property="path"/>
     </resultMap>

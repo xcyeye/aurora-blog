@@ -2,11 +2,11 @@ package xyz.xcye.file.interfaces.impl;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-import xyz.xcye.common.entity.FileEntity;
+import xyz.xcye.common.dto.FileEntityDTO;
 import xyz.xcye.common.enums.ResultStatusCode;
-import xyz.xcye.common.util.DateUtil;
+import xyz.xcye.common.util.DateUtils;
+import xyz.xcye.common.util.FileUtils;
 import xyz.xcye.file.exception.CustomFileException;
-import xyz.xcye.common.util.FileUtil;
 import xyz.xcye.file.interfaces.FileStorageService;
 
 import java.io.File;
@@ -60,15 +60,15 @@ public class LocalFileStorageServiceImpl implements FileStorageService {
      * @throws IOException
      */
     @Override
-    public FileEntity upload(InputStream inputStream, FileEntity fileEntity) throws CustomFileException {
+    public FileEntityDTO upload(InputStream inputStream, FileEntityDTO fileEntity) throws CustomFileException {
         //获取上传文件的扩展名
-        String extName = FileUtil.getExtName(fileEntity.getName());
+        String extName = FileUtils.getExtName(fileEntity.getName());
 
         String separator = File.separator;
 
         //获取当前的年和月
-        int currentYear = DateUtil.getYear(new Date());
-        int currentMonth = DateUtil.getMonth(new Date());
+        int currentYear = DateUtils.getYear(new Date());
+        int currentMonth = DateUtils.getMonth(new Date());
 
         if (!nginxRootPath.endsWith(File.separator)) {
             nginxRootPath = nginxRootPath + File.separator;
@@ -84,25 +84,25 @@ public class LocalFileStorageServiceImpl implements FileStorageService {
         //2. 将此输入流写入到path中
         File writeFile = null;
         try {
-            writeFile = FileUtil.writeByStream(inputStream, filePath);
+            writeFile = FileUtils.writeByStream(inputStream, filePath);
         } catch (IOException e) {
             e.printStackTrace();
             throw new CustomFileException(ResultStatusCode.EXCEPTION_FILE_FAIL_UPLOAD.getMessage(),ResultStatusCode.EXCEPTION_FILE_FAIL_UPLOAD.getCode());
         }
 
-        String fileRemoteUrl = host + FileUtil.getFileSplitPath(nginxRootPath,writeFile.getAbsolutePath());
+        String fileRemoteUrl = host + FileUtils.getFileSplitPath(nginxRootPath,writeFile.getAbsolutePath());
 
-        return new FileEntity(writeFile.getAbsolutePath(),writeFile.getName(),writeFile.length(),fileRemoteUrl);
+        return new FileEntityDTO(writeFile.getAbsolutePath(),writeFile.getName(),writeFile.length(),fileRemoteUrl);
     }
 
     @Override
-    public FileEntity download(String objectName) throws IOException {
-        //FileUtil.getOutputStream()
+    public FileEntityDTO download(String objectName) throws IOException {
+        //FileUtils.getOutputStream()
         return null;
     }
 
     @Override
-    public FileEntity query(String objectName) throws IOException {
+    public FileEntityDTO query(String objectName) throws IOException {
         return null;
     }
 
@@ -113,7 +113,7 @@ public class LocalFileStorageServiceImpl implements FileStorageService {
      */
     @Override
     public boolean delete(String objectName) {
-        return FileUtil.deleteFile(objectName);
+        return FileUtils.deleteFile(objectName);
     }
 
     /**
@@ -122,9 +122,9 @@ public class LocalFileStorageServiceImpl implements FileStorageService {
      * @param folderPath
      * @return
      */
-    private String getFilePath(FileEntity fileEntity,String folderPath) {
-        String extName = FileUtil.getExtName(fileEntity.getName());
-        String mainName = FileUtil.getMainName(fileEntity.getName());
+    private String getFilePath(FileEntityDTO fileEntity, String folderPath) {
+        String extName = FileUtils.getExtName(fileEntity.getName());
+        String mainName = FileUtils.getMainName(fileEntity.getName());
         String filePath = folderPath + File.separator + mainName + "." + extName;
 
         if (new File(filePath).exists()) {
@@ -147,7 +147,7 @@ public class LocalFileStorageServiceImpl implements FileStorageService {
 
         if (!folderExists) {
             //创建文件夹
-            if (!FileUtil.createFile(folderPath, true)) {
+            if (!FileUtils.createFile(folderPath, true)) {
                 //创建文件夹失败
                 throw new CustomFileException(ResultStatusCode.EXCEPTION_FILE_FAIL_CREATE.getMessage(),ResultStatusCode.EXCEPTION_FILE_FAIL_CREATE.getCode());
             }
@@ -156,7 +156,7 @@ public class LocalFileStorageServiceImpl implements FileStorageService {
         //执行到这里，说明文件夹已经存在或者创建成功
 
         //创建需要写入的文件
-        boolean isCreateFile = FileUtil.createFile(filePath, false);
+        boolean isCreateFile = FileUtils.createFile(filePath, false);
         if (!isCreateFile) {
             //创建文件夹失败
             throw new CustomFileException(ResultStatusCode.EXCEPTION_FILE_FAIL_CREATE.getMessage(),ResultStatusCode.EXCEPTION_FILE_FAIL_CREATE.getCode());

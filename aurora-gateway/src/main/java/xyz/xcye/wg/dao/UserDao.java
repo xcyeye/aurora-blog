@@ -3,7 +3,8 @@ package xyz.xcye.wg.dao;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import xyz.xcye.common.entity.table.User;
+import xyz.xcye.common.dos.UserDO;
+import xyz.xcye.wg.dto.SecurityUserDTO;
 
 /**
  * @author qsyyke
@@ -16,5 +17,5 @@ public interface UserDao {
      * @param username 用户名
      * @return usershiti
      */
-    User queryUserByUsername(@Param("username")String username);
+    SecurityUserDTO queryUserByUsername(@Param("username")String username);
 }

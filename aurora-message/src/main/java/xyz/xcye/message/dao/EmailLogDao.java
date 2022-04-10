@@ -2,8 +2,7 @@ package xyz.xcye.message.dao;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import xyz.xcye.common.entity.result.ModifyResult;
-import xyz.xcye.common.entity.table.EmailLog;
+import xyz.xcye.common.dos.EmailLogDO;
 
 import java.math.BigInteger;
 import java.util.List;
@@ -14,9 +13,9 @@ import java.util.List;
 
 @Mapper
 public interface EmailLogDao {
-    int insertEmailLog(@Param("emailLog") EmailLog emailLog);
-    int updateEmailLog(@Param("emailLog") EmailLog emailLog);
-    int deleteEmailLog(@Param("uid") BigInteger uid);
-    List<EmailLog> queryAll(@Param("emailLog") EmailLog emailLog);
-    EmailLog queryByUid(@Param("uid") BigInteger uid);
+    int insertEmailLog(@Param("emailLog") EmailLogDO emailLog);
+    int updateEmailLog(@Param("emailLog") EmailLogDO emailLog);
+    int deleteEmailLog(@Param("uid") long uid);
+    List<EmailLogDO> queryAll(@Param("emailLog") EmailLogDO emailLog);
+    EmailLogDO queryByUid(@Param("uid") long uid);
 }

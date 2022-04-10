@@ -1,0 +1,71 @@
+server:
+  port: 7075
+
+spring:
+  main:
+    allow-circular-references: true
+  redis:
+    database: 1
+    host: localhost
+    password: ''
+    port: 6379
+    jedis:
+      pool:
+        max-active: 15
+        max-idle: 10
+        min-idle: 0
+        max-wait: -1ms
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/aurora_comment?characterEncoding=utf8&connectTimeout=1000&socketTimeout=3000&autoReconnect=true&useUnicode=true&useSSL=false&serverTimezone=UTC
+    username: root
+    password: Cqy19981202
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+  application:
+    name: aurora-file
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: admin
+    password: 123456
+    publisher-returns: true
+    publisher-confirm-type: correlated
+    listener:
+      direct:
+        acknowledge-mode: manual
+      simple:
+        acknowledge-mode: manual
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+mybatis:
+  mapper-locations: classpath:mapper/**
+  configuration:
+    map-underscore-to-camel-case: true
+#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+
+# 自定义的配置
+aurora:
+  snow-flake:
+    workerId: 12
+    datacenterId: 20
+  pagination:
+    pageNum: 1
+    pageSize: 10
+
+# 分页插件
+pagehelper:
+  helperDialect: mysql
+  reasonable: true
+  supportMethodsArguments: true
+  params: count=countSql

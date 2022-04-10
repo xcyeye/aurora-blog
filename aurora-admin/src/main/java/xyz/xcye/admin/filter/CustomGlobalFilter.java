@@ -8,7 +8,7 @@ import xyz.xcye.admin.myenums.TokenEnum;
 import xyz.xcye.common.entity.result.R;
 import xyz.xcye.common.enums.ResultStatusCode;
 import xyz.xcye.common.util.ObjectConvertJson;
-import xyz.xcye.common.util.jwt.JwtUtil;
+import xyz.xcye.common.util.jwt.JwtUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -34,7 +34,7 @@ public class CustomGlobalFilter implements HandlerInterceptor {
         //判断此token是否失效
         boolean expiration = false;
         try {
-            expiration = JwtUtil.isExpiration(authenticationToken,
+            expiration = JwtUtils.isExpiration(authenticationToken,
                     TokenEnum.JWT_SECRET_KEY.getBytes(StandardCharsets.UTF_8));
         } catch (RuntimeException e) {
             e.printStackTrace();

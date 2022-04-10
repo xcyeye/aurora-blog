@@ -2,6 +2,7 @@ package xyz.xcye.wg.security;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.server.PathContainer;
 import org.springframework.http.server.reactive.ServerHttpRequest;
@@ -15,14 +16,16 @@ import org.springframework.util.AntPathMatcher;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 import xyz.xcye.common.annotaion.Log;
-import xyz.xcye.common.entity.JwtEntity;
-import xyz.xcye.common.entity.table.VerifyPath;
+import xyz.xcye.common.dos.VerifyPathDO;
+import xyz.xcye.common.dto.JwtEntityDTO;
 import xyz.xcye.common.enums.ResultStatusCode;
-import xyz.xcye.common.util.jwt.JwtUtil;
+import xyz.xcye.common.util.DateUtils;
+import xyz.xcye.common.util.jwt.JwtUtils;
 import xyz.xcye.wg.enums.TokenEnum;
 import xyz.xcye.wg.service.VerifyPathService;
 
 import java.nio.charset.StandardCharsets;
+import java.time.Duration;
 import java.util.List;
 
 /**
@@ -39,6 +42,9 @@ public class CustomReactiveAuthorizationManager implements ReactiveAuthorization
 
     @Autowired
     private VerifyPathService verifyPathService;
+
+    @Autowired
+    private RedisTemplate<String, Object> redisTemplate;
 
     @Log
     @Override
@@ -64,11 +70,16 @@ public class CustomReactiveAuthorizationManager implements ReactiveAuthorization
         //访问的路径 uri，不包含host 此uri需要验证
         String needVerifyUrl = pathContainer.value();
 
-        VerifyPath matchedVerifyPath = null;
+        VerifyPathDO matchedVerifyPath = null;
 
         //1.从数据库中，查询所有的url需要的权限信息 然后逐一和当前的uri进行匹配
-        List<VerifyPath> verifyPaths = verifyPathService.queryAllVerifyPath();
-        for (VerifyPath verifyPath : verifyPaths) {
+        List<VerifyPathDO> verifyPaths = (List<VerifyPathDO>) redisTemplate.opsForValue().get(TokenEnum.REDIS_STORAGE_VERIFY_PATH_LIST_NAME);
+        if (verifyPaths == null || verifyPaths.isEmpty()) {
+            //redis中没有，从数据库中查找
+            verifyPaths = verifyPathService.queryAllVerifyPath();
+            redisTemplate.opsForValue().set(TokenEnum.REDIS_STORAGE_VERIFY_PATH_LIST_NAME,verifyPaths, Duration.ofSeconds(DateUtils.getRandomSecond(TokenEnum.REDIS_STORAGE_VERIFY_PATH_LIST_MIN_TIME,TokenEnum.REDIS_STORAGE_VERIFY_PATH_LIST_MAX_TIME)));
+        }
+        for (VerifyPathDO verifyPath : verifyPaths) {
             //需要某个角色或者权限访问的路径
             String permissionPath = verifyPath.getPath();
 
@@ -78,7 +89,7 @@ public class CustomReactiveAuthorizationManager implements ReactiveAuthorization
             }
         }
 
-        JwtEntity jwtEntity = parseToken(token);
+        JwtEntityDTO jwtEntity = parseToken(token);
 
         //matchedVerifyPath 当前uri不需要特定角色才能访问
         if (matchedVerifyPath == null) {
@@ -90,7 +101,7 @@ public class CustomReactiveAuthorizationManager implements ReactiveAuthorization
         return Mono.just(new AuthorizationDecision(hasRole(jwtEntity, matchedVerifyPath)));
     }
 
-    public static Mono<AuthorizationDecision> getAuthorizationDecision(JwtEntity jwtEntity,ServerWebExchange exchange) {
+    public static Mono<AuthorizationDecision> getAuthorizationDecision(JwtEntityDTO jwtEntity, ServerWebExchange exchange) {
         if (jwtEntity.isExpiration()) {
             //token已经过期
             //return Mono.error(new AccessDeniedException(ResultStatusCode.PERMISSION_DENIED.getMessage()));
@@ -105,13 +116,13 @@ public class CustomReactiveAuthorizationManager implements ReactiveAuthorization
      * @param token
      * @return
      */
-    private static JwtEntity parseToken(String token) {
-        JwtEntity jwtEntity = null;
+    private static JwtEntityDTO parseToken(String token) {
+        JwtEntityDTO jwtEntity = null;
         try {
-            jwtEntity = JwtUtil.parseJwtToken(token, TokenEnum.JWT_SECRET_KEY.getBytes(StandardCharsets.UTF_8));
+            jwtEntity = JwtUtils.parseJwtToken(token, TokenEnum.JWT_SECRET_KEY.getBytes(StandardCharsets.UTF_8));
         } catch (RuntimeException e) {
             e.printStackTrace();
-            jwtEntity = new JwtEntity("","","",null,null,"","",null,true);
+            jwtEntity = new JwtEntityDTO("","","",null,null,"","",null,true);
         }
 
         return jwtEntity;
@@ -138,12 +149,12 @@ public class CustomReactiveAuthorizationManager implements ReactiveAuthorization
      * @param matchedVerifyPath 数据库中存放的该uri所需要的权限信息
      * @return
      */
-    public static boolean hasRole(JwtEntity jwtEntity,VerifyPath matchedVerifyPath) {
+    public static boolean hasRole(JwtEntityDTO jwtEntity, VerifyPathDO matchedVerifyPath) {
         if (matchedVerifyPath.getRole().equals(jwtEntity.getRole())) {
             return true;
         }
 
-        if (matchedVerifyPath.getIsRole()) {
+        if (matchedVerifyPath.getOnlyRole()) {
             //因为此path必须要拥有role的人才能访问，所以直接返回
             return false;
         }

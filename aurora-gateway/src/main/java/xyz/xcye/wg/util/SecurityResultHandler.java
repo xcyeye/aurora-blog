@@ -1,6 +1,8 @@
 package xyz.xcye.wg.util;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.buffer.DataBuffer;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.MediaType;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.http.server.reactive.ServerHttpResponse;
@@ -10,11 +12,11 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
+import xyz.xcye.common.dos.UserPermissionDO;
 import xyz.xcye.common.entity.result.R;
-import xyz.xcye.common.entity.table.UserPermission;
 import xyz.xcye.common.enums.ResultStatusCode;
 import xyz.xcye.common.util.ObjectConvertJson;
-import xyz.xcye.common.util.jwt.JwtUtil;
+import xyz.xcye.common.util.jwt.JwtUtils;
 import xyz.xcye.wg.enums.TokenEnum;
 
 import java.nio.charset.StandardCharsets;
@@ -33,77 +35,13 @@ public class SecurityResultHandler {
     public static Mono<Void> success(ServerWebExchange exchange, Authentication authentication) {
         //1. 获取用户名等信息
         List<GrantedAuthority> grantedAuthorities = (List<GrantedAuthority>) authentication.getAuthorities();
-
-        //用户名
-        String username = (String) authentication.getPrincipal();
-
-        //获取权限信息
-        UserPermission userPermission = getPermission(grantedAuthorities);
-
-        //从请求头中获取rememberMe的秒数
-        Integer rememberMeSecond = getRememberMeSecond(exchange);
-
-        //2. 获取一个token
-        String token = JwtUtil.generateToken(TokenEnum.JWT_SUBJECT, username,
-                rememberMeSecond, username, userPermission.getRole(), userPermission.getPermission(),
-                TokenEnum.JWT_SECRET_KEY.getBytes(StandardCharsets.UTF_8));
-
-        //3. 将此token放入header中
-        ServerHttpResponse response = exchange.getResponse();
-        response.getHeaders().set(TokenEnum.JWT_HEADER_TOKEN_NAME,token);
-
         setContentType(exchange);
-
         Map<String,Object> grantedAuthoritiesMap = new HashMap<>();
         grantedAuthoritiesMap.put("permission",grantedAuthorities);
         R success = R.success(ResultStatusCode.SUCCESS.getCode(), ResultStatusCode.SUCCESS.getMessage(),grantedAuthoritiesMap);
 
         String s = ObjectConvertJson.jsonToString(success);
-
         return getMonoTypeResult(s,exchange);
-    }
-
-    public static Integer getRememberMeSecond(ServerWebExchange exchange) {
-        //获取免登录天数
-        String rememberMeDay = "";
-
-        MultiValueMap<String, String> queryParams = exchange.getRequest().getQueryParams();
-        if (queryParams.get("remember-me-day") != null) {
-            rememberMeDay = queryParams.get("remember-me-day").get(0);
-        }
-
-        //如果没有设置免登陆天数，则设置为半天
-        rememberMeDay = rememberMeDay.equals("") ? "1" : rememberMeDay;
-        //1000 * 60 * 60 * 24 一天的秒数
-        int rememberMeDayNum = Integer.parseInt(rememberMeDay);
-
-        return rememberMeDayNum * 60 * 60 * 24;
-    }
-
-    public static UserPermission getPermission(List<GrantedAuthority> grantedAuthorities) {
-        StringBuilder permission = new StringBuilder();
-        String role = "";
-
-        for (int i = 0; i < grantedAuthorities.size(); i++) {
-            String authority = grantedAuthorities.get(i).getAuthority();
-
-            if (authority.contains("ROLE_")) {
-                role = authority;
-            }else {
-                permission.append(authority).append(",");
-            }
-
-            //去除最后一个,
-            if (i == grantedAuthorities.size() -1) {
-                permission = new StringBuilder(permission.substring(0, permission.length() - 1));
-            }
-        }
-
-        UserPermission userPermission = new UserPermission();
-        userPermission.setPermission(String.valueOf(permission));
-        userPermission.setRole(role);
-        return userPermission;
-
     }
 
     /**

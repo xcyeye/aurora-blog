@@ -1,8 +1,9 @@
 package xyz.xcye.message.service;
 
-import xyz.xcye.common.entity.Pagination;
+import org.apache.ibatis.annotations.Param;
+import xyz.xcye.common.dos.EmailDO;
+import xyz.xcye.common.dto.PaginationDTO;
 import xyz.xcye.common.entity.result.ModifyResult;
-import xyz.xcye.common.entity.table.Email;
 
 import java.util.List;
 
@@ -17,19 +18,26 @@ public interface EmailService {
      * @param email email对象
      * @return
      */
-    ModifyResult insertEmail(Email email);
+    ModifyResult insertEmail(EmailDO email);
 
     /**
      * 根据uid删除一条记录
+     * @param uid
+     * @return
+     */
+    ModifyResult deleteEmailByUid(long uid);
+
+    /**
+     * 修改email.uid对应的delete状态
      * @param email
      * @return
      */
-    ModifyResult deleteEmailByUid(Email email);
+    ModifyResult updateDeleteStatus(EmailDO email);
 
     /**
      * 根据uid修改记录 修改的内容在email对象中
      */
-    ModifyResult updateEmailByUid(Email email);
+    ModifyResult updateEmailByUid(EmailDO email);
 
     /**
      * 根据自定义条件查询对应的内容
@@ -37,12 +45,14 @@ public interface EmailService {
      * @param pagination 分页条件
      * @return
      */
-    List<Email> queryAllEmail(Email email, Pagination pagination);
+    List<EmailDO> queryAllEmail(EmailDO email, PaginationDTO pagination);
 
     /**
      * 通过uid进行查询
      * @param uid
      * @return
      */
-    Email queryByUid(String uid);
+    EmailDO queryByUid(long uid);
+
+    EmailDO queryByUserUid(@Param("userUid") long userUid);
 }

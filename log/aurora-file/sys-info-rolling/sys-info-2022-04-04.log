@@ -1,0 +1,128 @@
+2022-04-04 16:28:17:444 INFO  96142 -- background-preinit org.hibernate.validator.internal.util.Version--<clinit>  -HV000001: Hibernate Validator 6.2.2.Final
+2022-04-04 16:28:22:469 WARN  96142 -- main org.springframework.boot.StartupInfoLogger--appendOn  -InetAddress.getLocalHost().getHostName() took 5005 milliseconds to respond. Please verify your network configuration (macOS machines may need to add entries to /etc/hosts).
+2022-04-04 16:28:27:480 INFO  96142 -- main xyz.xcye.file.AuroraFileRun--logStarting  -Starting AuroraFileRun using Java 1.8.0_202 on auroradeMacBook-Pro.local with PID 96142 (/Volumes/Code/Java-code/aurora-theme/aurora-file/target/classes started by aurora in /Volumes/Code/Java-code/aurora-theme)
+2022-04-04 16:28:27:482 INFO  96142 -- main xyz.xcye.file.AuroraFileRun--logStartupProfileInfo  -No active profile set, falling back to 1 default profile: "default"
+2022-04-04 16:28:28:851 INFO  96142 -- main o.s.d.r.config.RepositoryConfigurationDelegate--multipleStoresDetected  -Multiple Spring Data modules found, entering strict repository configuration mode!
+2022-04-04 16:28:28:852 INFO  96142 -- main o.s.d.r.config.RepositoryConfigurationDelegate--registerRepositoriesIn  -Bootstrapping Spring Data JDBC repositories in DEFAULT mode.
+2022-04-04 16:28:28:869 INFO  96142 -- main o.s.d.r.config.RepositoryConfigurationDelegate--registerRepositoriesIn  -Finished Spring Data repository scanning in 6 ms. Found 0 JDBC repository interfaces.
+2022-04-04 16:28:28:881 INFO  96142 -- main o.s.d.r.config.RepositoryConfigurationDelegate--multipleStoresDetected  -Multiple Spring Data modules found, entering strict repository configuration mode!
+2022-04-04 16:28:28:882 INFO  96142 -- main o.s.d.r.config.RepositoryConfigurationDelegate--registerRepositoriesIn  -Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2022-04-04 16:28:28:895 INFO  96142 -- main o.s.d.r.config.RepositoryConfigurationDelegate--registerRepositoriesIn  -Finished Spring Data repository scanning in 2 ms. Found 0 Redis repository interfaces.
+2022-04-04 16:28:29:049 INFO  96142 -- main o.s.i.c.DefaultConfiguringBeanFactoryPostProcessor--info  -No bean named 'errorChannel' has been explicitly defined. Therefore, a default PublishSubscribeChannel will be created.
+2022-04-04 16:28:29:071 INFO  96142 -- main o.s.i.c.DefaultConfiguringBeanFactoryPostProcessor--info  -No bean named 'integrationHeaderChannelRegistry' has been explicitly defined. Therefore, a default DefaultHeaderChannelRegistry will be created.
+2022-04-04 16:28:29:223 INFO  96142 -- main o.springframework.cloud.context.scope.GenericScope--setSerializationId  -BeanFactory id=5615f3a8-7ad1-3b7d-8b9d-76827a8e2e8a
+2022-04-04 16:28:29:470 INFO  96142 -- main o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker--postProcessAfterInitialization  -Bean 'fileWebConfig' of type [xyz.xcye.file.config.FileWebConfig$$EnhancerBySpringCGLIB$$be755b9] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-04-04 16:28:29:487 INFO  96142 -- main o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker--postProcessAfterInitialization  -Bean 'integrationChannelResolver' of type [org.springframework.integration.support.channel.BeanFactoryChannelResolver] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-04-04 16:28:29:511 INFO  96142 -- main o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker--postProcessAfterInitialization  -Bean 'org.springframework.integration.config.IntegrationManagementConfiguration' of type [org.springframework.integration.config.IntegrationManagementConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-04-04 16:28:29:518 INFO  96142 -- main o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker--postProcessAfterInitialization  -Bean 'org.springframework.boot.autoconfigure.integration.IntegrationAutoConfiguration$IntegrationJmxConfiguration' of type [org.springframework.boot.autoconfigure.integration.IntegrationAutoConfiguration$IntegrationJmxConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-04-04 16:28:29:527 INFO  96142 -- main o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker--postProcessAfterInitialization  -Bean 'org.springframework.boot.autoconfigure.jmx.JmxAutoConfiguration' of type [org.springframework.boot.autoconfigure.jmx.JmxAutoConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-04-04 16:28:29:531 INFO  96142 -- main o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker--postProcessAfterInitialization  -Bean 'mbeanServer' of type [com.sun.jmx.mbeanserver.JmxMBeanServer] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-04-04 16:28:29:870 INFO  96142 -- main o.s.boot.web.embedded.tomcat.TomcatWebServer--initialize  -Tomcat initialized with port(s): 6767 (http)
+2022-04-04 16:28:29:891 INFO  96142 -- main org.apache.coyote.http11.Http11NioProtocol--log  -Initializing ProtocolHandler ["http-nio-6767"]
+2022-04-04 16:28:29:892 INFO  96142 -- main org.apache.catalina.core.StandardService--log  -Starting service [Tomcat]
+2022-04-04 16:28:29:892 INFO  96142 -- main org.apache.catalina.core.StandardEngine--log  -Starting Servlet engine: [Apache Tomcat/9.0.58]
+2022-04-04 16:28:30:016 INFO  96142 -- main o.a.c.core.ContainerBase.[Tomcat].[localhost].[/]--log  -Initializing Spring embedded WebApplicationContext
+2022-04-04 16:28:30:017 INFO  96142 -- main o.s.b.w.s.c.ServletWebServerApplicationContext--prepareWebApplicationContext  -Root WebApplicationContext: initialization completed in 2483 ms
+2022-04-04 16:28:30:390 ERROR 96142 -- main RedisCache--getId  -34
+2022-04-04 16:28:30:391 ERROR 96142 -- main RedisCache--getId  -34
+2022-04-04 16:28:31:647 INFO  96142 -- main o.s.b.actuate.endpoint.web.EndpointLinksResolver--<init>  -Exposing 22 endpoint(s) beneath base path '/actuator'
+2022-04-04 16:28:32:446 INFO  96142 -- main o.s.c.s.f.FunctionConfiguration$FunctionBindingRegistrar--afterPropertiesSet  -Functional binding is disabled due to the presense of @EnableBinding annotation in your configuration
+2022-04-04 16:28:32:677 INFO  96142 -- main com.alibaba.druid.pool.DruidDataSource--init  -{dataSource-1} inited
+2022-04-04 16:28:32:972 WARN  96142 -- main o.s.c.l.c.LoadBalancerCacheAutoConfiguration$LoadBalancerCaffeineWarnLogger--logWarning  -Spring Cloud LoadBalancer is currently working with the default cache. While this cache implementation is useful for development and tests, it's recommended to use Caffeine cache in production.You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
+2022-04-04 16:28:33:193 INFO  96142 -- main o.s.integration.monitor.IntegrationMBeanExporter--registerChannel  -Registering MessageChannel output
+2022-04-04 16:28:33:258 INFO  96142 -- main o.s.integration.monitor.IntegrationMBeanExporter--registerChannel  -Registering MessageChannel errorChannel
+2022-04-04 16:28:33:275 INFO  96142 -- main o.s.integration.monitor.IntegrationMBeanExporter--registerChannel  -Registering MessageChannel nullChannel
+2022-04-04 16:28:33:286 INFO  96142 -- main o.s.integration.monitor.IntegrationMBeanExporter--registerHandler  -Registering MessageHandler _org.springframework.integration.errorLogger
+2022-04-04 16:28:33:327 INFO  96142 -- main o.s.integration.endpoint.EventDrivenConsumer--info  -Adding {logging-channel-adapter:_org.springframework.integration.errorLogger} as a subscriber to the 'errorChannel' channel
+2022-04-04 16:28:33:328 INFO  96142 -- main o.s.integration.channel.PublishSubscribeChannel--info  -Channel 'aurora-file.errorChannel' has 1 subscriber(s).
+2022-04-04 16:28:33:328 INFO  96142 -- main o.s.integration.endpoint.EventDrivenConsumer--info  -started bean '_org.springframework.integration.errorLogger'
+2022-04-04 16:28:33:329 INFO  96142 -- main o.s.cloud.stream.binder.DefaultBinderFactory--getBinderInstance  -Creating binder: defaultRabbit
+2022-04-04 16:28:33:425 INFO  96142 -- main o.s.cloud.stream.binder.DefaultBinderFactory--getBinderInstance  -Caching the binder: defaultRabbit
+2022-04-04 16:28:33:426 INFO  96142 -- main o.s.cloud.stream.binder.DefaultBinderFactory--getBinderInstance  -Retrieving cached binder: defaultRabbit
+2022-04-04 16:28:33:531 INFO  96142 -- main o.s.a.rabbit.connection.CachingConnectionFactory--connectAddresses  -Attempting to connect to: [127.0.0.1:5672]
+2022-04-04 16:28:33:572 INFO  96142 -- main o.s.a.rabbit.connection.CachingConnectionFactory--createBareConnection  -Created new connection: rabbitConnectionFactory#4a18e0f1:0/SimpleConnection@48bab2c6 [delegate=amqp://admin@127.0.0.1:5672/, localPort= 54393]
+2022-04-04 16:28:33:605 INFO  96142 -- main o.s.c.stream.messaging.DirectWithAttributesChannel--info  -Channel 'aurora-file.output' has 1 subscriber(s).
+2022-04-04 16:28:38:727 INFO  96142 -- main org.apache.coyote.http11.Http11NioProtocol--log  -Starting ProtocolHandler ["http-nio-6767"]
+2022-04-04 16:28:38:752 INFO  96142 -- main o.s.boot.web.embedded.tomcat.TomcatWebServer--start  -Tomcat started on port(s): 6767 (http) with context path ''
+2022-04-04 16:28:38:981 INFO  96142 -- main c.a.cloud.nacos.registry.NacosServiceRegistry--register  -nacos registry, DEFAULT_GROUP aurora-file 100.64.83.44:6767 register finished
+2022-04-04 16:28:39:259 INFO  96142 -- main xyz.xcye.file.AuroraFileRun--logStarted  -Started AuroraFileRun in 32.414 seconds (JVM running for 38.265)
+2022-04-04 16:28:39:579 INFO  96142 -- RMI TCP Connection(3)-100.64.83.44 o.a.c.core.ContainerBase.[Tomcat].[localhost].[/]--log  -Initializing Spring DispatcherServlet 'dispatcherServlet'
+2022-04-04 16:28:39:580 INFO  96142 -- RMI TCP Connection(3)-100.64.83.44 org.springframework.web.servlet.DispatcherServlet--initServletBean  -Initializing Servlet 'dispatcherServlet'
+2022-04-04 16:28:39:585 INFO  96142 -- RMI TCP Connection(3)-100.64.83.44 org.springframework.web.servlet.DispatcherServlet--initServletBean  -Completed initialization in 5 ms
+2022-04-04 16:28:39:590 INFO  96142 -- RMI TCP Connection(4)-100.64.83.44 o.s.a.rabbit.connection.CachingConnectionFactory--connectAddresses  -Attempting to connect to: [localhost:5672]
+2022-04-04 16:28:39:598 INFO  96142 -- RMI TCP Connection(4)-100.64.83.44 o.s.a.rabbit.connection.CachingConnectionFactory--createBareConnection  -Created new connection: rabbitConnectionFactory#6c24f61d:0/SimpleConnection@3918d7de [delegate=amqp://guest@127.0.0.1:5672/, localPort= 54398]
+2022-04-04 16:30:08:205 ERROR 96142 -- http-nio-6767-exec-4 RedisCache--getObject  -34
+2022-04-04 16:30:08:205 ERROR 96142 -- http-nio-6767-exec-4 RedisCache--getId  -34
+2022-04-04 16:30:08:222 WARN  96142 -- http-nio-6767-exec-4 com.alibaba.druid.pool.DruidAbstractDataSource--testConnectionInternal  -discard long time none received connection. , jdbcUrl : jdbc:mysql://127.0.0.1:3306/aurora_file?characterEncoding=utf8&connectTimeout=1000&socketTimeout=3000&autoReconnect=true&useUnicode=true&useSSL=false&serverTimezone=UTC, version : 1.2.5, lastPacketReceivedIdleMillis : 95435
+2022-04-04 16:30:08:273 ERROR 96142 -- http-nio-6767-exec-4 RedisCache--getObject  -34
+2022-04-04 16:30:08:273 ERROR 96142 -- http-nio-6767-exec-4 RedisCache--getId  -34
+2022-04-04 16:30:08:282 ERROR 96142 -- http-nio-6767-exec-4 RedisCache--putObject  -34
+2022-04-04 16:30:08:282 ERROR 96142 -- http-nio-6767-exec-4 RedisCache--putObject  -34
+2022-04-04 16:30:45:291 ERROR 96142 -- http-nio-6767-exec-6 RedisCache--getObject  -34
+2022-04-04 16:30:45:292 ERROR 96142 -- http-nio-6767-exec-6 RedisCache--getId  -34
+2022-04-04 16:30:45:294 ERROR 96142 -- http-nio-6767-exec-6 RedisCache--putObject  -34
+2022-04-04 16:31:00:416 ERROR 96142 -- http-nio-6767-exec-7 RedisCache--getObject  -34
+2022-04-04 16:31:00:417 ERROR 96142 -- http-nio-6767-exec-7 RedisCache--getId  -34
+2022-04-04 16:31:00:419 ERROR 96142 -- http-nio-6767-exec-7 RedisCache--putObject  -34
+2022-04-04 16:31:44:353 ERROR 96142 -- http-nio-6767-exec-8 RedisCache--getObject  -34
+2022-04-04 16:31:44:354 ERROR 96142 -- http-nio-6767-exec-8 RedisCache--getId  -34
+2022-04-04 16:31:44:356 ERROR 96142 -- http-nio-6767-exec-8 RedisCache--putObject  -34
+2022-04-04 16:31:51:291 ERROR 96142 -- http-nio-6767-exec-10 RedisCache--getObject  -34
+2022-04-04 16:31:51:291 ERROR 96142 -- http-nio-6767-exec-10 RedisCache--getId  -34
+2022-04-04 16:31:51:294 ERROR 96142 -- http-nio-6767-exec-10 RedisCache--putObject  -34
+2022-04-04 16:31:55:483 ERROR 96142 -- http-nio-6767-exec-1 RedisCache--getObject  -34
+2022-04-04 16:31:55:484 ERROR 96142 -- http-nio-6767-exec-1 RedisCache--getId  -34
+2022-04-04 16:31:55:489 ERROR 96142 -- http-nio-6767-exec-1 RedisCache--getObject  -34
+2022-04-04 16:31:55:489 ERROR 96142 -- http-nio-6767-exec-1 RedisCache--getId  -34
+2022-04-04 16:31:55:498 ERROR 96142 -- http-nio-6767-exec-1 RedisCache--putObject  -34
+2022-04-04 16:31:55:499 ERROR 96142 -- http-nio-6767-exec-1 RedisCache--putObject  -34
+2022-04-04 16:32:14:512 ERROR 96142 -- http-nio-6767-exec-2 RedisCache--getObject  -34
+2022-04-04 16:32:14:512 ERROR 96142 -- http-nio-6767-exec-2 RedisCache--getId  -34
+2022-04-04 16:32:14:514 ERROR 96142 -- http-nio-6767-exec-2 RedisCache--getObject  -34
+2022-04-04 16:32:14:514 ERROR 96142 -- http-nio-6767-exec-2 RedisCache--getId  -34
+2022-04-04 16:32:14:521 ERROR 96142 -- http-nio-6767-exec-2 RedisCache--putObject  -34
+2022-04-04 16:32:14:521 ERROR 96142 -- http-nio-6767-exec-2 RedisCache--putObject  -34
+2022-04-04 16:32:43:690 ERROR 96142 -- http-nio-6767-exec-3 RedisCache--getObject  -34
+2022-04-04 16:32:43:691 ERROR 96142 -- http-nio-6767-exec-3 RedisCache--getId  -34
+2022-04-04 16:32:43:694 ERROR 96142 -- http-nio-6767-exec-3 RedisCache--getObject  -34
+2022-04-04 16:32:43:694 ERROR 96142 -- http-nio-6767-exec-3 RedisCache--getId  -34
+2022-04-04 16:32:43:696 ERROR 96142 -- http-nio-6767-exec-3 RedisCache--putObject  -34
+2022-04-04 16:32:43:696 ERROR 96142 -- http-nio-6767-exec-3 RedisCache--putObject  -34
+2022-04-04 16:32:54:651 ERROR 96142 -- http-nio-6767-exec-5 RedisCache--getObject  -34
+2022-04-04 16:32:54:651 ERROR 96142 -- http-nio-6767-exec-5 RedisCache--getId  -34
+2022-04-04 16:32:54:654 ERROR 96142 -- http-nio-6767-exec-5 RedisCache--getObject  -34
+2022-04-04 16:32:54:654 ERROR 96142 -- http-nio-6767-exec-5 RedisCache--getId  -34
+2022-04-04 16:32:54:657 ERROR 96142 -- http-nio-6767-exec-5 RedisCache--putObject  -34
+2022-04-04 16:32:54:657 ERROR 96142 -- http-nio-6767-exec-5 RedisCache--putObject  -34
+2022-04-04 16:33:00:127 ERROR 96142 -- http-nio-6767-exec-6 RedisCache--getObject  -34
+2022-04-04 16:33:00:127 ERROR 96142 -- http-nio-6767-exec-6 RedisCache--getId  -34
+2022-04-04 16:33:00:130 ERROR 96142 -- http-nio-6767-exec-6 RedisCache--putObject  -34
+2022-04-04 16:33:08:048 ERROR 96142 -- http-nio-6767-exec-7 RedisCache--getObject  -34
+2022-04-04 16:33:08:049 ERROR 96142 -- http-nio-6767-exec-7 RedisCache--getId  -34
+2022-04-04 16:33:08:054 ERROR 96142 -- http-nio-6767-exec-7 RedisCache--getObject  -34
+2022-04-04 16:33:08:055 ERROR 96142 -- http-nio-6767-exec-7 RedisCache--getId  -34
+2022-04-04 16:33:08:057 ERROR 96142 -- http-nio-6767-exec-7 RedisCache--putObject  -34
+2022-04-04 16:33:08:058 ERROR 96142 -- http-nio-6767-exec-7 RedisCache--putObject  -34
+2022-04-04 16:33:27:565 ERROR 96142 -- http-nio-6767-exec-8 RedisCache--getObject  -34
+2022-04-04 16:33:27:566 ERROR 96142 -- http-nio-6767-exec-8 RedisCache--getId  -34
+2022-04-04 16:33:27:568 ERROR 96142 -- http-nio-6767-exec-8 RedisCache--getObject  -34
+2022-04-04 16:33:27:568 ERROR 96142 -- http-nio-6767-exec-8 RedisCache--getId  -34
+2022-04-04 16:33:27:571 ERROR 96142 -- http-nio-6767-exec-8 RedisCache--putObject  -34
+2022-04-04 16:33:27:571 ERROR 96142 -- http-nio-6767-exec-8 RedisCache--putObject  -34
+2022-04-04 16:33:38:113 ERROR 96142 -- http-nio-6767-exec-9 RedisCache--getObject  -34
+2022-04-04 16:33:38:114 ERROR 96142 -- http-nio-6767-exec-9 RedisCache--getId  -34
+2022-04-04 16:33:38:117 ERROR 96142 -- http-nio-6767-exec-9 RedisCache--getObject  -34
+2022-04-04 16:33:38:118 ERROR 96142 -- http-nio-6767-exec-9 RedisCache--getId  -34
+2022-04-04 16:33:38:123 ERROR 96142 -- http-nio-6767-exec-9 RedisCache--putObject  -34
+2022-04-04 16:33:38:124 ERROR 96142 -- http-nio-6767-exec-9 RedisCache--putObject  -34
+2022-04-04 16:34:56:681 WARN  96142 -- Thread-60 com.alibaba.nacos.common.notify.NotifyCenter--shutdown  -[NotifyCenter] Start destroying Publisher
+2022-04-04 16:34:56:681 WARN  96142 -- Thread-51 com.alibaba.nacos.common.http.HttpClientBeanHolder--shutdown  -[HttpClientBeanHolder] Start destroying common HttpClient
+2022-04-04 16:34:56:682 WARN  96142 -- Thread-60 com.alibaba.nacos.common.notify.NotifyCenter--shutdown  -[NotifyCenter] Destruction of the end
+2022-04-04 16:34:56:682 WARN  96142 -- Thread-51 com.alibaba.nacos.common.http.HttpClientBeanHolder--shutdown  -[HttpClientBeanHolder] Destruction of the end
+2022-04-04 16:34:56:701 INFO  96142 -- SpringApplicationShutdownHook o.s.integration.endpoint.EventDrivenConsumer--info  -Removing {logging-channel-adapter:_org.springframework.integration.errorLogger} as a subscriber to the 'errorChannel' channel
+2022-04-04 16:34:56:701 INFO  96142 -- SpringApplicationShutdownHook o.s.integration.channel.PublishSubscribeChannel--info  -Channel 'aurora-file.errorChannel' has 0 subscriber(s).
+2022-04-04 16:34:56:702 INFO  96142 -- SpringApplicationShutdownHook o.s.integration.endpoint.EventDrivenConsumer--info  -stopped bean '_org.springframework.integration.errorLogger'
+2022-04-04 16:34:56:712 INFO  96142 -- SpringApplicationShutdownHook c.a.cloud.nacos.registry.NacosServiceRegistry--deregister  -De-registering from Nacos Server now...
+2022-04-04 16:34:56:716 INFO  96142 -- SpringApplicationShutdownHook c.a.cloud.nacos.registry.NacosServiceRegistry--deregister  -De-registration finished.
+2022-04-04 16:35:03:144 INFO  96142 -- SpringApplicationShutdownHook com.alibaba.druid.pool.DruidDataSource--close  -{dataSource-1} closing ...
+2022-04-04 16:35:03:147 INFO  96142 -- SpringApplicationShutdownHook com.alibaba.druid.pool.DruidDataSource--close  -{dataSource-1} closed

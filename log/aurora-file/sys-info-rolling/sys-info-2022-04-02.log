@@ -23,8 +23,8 @@
 2022-04-02 14:38:38:162 INFO  49022 -- main org.apache.catalina.core.StandardEngine--log  -Starting Servlet engine: [Apache Tomcat/9.0.58]
 2022-04-02 14:38:38:343 INFO  49022 -- main o.a.c.core.ContainerBase.[Tomcat].[localhost].[/]--log  -Initializing Spring embedded WebApplicationContext
 2022-04-02 14:38:38:343 INFO  49022 -- main o.s.b.w.s.c.ServletWebServerApplicationContext--prepareWebApplicationContext  -Root WebApplicationContext: initialization completed in 4836 ms
-2022-04-02 14:38:55:160 ERROR 49022 -- main xyz.xcye.file.cache.RedisCache--getId  -34
-2022-04-02 14:38:55:160 ERROR 49022 -- main xyz.xcye.file.cache.RedisCache--getId  -34
+2022-04-02 14:38:55:160 ERROR 49022 -- main RedisCache--getId  -34
+2022-04-02 14:38:55:160 ERROR 49022 -- main RedisCache--getId  -34
 2022-04-02 14:38:57:963 INFO  49022 -- main o.s.b.actuate.endpoint.web.EndpointLinksResolver--<init>  -Exposing 22 endpoint(s) beneath base path '/actuator'
 2022-04-02 14:38:59:241 INFO  49022 -- main o.s.c.s.f.FunctionConfiguration$FunctionBindingRegistrar--afterPropertiesSet  -Functional binding is disabled due to the presense of @EnableBinding annotation in your configuration
 2022-04-02 14:38:59:625 INFO  49022 -- main com.alibaba.druid.pool.DruidDataSource--init  -{dataSource-1} inited
@@ -161,8 +161,8 @@ Caused by: com.rabbitmq.client.ShutdownSignalException: connection error; protoc
 2022-04-02 14:43:23:558 INFO  51864 -- main org.apache.catalina.core.StandardEngine--log  -Starting Servlet engine: [Apache Tomcat/9.0.58]
 2022-04-02 14:43:23:720 INFO  51864 -- main o.a.c.core.ContainerBase.[Tomcat].[localhost].[/]--log  -Initializing Spring embedded WebApplicationContext
 2022-04-02 14:43:23:720 INFO  51864 -- main o.s.b.w.s.c.ServletWebServerApplicationContext--prepareWebApplicationContext  -Root WebApplicationContext: initialization completed in 3770 ms
-2022-04-02 14:43:24:304 ERROR 51864 -- main xyz.xcye.file.cache.RedisCache--getId  -34
-2022-04-02 14:43:24:305 ERROR 51864 -- main xyz.xcye.file.cache.RedisCache--getId  -34
+2022-04-02 14:43:24:304 ERROR 51864 -- main RedisCache--getId  -34
+2022-04-02 14:43:24:305 ERROR 51864 -- main RedisCache--getId  -34
 2022-04-02 14:43:26:030 INFO  51864 -- main o.s.b.actuate.endpoint.web.EndpointLinksResolver--<init>  -Exposing 22 endpoint(s) beneath base path '/actuator'
 2022-04-02 14:43:27:058 INFO  51864 -- main o.s.c.s.f.FunctionConfiguration$FunctionBindingRegistrar--afterPropertiesSet  -Functional binding is disabled due to the presense of @EnableBinding annotation in your configuration
 2022-04-02 14:43:27:328 INFO  51864 -- main com.alibaba.druid.pool.DruidDataSource--init  -{dataSource-1} inited
@@ -223,8 +223,8 @@ Caused by: com.rabbitmq.client.ShutdownSignalException: connection error; protoc
 2022-04-02 14:45:04:028 INFO  52886 -- main org.apache.catalina.core.StandardEngine--log  -Starting Servlet engine: [Apache Tomcat/9.0.58]
 2022-04-02 14:45:04:198 INFO  52886 -- main o.a.c.core.ContainerBase.[Tomcat].[localhost].[/]--log  -Initializing Spring embedded WebApplicationContext
 2022-04-02 14:45:04:199 INFO  52886 -- main o.s.b.w.s.c.ServletWebServerApplicationContext--prepareWebApplicationContext  -Root WebApplicationContext: initialization completed in 4063 ms
-2022-04-02 14:45:04:877 ERROR 52886 -- main xyz.xcye.file.cache.RedisCache--getId  -34
-2022-04-02 14:45:04:877 ERROR 52886 -- main xyz.xcye.file.cache.RedisCache--getId  -34
+2022-04-02 14:45:04:877 ERROR 52886 -- main RedisCache--getId  -34
+2022-04-02 14:45:04:877 ERROR 52886 -- main RedisCache--getId  -34
 2022-04-02 14:45:06:635 INFO  52886 -- main o.s.b.actuate.endpoint.web.EndpointLinksResolver--<init>  -Exposing 22 endpoint(s) beneath base path '/actuator'
 2022-04-02 14:45:07:919 INFO  52886 -- main o.s.c.s.f.FunctionConfiguration$FunctionBindingRegistrar--afterPropertiesSet  -Functional binding is disabled due to the presense of @EnableBinding annotation in your configuration
 2022-04-02 14:45:08:212 INFO  52886 -- main com.alibaba.druid.pool.DruidDataSource--init  -{dataSource-1} inited
@@ -287,8 +287,8 @@ Caused by: com.rabbitmq.client.ShutdownSignalException: connection error; protoc
 2022-04-02 14:56:30:469 INFO  59768 -- main org.apache.catalina.core.StandardEngine--log  -Starting Servlet engine: [Apache Tomcat/9.0.58]
 2022-04-02 14:56:30:599 INFO  59768 -- main o.a.c.core.ContainerBase.[Tomcat].[localhost].[/]--log  -Initializing Spring embedded WebApplicationContext
 2022-04-02 14:56:30:600 INFO  59768 -- main o.s.b.w.s.c.ServletWebServerApplicationContext--prepareWebApplicationContext  -Root WebApplicationContext: initialization completed in 2290 ms
-2022-04-02 14:56:31:014 ERROR 59768 -- main xyz.xcye.file.cache.RedisCache--getId  -34
-2022-04-02 14:56:31:014 ERROR 59768 -- main xyz.xcye.file.cache.RedisCache--getId  -34
+2022-04-02 14:56:31:014 ERROR 59768 -- main RedisCache--getId  -34
+2022-04-02 14:56:31:014 ERROR 59768 -- main RedisCache--getId  -34
 2022-04-02 14:56:32:748 INFO  59768 -- main o.s.b.actuate.endpoint.web.EndpointLinksResolver--<init>  -Exposing 22 endpoint(s) beneath base path '/actuator'
 2022-04-02 14:56:33:735 INFO  59768 -- main o.s.c.s.f.FunctionConfiguration$FunctionBindingRegistrar--afterPropertiesSet  -Functional binding is disabled due to the presense of @EnableBinding annotation in your configuration
 2022-04-02 14:56:33:924 WARN  59768 -- Thread-60 com.alibaba.nacos.common.notify.NotifyCenter--shutdown  -[NotifyCenter] Start destroying Publisher
@@ -321,8 +321,8 @@ Caused by: com.rabbitmq.client.ShutdownSignalException: connection error; protoc
 2022-04-02 14:58:11:377 INFO  60768 -- main org.apache.catalina.core.StandardEngine--log  -Starting Servlet engine: [Apache Tomcat/9.0.58]
 2022-04-02 14:58:11:539 INFO  60768 -- main o.a.c.core.ContainerBase.[Tomcat].[localhost].[/]--log  -Initializing Spring embedded WebApplicationContext
 2022-04-02 14:58:11:539 INFO  60768 -- main o.s.b.w.s.c.ServletWebServerApplicationContext--prepareWebApplicationContext  -Root WebApplicationContext: initialization completed in 3531 ms
-2022-04-02 14:58:12:225 ERROR 60768 -- main xyz.xcye.file.cache.RedisCache--getId  -34
-2022-04-02 14:58:12:225 ERROR 60768 -- main xyz.xcye.file.cache.RedisCache--getId  -34
+2022-04-02 14:58:12:225 ERROR 60768 -- main RedisCache--getId  -34
+2022-04-02 14:58:12:225 ERROR 60768 -- main RedisCache--getId  -34
 2022-04-02 14:58:14:403 INFO  60768 -- main o.s.b.actuate.endpoint.web.EndpointLinksResolver--<init>  -Exposing 22 endpoint(s) beneath base path '/actuator'
 2022-04-02 14:58:15:526 INFO  60768 -- main o.s.c.s.f.FunctionConfiguration$FunctionBindingRegistrar--afterPropertiesSet  -Functional binding is disabled due to the presense of @EnableBinding annotation in your configuration
 2022-04-02 14:58:15:759 INFO  60768 -- main com.alibaba.druid.pool.DruidDataSource--init  -{dataSource-1} inited
@@ -385,8 +385,8 @@ Caused by: com.rabbitmq.client.ShutdownSignalException: connection error; protoc
 2022-04-02 15:16:41:730 INFO  71942 -- main org.apache.catalina.core.StandardEngine--log  -Starting Servlet engine: [Apache Tomcat/9.0.58]
 2022-04-02 15:16:41:825 INFO  71942 -- main o.a.c.core.ContainerBase.[Tomcat].[localhost].[/]--log  -Initializing Spring embedded WebApplicationContext
 2022-04-02 15:16:41:826 INFO  71942 -- main o.s.b.w.s.c.ServletWebServerApplicationContext--prepareWebApplicationContext  -Root WebApplicationContext: initialization completed in 2347 ms
-2022-04-02 15:16:42:158 ERROR 71942 -- main xyz.xcye.file.cache.RedisCache--getId  -34
-2022-04-02 15:16:42:159 ERROR 71942 -- main xyz.xcye.file.cache.RedisCache--getId  -34
+2022-04-02 15:16:42:158 ERROR 71942 -- main RedisCache--getId  -34
+2022-04-02 15:16:42:159 ERROR 71942 -- main RedisCache--getId  -34
 2022-04-02 15:16:43:361 INFO  71942 -- main o.s.b.actuate.endpoint.web.EndpointLinksResolver--<init>  -Exposing 22 endpoint(s) beneath base path '/actuator'
 2022-04-02 15:16:44:048 INFO  71942 -- main o.s.c.s.f.FunctionConfiguration$FunctionBindingRegistrar--afterPropertiesSet  -Functional binding is disabled due to the presense of @EnableBinding annotation in your configuration
 2022-04-02 15:16:44:220 INFO  71942 -- main com.alibaba.druid.pool.DruidDataSource--init  -{dataSource-1} inited
@@ -449,8 +449,8 @@ Caused by: com.rabbitmq.client.ShutdownSignalException: connection error; protoc
 2022-04-02 15:51:38:369 INFO  93014 -- main org.apache.catalina.core.StandardEngine--log  -Starting Servlet engine: [Apache Tomcat/9.0.58]
 2022-04-02 15:51:38:533 INFO  93014 -- main o.a.c.core.ContainerBase.[Tomcat].[localhost].[/]--log  -Initializing Spring embedded WebApplicationContext
 2022-04-02 15:51:38:534 INFO  93014 -- main o.s.b.w.s.c.ServletWebServerApplicationContext--prepareWebApplicationContext  -Root WebApplicationContext: initialization completed in 4016 ms
-2022-04-02 15:51:39:815 ERROR 93014 -- main xyz.xcye.file.cache.RedisCache--getId  -34
-2022-04-02 15:51:39:819 ERROR 93014 -- main xyz.xcye.file.cache.RedisCache--getId  -34
+2022-04-02 15:51:39:815 ERROR 93014 -- main RedisCache--getId  -34
+2022-04-02 15:51:39:819 ERROR 93014 -- main RedisCache--getId  -34
 2022-04-02 15:51:44:048 INFO  93014 -- main o.s.b.actuate.endpoint.web.EndpointLinksResolver--<init>  -Exposing 22 endpoint(s) beneath base path '/actuator'
 2022-04-02 15:51:45:172 INFO  93014 -- main o.s.c.s.f.FunctionConfiguration$FunctionBindingRegistrar--afterPropertiesSet  -Functional binding is disabled due to the presense of @EnableBinding annotation in your configuration
 2022-04-02 15:51:45:466 INFO  93014 -- main com.alibaba.druid.pool.DruidDataSource--init  -{dataSource-1} inited

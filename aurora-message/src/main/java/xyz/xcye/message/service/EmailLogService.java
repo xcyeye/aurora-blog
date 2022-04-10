@@ -1,9 +1,9 @@
 package xyz.xcye.message.service;
 
 import org.springframework.validation.BindException;
-import xyz.xcye.common.entity.Pagination;
+import xyz.xcye.common.dos.EmailLogDO;
+import xyz.xcye.common.dto.PaginationDTO;
 import xyz.xcye.common.entity.result.ModifyResult;
-import xyz.xcye.common.entity.table.EmailLog;
 
 import java.math.BigInteger;
 import java.util.List;
@@ -14,9 +14,9 @@ import java.util.List;
  */
 
 public interface EmailLogService {
-    ModifyResult insertEmailLog(EmailLog emailLog);
-    ModifyResult updateEmailLog(EmailLog emailLog) throws BindException;
-    ModifyResult deleteEmailLog(BigInteger uid);
-    List<EmailLog> queryAll(EmailLog emailLog, Pagination pagination);
-    EmailLog queryByUid(BigInteger uid);
+    ModifyResult insertEmailLog(EmailLogDO emailLog);
+    ModifyResult updateEmailLog(EmailLogDO emailLog) throws BindException;
+    ModifyResult deleteEmailLog(long uid);
+    List<EmailLogDO> queryAll(EmailLogDO emailLog, PaginationDTO pagination);
+    EmailLogDO queryByUid(long uid);
 }

@@ -1,0 +1,216 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="xyz.xcye.comment.dao.CommentDao">
+
+
+    <insert id="insertComment">
+        insert into au_comment
+        (uid,username,avatar,site,email,is_delete,create_time,update_time,comment_ip,operation_system_info,
+        is_show_comment,reply_comment_uid,is_email_notice,path,content,user_uid)
+
+        values (#{commentDO.uid},#{commentDO.username},#{commentDO.avatar},#{commentDO.site},#{commentDO.email}
+               ,#{commentDO.delete},#{commentDO.createTime},#{commentDO.updateTime},#{commentDO.commentIp}
+               ,#{commentDO.operationSystemInfo},#{commentDO.showComment},#{commentDO.replyCommentUid},#{commentDO.emailNotice}
+               ,#{commentDO.path},#{commentDO.content},#{commentDO.userUid})
+    </insert>
+    <update id="setCommentDeleteStatus">
+        update au_comment set is_delete=true where uid=#{uid}
+    </update>
+    <update id="updateComment">
+        update au_comment
+        <set>
+            <if test="commentDO.username != null">
+                username=#{commentDO.username},
+            </if>
+            <if test="commentDO.avatar != null">
+                avatar=#{commentDO.avatar},
+            </if>
+            <if test="commentDO.site != null">
+                site=#{commentDO.site},
+            </if>
+            <if test="commentDO.email != null">
+                email=#{commentDO.email},
+            </if>
+            <if test="commentDO.delete != null">
+                is_delete=#{commentDO.delete},
+            </if>
+            <if test="commentDO.createTime != null">
+                create_time=#{commentDO.createTime},
+            </if>
+            <if test="commentDO.updateTime != null">
+                update_time=#{commentDO.updateTime},
+            </if>
+            <if test="commentDO.commentIp != null">
+                comment_ip=#{commentDO.commentIp},
+            </if>
+            <if test="commentDO.operationSystemInfo != null">
+                operation_system_info=#{commentDO.operationSystemInfo},
+            </if>
+            <if test="commentDO.showComment != null">
+                is_show_comment=#{commentDO.showComment},
+            </if>
+            <if test="commentDO.replyCommentUid != null">
+                reply_comment_uid=#{commentDO.replyCommentUid},
+            </if>
+            <if test="commentDO.emailNotice != null">
+                is_email_notice=#{commentDO.emailNotice},
+            </if>
+            <if test="commentDO.path != null">
+                path=#{commentDO.path},
+            </if>
+            <if test="commentDO.content != null">
+                content=#{commentDO.content},
+            </if>
+            <if test="commentDO.nextCommentUidArray != null">
+                next_comment_uid_array=#{commentDO.nextCommentUidArray},
+            </if>
+
+            <if test="commentDO.userUid != null">
+                user_uid=#{commentDO.userUid}
+            </if>
+        </set>
+
+            where uid=#{commentDO.uid}
+    </update>
+
+    <delete id="deleteComment">
+        delete from au_comment where uid=#{uid}
+    </delete>
+
+    <resultMap id="commentDO" type="xyz.xcye.common.dos.CommentDO">
+        <id column="uid" property="uid"/>
+        <result property="delete" column="is_delete"/>
+        <result property="emailNotice" column="is_email_notice"/>
+        <result property="replyCommentUid" column="reply_comment_uid"/>
+        <result property="showComment" column="is_show_comment"/>
+        <result property="operationSystemInfo" column="operation_system_info"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="createTime" column="create_time"/>
+        <result property="email" column="email"/>
+        <result property="site" column="site"/>
+        <result property="content" column="content"/>
+        <result property="nextCommentUidArray" column="next_comment_uid_array"/>
+        <result property="path" column="path"/>
+        <result property="userUid" column="user_uid"/>
+    </resultMap>
+
+    <select id="queryAllComment" resultMap="commentDO">
+        select uid,username,avatar,site,email,is_delete,create_time,update_time,comment_ip,operation_system_info,
+        is_show_comment,reply_comment_uid,is_email_notice,`path`,next_comment_uid_array,user_uid
+        from au_comment
+        <where>
+            <if test="commentDO.uid != null">
+                uid like contact('%',#{commentDO.uid},'%')
+            </if>
+            <if test="commentDO.username != null">
+                and username like contact('%', #{commentDO.username},'%')
+            </if>
+            <if test="commentDO.avatar != null">
+                and avatar like contact('%', #{commentDO.avatar},'%')
+            </if>
+            <if test="commentDO.site != null">
+                and site like contact('%',  #{commentDO.site},'%')
+            </if>
+            <if test="commentDO.email != null">
+                and email like contact('%', #{commentDO.email},'%')
+            </if>
+            <if test="commentDO.delete != null">
+                and is_delete=#{commentDO.delete}
+            </if>
+            <if test="commentDO.createTime != null">
+                and create_time like contact('%', #{commentDO.createTime},'%')
+            </if>
+            <if test="commentDO.updateTime != null">
+                and update_time like contact('%', #{commentDO.updateTime},'%')
+            </if>
+            <if test="commentDO.commentIp != null">
+                and comment_ip like contact('%', #{commentDO.commentIp},'%')
+            </if>
+            <if test="commentDO.operationSystemInfo != null">
+                and operation_system_info like contact('%', #{commentDO.operationSystemInfo},'%')
+            </if>
+            <if test="commentDO.showComment != null">
+                and is_show_comment=#{commentDO.showComment}
+            </if>
+            <if test="commentDO.replyCommentUid != null">
+                and reply_comment_uid=#{commentDO.replyCommentUid}
+            </if>
+            <if test="commentDO.emailNotice != null">
+                and is_email_notice=#{commentDO.emailNotice}
+            </if>
+            <if test="commentDO.path != null">
+                and `path` like contact('%', #{commentDO.path},'%')
+            </if>
+            <if test="commentDO.content != null">
+                and `content` like contact('%', #{commentDO.content},'%')
+            </if>
+            <if test="commentDO.userUid != null">
+                and user_uid=#{commentDO.userUid}
+            </if>
+        </where>
+    </select>
+
+    <select id="querySingleByUid" resultMap="commentDO">
+        select uid,username,avatar,site,email,is_delete,create_time,update_time,comment_ip,operation_system_info,
+            is_show_comment,reply_comment_uid,is_email_notice,`path`,next_comment_uid_array,user_uid
+        from au_comment where uid=#{uid}
+    </select>
+
+    <!--<select id="queryAllCommentByCondition" resultMap="commentDO">
+        select uid,username,avatar,site,email,is_delete,create_time,update_time,comment_ip,operation_system_info,
+        is_show_comment,reply_comment_uid,is_email_notice,`path`,next_comment_uid_array,user_uid
+        from au_comment
+        <where>
+            <if test="commentDO.uid != null">
+                uid like contact('%',#{commentDO.uid},'%')
+            </if>
+            <if test="commentDO.username != null">
+                and username like contact('%', #{commentDO.username},'%')
+            </if>
+            <if test="commentDO.avatar != null">
+                and avatar like contact('%', #{commentDO.avatar},'%')
+            </if>
+            <if test="commentDO.site != null">
+                and site like contact('%',  #{commentDO.site},'%')
+            </if>
+            <if test="commentDO.email != null">
+                and email like contact('%', #{commentDO.email},'%')
+            </if>
+            <if test="commentDO.delete != null">
+                and is_delete like contact('%',  #{commentDO.delete},'%')
+            </if>
+            <if test="commentDO.createTime != null">
+                and create_time like contact('%', #{commentDO.createTime},'%')
+            </if>
+            <if test="commentDO.updateTime != null">
+                and update_time like contact('%', #{commentDO.updateTime},'%')
+            </if>
+            <if test="commentDO.commentIp != null">
+                and comment_ip like contact('%', #{commentDO.commentIp},'%')
+            </if>
+            <if test="commentDO.operationSystemInfo != null">
+                and operation_system_info like contact('%', #{commentDO.operationSystemInfo},'%')
+            </if>
+            <if test="commentDO.showComment != null">
+                and is_show_comment like contact('%', #{commentDO.showComment},'%')
+            </if>
+            <if test="commentDO.replyCommentUid != null">
+                and reply_comment like contact('%', #{commentDO.replyCommentUid},'%')
+            </if>
+            <if test="commentDO.emailNotice != null">
+                and is_email_notice like contact('%', #{commentDO.emailNotice},'%')
+            </if>
+            <if test="commentDO.path != null">
+                and `path` like contact('%', #{commentDO.path},'%')
+            </if>
+            <if test="commentDO.content != null">
+                and `content` like contact('%', #{commentDO.content},'%')
+            </if>
+            <if test="commentDO.userUid != null">
+                and user_uid=#{commentDO.userUid}
+            </if>
+        </where>
+    </select>-->
+</mapper>

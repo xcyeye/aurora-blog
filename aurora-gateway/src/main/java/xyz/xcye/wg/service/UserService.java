@@ -1,6 +1,7 @@
 package xyz.xcye.wg.service;
 
-import xyz.xcye.common.entity.table.User;
+import xyz.xcye.common.dos.UserDO;
+import xyz.xcye.wg.dto.SecurityUserDTO;
 
 /**
  * 用户service层，在网关中，只有查询用户的操作
@@ -14,5 +15,5 @@ public interface UserService {
      * @param username 用户名
      * @return usershiti
      */
-    User queryUserByUsername(String username);
+    SecurityUserDTO queryUserByUsername(String username);
 }

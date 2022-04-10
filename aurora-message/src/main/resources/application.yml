@@ -35,12 +35,19 @@ spring:
       matching-strategy: ant_path_matcher
   application:
     name: aurora-file
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: admin
+    password: 123456
+    publisher-returns: true
+    publisher-confirm-type: correlated
+    listener:
+      direct:
+        acknowledge-mode: manual
+      simple:
+        acknowledge-mode: manual
   cloud:
-    rabbitmq:
-      host: localhost
-      port: 5672
-      username: admin
-      password: 123456
     nacos:
       discovery:
         server-addr: 127.0.0.1:8848
@@ -66,6 +73,8 @@ aurora:
   pagination:
     pageNum: 1
     pageSize: 10
+  mail:
+    max-subject: 50
 
 # 分页插件
 pagehelper:

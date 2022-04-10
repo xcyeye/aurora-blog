@@ -6,8 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import xyz.xcye.common.annotaion.ResponseResult;
+import xyz.xcye.common.dos.FileDO;
 import xyz.xcye.common.entity.result.ModifyResult;
-import xyz.xcye.common.entity.table.File;
 import xyz.xcye.common.valid.Update;
 import xyz.xcye.file.service.FileService;
 
@@ -34,7 +34,7 @@ public class UpdateFileController {
     @ResponseResult
     @ApiOperation(value = "修改文件属性",notes = "只能修改文件的简介，因为其余的字段，修改没有任何意义，名字这些都是和文件本身绑定")
     @PutMapping("/update")
-    public ModifyResult updateFile(@Validated({Update.class,Default.class}) File fileInfo) {
+    public ModifyResult updateFile(@Validated({Update.class,Default.class}) FileDO fileInfo) {
         return fileService.updateFile(fileInfo);
     }
 }

@@ -4,23 +4,23 @@
 
 <mapper namespace="xyz.xcye.wg.dao.UserDao">
 
-    <resultMap id="verifyPath" type="xyz.xcye.common.entity.table.User">
+    <resultMap id="verifyPath" type="xyz.xcye.wg.dto.SecurityUserDTO">
         <result property="password" column="password" />
         <result property="username" column="username"/>
-        <result property="deleteStatus" column="delete_status"/>
+        <result property="delete" column="is_delete"/>
         <result property="noLoginDay" column="no_login_day" javaType="_int"/>
 
-        <association property="userPermission" javaType="xyz.xcye.common.entity.table.UserPermission">
+        <association property="userPermissionDO" javaType="xyz.xcye.common.dos.UserPermissionDO">
             <result property="role" column="role"/>
             <result property="permission" column="permission"/>
-            <result property="accountNonExpired" column="account-non-expired"/>
-            <result property="accountNonLocked" column="account-non-locked"/>
+            <result property="accountExpired" column="is_account-expired"/>
+            <result property="accountLocked" column="is_account-locked"/>
         </association>
     </resultMap>
 
     <select id="queryUserByUsername" resultMap="verifyPath" >
-        select role,permission,`account-non-locked`,`account-non-expired`,
-               username,`password`,no_login_day,delete_status,
+        select role,permission,`is_account-locked`,`is_account-expired`,
+               username,`password`,no_login_day,is_delete,
                is_verify_email
         FROM
             au_user as user,au_user_permission as user_permission

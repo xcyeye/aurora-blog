@@ -1,8 +1,11 @@
 package xyz.xcye.wg.aop;
 
 import lombok.extern.slf4j.Slf4j;
+import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.springframework.stereotype.Component;
+import xyz.xcye.common.util.DateUtils;
 
 /**
  * 日志切面类
@@ -29,7 +32,7 @@ public class LogAop {
 
         if (logAnnotation != null) {
             //记录日志
-            log.error(target.getClass().getSimpleName() + "  类开始执行目标方法" + targetMethod.getName() + "执行时间" + DateUtil.format(new Date()));
+            log.error(target.getClass().getSimpleName() + "  类开始执行目标方法" + targetMethod.getName() + "执行时间" + DateUtils.format(new Date()));
         }
 
         Object proceed = null;
@@ -39,7 +42,7 @@ public class LogAop {
             e.printStackTrace();
         }
 
-        log.error(target.getClass().getSimpleName() + "  类执行完目标方法" + targetMethod.getName() + "执行时间" + DateUtil.format(new Date()));
+        log.error(target.getClass().getSimpleName() + "  类执行完目标方法" + targetMethod.getName() + "执行时间" + DateUtils.format(new Date()));
 
         return proceed;
     }*/

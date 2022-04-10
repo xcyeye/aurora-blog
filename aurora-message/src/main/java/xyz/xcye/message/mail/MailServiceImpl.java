@@ -1,5 +1,6 @@
 package xyz.xcye.message.mail;
 
+import cn.hutool.extra.template.TemplateEngine;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -9,8 +10,6 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.messaging.MessagingException;
 import org.springframework.stereotype.Component;
-import org.thymeleaf.TemplateEngine;
-import org.thymeleaf.context.Context;
 
 import javax.mail.internet.MimeMessage;
 import java.io.File;
@@ -25,9 +24,6 @@ public class MailServiceImpl {
 
     @Autowired
     private JavaMailSender mailSender;
-
-    @Autowired
-    private TemplateEngine templateEngine;
 
     public void sendSimpleMail(String to, String subject, String content) {
         SimpleMailMessage message = new SimpleMailMessage();
@@ -53,10 +49,6 @@ public class MailServiceImpl {
             helper.setTo(to);
             helper.setSubject(subject);
 
-            Context context = new Context();
-            context.setVariable("message",content);
-
-            String mail = templateEngine.process("mail", context);
             helper.setText(content, true);//true代表支持html
             mailSender.send(message);
             log.info("发送HTML邮件成功");

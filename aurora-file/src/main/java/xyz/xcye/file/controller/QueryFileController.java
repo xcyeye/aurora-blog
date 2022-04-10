@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import xyz.xcye.common.annotaion.ResponseResult;
-import xyz.xcye.common.entity.Pagination;
-import xyz.xcye.common.entity.table.File;
+import xyz.xcye.common.dos.FileDO;
+import xyz.xcye.common.dto.PaginationDTO;
 import xyz.xcye.file.service.FileService;
 import java.util.List;
 
@@ -34,7 +34,7 @@ public class QueryFileController {
     @ResponseResult
     @ApiOperation(value = "查询文件数据",notes = "可以传入file对象中的属性进行筛选以及排序")
     @GetMapping("/all")
-    public List<File> queryAllFile(File file, Pagination pagination) {
+    public List<FileDO> queryAllFile(FileDO file, PaginationDTO pagination) {
         return fileService.queryAllFile(file,pagination);
     }
 }

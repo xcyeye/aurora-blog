@@ -7,9 +7,9 @@
 
     <insert id="insertEmailLog" keyProperty="uid" keyColumn="uid" useGeneratedKeys="true">
         insert  into au_email_log
-        (sender,subject,content,receiver,created_at,send_status)
+        (sender,subject,content,receiver,create_time,is_send)
         values (
-        #{emailLog.sender},#{emailLog.subject},#{emailLog.content},#{emailLog.receiver},#{emailLog.createdAt},#{emailLog.sendStatus}
+        #{emailLog.sender},#{emailLog.subject},#{emailLog.content},#{emailLog.receiver},#{emailLog.createTime},#{emailLog.send}
         )
     </insert>
 
@@ -28,7 +28,12 @@
             <if test="emailLog.receiver != null">
                 receiver=#{emailLog.receiver},
             </if>
-            send_status=#{emailLog.sendStatus}
+            <if test="emailLog.updateTime != null">
+                update_time=#{emailLog.updateTime},
+            </if>
+            <if test="emailLog.send != null">
+                is_send=#{emailLog.send},
+            </if>
         </set>
         where uid=#{emailLog.uid}
     </update>
@@ -37,8 +42,8 @@
         delete from au_email_log where uid=#{uid}
     </delete>
 
-    <select id="queryAll" resultType="xyz.xcye.common.entity.table.EmailLog">
-        select * from au_email_log
+    <select id="queryAll" resultMap="emailLogMap">
+        select uid,sender,subject,content,receiver,create_time,update_time,is_send from au_email_log
         <where>
             <if test="emailLog.sender != null">
                 sender like contact('%',#{emailLog.sender} ,'%')
@@ -53,12 +58,30 @@
                 and receiver like contact('%',#{emailLog.receiver},'%')
             </if>
             <if test="emailLog.createdAt != null">
-                and created_at like contact('%',#{emailLog.createdAt},'%')
+                and create_time like contact('%',#{emailLog.createTime},'%')
             </if>
-            and send_status=#{emailLog.sendStatus}
+            <if test="emailLog.updateTime != null">
+                and update_time like contact('%',#{emailLog.updateTime},'%')
+            </if>
+            <if test="emailLog.send != null">
+                and is_send like contact('%',#{emailLog.send},'%')
+            </if>
+
         </where>
     </select>
-    <select id="queryByUid" resultType="xyz.xcye.common.entity.table.EmailLog">
-        select * from au_email_log where uid=#{uid}
+
+    <select id="queryByUid" resultMap="emailLogMap">
+        selectuid,sender,subject,content,receiver,create_time,update_time,is_send from au_email_log where uid=#{uid}
     </select>
+
+    <resultMap id="emailLogMap" type="xyz.xcye.common.dos.EmailLogDO">
+        <id column="uid" property="uid"/>
+        <result column="sender" property="sender"/>
+        <result column="subject" property="subject"/>
+        <result column="content" property="content"/>
+        <result column="receiver" property="receiver"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="send" property="sender"/>
+    </resultMap>
 </mapper>

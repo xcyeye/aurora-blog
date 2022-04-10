@@ -13,6 +13,6 @@ import org.springframework.context.ConfigurableApplicationContext;
 @SpringBootApplication
 public class AuroraGateWayMain {
     public static void main(String[] args) {
-        ConfigurableApplicationContext applicationContext = SpringApplication.run(AuroraGateWayMain.class, args);
+        SpringApplication.run(AuroraGateWayMain.class, args);
     }
 }

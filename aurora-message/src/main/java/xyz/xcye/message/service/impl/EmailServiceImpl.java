@@ -2,22 +2,21 @@ package xyz.xcye.message.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
-import org.springframework.validation.annotation.Validated;
-import xyz.xcye.common.entity.Pagination;
+import xyz.xcye.common.dos.EmailDO;
+import xyz.xcye.common.dto.PaginationDTO;
 import xyz.xcye.common.entity.result.ModifyResult;
-import xyz.xcye.common.entity.table.Email;
-import xyz.xcye.common.entity.table.File;
-import xyz.xcye.common.util.NameUtil;
-import xyz.xcye.common.util.id.GenerateInfoUtil;
+import xyz.xcye.common.util.DateUtils;
+import xyz.xcye.common.util.id.GenerateInfoUtils;
 import xyz.xcye.message.dao.EmailDao;
 import xyz.xcye.message.service.EmailService;
 
-import javax.annotation.Resource;
 import java.math.BigInteger;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -55,64 +54,70 @@ public class EmailServiceImpl implements EmailService {
     private int defaultPageSize;
 
     @Override
-    public ModifyResult insertEmail(Email email) {
+    public ModifyResult insertEmail(EmailDO email) {
         //生成一个uid
-        long uid = GenerateInfoUtil.generateUid(workerId, datacenterId);
+        long uid = GenerateInfoUtils.generateUid(workerId, datacenterId);
 
         //其中user_uid应该在调用的此方法的时候，就已经赋值在email对象里面
-        email.setUid(new BigInteger(uid + ""));
+        email.setUid(uid);
+        email.setCreateTime(DateUtils.format(new Date()));
         int insertEmailNum = emailDao.insertEmail(email);
-
-        String msg = insertEmailNum == 1 ? "添加成功" : "添加失败";
-        return new ModifyResult(insertEmailNum,insertEmailNum == 1,msg,insertEmailNum == 1 ? email : null);
+        return ModifyResult.operateResult(insertEmailNum,"插入email数据",insertEmailNum == 1 ? email : null);
     }
 
     @Override
-    public ModifyResult deleteEmailByUid(Email email) {
-
+    public ModifyResult deleteEmailByUid(long uid) {
         //验证uid是否有效
-        if (email.getUid() == null) {
-            return new ModifyResult(0,false,"uid不能为null",null);
+        if (uid == 0) {
+            return ModifyResult.operateResult("uid: " + uid + "不是一个有效值",null,0);
         }
 
         //删除
-        int deleteEmailNum = emailDao.deleteEmailByUid(email);
-
-        String msg = deleteEmailNum == 1 ? "删除成功" : "删除失败（没有该记录或者出现了错误）";
-
-        return new ModifyResult(deleteEmailNum,deleteEmailNum == 1,msg,deleteEmailNum == 1 ? email : null);
+        int deleteEmailNum = emailDao.deleteEmailByUid(uid);
+        return ModifyResult.operateResult(deleteEmailNum,"删除" + uid + "对应的email数据",null);
     }
 
     @Override
-    public ModifyResult updateEmailByUid(Email email) {
-        //判断uid是否有效
-        if (email == null) {
-            return new ModifyResult(0,false,"uid不能为null",null);
+    public ModifyResult updateDeleteStatus(EmailDO email) {
+        //验证uid是否有效
+        if (email.getUid() == 0) {
+            return ModifyResult.operateResult("uid: " + email.getUid() + "不是一个有效值",null,0);
         }
 
-        int updateEmailByUidNum = emailDao.updateEmailByUid(email);
-
-        String msg = updateEmailByUidNum == 1 ? "修改成功" : "修改失败";
-
-        //根据uid查询修改之后的email
-        Email queryEmail = queryByUid(email.getUid()+"");
-
-        return new ModifyResult(updateEmailByUidNum,updateEmailByUidNum == 1,msg,updateEmailByUidNum == 1 ? queryEmail : null);
+        int updateDeleteStatus = emailDao.updateDeleteStatus(email);
+        return ModifyResult.operateResult(updateDeleteStatus,"修改" + email.getUid() + "对应的email数据",null);
     }
 
     @Override
-    public List<Email> queryAllEmail(Email email, Pagination pagination) {
+    public ModifyResult updateEmailByUid(EmailDO email) {
+        //判断uid是否有效
+        if (email == null) {
+            return ModifyResult.operateResult("uid: " + email.getUid() + "不是一个有效值",null,0);
+        }
+        email.setUpdateTime(DateUtils.format(new Date()));
+        int updateEmailByUidNum = emailDao.updateEmailByUid(email);
 
-        pagination = Pagination.initPagination(pagination,defaultPageNum,defaultPageSize);
+        //根据uid查询修改之后的email
+        EmailDO queryEmail = queryByUid(email.getUid());
+        return ModifyResult.operateResult(updateEmailByUidNum,"修改" + email.getUid() + "对应的email数据",updateEmailByUidNum == 1 ? queryEmail : null);
+    }
 
+    @Override
+    public List<EmailDO> queryAllEmail(EmailDO email, PaginationDTO pagination) {
+        pagination = PaginationDTO.initPagination(pagination,defaultPageNum,defaultPageSize);
         PageHelper.startPage(pagination.getPageNum(),pagination.getPageSize(),pagination.getOrderBy());
-        List<Email> emails = emailDao.queryAllEmail(email);
-        PageInfo<Email> filePageInfo = new PageInfo<>(emails);
+        List<EmailDO> emails = emailDao.queryAllEmail(email);
+        PageInfo<EmailDO> filePageInfo = new PageInfo<>(emails);
         return filePageInfo.getList();
     }
 
     @Override
-    public Email queryByUid(String uid) {
+    public EmailDO queryByUid(long uid) {
         return emailDao.queryByUid(uid);
+    }
+
+    @Override
+    public EmailDO queryByUserUid(long userUid) {
+        return emailDao.queryByUserUid(userUid);
     }
 }

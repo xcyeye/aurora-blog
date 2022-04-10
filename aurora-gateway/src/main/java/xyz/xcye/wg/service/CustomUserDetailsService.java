@@ -7,8 +7,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
-import xyz.xcye.common.entity.table.User;
+import xyz.xcye.common.dos.UserDO;
 import xyz.xcye.common.enums.ResultStatusCode;
+import xyz.xcye.wg.dto.SecurityUserDTO;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -35,7 +36,7 @@ public class CustomUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-        User user = userService.queryUserByUsername(username);
+        SecurityUserDTO user = userService.queryUserByUsername(username);
 
         if (user == null) {
             //用户不存在
@@ -45,15 +46,14 @@ public class CustomUserDetailsService implements UserDetailsService {
         List<String> grantedAuthorities = new ArrayList<>();
 
         //将从数据库中查询出来的role和权限增加到grantedAuthorities集合中
-        grantedAuthorities.add(user.getUserPermission().getRole());
-        grantedAuthorities.addAll(Arrays.asList(user.getUserPermission().getPermission().split(",")));
-
+        grantedAuthorities.add(user.getUserPermissionDO().getRole());
+        grantedAuthorities.addAll(Arrays.asList(user.getUserPermissionDO().getPermission().split(",")));
 
         //用户存在，封装UserDetails
         CustomUserDetails userDetails = new CustomUserDetails(
                 username,user.getPassword(),enable,credentialsNonExpired,
-                user.getUserPermission().isAccountNonLocked(),
-                user.getUserPermission().isAccountNonExpired(),null);
+                user.getUserPermissionDO().getAccountLocked(),
+                user.getUserPermissionDO().getAccountExpired(),null);
         //将权限集合放入userDetails对象中
         userDetails.setGrantedAuthorities(grantedAuthorities);
         return userDetails;

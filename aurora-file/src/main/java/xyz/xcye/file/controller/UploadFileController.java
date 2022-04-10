@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-import xyz.xcye.common.entity.FileEntity;
+import xyz.xcye.common.dos.FileDO;
+import xyz.xcye.common.dto.FileEntityDTO;
 import xyz.xcye.common.entity.result.ModifyResult;
-import xyz.xcye.common.entity.table.File;
 import xyz.xcye.file.service.FileService;
 
 import java.io.IOException;
@@ -39,9 +39,9 @@ public class UploadFileController {
      */
     @ApiOperation(value = "上传单个文件",notes = "可以上传任何类型，最大不能操作30M，返回上传之后的文件信息")
     @PostMapping("/single")
-    public ModifyResult singleUploadFile(@Validated File fileInfo, @RequestParam(value = "file") MultipartFile file,
+    public ModifyResult singleUploadFile(@Validated FileDO fileInfo, @RequestParam(value = "file") MultipartFile file,
                                          @RequestParam(required = false) int storageMode) throws IOException {
-        FileEntity fileEntity = new FileEntity(file.getOriginalFilename(),file.getInputStream());
+        FileEntityDTO fileEntity = new FileEntityDTO(file.getOriginalFilename(),file.getInputStream());
         return fileService.insertFile(fileEntity, fileInfo, storageMode);
     }
 
@@ -55,8 +55,8 @@ public class UploadFileController {
     public List<ModifyResult> multiUploadFile(@RequestParam(value = "files") MultipartFile[] files,@RequestParam(required = false) int storageMode) throws IOException {
         List<ModifyResult> fileList = new ArrayList<>();
         for (MultipartFile file : files) {
-            FileEntity fileEntity = new FileEntity(file.getOriginalFilename(), file.getInputStream());
-            File fileInfo = new File();
+            FileEntityDTO fileEntity = new FileEntityDTO(file.getOriginalFilename(), file.getInputStream());
+            FileDO fileInfo = new FileDO();
             ModifyResult insertedFile = fileService.insertFile(fileEntity, fileInfo, storageMode);
             fileList.add(insertedFile);
         }
@@ -70,12 +70,12 @@ public class UploadFileController {
     @ApiOperation(value = "在typora中自动上传图片",notes = "用于在typora中粘贴图片时，将图片上传到本地服务器或者某个对象存储中")
     @PostMapping("/typora")
     public String typoraUploadFile(@RequestParam(value = "file") MultipartFile file,@RequestParam(required = false) int storageMode) throws IOException {
-        FileEntity fileEntity = new FileEntity(file.getOriginalFilename(),file.getInputStream());
-        File fileInfo = new File();
+        FileEntityDTO fileEntity = new FileEntityDTO(file.getOriginalFilename(),file.getInputStream());
+        FileDO fileInfo = new FileDO();
         fileInfo.setSummary("从typora上传的文件");
         ModifyResult modifyResult = fileService.insertFile(fileEntity, fileInfo, storageMode);
         if (modifyResult.getModifiedData() != null) {
-            File insertedFile = (File) modifyResult.getModifiedData();
+            FileDO insertedFile = (FileDO) modifyResult.getModifiedData();
             return insertedFile.getPath();
         }
         return "";

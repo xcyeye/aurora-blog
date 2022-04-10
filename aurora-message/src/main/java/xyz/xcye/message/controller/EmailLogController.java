@@ -5,11 +5,9 @@ import org.springframework.validation.BindException;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import xyz.xcye.common.annotaion.ResponseResult;
-import xyz.xcye.common.entity.Pagination;
+import xyz.xcye.common.dos.EmailLogDO;
+import xyz.xcye.common.dto.PaginationDTO;
 import xyz.xcye.common.entity.result.ModifyResult;
-import xyz.xcye.common.entity.table.EmailLog;
-import xyz.xcye.common.enums.RegexEnum;
-import xyz.xcye.common.valid.Delete;
 import xyz.xcye.common.valid.Insert;
 import xyz.xcye.common.valid.Update;
 import xyz.xcye.message.service.EmailLogService;
@@ -32,30 +30,31 @@ public class EmailLogController {
 
     @ResponseResult
     @PostMapping("/insert")
-    public ModifyResult insertEmailLog(@Validated({Insert.class, Default.class}) EmailLog emailLog) {
+    public ModifyResult insertEmailLog(@Validated({Insert.class, Default.class}) EmailLogDO emailLog) {
         return emailLogService.insertEmailLog(emailLog);
     }
 
     @ResponseResult
     @PutMapping("/update")
-    public ModifyResult updateEmailLog(@Validated({Update.class}) EmailLog emailLog) throws BindException {
+    public ModifyResult updateEmailLog(@Validated({Update.class}) EmailLogDO emailLog) throws BindException {
         return emailLogService.updateEmailLog(emailLog);
     }
 
     @ResponseResult
     @DeleteMapping("/delete/{uid}")
-    public ModifyResult deleteEmailLog(@PathVariable("uid") String uid) {
-        return emailLogService.deleteEmailLog(new BigInteger(uid));
+    public ModifyResult deleteEmailLog(@PathVariable("uid") long uid) {
+        return emailLogService.deleteEmailLog(uid);
     }
 
+    @ResponseResult
     @GetMapping("/queryAll")
-    public List<EmailLog> queryAllEmailLog(EmailLog emailLog, Pagination pagination) {
+    public List<EmailLogDO> queryAllEmailLog(EmailLogDO emailLog, PaginationDTO pagination) {
         if (emailLog == null) {
-            emailLog = new EmailLog();
+            emailLog = new EmailLogDO();
         }
 
         if (pagination == null) {
-            pagination = new Pagination();
+            pagination = new PaginationDTO();
         }
 
         return emailLogService.queryAll(emailLog,pagination);

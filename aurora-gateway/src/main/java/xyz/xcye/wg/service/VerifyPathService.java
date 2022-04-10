@@ -1,6 +1,7 @@
 package xyz.xcye.wg.service;
 
-import xyz.xcye.common.entity.table.VerifyPath;
+
+import xyz.xcye.common.dos.VerifyPathDO;
 
 import java.util.List;
 
@@ -15,6 +16,6 @@ public interface VerifyPathService {
      * 返回所有的路径访问权限信息
      * @return 路径权限集合
      */
-    List<VerifyPath> queryAllVerifyPath();
+    List<VerifyPathDO> queryAllVerifyPath();
 
 }

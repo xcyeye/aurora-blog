@@ -8,21 +8,20 @@
         insert into au_email
         (uid,
         reply_comment_template,verify_account_template,notice_template,receive_comment_template,
-        email,delete_status,port,
+        email,is_delete,port,
         reply_comment_subject,verify_account_subject,receive_comment_subject,notice_subject,
-        user_uid,email_host,email_password,protocol)
+        user_uid,email_host,email_password,protocol,create_time,update_time)
 
         values (
         #{email.uid},#{email.replyCommentTemplate},#{email.verifyAccountTemplate},#{email.noticeTemplate},#{email.receiveCommentTemplate},
         #{email.email},#{email.deleteStatus},#{email.port},
         #{email.replyCommentSubject},#{email.verifyAccountSubject},#{email.receiveCommentSubject},#{email.noticeSubject}
-        ,#{email.userUid},#{email.emailHost},#{email.emailPassword},#{email.protocol}
+        ,#{email.userUid},#{email.emailHost},#{email.emailPassword},#{email.protocol},#{email.createTime},#{email.updateTime}
         )
     </insert>
 
     <update id="updateEmailByUid">
         update au_email
-
         <set>
             <if test="email.noticeSubject != null">
                 notice_subject=#{email.noticeSubject}
@@ -63,22 +62,33 @@
             <if test="email.noticeTemplate != null">
                 user_uid=#{email.userUid}
             </if>
-            ,delete_status=#{email.deleteStatus},port=#{email.port}
+            <if test="email.delete != null">
+                is_delete=#{email.delete}
+            </if>
+            <if test="email.port != null">
+                port=#{email.port}
+            </if>
+            <if test="email.updateTime != null">
+                update_time=#{email.updateTime}
+            </if>
         </set>
 
         where uid=#{email.uid}
     </update>
 
     <update id="deleteEmailByUid">
-        update au_email set delete_status=true where uid=#{email.uid}
+        delete from au_email where uid=#{uid}
+    </update>
+    <update id="updateDeleteStatus">
+        update au_email set is_delete=#{email.delete} where uid=#{email.uid}
     </update>
 
-    <select id="queryAllEmail" resultType="xyz.xcye.common.entity.table.Email">
+    <select id="queryAllEmail" resultMap="emailMap">
         select uid,
         reply_comment_template,verify_account_template,notice_template,receive_comment_template,
-        email,delete_status,port,
+        email,is_delete,port,
         reply_comment_subject,verify_account_subject,receive_comment_subject,notice_subject,
-        user_uid,email_host,protocol from au_email
+        user_uid,email_host,protocol,create_time,update_time from au_email
 
         <where>
             <if test="email.noticeSubject != null">
@@ -111,9 +121,6 @@
             <if test="email.protocol != null">
                 and protocol like contact('%',#{email.protocol},'%')
             </if>
-            <if test="email.emailPassword != null">
-                and email_password=#{email.emailPassword}
-            </if>
             <if test="email.emailHost != null">
                 and email_host like contact('%',#{email.emailHost},'%')
             </if>
@@ -123,17 +130,46 @@
             <if test="email.uid != null">
                 and uid=#{email.uid}
             </if>
-            and delete_status=#{email.deleteStatus}
+            <if test="email.delete != null">
+                and is_delete=#{email.delete}
+            </if>
         </where>
     </select>
 
-    <select id="queryByUid" resultType="xyz.xcye.common.entity.table.Email">
+    <resultMap id="emailMap" type="xyz.xcye.common.dos.EmailDO">
+        <id column="uid" property="uid"/>
+        <result column="userUid" property="userUid"/>
+        <result column="email_host" property="emailHost"/>
+        <result column="protocol" property="protocol"/>
+        <result column="reply_comment_template" property="replyCommentTemplate"/>
+        <result column="verify_Account_template" property="verifyAccountTemplate"/>
+        <result column="notice_template" property="noticeTemplate"/>
+        <result column="receive_comment_template" property="receiveCommentTemplate"/>
+        <result column="email" property="email"/>
+        <result column="is_delete" property="delete"/>
+        <result column="port" property="port"/>
+        <result column="reply_comment_subject" property="replyCommentSubject"/>
+        <result column="verify_account_subject" property="verifyAccountSubject"/>
+        <result column="receive_comment_subject" property="receiveCommentSubject"/>
+        <result column="notice_subject" property="noticeSubject"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="create_time" property="createTime"/>
+    </resultMap>
+
+    <select id="queryByUid" resultMap="emailMap">
         select uid,
-                reply_comment_template,verify_account_template,notice_template,receive_comment_template,
-                email,delete_status,port,
-                reply_comment_subject,verify_account_subject,receive_comment_subject,notice_subject,
-                user_uid,email_host,protocol
-        from au_email
+               reply_comment_template,verify_account_template,notice_template,receive_comment_template,
+               email,is_delete,port,
+               reply_comment_subject,verify_account_subject,receive_comment_subject,notice_subject,
+               user_uid,email_host,protocol,create_time,update_time from au_email
         where uid=#{uid}
+    </select>
+    <select id="queryByUserUid" resultMap="emailMap">
+        select uid,
+               reply_comment_template,verify_account_template,notice_template,receive_comment_template,
+               email,is_delete,port,
+               reply_comment_subject,verify_account_subject,receive_comment_subject,notice_subject,
+               user_uid,email_host,protocol,create_time,update_time from au_email
+        where user_uid=#{userUid}
     </select>
 </mapper>

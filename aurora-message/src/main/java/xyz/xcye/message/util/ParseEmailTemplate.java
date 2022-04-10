@@ -1,13 +1,10 @@
 package xyz.xcye.message.util;
 
-import xyz.xcye.common.entity.email.EmailCommonNotice;
-import xyz.xcye.common.entity.email.EmailVerifyAccount;
-import xyz.xcye.common.entity.table.Comment;
-import xyz.xcye.common.entity.table.Email;
-import xyz.xcye.common.util.DateUtil;
+import xyz.xcye.common.dos.CommentDO;
+import xyz.xcye.common.dos.EmailDO;
+import xyz.xcye.common.dto.EmailCommonNoticeDTO;
+import xyz.xcye.common.dto.EmailVerifyAccountDTO;
 import xyz.xcye.message.enums.EmailTemplateReplaceRegex;
-
-import java.util.Date;
 
 /**
  * 这是一个解析邮件模板的类
@@ -23,7 +20,7 @@ public class ParseEmailTemplate {
      * @param senderEmailInfo
      * @return 解析之后的邮件发送内容，包含html，content
      */
-    public static String sendCommonNoticeMail(EmailCommonNotice emailCommonNotice, Email senderEmailInfo) {
+    public static String sendCommonNoticeMail(EmailCommonNoticeDTO emailCommonNotice, EmailDO senderEmailInfo) {
         //获取通知html模板
         String noticeTemplate = senderEmailInfo.getNoticeTemplate();
 
@@ -47,7 +44,7 @@ public class ParseEmailTemplate {
      * @param senderEmailInfo
      * @return 邮件发送的content，包含html，content
      */
-    public static String sendReplyCommentMail(Comment replyingCommentInfo, Comment repliedCommentInfo, Email senderEmailInfo) {
+    public static String sendReplyCommentMail(CommentDO replyingCommentInfo, CommentDO repliedCommentInfo, EmailDO senderEmailInfo) {
         //回复评论的模板
         String replyCommentTemplate = senderEmailInfo.getReplyCommentTemplate();
 
@@ -58,7 +55,7 @@ public class ParseEmailTemplate {
         //被回复的评论的发布者
         content = content.replaceAll(EmailTemplateReplaceRegex.REPLIED_COMMENT_USERNAME,repliedCommentInfo.getUsername());
         //被回复的评论的发布时间
-        content = content.replaceAll(EmailTemplateReplaceRegex.REPLIED_COMMENT_CREATED_AT,repliedCommentInfo.getCreatedAt());
+        content = content.replaceAll(EmailTemplateReplaceRegex.REPLIED_COMMENT_CREATED_AT,repliedCommentInfo.getCreateTime());
         //被回复的评论的用户站点地址
         content = content.replaceAll(EmailTemplateReplaceRegex.REPLIED_COMMENT_USER_SITE,repliedCommentInfo.getSite());
 
@@ -69,7 +66,7 @@ public class ParseEmailTemplate {
         //回复者的站点
         content = content.replaceAll(EmailTemplateReplaceRegex.REPLYING_COMMENT_USER_SITE,replyingCommentInfo.getSite());
         //时间
-        content = content.replaceAll(EmailTemplateReplaceRegex.REPLYING_COMMENT_TIME,replyingCommentInfo.getCreatedAt());
+        content = content.replaceAll(EmailTemplateReplaceRegex.REPLYING_COMMENT_TIME,replyingCommentInfo.getCreateTime());
         //替换此评论所对应的页面地址
         content = content.replaceAll(EmailTemplateReplaceRegex.COMMENT_PATH,repliedCommentInfo.getPath());
         return content;
@@ -81,7 +78,7 @@ public class ParseEmailTemplate {
      * @param senderEmailInfo
      * @return 邮件发送的内容，包含html，content
      */
-    public static String sendReceiveCommentMail(Comment receiveCommentInfo,Email senderEmailInfo) {
+    public static String sendReceiveCommentMail(CommentDO receiveCommentInfo,EmailDO senderEmailInfo) {
         //回复评论的模板
         String receiveCommentTemplate = senderEmailInfo.getReceiveCommentTemplate();
 
@@ -90,7 +87,7 @@ public class ParseEmailTemplate {
         //被回复的评论的发布者
         content = content.replaceAll(EmailTemplateReplaceRegex.REPLIED_COMMENT_USERNAME,receiveCommentInfo.getUsername());
         //被回复的评论的发布时间
-        content = content.replaceAll(EmailTemplateReplaceRegex.REPLIED_COMMENT_CREATED_AT,receiveCommentInfo.getCreatedAt());
+        content = content.replaceAll(EmailTemplateReplaceRegex.REPLIED_COMMENT_CREATED_AT,receiveCommentInfo.getCreateTime());
         //被回复的评论的用户站点地址
         content = content.replaceAll(EmailTemplateReplaceRegex.REPLIED_COMMENT_USER_SITE,receiveCommentInfo.getSite());
         //替换此评论所对应的页面地址
@@ -104,7 +101,7 @@ public class ParseEmailTemplate {
      * @param senderEmailInfo
      * @return 邮件发送的content，html
      */
-    public static String sendVerifyAccountMail(EmailVerifyAccount verifyAccount, Email senderEmailInfo) {
+    public static String sendVerifyAccountMail(EmailVerifyAccountDTO verifyAccount, EmailDO senderEmailInfo) {
         String verifyAccountTemplate = senderEmailInfo.getVerifyAccountTemplate();
 
         //替换内容

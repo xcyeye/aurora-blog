@@ -2,8 +2,9 @@ package xyz.xcye.wg.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import xyz.xcye.common.entity.table.User;
+import xyz.xcye.common.dos.UserDO;
 import xyz.xcye.wg.dao.UserDao;
+import xyz.xcye.wg.dto.SecurityUserDTO;
 import xyz.xcye.wg.service.UserService;
 
 /**
@@ -17,7 +18,7 @@ public class UserServiceImpl implements UserService {
     private UserDao userDao;
 
     @Override
-    public User queryUserByUsername(String username) {
+    public SecurityUserDTO queryUserByUsername(String username) {
         return userDao.queryUserByUsername(username);
     }
 }

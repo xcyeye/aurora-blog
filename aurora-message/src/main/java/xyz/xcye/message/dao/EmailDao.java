@@ -2,8 +2,7 @@ package xyz.xcye.message.dao;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import xyz.xcye.common.entity.result.ModifyResult;
-import xyz.xcye.common.entity.table.Email;
+import xyz.xcye.common.dos.EmailDO;
 
 import java.util.List;
 
@@ -15,11 +14,16 @@ import java.util.List;
 @Mapper
 public interface EmailDao {
 
-    int insertEmail(@Param("email") Email email);
-    int deleteEmailByUid(@Param("email") Email email);
-    int updateEmailByUid(@Param("email") Email email);
+    int insertEmail(@Param("email") EmailDO email);
 
-    List<Email> queryAllEmail(@Param("email") Email email);
+    int deleteEmailByUid(@Param("uid") long uid);
 
-    Email queryByUid(@Param("uid") String uid);
+    int updateDeleteStatus(@Param("email") EmailDO email);
+
+    int updateEmailByUid(@Param("email") EmailDO email);
+
+    List<EmailDO> queryAllEmail(@Param("email") EmailDO email);
+
+    EmailDO queryByUid(@Param("uid") long uid);
+    EmailDO queryByUserUid(@Param("userUid") long userUid);
 }

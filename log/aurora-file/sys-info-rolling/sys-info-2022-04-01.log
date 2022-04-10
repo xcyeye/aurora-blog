@@ -1608,8 +1608,8 @@ Caused by: java.lang.NullPointerException: null
 2022-04-01 23:06:28:618 INFO  59668 -- main org.apache.catalina.core.StandardEngine--log  -Starting Servlet engine: [Apache Tomcat/9.0.58]
 2022-04-01 23:06:28:757 INFO  59668 -- main o.a.c.core.ContainerBase.[Tomcat].[localhost].[/]--log  -Initializing Spring embedded WebApplicationContext
 2022-04-01 23:06:28:757 INFO  59668 -- main o.s.b.w.s.c.ServletWebServerApplicationContext--prepareWebApplicationContext  -Root WebApplicationContext: initialization completed in 2967 ms
-2022-04-01 23:06:36:014 ERROR 59668 -- main xyz.xcye.file.cache.RedisCache--getId  -34
-2022-04-01 23:06:36:810 ERROR 59668 -- main xyz.xcye.file.cache.RedisCache--getId  -34
+2022-04-01 23:06:36:014 ERROR 59668 -- main RedisCache--getId  -34
+2022-04-01 23:06:36:810 ERROR 59668 -- main RedisCache--getId  -34
 2022-04-01 23:06:37:945 INFO  59668 -- main o.s.b.actuate.endpoint.web.EndpointLinksResolver--<init>  -Exposing 18 endpoint(s) beneath base path '/actuator'
 2022-04-01 23:06:39:135 INFO  59668 -- main com.alibaba.druid.pool.DruidDataSource--init  -{dataSource-1} inited
 2022-04-01 23:06:39:634 WARN  59668 -- main o.s.c.l.c.LoadBalancerCacheAutoConfiguration$LoadBalancerCaffeineWarnLogger--logWarning  -Spring Cloud LoadBalancer is currently working with the default cache. While this cache implementation is useful for development and tests, it's recommended to use Caffeine cache in production.You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
@@ -1620,19 +1620,19 @@ Caused by: java.lang.NullPointerException: null
 2022-04-01 23:06:45:492 INFO  59668 -- http-nio-6767-exec-1 org.springframework.web.servlet.DispatcherServlet--initServletBean  -Initializing Servlet 'dispatcherServlet'
 2022-04-01 23:06:45:496 INFO  59668 -- http-nio-6767-exec-1 org.springframework.web.servlet.DispatcherServlet--initServletBean  -Completed initialization in 4 ms
 2022-04-01 23:06:45:581 INFO  59668 -- main xyz.xcye.file.AuroraFileRun--logStarted  -Started AuroraFileRun in 40.814 seconds (JVM running for 49.86)
-2022-04-01 23:07:49:712 ERROR 59668 -- http-nio-6767-exec-1 xyz.xcye.file.cache.RedisCache--getObject  -34
-2022-04-01 23:07:51:408 ERROR 59668 -- http-nio-6767-exec-1 xyz.xcye.file.cache.RedisCache--getId  -34
+2022-04-01 23:07:49:712 ERROR 59668 -- http-nio-6767-exec-1 RedisCache--getObject  -34
+2022-04-01 23:07:51:408 ERROR 59668 -- http-nio-6767-exec-1 RedisCache--getId  -34
 2022-04-01 23:07:51:469 WARN  59668 -- http-nio-6767-exec-1 com.alibaba.druid.pool.DruidAbstractDataSource--testConnectionInternal  -discard long time none received connection. , jdbcUrl : jdbc:mysql://127.0.0.1:3306/aurora_file?characterEncoding=utf8&connectTimeout=1000&socketTimeout=3000&autoReconnect=true&useUnicode=true&useSSL=false&serverTimezone=UTC, version : 1.2.5, lastPacketReceivedIdleMillis : 72161
-2022-04-01 23:07:53:210 ERROR 59668 -- http-nio-6767-exec-1 xyz.xcye.file.cache.RedisCache--getObject  -34
-2022-04-01 23:07:54:191 ERROR 59668 -- http-nio-6767-exec-1 xyz.xcye.file.cache.RedisCache--getId  -34
-2022-04-01 23:07:55:150 ERROR 59668 -- http-nio-6767-exec-1 xyz.xcye.file.cache.RedisCache--putObject  -34
-2022-04-01 23:08:24:971 ERROR 59668 -- http-nio-6767-exec-1 xyz.xcye.file.cache.RedisCache--putObject  -34
-2022-04-01 23:08:59:722 ERROR 59668 -- http-nio-6767-exec-3 xyz.xcye.file.cache.RedisCache--getObject  -34
-2022-04-01 23:09:00:810 ERROR 59668 -- http-nio-6767-exec-3 xyz.xcye.file.cache.RedisCache--getId  -34
-2022-04-01 23:09:05:672 ERROR 59668 -- http-nio-6767-exec-3 xyz.xcye.file.cache.RedisCache--getObject  -34
-2022-04-01 23:09:06:953 ERROR 59668 -- http-nio-6767-exec-3 xyz.xcye.file.cache.RedisCache--getId  -34
-2022-04-01 23:09:31:518 ERROR 59668 -- http-nio-6767-exec-3 xyz.xcye.file.cache.RedisCache--putObject  -34
-2022-04-01 23:09:32:157 ERROR 59668 -- http-nio-6767-exec-3 xyz.xcye.file.cache.RedisCache--putObject  -34
+2022-04-01 23:07:53:210 ERROR 59668 -- http-nio-6767-exec-1 RedisCache--getObject  -34
+2022-04-01 23:07:54:191 ERROR 59668 -- http-nio-6767-exec-1 RedisCache--getId  -34
+2022-04-01 23:07:55:150 ERROR 59668 -- http-nio-6767-exec-1 RedisCache--putObject  -34
+2022-04-01 23:08:24:971 ERROR 59668 -- http-nio-6767-exec-1 RedisCache--putObject  -34
+2022-04-01 23:08:59:722 ERROR 59668 -- http-nio-6767-exec-3 RedisCache--getObject  -34
+2022-04-01 23:09:00:810 ERROR 59668 -- http-nio-6767-exec-3 RedisCache--getId  -34
+2022-04-01 23:09:05:672 ERROR 59668 -- http-nio-6767-exec-3 RedisCache--getObject  -34
+2022-04-01 23:09:06:953 ERROR 59668 -- http-nio-6767-exec-3 RedisCache--getId  -34
+2022-04-01 23:09:31:518 ERROR 59668 -- http-nio-6767-exec-3 RedisCache--putObject  -34
+2022-04-01 23:09:32:157 ERROR 59668 -- http-nio-6767-exec-3 RedisCache--putObject  -34
 2022-04-01 23:09:40:558 WARN  59668 -- Thread-67 com.alibaba.nacos.common.http.HttpClientBeanHolder--shutdown  -[HttpClientBeanHolder] Start destroying common HttpClient
 2022-04-01 23:09:40:558 WARN  59668 -- Thread-76 com.alibaba.nacos.common.notify.NotifyCenter--shutdown  -[NotifyCenter] Start destroying Publisher
 2022-04-01 23:09:40:561 WARN  59668 -- Thread-67 com.alibaba.nacos.common.http.HttpClientBeanHolder--shutdown  -[HttpClientBeanHolder] Destruction of the end

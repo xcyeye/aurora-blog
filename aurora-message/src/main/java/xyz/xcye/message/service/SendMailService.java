@@ -1,13 +1,10 @@
 package xyz.xcye.message.service;
 
-import org.springframework.mail.MailException;
-import xyz.xcye.common.entity.email.EmailCommonNotice;
-import xyz.xcye.common.entity.email.EmailVerifyAccount;
+import org.springframework.validation.BindException;
+import xyz.xcye.common.dos.CommentDO;
+import xyz.xcye.common.dto.EmailCommonNoticeDTO;
+import xyz.xcye.common.dto.EmailVerifyAccountDTO;
 import xyz.xcye.common.entity.result.ModifyResult;
-import xyz.xcye.common.entity.table.Comment;
-import xyz.xcye.common.entity.table.Email;
-import xyz.xcye.common.entity.table.EmailLog;
-import xyz.xcye.message.enums.EmailTemplateReplaceRegex;
 
 import javax.mail.MessagingException;
 import java.math.BigInteger;
@@ -23,7 +20,7 @@ public interface SendMailService {
      * @param emailCommonNotice
      * @return 解析之后的邮件发送内容，包含html，content
      */
-    ModifyResult sendCommonNoticeMail(EmailCommonNotice emailCommonNotice, BigInteger userUid,String subject) throws MessagingException;
+    ModifyResult sendCommonNoticeMail(EmailCommonNoticeDTO emailCommonNotice, long userUid, String subject) throws MessagingException;
 
     /**
      * 如果有用户回复某条评论，则会调用该解析方法进行解析，模板存放与数据库中
@@ -31,21 +28,21 @@ public interface SendMailService {
      * @param repliedCommentInfo
      * @return 邮件发送的content，包含html，content
      */
-    ModifyResult sendReplyCommentMail(Comment replyingCommentInfo, Comment repliedCommentInfo, BigInteger userUid,String subject) throws MessagingException;
+    ModifyResult sendReplyCommentMail(CommentDO replyingCommentInfo, CommentDO repliedCommentInfo, long userUid, String subject) throws MessagingException;
 
     /**
      * 如果有用户发布了评论，那么就使用该方法进行模板内容的替换
      * @param receiveCommentInfo
      * @return 邮件发送的内容，包含html，content
      */
-    ModifyResult sendReceiveCommentMail(Comment receiveCommentInfo,BigInteger userUid,String subject) throws MessagingException;
+    ModifyResult sendReceiveCommentMail(CommentDO receiveCommentInfo,long userUid,String subject) throws MessagingException, BindException;
 
     /**
      * 邮件验证url的模板解析
      * @param verifyAccount
      * @return 邮件发送的content，html
      */
-    ModifyResult sendVerifyAccountMail(EmailVerifyAccount verifyAccount, BigInteger userUid,String subject) throws MessagingException;
+    ModifyResult sendVerifyAccountMail(EmailVerifyAccountDTO verifyAccount, long userUid, String subject) throws MessagingException;
 
     /**
      * 发送简单的邮件
