@@ -7,7 +7,7 @@
 
 ![](https://img.shields.io/npm/v/vuepress-theme-aurora)![npm](https://img.shields.io/npm/dm/vuepress-theme-aurora)![](https://img.shields.io/github/stars/qsyyke/vuepress-theme-aurora?style=social)
 
-![image-20211208135404881](https://ooszy.cco.vin/img/blog-note/image-20211208135404881.png?x-oss-process=style/pictureProcess1)
+![image-20211208135404881](https://picture.xcye.xyz/image-20211208135404881.png?x-oss-process=style/pictureProcess1)
 
 ---
 
@@ -61,17 +61,17 @@ aurora demo-blog
 
 
 
-![image-20211130123037624](https://ooszy.cco.vin/img/blog-note/image-20211130123037624.png?x-oss-process=style/pictureProcess1)
+![image-20211130123037624](https://picture.xcye.xyz/image-20211130123037624.png?x-oss-process=style/pictureProcess1)
 
 
 
-![image-20211130123146954](https://ooszy.cco.vin/img/blog-note/image-20211130123146954.png?x-oss-process=style/pictureProcess1)
+![image-20211130123146954](https://picture.xcye.xyz/image-20211130123146954.png?x-oss-process=style/pictureProcess1)
 
 ### 启动
 
 > 运行成功之后，会出现一个地址，你只需要在浏览器中，输入这个地址，就可以看到下面的页面
 
-![image-20211010232918219](https://ooszy.cco.vin/img/blog-note/image-20211010232918219.png?x-oss-process=style/pictureProcess1)
+![image-20211010232918219](https://picture.xcye.xyz/image-20211010232918219.png?x-oss-process=style/pictureProcess1)
 
 
 
@@ -92,27 +92,20 @@ aurora demo-blog
 
 | QQ                                                           | 主题交流群                                                   | 微信                                                         |
 | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
-| <img src="https://ooszy.cco.vin/img/blog-note/image-20211024233620332.png?x-oss-process=style/pictureProcess1" style="zoom:33%;" /> | <img src="https://ooszy.cco.vin/img/blog-note/image-20211024233827133.png?x-oss-process=style/pictureProcess1" alt="image-20211024233827133" style="zoom:33%;" /> | <img src="https://ooszy.cco.vin/img/blog-note/image-20211024233735110.png?x-oss-process=style/pictureProcess1" alt="image-20211024233735110" style="zoom: 39%;" /> |
+| <img src="https://picture.xcye.xyz/image-20211024233620332.png?x-oss-process=style/pictureProcess1" style="zoom:33%;" /> | <img src="https://picture.xcye.xyz/image-20211024233827133.png?x-oss-process=style/pictureProcess1" alt="image-20211024233827133" style="zoom:33%;" /> | <img src="https://picture.xcye.xyz/image-20211024233735110.png?x-oss-process=style/pictureProcess1" alt="image-20211024233735110" style="zoom: 39%;" /> |
 
 
 ## 🌸渲染
 
 
 
-![image-20211208144535337](https://ooszy.cco.vin/img/blog-note/image-20211208144535337.png?x-oss-process=style/pictureProcess1)
+![image-20211208144535337](https://picture.xcye.xyz/image-20211208144535337.png?x-oss-process=style/pictureProcess1)
 
-![image-20211208144606097](https://ooszy.cco.vin/img/blog-note/image-20211208144606097.png?x-oss-process=style/pictureProcess1)
+![image-20211208144606097](https://picture.xcye.xyz/image-20211208144606097.png?x-oss-process=style/pictureProcess1)
 
-![image-20211208144639212](https://ooszy.cco.vin/img/blog-note/image-20211208144639212.png?x-oss-process=style/pictureProcess1)
+![image-20211208144639212](https://picture.xcye.xyz/image-20211208144639212.png?x-oss-process=style/pictureProcess1)
 
-![image-20211208143430263](https://ooszy.cco.vin/img/blog-note/image-20211208143430263.png?x-oss-process=style/pictureProcess1)
+![image-20211208143430263](https://picture.xcye.xyz/image-20211208143430263.png?x-oss-process=style/pictureProcess1)
 
-![image-20211208144724128](https://ooszy.cco.vin/img/blog-note/image-20211208144724128.png?x-oss-process=style/pictureProcess1)
-
-![](https://ooszy.cco.vin/img/theme/article.jpg)
-![](https://ooszy.cco.vin/img/theme/about.jpg)
-![](https://ooszy.cco.vin/img/theme/comment-theme.jpg)
-
-![](https://ooszy.cco.vin/img/theme/phoone.jpg)
-![](https://ooszy.cco.vin/img/theme/photo-theme.jpg)
+![image-20211208144724128](https://picture.xcye.xyz/image-20211208144724128.png?x-oss-process=style/pictureProcess1)
 
