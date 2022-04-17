@@ -12,7 +12,7 @@ import xyz.xcye.common.enums.RabbitMQNameEnum;
  */
 
 @Component
-public class RabbitMQQueueRegister {
+public class MessageRabbitMQQueueRegister {
 
     /**
      * 发送普通邮件通知的队列
@@ -92,6 +92,15 @@ public class RabbitMQQueueRegister {
     @Bean
     public Queue mailVerifyAccountNoticeDeadLetterQueue() {
         return new Queue(RabbitMQNameEnum.DEAD_LETTER_MAIL_VERIFY_ACCOUNT_NOTICE_QUEUE_NAME, true);
+    }
+
+    /**
+     * 注册一个生产者生产错误消息的队列
+     * @return
+     */
+    @Bean
+    public Queue mistakeMessageQueue() {
+        return new Queue(RabbitMQNameEnum.MISTAKE_MESSAGE_QUEUE,true,true,false);
     }
 
 }

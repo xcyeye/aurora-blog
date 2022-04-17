@@ -49,6 +49,9 @@
         <fastjson.version>1.2.80</fastjson.version>
         <jedis.version>3.7.1</jedis.version>
         <pagehelper.version>1.4.0</pagehelper.version>
+        <userAgentUtils.version>1.20</userAgentUtils.version>
+        <seata.version>1.4.2</seata.version>
+        <nacos-client.version>2.0.4</nacos-client.version>
     </properties>
 
     <!--统一依赖管理-->

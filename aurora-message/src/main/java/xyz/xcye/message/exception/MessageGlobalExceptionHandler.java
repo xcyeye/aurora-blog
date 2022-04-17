@@ -1,4 +1,4 @@
-package xyz.xcye.comment.exception;
+package xyz.xcye.message.exception;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -24,7 +24,7 @@ import java.util.Map;
 @Slf4j
 @RestControllerAdvice
 @Component
-public class GlobalExceptionHandler {
+public class MessageGlobalExceptionHandler {
 
     /**
      * 不知道的异常名称
@@ -34,7 +34,8 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler
     public ExceptionResultEntity result(Exception e, HttpServletRequest request) {
-        log.error("发生异常：message:{},uri:{},消息信息:{}",e.getMessage(),request.getRequestURI(),e.getStackTrace());
+        //log.error("发生异常：message:{},uri:{},消息信息:{}",e.getMessage(),request.getRequestURI(),e.getStackTrace());
+        e.printStackTrace();
         String requestURI = request.getRequestURI();
         return new ExceptionResultEntity(e.getMessage(),requestURI,ResultStatusCode.UNKNOWN.getCode());
     }
@@ -47,7 +48,8 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(BindException.class)
     public ExceptionResultEntity bing(BindException e,HttpServletRequest request) {
-        log.error("发生异常：message:{},uri:{},消息信息:{}",e.getMessage(),request.getRequestURI(),e.getStackTrace());
+        //log.error("发生异常：message:{},uri:{},消息信息:{}",e.getMessage(),request.getRequestURI(),e.getStackTrace());
+        e.printStackTrace();
         String requestURI = request.getRequestURI();
         //所有的字段验证错误信息
         List<Map<String,Object>> errorsList = new ArrayList<>();

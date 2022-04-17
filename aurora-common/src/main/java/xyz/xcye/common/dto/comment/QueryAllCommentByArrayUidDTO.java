@@ -1,4 +1,4 @@
-package xyz.xcye.comment.dto;
+package xyz.xcye.common.dto.comment;
 
 import lombok.Data;
 

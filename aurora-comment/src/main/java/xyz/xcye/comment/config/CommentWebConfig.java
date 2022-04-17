@@ -14,7 +14,7 @@ import java.util.List;
 
 @Configuration
 public class CommentWebConfig {
-    @Bean
+    @Bean(name = "commentBeanPostProcessor")
     public BeanPostProcessor springfoxHandlerProviderBeanPostProcessor() {
         return new BeanPostProcessor() {
             @Override

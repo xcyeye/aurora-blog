@@ -1,7 +1,5 @@
 package xyz.xcye.comment.manager.mq;
 
-import org.springframework.amqp.core.CustomExchange;
-import org.springframework.amqp.core.DirectExchange;
 import org.springframework.amqp.core.Exchange;
 import org.springframework.amqp.core.TopicExchange;
 import org.springframework.context.annotation.Bean;
@@ -14,7 +12,7 @@ import xyz.xcye.common.enums.RabbitMQNameEnum;
  */
 
 @Component
-public class RabbitMQExchangeRegister {
+public class CommentRabbitMQExchangeRegister {
 
     /**
      * 注册一个普通发送邮件的交换机

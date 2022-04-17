@@ -1,6 +1,29 @@
 server:
   port: 7070
 
+seata:
+  enabled: true
+  application-id: applicationName
+  tx-service-group: aurora_blog_tx_group
+  enable-auto-data-source-proxy: true
+  config:
+    type: nacos
+    nacos:
+      namespace:
+      serverAddr: 127.0.0.1:8848
+      group: SEATA_GROUP
+      username: "nacos"
+      password: "nacos"
+  registry:
+    type: nacos
+    nacos:
+      application: seata-server
+      server-addr: 127.0.0.1:8848
+      group: SEATA_GROUP
+      namespace:
+      username: "nacos"
+      password: "nacos"
+
 spring:
   mail:
     host: smtp.qq.com
@@ -34,7 +57,7 @@ spring:
     pathmatch:
       matching-strategy: ant_path_matcher
   application:
-    name: aurora-file
+    name: aurora-message
   rabbitmq:
     host: localhost
     port: 5672
@@ -47,10 +70,6 @@ spring:
         acknowledge-mode: manual
       simple:
         acknowledge-mode: manual
-  cloud:
-    nacos:
-      discovery:
-        server-addr: 127.0.0.1:8848
 
 mybatis:
   mapper-locations: classpath:mapper/**

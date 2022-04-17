@@ -24,7 +24,7 @@ import java.util.Map;
 
 @Slf4j
 @ControllerAdvice
-public class ResponseResultHandler implements ResponseBodyAdvice<Object> {
+public class CommentResponseResultHandler implements ResponseBodyAdvice<Object> {
 
     @Override
     public boolean supports(MethodParameter returnType, Class<? extends HttpMessageConverter<?>> converterType) {

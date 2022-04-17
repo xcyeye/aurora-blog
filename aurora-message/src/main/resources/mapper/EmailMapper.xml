@@ -24,49 +24,49 @@
         update au_email
         <set>
             <if test="email.noticeSubject != null">
-                notice_subject=#{email.noticeSubject}
+                notice_subject=#{email.noticeSubject},
             </if>
             <if test="email.receiveCommentSubject != null">
-                receive_comment_subject=#{email.receiveCommentSubject}
+                receive_comment_subject=#{email.receiveCommentSubject},
             </if>
             <if test="email.verifyAccountSubject != null">
-                verify_account_subject=#{email.verifyAccountSubject}
+                verify_account_subject=#{email.verifyAccountSubject},
             </if>
             <if test="email.replyCommentSubject != null">
-                reply_comment_subject=#{email.replyCommentSubject}
+                reply_comment_subject=#{email.replyCommentSubject},
             </if>
             <if test="email.email != null">
-                email=#{email.email}
+                email=#{email.email},
             </if>
             <if test="email.receiveCommentTemplate != null">
-                receive_comment_template=#{email.receiveCommentTemplate}
+                receive_comment_template=#{email.receiveCommentTemplate},
             </if>
             <if test="email.noticeTemplate != null">
-                notice_template=#{email.noticeTemplate}
+                notice_template=#{email.noticeTemplate},
             </if>
             <if test="email.verifyAccountTemplate != null">
-                verify_account_template=#{email.verifyAccountTemplate}
+                verify_account_template=#{email.verifyAccountTemplate},
             </if>
             <if test="email.replyCommentTemplate != null">
-                reply_comment_template=#{email.replyCommentTemplate}
+                reply_comment_template=#{email.replyCommentTemplate},
             </if>
             <if test="email.protocol != null">
-                protocol=#{email.protocol}
+                protocol=#{email.protocol},
             </if>
             <if test="email.emailPassword != null">
-                email_password=#{email.emailPassword}
+                email_password=#{email.emailPassword},
             </if>
             <if test="email.emailHost != null">
-                email_host=#{email.emailHost}
+                email_host=#{email.emailHost},
             </if>
             <if test="email.noticeTemplate != null">
-                user_uid=#{email.userUid}
+                user_uid=#{email.userUid},
             </if>
             <if test="email.delete != null">
-                is_delete=#{email.delete}
+                is_delete=#{email.delete},
             </if>
             <if test="email.port != null">
-                port=#{email.port}
+                port=#{email.port},
             </if>
             <if test="email.updateTime != null">
                 update_time=#{email.updateTime}

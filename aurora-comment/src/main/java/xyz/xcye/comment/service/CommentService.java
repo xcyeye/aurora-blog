@@ -1,8 +1,8 @@
 package xyz.xcye.comment.service;
 
-import org.apache.ibatis.annotations.Param;
-import xyz.xcye.comment.dto.CommentDTO;
-import xyz.xcye.comment.vo.CommentVO;
+import org.springframework.validation.BindException;
+import xyz.xcye.common.dto.comment.CommentDTO;
+import xyz.xcye.common.vo.CommentVO;
 import xyz.xcye.common.dos.CommentDO;
 import xyz.xcye.common.dto.PaginationDTO;
 import xyz.xcye.common.entity.result.ModifyResult;
@@ -19,7 +19,7 @@ public interface CommentService {
      * 插入一条评论数据，根据commentDTO对象
      * @return
      */
-    ModifyResult insertComment(CommentDO commentDO);
+    ModifyResult insertComment(CommentDO commentDO) throws BindException;
 
     /**
      * 修改此uid对应的记录的delete状态，没有真正的从数据库中删除

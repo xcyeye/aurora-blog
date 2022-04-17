@@ -1,13 +1,13 @@
 package xyz.xcye.comment.controller;
 
-import org.apache.http.protocol.RequestUserAgent;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.BindException;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import xyz.xcye.comment.dto.CommentDTO;
-import xyz.xcye.comment.dto.QueryAllCommentByArrayUidDTO;
+import xyz.xcye.common.dto.comment.CommentDTO;
+import xyz.xcye.common.dto.comment.QueryAllCommentByArrayUidDTO;
 import xyz.xcye.comment.service.CommentService;
-import xyz.xcye.comment.vo.CommentVO;
+import xyz.xcye.common.vo.CommentVO;
 import xyz.xcye.common.annotaion.ResponseResult;
 import xyz.xcye.common.dos.CommentDO;
 import xyz.xcye.common.dto.PaginationDTO;
@@ -64,7 +64,7 @@ public class CommentController {
     @ResponseResult
     @PostMapping("/insert")
     public ModifyResult insertComment(@Validated({Default.class, Insert.class}) CommentDO commentDO,
-                                      HttpServletRequest request) {
+                                      HttpServletRequest request) throws BindException {
         commentDO.setCommentIp(NetWorkUtils.getIpAddr(request));
         commentDO.setOperationSystemInfo(NetWorkUtils.getOperationInfo(request));
         return commentService.insertComment(commentDO);

@@ -102,4 +102,15 @@ public class BindingConfig {
                 .to(new TopicExchange(RabbitMQNameEnum.AURORA_SEND_EMAIL_DEAD_LETTER_EXCHANGE))
                 .with(RabbitMQNameEnum.DEAD_LETTER_MAIL_VERIFY_ACCOUNT_NOTICE_ROUTING_KEY);
     }
+
+    /**
+     * 将mistakeMessageExchange交换机和队列绑定起来
+     * @return
+     */
+    @Bean
+    public Binding mistakeMessageBinding() {
+        return BindingBuilder.bind(new Queue(RabbitMQNameEnum.MISTAKE_MESSAGE_QUEUE))
+                .to(new DirectExchange(RabbitMQNameEnum.MISTAKE_MESSAGE_EXCHANGE))
+                .with(RabbitMQNameEnum.MISTAKE_MESSAGE_ROUTING_KEY);
+    }
 }

@@ -3,10 +3,7 @@ package xyz.xcye.comment;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import xyz.xcye.comment.dto.CommentDTO;
 import xyz.xcye.comment.service.CommentService;
-import xyz.xcye.comment.vo.CommentVO;
-import xyz.xcye.common.entity.result.ModifyResult;
 
 /**
  * @author qsyyke

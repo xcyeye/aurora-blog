@@ -2,27 +2,36 @@ package xyz.xcye.comment.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import io.seata.core.context.RootContext;
+import io.seata.core.model.GlobalStatus;
+import io.seata.core.protocol.transaction.GlobalBeginRequest;
+import io.seata.spring.annotation.GlobalTransactional;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.BindException;
 import xyz.xcye.comment.dao.CommentDao;
-import xyz.xcye.comment.dto.CommentDTO;
+import xyz.xcye.comment.service.MessageLogFeignService;
+import xyz.xcye.common.dto.comment.CommentDTO;
 import xyz.xcye.comment.manager.mq.RabbitMQSendService;
 import xyz.xcye.comment.service.CommentService;
-import xyz.xcye.comment.vo.CommentVO;
+import xyz.xcye.common.vo.CommentVO;
 import xyz.xcye.common.dos.CommentDO;
 import xyz.xcye.common.dto.PaginationDTO;
 import xyz.xcye.common.entity.result.ModifyResult;
 import xyz.xcye.common.util.DateUtils;
 import xyz.xcye.common.util.id.GenerateInfoUtils;
 
+import javax.annotation.Resource;
 import java.util.*;
 
 /**
  * @author qsyyke
  */
 
+@Slf4j
 @Service
 public class CommentServiceImpl implements CommentService {
 
@@ -56,14 +65,22 @@ public class CommentServiceImpl implements CommentService {
     @Autowired
     private RabbitMQSendService rabbitMQSendService;
 
-    // TODO 这里得设置事务
+    @Resource
+    private MessageLogFeignService messageLogFeignService;
+
+    @GlobalTransactional(rollbackFor = Exception.class)
     @Override
-    public ModifyResult insertComment(CommentDO commentDO) {
+    public ModifyResult insertComment(CommentDO commentDO) throws BindException {
         // 不需要进行参数的校验，因为已经在controller中进行验证了 但是设置ip地址，得在controller中进行设置
         // 创建一个uid
         commentDO.setUid(GenerateInfoUtils.generateUid(workerId,datacenterId));
         // 设置创建的时间
         commentDO.setCreateTime(DateUtils.format(new Date()));
+
+        String xid = RootContext.getXID();
+        assert xid != null;
+        RootContext.bind(xid);
+        System.out.println(xid);
 
         // 设置删除状态
         commentDO.setDelete(false);
@@ -77,7 +94,23 @@ public class CommentServiceImpl implements CommentService {
 
         boolean isReplyCommentFlag = repliedCommentDOByUid != null;
 
-        // 使用rabbitmq发送邮件通知对方
+        // 设置email的发送状态，这里目前只能保证消息是否成功投递到rabbitmq交换机中，不能保证email是否发送成功
+        commentDO.setEmailNotice(false);
+
+        //向数据库中插入此条评论
+        int insertCommentNum = commentDao.insertComment(commentDO);
+
+        log.error("插入成功，远程调用");
+
+        messageLogFeignService.testMethod(xid);
+
+        GlobalStatus begin = GlobalStatus.Begin;
+        GlobalBeginRequest globalBeginRequest = new GlobalBeginRequest();
+
+
+        return null;
+
+        /*// 使用rabbitmq发送邮件通知对方
         if (isReplyCommentFlag) {
             rabbitMQSendService.sendReplyCommentNotice(commentDO,repliedCommentDOByUid);
         }else {
@@ -87,11 +120,10 @@ public class CommentServiceImpl implements CommentService {
             rabbitMQSendService.sendReceiveCommentNotice(commentDO);
         }
 
-        // 设置email的发送状态，这里目前只能保证消息是否成功投递到rabbitmq交换机中，不能保证email是否发送成功
+        //如果运行到这里，说明邮件发送成功，修改发送状态
         commentDO.setEmailNotice(true);
+        updateComment(commentDO);
 
-        //向数据库中插入此条评论
-        int insertCommentNum = commentDao.insertComment(commentDO);
 
         // 如果插入成功，并且是回复某条评论，则修改此被回复的评论的nextCommentUidArray值
         if (isReplyCommentFlag && insertCommentNum == 1) {
@@ -104,7 +136,7 @@ public class CommentServiceImpl implements CommentService {
         CommentDTO commentDTO = new CommentDTO();
         BeanUtils.copyProperties(commentDO,commentDTO);
 
-        return getOperateResult(insertCommentNum,"插入评论",commentDTO);
+        return getOperateResult(insertCommentNum,"插入评论",commentDTO);*/
     }
 
     @Override

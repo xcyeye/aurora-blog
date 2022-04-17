@@ -2,6 +2,7 @@ package xyz.xcye.message.config;
 
 
 import com.alibaba.druid.pool.DruidDataSource;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,7 +16,7 @@ import xyz.xcye.common.config.RedisCommonConfig;
  */
 
 @Configuration
-public class DatasourceConfig {
+public class MessageDatasourceConfig {
 
     @Value("${spring.datasource.url}")
     private String datasourceUrl;
@@ -26,7 +27,7 @@ public class DatasourceConfig {
     @Value("${spring.datasource.password}")
     private String datasourcePassword;
 
-    @Bean
+    @Bean(name = "messageDruidDataSource")
     public DruidDataSource dataSource() {
         DruidDataSource druidDataSource = new DruidDataSource();
         druidDataSource.setPassword(datasourcePassword);
@@ -35,14 +36,14 @@ public class DatasourceConfig {
         return druidDataSource;
     }
 
-    @Bean
+    @Bean(name = "messageRedisConnectionFactory")
     public RedisConnectionFactory redisConnectionFactory() {
         return new JedisConnectionFactory();
     }
 
-    @Bean
+    @Bean(name = "messageRedisTemplate")
     @SuppressWarnings("all")
-    public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory factory){
+    public RedisTemplate<String, Object> redisTemplate(@Qualifier("messageRedisConnectionFactory") RedisConnectionFactory factory){
         return RedisCommonConfig.redisTemplate(factory);
     }
 

@@ -69,7 +69,7 @@
         <dependency>
             <groupId>eu.bitwalker</groupId>
             <artifactId>UserAgentUtils</artifactId>
-            <version>1.20</version>
+            <version>${userAgentUtils.version}</version>
         </dependency>
 
     </dependencies>

@@ -1,7 +1,40 @@
 server:
   port: 7075
 
+seata:
+  enabled: true
+  application-id: applicationName
+  tx-service-group: aurora_blog_tx_group
+  enable-auto-data-source-proxy: true
+  config:
+    type: nacos
+    nacos:
+      namespace:
+      serverAddr: 127.0.0.1:8848
+      group: SEATA_GROUP
+      username: "nacos"
+      password: "nacos"
+  registry:
+    type: nacos
+    nacos:
+      application: seata-server
+      server-addr: 127.0.0.1:8848
+      group: SEATA_GROUP
+      namespace:
+      username: "nacos"
+      password: "nacos"
+
 spring:
+  mail:
+    host: smtp.qq.com
+    username: 2291308094@qq.com
+    password: uutqhjyodxtrdiea
+    protocol: smtps
+    properties.mail.smtp.port: 465
+    properties.mail.smtp.starttls.enable: true
+    properties.mail.smtp.starttlls.required: true
+    properties.mail.smtp.ssl.enable: true
+    default-encoding: utf-8
   main:
     allow-circular-references: true
   redis:
@@ -24,7 +57,7 @@ spring:
     pathmatch:
       matching-strategy: ant_path_matcher
   application:
-    name: aurora-file
+    name: aurora-comment
   rabbitmq:
     host: localhost
     port: 5672
@@ -37,10 +70,6 @@ spring:
         acknowledge-mode: manual
       simple:
         acknowledge-mode: manual
-  cloud:
-    nacos:
-      discovery:
-        server-addr: 127.0.0.1:8848
 mybatis:
   mapper-locations: classpath:mapper/**
   configuration:
@@ -69,3 +98,20 @@ pagehelper:
   reasonable: true
   supportMethodsArguments: true
   params: count=countSql
+
+logging:
+  level:
+    xyz.xcye.comment.service.MessageLogFeignService: DEBUG
+
+feign:
+  circuitbreaker:
+    enabled: true
+    group:
+      enabled: true
+  client:
+    refresh-enabled: true
+    config:
+      aurora-message-messageLog:
+#        connectTimeout: 10000
+#        readTimeout: 10000
+        loggerLevel: basic

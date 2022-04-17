@@ -14,7 +14,7 @@ import java.util.List;
 
 @Configuration
 public class MessageWebConfig {
-    @Bean
+    @Bean(name = "messageBeanPostProcessor")
     public BeanPostProcessor springfoxHandlerProviderBeanPostProcessor() {
         return new BeanPostProcessor() {
             @Override

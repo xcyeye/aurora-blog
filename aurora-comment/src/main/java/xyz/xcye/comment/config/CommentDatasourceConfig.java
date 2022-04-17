@@ -2,7 +2,9 @@ package xyz.xcye.comment.config;
 
 
 import com.alibaba.druid.pool.DruidDataSource;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
@@ -15,7 +17,7 @@ import xyz.xcye.common.config.RedisCommonConfig;
  */
 
 @Configuration
-public class DatasourceConfig {
+public class CommentDatasourceConfig {
 
     @Value("${spring.datasource.url}")
     private String datasourceUrl;
@@ -26,7 +28,8 @@ public class DatasourceConfig {
     @Value("${spring.datasource.password}")
     private String datasourcePassword;
 
-    @Bean
+    //@ConditionalOnMissingBean
+    @Bean(name = "commentDruidDataSource")
     public DruidDataSource dataSource() {
         DruidDataSource druidDataSource = new DruidDataSource();
         druidDataSource.setPassword(datasourcePassword);
@@ -35,14 +38,14 @@ public class DatasourceConfig {
         return druidDataSource;
     }
 
-    @Bean
+    @Bean(name = "commentRedisConnectionFactory")
     public RedisConnectionFactory redisConnectionFactory() {
         return new JedisConnectionFactory();
     }
 
-    @Bean
+    @Bean(name = "commentRedisTemplate")
     @SuppressWarnings("all")
-    public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory factory){
+    public RedisTemplate<String, Object> redisTemplate(@Qualifier("commentRedisConnectionFactory") RedisConnectionFactory factory){
         return RedisCommonConfig.redisTemplate(factory);
     }
 

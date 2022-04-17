@@ -42,8 +42,15 @@ public class RabbitMQNameEnum {
     public static final String DEAD_LETTER_MAIL_RECEIVE_COMMENT_NOTICE_QUEUE_NAME = "mail.receive.comment.dead.letter.queue";
     public static final String DEAD_LETTER_MAIL_RECEIVE_COMMENT_NOTICE_ROUTING_KEY = "mail.receive.comment.dead.letter.routing";
 
+    /** 生产者生产的消息不合法的队列 **/
+    public static final String MISTAKE_MESSAGE_QUEUE = "aurora.mistake.queue";
+    /** 生产者生产的消息不合法的routingKey **/
+    public static final String MISTAKE_MESSAGE_ROUTING_KEY = "aurora.mistake.routing.key";
+
     /** 发送邮件的普通交换机名称 **/
     public static final String AURORA_SEND_EMAIL_COMMON_EXCHANGE = "aurora.send.email.common.exchange";
     /** 发送邮件的死信交换机名称 **/
     public static final String AURORA_SEND_EMAIL_DEAD_LETTER_EXCHANGE = "aurora.send.email.dead.letter.exchange";
+    /** 如果生产者生产的消息不合法，那么都会被该交换机接收 **/
+    public static final String MISTAKE_MESSAGE_EXCHANGE = "aurora.send.mistake.exchange";
 }

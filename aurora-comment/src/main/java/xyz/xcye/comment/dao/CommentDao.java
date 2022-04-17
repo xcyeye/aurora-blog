@@ -2,10 +2,7 @@ package xyz.xcye.comment.dao;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import xyz.xcye.comment.dto.CommentDTO;
-import xyz.xcye.comment.vo.CommentVO;
 import xyz.xcye.common.dos.CommentDO;
-import xyz.xcye.common.entity.result.ModifyResult;
 
 import java.util.List;
 
