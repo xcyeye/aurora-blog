@@ -2,13 +2,12 @@ package xyz.xcye.common.dos;
 
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
-import xyz.xcye.common.enums.FieldLengthEnum;
+import xyz.xcye.common.constant.FieldLengthConstant;
 import xyz.xcye.common.valid.Delete;
 import xyz.xcye.common.valid.Update;
 import xyz.xcye.common.valid.validator.ValidateString;
 
 import javax.validation.constraints.NotNull;
-import java.math.BigInteger;
 
 /**
  * 数据表 au_admin_sidebar
@@ -38,14 +37,14 @@ public class AdminSidebarDO {
      * 导航的标题 不能为null
      * <p>length < 15</p>
      */
-    @ValidateString(value = "后台-导航标题",max = FieldLengthEnum.NAVIGATION_TITLE)
+    @ValidateString(value = "后台-导航标题",max = FieldLengthConstant.NAVIGATION_TITLE)
     private String title;
 
     /**
      * 导航的对应地址 不能为null
      * <p>length < 255</p>
      */
-    @ValidateString(value = "后台-导航地址",max = FieldLengthEnum.URL)
+    @ValidateString(value = "后台-导航地址",max = FieldLengthConstant.URL)
     private String path;
 
     /**
@@ -57,7 +56,7 @@ public class AdminSidebarDO {
      * 此导航的类名 用户设置图标 可以为null
      * <p>length < 70</p>
      */
-    @Length(max = FieldLengthEnum.CLASS_NAME,message = "后台-类名最大长度必须小于{max}")
+    @Length(max = FieldLengthConstant.CLASS_NAME,message = "后台-类名最大长度必须小于{max}")
     private String iconClassName;
 
     /**

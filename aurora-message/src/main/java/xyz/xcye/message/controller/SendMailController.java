@@ -1,5 +1,8 @@
 package xyz.xcye.message.controller;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindException;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,6 +24,7 @@ import java.math.BigInteger;
  * @author qsyyke
  */
 
+@Api(value = "发送邮件相关接口",tags = "发送邮件相关接口")
 @RequestMapping("/message/mail")
 @RestController
 public class SendMailController {
@@ -28,6 +32,7 @@ public class SendMailController {
     @Autowired
     private SendMailService sendMailService;
 
+    @ApiOperation(value = "发送普通通知")
     @ResponseResult
     @PostMapping("/notice")
     public ModifyResult sendCommonNotice(@RequestParam(value = "userUid") long userUid,
@@ -36,14 +41,16 @@ public class SendMailController {
         return sendMailService.sendCommonNoticeMail(emailCommonNotice,userUid,subject);
     }
 
+    @ApiOperation(value = "发送回复评论")
     @ResponseResult
     @PostMapping("/replyComment")
     public ModifyResult sendReplyCommentMail(@RequestParam("replying") CommentDO replyingCommentInfo, @RequestParam("replied") CommentDO repliedCommentInfo,
                                              @RequestParam(value = "userUid") long userUid,
-                                             @RequestParam(value = "subject",required = false) String subject) throws MessagingException {
+                                             @RequestParam(value = "subject",required = false) String subject) throws MessagingException, BindException {
         return sendMailService.sendReplyCommentMail(replyingCommentInfo,repliedCommentInfo,userUid,subject);
     }
 
+    @ApiOperation(value = "发送收到评论")
     @ResponseResult
     @PostMapping("/receiveComment")
     public ModifyResult sendReceiveCommentMail(CommentDO receiveCommentInfo,
@@ -57,6 +64,7 @@ public class SendMailController {
      * @param verifyAccount
      * @return 邮件发送的content，html
      */
+    @ApiOperation(value = "发送验证账户")
     @ResponseResult
     @PostMapping("/verifyAccount")
     public ModifyResult sendVerifyAccountMail(EmailVerifyAccountDTO verifyAccount,
@@ -69,9 +77,19 @@ public class SendMailController {
      * 发送简单的邮件
      * @return
      */
+    @ApiOperation(value = "发送普通文本")
+    @PostMapping("/simpleText")
     public ModifyResult sendSimpleMail( @RequestParam(value = "receiverEmail") String receiverEmail,
                                         @RequestParam(value = "subject") String subject,
                                         @RequestParam(value = "content") String content) throws MessagingException {
         return sendMailService.sendSimpleMail(receiverEmail,subject,content);
+    }
+
+    @ApiOperation(value = "发送自定义html")
+    @PostMapping("/customMail")
+    public ModifyResult sendCustomMail(@RequestParam("subject") String subject,
+                                       @RequestParam("content") String content,
+                                       @RequestParam("receiverEmail") String receiverEmail) throws MessagingException {
+        return sendMailService.sendCustomMail(receiverEmail,subject,content);
     }
 }

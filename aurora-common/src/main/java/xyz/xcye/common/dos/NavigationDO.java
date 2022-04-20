@@ -2,13 +2,12 @@ package xyz.xcye.common.dos;
 
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
-import xyz.xcye.common.enums.FieldLengthEnum;
+import xyz.xcye.common.constant.FieldLengthConstant;
 import xyz.xcye.common.valid.Delete;
 import xyz.xcye.common.valid.Update;
 import xyz.xcye.common.valid.validator.ValidateString;
 
 import javax.validation.constraints.NotNull;
-import java.math.BigInteger;
 
 /**
  * 数据表 au_navigation
@@ -37,14 +36,14 @@ public class NavigationDO {
      * 导航的标题 不能为null
      * <p>长度<15</p>
      */
-    @ValidateString(value = "前台导航-导航标题",max = FieldLengthEnum.NAVIGATION_TITLE)
+    @ValidateString(value = "前台导航-导航标题",max = FieldLengthConstant.NAVIGATION_TITLE)
     private String title;
 
     /**
      * 导航对应的地址 不能为null
      * <p>长度<255</p>
      */
-    @ValidateString(value = "前台导航-导航对应地址",max = FieldLengthEnum.URL)
+    @ValidateString(value = "前台导航-导航对应地址",max = FieldLengthConstant.URL)
     private String path;
 
     /**
@@ -56,7 +55,7 @@ public class NavigationDO {
      * 此导航的类名，用户设置图标
      * <p>长度<70</p>
      */
-    @Length(max = FieldLengthEnum.CLASS_NAME,message = "前台导航-导航的类名")
+    @Length(max = FieldLengthConstant.CLASS_NAME,message = "前台导航-导航的类名")
     private String iconClassName;
 
     /**

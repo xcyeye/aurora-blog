@@ -61,7 +61,7 @@ public class MessageLogDO {
     @NotNull(message = "消息投递日志的发送状态不能为null", groups={Insert.class,Update.class})
     private Boolean consumeStatus;
 
-    @NotNull(groups = {Insert.class,Update.class},message = "消息的应答状态")
+    @NotNull(groups = {Insert.class},message = "消息的应答状态")
     private Boolean ackStatus;
 
     /**

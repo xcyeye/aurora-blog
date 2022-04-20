@@ -1,6 +1,5 @@
 server:
   port: 7075
-
 seata:
   enabled: true
   application-id: applicationName
@@ -25,6 +24,7 @@ seata:
       password: "nacos"
 
 spring:
+
   mail:
     host: smtp.qq.com
     username: 2291308094@qq.com

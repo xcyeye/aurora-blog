@@ -6,17 +6,14 @@ import com.rabbitmq.client.Channel;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
-import org.springframework.amqp.rabbit.connection.CorrelationData;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.BindException;
 import xyz.xcye.common.dos.CommentDO;
 import xyz.xcye.common.dos.MessageLogDO;
 import xyz.xcye.common.entity.result.ModifyResult;
-import xyz.xcye.common.enums.RabbitMQNameEnum;
-import xyz.xcye.common.util.DateUtils;
+import xyz.xcye.common.constant.RabbitMQNameConstant;
 import xyz.xcye.common.util.ValidationUtils;
 import xyz.xcye.common.valid.Insert;
 import xyz.xcye.message.service.MessageLogService;
@@ -26,10 +23,6 @@ import javax.mail.MessagingException;
 import javax.validation.groups.Default;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 /**
  * 消费者
@@ -48,7 +41,7 @@ public class RabbitMQConsumer {
     @Autowired
     private MessageLogService messageLogService;
 
-    @RabbitListener(queues = RabbitMQNameEnum.MAIL_RECEIVE_COMMENT_NOTICE_QUEUE_NAME)
+    @RabbitListener(queues = RabbitMQNameConstant.MAIL_RECEIVE_COMMENT_NOTICE_QUEUE_NAME)
     public void receiveCommentNotice(String msgJson, Channel channel, Message message) throws MessagingException, BindException, IOException {
         log.info("消费者replyCommentNotice执行{}",msgJson);
         // 获取唯一id
@@ -81,7 +74,7 @@ public class RabbitMQConsumer {
         updateMessageLogData(correlationDataId,true,true,null);
     }
 
-    @RabbitListener(queues = RabbitMQNameEnum.MAIL_REPLY_COMMENT_NOTICE_QUEUE_NAME)
+    @RabbitListener(queues = RabbitMQNameConstant.MAIL_REPLY_COMMENT_NOTICE_QUEUE_NAME)
     public void replyCommentNotice(String msgJson, Channel channel, Message message) throws MessagingException, BindException, IOException {
         log.info("消费者replyCommentNotice执行{}",msgJson);
         CommentDO replyingCommentInfo = null;
@@ -114,13 +107,13 @@ public class RabbitMQConsumer {
         updateMessageLogData(correlationDataId,true,true,null);
     }
 
-    @RabbitListener(queues = RabbitMQNameEnum.DEAD_LETTER_MAIL_REPLY_COMMENT_NOTICE_QUEUE_NAME)
+    @RabbitListener(queues = RabbitMQNameConstant.DEAD_LETTER_MAIL_REPLY_COMMENT_NOTICE_QUEUE_NAME)
     public void deadLetterReplyCommentNotice(String msgJson,Channel channel,Message message) throws MessagingException, BindException, IOException {
         log.error("死信队列执行 {}",msgJson);
         replyCommentNotice(msgJson,channel,message);
     }
 
-    @RabbitListener(queues = RabbitMQNameEnum.DEAD_LETTER_MAIL_RECEIVE_COMMENT_NOTICE_QUEUE_NAME)
+    @RabbitListener(queues = RabbitMQNameConstant.DEAD_LETTER_MAIL_RECEIVE_COMMENT_NOTICE_QUEUE_NAME)
     public void deadLetterReceiveCommentNotice(String msgJson,Channel channel,Message message) throws MessagingException, BindException, IOException {
         log.error("死信队列执行 {}",msgJson);
         receiveCommentNotice(msgJson,channel,message);
@@ -131,7 +124,7 @@ public class RabbitMQConsumer {
      * @param msgJson
      * @param channel
      */
-    @RabbitListener(queues = RabbitMQNameEnum.MISTAKE_MESSAGE_QUEUE)
+    @RabbitListener(queues = RabbitMQNameConstant.MISTAKE_MESSAGE_QUEUE)
     public void mistakeMessageConsumer(String msgJson,Channel channel,Message message) throws IOException {
         log.error("无法消费的消息: {}",msgJson);
         channel.basicAck(message.getMessageProperties().getDeliveryTag(),false);
@@ -139,7 +132,7 @@ public class RabbitMQConsumer {
 
     private void sendMistakeMessageToExchange(String msg,Channel channel,Message message) throws IOException {
         // 任何一个出问题，都表示生产者发送的消息不合法，将此消息发送到mistakeMessageExchange交换机 因为这个消息是没有用的，所以也就不更新数据库了
-        rabbitTemplate.send(RabbitMQNameEnum.MISTAKE_MESSAGE_EXCHANGE,RabbitMQNameEnum.MISTAKE_MESSAGE_ROUTING_KEY,new Message(msg.getBytes(StandardCharsets.UTF_8)));
+        rabbitTemplate.send(RabbitMQNameConstant.MISTAKE_MESSAGE_EXCHANGE, RabbitMQNameConstant.MISTAKE_MESSAGE_ROUTING_KEY,new Message(msg.getBytes(StandardCharsets.UTF_8)));
         //在此处需要应答
         channel.basicAck(message.getMessageProperties().getDeliveryTag(),false);
     }

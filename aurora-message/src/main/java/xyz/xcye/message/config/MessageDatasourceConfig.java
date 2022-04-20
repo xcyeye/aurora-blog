@@ -27,6 +27,10 @@ public class MessageDatasourceConfig {
     @Value("${spring.datasource.password}")
     private String datasourcePassword;
 
+    /**
+     * 配置mysql数据源
+     * @return
+     */
     @Bean(name = "messageDruidDataSource")
     public DruidDataSource dataSource() {
         DruidDataSource druidDataSource = new DruidDataSource();
@@ -36,6 +40,10 @@ public class MessageDatasourceConfig {
         return druidDataSource;
     }
 
+    /**
+     * 配置redisTemplate模板
+     * @return
+     */
     @Bean(name = "messageRedisConnectionFactory")
     public RedisConnectionFactory redisConnectionFactory() {
         return new JedisConnectionFactory();

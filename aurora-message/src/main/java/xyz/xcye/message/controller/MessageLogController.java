@@ -1,6 +1,8 @@
 package xyz.xcye.message.controller;
 
 import io.seata.core.context.RootContext;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.BindException;
@@ -12,62 +14,65 @@ import xyz.xcye.common.dto.PaginationDTO;
 import xyz.xcye.common.entity.result.ModifyResult;
 import xyz.xcye.common.valid.Insert;
 import xyz.xcye.common.valid.Update;
+import xyz.xcye.message.manager.schedule.RabbitMQSchedule;
 import xyz.xcye.message.service.MessageLogService;
 import xyz.xcye.common.vo.MessageLogVO;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.groups.Default;
-import java.util.Enumeration;
 import java.util.List;
 
 /**
  * @author qsyyke
  */
 
+@Api(value = "消息中间件消费消息相关接口",tags = "消息中间件消费消息相关接口")
 @RequestMapping("/message/messageLog")
 @RestController
 public class MessageLogController {
     @Autowired
     private MessageLogService messageLogService;
 
+    @Autowired
+    private RabbitMQSchedule rabbitMQSchedule;
+
+    @ApiOperation(value = "插入新消费消息",notes = "插入新消费消息")
     @ResponseResult
     @PostMapping("/insert")
-    public ModifyResult insertMessageLog(@Validated({Insert.class,Default.class}) MessageLogDO messageLogDO, @RequestParam(value = "xid",required = false) String xid) throws BindException {
-        return messageLogService.insertMessageLog(messageLogDO,xid);
+    public ModifyResult insertMessageLog(@Validated({Insert.class,Default.class}) MessageLogDO messageLogDO) throws BindException {
+        return messageLogService.insertMessageLog(messageLogDO);
     }
 
+    @ApiOperation(value = "更新消费消息")
     @ResponseResult
     @PutMapping("/update")
     public ModifyResult updateMessageLog(@Validated(Update.class) MessageLogDO messageLogDO) throws BindException {
         return messageLogService.updateMessageLog(messageLogDO);
     }
 
+    @ApiOperation(value = "删除消费消息")
     @ResponseResult
     @DeleteMapping("/delete/{uid}")
     public ModifyResult deleteMessageLog(@PathVariable("uid") long uid) {
         return messageLogService.deleteMessageLog(uid);
     }
 
+    @ApiOperation(value = "查询所有消费消息")
     @ResponseResult
     @GetMapping("/queryAll")
     public List<MessageLogVO> queryAllMessageLog(MessageLogDO messageLogDO, PaginationDTO paginationDTO) throws InstantiationException, IllegalAccessException {
         return messageLogService.queryAllMessageLog(messageLogDO,paginationDTO);
     }
 
+    @ApiOperation(value = "根据uid查询消费消息")
     @ResponseResult
     @GetMapping("/queryByUid/{uid}")
-    public MessageLogDO queryMessageLogByUid(@PathVariable("uid") long uid) throws InstantiationException, IllegalAccessException {
-        return messageLogService.queryByUid(uid);
-    }
+    public MessageLogDO queryMessageLogByUid(@PathVariable("uid") long uid) {
 
-    @PostMapping("/seataTest")
-    public void testMethod(@RequestParam(value = "xid",required = false) String xid, HttpServletRequest request) throws BindException {
-        String transactionalXid = request.getHeader("transactionalXid");
-        if (StringUtils.hasLength(transactionalXid)) {
-            RootContext.bind(transactionalXid);
-            System.out.println("从请求中获取到的: " + transactionalXid);
+        try {
+            rabbitMQSchedule.reconsumeMQMessageTask();
+        } catch (BindException e) {
+            e.printStackTrace();
         }
-
-        String s = messageLogService.seataTest(xid);
+        return messageLogService.queryByUid(uid);
     }
 }

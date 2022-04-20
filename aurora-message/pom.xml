@@ -11,11 +11,6 @@
 
     <artifactId>aurora-message</artifactId>
 
-    <properties>
-        <maven.compiler.source>8</maven.compiler.source>
-        <maven.compiler.target>8</maven.compiler.target>
-    </properties>
-
     <dependencies>
         <!--spring boot系-->
         <dependency>
@@ -92,14 +87,13 @@
         <dependency>
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-seata</artifactId>
-            <version>${spring-alibaba-cloud.version}</version>
         </dependency>
 
-        <dependency>
+        <!--<dependency>
             <groupId>io.seata</groupId>
             <artifactId>seata-spring-boot-starter</artifactId>
             <version>${seata.version}</version>
-        </dependency>
+        </dependency>-->
 
 
 

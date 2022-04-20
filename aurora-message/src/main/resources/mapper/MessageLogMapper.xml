@@ -75,7 +75,7 @@
                 and try_count=#{messageDO.tryCount}
             </if>
             <if test="messageDO.consumeStatus != null">
-                and consumer_status=#{messageDO.consumeStatus}
+                and consume_status=#{messageDO.consumeStatus}
             </if>
             <if test="messageDO.createTime != null">
                 and create_time=#{messageDO.createTime}

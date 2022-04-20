@@ -5,7 +5,7 @@ import org.springframework.amqp.core.CustomExchange;
 import org.springframework.amqp.core.Exchange;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
-import xyz.xcye.common.enums.RabbitMQNameEnum;
+import xyz.xcye.common.constant.RabbitMQNameConstant;
 
 */
 /**
@@ -25,8 +25,8 @@ public class RabbitMQExchangeRegister {
 
     @Bean
     public Exchange mailCommonNoticeExchange() {
-        return new CustomExchange(RabbitMQNameEnum.MAIL_COMMON_NOTICE.getExchangeName(),
-                RabbitMQNameEnum.MAIL_COMMON_NOTICE.getType(),RabbitMQNameEnum.MAIL_COMMON_NOTICE.isDurable(),false);
+        return new CustomExchange(RabbitMQNameConstant.MAIL_COMMON_NOTICE.getExchangeName(),
+                RabbitMQNameConstant.MAIL_COMMON_NOTICE.getType(),RabbitMQNameConstant.MAIL_COMMON_NOTICE.isDurable(),false);
     }
 
     */
@@ -37,8 +37,8 @@ public class RabbitMQExchangeRegister {
 
     @Bean
     public Exchange mailReplyCommentNoticeExchange() {
-        return new CustomExchange(RabbitMQNameEnum.MAIL_REPLY_COMMENT_NOTICE.getExchangeName(),
-                RabbitMQNameEnum.MAIL_REPLY_COMMENT_NOTICE.getType(),RabbitMQNameEnum.MAIL_REPLY_COMMENT_NOTICE.isDurable(),false);
+        return new CustomExchange(RabbitMQNameConstant.MAIL_REPLY_COMMENT_NOTICE.getExchangeName(),
+                RabbitMQNameConstant.MAIL_REPLY_COMMENT_NOTICE.getType(),RabbitMQNameConstant.MAIL_REPLY_COMMENT_NOTICE.isDurable(),false);
     }
 
     */
@@ -49,8 +49,8 @@ public class RabbitMQExchangeRegister {
 
     @Bean
     public Exchange mailReceiveCommentNoticeExchange() {
-        return new CustomExchange(RabbitMQNameEnum.MAIL_RECEIVE_COMMENT_NOTICE.getExchangeName(),
-                RabbitMQNameEnum.MAIL_RECEIVE_COMMENT_NOTICE.getType(),RabbitMQNameEnum.MAIL_RECEIVE_COMMENT_NOTICE.isDurable(), false);
+        return new CustomExchange(RabbitMQNameConstant.MAIL_RECEIVE_COMMENT_NOTICE.getExchangeName(),
+                RabbitMQNameConstant.MAIL_RECEIVE_COMMENT_NOTICE.getType(),RabbitMQNameConstant.MAIL_RECEIVE_COMMENT_NOTICE.isDurable(), false);
     }
 
     */
@@ -61,8 +61,8 @@ public class RabbitMQExchangeRegister {
 
     @Bean
     public Exchange mailVerifyAccountNoticeExchange() {
-        return new CustomExchange(RabbitMQNameEnum.MAIL_VERIFY_ACCOUNT_NOTICE.getExchangeName(),
-                RabbitMQNameEnum.MAIL_VERIFY_ACCOUNT_NOTICE.getType(),RabbitMQNameEnum.MAIL_VERIFY_ACCOUNT_NOTICE.isDurable(), false);
+        return new CustomExchange(RabbitMQNameConstant.MAIL_VERIFY_ACCOUNT_NOTICE.getExchangeName(),
+                RabbitMQNameConstant.MAIL_VERIFY_ACCOUNT_NOTICE.getType(),RabbitMQNameConstant.MAIL_VERIFY_ACCOUNT_NOTICE.isDurable(), false);
     }
 
     */
@@ -73,8 +73,8 @@ public class RabbitMQExchangeRegister {
 
     @Bean
     public Exchange mailCommonNoticeDeadLetterExchange() {
-        return new CustomExchange(RabbitMQNameEnum.DEAD_LETTER_MAIL_COMMON_NOTICE.getExchangeName(),
-                RabbitMQNameEnum.DEAD_LETTER_MAIL_COMMON_NOTICE.getType(),RabbitMQNameEnum.DEAD_LETTER_MAIL_COMMON_NOTICE.isDurable(), false);
+        return new CustomExchange(RabbitMQNameConstant.DEAD_LETTER_MAIL_COMMON_NOTICE.getExchangeName(),
+                RabbitMQNameConstant.DEAD_LETTER_MAIL_COMMON_NOTICE.getType(),RabbitMQNameConstant.DEAD_LETTER_MAIL_COMMON_NOTICE.isDurable(), false);
     }
 
     */
@@ -85,8 +85,8 @@ public class RabbitMQExchangeRegister {
 
     @Bean
     public Exchange mailReplyCommentNoticeDeadLetterExchange() {
-        return new CustomExchange(RabbitMQNameEnum.DEAD_LETTER_MAIL_REPLY_COMMENT_NOTICE.getExchangeName(),
-                RabbitMQNameEnum.DEAD_LETTER_MAIL_REPLY_COMMENT_NOTICE.getType(),RabbitMQNameEnum.DEAD_LETTER_MAIL_REPLY_COMMENT_NOTICE.isDurable(), false);
+        return new CustomExchange(RabbitMQNameConstant.DEAD_LETTER_MAIL_REPLY_COMMENT_NOTICE.getExchangeName(),
+                RabbitMQNameConstant.DEAD_LETTER_MAIL_REPLY_COMMENT_NOTICE.getType(),RabbitMQNameConstant.DEAD_LETTER_MAIL_REPLY_COMMENT_NOTICE.isDurable(), false);
     }
 
     */
@@ -97,8 +97,8 @@ public class RabbitMQExchangeRegister {
 
     @Bean
     public Exchange mailReceiveCommentNoticeDeadLetterExchange() {
-        return new CustomExchange(RabbitMQNameEnum.DEAD_LETTER_MAIL_RECEIVE_COMMENT_NOTICE.getExchangeName(),
-                RabbitMQNameEnum.DEAD_LETTER_MAIL_RECEIVE_COMMENT_NOTICE.getType(),RabbitMQNameEnum.DEAD_LETTER_MAIL_RECEIVE_COMMENT_NOTICE.isDurable(), false);
+        return new CustomExchange(RabbitMQNameConstant.DEAD_LETTER_MAIL_RECEIVE_COMMENT_NOTICE.getExchangeName(),
+                RabbitMQNameConstant.DEAD_LETTER_MAIL_RECEIVE_COMMENT_NOTICE.getType(),RabbitMQNameConstant.DEAD_LETTER_MAIL_RECEIVE_COMMENT_NOTICE.isDurable(), false);
     }
 
     */
@@ -109,8 +109,8 @@ public class RabbitMQExchangeRegister {
 
     @Bean
     public Exchange mailVerifyAccountNoticeDeadLetterExchange() {
-        return new CustomExchange(RabbitMQNameEnum.DEAD_LETTER_MAIL_VERIFY_ACCOUNT_NOTICE.getExchangeName(),
-                RabbitMQNameEnum.DEAD_LETTER_MAIL_VERIFY_ACCOUNT_NOTICE.getType(),RabbitMQNameEnum.DEAD_LETTER_MAIL_VERIFY_ACCOUNT_NOTICE.isDurable(), false);
+        return new CustomExchange(RabbitMQNameConstant.DEAD_LETTER_MAIL_VERIFY_ACCOUNT_NOTICE.getExchangeName(),
+                RabbitMQNameConstant.DEAD_LETTER_MAIL_VERIFY_ACCOUNT_NOTICE.getType(),RabbitMQNameConstant.DEAD_LETTER_MAIL_VERIFY_ACCOUNT_NOTICE.isDurable(), false);
     }
 
 }

@@ -2,13 +2,12 @@ package xyz.xcye.common.dos;
 
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
-import xyz.xcye.common.enums.FieldLengthEnum;
+import xyz.xcye.common.constant.FieldLengthConstant;
 import xyz.xcye.common.valid.Delete;
 import xyz.xcye.common.valid.Update;
 import xyz.xcye.common.valid.validator.ValidateString;
 
 import javax.validation.constraints.NotNull;
-import java.math.BigInteger;
 
 /**
  * 数据表 au_logo_info
@@ -32,28 +31,28 @@ public class LoginInfoDO {
      * 登录地点 可以为null
      * <p>长度<255</p>
      */
-    @Length(max = FieldLengthEnum.LOGIN_LOCATION,message = "登录日志-登录地点不能超过{max}")
+    @Length(max = FieldLengthConstant.LOGIN_LOCATION,message = "登录日志-登录地点不能超过{max}")
     private String loginLocation;
 
     /**
      * 登录地点ip地址 不能为null
      * <p>长度<12</p>
      */
-    @ValidateString(value = "登录日志-登录地点的ip地址",max = FieldLengthEnum.IP)
+    @ValidateString(value = "登录日志-登录地点的ip地址",max = FieldLengthConstant.IP)
     private String loginIp;
 
     /**
      * 登录时间 不能为null
      * <p>mysql -> datetime</p>
      */
-    @ValidateString(value = "登录日志-登录时间",max = FieldLengthEnum.TIME_FORMAT)
+    @ValidateString(value = "登录日志-登录时间",max = FieldLengthConstant.TIME_FORMAT)
     private String loginTime;
 
     /**
      * 登录的操作系统信息 可以为null
      * <p>长度<200</p>
      */
-    @Length(max = FieldLengthEnum.OPERATION_INFO,message = "登录日志-操作系统信息不能超过{max}")
+    @Length(max = FieldLengthConstant.OPERATION_INFO,message = "登录日志-操作系统信息不能超过{max}")
     private String operationSystem;
 
     /**

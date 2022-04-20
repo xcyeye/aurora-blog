@@ -2,15 +2,13 @@ package xyz.xcye.common.dos;
 
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
-import xyz.xcye.common.enums.FieldLengthEnum;
+import xyz.xcye.common.constant.FieldLengthConstant;
 import xyz.xcye.common.valid.Delete;
 import xyz.xcye.common.valid.Update;
 import xyz.xcye.common.valid.validator.ValidateString;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
-import java.math.BigInteger;
-import java.util.List;
 
 /**
  * 数据库中的aurora_user表的映射
@@ -28,19 +26,19 @@ public class UserDO {
     /**
      * 用户简介
      */
-    @Length(max = FieldLengthEnum.SUMMARY,message = "用户-简介不能超过{max}")
+    @Length(max = FieldLengthConstant.SUMMARY,message = "用户-简介不能超过{max}")
     private String userSummary;
 
     /**
      * 用户昵称
      */
-    @ValidateString(value = "用户-昵称",max = FieldLengthEnum.NICKNAME)
+    @ValidateString(value = "用户-昵称",max = FieldLengthConstant.NICKNAME)
     private String nickname;
 
     /**
      * 用户性别
      */
-    @ValidateString(value = "用户-性别",max = FieldLengthEnum.GENDER)
+    @ValidateString(value = "用户-性别",max = FieldLengthConstant.GENDER)
     private Character gender;
 
     /**
@@ -61,7 +59,7 @@ public class UserDO {
     /**
      * 用户头像
      */
-    @ValidateString(value = "用户-头像地址",max = FieldLengthEnum.URL)
+    @ValidateString(value = "用户-头像地址",max = FieldLengthConstant.URL)
     private String avatar;
 
     /**
@@ -72,19 +70,19 @@ public class UserDO {
     /**
      * 密码，使用md5加密
      */
-    @ValidateString(value = "用户-密码",max = FieldLengthEnum.PASSWORD)
+    @ValidateString(value = "用户-密码",max = FieldLengthConstant.PASSWORD)
     private String password;
 
     /**
      * 用户名（和用户昵称不同，用户名唯一，昵称只要符合要求都行）
      */
-    @ValidateString(value = "用户-用户名",max = FieldLengthEnum.USERNAME)
+    @ValidateString(value = "用户-用户名",max = FieldLengthConstant.USERNAME)
     private String username;
 
     /**
      * 专业
      */
-    @Length(max = FieldLengthEnum.PROFESSION,message = "用户-专业不能超过{max}")
+    @Length(max = FieldLengthConstant.PROFESSION,message = "用户-专业不能超过{max}")
     private String profession;
 
     /**
@@ -106,7 +104,7 @@ public class UserDO {
     /**
      * 用户权限集合，可以有多个，使用,分割开
      */
-    @ValidateString(value = "用户权限集合",max = FieldLengthEnum.USER_PERMISSION)
+    @ValidateString(value = "用户权限集合",max = FieldLengthConstant.USER_PERMISSION)
     private String permission;
 
     /**

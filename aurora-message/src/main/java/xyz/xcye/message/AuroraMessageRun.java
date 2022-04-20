@@ -13,6 +13,7 @@ import springfox.documentation.oas.annotations.EnableOpenApi;
 
 @EnableOpenApi
 @EnableDiscoveryClient
+@EnableScheduling
 @SpringBootApplication
 public class AuroraMessageRun {
     public static void main(String[] args) {

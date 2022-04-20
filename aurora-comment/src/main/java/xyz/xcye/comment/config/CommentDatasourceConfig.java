@@ -28,7 +28,7 @@ public class CommentDatasourceConfig {
     @Value("${spring.datasource.password}")
     private String datasourcePassword;
 
-    //@ConditionalOnMissingBean
+    // 设置mysql数据源
     @Bean(name = "commentDruidDataSource")
     public DruidDataSource dataSource() {
         DruidDataSource druidDataSource = new DruidDataSource();
@@ -38,6 +38,10 @@ public class CommentDatasourceConfig {
         return druidDataSource;
     }
 
+    /**
+     * 设置redisTemplate模板
+     * @return
+     */
     @Bean(name = "commentRedisConnectionFactory")
     public RedisConnectionFactory redisConnectionFactory() {
         return new JedisConnectionFactory();

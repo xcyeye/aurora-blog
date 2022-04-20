@@ -13,6 +13,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.mvc.method.RequestMappingInfoHandlerMapping;
 import springfox.documentation.spring.web.plugins.WebFluxRequestHandlerProvider;
 import springfox.documentation.spring.web.plugins.WebMvcRequestHandlerProvider;
+import xyz.xcye.common.exception.CustomGlobalExceptionHandler;
+import xyz.xcye.common.manager.advice.ResponseResultHandler;
 
 import java.lang.reflect.Field;
 import java.util.List;
@@ -54,4 +56,22 @@ public class FileWebConfig {
         registry.addResourceHandler("/webjars/**")
                 .addResourceLocations("classpath:/META-INF/resources/webjars/");
     }*/
+
+    /**
+     * 自定义全局异常处理
+     * @return
+     */
+    @Bean
+    public CustomGlobalExceptionHandler customGlobalExceptionHandler() {
+        return new CustomGlobalExceptionHandler();
+    }
+
+    /**
+     * 对响应结果进行包装
+     * @return
+     */
+    @Bean
+    public ResponseResultHandler responseResultHandler() {
+        return new ResponseResultHandler();
+    }
 }

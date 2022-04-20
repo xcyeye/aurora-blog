@@ -15,6 +15,10 @@ import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import java.util.Date;
 
+/**
+ * rabbitmq相关的配置
+ * */
+
 @Component
 @Slf4j
 public class RabbitMQConfig implements RabbitTemplate.ConfirmCallback,RabbitTemplate.ReturnsCallback {
@@ -22,6 +26,15 @@ public class RabbitMQConfig implements RabbitTemplate.ConfirmCallback,RabbitTemp
     @Resource
     private MessageLogFeignService messageLogFeignService;
 
+    @Autowired
+    RabbitTemplate rabbitTemplate;
+
+    /**
+     * 设置消息确认
+     * @param correlationData
+     * @param ack
+     * @param cause
+     */
     @Override
     public void confirm(CorrelationData correlationData, boolean ack, String cause) {
         if (ack) {
@@ -81,14 +94,21 @@ public class RabbitMQConfig implements RabbitTemplate.ConfirmCallback,RabbitTemp
 
     }
 
-    @Autowired
-    RabbitTemplate rabbitTemplate;
-
+    /**
+     * 初始化rabbitmqTemplate
+     */
     @PostConstruct
     public void init() {
         rabbitTemplate.setConfirmCallback(this);
     }
 
+    /**
+     * 从数据库中获取mq消息
+     * @param correlationDataId
+     * @return
+     * @throws InstantiationException
+     * @throws IllegalAccessException
+     */
     private MessageLogDO getMessageLogFromDb(String correlationDataId) throws InstantiationException, IllegalAccessException {
         if (correlationDataId == null) {
             return null;

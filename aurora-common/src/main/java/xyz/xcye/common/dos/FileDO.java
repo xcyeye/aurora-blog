@@ -6,13 +6,12 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
-import xyz.xcye.common.enums.FieldLengthEnum;
+import xyz.xcye.common.constant.FieldLengthConstant;
 import xyz.xcye.common.valid.Delete;
 import xyz.xcye.common.valid.Update;
 
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.math.BigInteger;
 
 /**
  * 数据表 au_file
@@ -39,7 +38,7 @@ public class FileDO implements Serializable {
      * <p>mysql -> datetime</p>
      */
     @ApiModelProperty(value = "创建时间")
-    //@ValidateString(value = "文件-创建的时间",max = FieldLengthEnum.TIME_FORMAT)
+    //@ValidateString(value = "文件-创建的时间",max = FieldLengthConstant.TIME_FORMAT)
     private String createTime;
 
     /**
@@ -53,7 +52,7 @@ public class FileDO implements Serializable {
      * <p>length < 120</p>
      */
     @ApiModelProperty(value = "文件名称")
-    //@ValidateString(value = "文件-名称",max = FieldLengthEnum.FILE_NAME)
+    //@ValidateString(value = "文件-名称",max = FieldLengthConstant.FILE_NAME)
     private String fileName;
 
     /**
@@ -74,14 +73,14 @@ public class FileDO implements Serializable {
      * <p>length < 500</p>
      */
     @ApiModelProperty(value = "文件简介")
-    @Length(max = FieldLengthEnum.SUMMARY,message = "文件-简介不能超过{max}")
+    @Length(max = FieldLengthConstant.SUMMARY,message = "文件-简介不能超过{max}")
     private String summary;
 
     /**
      * 此文件的访问路径
      */
     @ApiModelProperty(value = "文件路径")
-    @Length(max = FieldLengthEnum.FILE_PATH,message = "文件的访问路径长度不能超过{max}")
+    @Length(max = FieldLengthConstant.FILE_PATH,message = "文件的访问路径长度不能超过{max}")
     private String path;
 
     /**
@@ -93,6 +92,6 @@ public class FileDO implements Serializable {
     /**
      * 此文件的存储位置
      */
-    @Length(message = "文件存储路径长度不能超过{max}",max = FieldLengthEnum.FILE_PATH)
+    @Length(message = "文件存储路径长度不能超过{max}",max = FieldLengthConstant.FILE_PATH)
     private String storagePath;
 }

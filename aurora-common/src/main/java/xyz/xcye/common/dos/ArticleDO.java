@@ -2,14 +2,13 @@ package xyz.xcye.common.dos;
 
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
-import xyz.xcye.common.enums.FieldLengthEnum;
+import xyz.xcye.common.constant.FieldLengthConstant;
 import xyz.xcye.common.valid.Delete;
 import xyz.xcye.common.valid.Update;
 import xyz.xcye.common.valid.validator.ValidateString;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
-import java.math.BigInteger;
 
 /**
  * 数据表 au_article
@@ -33,21 +32,21 @@ public class ArticleDO {
      * 文章中如果有附件的话，存放附件集合 可以为null
      * <p>length < 255</p>
      */
-    @Length(max = FieldLengthEnum.STRING_ARRAY,message = "文章-附件下载集合长度必须小于{max}")
+    @Length(max = FieldLengthConstant.STRING_ARRAY,message = "文章-附件下载集合长度必须小于{max}")
     private String downloadFileArr;
 
     /**
      * 文章类别的uid集合 可以为null
      * <p>length < 255</p>
      */
-    @Length(max = FieldLengthEnum.STRING_ARRAY,message = "文章-类别集合长度必须小于{max}")
+    @Length(max = FieldLengthConstant.STRING_ARRAY,message = "文章-类别集合长度必须小于{max}")
     private String categoryArr;
 
     /**
      * 文章的标签uid集合 可以为null
      * <p>length < 255</p>
      */
-    @Length(max = FieldLengthEnum.STRING_ARRAY,message = "文章-标签集合长度必须小于{max}")
+    @Length(max = FieldLengthConstant.STRING_ARRAY,message = "文章-标签集合长度必须小于{max}")
     private String tagArr;
 
     /**
@@ -69,35 +68,35 @@ public class ArticleDO {
      * 如果不是原创的话 该篇文章的真是地址
      * <p>length < 255</p>
      */
-    @Length(max = FieldLengthEnum.URL,message = "文章-路径长度必须小于{max}")
+    @Length(max = FieldLengthConstant.URL,message = "文章-路径长度必须小于{max}")
     private String originalArticleUrl;
 
     /**
      * 该篇文章对应的评论uid集合 可以为null
      * <p>mysql -> text</p>
      */
-    @Length(max = FieldLengthEnum.STRING_ARRAY,message = "文章-对应评论集合")
+    @Length(max = FieldLengthConstant.STRING_ARRAY,message = "文章-对应评论集合")
     private String commentArr;
 
     /**
      * 最后修改时间，不能为null
      * <p>mysql -> datetime</p>
      */
-    @ValidateString(max = FieldLengthEnum.TIME_FORMAT,value = "文章-最后更新时间")
+    @ValidateString(max = FieldLengthConstant.TIME_FORMAT,value = "文章-最后更新时间")
     private String updateTime;
 
     /**
      * 文章发布时间 不能为null
      * <p>mysql -> datetime</p>
      */
-    @ValidateString(value = "文章-创建时间",max = FieldLengthEnum.TIME_FORMAT)
+    @ValidateString(value = "文章-创建时间",max = FieldLengthConstant.TIME_FORMAT)
     private String createTime;
 
     /**
      * 文章的内容 不能为null
      * <p>mysql -> longtext</p>
      */
-    @ValidateString(value = "文章-内容",max = FieldLengthEnum.CONTENT)
+    @ValidateString(value = "文章-内容",max = FieldLengthConstant.CONTENT)
     private String content;
 
     /**
@@ -110,14 +109,14 @@ public class ArticleDO {
      * 文章的标题 不能为null
      * <p>length < 100</p>
      */
-    @ValidateString(value = "文章-标题",max = FieldLengthEnum.TITLE)
+    @ValidateString(value = "文章-标题",max = FieldLengthConstant.TITLE)
     private String title;
 
     /**
      * 文章的简介 可以为null
      * <p>length < 500</p>
      */
-    @Length(max = FieldLengthEnum.SUMMARY,message = "文章-简介必须小于等于{max}")
+    @Length(max = FieldLengthConstant.SUMMARY,message = "文章-简介必须小于等于{max}")
     private String summary;
 
     /**
@@ -129,7 +128,7 @@ public class ArticleDO {
      * 如果是定时发布的话，定时发布的时间 可以为null
      * <p>mysql -> datetime</p>
      */
-    @Length(message = "文章-定时发布时间，只能是未来",max = FieldLengthEnum.TIME_FORMAT)
+    @Length(message = "文章-定时发布时间，只能是未来",max = FieldLengthConstant.TIME_FORMAT)
     private String timingPublish;
 
     /**
@@ -141,6 +140,6 @@ public class ArticleDO {
      * 文章的封面url 不可以为null
      * <p>length < 255</p>
      */
-    @ValidateString(value = "文章-封面图",max = FieldLengthEnum.URL)
+    @ValidateString(value = "文章-封面图",max = FieldLengthConstant.URL)
     private String coverPicture;
 }

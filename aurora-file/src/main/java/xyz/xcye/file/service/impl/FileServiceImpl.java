@@ -14,15 +14,13 @@ import xyz.xcye.file.interfaces.FileStorageService;
 import xyz.xcye.file.interfaces.impl.LocalFileStorageServiceImpl;
 import xyz.xcye.common.dto.PaginationDTO;
 import xyz.xcye.common.entity.result.ModifyResult;
-import xyz.xcye.common.enums.FileStorageModeEnum;
+import xyz.xcye.common.constant.FileStorageModeConstant;
 import xyz.xcye.common.enums.ResultStatusCode;
-import xyz.xcye.common.util.NameUtils;
 import xyz.xcye.common.util.id.GenerateInfoUtils;
 import xyz.xcye.common.dto.FileEntityDTO;
 import xyz.xcye.file.service.FileService;
 
 import java.io.IOException;
-import java.math.BigInteger;
 import java.util.Date;
 import java.util.List;
 
@@ -160,7 +158,7 @@ public class FileServiceImpl implements FileService {
 
         FileStorageService fileStorageService = null;
         //查看文件的存储方式
-        if (storageMode == FileStorageModeEnum.LOCAL_STORAGE) {
+        if (storageMode == FileStorageModeConstant.LOCAL_STORAGE) {
             //本地存储
             fileStorageService = localStorageService;
         }

@@ -1,32 +1,25 @@
 package xyz.xcye.admin.config;
 
 import org.springframework.beans.BeansException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.util.ReflectionUtils;
-import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.mvc.method.RequestMappingInfoHandlerMapping;
 import springfox.documentation.spring.web.plugins.WebFluxRequestHandlerProvider;
 import springfox.documentation.spring.web.plugins.WebMvcRequestHandlerProvider;
-import xyz.xcye.admin.filter.CustomGlobalFilter;
+import xyz.xcye.common.exception.CustomGlobalExceptionHandler;
+import xyz.xcye.common.manager.advice.ResponseResultHandler;
 
 import java.lang.reflect.Field;
 import java.util.List;
 
 /**
- * @author qsyyke
+ * 配置swagger
  */
-
 @Configuration
-public class AdminWebConfig implements WebMvcConfigurer {
-
-    @Autowired
-    private CustomGlobalFilter globalFilter;
-
-    @Bean
+public class AdminWebConfig {
+    @Bean(name = "commentBeanPostProcessor")
     public BeanPostProcessor springfoxHandlerProviderBeanPostProcessor() {
         return new BeanPostProcessor() {
             @Override
@@ -49,11 +42,21 @@ public class AdminWebConfig implements WebMvcConfigurer {
         };
     }
 
-    //配置拦截器
+    /**
+     * 自定义全局异常处理
+     * @return
+     */
+    @Bean(name = "adminCustomGlobalExceptionHandler")
+    public CustomGlobalExceptionHandler customGlobalExceptionHandler() {
+        return new CustomGlobalExceptionHandler();
+    }
 
-    @Override
-    public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(globalFilter)
-                .addPathPatterns("/**");
+    /**
+     * 对响应结果进行包装
+     * @return
+     */
+    @Bean(name = "adminResponseResultHandler")
+    public ResponseResultHandler responseResultHandler() {
+        return new ResponseResultHandler();
     }
 }

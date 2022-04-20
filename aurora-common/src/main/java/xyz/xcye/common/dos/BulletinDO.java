@@ -1,16 +1,14 @@
 package xyz.xcye.common.dos;
 
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import lombok.Data;
 
 import org.hibernate.validator.constraints.Length;
-import xyz.xcye.common.enums.FieldLengthEnum;
+import xyz.xcye.common.constant.FieldLengthConstant;
 import xyz.xcye.common.valid.Delete;
 import xyz.xcye.common.valid.Update;
 import xyz.xcye.common.valid.validator.ValidateString;
 
 import javax.validation.constraints.NotNull;
-import java.math.BigInteger;
 
 /**
  * 数据表 au_bulletin
@@ -29,21 +27,21 @@ public class BulletinDO {
      * 公告标题 可以为null
      * <p>length < 100</p>
      */
-    @Length(max = FieldLengthEnum.TITLE,message = "公告-标题最大长度为{max}")
+    @Length(max = FieldLengthConstant.TITLE,message = "公告-标题最大长度为{max}")
     private String title;
 
     /**
      * 公告内容 不能为null
      * <p>mysql -> longtext</p>
      */
-    @ValidateString(value = "公告-内容",max = FieldLengthEnum.CONTENT)
+    @ValidateString(value = "公告-内容",max = FieldLengthConstant.CONTENT)
     private String content;
 
     /**
      * 公告创建时间 不能为null
      * <p>mysql -> datetime</p>
      */
-    @ValidateString(value = "公告-创建时间",max = FieldLengthEnum.TIME_FORMAT)
+    @ValidateString(value = "公告-创建时间",max = FieldLengthConstant.TIME_FORMAT)
     private String createTime;
 
     /**
@@ -76,7 +74,7 @@ public class BulletinDO {
      * 定时发布时间 可以为null
      * <p>mysql -> datetime</p>
      */
-    @Length(max = FieldLengthEnum.TIME_FORMAT)
+    @Length(max = FieldLengthConstant.TIME_FORMAT)
     private String timingPublish;
 
 }

@@ -4,7 +4,7 @@ import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.core.QueueBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
-import xyz.xcye.common.enums.RabbitMQNameEnum;
+import xyz.xcye.common.constant.RabbitMQNameConstant;
 
 /**
  * 注册队列以及交换机
@@ -20,9 +20,9 @@ public class MessageRabbitMQQueueRegister {
      */
     @Bean
     public Queue mailCommonNoticeQueue() {
-        return QueueBuilder.durable(RabbitMQNameEnum.MAIL_COMMON_NOTICE_QUEUE_NAME)
-                .deadLetterExchange(RabbitMQNameEnum.AURORA_SEND_EMAIL_DEAD_LETTER_EXCHANGE)
-                .deadLetterRoutingKey(RabbitMQNameEnum.DEAD_LETTER_MAIL_COMMON_NOTICE_ROUTING_KEY).build();
+        return QueueBuilder.durable(RabbitMQNameConstant.MAIL_COMMON_NOTICE_QUEUE_NAME)
+                .deadLetterExchange(RabbitMQNameConstant.AURORA_SEND_EMAIL_DEAD_LETTER_EXCHANGE)
+                .deadLetterRoutingKey(RabbitMQNameConstant.DEAD_LETTER_MAIL_COMMON_NOTICE_ROUTING_KEY).build();
     }
 
     /**
@@ -31,9 +31,9 @@ public class MessageRabbitMQQueueRegister {
      */
     @Bean
     public Queue mailReplyCommentNoticeQueue() {
-        return QueueBuilder.durable(RabbitMQNameEnum.MAIL_REPLY_COMMENT_NOTICE_QUEUE_NAME)
-                .deadLetterExchange(RabbitMQNameEnum.AURORA_SEND_EMAIL_DEAD_LETTER_EXCHANGE)
-                .deadLetterRoutingKey(RabbitMQNameEnum.DEAD_LETTER_MAIL_REPLY_COMMENT_NOTICE_ROUTING_KEY).build();
+        return QueueBuilder.durable(RabbitMQNameConstant.MAIL_REPLY_COMMENT_NOTICE_QUEUE_NAME)
+                .deadLetterExchange(RabbitMQNameConstant.AURORA_SEND_EMAIL_DEAD_LETTER_EXCHANGE)
+                .deadLetterRoutingKey(RabbitMQNameConstant.DEAD_LETTER_MAIL_REPLY_COMMENT_NOTICE_ROUTING_KEY).build();
     }
 
     /**
@@ -42,9 +42,9 @@ public class MessageRabbitMQQueueRegister {
      */
     @Bean
     public Queue mailReceiveCommentNoticeQueue() {
-        return QueueBuilder.durable(RabbitMQNameEnum.MAIL_RECEIVE_COMMENT_NOTICE_QUEUE_NAME)
-                .deadLetterExchange(RabbitMQNameEnum.AURORA_SEND_EMAIL_DEAD_LETTER_EXCHANGE)
-                .deadLetterRoutingKey(RabbitMQNameEnum.DEAD_LETTER_MAIL_RECEIVE_COMMENT_NOTICE_ROUTING_KEY).build();
+        return QueueBuilder.durable(RabbitMQNameConstant.MAIL_RECEIVE_COMMENT_NOTICE_QUEUE_NAME)
+                .deadLetterExchange(RabbitMQNameConstant.AURORA_SEND_EMAIL_DEAD_LETTER_EXCHANGE)
+                .deadLetterRoutingKey(RabbitMQNameConstant.DEAD_LETTER_MAIL_RECEIVE_COMMENT_NOTICE_ROUTING_KEY).build();
     }
 
     /**
@@ -53,9 +53,9 @@ public class MessageRabbitMQQueueRegister {
      */
     @Bean
     public Queue mailVerifyAccountNoticeQueue() {
-        return QueueBuilder.durable(RabbitMQNameEnum.MAIL_VERIFY_ACCOUNT_NOTICE_QUEUE_NAME)
-                .deadLetterExchange(RabbitMQNameEnum.AURORA_SEND_EMAIL_DEAD_LETTER_EXCHANGE)
-                .deadLetterRoutingKey(RabbitMQNameEnum.DEAD_LETTER_MAIL_VERIFY_ACCOUNT_NOTICE_ROUTING_KEY).build();
+        return QueueBuilder.durable(RabbitMQNameConstant.MAIL_VERIFY_ACCOUNT_NOTICE_QUEUE_NAME)
+                .deadLetterExchange(RabbitMQNameConstant.AURORA_SEND_EMAIL_DEAD_LETTER_EXCHANGE)
+                .deadLetterRoutingKey(RabbitMQNameConstant.DEAD_LETTER_MAIL_VERIFY_ACCOUNT_NOTICE_ROUTING_KEY).build();
     }
 
     /**
@@ -64,7 +64,7 @@ public class MessageRabbitMQQueueRegister {
      */
     @Bean
     public Queue mailCommonNoticeDeadLetterQueue() {
-        return new Queue(RabbitMQNameEnum.DEAD_LETTER_MAIL_COMMON_NOTICE_QUEUE_NAME, true);
+        return new Queue(RabbitMQNameConstant.DEAD_LETTER_MAIL_COMMON_NOTICE_QUEUE_NAME, true);
     }
 
     /**
@@ -73,7 +73,7 @@ public class MessageRabbitMQQueueRegister {
      */
     @Bean
     public Queue mailReplyCommentNoticeDeadLetterQueue() {
-        return new Queue(RabbitMQNameEnum.DEAD_LETTER_MAIL_REPLY_COMMENT_NOTICE_QUEUE_NAME, true);
+        return new Queue(RabbitMQNameConstant.DEAD_LETTER_MAIL_REPLY_COMMENT_NOTICE_QUEUE_NAME, true);
     }
 
     /**
@@ -82,7 +82,7 @@ public class MessageRabbitMQQueueRegister {
      */
     @Bean
     public Queue mailReceiveCommentNoticeDeadLetterQueue() {
-        return new Queue(RabbitMQNameEnum.DEAD_LETTER_MAIL_RECEIVE_COMMENT_NOTICE_QUEUE_NAME, true);
+        return new Queue(RabbitMQNameConstant.DEAD_LETTER_MAIL_RECEIVE_COMMENT_NOTICE_QUEUE_NAME, true);
     }
 
     /**
@@ -91,7 +91,7 @@ public class MessageRabbitMQQueueRegister {
      */
     @Bean
     public Queue mailVerifyAccountNoticeDeadLetterQueue() {
-        return new Queue(RabbitMQNameEnum.DEAD_LETTER_MAIL_VERIFY_ACCOUNT_NOTICE_QUEUE_NAME, true);
+        return new Queue(RabbitMQNameConstant.DEAD_LETTER_MAIL_VERIFY_ACCOUNT_NOTICE_QUEUE_NAME, true);
     }
 
     /**
@@ -100,7 +100,7 @@ public class MessageRabbitMQQueueRegister {
      */
     @Bean
     public Queue mistakeMessageQueue() {
-        return new Queue(RabbitMQNameEnum.MISTAKE_MESSAGE_QUEUE,true,true,false);
+        return new Queue(RabbitMQNameConstant.MISTAKE_MESSAGE_QUEUE,true,true,false);
     }
 
 }

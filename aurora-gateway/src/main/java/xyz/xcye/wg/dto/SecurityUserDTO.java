@@ -1,15 +1,7 @@
 package xyz.xcye.wg.dto;
 
 import lombok.Data;
-import org.hibernate.validator.constraints.Length;
 import xyz.xcye.common.dos.UserPermissionDO;
-import xyz.xcye.common.enums.FieldLengthEnum;
-import xyz.xcye.common.valid.Delete;
-import xyz.xcye.common.valid.Update;
-import xyz.xcye.common.valid.validator.ValidateString;
-
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 
 /**
  * @author qsyyke

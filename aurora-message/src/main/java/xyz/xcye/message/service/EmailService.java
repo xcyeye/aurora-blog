@@ -54,5 +54,10 @@ public interface EmailService {
      */
     EmailDO queryByUid(long uid);
 
+    /**
+     * 查询数据库中，userUid这个用户所对应的邮件模板
+     * @param userUid
+     * @return
+     */
     EmailDO queryByUserUid(@Param("userUid") long userUid);
 }

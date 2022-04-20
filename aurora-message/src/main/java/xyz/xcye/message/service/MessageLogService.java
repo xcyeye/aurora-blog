@@ -14,11 +14,43 @@ import java.util.List;
  */
 
 public interface MessageLogService {
-    ModifyResult insertMessageLog(MessageLogDO messageLogDO,String xid) throws BindException;
-    ModifyResult deleteMessageLog(long uid);
-    ModifyResult updateMessageLog(MessageLogDO messageLogDO) throws BindException;
-    List<MessageLogVO> queryAllMessageLog(MessageLogDO messageLogDO, PaginationDTO paginationDTO) throws InstantiationException, IllegalAccessException;
-    MessageLogDO queryByUid(long uid);
+    /**
+     * 插入一条mq发送的消息
+     * @param messageLogDO
+     * @return
+     * @throws BindException 字段缺失或者某个字段不符合要求
+     */
+    ModifyResult insertMessageLog(MessageLogDO messageLogDO) throws BindException;
 
-    String seataTest(String xid) throws BindException;
+    /**
+     * 根据uid删除对应的mq消息 直接删除，不需要先设置删除状态
+     * @param uid
+     * @return
+     */
+    ModifyResult deleteMessageLog(long uid);
+
+    /**
+     * 更新mq消息
+     * @param messageLogDO
+     * @return
+     * @throws BindException 字段缺失或者不符合要求
+     */
+    ModifyResult updateMessageLog(MessageLogDO messageLogDO) throws BindException;
+
+    /**
+     * 根据分页条件和自定义条件查询所有满足要求的数据
+     * @param messageLogDO
+     * @param paginationDTO
+     * @return
+     * @throws InstantiationException
+     * @throws IllegalAccessException
+     */
+    List<MessageLogVO> queryAllMessageLog(MessageLogDO messageLogDO, PaginationDTO paginationDTO) throws InstantiationException, IllegalAccessException;
+
+    /**
+     * 根据uid查询对应mq消息
+     * @param uid
+     * @return
+     */
+    MessageLogDO queryByUid(long uid);
 }

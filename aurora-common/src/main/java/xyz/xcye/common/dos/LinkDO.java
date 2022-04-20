@@ -2,13 +2,12 @@ package xyz.xcye.common.dos;
 
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
-import xyz.xcye.common.enums.FieldLengthEnum;
+import xyz.xcye.common.constant.FieldLengthConstant;
 import xyz.xcye.common.valid.Delete;
 import xyz.xcye.common.valid.Update;
 import xyz.xcye.common.valid.validator.ValidateString;
 
 import javax.validation.constraints.NotNull;
-import java.math.BigInteger;
 
 /**
  * 数据表 au_link
@@ -42,14 +41,14 @@ public class LinkDO {
      * logo地址 不能为null
      * <p>长度<255</p>
      */
-    @ValidateString(value = "友情链接-对方的logo地址",max = FieldLengthEnum.URL)
+    @ValidateString(value = "友情链接-对方的logo地址",max = FieldLengthConstant.URL)
     private String linkLogo;
 
     /**
      * 链接地址 不能为null
      * <p>长度<255</p>
      */
-    @ValidateString(value = "友情链接-对方的站点地址",max = FieldLengthEnum.URL)
+    @ValidateString(value = "友情链接-对方的站点地址",max = FieldLengthConstant.URL)
     private String linkUrl;
 
     /**
@@ -63,14 +62,14 @@ public class LinkDO {
      * 描述信息 可以为null
      * <p>长度<150</p>
      */
-    @Length(max = FieldLengthEnum.LINK_DESCRIPTION,message = "友情链接-对方的描述信息不能超过{value}")
+    @Length(max = FieldLengthConstant.LINK_DESCRIPTION,message = "友情链接-对方的描述信息不能超过{value}")
     private String linkDescription;
 
     /**
      * 站点封面图 可以为null
      * <p>长度<255</p>
      */
-    @Length(max = FieldLengthEnum.URL,message = "友情链接-对方的站点封面图地址不能超过{max}")
+    @Length(max = FieldLengthConstant.URL,message = "友情链接-对方的站点封面图地址不能超过{max}")
     private String linkCover;
 
     /**
@@ -82,7 +81,7 @@ public class LinkDO {
      * 邮箱 不能为null
      * <p>长度<255</p>
      */
-    @ValidateString(value = "友情链接-对方的邮箱号",max = FieldLengthEnum.EMAIL_NUMBER)
+    @ValidateString(value = "友情链接-对方的邮箱号",max = FieldLengthConstant.EMAIL_NUMBER)
     private String email;
 
     /**

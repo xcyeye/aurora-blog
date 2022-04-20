@@ -32,19 +32,19 @@ public class GlobalExceptionHandler {
      * @param request
      * @return
      */
-    @ExceptionHandler
+    /*@ExceptionHandler
     public ExceptionResultEntity result(Exception e, HttpServletRequest request) {
         log.error("发生异常：message:{},uri:{},消息信息:{}",e.getMessage(),request.getRequestURI(),e.getStackTrace());
         String requestURI = request.getRequestURI();
         return new ExceptionResultEntity(e.getMessage(),requestURI,ResultStatusCode.UNKNOWN.getCode());
     }
 
-    /**
+    *//**
      * 参数类型校验失败
      * @param e
      * @param request
      * @return
-     */
+     *//*
     @ExceptionHandler(BindException.class)
     public ExceptionResultEntity bing(BindException e,HttpServletRequest request) {
         log.error("发生异常：message:{},uri:{},消息信息:{}",e.getMessage(),request.getRequestURI(),e.getStackTrace());
@@ -75,7 +75,7 @@ public class GlobalExceptionHandler {
                 ResultStatusCode.PARAM_IS_INVALID.getMessage(),
                 ResultStatusCode.PARAM_IS_INVALID.getCode(),
                 requestURI,errorsList);
-    }
+    }*/
 
 
     /**

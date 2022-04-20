@@ -1,9 +1,7 @@
 package xyz.xcye.file.interceptor;
-import com.sun.corba.se.impl.orbutil.closure.Constant;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.cache.CacheKey;
 import org.apache.ibatis.executor.Executor;
-import org.apache.ibatis.executor.statement.StatementHandler;
 import org.apache.ibatis.logging.jdbc.PreparedStatementLogger;
 import org.apache.ibatis.mapping.BoundSql;
 import org.apache.ibatis.mapping.MappedStatement;
@@ -14,11 +12,7 @@ import org.apache.ibatis.session.Configuration;
 import org.apache.ibatis.session.ResultHandler;
 import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.type.TypeHandlerRegistry;
-import org.junit.platform.commons.logging.Logger;
-import org.junit.platform.commons.logging.LoggerFactory;
-import org.springframework.stereotype.Component;
 
-import java.beans.Statement;
 import java.lang.reflect.Field;
 import java.text.DateFormat;
 import java.util.Date;

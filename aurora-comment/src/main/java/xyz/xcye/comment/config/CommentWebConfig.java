@@ -8,10 +8,15 @@ import org.springframework.util.ReflectionUtils;
 import org.springframework.web.servlet.mvc.method.RequestMappingInfoHandlerMapping;
 import springfox.documentation.spring.web.plugins.WebFluxRequestHandlerProvider;
 import springfox.documentation.spring.web.plugins.WebMvcRequestHandlerProvider;
+import xyz.xcye.common.exception.CustomGlobalExceptionHandler;
+import xyz.xcye.common.manager.advice.ResponseResultHandler;
 
 import java.lang.reflect.Field;
 import java.util.List;
 
+/**
+ * 配置swagger
+ */
 @Configuration
 public class CommentWebConfig {
     @Bean(name = "commentBeanPostProcessor")
@@ -35,5 +40,23 @@ public class CommentWebConfig {
                 return bean;
             }
         };
+    }
+
+    /**
+     * 自定义全局异常处理
+     * @return
+     */
+    @Bean
+    public CustomGlobalExceptionHandler customGlobalExceptionHandler() {
+        return new CustomGlobalExceptionHandler();
+    }
+
+    /**
+     * 对响应结果进行包装
+     * @return
+     */
+    @Bean
+    public ResponseResultHandler responseResultHandler() {
+        return new ResponseResultHandler();
     }
 }

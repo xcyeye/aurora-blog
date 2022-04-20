@@ -3,7 +3,7 @@ package xyz.xcye.message.manager.mq;
 import org.springframework.amqp.core.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
-import xyz.xcye.common.enums.RabbitMQNameEnum;
+import xyz.xcye.common.constant.RabbitMQNameConstant;
 
 /**
  * @author qsyyke
@@ -19,9 +19,9 @@ public class BindingConfig {
      */
     @Bean
     public Binding mailCommonNoticeBinding() {
-        return BindingBuilder.bind(new Queue(RabbitMQNameEnum.MAIL_COMMON_NOTICE_QUEUE_NAME))
-                .to(new TopicExchange(RabbitMQNameEnum.AURORA_SEND_EMAIL_COMMON_EXCHANGE))
-                .with(RabbitMQNameEnum.MAIL_COMMON_NOTICE_ROUTING_KEY);
+        return BindingBuilder.bind(new Queue(RabbitMQNameConstant.MAIL_COMMON_NOTICE_QUEUE_NAME))
+                .to(new TopicExchange(RabbitMQNameConstant.AURORA_SEND_EMAIL_COMMON_EXCHANGE))
+                .with(RabbitMQNameConstant.MAIL_COMMON_NOTICE_ROUTING_KEY);
     }
 
     /**
@@ -30,9 +30,9 @@ public class BindingConfig {
      */
     @Bean
     public Binding mailReplyCommentNoticeBinding() {
-        return BindingBuilder.bind(new Queue(RabbitMQNameEnum.MAIL_REPLY_COMMENT_NOTICE_QUEUE_NAME))
-                .to(new TopicExchange(RabbitMQNameEnum.AURORA_SEND_EMAIL_COMMON_EXCHANGE))
-                .with(RabbitMQNameEnum.MAIL_REPLY_COMMENT_NOTICE_ROUTING_KEY);
+        return BindingBuilder.bind(new Queue(RabbitMQNameConstant.MAIL_REPLY_COMMENT_NOTICE_QUEUE_NAME))
+                .to(new TopicExchange(RabbitMQNameConstant.AURORA_SEND_EMAIL_COMMON_EXCHANGE))
+                .with(RabbitMQNameConstant.MAIL_REPLY_COMMENT_NOTICE_ROUTING_KEY);
     }
 
     /**
@@ -41,9 +41,9 @@ public class BindingConfig {
      */
     @Bean
     public Binding mailReceiveCommentNoticeBinding() {
-        return BindingBuilder.bind(new Queue(RabbitMQNameEnum.MAIL_RECEIVE_COMMENT_NOTICE_QUEUE_NAME))
-                .to(new TopicExchange(RabbitMQNameEnum.AURORA_SEND_EMAIL_COMMON_EXCHANGE))
-                .with(RabbitMQNameEnum.MAIL_RECEIVE_COMMENT_NOTICE_ROUTING_KEY);
+        return BindingBuilder.bind(new Queue(RabbitMQNameConstant.MAIL_RECEIVE_COMMENT_NOTICE_QUEUE_NAME))
+                .to(new TopicExchange(RabbitMQNameConstant.AURORA_SEND_EMAIL_COMMON_EXCHANGE))
+                .with(RabbitMQNameConstant.MAIL_RECEIVE_COMMENT_NOTICE_ROUTING_KEY);
     }
 
     /**
@@ -52,9 +52,9 @@ public class BindingConfig {
      */
     @Bean
     public Binding mailVerifyAccountNoticeBinding() {
-        return BindingBuilder.bind(new Queue(RabbitMQNameEnum.MAIL_VERIFY_ACCOUNT_NOTICE_QUEUE_NAME))
-                .to(new TopicExchange(RabbitMQNameEnum.AURORA_SEND_EMAIL_COMMON_EXCHANGE))
-                .with(RabbitMQNameEnum.MAIL_VERIFY_ACCOUNT_NOTICE_ROUTING_KEY);
+        return BindingBuilder.bind(new Queue(RabbitMQNameConstant.MAIL_VERIFY_ACCOUNT_NOTICE_QUEUE_NAME))
+                .to(new TopicExchange(RabbitMQNameConstant.AURORA_SEND_EMAIL_COMMON_EXCHANGE))
+                .with(RabbitMQNameConstant.MAIL_VERIFY_ACCOUNT_NOTICE_ROUTING_KEY);
     }
 
     // ===================死信队列和死信交换机绑定
@@ -65,9 +65,9 @@ public class BindingConfig {
      */
     @Bean
     public Binding mailCommonNoticeDeadLetterBinding() {
-        return BindingBuilder.bind(new Queue(RabbitMQNameEnum.DEAD_LETTER_MAIL_COMMON_NOTICE_QUEUE_NAME))
-                .to(new TopicExchange(RabbitMQNameEnum.AURORA_SEND_EMAIL_DEAD_LETTER_EXCHANGE))
-                .with(RabbitMQNameEnum.DEAD_LETTER_MAIL_COMMON_NOTICE_ROUTING_KEY);
+        return BindingBuilder.bind(new Queue(RabbitMQNameConstant.DEAD_LETTER_MAIL_COMMON_NOTICE_QUEUE_NAME))
+                .to(new TopicExchange(RabbitMQNameConstant.AURORA_SEND_EMAIL_DEAD_LETTER_EXCHANGE))
+                .with(RabbitMQNameConstant.DEAD_LETTER_MAIL_COMMON_NOTICE_ROUTING_KEY);
     }
 
     /**
@@ -76,9 +76,9 @@ public class BindingConfig {
      */
     @Bean
     public Binding mailReplyCommentNoticeDeadLetterBinding() {
-        return BindingBuilder.bind(new Queue(RabbitMQNameEnum.DEAD_LETTER_MAIL_REPLY_COMMENT_NOTICE_QUEUE_NAME))
-                .to(new TopicExchange(RabbitMQNameEnum.AURORA_SEND_EMAIL_DEAD_LETTER_EXCHANGE))
-                .with(RabbitMQNameEnum.DEAD_LETTER_MAIL_REPLY_COMMENT_NOTICE_ROUTING_KEY);
+        return BindingBuilder.bind(new Queue(RabbitMQNameConstant.DEAD_LETTER_MAIL_REPLY_COMMENT_NOTICE_QUEUE_NAME))
+                .to(new TopicExchange(RabbitMQNameConstant.AURORA_SEND_EMAIL_DEAD_LETTER_EXCHANGE))
+                .with(RabbitMQNameConstant.DEAD_LETTER_MAIL_REPLY_COMMENT_NOTICE_ROUTING_KEY);
     }
 
     /**
@@ -87,9 +87,9 @@ public class BindingConfig {
      */
     @Bean
     public Binding mailReceiveCommentNoticeDeadLetterBinding() {
-        return BindingBuilder.bind(new Queue(RabbitMQNameEnum.DEAD_LETTER_MAIL_RECEIVE_COMMENT_NOTICE_QUEUE_NAME))
-                .to(new TopicExchange(RabbitMQNameEnum.AURORA_SEND_EMAIL_DEAD_LETTER_EXCHANGE))
-                .with(RabbitMQNameEnum.DEAD_LETTER_MAIL_RECEIVE_COMMENT_NOTICE_ROUTING_KEY);
+        return BindingBuilder.bind(new Queue(RabbitMQNameConstant.DEAD_LETTER_MAIL_RECEIVE_COMMENT_NOTICE_QUEUE_NAME))
+                .to(new TopicExchange(RabbitMQNameConstant.AURORA_SEND_EMAIL_DEAD_LETTER_EXCHANGE))
+                .with(RabbitMQNameConstant.DEAD_LETTER_MAIL_RECEIVE_COMMENT_NOTICE_ROUTING_KEY);
     }
 
     /**
@@ -98,9 +98,9 @@ public class BindingConfig {
      */
     @Bean
     public Binding mailVerifyAccountNoticeDeadLetterBinding() {
-        return BindingBuilder.bind(new Queue(RabbitMQNameEnum.MAIL_VERIFY_ACCOUNT_NOTICE_QUEUE_NAME))
-                .to(new TopicExchange(RabbitMQNameEnum.AURORA_SEND_EMAIL_DEAD_LETTER_EXCHANGE))
-                .with(RabbitMQNameEnum.DEAD_LETTER_MAIL_VERIFY_ACCOUNT_NOTICE_ROUTING_KEY);
+        return BindingBuilder.bind(new Queue(RabbitMQNameConstant.MAIL_VERIFY_ACCOUNT_NOTICE_QUEUE_NAME))
+                .to(new TopicExchange(RabbitMQNameConstant.AURORA_SEND_EMAIL_DEAD_LETTER_EXCHANGE))
+                .with(RabbitMQNameConstant.DEAD_LETTER_MAIL_VERIFY_ACCOUNT_NOTICE_ROUTING_KEY);
     }
 
     /**
@@ -109,8 +109,8 @@ public class BindingConfig {
      */
     @Bean
     public Binding mistakeMessageBinding() {
-        return BindingBuilder.bind(new Queue(RabbitMQNameEnum.MISTAKE_MESSAGE_QUEUE))
-                .to(new DirectExchange(RabbitMQNameEnum.MISTAKE_MESSAGE_EXCHANGE))
-                .with(RabbitMQNameEnum.MISTAKE_MESSAGE_ROUTING_KEY);
+        return BindingBuilder.bind(new Queue(RabbitMQNameConstant.MISTAKE_MESSAGE_QUEUE))
+                .to(new DirectExchange(RabbitMQNameConstant.MISTAKE_MESSAGE_EXCHANGE))
+                .with(RabbitMQNameConstant.MISTAKE_MESSAGE_ROUTING_KEY);
     }
 }

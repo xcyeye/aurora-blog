@@ -1,5 +1,7 @@
 package xyz.xcye.comment.controller;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindException;
 import org.springframework.validation.annotation.Validated;
@@ -25,7 +27,7 @@ import java.util.List;
  * @author qsyyke
  */
 
-//TODO 插入数据时，获取操作系统信息没做
+@Api(tags = "评论相关操作接口")
 @RequestMapping("/comment")
 @RestController
 public class CommentController {
@@ -37,7 +39,7 @@ public class CommentController {
      * @param queryAllCommentByArrayUidDTO
      * @return
      */
-
+    @ApiOperation(value = "查询所有满足要求的所有评论")
     @ResponseResult
     @GetMapping("/queryArticleComments")
     public CommentVO queryAllComment(@Validated QueryAllCommentByArrayUidDTO queryAllCommentByArrayUidDTO) {
@@ -49,18 +51,21 @@ public class CommentController {
         return commentService.queryArticleComments(queryAllCommentByArrayUidDTO.getArrayCommentUid(), queryAllCommentByArrayUidDTO.getArticleUid(), queryAllCommentByArrayUidDTO.getPageType());
     }
 
+    @ApiOperation(value = "根据自定义条件查询所有评论")
     @ResponseResult
     @GetMapping("/queryAll")
     public List<CommentDTO> queryAllCommentByCondition(CommentDO commentDO, PaginationDTO paginationDTO) {
         return commentService.queryAllComments(commentDO, paginationDTO);
     }
 
+    @ApiOperation(value = "更新评论")
     @ResponseResult
     @PutMapping("/update")
     public ModifyResult updateComment(@Validated({Update.class}) CommentDO commentDO) {
         return commentService.updateComment(commentDO);
     }
 
+    @ApiOperation(value = "插入新评论")
     @ResponseResult
     @PostMapping("/insert")
     public ModifyResult insertComment(@Validated({Default.class, Insert.class}) CommentDO commentDO,
@@ -70,12 +75,14 @@ public class CommentController {
         return commentService.insertComment(commentDO);
     }
 
+    @ApiOperation(value = "修改评论的删除状态")
     @ResponseResult
     @PutMapping("/setDeleteStatus/{uid}")
     public ModifyResult setCommentDeleteStatus(@PathVariable("uid") Long uid) {
         return commentService.setCommentDeleteStatus(uid);
     }
 
+    @ApiOperation(value = "删除单条评论")
     @ResponseResult
     @DeleteMapping("/delete/{uid}")
     public ModifyResult deleteComment(@PathVariable("uid") Long uid) {

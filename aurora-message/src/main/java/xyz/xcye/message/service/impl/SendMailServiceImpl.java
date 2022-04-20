@@ -42,11 +42,17 @@ public class SendMailServiceImpl implements SendMailService {
     @Autowired
     private EmailLogService emailLogService;
 
+    /**
+     * 配置文件中的发送者的邮箱号
+     */
     @Value("${spring.mail.username}")
     private String senderEmail;
 
-    @Value("${aurora.mail.max-subject}")
-    private int maxSubject;
+    /**
+     * 邮件的最大标题长度
+     */
+    @Value("${aurora.mail.max-subject-length}")
+    private int maxSubjectLength;
 
     @Override
     public ModifyResult sendCommonNoticeMail(EmailCommonNoticeDTO emailCommonNotice, long userUid , String subject) throws MessagingException {
@@ -69,7 +75,7 @@ public class SendMailServiceImpl implements SendMailService {
     }
 
     @Override
-    public ModifyResult sendReplyCommentMail(CommentDO replyingCommentInfo, CommentDO repliedCommentInfo, long userUid, String subject) throws MessagingException {
+    public ModifyResult sendReplyCommentMail(CommentDO replyingCommentInfo, CommentDO repliedCommentInfo, long userUid, String subject) throws MessagingException, BindException {
         //根据userUid获取对应的Email对象
         EmailDO emailDO = emailService.queryByUserUid(userUid);
         if (emailDO == null) {
@@ -81,6 +87,9 @@ public class SendMailServiceImpl implements SendMailService {
 
         //解析邮件发送内容
         String sendContent = ParseEmailTemplate.sendReplyCommentMail(replyingCommentInfo, repliedCommentInfo, emailDO);
+
+        // 用户回复评论，除了被回复的评论的用户会收到提醒，发布评论所对应的页面(文章)的作者也会收到
+        sendReceiveCommentMail(replyingCommentInfo,userUid,"");
 
         return sendEmail(subject,sendContent,repliedCommentInfo.getEmail());
     }
@@ -137,6 +146,11 @@ public class SendMailServiceImpl implements SendMailService {
         return emailLogService.insertEmailLog(emailLog);
     }
 
+    @Override
+    public ModifyResult sendCustomMail(String receiverEmail, String subject, String content) throws MessagingException {
+        return sendEmail(subject, content, receiverEmail);
+    }
+
     /**
      * 判断自定义的subject是否为空或者null，如果为null或者空，返回数据库中的subject
      * @param customSubject
@@ -148,12 +162,20 @@ public class SendMailServiceImpl implements SendMailService {
             return dbSubject;
         }
 
-        if (customSubject.length() > maxSubject) {
-            return customSubject.substring(0,maxSubject);
+        if (customSubject.length() > maxSubjectLength) {
+            return customSubject.substring(0,maxSubjectLength);
         }
         return customSubject;
     }
 
+    /**
+     * 发送html邮件
+     * @param subject 最终发送的邮件标题
+     * @param sendContent 最终经过解析之后邮件内容(html)
+     * @param receiverEmail 接收者的邮箱号
+     * @return
+     * @throws MessagingException
+     */
     private ModifyResult sendEmail(String subject,String sendContent,String receiverEmail) throws MessagingException {
         // 设置标志点
         boolean sendFlag = false;

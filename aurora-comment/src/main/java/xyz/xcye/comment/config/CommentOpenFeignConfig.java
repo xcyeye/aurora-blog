@@ -1,8 +1,6 @@
 package xyz.xcye.comment.config;
 
-import feign.Contract;
 import feign.Logger;
-import feign.auth.BasicAuthRequestInterceptor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -14,6 +12,10 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class CommentOpenFeignConfig {
 
+    /**
+     * 设置openFeign调用时的日志级别
+     * @return
+     */
     @Bean
     Logger.Level feignLoggerLevel() {
         return Logger.Level.FULL;

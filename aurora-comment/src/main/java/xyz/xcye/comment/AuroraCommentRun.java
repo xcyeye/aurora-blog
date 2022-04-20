@@ -11,7 +11,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 
 
 @EnableScheduling
-@EnableFeignClients
+@EnableFeignClients(basePackages = {"xyz.xcye.comment.service"})
 @SpringBootApplication
 public class AuroraCommentRun {
     public static void main(String[] args) {

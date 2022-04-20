@@ -1,6 +1,6 @@
 package xyz.xcye.common.util.id.generator;
 
-import xyz.xcye.common.enums.FieldLengthEnum;
+import xyz.xcye.common.constant.FieldLengthConstant;
 
 import java.util.Random;
 
@@ -18,12 +18,12 @@ public class UsernameGenerator {
      */
     public static String getUsername(String usernamePrefix) {
         //用户名前缀长度大于最大的用户名长度
-        if (usernamePrefix.length() >= FieldLengthEnum.USERNAME) {
-            return usernamePrefix.substring(0,FieldLengthEnum.USERNAME);
+        if (usernamePrefix.length() >= FieldLengthConstant.USERNAME) {
+            return usernamePrefix.substring(0, FieldLengthConstant.USERNAME);
         }
 
         //用户名前缀小于最大的用户名长度
-        int suffixLength = FieldLengthEnum.USERNAME - usernamePrefix.length();
+        int suffixLength = FieldLengthConstant.USERNAME - usernamePrefix.length();
         String timeMillisStr = System.currentTimeMillis() + "";
 
         //截取的将时间戳和用户名前缀进行凭借

@@ -77,11 +77,6 @@ public class CommentServiceImpl implements CommentService {
         // 设置创建的时间
         commentDO.setCreateTime(DateUtils.format(new Date()));
 
-        String xid = RootContext.getXID();
-        assert xid != null;
-        RootContext.bind(xid);
-        System.out.println(xid);
-
         // 设置删除状态
         commentDO.setDelete(false);
         commentDO.setShowComment(true);
@@ -91,7 +86,6 @@ public class CommentServiceImpl implements CommentService {
          * 如果此条评论的replyCommentUid在数据库中不存在，则标记为新建的单独评论
          */
         CommentDO repliedCommentDOByUid = getCommentDOByUid(commentDO);
-
         boolean isReplyCommentFlag = repliedCommentDOByUid != null;
 
         // 设置email的发送状态，这里目前只能保证消息是否成功投递到rabbitmq交换机中，不能保证email是否发送成功
@@ -100,17 +94,7 @@ public class CommentServiceImpl implements CommentService {
         //向数据库中插入此条评论
         int insertCommentNum = commentDao.insertComment(commentDO);
 
-        log.error("插入成功，远程调用");
-
-        messageLogFeignService.testMethod(xid);
-
-        GlobalStatus begin = GlobalStatus.Begin;
-        GlobalBeginRequest globalBeginRequest = new GlobalBeginRequest();
-
-
-        return null;
-
-        /*// 使用rabbitmq发送邮件通知对方
+        // 使用rabbitmq发送邮件通知对方
         if (isReplyCommentFlag) {
             rabbitMQSendService.sendReplyCommentNotice(commentDO,repliedCommentDOByUid);
         }else {
@@ -136,20 +120,20 @@ public class CommentServiceImpl implements CommentService {
         CommentDTO commentDTO = new CommentDTO();
         BeanUtils.copyProperties(commentDO,commentDTO);
 
-        return getOperateResult(insertCommentNum,"插入评论",commentDTO);*/
+        return ModifyResult.operateResult(insertCommentNum,"插入评论",commentDTO);
     }
 
     @Override
     public ModifyResult setCommentDeleteStatus(Long uid) {
         // 直接修改
         int updateNum = commentDao.setCommentDeleteStatus(uid);
-        return getOperateResult(updateNum,"修改" + uid + "对应的删除状态",null);
+        return ModifyResult.operateResult(updateNum,"对应的删除状态",null);
     }
 
     @Override
     public ModifyResult deleteComment(Long uid) {
         int deleteCommentNum = commentDao.deleteComment(uid);
-        return getOperateResult(deleteCommentNum,"删除" + uid + "对应的评论",null);
+        return ModifyResult.operateResult(deleteCommentNum,"删除" + uid + "对应的评论",null);
     }
 
     @Override
@@ -158,7 +142,7 @@ public class CommentServiceImpl implements CommentService {
         boolean existsComment = isExistsComment(commentDO.getUid());
         if (!existsComment) {
             // 数据库中不存在此uid的记录，直接返回
-            return getOperateResult(0,"此" + commentDO.getUid() + "不存在",null);
+            return ModifyResult.operateResult("此" + commentDO.getUid() + "不存在",null,0);
         }
 
         //设置最后修改时间
@@ -166,7 +150,7 @@ public class CommentServiceImpl implements CommentService {
         int updateCommentNum = commentDao.updateComment(commentDO);
         CommentDTO commentDTO = new CommentDTO();
         BeanUtils.copyProperties(commentDO,commentDTO);
-        return getOperateResult(updateCommentNum,"修改评论",commentDTO);
+        return ModifyResult.operateResult(updateCommentNum,"删除评论",commentDTO);
     }
 
     @Override
@@ -232,7 +216,11 @@ public class CommentServiceImpl implements CommentService {
         return commentDao.querySingleByUid(commentDO.getReplyCommentUid()) != null;
     }
 
-
+    /**
+     * 从数据库中查询uid所对应的评论数据，如果没有，返回null
+     * @param commentDO
+     * @return
+     */
     private CommentDO getCommentDOByUid(CommentDO commentDO) {
         //此评论就是单独新建的一条评论
         if (commentDO.getReplyCommentUid() == null || commentDO.getReplyCommentUid() == 0) {
@@ -241,22 +229,6 @@ public class CommentServiceImpl implements CommentService {
         //判断是否存在
         return commentDao.querySingleByUid(commentDO.getReplyCommentUid());
 
-    }
-
-    private ModifyResult getOperateResult(int affectedRows, String prefix, Object returnData) {
-        String msg = "";
-        if (affectedRows == 1) {
-            msg = prefix + "成功";
-        }else {
-            msg = prefix + "失败";
-        }
-
-        if (affectedRows != 1 || returnData == null) {
-            // 如果affectedRows为0，则返回空数据
-            returnData = new HashMap<>();
-        }
-
-        return new ModifyResult(affectedRows,affectedRows == 1,msg,returnData);
     }
 
     /**
@@ -269,6 +241,11 @@ public class CommentServiceImpl implements CommentService {
         return commentDO != null;
     }
 
+    /**
+     * 获取arrayUid中有效的uid
+     * @param arrayUid
+     * @return
+     */
     private List<Long> getEffectiveCommentUid(Long[] arrayUid) {
         List<Long> listUid = new ArrayList<>();
         for (Long uid : arrayUid) {
@@ -279,6 +256,11 @@ public class CommentServiceImpl implements CommentService {
         return listUid;
     }
 
+    /**
+     *
+     * @param commentDTO
+     * @return
+     */
     private CommentDTO getAllSingleParentNodeList(CommentDTO commentDTO) {
         List<Long> uidList = parseUidArray(commentDTO.getNextCommentUidArray());
         if (uidList.isEmpty()) {

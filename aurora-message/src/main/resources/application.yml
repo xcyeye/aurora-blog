@@ -93,7 +93,10 @@ aurora:
     pageNum: 1
     pageSize: 10
   mail:
-    max-subject: 50
+    max-subject-length: 50
+  mq:
+    # 最大重新消费次数
+    max-retry-consume: 3
 
 # 分页插件
 pagehelper:

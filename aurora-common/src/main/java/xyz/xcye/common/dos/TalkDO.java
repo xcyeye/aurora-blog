@@ -2,13 +2,12 @@ package xyz.xcye.common.dos;
 
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
-import xyz.xcye.common.enums.FieldLengthEnum;
+import xyz.xcye.common.constant.FieldLengthConstant;
 import xyz.xcye.common.valid.Delete;
 import xyz.xcye.common.valid.Update;
 import xyz.xcye.common.valid.validator.ValidateString;
 
 import javax.validation.constraints.NotNull;
-import java.math.BigInteger;
 
 /**
  * 说说表
@@ -46,19 +45,19 @@ public class TalkDO {
     /**
      * 创建时间 不能为null
      */
-    @ValidateString(value = "说说-创建时间",max = FieldLengthEnum.TIME_FORMAT)
+    @ValidateString(value = "说说-创建时间",max = FieldLengthConstant.TIME_FORMAT)
     private String createTime;
 
     /**
      * 说说内容 数据表中的类型为longtext 不能为null
      */
-    @ValidateString(value = "说说-内容",max = FieldLengthEnum.CONTENT)
+    @ValidateString(value = "说说-内容",max = FieldLengthConstant.CONTENT)
     private String content;
 
     /**
      * 说说标题 可以为null
      */
-    @Length(max = FieldLengthEnum.TITLE,message = "说说-标题不能超过{max}")
+    @Length(max = FieldLengthConstant.TITLE,message = "说说-标题不能超过{max}")
     private String title;
 
     /**

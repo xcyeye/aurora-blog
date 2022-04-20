@@ -1,9 +1,5 @@
 package xyz.xcye.comment.service;
 
-import lombok.extern.slf4j.Slf4j;
-import org.apache.ibatis.annotations.Mapper;
-import org.springframework.cloud.client.circuitbreaker.NoFallbackAvailableException;
-import org.springframework.cloud.openfeign.FallbackFactory;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.cloud.openfeign.SpringQueryMap;
 import org.springframework.stereotype.Component;
@@ -14,6 +10,7 @@ import xyz.xcye.common.entity.result.ModifyResult;
 
 
 /**
+ * 使用openFeign远程调用mq消息相关接口
  * @author qsyyke
  */
 
@@ -21,16 +18,31 @@ import xyz.xcye.common.entity.result.ModifyResult;
 @FeignClient(value = "aurora-message",contextId = "aurora-message-messageLog")
 public interface MessageLogFeignService {
 
+    /**
+     * 插入新mq消息
+     * @param messageLogDO
+     * @return
+     * @throws BindException
+     */
     @PostMapping("/message/messageLog/insert")
-    ModifyResult insertMessageLog(@SpringQueryMap MessageLogDO messageLogDO, @RequestParam("xid") String xid) throws BindException;
+    ModifyResult insertMessageLog(@SpringQueryMap MessageLogDO messageLogDO) throws BindException;
 
-
+    /**
+     * 更新mq消息
+     * @param messageLogDO
+     * @return
+     * @throws BindException
+     */
     @PutMapping("/message/messageLog/update")
     ModifyResult updateMessageLog(@SpringQueryMap MessageLogDO messageLogDO) throws BindException;
 
+    /**
+     * 根据uid查询mq消息
+     * @param uid
+     * @return
+     * @throws InstantiationException
+     * @throws IllegalAccessException
+     */
     @GetMapping("/message/messageLog/queryByUid/{uid}")
     MessageLogDO queryMessageLogByUid(@PathVariable long uid) throws InstantiationException, IllegalAccessException;
-
-    @PostMapping("/message/messageLog/seataTest")
-    void testMethod(@RequestParam(value = "xid",required = false) String xid) throws BindException;
 }

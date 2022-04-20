@@ -3,8 +3,8 @@ package xyz.xcye.common.util.jwt;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import xyz.xcye.common.constant.FieldLengthConstant;
 import xyz.xcye.common.dto.JwtEntityDTO;
-import xyz.xcye.common.enums.FieldLengthEnum;
 import xyz.xcye.common.util.id.GenerateInfoUtils;
 import java.util.Date;
 
@@ -35,7 +35,7 @@ public class JwtUtils {
 
         if (expirationTime == 0) {
             //默认失效时间为30分钟
-            expirationTime = FieldLengthEnum.TOKEN_EXPIRATION_Time;
+            expirationTime = FieldLengthConstant.TOKEN_EXPIRATION_Time;
         }
 
         //将秒数转换成毫秒

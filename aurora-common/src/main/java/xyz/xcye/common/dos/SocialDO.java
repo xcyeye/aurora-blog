@@ -1,13 +1,12 @@
 package xyz.xcye.common.dos;
 
 import lombok.Data;
-import xyz.xcye.common.enums.FieldLengthEnum;
+import xyz.xcye.common.constant.FieldLengthConstant;
 import xyz.xcye.common.valid.Delete;
 import xyz.xcye.common.valid.Update;
 import xyz.xcye.common.valid.validator.ValidateString;
 
 import javax.validation.constraints.NotNull;
-import java.math.BigInteger;
 
 /**
  * @author qsyyke
@@ -25,21 +24,21 @@ public class SocialDO {
      * 社交名称 不能为null
      * <p>长度<10</p>
      */
-    @ValidateString(value = "社交-社交名称",max = FieldLengthEnum.SOCIAL_NAME)
+    @ValidateString(value = "社交-社交名称",max = FieldLengthConstant.SOCIAL_NAME)
     private String socialName;
 
     /**
      * 社交图标的地址 不能为null
      * <p>长度<255</p>
      */
-    @ValidateString(value = "社交-社交图标地址",max = FieldLengthEnum.URL)
+    @ValidateString(value = "社交-社交图标地址",max = FieldLengthConstant.URL)
     private String socialIcon;
 
     /**
      * 社交的链接地址 不能为null
      * <p>长度<255</p>
      */
-    @ValidateString(value = "社交-社交链接地址",max = FieldLengthEnum.URL)
+    @ValidateString(value = "社交-社交链接地址",max = FieldLengthConstant.URL)
     private String socialUrl;
 
     /**

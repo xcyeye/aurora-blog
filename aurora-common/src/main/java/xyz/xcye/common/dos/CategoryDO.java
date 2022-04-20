@@ -2,13 +2,12 @@ package xyz.xcye.common.dos;
 
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
-import xyz.xcye.common.enums.FieldLengthEnum;
+import xyz.xcye.common.constant.FieldLengthConstant;
 import xyz.xcye.common.valid.Delete;
 import xyz.xcye.common.valid.Update;
 import xyz.xcye.common.valid.validator.ValidateString;
 
 import javax.validation.constraints.NotNull;
-import java.math.BigInteger;
 
 /**
  * 数据表 au_category
@@ -27,14 +26,14 @@ public class CategoryDO {
      * 此类别的标题 不能为null
      * <p>length < 100</p>
      */
-    @ValidateString(value = "类别-标题",max = FieldLengthEnum.TITLE)
+    @ValidateString(value = "类别-标题",max = FieldLengthConstant.TITLE)
     private String title;
 
     /**
      * 此类别的简介 可以为null
      * <p>length < 500</p>
      */
-    @Length(max = FieldLengthEnum.SUMMARY,message = "类别-简介长度不能超过{max}")
+    @Length(max = FieldLengthConstant.SUMMARY,message = "类别-简介长度不能超过{max}")
     private String summary;
 
     /**
@@ -46,7 +45,7 @@ public class CategoryDO {
      * 创建时间 不能为null
      * <p>mysql -> datetime</p>
      */
-    @ValidateString(value = "类别-创建时间",max = FieldLengthEnum.TIME_FORMAT)
+    @ValidateString(value = "类别-创建时间",max = FieldLengthConstant.TIME_FORMAT)
     private String createTime;
 
     /**
@@ -59,6 +58,6 @@ public class CategoryDO {
      * 此类别的封面图地址 可以为null
      * <p>length < 255</p>
      */
-    @Length(max = FieldLengthEnum.URL,message = "类别-封面图片地址不能超过{max}")
+    @Length(max = FieldLengthConstant.URL,message = "类别-封面图片地址不能超过{max}")
     private String coverUrl;
 }

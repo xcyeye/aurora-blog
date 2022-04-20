@@ -53,6 +53,10 @@ public class NetWorkUtils {
         } catch (Exception e) {
             ipAddress = "";
         }
+
+        if ("0:0:0:0:0:0:0:1".equals(ipAddress)) {
+            ipAddress = "127.0.0.1";
+        }
         return ipAddress;
     }
 
@@ -78,7 +82,13 @@ public class NetWorkUtils {
         Browser browser = userAgent.getBrowser();
         //获取浏览器版本号
         Version version = browser.getVersion(header);
-        return version.getVersion();
+        String versionStr = null;
+        try {
+            versionStr = version.getVersion();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return versionStr;
     }
 
     /**

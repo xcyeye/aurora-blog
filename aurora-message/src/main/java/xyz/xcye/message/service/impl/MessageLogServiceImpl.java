@@ -59,13 +59,12 @@ public class MessageLogServiceImpl implements MessageLogService {
     @Autowired
     private MessageLogDao messageLogDao;
 
-    @GlobalTransactional(rollbackFor = Exception.class)
     @Override
-    public ModifyResult insertMessageLog(MessageLogDO messageLogDO,String xid) throws BindException {
+    public ModifyResult insertMessageLog(MessageLogDO messageLogDO) throws BindException {
         ValidationUtils.valid(messageLogDO, Insert.class);
 
-        RootContext.bind(xid);
-        boolean b = RootContext.inGlobalTransaction();
+        System.out.println("全局xid" + RootContext.getXID() + "是否绑定" + RootContext.inGlobalTransaction());
+
         //设置创建时间
         messageLogDO.setCreateTime(DateUtils.format(new Date()));
         if (messageLogDO.getUid() == null || messageLogDO.getUid() == 0) {
@@ -73,9 +72,6 @@ public class MessageLogServiceImpl implements MessageLogService {
         }
         int insertMessageLogNum = messageLogDao.insertMessageLog(messageLogDO);
 
-        System.out.println(xid + ": " + b);
-
-        int i = 10 /0;
         return ModifyResult.operateResult(insertMessageLogNum,"插入消息投递日志",messageLogDO);
     }
 
@@ -99,7 +95,7 @@ public class MessageLogServiceImpl implements MessageLogService {
 
     @Override
     public List<MessageLogVO> queryAllMessageLog(MessageLogDO messageLogDO, PaginationDTO paginationDTO) throws InstantiationException, IllegalAccessException {
-        PaginationDTO.initPagination(paginationDTO,defaultPageNum,defaultPageSize);
+        paginationDTO = PaginationDTO.initPagination(paginationDTO,defaultPageNum,defaultPageSize);
         PageHelper.startPage(paginationDTO.getPageNum(),paginationDTO.getPageSize(),paginationDTO.getOrderBy());
         List<MessageLogDO> messageLogDOList = messageLogDao.queryAllMessageLog(messageLogDO);
         return BeanCopyUtils.copyList(messageLogDOList,MessageLogVO.class);
@@ -111,27 +107,5 @@ public class MessageLogServiceImpl implements MessageLogService {
             return null;
         }
         return messageLogDao.queryByUid(uid);
-    }
-
-    @GlobalTransactional
-    @Override
-    public String seataTest(String xid) throws BindException {
-        String xid1 = RootContext.getXID();
-
-
-        System.out.println("获取到的: " + xid1);
-
-        MessageLogDO messageLogDO = new MessageLogDO();
-        messageLogDO.setUid(1514200870569951232L);
-        messageLogDO.setExchange("chucehnExchange");
-        messageLogDO.setAckStatus(false);
-        messageLogDO.setConsumeStatus(false);
-        messageLogDO.setTryCount(24345);
-        ModifyResult modifyResult = updateMessageLog(messageLogDO);
-
-        if (new Random().nextInt(6) % 2 == 0) {
-            throw new RuntimeException();
-        }
-        return null;
     }
 }
