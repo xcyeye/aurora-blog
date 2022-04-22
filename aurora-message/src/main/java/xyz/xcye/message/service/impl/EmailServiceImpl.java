@@ -3,12 +3,14 @@ package xyz.xcye.message.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.apache.ibatis.annotations.Param;
+import org.bouncycastle.math.raw.Mod;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import xyz.xcye.common.dos.EmailDO;
 import xyz.xcye.common.dto.PaginationDTO;
 import xyz.xcye.common.entity.result.ModifyResult;
+import xyz.xcye.common.enums.ResponseStatusCodeEnum;
 import xyz.xcye.common.util.DateUtils;
 import xyz.xcye.common.util.id.GenerateInfoUtils;
 import xyz.xcye.message.dao.EmailDao;
@@ -62,44 +64,51 @@ public class EmailServiceImpl implements EmailService {
         email.setUid(uid);
         email.setCreateTime(DateUtils.format(new Date()));
         int insertEmailNum = emailDao.insertEmail(email);
-        return ModifyResult.operateResult(insertEmailNum,"插入email数据",insertEmailNum == 1 ? email : null);
+        return ModifyResult.operateResult(insertEmailNum,"插入email数据",
+                 ResponseStatusCodeEnum.SUCCESS.getCode());
     }
 
     @Override
     public ModifyResult deleteEmailByUid(long uid) {
         //验证uid是否有效
         if (uid == 0) {
-            return ModifyResult.operateResult("uid: " + uid + "不是一个有效值",null,0);
+            return ModifyResult.operateResult(ResponseStatusCodeEnum.PARAM_IS_INVALID.getMessage(),
+                    0,ResponseStatusCodeEnum.PARAM_IS_INVALID.getCode());
         }
 
         //删除
         int deleteEmailNum = emailDao.deleteEmailByUid(uid);
-        return ModifyResult.operateResult(deleteEmailNum,"删除" + uid + "对应的email数据",null);
+        return ModifyResult.operateResult(deleteEmailNum,"删除" + uid + "对应的email数据",
+                ResponseStatusCodeEnum.SUCCESS.getCode());
     }
 
     @Override
     public ModifyResult updateDeleteStatus(EmailDO email) {
         //验证uid是否有效
         if (email.getUid() == 0) {
-            return ModifyResult.operateResult("uid: " + email.getUid() + "不是一个有效值",null,0);
+            return ModifyResult.operateResult(ResponseStatusCodeEnum.PARAM_IS_INVALID.getMessage(),
+                    0,ResponseStatusCodeEnum.PARAM_IS_INVALID.getCode());
         }
 
         int updateDeleteStatus = emailDao.updateDeleteStatus(email);
-        return ModifyResult.operateResult(updateDeleteStatus,"修改" + email.getUid() + "对应的email数据",null);
+        return ModifyResult.operateResult(updateDeleteStatus,"修改" + email.getUid() + "对应的email数据",
+                ResponseStatusCodeEnum.SUCCESS.getCode());
     }
 
     @Override
     public ModifyResult updateEmailByUid(EmailDO email) {
         //判断uid是否有效
         if (email == null) {
-            return ModifyResult.operateResult("uid: " + email.getUid() + "不是一个有效值",null,0);
+            return ModifyResult.operateResult(ResponseStatusCodeEnum.PARAM_IS_INVALID.getMessage(),
+                    0,ResponseStatusCodeEnum.PARAM_IS_INVALID.getCode());
         }
         email.setUpdateTime(DateUtils.format(new Date()));
         int updateEmailByUidNum = emailDao.updateEmailByUid(email);
 
         //根据uid查询修改之后的email
         EmailDO queryEmail = queryByUid(email.getUid());
-        return ModifyResult.operateResult(updateEmailByUidNum,"修改" + email.getUid() + "对应的email数据",updateEmailByUidNum == 1 ? queryEmail : null);
+        return ModifyResult.operateResult(updateEmailByUidNum,"修改" + email.getUid() + "对应的email数据",
+                ResponseStatusCodeEnum.SUCCESS.getCode());
     }
 
     @Override

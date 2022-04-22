@@ -6,7 +6,7 @@ import org.springframework.security.web.server.WebFilterExchange;
 import org.springframework.security.web.server.authentication.ServerAuthenticationFailureHandler;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
-import xyz.xcye.common.enums.ResultStatusCode;
+import xyz.xcye.common.enums.ResponseStatusCodeEnum;
 import xyz.xcye.wg.util.SecurityResultHandler;
 
 /**
@@ -21,7 +21,7 @@ public class CustomAuthenticationFailureHandler implements ServerAuthenticationF
     public Mono<Void> onAuthenticationFailure(WebFilterExchange webFilterExchange, AuthenticationException exception) {
         //设置响应码
         webFilterExchange.getExchange().getResponse().setStatusCode(HttpStatus.MULTI_STATUS);
-        return SecurityResultHandler.failure(webFilterExchange.getExchange(),exception, ResultStatusCode.PERMISSION_AUTHORIZED_FAIL.getCode());
+        return SecurityResultHandler.failure(webFilterExchange.getExchange(),exception, ResponseStatusCodeEnum.PERMISSION_AUTHORIZED_FAIL.getCode());
     }
 }
 

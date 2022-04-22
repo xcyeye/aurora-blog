@@ -18,6 +18,7 @@ import xyz.xcye.wg.security.handler.CustomAuthenticationEntryPoint;
 import xyz.xcye.wg.security.handler.CustomAuthenticationFailureHandler;
 import xyz.xcye.wg.security.handler.CustomAuthenticationSuccessHandler;
 
+
 /**
  * @author qsyyke
  */

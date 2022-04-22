@@ -9,6 +9,7 @@ import xyz.xcye.common.annotaion.ResponseResult;
 import xyz.xcye.common.dos.EmailDO;
 import xyz.xcye.common.dto.PaginationDTO;
 import xyz.xcye.common.entity.result.ModifyResult;
+import xyz.xcye.common.enums.ResponseStatusCodeEnum;
 import xyz.xcye.common.valid.Insert;
 import xyz.xcye.common.valid.Update;
 import xyz.xcye.message.service.EmailService;
@@ -29,6 +30,12 @@ public class EmailController {
 
     @Autowired
     private EmailService emailService;
+
+    @ResponseResult
+    @GetMapping(value = "/test")
+    public ModifyResult test() {
+        return null;
+    }
 
     @ApiOperation(value = "向数据库中插入新的邮箱记录，比如主机，授权码等")
     @ResponseResult

@@ -1,0 +1,129 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="xyz.xcye.admin.dao.UserDao">
+
+    <resultMap id="userResultMap" type="xyz.xcye.admin.vo.UserVO">
+        <result column="is_delete" property="delete"/>
+        <result column="is_verify_email" property="verifyEmail"/>
+    </resultMap>
+
+    <insert id="insertUser">
+        insert into au_user (
+         uid,user_summary,nickname,gender,login_uid,is_delete,
+         site_uid,avatar,password,username,profession,is_verify_email,
+         email_uid,user_account_uid,create_time,update_time
+         )
+
+         values (
+                 #{userDO.uid},#{userDO.userSummary},#{userDO.nickname},#{userDO.gender},#{userDO.loginUid},
+                 #{userDO.delete},#{userDO.siteUid},#{userDO.avatar},#{userDO.password},#{userDO.username},
+                 #{userDO.profession},#{userDO.verifyEmail},#{userDO.emailUid},#{userDO.userAccountUid},
+                 #{userDO.createTime},#{userDO.updateTime}
+                )
+    </insert>
+
+    <update id="updateUser">
+        update au_user
+        <set>
+            <if test="userDO.userSummary != null">
+                user_summary=#{userDO.userSummary},
+            </if>
+            <if test="userDO.nickname != null">
+                nickname=#{userDO.nickname},
+            </if>
+            <if test="userDO.gender != null">
+                gender=#{userDO.gender},
+            </if>
+            <if test="userDO.avatar != null">
+                avatar=#{userDO.avatar},
+            </if>
+            <if test="userDO.username != null">
+                username=#{userDO.username},
+            </if>
+            <if test="userDO.password != null">
+                password=#{userDO.password},
+            </if>
+            <if test="userDO.profession != null">
+                profession=#{userDO.profession},
+            </if>
+            <if test="userDO.verifyEmail != null">
+                is_verify_email=#{userDO.verifyEmail},
+            </if>
+            <if test="userDO.updateTime != null">
+                update_time=#{userDO.updateTime}
+            </if>
+        </set>
+        where uid=#{userDO.uid}
+    </update>
+
+    <update id="updateDeleteStatus">
+        update au_user set is_delete=#{userDO.delete} where uid=#{userDO.uid}
+    </update>
+
+    <delete id="deleteByUid">
+        delete from au_user where uid=#{uid}
+    </delete>
+
+    <select id="queryAll" resultMap="userResultMap">
+        select uid,user_summary,nickname,gender,login_uid,is_delete,
+               site_uid,avatar,password,username,profession,is_verify_email,
+               email_uid,user_account_uid,create_time,update_time
+        from au_user
+        <where>
+            <if test="userDO.uid != null">
+                uid=#{userDO.uid}
+            </if>
+            <if test="userDO.nickname != null">
+                and nickname=#{userDO.nickname}
+            </if>
+            <if test="userDO.gender != null">
+                and gender=#{userDO.gender}
+            </if>
+            <if test="userDO.loginUid != null">
+                and login_uid=#{userDO.loginUid}
+            </if>
+            <if test="userDO.delete != null">
+                and is_delete=#{userDO.delete}
+            </if>
+            <if test="userDO.siteUid != null">
+                and site_uid=#{userDO.siteUid}
+            </if>
+            <if test="userDO.username != null">
+                and username=#{userDO.username}
+            </if>
+            <if test="userDO.verifyEmail != null">
+                and is_verify_email=#{userDO.verifyEmail}
+            </if>
+            <if test="userDO.emailUid != null">
+                and email_uid=#{userDO.emailUid}
+            </if>
+            <if test="userDO.userAccountUid != null">
+                and user_account_uid=#{userDO.userAccountUid}
+            </if>
+            <if test="userDO.createTime != null">
+                and create_time=#{userDO.createTime}
+            </if>
+            <if test="userDO.updateTime != null">
+                and update_time=#{userDO.updateTime}
+            </if>
+        </where>
+    </select>
+
+    <select id="queryByUid" resultMap="userResultMap">
+        select uid,user_summary,nickname,gender,login_uid,is_delete,
+               site_uid,avatar,password,username,profession,is_verify_email,
+               email_uid,user_account_uid,create_time,update_time
+        from au_user
+        where uid=#{uid}
+    </select>
+
+    <select id="queryByUsername" resultMap="userResultMap">
+        select uid,user_summary,nickname,gender,login_uid,is_delete,
+               site_uid,avatar,password,username,profession,is_verify_email,
+               email_uid,user_account_uid,create_time,update_time
+        from au_user
+        where username=#{username}
+    </select>
+</mapper>

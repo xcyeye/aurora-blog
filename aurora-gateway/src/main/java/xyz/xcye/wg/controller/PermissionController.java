@@ -18,7 +18,7 @@ public class PermissionController {
         log.info(String.valueOf(verifyPath));
         //VerifyPathDO insertVerifyPath = verifyPathService.insertPermission(verifyPath);
 
-        R success = R.success(ResultStatusCode.SUCCESS.getCode(), ResultStatusCode.SUCCESS.getMessage(), "insertVerifyPath");
+        R success = R.success(ResponseStatusCodeEnum.SUCCESS.getCode(), ResponseStatusCodeEnum.SUCCESS.getMessage(), "insertVerifyPath");
         System.out.println(success);
         return success;
     }

@@ -1,23 +1,17 @@
 package xyz.xcye.wg.util;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.buffer.DataBuffer;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.MediaType;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Component;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
-import xyz.xcye.common.dos.UserPermissionDO;
 import xyz.xcye.common.entity.result.R;
-import xyz.xcye.common.enums.ResultStatusCode;
+import xyz.xcye.common.enums.ResponseStatusCodeEnum;
 import xyz.xcye.common.util.ObjectConvertJson;
-import xyz.xcye.common.util.jwt.JwtUtils;
-import xyz.xcye.wg.enums.TokenEnum;
 
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
@@ -38,7 +32,7 @@ public class SecurityResultHandler {
         setContentType(exchange);
         Map<String,Object> grantedAuthoritiesMap = new HashMap<>();
         grantedAuthoritiesMap.put("permission",grantedAuthorities);
-        R success = R.success(ResultStatusCode.SUCCESS.getCode(), ResultStatusCode.SUCCESS.getMessage(),grantedAuthoritiesMap);
+        R success = R.success(ResponseStatusCodeEnum.SUCCESS.getCode(), ResponseStatusCodeEnum.SUCCESS.getMessage(),grantedAuthoritiesMap);
 
         String s = ObjectConvertJson.jsonToString(success);
         return getMonoTypeResult(s,exchange);

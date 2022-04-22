@@ -46,4 +46,6 @@ public interface FileService {
      * @return FileEntity对象
      */
     List<FileDO> queryAllFile(FileDO file, PaginationDTO pagination);
+
+    FileDO queryByUid(long uid);
 }

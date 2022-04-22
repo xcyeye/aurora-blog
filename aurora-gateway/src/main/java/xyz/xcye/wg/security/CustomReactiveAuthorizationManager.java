@@ -18,7 +18,7 @@ import reactor.core.publisher.Mono;
 import xyz.xcye.common.annotaion.Log;
 import xyz.xcye.common.dos.VerifyPathDO;
 import xyz.xcye.common.dto.JwtEntityDTO;
-import xyz.xcye.common.enums.ResultStatusCode;
+import xyz.xcye.common.enums.ResponseStatusCodeEnum;
 import xyz.xcye.common.util.DateUtils;
 import xyz.xcye.common.util.jwt.JwtUtils;
 import xyz.xcye.wg.enums.TokenEnum;
@@ -104,8 +104,8 @@ public class CustomReactiveAuthorizationManager implements ReactiveAuthorization
     public static Mono<AuthorizationDecision> getAuthorizationDecision(JwtEntityDTO jwtEntity, ServerWebExchange exchange) {
         if (jwtEntity.isExpiration()) {
             //token已经过期
-            //return Mono.error(new AccessDeniedException(ResultStatusCode.PERMISSION_DENIED.getMessage()));
-            return Mono.error(new UsernameNotFoundException(ResultStatusCode.PERMISSION_TOKEN_EXPIRATION.getMessage()));
+            //return Mono.error(new AccessDeniedException(ResponseStatusCodeEnum.PERMISSION_DENIED.getMessage()));
+            return Mono.error(new UsernameNotFoundException(ResponseStatusCodeEnum.PERMISSION_TOKEN_EXPIRATION.getMessage()));
         }
 
         return Mono.just(new AuthorizationDecision(true));

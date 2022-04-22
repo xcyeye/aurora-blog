@@ -9,6 +9,7 @@ import org.springframework.validation.BindException;
 import xyz.xcye.common.dos.EmailLogDO;
 import xyz.xcye.common.dto.PaginationDTO;
 import xyz.xcye.common.entity.result.ModifyResult;
+import xyz.xcye.common.enums.ResponseStatusCodeEnum;
 import xyz.xcye.common.util.DateUtils;
 import xyz.xcye.common.util.ValidationUtils;
 import xyz.xcye.common.valid.Insert;
@@ -48,7 +49,9 @@ public class EmailLogServiceImpl implements EmailLogService {
         //设置创建时间
         emailLog.setCreateTime(DateUtils.format(new Date()));
         int insertEmailLogNum = emailLogDao.insertEmailLog(emailLog);
-        return ModifyResult.operateResult(insertEmailLogNum,"插入邮件发送日志",emailLog);
+        return ModifyResult.operateResult(
+                insertEmailLogNum,"插入邮件发送日志",
+                ResponseStatusCodeEnum.SUCCESS.getCode());
     }
 
     @Override
@@ -62,13 +65,15 @@ public class EmailLogServiceImpl implements EmailLogService {
             //修改数据成功，调用查询，返回最新的数据
             emailLog = queryByUid(emailLog.getUid());
         }
-        return ModifyResult.operateResult(updateEmailLogNum,"修改邮件发送日志",emailLog);
+        return ModifyResult.operateResult(updateEmailLogNum, "修改邮件发送日志",
+                ResponseStatusCodeEnum.SUCCESS.getCode());
     }
 
     @Override
     public ModifyResult deleteEmailLog(long uid) {
         int deleteEmailLogNum = emailLogDao.deleteEmailLog(uid);
-        return ModifyResult.operateResult(deleteEmailLogNum,"删除" + uid + "对应的邮件发送日志",null);
+        return ModifyResult.operateResult(deleteEmailLogNum,"删除" + uid + "对应的邮件发送日志",
+                ResponseStatusCodeEnum.SUCCESS.getCode());
     }
 
     @Override

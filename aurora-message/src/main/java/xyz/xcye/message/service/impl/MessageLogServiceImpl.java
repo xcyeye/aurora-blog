@@ -11,6 +11,7 @@ import org.springframework.validation.BindException;
 import xyz.xcye.common.dos.MessageLogDO;
 import xyz.xcye.common.dto.PaginationDTO;
 import xyz.xcye.common.entity.result.ModifyResult;
+import xyz.xcye.common.enums.ResponseStatusCodeEnum;
 import xyz.xcye.common.util.BeanCopyUtils;
 import xyz.xcye.common.util.DateUtils;
 import xyz.xcye.common.util.ValidationUtils;
@@ -72,13 +73,15 @@ public class MessageLogServiceImpl implements MessageLogService {
         }
         int insertMessageLogNum = messageLogDao.insertMessageLog(messageLogDO);
 
-        return ModifyResult.operateResult(insertMessageLogNum,"插入消息投递日志",messageLogDO);
+        return ModifyResult.operateResult(insertMessageLogNum,"插入消息投递日志",
+                 ResponseStatusCodeEnum.SUCCESS.getCode());
     }
 
     @Override
     public ModifyResult deleteMessageLog(long uid) {
         int deleteMessageLogNum = messageLogDao.deleteMessageLog(uid);
-        return ModifyResult.operateResult(deleteMessageLogNum,"删除消息投递日志",null);
+        return ModifyResult.operateResult(deleteMessageLogNum,"删除消息投递日志",
+                ResponseStatusCodeEnum.SUCCESS.getCode());
     }
 
     @Override
@@ -90,7 +93,7 @@ public class MessageLogServiceImpl implements MessageLogService {
 
         //如果修改成功，返回最新的数据
         return ModifyResult.operateResult(updateMessageLogNum,"修改消息投递日志",
-                updateMessageLogNum == 1 ? queryByUid(messageLogDO.getUid()) : null);
+                ResponseStatusCodeEnum.SUCCESS.getCode());
     }
 
     @Override

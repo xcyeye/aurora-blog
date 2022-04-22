@@ -12,32 +12,8 @@ public class AuroraGlobalException extends Exception {
     /** 响应码 **/
     public Integer statusCode;
 
-    /** 发生异常的path **/
-    public String path;
-
-    public AuroraGlobalException(Integer statusCode,String path,String message) {
+    public AuroraGlobalException(String message, Integer statusCode) {
         super(message);
         this.statusCode = statusCode;
-        this.path = path;
-    }
-
-    public AuroraGlobalException() {
-        super();
-    }
-
-    public AuroraGlobalException(String message) {
-        super(message);
-    }
-
-    public AuroraGlobalException(String message, Throwable cause) {
-        super(message, cause);
-    }
-
-    public AuroraGlobalException(Throwable cause) {
-        super(cause);
-    }
-
-    protected AuroraGlobalException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
-        super(message, cause, enableSuppression, writableStackTrace);
     }
 }

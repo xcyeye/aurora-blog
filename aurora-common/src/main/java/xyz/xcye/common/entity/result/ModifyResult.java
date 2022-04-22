@@ -1,9 +1,10 @@
 package xyz.xcye.common.entity.result;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 
 /**
@@ -12,8 +13,7 @@ import java.util.HashMap;
  * @author qsyyke
  */
 
-@AllArgsConstructor
-@NoArgsConstructor
+@Builder
 @Data
 public class ModifyResult {
     /**
@@ -29,14 +29,21 @@ public class ModifyResult {
     /**
      * 成功或者失败的消息
      */
+    @JsonIgnore
     private String message;
 
     /**
-     * 修改之后的数据
+     * 响应码
      */
-    private Object modifiedData;
+    @JsonIgnore
+    private int code;
 
-    public static ModifyResult operateResult(int affectedRows, String prefix, Object returnData) {
+    /**
+     * 主键uid
+     */
+    private long uid;
+
+    public static ModifyResult operateResult(int affectedRows, String prefix, int code, long... uid) {
         String msg = "";
         if (affectedRows == 1) {
             msg = prefix + "成功";
@@ -44,21 +51,24 @@ public class ModifyResult {
             msg = prefix + "失败";
         }
 
-        if (affectedRows != 1 || returnData == null) {
-            // 如果affectedRows为0，则返回空数据
-            returnData = new HashMap<>();
+        long insertUid = 0L;
+        if (uid.length >= 1) {
+            insertUid = uid[0];
         }
 
-        return new ModifyResult(affectedRows,affectedRows == 1,msg,returnData);
+        return ModifyResult.builder()
+                .affectedRows(affectedRows).message(msg).uid(insertUid)
+                .success(affectedRows == 1).code(code).build();
     }
 
-    public static ModifyResult operateResult(String msg, Object returnData, int affectedRows ) {
-
-        if (affectedRows != 1 || returnData == null) {
-            // 如果affectedRows为0，则返回空数据
-            returnData = new HashMap<>();
+    public static ModifyResult operateResult(String msg, int affectedRows,int code, long... uid) {
+        long insertUid = 0L;
+        if (uid.length >= 1) {
+            insertUid = uid[0];
         }
+        return ModifyResult.builder()
+                .code(code).affectedRows(affectedRows).uid(insertUid)
+                .success(affectedRows == 1).message(msg).build();
 
-        return new ModifyResult(affectedRows,affectedRows == 1,msg,returnData);
     }
 }

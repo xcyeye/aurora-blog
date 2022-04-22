@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import xyz.xcye.common.entity.result.R;
-import xyz.xcye.common.enums.ResultStatusCode;
+import xyz.xcye.common.enums.ResponseStatusCodeEnum;
 
 /**
  * 这是一个全局异常处理
@@ -23,6 +23,6 @@ public class GlobalHandlerException {
     public Object test(Exception exception) {
         log.error("发生异常了: 时间{},异常信息: {}",System.currentTimeMillis(),exception.getMessage());
 
-        return R.failure(ResultStatusCode.UNKNOWN.getCode(), exception.getMessage(),exception.getStackTrace());
+        return R.failure(ResponseStatusCodeEnum.UNKNOWN.getCode(), exception.getMessage(),exception.getStackTrace());
     }
 }

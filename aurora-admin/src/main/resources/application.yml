@@ -1,5 +1,5 @@
 server:
-  port: 7075
+  port: 8088
 seata:
   enabled: true
   application-id: applicationName
@@ -39,7 +39,7 @@ spring:
         max-wait: -1ms
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3306/aurora_comment?characterEncoding=utf8&connectTimeout=1000&socketTimeout=3000&autoReconnect=true&useUnicode=true&useSSL=false&serverTimezone=UTC
+    url: jdbc:mysql://127.0.0.1:3306/aurora_blog?characterEncoding=utf8&connectTimeout=1000&socketTimeout=3000&autoReconnect=true&useUnicode=true&useSSL=false&serverTimezone=UTC
     username: root
     password: Cqy19981202
   mvc:
@@ -63,7 +63,7 @@ mybatis:
   mapper-locations: classpath:mapper/**
   configuration:
     map-underscore-to-camel-case: true
-#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
 management:
   endpoints:
@@ -74,6 +74,10 @@ management:
 
 # 自定义的配置
 aurora:
+  user:
+    remember-me-day: 7
+    default-role: ROLE_user
+    default-permission: user
   snow-flake:
     workerId: 12
     datacenterId: 20

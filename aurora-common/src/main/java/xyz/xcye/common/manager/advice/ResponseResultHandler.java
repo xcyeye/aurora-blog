@@ -1,6 +1,7 @@
 package xyz.xcye.common.manager.advice;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
@@ -10,8 +11,9 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 import xyz.xcye.common.annotaion.ResponseResult;
 import xyz.xcye.common.entity.result.ExceptionResultEntity;
+import xyz.xcye.common.entity.result.ModifyResult;
 import xyz.xcye.common.entity.result.R;
-import xyz.xcye.common.enums.ResultStatusCode;
+import xyz.xcye.common.enums.ResponseStatusCodeEnum;
 
 import java.lang.reflect.Method;
 import java.util.HashMap;
@@ -23,6 +25,7 @@ import java.util.Map;
  */
 
 @Slf4j
+@ConditionalOnClass(ResponseBodyAdvice.class)
 @ControllerAdvice
 public class ResponseResultHandler implements ResponseBodyAdvice<Object> {
 
@@ -33,7 +36,7 @@ public class ResponseResultHandler implements ResponseBodyAdvice<Object> {
 
     @Override
     public Object beforeBodyWrite(Object responseBody, MethodParameter methodParameter, MediaType selectedContentType, Class<? extends HttpMessageConverter<?>> selectedConverterType, ServerHttpRequest request, ServerHttpResponse response) {
-
+        //response.getHeaders().setContentType(MediaType.APPLICATION_JSON);
         //执行的方法
         Method method = methodParameter.getMethod();
 
@@ -49,7 +52,13 @@ public class ResponseResultHandler implements ResponseBodyAdvice<Object> {
 
         if (hasResponseResultAnnotation) {
             //存在注解，没有发生异常，对结果封装
-            return R.success(ResultStatusCode.SUCCESS.getCode(), ResultStatusCode.SUCCESS.getMessage(),responseBody);
+            // 判断返回体是不是ModifyResult类型
+            if (responseBody instanceof ModifyResult) {
+                ModifyResult modifyResult = (ModifyResult) responseBody;
+                return R.success(modifyResult.getCode(), modifyResult.getMessage(),responseBody);
+            }
+            return R.success(ResponseStatusCodeEnum.SUCCESS.getCode(),
+                    ResponseStatusCodeEnum.SUCCESS.getMessage(),responseBody);
         }
 
         if (responseBody instanceof ExceptionResultEntity) {

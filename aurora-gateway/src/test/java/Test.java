@@ -3,7 +3,7 @@ import com.alibaba.fastjson.JSON;
 import lombok.Data;
 import xyz.xcye.common.entity.result.ExceptionResultEntity;
 import xyz.xcye.common.entity.result.R;
-import xyz.xcye.common.enums.ResultStatusCode;
+import xyz.xcye.common.enums.ResponseStatusCodeEnum;
 
 /**
  * @author qsyyke
@@ -18,7 +18,7 @@ public class Test {
         result.setErrorUrl("/login");
         result.setData(null);
 
-        R failure = R.failure(ResultStatusCode.PERMISSION_DENIED.getCode(), ResultStatusCode.PERMISSION_DENIED.getMessage());
+        R failure = R.failure(ResponseStatusCodeEnum.PERMISSION_DENIED.getCode(), ResponseStatusCodeEnum.PERMISSION_DENIED.getMessage());
 
 
         failure.setData(result);

@@ -2,19 +2,11 @@ package xyz.xcye.file.exception;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
-import org.springframework.validation.BindException;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import xyz.xcye.common.entity.result.ExceptionResultEntity;
-import xyz.xcye.common.enums.ResultStatusCode;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 /**
  * @author qsyyke
@@ -36,7 +28,7 @@ public class GlobalExceptionHandler {
     public ExceptionResultEntity result(Exception e, HttpServletRequest request) {
         log.error("发生异常：message:{},uri:{},消息信息:{}",e.getMessage(),request.getRequestURI(),e.getStackTrace());
         String requestURI = request.getRequestURI();
-        return new ExceptionResultEntity(e.getMessage(),requestURI,ResultStatusCode.UNKNOWN.getCode());
+        return new ExceptionResultEntity(e.getMessage(),requestURI,ResponseStatusCodeEnum.UNKNOWN.getCode());
     }
 
     *//**
@@ -72,8 +64,8 @@ public class GlobalExceptionHandler {
         });
 
         return new ExceptionResultEntity(
-                ResultStatusCode.PARAM_IS_INVALID.getMessage(),
-                ResultStatusCode.PARAM_IS_INVALID.getCode(),
+                ResponseStatusCodeEnum.PARAM_IS_INVALID.getMessage(),
+                ResponseStatusCodeEnum.PARAM_IS_INVALID.getCode(),
                 requestURI,errorsList);
     }*/
 

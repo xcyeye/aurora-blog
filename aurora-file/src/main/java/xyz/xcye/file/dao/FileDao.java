@@ -39,4 +39,6 @@ public interface FileDao {
      * @return FileEntity对象集合
      */
     List<FileDO> query(@Param("file") FileDO file);
+
+    FileDO queryByUid(@Param("uid") long uid);
 }

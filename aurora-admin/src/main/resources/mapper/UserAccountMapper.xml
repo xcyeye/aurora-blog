@@ -1,0 +1,15 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="xyz.xcye.admin.dao.UserAccountDao">
+
+
+    <insert id="insert"></insert>
+    <update id="update"></update>
+    <update id="updateDeleteStatus"></update>
+    <delete id="deleteByUid"></delete>
+    <select id="queryAll" resultType="xyz.xcye.common.dos.UserAccountDO"></select>
+    <select id="queryByUid" resultType="xyz.xcye.common.dos.UserAccountDO"></select>
+    <select id="queryByUserUid" resultType="xyz.xcye.common.dos.UserAccountDO"></select>
+</mapper>

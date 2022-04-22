@@ -7,8 +7,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
-import xyz.xcye.common.dos.UserDO;
-import xyz.xcye.common.enums.ResultStatusCode;
+import xyz.xcye.common.enums.ResponseStatusCodeEnum;
 import xyz.xcye.wg.dto.SecurityUserDTO;
 
 import java.util.ArrayList;
@@ -40,20 +39,20 @@ public class CustomUserDetailsService implements UserDetailsService {
 
         if (user == null) {
             //用户不存在
-            throw new UsernameNotFoundException(username + ResultStatusCode.PERMISSION_USER_NOT_EXIST.getMessage());
+            throw new UsernameNotFoundException(username + ResponseStatusCodeEnum.PERMISSION_USER_NOT_EXIST.getMessage());
         }
 
         List<String> grantedAuthorities = new ArrayList<>();
 
         //将从数据库中查询出来的role和权限增加到grantedAuthorities集合中
-        grantedAuthorities.add(user.getUserPermissionDO().getRole());
-        grantedAuthorities.addAll(Arrays.asList(user.getUserPermissionDO().getPermission().split(",")));
+        grantedAuthorities.add(user.getUserAccountDO().getRole());
+        grantedAuthorities.addAll(Arrays.asList(user.getUserAccountDO().getPermission().split(",")));
 
         //用户存在，封装UserDetails
         CustomUserDetails userDetails = new CustomUserDetails(
                 username,user.getPassword(),enable,credentialsNonExpired,
-                user.getUserPermissionDO().getAccountLocked(),
-                user.getUserPermissionDO().getAccountExpired(),null);
+                user.getUserAccountDO().getAccountLocked(),
+                user.getUserAccountDO().getAccountExpired(),null);
         //将权限集合放入userDetails对象中
         userDetails.setGrantedAuthorities(grantedAuthorities);
         return userDetails;

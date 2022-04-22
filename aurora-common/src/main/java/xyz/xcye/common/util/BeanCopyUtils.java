@@ -16,8 +16,8 @@ public class BeanCopyUtils {
         if (sourceList.isEmpty() || target == null) {
             return new ArrayList<>();
         }
-        PageInfo<S> emailLogPageInfo = new PageInfo<>(sourceList);
-        List<S> sourcePageInfoList = emailLogPageInfo.getList();
+        PageInfo<S> pageInfo = new PageInfo<>(sourceList);
+        List<S> sourcePageInfoList = pageInfo.getList();
         List<T> copyBeanList = new ArrayList<>();
         for (S sourceBean : sourcePageInfoList) {
             T t = target.newInstance();
@@ -25,5 +25,14 @@ public class BeanCopyUtils {
             copyBeanList.add(t);
         }
         return copyBeanList;
+    }
+
+    public static <T> T copyProperties(Object source,Class<T> target) throws InstantiationException, IllegalAccessException {
+        if (source == null) {
+            return null;
+        }
+        T t = target.newInstance();
+        BeanUtils.copyProperties(source,t);
+        return t;
     }
 }

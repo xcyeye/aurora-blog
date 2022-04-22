@@ -15,7 +15,7 @@ import xyz.xcye.file.interfaces.impl.LocalFileStorageServiceImpl;
 import xyz.xcye.common.dto.PaginationDTO;
 import xyz.xcye.common.entity.result.ModifyResult;
 import xyz.xcye.common.constant.FileStorageModeConstant;
-import xyz.xcye.common.enums.ResultStatusCode;
+import xyz.xcye.common.enums.ResponseStatusCodeEnum;
 import xyz.xcye.common.util.id.GenerateInfoUtils;
 import xyz.xcye.common.dto.FileEntityDTO;
 import xyz.xcye.file.service.FileService;
@@ -67,20 +67,19 @@ public class FileServiceImpl implements FileService {
     public ModifyResult insertFile(FileEntityDTO fileEntity, FileDO file, int storageMode) throws CustomFileException {
 
         if (fileEntity.getName() == null || fileEntity.getInputStream() == null) {
-            return new ModifyResult(0,false,"获取流失败或者获取文件名字失败",null);
+            return ModifyResult.operateResult(ResponseStatusCodeEnum.EXCEPTION_FILE_FAIL_PROPERTY.getMessage(),
+                    0,ResponseStatusCodeEnum.EXCEPTION_FILE_FAIL_PROPERTY.getCode());
         }
-
         //生成一个uid
         long uid = GenerateInfoUtils.generateUid(workerId,datacenterId);
 
         //根据storageMode获取需要使用的文件存储方式
         FileStorageService fileStorageService = getNeedFileStorageService(storageMode);
-
         FileEntityDTO uploadFileEntity = null;
         try {
             uploadFileEntity = fileStorageService.upload(fileEntity.getInputStream(), fileEntity);
         }catch (IOException e) {
-            throw new CustomFileException(e.getMessage(), ResultStatusCode.UNKNOWN.getCode());
+            throw new CustomFileException(e.getMessage(), ResponseStatusCodeEnum.UNKNOWN.getCode());
         }
 
         //对file对象进行赋值
@@ -90,21 +89,21 @@ public class FileServiceImpl implements FileService {
                 uploadFileEntity.getRemoteUrl(),storageMode,uploadFileEntity.getStoragePath());
 
         int insertFileNum = fileDao.insertFile(file);
-        String message = insertFileNum == 1 ? "插入成功" : "插入失败";
-        return new ModifyResult(insertFileNum, insertFileNum == 1,message,file);
+        return ModifyResult.operateResult(insertFileNum, "插入"+ file.getFileName() +"文件",
+                ResponseStatusCodeEnum.SUCCESS.getCode(),uid);
     }
 
     @Override
     public ModifyResult updateFile(FileDO file) {
         int updateRow = fileDao.updateFile(file);
         //无论修改成功，还是失败，都调用查询返回file
-        String message = updateRow == 1 ? "修改成功" : "修改失败";
         List<FileDO> fileList = queryAllFile(file, new PaginationDTO(defaultPageNum, defaultPageSize, ""));
         FileDO modifiedFile = null;
         if (fileList.size() != 0) {
             modifiedFile = fileList.get(0);
         }
-        return new ModifyResult(updateRow,updateRow == 1,message,modifiedFile);
+        return ModifyResult.operateResult(updateRow,"更新文件",
+                ResponseStatusCodeEnum.SUCCESS.getCode());
     }
 
     @Override
@@ -115,14 +114,16 @@ public class FileServiceImpl implements FileService {
         List<FileDO> fileList = queryAllFile(fileDO, new PaginationDTO());
         if (fileList.size() == 0) {
             //此uid无效 这里会存在一个问题，因为deleteStatus默认为false，如果你已经删除了文件，但是只传入uid，也会进入到这里
-            return new ModifyResult(0,false,"uid无效或已被删除",null);
+            return ModifyResult.operateResult(ResponseStatusCodeEnum.COMMON_RECORD_NOT_EXISTS.getMessage(),
+                    0,ResponseStatusCodeEnum.COMMON_RECORD_NOT_EXISTS.getCode());
         }
 
         FileDO deleteFileInfo = fileList.get(0);
 
         //如果已经删除，直接返回
         if (deleteFileInfo.getDelete()) {
-            return new ModifyResult(0,false,deleteFileInfo.getFileName() + "文件在此之前已被删除",deleteFileInfo);
+            return ModifyResult.operateResult(deleteFileInfo.getFileName() + ResponseStatusCodeEnum.EXCEPTION_FILE_FAIL_HAD_DELETED.getMessage(),
+                    0,ResponseStatusCodeEnum.EXCEPTION_FILE_FAIL_HAD_DELETED.getCode());
         }
 
         //获取此文件的存储模式，然后删除文件
@@ -131,7 +132,8 @@ public class FileServiceImpl implements FileService {
         //从对应的存储模式中删除文件
         if (!fileStorageService.delete(deleteFileInfo.getStoragePath())) {
             //没有删除成功，直接返回null
-            return new ModifyResult(0,false,"从存储服务中删除" + deleteFileInfo.getFileName() + "文件失败，操作被终止，可能原因：文件不存在",deleteFileInfo);
+            return ModifyResult.operateResult(ResponseStatusCodeEnum.EXCEPTION_FILE_FAIL_DELETE.getMessage() + " 可能原因：文件不存在",
+                    0,ResponseStatusCodeEnum.EXCEPTION_FILE_FAIL_DELETE.getCode());
         }
 
         //删除成功，修改数据表文件的状态
@@ -152,6 +154,11 @@ public class FileServiceImpl implements FileService {
         List<FileDO> query = fileDao.query(file);
         PageInfo<FileDO> filePageInfo = new PageInfo<>(query);
         return filePageInfo.getList();
+    }
+
+    @Override
+    public FileDO queryByUid(long uid) {
+        return fileDao.queryByUid(uid);
     }
 
     private FileStorageService getNeedFileStorageService(int storageMode) {

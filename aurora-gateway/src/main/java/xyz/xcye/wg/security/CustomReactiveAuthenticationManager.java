@@ -8,7 +8,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
-import xyz.xcye.common.enums.ResultStatusCode;
+import xyz.xcye.common.enums.ResponseStatusCodeEnum;
 import xyz.xcye.wg.service.CustomUserDetailsService;
 
 /**
@@ -41,7 +41,7 @@ public class CustomReactiveAuthenticationManager implements ReactiveAuthenticati
 
         //将数据库中查询到的密码和用户输入的明文密码调用matches方法进行比较
         if (!passwordEncoder.matches(presentedPassword,userDetails.getPassword())) {
-            return Mono.error(new AuthenticationCredentialsNotFoundException(username + ResultStatusCode.PERMISSION_USER_MISTAKE.getMessage()));
+            return Mono.error(new AuthenticationCredentialsNotFoundException(username + ResponseStatusCodeEnum.PERMISSION_USER_MISTAKE.getMessage()));
         }
 
         //密码正确，检查账户的状态
@@ -55,19 +55,19 @@ public class CustomReactiveAuthenticationManager implements ReactiveAuthenticati
      */
     private Mono<Authentication> checkAccount(UserDetails userDetails) {
         if (!userDetails.isEnabled()) {
-            return Mono.error(new DisabledException(userDetails.getUsername() + ResultStatusCode.PERMISSION_USER_IS_DISABLE.getMessage()));
+            return Mono.error(new DisabledException(userDetails.getUsername() + ResponseStatusCodeEnum.PERMISSION_USER_IS_DISABLE.getMessage()));
         }
 
         if (!userDetails.isAccountNonLocked()) {
-            return Mono.error(new LockedException(userDetails.getUsername() + ResultStatusCode.PERMISSION_USER_IS_LOCKED.getMessage()));
+            return Mono.error(new LockedException(userDetails.getUsername() + ResponseStatusCodeEnum.PERMISSION_USER_IS_LOCKED.getMessage()));
         }
 
         if (!userDetails.isAccountNonExpired()) {
-            return Mono.error(new AccountExpiredException(userDetails.getUsername() + ResultStatusCode.PERMISSION_TOKEN_EXPIRATION.getMessage()));
+            return Mono.error(new AccountExpiredException(userDetails.getUsername() + ResponseStatusCodeEnum.PERMISSION_TOKEN_EXPIRATION.getMessage()));
         }
 
         if (!userDetails.isCredentialsNonExpired()) {
-            return Mono.error(new CredentialsExpiredException(userDetails.getUsername() + ResultStatusCode.PERMISSION_TOKEN_EXPIRATION.getMessage()));
+            return Mono.error(new CredentialsExpiredException(userDetails.getUsername() + ResponseStatusCodeEnum.PERMISSION_TOKEN_EXPIRATION.getMessage()));
         }
 
         //运行到这里说明用户的密码正确

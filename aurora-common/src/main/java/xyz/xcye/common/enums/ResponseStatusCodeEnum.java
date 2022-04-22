@@ -4,10 +4,11 @@ package xyz.xcye.common.enums;
  * @author qsyyke
  */
 
-public enum ResultStatusCode {
+public enum ResponseStatusCodeEnum {
 
     //----------------------成功相关的响应码
-    SUCCESS(20000,"成功"),
+    SUCCESS(21000,"成功"),
+    COMMON_RECORD_NOT_EXISTS(22000,"记录不存在"),
 
 
     //----------------------参数相关的响应码
@@ -24,9 +25,11 @@ public enum ResultStatusCode {
     EXCEPTION_FILE_FAIL_DELETE(11130,"删除文件失败"),
     EXCEPTION_FILE_FAIL_DOWNLOAD(11140,"下载文件失败"),
     EXCEPTION_FILE_FAIL_CREATE(11150,"未能在指定路径下创建新文件或者文件夹"),
+    EXCEPTION_FILE_FAIL_HAD_DELETED(11160,"文件已被删除"),
     EXCEPTION_FILE_PERMISSION(11200,"没有权限操作文件"),
     EXCEPTION_FILE_NOT_FOUND(11300,"未发现该文件"),
     EXCEPTION_FILE_ALREADY_EXIST(11400,"已经存在该文件"),
+    EXCEPTION_FILE_FAIL_PROPERTY(11500,"获取文件属性失败"),
 
 
     //----------------------异常相关的响应码--------未知异常
@@ -62,6 +65,8 @@ public enum ResultStatusCode {
     PERMISSION_USER_EXIST(44500,"用户已存在"),
     PERMISSION_USER_NOT_EMAIL_UNAUTHORIZED(44610,"邮箱未验证"),
     PERMISSION_USER_IS_LOCKED(44710,"用户已被锁住"),
+    PERMISSION_USER_FAIL_ADD(44800,"添加用户失败"),
+    PERMISSION_USER_FAIL_DELETE(44900,"删除用户失败"),
 
 
     //----------------------未知错误相关的响应码
@@ -77,7 +82,7 @@ public enum ResultStatusCode {
      */
     private String message;
 
-    ResultStatusCode(Integer code, String message) {
+    ResponseStatusCodeEnum(Integer code, String message) {
         this.code = code;
         this.message = message;
     }

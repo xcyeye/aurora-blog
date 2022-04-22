@@ -1,7 +1,10 @@
 package xyz.xcye.common.entity.result;
 
+import lombok.Builder;
 import lombok.Data;
-import xyz.xcye.common.enums.ResultStatusCode;
+import xyz.xcye.common.enums.ResponseStatusCodeEnum;
+
+import java.util.HashMap;
 
 
 /**
@@ -9,6 +12,7 @@ import xyz.xcye.common.enums.ResultStatusCode;
  * @author qsyyke
  */
 
+@Builder
 @Data
 public class R {
 
@@ -32,7 +36,8 @@ public class R {
      * @return R对象
      */
     public static R success() {
-        return new R(ResultStatusCode.SUCCESS.getCode(),ResultStatusCode.SUCCESS.getMessage());
+        return success(ResponseStatusCodeEnum.SUCCESS.getCode(),
+                ResponseStatusCodeEnum.SUCCESS.getMessage(),new HashMap<>());
     }
 
     /**
@@ -42,7 +47,7 @@ public class R {
      * @return R对象
      */
     public static R success(Integer code,String message) {
-        return new R(code,message);
+        return success(code,message,new HashMap<>());
     }
 
     /**
@@ -53,7 +58,10 @@ public class R {
      * @return R对象
      */
     public static R success(Integer code,String message,Object data) {
-        return new R(code,message,data);
+        if (data == null) {
+            data = new HashMap<>();
+        }
+        return R.builder().code(code).message(message).data(data).build();
     }
 
     /**
@@ -61,7 +69,8 @@ public class R {
      * @return R对象
      */
     public static R failure() {
-        return new R(ResultStatusCode.UNKNOWN.getCode(),ResultStatusCode.UNKNOWN.getMessage());
+        return failure(ResponseStatusCodeEnum.UNKNOWN.getCode(),
+                ResponseStatusCodeEnum.UNKNOWN.getMessage(),new HashMap<>());
     }
 
     /**
@@ -71,7 +80,7 @@ public class R {
      * @return R对象
      */
     public static R failure(Integer code,String message) {
-        return new R(code,message);
+        return failure(code,message,new HashMap<>());
     }
 
     /**
@@ -82,36 +91,9 @@ public class R {
      * @return R对象
      */
     public static R failure(Integer code,String message,Object data) {
-        return new R(code,message,data);
-    }
-
-    private R(Integer code, String message) {
-        this.code = code;
-        this.message = message;
-    }
-
-    private R(Integer code, String message, Object data) {
-        this.code = code;
-        this.message = message;
-        this.data = data;
-    }
-
-    private R() {}
-
-    @Override
-    public String toString() {
-
         if (data == null) {
-            return "R{" +
-                    "code=" + code +
-                    ", message='" + message + '\'' +
-                    '}';
+            data = new HashMap<>();
         }
-
-        return "R{" +
-                "code=" + code +
-                ", message='" + message + '\'' +
-                ", data=" + data +
-                '}';
+        return R.builder().code(code).message(message).data(data).build();
     }
 }

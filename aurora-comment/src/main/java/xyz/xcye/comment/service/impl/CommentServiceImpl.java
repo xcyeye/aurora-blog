@@ -2,9 +2,6 @@ package xyz.xcye.comment.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import io.seata.core.context.RootContext;
-import io.seata.core.model.GlobalStatus;
-import io.seata.core.protocol.transaction.GlobalBeginRequest;
 import io.seata.spring.annotation.GlobalTransactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
@@ -17,6 +14,7 @@ import xyz.xcye.comment.service.MessageLogFeignService;
 import xyz.xcye.common.dto.comment.CommentDTO;
 import xyz.xcye.comment.manager.mq.RabbitMQSendService;
 import xyz.xcye.comment.service.CommentService;
+import xyz.xcye.common.enums.ResponseStatusCodeEnum;
 import xyz.xcye.common.vo.CommentVO;
 import xyz.xcye.common.dos.CommentDO;
 import xyz.xcye.common.dto.PaginationDTO;
@@ -120,20 +118,23 @@ public class CommentServiceImpl implements CommentService {
         CommentDTO commentDTO = new CommentDTO();
         BeanUtils.copyProperties(commentDO,commentDTO);
 
-        return ModifyResult.operateResult(insertCommentNum,"插入评论",commentDTO);
+        return ModifyResult.operateResult(insertCommentNum,"插入评论",
+                 ResponseStatusCodeEnum.SUCCESS.getCode());
     }
 
     @Override
     public ModifyResult setCommentDeleteStatus(Long uid) {
         // 直接修改
         int updateNum = commentDao.setCommentDeleteStatus(uid);
-        return ModifyResult.operateResult(updateNum,"对应的删除状态",null);
+        return ModifyResult.operateResult(updateNum,"对应的删除状态",
+                ResponseStatusCodeEnum.SUCCESS.getCode());
     }
 
     @Override
     public ModifyResult deleteComment(Long uid) {
         int deleteCommentNum = commentDao.deleteComment(uid);
-        return ModifyResult.operateResult(deleteCommentNum,"删除" + uid + "对应的评论",null);
+        return ModifyResult.operateResult(deleteCommentNum,"删除" + uid + "对应的评论",
+                ResponseStatusCodeEnum.SUCCESS.getCode());
     }
 
     @Override
@@ -142,7 +143,8 @@ public class CommentServiceImpl implements CommentService {
         boolean existsComment = isExistsComment(commentDO.getUid());
         if (!existsComment) {
             // 数据库中不存在此uid的记录，直接返回
-            return ModifyResult.operateResult("此" + commentDO.getUid() + "不存在",null,0);
+            return ModifyResult.operateResult("此" + commentDO.getUid() + "不存在",
+                    0,ResponseStatusCodeEnum.COMMON_RECORD_NOT_EXISTS.getCode());
         }
 
         //设置最后修改时间
@@ -150,7 +152,8 @@ public class CommentServiceImpl implements CommentService {
         int updateCommentNum = commentDao.updateComment(commentDO);
         CommentDTO commentDTO = new CommentDTO();
         BeanUtils.copyProperties(commentDO,commentDTO);
-        return ModifyResult.operateResult(updateCommentNum,"删除评论",commentDTO);
+        return ModifyResult.operateResult(updateCommentNum,"删除评论",
+                ResponseStatusCodeEnum.SUCCESS.getCode());
     }
 
     @Override

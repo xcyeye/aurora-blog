@@ -5,7 +5,7 @@ import org.springframework.security.web.server.ServerAuthenticationEntryPoint;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
-import xyz.xcye.common.enums.ResultStatusCode;
+import xyz.xcye.common.enums.ResponseStatusCodeEnum;
 import xyz.xcye.wg.util.SecurityResultHandler;
 
 /**
@@ -18,6 +18,6 @@ public class CustomAuthenticationEntryPoint implements ServerAuthenticationEntry
 
     @Override
     public Mono<Void> commence(ServerWebExchange exchange, AuthenticationException ex) {
-        return SecurityResultHandler.failure(exchange,ex, ResultStatusCode.PERMISSION_USER_NOT_LOGIN.getCode());
+        return SecurityResultHandler.failure(exchange,ex, ResponseStatusCodeEnum.PERMISSION_USER_NOT_LOGIN.getCode());
     }
 }

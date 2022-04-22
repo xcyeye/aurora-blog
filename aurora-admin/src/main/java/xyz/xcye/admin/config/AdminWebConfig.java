@@ -1,15 +1,20 @@
 package xyz.xcye.admin.config;
 
 import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.util.ReflectionUtils;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.mvc.method.RequestMappingInfoHandlerMapping;
 import springfox.documentation.spring.web.plugins.WebFluxRequestHandlerProvider;
 import springfox.documentation.spring.web.plugins.WebMvcRequestHandlerProvider;
+import xyz.xcye.admin.interceptor.AdminGlobalHandlerInterceptor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import xyz.xcye.common.exception.CustomGlobalExceptionHandler;
-import xyz.xcye.common.manager.advice.ResponseResultHandler;
 
 import java.lang.reflect.Field;
 import java.util.List;
@@ -18,7 +23,11 @@ import java.util.List;
  * 配置swagger
  */
 @Configuration
-public class AdminWebConfig {
+public class AdminWebConfig implements WebMvcConfigurer {
+
+    @Autowired
+    private AdminGlobalHandlerInterceptor globalHandlerInterceptor;
+
     @Bean(name = "commentBeanPostProcessor")
     public BeanPostProcessor springfoxHandlerProviderBeanPostProcessor() {
         return new BeanPostProcessor() {
@@ -43,20 +52,29 @@ public class AdminWebConfig {
     }
 
     /**
-     * 自定义全局异常处理
-     * @return
+     * 增加自定义拦截器
+     * @param registry
      */
-    @Bean(name = "adminCustomGlobalExceptionHandler")
-    public CustomGlobalExceptionHandler customGlobalExceptionHandler() {
-        return new CustomGlobalExceptionHandler();
+    @Override
+    public void addInterceptors (InterceptorRegistry registry) {
+        //"*/css/**","*/js/**","*/images/**","*/fonts/**"
+        registry.addInterceptor(globalHandlerInterceptor)
+                .addPathPatterns("/**")
+                .excludePathPatterns("/login","/","/css/**","/js/**","/images/**","/fonts/**");
+
     }
 
     /**
-     * 对响应结果进行包装
+     * 自定义全局异常处理
      * @return
      */
-    @Bean(name = "adminResponseResultHandler")
-    public ResponseResultHandler responseResultHandler() {
-        return new ResponseResultHandler();
+    /*@Bean
+    public CustomGlobalExceptionHandler customGlobalExceptionHandler() {
+        return new CustomGlobalExceptionHandler();
+    }*/
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 }

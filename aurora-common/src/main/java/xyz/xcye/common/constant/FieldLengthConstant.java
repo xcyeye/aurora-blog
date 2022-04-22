@@ -34,7 +34,7 @@ public class FieldLengthConstant {
     /** 用户昵称 **/
     public static final int NICKNAME = 15;
     /** 性别 **/
-    public static final int GENDER = 2;
+    public static final int GENDER = 10;
     /** 登录密码 **/
     public static final int PASSWORD = 100;
     /** 专业 **/

@@ -1,11 +1,7 @@
 package xyz.xcye.wg.security.handler;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -13,12 +9,9 @@ import org.springframework.security.web.server.WebFilterExchange;
 import org.springframework.security.web.server.authentication.ServerAuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
 import org.springframework.util.MultiValueMap;
-import org.springframework.util.StringUtils;
 import org.springframework.web.server.ServerWebExchange;
-import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
-import xyz.xcye.common.dos.UserPermissionDO;
-import xyz.xcye.common.util.DateUtils;
+import xyz.xcye.common.dos.UserAccountDO;
 import xyz.xcye.common.util.jwt.JwtUtils;
 import xyz.xcye.wg.enums.TokenEnum;
 import xyz.xcye.wg.util.SecurityResultHandler;
@@ -50,7 +43,7 @@ public class CustomAuthenticationSuccessHandler implements ServerAuthenticationS
         String username = (String) authentication.getPrincipal();
 
         //获取权限信息
-        UserPermissionDO userPermission = getPermission(grantedAuthorities);
+        UserAccountDO userPermission = getPermission(grantedAuthorities);
 
         //从请求头中获取rememberMe的秒数
         Integer rememberMeSecond = getRememberMeSecond(exchange);
@@ -87,7 +80,7 @@ public class CustomAuthenticationSuccessHandler implements ServerAuthenticationS
         return rememberMeDayNum * 60 * 60 * 24;
     }
 
-    public UserPermissionDO getPermission(List<GrantedAuthority> grantedAuthorities) {
+    public UserAccountDO getPermission(List<GrantedAuthority> grantedAuthorities) {
         StringBuilder permission = new StringBuilder();
         String role = "";
 
@@ -106,9 +99,8 @@ public class CustomAuthenticationSuccessHandler implements ServerAuthenticationS
             }
         }
 
-        UserPermissionDO userPermission = new UserPermissionDO();
-        userPermission.setPermission(String.valueOf(permission));
-        userPermission.setRole(role);
+        UserAccountDO userPermission = UserAccountDO.builder().permission(String.valueOf(permission))
+                .role(role).build();
         return userPermission;
 
     }

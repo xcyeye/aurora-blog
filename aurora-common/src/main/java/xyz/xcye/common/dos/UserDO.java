@@ -1,12 +1,15 @@
 package xyz.xcye.common.dos;
 
+import lombok.Builder;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
 import xyz.xcye.common.constant.FieldLengthConstant;
 import xyz.xcye.common.valid.Delete;
+import xyz.xcye.common.valid.Insert;
 import xyz.xcye.common.valid.Update;
 import xyz.xcye.common.valid.validator.ValidateString;
 
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
@@ -15,6 +18,7 @@ import javax.validation.constraints.Pattern;
  * @author qsyyke
  */
 
+@Builder
 @Data
 public class UserDO {
     /**
@@ -32,19 +36,19 @@ public class UserDO {
     /**
      * 用户昵称
      */
-    @ValidateString(value = "用户-昵称",max = FieldLengthConstant.NICKNAME)
+    @Length(max = FieldLengthConstant.NICKNAME,groups = {Insert.class})
     private String nickname;
 
     /**
      * 用户性别
      */
-    @ValidateString(value = "用户-性别",max = FieldLengthConstant.GENDER)
-    private Character gender;
+    @Length(max = FieldLengthConstant.GENDER)
+    private String gender;
 
     /**
      * 用户多少天免登录
      */
-    private Integer noLoginDay;
+    // private Integer rememberMeDay;
 
     /**
      * 用户的删除状态 true：已删除 false：未删除
@@ -59,13 +63,8 @@ public class UserDO {
     /**
      * 用户头像
      */
-    @ValidateString(value = "用户-头像地址",max = FieldLengthConstant.URL)
+    @Length(max = FieldLengthConstant.URL)
     private String avatar;
-
-    /**
-     * 用户级别 0：管理员 1：普通用户
-     */
-    private Integer userLevel;
 
     /**
      * 密码，使用md5加密
@@ -96,16 +95,23 @@ public class UserDO {
     private Long emailUid;
 
     /**
+     * 用户登录记录的uid
+     */
+    private Long loginUid;
+
+    /**
      * 角色 角色的命名必须遵循spring security规范，以ROLE_XXX，一个用户只能有一个角色
      */
-    @Pattern(regexp = "^(ROLE_)[a-zA-Z]{1,10}",message = "角色命名必须ROLE_XXX，并且总长度不能大于15")
-    private String role;
+    //@NotNull
+    //@NotEmpty
+    //@Pattern(regexp = "^(ROLE_)[a-zA-Z]{1,10}",message = "角色命名必须ROLE_XXX，并且总长度不能大于15")
+    //private String role;
 
     /**
      * 用户权限集合，可以有多个，使用,分割开
      */
-    @ValidateString(value = "用户权限集合",max = FieldLengthConstant.USER_PERMISSION)
-    private String permission;
+    //@Length(max = FieldLengthConstant.USER_PERMISSION)
+    //private String permission;
 
     /**
      * 创建时间
@@ -116,4 +122,7 @@ public class UserDO {
      * 更新时间
      */
     private String updateTime;
+
+    @NotNull(groups = {Update.class,Delete.class})
+    private Long userAccountUid;
 }

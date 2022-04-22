@@ -3,7 +3,7 @@ package xyz.xcye.file.interfaces.impl;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import xyz.xcye.common.dto.FileEntityDTO;
-import xyz.xcye.common.enums.ResultStatusCode;
+import xyz.xcye.common.enums.ResponseStatusCodeEnum;
 import xyz.xcye.common.util.DateUtils;
 import xyz.xcye.common.util.FileUtils;
 import xyz.xcye.file.exception.CustomFileException;
@@ -87,7 +87,7 @@ public class LocalFileStorageServiceImpl implements FileStorageService {
             writeFile = FileUtils.writeByStream(inputStream, filePath);
         } catch (IOException e) {
             e.printStackTrace();
-            throw new CustomFileException(ResultStatusCode.EXCEPTION_FILE_FAIL_UPLOAD.getMessage(),ResultStatusCode.EXCEPTION_FILE_FAIL_UPLOAD.getCode());
+            throw new CustomFileException(ResponseStatusCodeEnum.EXCEPTION_FILE_FAIL_UPLOAD.getMessage(), ResponseStatusCodeEnum.EXCEPTION_FILE_FAIL_UPLOAD.getCode());
         }
 
         String fileRemoteUrl = host + FileUtils.getFileSplitPath(nginxRootPath,writeFile.getAbsolutePath());
@@ -149,7 +149,7 @@ public class LocalFileStorageServiceImpl implements FileStorageService {
             //创建文件夹
             if (!FileUtils.createFile(folderPath, true)) {
                 //创建文件夹失败
-                throw new CustomFileException(ResultStatusCode.EXCEPTION_FILE_FAIL_CREATE.getMessage(),ResultStatusCode.EXCEPTION_FILE_FAIL_CREATE.getCode());
+                throw new CustomFileException(ResponseStatusCodeEnum.EXCEPTION_FILE_FAIL_CREATE.getMessage(), ResponseStatusCodeEnum.EXCEPTION_FILE_FAIL_CREATE.getCode());
             }
         }
 
@@ -159,7 +159,7 @@ public class LocalFileStorageServiceImpl implements FileStorageService {
         boolean isCreateFile = FileUtils.createFile(filePath, false);
         if (!isCreateFile) {
             //创建文件夹失败
-            throw new CustomFileException(ResultStatusCode.EXCEPTION_FILE_FAIL_CREATE.getMessage(),ResultStatusCode.EXCEPTION_FILE_FAIL_CREATE.getCode());
+            throw new CustomFileException(ResponseStatusCodeEnum.EXCEPTION_FILE_FAIL_CREATE.getMessage(), ResponseStatusCodeEnum.EXCEPTION_FILE_FAIL_CREATE.getCode());
         }
 
         return isCreateFile;

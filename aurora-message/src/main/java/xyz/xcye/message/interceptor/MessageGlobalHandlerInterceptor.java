@@ -47,8 +47,8 @@ public class MessageGlobalHandlerInterceptor implements HandlerInterceptor {
 
         if (!expiration) {
             //token过期
-            R failureResult = R.failure(ResultStatusCode.PERMISSION_TOKEN_EXPIRATION.getCode(),
-                    ResultStatusCode.PERMISSION_TOKEN_EXPIRATION.getMessage());
+            R failureResult = R.failure(ResponseStatusCodeEnum.PERMISSION_TOKEN_EXPIRATION.getCode(),
+                    ResponseStatusCodeEnum.PERMISSION_TOKEN_EXPIRATION.getMessage());
 
             String jsonToString = ObjectConvertJson.jsonToString(failureResult);
 

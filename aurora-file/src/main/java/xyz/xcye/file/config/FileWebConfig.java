@@ -6,6 +6,7 @@ import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.util.ReflectionUtils;
+import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
@@ -67,7 +68,7 @@ public class FileWebConfig {
     }
 
     /**
-     * 对响应结果进行包装
+     * 响应结果封装
      * @return
      */
     @Bean

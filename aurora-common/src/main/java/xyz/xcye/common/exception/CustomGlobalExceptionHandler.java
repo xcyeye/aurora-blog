@@ -8,7 +8,7 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import xyz.xcye.common.entity.result.ExceptionResultEntity;
-import xyz.xcye.common.enums.ResultStatusCode;
+import xyz.xcye.common.enums.ResponseStatusCodeEnum;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -36,7 +36,7 @@ public class CustomGlobalExceptionHandler {
 
         // 设置响应码，否则出现异常，seata不会回滚
         response.setStatus(500);
-        return new ExceptionResultEntity(e.getMessage(),requestURI, ResultStatusCode.UNKNOWN.getCode());
+        return new ExceptionResultEntity(e.getMessage(),requestURI, ResponseStatusCodeEnum.UNKNOWN.getCode());
     }
 
     /**
@@ -74,8 +74,8 @@ public class CustomGlobalExceptionHandler {
 
         response.setStatus(500);
         return new ExceptionResultEntity(
-                ResultStatusCode.PARAM_IS_INVALID.getMessage(),
-                ResultStatusCode.PARAM_IS_INVALID.getCode(),
+                ResponseStatusCodeEnum.PARAM_IS_INVALID.getMessage(),
+                ResponseStatusCodeEnum.PARAM_IS_INVALID.getCode(),
                 requestURI,errorsList);
     }
 }

@@ -1,7 +1,7 @@
 package xyz.xcye.wg.dto;
 
 import lombok.Data;
-import xyz.xcye.common.dos.UserPermissionDO;
+import xyz.xcye.common.dos.UserAccountDO;
 
 /**
  * @author qsyyke
@@ -59,5 +59,5 @@ public class SecurityUserDTO {
      */
     private String permission;
 
-    private UserPermissionDO userPermissionDO;
+    private UserAccountDO userAccountDO;
 }

@@ -74,9 +74,8 @@ public class UploadFileController {
         FileDO fileInfo = new FileDO();
         fileInfo.setSummary("从typora上传的文件");
         ModifyResult modifyResult = fileService.insertFile(fileEntity, fileInfo, storageMode);
-        if (modifyResult.getModifiedData() != null) {
-            FileDO insertedFile = (FileDO) modifyResult.getModifiedData();
-            return insertedFile.getPath();
+        if (modifyResult.getAffectedRows() == 1) {
+            return fileService.queryByUid(modifyResult.getUid()).getPath();
         }
         return "";
     }

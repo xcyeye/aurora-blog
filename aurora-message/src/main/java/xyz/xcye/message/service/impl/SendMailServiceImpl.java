@@ -12,6 +12,7 @@ import xyz.xcye.common.dos.EmailLogDO;
 import xyz.xcye.common.dto.EmailCommonNoticeDTO;
 import xyz.xcye.common.dto.EmailVerifyAccountDTO;
 import xyz.xcye.common.entity.result.ModifyResult;
+import xyz.xcye.common.enums.ResponseStatusCodeEnum;
 import xyz.xcye.common.util.DateUtils;
 import xyz.xcye.common.util.ValidationUtils;
 import xyz.xcye.common.valid.Insert;
@@ -59,7 +60,8 @@ public class SendMailServiceImpl implements SendMailService {
         //根据userUid获取对应的Email对象
         EmailDO emailDO = emailService.queryByUserUid(userUid);
         if (emailDO == null) {
-            return ModifyResult.operateResult("数据库中并不存在此" + userUid + "邮件记录",null,0);
+            return ModifyResult.operateResult(userUid + "邮件" + ResponseStatusCodeEnum.COMMON_RECORD_NOT_EXISTS.getMessage(),
+                    0,ResponseStatusCodeEnum.COMMON_RECORD_NOT_EXISTS.getCode());
         }
 
         //判断传入的subject是否为null或者空
@@ -79,7 +81,8 @@ public class SendMailServiceImpl implements SendMailService {
         //根据userUid获取对应的Email对象
         EmailDO emailDO = emailService.queryByUserUid(userUid);
         if (emailDO == null) {
-            return ModifyResult.operateResult("数据库中并不存在此" + userUid + "邮件记录",null,0);
+            return ModifyResult.operateResult(userUid + "邮件" + ResponseStatusCodeEnum.COMMON_RECORD_NOT_EXISTS.getMessage(),
+                    0,ResponseStatusCodeEnum.COMMON_RECORD_NOT_EXISTS.getCode());
         }
 
         //判断传入的subject是否为null或者空或者长度超过限制
@@ -99,7 +102,8 @@ public class SendMailServiceImpl implements SendMailService {
         //根据userUid获取对应的Email对象
         EmailDO emailDO = emailService.queryByUserUid(userUid);
         if (emailDO == null) {
-            return ModifyResult.operateResult("数据库中并不存在此" + userUid + "邮件记录",null,0);
+            return ModifyResult.operateResult(userUid + "邮件" + ResponseStatusCodeEnum.COMMON_RECORD_NOT_EXISTS.getMessage(),
+                    0,ResponseStatusCodeEnum.COMMON_RECORD_NOT_EXISTS.getCode());
         }
 
         //判断传入的subject是否为null或者空
@@ -118,7 +122,8 @@ public class SendMailServiceImpl implements SendMailService {
         //根据userUid获取对应的Email对象
         EmailDO emailDO = emailService.queryByUserUid(userUid);
         if (emailDO == null) {
-            return ModifyResult.operateResult("数据库中并不存在此" + userUid + "邮件记录",null,0);
+            return ModifyResult.operateResult(userUid + "邮件" + ResponseStatusCodeEnum.COMMON_RECORD_NOT_EXISTS.getMessage(),
+                    0,ResponseStatusCodeEnum.COMMON_RECORD_NOT_EXISTS.getCode());
         }
 
         //判断传入的subject是否为null或者空

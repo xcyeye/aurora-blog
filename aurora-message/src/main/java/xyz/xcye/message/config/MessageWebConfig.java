@@ -71,7 +71,7 @@ public class MessageWebConfig implements WebMvcConfigurer {
     }
 
     /**
-     * 对响应结果进行包装
+     * 响应结果封装
      * @return
      */
     @Bean

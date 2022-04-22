@@ -68,6 +68,11 @@
         </where>
     </select>
 
+    <select id="queryByUid" resultMap="fileResult">
+        select uid,create_time,delete_time,file_name,size,is_delete,summary,path,storage_mode,storage_path from au_file
+        where uid=#{uid}
+    </select>
+
     <resultMap id="fileResult" type="xyz.xcye.common.dos.FileDO">
         <id column="uid" property="uid"/>
         <result column="create_time" property="createTime"/>
