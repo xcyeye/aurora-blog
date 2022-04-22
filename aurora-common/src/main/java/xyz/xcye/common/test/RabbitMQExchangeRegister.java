@@ -5,7 +5,7 @@ import org.springframework.amqp.core.CustomExchange;
 import org.springframework.amqp.core.Exchange;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
-import xyz.xcye.common.constant.RabbitMQNameConstant;
+import RabbitMQNameConstant;
 
 */
 /**

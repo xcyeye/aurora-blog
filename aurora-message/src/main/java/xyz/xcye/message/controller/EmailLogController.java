@@ -34,28 +34,28 @@ public class EmailLogController {
 
     @ApiOperation(value = "插入邮件发送日志",notes = "插入邮件发送日志")
     @ResponseResult
-    @PostMapping("/insert")
+    @PostMapping("")
     public ModifyResult insertEmailLog(@Validated({Insert.class, Default.class}) EmailLogDO emailLog) {
         return emailLogService.insertEmailLog(emailLog);
     }
 
     @ApiOperation(value = "根据uid更新邮件发送日志")
     @ResponseResult
-    @PutMapping("/update")
+    @PutMapping("")
     public ModifyResult updateEmailLog(@Validated({Update.class}) EmailLogDO emailLog) throws BindException {
         return emailLogService.updateEmailLog(emailLog);
     }
 
     @ApiOperation(value = "删除uid对应邮件发送日志")
     @ResponseResult
-    @DeleteMapping("/delete/{uid}")
+    @DeleteMapping("/{uid}")
     public ModifyResult deleteEmailLog(@PathVariable("uid") long uid) {
         return emailLogService.deleteEmailLog(uid);
     }
 
     @ApiOperation(value = "查询所有邮件发送日志")
     @ResponseResult
-    @GetMapping("/queryAll")
+    @GetMapping("")
     public List<EmailLogDO> queryAllEmailLog(EmailLogDO emailLog, PaginationDTO pagination) {
         if (emailLog == null) {
             emailLog = new EmailLogDO();

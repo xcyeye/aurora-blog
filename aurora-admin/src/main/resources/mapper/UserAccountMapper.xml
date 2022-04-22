@@ -4,12 +4,108 @@
 
 <mapper namespace="xyz.xcye.admin.dao.UserAccountDao">
 
+    <resultMap id="userAccountResultMap" type="xyz.xcye.common.dos.UserAccountDO">
+        <result column="is_delete" property="delete"/>
+        <result column="is_account_locked" property="accountLocked"/>
+        <result column="is_account_expired" property="accountExpired"/>
+    </resultMap>
 
-    <insert id="insert"></insert>
-    <update id="update"></update>
-    <update id="updateDeleteStatus"></update>
-    <delete id="deleteByUid"></delete>
-    <select id="queryAll" resultType="xyz.xcye.common.dos.UserAccountDO"></select>
-    <select id="queryByUid" resultType="xyz.xcye.common.dos.UserAccountDO"></select>
-    <select id="queryByUserUid" resultType="xyz.xcye.common.dos.UserAccountDO"></select>
+    <insert id="insert">
+        insert into au_user_account
+        (
+         uid,role,permission,is_account_locked,is_account_expired,user_uid,create_time,update_time,is_delete
+        )
+        values
+        (
+         #{userAccountDO.uid},#{userAccountDO.role},#{userAccountDO.permission},
+         #{userAccountDO.accountLocked},#{userAccountDO.accountExpired},#{userAccountDO.userUid},
+         #{userAccountDO.createTime},#{userAccountDO.updateTime},#{userAccountDO.delete}
+        )
+    </insert>
+
+    <update id="update">
+        update au_user_account
+        <set>
+            <if test="userAccountDO.role != null">
+                role=#{userAccountDO.role},
+            </if>
+            <if test="userAccountDO.permission != null">
+                permission=#{userAccountDO.permission},
+            </if>
+            <if test="userAccountDO.accountLocked != null">
+                is_account_locked=#{userAccountDO.accountLocked},
+            </if>
+            <if test="userAccountDO.accountExpired != null">
+                is_account_expired=#{userAccountDO.accountExpired},
+            </if>
+            <if test="userAccountDO.updateTime != null">
+                update_time=#{userAccountDO.updateTime},
+            </if>
+        </set>
+        where uid=#{userAccountDO.uid}
+    </update>
+
+    <update id="updateDeleteStatus">
+        update
+            au_user_account
+        set
+            is_delete=#{userAccountDO.delete},update_time=#{userAccountDO.updateTime}
+        where
+            uid=#{userAccountDO.uid}
+    </update>
+
+    <delete id="deleteByUid">
+        delete
+            au_user_account
+        where
+            uid=#{uid}
+    </delete>
+
+    <select id="queryAll" resultType="xyz.xcye.common.dos.UserAccountDO">
+        select
+        uid,role,permission,is_account_locked,is_account_expired,user_uid,create_time,update_time,is_delete
+        from
+            au_user_account
+        <where>
+            <if test="userAccountDO.role != null">
+                role=#{userAccountDO.role}
+            </if>
+            <if test="userAccountDO.permission != null">
+                and permission like contact('%',#{userAccountDO.permission},'%')
+            </if>
+            <if test="userAccountDO.accountLocked != null">
+                and is_account_locked=#{userAccountDO.accountLocked}
+            </if>
+            <if test="userAccountDO.accountExpired != null">
+                and is_account_expired=#{userAccountDO.accountExpired}
+            </if>
+            <if test="userAccountDO.createTime != null">
+                and create_time=#{userAccountDO.createTime}
+            </if>
+            <if test="userAccountDO.updateTime != null">
+                and update_time=#{userAccountDO.updateTime}
+            </if>
+            <if test="userAccountDO.delete != null">
+                and is_delete=#{userAccountDO.delete}
+            </if>
+        </where>
+    </select>
+
+    <select id="queryByUid" resultMap="userAccountResultMap">
+        select
+            uid,role,permission,is_account_locked,is_account_expired,user_uid,create_time,update_time,is_delete
+        from
+            au_user_account
+        where
+            uid=#{uid}
+    </select>
+
+    <select id="queryByUserUid" resultMap="userAccountResultMap">
+        select
+            uid,role,permission,is_account_locked,is_account_expired,user_uid,create_time,update_time,is_delete
+        from
+            au_user_account
+        where
+            user_uid=#{userUid}
+    </select>
 </mapper>

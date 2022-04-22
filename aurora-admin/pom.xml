@@ -147,6 +147,12 @@
             <version>1.0-SNAPSHOT</version>
         </dependency>
 
+        <dependency>
+            <groupId>xyz.xcye</groupId>
+            <artifactId>aurora-web-common</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+
         <!--临时依赖，这个是出现bug，临时的依赖可以解决-->
 
         <!--解决seata序列化问题-->

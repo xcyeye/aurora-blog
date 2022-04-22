@@ -37,14 +37,14 @@ public class MessageLogController {
 
     @ApiOperation(value = "插入新消费消息",notes = "插入新消费消息")
     @ResponseResult
-    @PostMapping("/insert")
+    @PostMapping("")
     public ModifyResult insertMessageLog(@Validated({Insert.class,Default.class}) MessageLogDO messageLogDO) throws BindException {
         return messageLogService.insertMessageLog(messageLogDO);
     }
 
     @ApiOperation(value = "更新消费消息")
     @ResponseResult
-    @PutMapping("/update")
+    @PutMapping("")
     public ModifyResult updateMessageLog(@Validated(Update.class) MessageLogDO messageLogDO) throws BindException {
         return messageLogService.updateMessageLog(messageLogDO);
     }
@@ -58,16 +58,15 @@ public class MessageLogController {
 
     @ApiOperation(value = "查询所有消费消息")
     @ResponseResult
-    @GetMapping("/queryAll")
+    @GetMapping("")
     public List<MessageLogVO> queryAllMessageLog(MessageLogDO messageLogDO, PaginationDTO paginationDTO) throws InstantiationException, IllegalAccessException {
         return messageLogService.queryAllMessageLog(messageLogDO,paginationDTO);
     }
 
     @ApiOperation(value = "根据uid查询消费消息")
     @ResponseResult
-    @GetMapping("/queryByUid/{uid}")
+    @GetMapping("/{uid}")
     public MessageLogDO queryMessageLogByUid(@PathVariable("uid") long uid) {
-
         try {
             rabbitMQSchedule.reconsumeMQMessageTask();
         } catch (BindException e) {

@@ -23,6 +23,7 @@
         <module>aurora-admin</module>
         <module>aurora-message</module>
         <module>aurora-common</module>
+        <module>aurora-web-common</module>
     </modules>
 
     <properties>

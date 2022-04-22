@@ -24,7 +24,6 @@ seata:
       password: "nacos"
 
 spring:
-
   mail:
     host: smtp.qq.com
     username: 2291308094@qq.com
@@ -112,6 +111,6 @@ feign:
     refresh-enabled: true
     config:
       aurora-message-messageLog:
-#        connectTimeout: 10000
-#        readTimeout: 10000
+        connectTimeout: 10000000
+        readTimeout: 100000000
         loggerLevel: basic

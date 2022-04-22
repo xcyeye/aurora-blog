@@ -80,7 +80,12 @@
         delete from au_email where uid=#{uid}
     </update>
     <update id="updateDeleteStatus">
-        update au_email set is_delete=#{email.delete} where uid=#{email.uid}
+        update
+            au_email
+        set
+            is_delete=#{email.delete},update_time=#{email.updateTime}
+        where
+            uid=#{email.uid}
     </update>
 
     <select id="queryAllEmail" resultMap="emailMap">

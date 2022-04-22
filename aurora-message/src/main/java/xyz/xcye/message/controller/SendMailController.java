@@ -25,7 +25,7 @@ import java.math.BigInteger;
  */
 
 @Api(value = "发送邮件相关接口",tags = "发送邮件相关接口")
-@RequestMapping("/message/mail")
+@RequestMapping("/message/sendMail")
 @RestController
 public class SendMailController {
 

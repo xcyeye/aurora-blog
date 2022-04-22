@@ -5,7 +5,7 @@ import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.core.QueueBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
-import xyz.xcye.common.constant.RabbitMQNameConstant;
+import RabbitMQNameConstant;
 
 */
 /**

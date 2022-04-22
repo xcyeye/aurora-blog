@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.BindException;
 import xyz.xcye.admin.dao.UserDao;
+import xyz.xcye.admin.entity.DefaultValueEntity;
 import xyz.xcye.admin.exception.UserException;
 import xyz.xcye.admin.service.RoleService;
 import xyz.xcye.admin.service.UserAccountService;
@@ -83,6 +84,8 @@ public class UserServiceImpl implements UserService {
     private UserAccountService userAccountService;
     @Autowired
     private RoleService roleService;
+    @Autowired
+    private DefaultValueEntity defaultValueEntity;
 
     @Transactional
     @Override
@@ -94,47 +97,25 @@ public class UserServiceImpl implements UserService {
         }
 
         // 设置默认属性
-        userDO.setCreateTime(DateUtils.format(new Date()));
-        userDO.setDelete(false);
-        userDO.setVerifyEmail(false);
-        userDO.setPassword(passwordEncoder.encode(userDO.getPassword()));
-        userDO.setUid(GenerateInfoUtils.generateUid(workerId,datacenterId));
-
-        if (!StringUtils.hasLength(userDO.getNickname())) {
-            userDO.setNickname("aurora");
-        }
-
-        userAccountDO.setCreateTime(DateUtils.format(new Date()));
-        userAccountDO.setDelete(false);
-        userAccountDO.setAccountExpired(false);
-        userAccountDO.setAccountLocked(false);
-        userAccountDO.setUid(GenerateInfoUtils.generateUid(workerId,datacenterId));
-        userAccountDO.setUserUid(userDO.getUid());
-
-        // 部分属性值缺失，设置默认值
-        if (!StringUtils.hasLength(userDO.getGender())) {
-            userDO.setGender(GenderConstant.MALE);
-        }
-
-        // 判断用户角色是否存在且正确
-        userAccountDO.setPermission(getEffectivePermission(userAccountDO.getPermission()));
-        if (!existsRole(userAccountDO.getRole())) {
-            userAccountDO.setRole("");
-        }
+        userDO = setUserProperties(userDO);
+        userAccountDO = setUserAccountProperties(userDO,userAccountDO);
 
         // 插入
         int insertUserNum = userDao.insertUser(userDO);
         ModifyResult modifyResult = userAccountService.insert(userAccountDO);
         if (modifyResult.getAffectedRows() == 1) {
-            userDO.setUserAccountUid(modifyResult.getUid());
+            userDO = UserDO.builder().uid(userDO.getUid()).userAccountUid(modifyResult.getUid()).build();
         }else {
             throw new UserException(ResponseStatusCodeEnum.PERMISSION_USER_FAIL_ADD.getMessage(),
                     ResponseStatusCodeEnum.PERMISSION_USER_FAIL_ADD.getCode());
         }
 
-        updateUser(userDO);
+        if (updateUser(userDO).getAffectedRows() != 1) {
+            throw new UserException(ResponseStatusCodeEnum.PERMISSION_USER_FAIL_ADD.getMessage(),
+                    ResponseStatusCodeEnum.PERMISSION_USER_FAIL_ADD.getCode());
+        }
         return ModifyResult.operateResult(insertUserNum,"插入用户" + userDO.getUsername(),
-                ResponseStatusCodeEnum.SUCCESS.getCode());
+                ResponseStatusCodeEnum.SUCCESS.getCode(),userDO.getUid());
     }
 
     @Override
@@ -270,5 +251,45 @@ public class UserServiceImpl implements UserService {
             roleService.insert(RoleDO.builder().role(role).build());
         }
         return true;
+    }
+
+    private UserDO setUserProperties(UserDO userDO) {
+        userDO.setCreateTime(DateUtils.format(new Date()));
+        userDO.setDelete(false);
+        userDO.setVerifyEmail(false);
+        userDO.setPassword(passwordEncoder.encode(userDO.getPassword()));
+        userDO.setUid(GenerateInfoUtils.generateUid(workerId,datacenterId));
+
+        if (!StringUtils.hasLength(userDO.getNickname())) {
+            userDO.setNickname(defaultValueEntity.getNickname());
+        }
+
+        if (!StringUtils.hasLength(userDO.getAvatar())) {
+            userDO.setAvatar(defaultValueEntity.getAvatar());
+        }
+
+        // 部分属性值缺失，设置默认值
+        if (!StringUtils.hasLength(userDO.getGender())) {
+            userDO.setGender(defaultValueEntity.getGender());
+        }
+
+        return userDO;
+    }
+
+    private UserAccountDO setUserAccountProperties(UserDO userDO,UserAccountDO userAccountDO) throws InstantiationException, IllegalAccessException {
+        userAccountDO.setCreateTime(DateUtils.format(new Date()));
+        userAccountDO.setDelete(false);
+        userAccountDO.setAccountExpired(false);
+        userAccountDO.setAccountLocked(false);
+        userAccountDO.setUid(GenerateInfoUtils.generateUid(workerId,datacenterId));
+        userAccountDO.setUserUid(userDO.getUid());
+
+        // 判断用户角色是否存在且正确
+        userAccountDO.setPermission(getEffectivePermission(userAccountDO.getPermission()));
+        if (!existsRole(userAccountDO.getRole())) {
+            userAccountDO.setRole(defaultValueEntity.getRole());
+        }
+
+        return userAccountDO;
     }
 }

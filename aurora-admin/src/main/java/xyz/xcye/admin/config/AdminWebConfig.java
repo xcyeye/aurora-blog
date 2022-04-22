@@ -14,7 +14,6 @@ import springfox.documentation.spring.web.plugins.WebFluxRequestHandlerProvider;
 import springfox.documentation.spring.web.plugins.WebMvcRequestHandlerProvider;
 import xyz.xcye.admin.interceptor.AdminGlobalHandlerInterceptor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import xyz.xcye.common.exception.CustomGlobalExceptionHandler;
 
 import java.lang.reflect.Field;
 import java.util.List;
@@ -77,4 +76,46 @@ public class AdminWebConfig implements WebMvcConfigurer {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
+    /*@Bean
+    public HttpMessageConverters fastJsonConfigure() {
+        FastJsonHttpMessageConverter converter = new FastJsonHttpMessageConverter();
+        ArrayList<MediaType> supportedMediaTypes = new ArrayList<>(32);
+        supportedMediaTypes.add(MediaType.APPLICATION_JSON);
+        supportedMediaTypes.add(MediaType.APPLICATION_JSON_UTF8);
+        supportedMediaTypes.add(MediaType.APPLICATION_ATOM_XML);
+        supportedMediaTypes.add(MediaType.APPLICATION_FORM_URLENCODED);
+        supportedMediaTypes.add(MediaType.APPLICATION_OCTET_STREAM);
+        supportedMediaTypes.add(MediaType.APPLICATION_PDF);
+        supportedMediaTypes.add(MediaType.APPLICATION_RSS_XML);
+        supportedMediaTypes.add(MediaType.APPLICATION_XHTML_XML);
+        supportedMediaTypes.add(MediaType.APPLICATION_XML);
+        supportedMediaTypes.add(MediaType.IMAGE_GIF);
+        supportedMediaTypes.add(MediaType.IMAGE_JPEG);
+        supportedMediaTypes.add(MediaType.IMAGE_PNG);
+        supportedMediaTypes.add(MediaType.TEXT_EVENT_STREAM);
+        supportedMediaTypes.add(MediaType.TEXT_HTML);
+        supportedMediaTypes.add(MediaType.TEXT_MARKDOWN);
+        supportedMediaTypes.add(MediaType.TEXT_PLAIN);
+        supportedMediaTypes.add(MediaType.TEXT_XML);
+        converter.setSupportedMediaTypes(supportedMediaTypes);
+        FastJsonConfig fastJsonConfig = new FastJsonConfig();
+        fastJsonConfig.setSerializerFeatures(SerializerFeature.WriteDateUseDateFormat,
+                SerializerFeature.WriteMapNullValue,
+                SerializerFeature.WriteEnumUsingToString,
+                SerializerFeature.WriteNullListAsEmpty,
+                SerializerFeature.WriteNullStringAsEmpty,
+                SerializerFeature.WriteNullBooleanAsFalse,
+                SerializerFeature.DisableCircularReferenceDetect);
+        //日期格式化
+        fastJsonConfig.setDateFormat("yyyy-MM-dd HH:mm:ss");
+        converter.setFastJsonConfig(fastJsonConfig);
+        return new HttpMessageConverters(converter);
+    }*/
+
+    /*@Bean
+    @ConditionalOnMissingBean
+    public HttpMessageConverters messageConverters(ObjectProvider<HttpMessageConverter<?>> converters) {
+        return new HttpMessageConverters(converters.orderedStream().collect(Collectors.toList()));
+    }*/
 }

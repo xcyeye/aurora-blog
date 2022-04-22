@@ -1,7 +1,7 @@
 package xyz.xcye.common.util.id;
 
-import xyz.xcye.common.util.id.generator.UsernameGenerator;
 import xyz.xcye.common.util.id.generator.SnowFlakeGenerator;
+import xyz.xcye.common.util.id.generator.UsernameGenerator;
 
 import java.util.Random;
 

@@ -60,14 +60,14 @@ public class CommentController {
 
     @ApiOperation(value = "更新评论")
     @ResponseResult
-    @PutMapping("/update")
+    @PutMapping("")
     public ModifyResult updateComment(@Validated({Update.class}) CommentDO commentDO) {
         return commentService.updateComment(commentDO);
     }
 
     @ApiOperation(value = "插入新评论")
     @ResponseResult
-    @PostMapping("/insert")
+    @PostMapping("")
     public ModifyResult insertComment(@Validated({Default.class, Insert.class}) CommentDO commentDO,
                                       HttpServletRequest request) throws BindException {
         commentDO.setCommentIp(NetWorkUtils.getIpAddr(request));
@@ -77,14 +77,14 @@ public class CommentController {
 
     @ApiOperation(value = "修改评论的删除状态")
     @ResponseResult
-    @PutMapping("/setDeleteStatus/{uid}")
+    @PutMapping("/deleteStatus/{uid}")
     public ModifyResult setCommentDeleteStatus(@PathVariable("uid") Long uid) {
         return commentService.setCommentDeleteStatus(uid);
     }
 
     @ApiOperation(value = "删除单条评论")
     @ResponseResult
-    @DeleteMapping("/delete/{uid}")
+    @DeleteMapping("/{uid}")
     public ModifyResult deleteComment(@PathVariable("uid") Long uid) {
         return commentService.deleteComment(uid);
     }

@@ -25,7 +25,8 @@
     </insert>
 
     <update id="updateUser">
-        update au_user
+        update
+            au_user
         <set>
             <if test="userDO.userSummary != null">
                 user_summary=#{userDO.userSummary},
@@ -54,23 +55,36 @@
             <if test="userDO.updateTime != null">
                 update_time=#{userDO.updateTime}
             </if>
+            <if test="userDO.userAccountUid != null">
+                user_account_uid=#{userDO.userAccountUid}
+            </if>
         </set>
         where uid=#{userDO.uid}
     </update>
 
     <update id="updateDeleteStatus">
-        update au_user set is_delete=#{userDO.delete} where uid=#{userDO.uid}
+        update
+            au_user
+        set
+            is_delete=#{userDO.delete},update_time=#{userDO.updateTime}
+        where
+            uid=#{userDO.uid}
     </update>
 
     <delete id="deleteByUid">
-        delete from au_user where uid=#{uid}
+        delete from
+            au_user
+        where
+            uid=#{uid}
     </delete>
 
     <select id="queryAll" resultMap="userResultMap">
-        select uid,user_summary,nickname,gender,login_uid,is_delete,
-               site_uid,avatar,password,username,profession,is_verify_email,
-               email_uid,user_account_uid,create_time,update_time
-        from au_user
+        select
+            uid,user_summary,nickname,gender,login_uid,is_delete,
+            site_uid,avatar,password,username,profession,is_verify_email,
+            email_uid,user_account_uid,create_time,update_time
+        from
+            au_user
         <where>
             <if test="userDO.uid != null">
                 uid=#{userDO.uid}
@@ -112,18 +126,24 @@
     </select>
 
     <select id="queryByUid" resultMap="userResultMap">
-        select uid,user_summary,nickname,gender,login_uid,is_delete,
-               site_uid,avatar,password,username,profession,is_verify_email,
-               email_uid,user_account_uid,create_time,update_time
-        from au_user
-        where uid=#{uid}
+        select
+            uid,user_summary,nickname,gender,login_uid,is_delete,
+            site_uid,avatar,password,username,profession,is_verify_email,
+            email_uid,user_account_uid,create_time,update_time
+        from
+            au_user
+        where
+            uid=#{uid}
     </select>
 
     <select id="queryByUsername" resultMap="userResultMap">
-        select uid,user_summary,nickname,gender,login_uid,is_delete,
-               site_uid,avatar,password,username,profession,is_verify_email,
-               email_uid,user_account_uid,create_time,update_time
-        from au_user
-        where username=#{username}
+        select
+            uid,user_summary,nickname,gender,login_uid,is_delete,
+            site_uid,avatar,password,username,profession,is_verify_email,
+            email_uid,user_account_uid,create_time,update_time
+        from
+            au_user
+        where
+            username=#{username}
     </select>
 </mapper>

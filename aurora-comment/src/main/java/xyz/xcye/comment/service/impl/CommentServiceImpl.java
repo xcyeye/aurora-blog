@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindException;
 import xyz.xcye.comment.dao.CommentDao;
-import xyz.xcye.comment.service.MessageLogFeignService;
 import xyz.xcye.common.dto.comment.CommentDTO;
 import xyz.xcye.comment.manager.mq.RabbitMQSendService;
 import xyz.xcye.comment.service.CommentService;
@@ -21,6 +20,7 @@ import xyz.xcye.common.dto.PaginationDTO;
 import xyz.xcye.common.entity.result.ModifyResult;
 import xyz.xcye.common.util.DateUtils;
 import xyz.xcye.common.util.id.GenerateInfoUtils;
+import xyz.xcye.web.common.service.feign.MessageLogFeignService;
 
 import javax.annotation.Resource;
 import java.util.*;
@@ -62,9 +62,6 @@ public class CommentServiceImpl implements CommentService {
 
     @Autowired
     private RabbitMQSendService rabbitMQSendService;
-
-    @Resource
-    private MessageLogFeignService messageLogFeignService;
 
     @GlobalTransactional(rollbackFor = Exception.class)
     @Override

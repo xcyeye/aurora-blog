@@ -1,12 +1,10 @@
 package xyz.xcye.common.dos;
 
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
-import xyz.xcye.common.constant.FieldLengthConstant;
 import xyz.xcye.common.valid.Update;
+import xyz.xcye.common.constant.FieldLengthConstant;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;

@@ -9,7 +9,6 @@ import xyz.xcye.common.util.DateUtils;
 import xyz.xcye.common.util.id.GenerateInfoUtils;
 import org.springframework.integration.support.MessageBuilder;
 
-import java.math.BigInteger;
 import java.util.Date;
 
 /**

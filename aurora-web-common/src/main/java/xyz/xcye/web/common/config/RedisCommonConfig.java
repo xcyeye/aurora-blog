@@ -1,4 +1,4 @@
-package xyz.xcye.common.config;
+package xyz.xcye.web.common.config;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;

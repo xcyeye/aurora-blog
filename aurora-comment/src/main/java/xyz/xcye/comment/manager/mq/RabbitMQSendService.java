@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.BindException;
-import xyz.xcye.comment.service.MessageLogFeignService;
 import xyz.xcye.common.constant.RabbitMQNameConstant;
 import xyz.xcye.common.dos.CommentDO;
 import xyz.xcye.common.dos.MessageLogDO;
@@ -16,6 +15,7 @@ import xyz.xcye.common.util.ObjectConvertJson;
 import xyz.xcye.common.util.ValidationUtils;
 import xyz.xcye.common.util.id.GenerateInfoUtils;
 import xyz.xcye.common.valid.Insert;
+import xyz.xcye.web.common.service.feign.MessageLogFeignService;
 
 import javax.annotation.Resource;
 import javax.validation.groups.Default;

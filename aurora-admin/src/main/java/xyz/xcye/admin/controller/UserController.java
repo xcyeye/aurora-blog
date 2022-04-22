@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindException;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import xyz.xcye.admin.entity.DefaultValueEntity;
 import xyz.xcye.admin.exception.UserException;
 import xyz.xcye.admin.service.UserService;
 import xyz.xcye.admin.vo.RoleVO;
@@ -33,6 +34,9 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private DefaultValueEntity defaultValueEntity;
 
     @PostMapping("")
     @ResponseResult

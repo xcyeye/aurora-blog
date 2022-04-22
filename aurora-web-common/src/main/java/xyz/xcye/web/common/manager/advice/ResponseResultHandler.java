@@ -1,4 +1,4 @@
-package xyz.xcye.common.manager.advice;
+package xyz.xcye.web.common.manager.advice;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;

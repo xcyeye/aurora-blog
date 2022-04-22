@@ -59,9 +59,8 @@ public class UserAccountServiceImpl implements UserAccountService {
                 .accountLocked(false).accountExpired(false)
                 .role(userAccountDO.getRole()).permission(userAccountDO.getPermission())
                 .userUid(userAccountDO.getUserUid()).build();
-
         return ModifyResult.operateResult(userAccountDao.insert(userAccountDO),"插入账户信息",
-                ResponseStatusCodeEnum.SUCCESS.getCode());
+                ResponseStatusCodeEnum.SUCCESS.getCode(),userAccountDO.getUid());
     }
 
     @Override

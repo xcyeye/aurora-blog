@@ -89,7 +89,7 @@ public class EmailServiceImpl implements EmailService {
             return ModifyResult.operateResult(ResponseStatusCodeEnum.PARAM_IS_INVALID.getMessage(),
                     0,ResponseStatusCodeEnum.PARAM_IS_INVALID.getCode());
         }
-
+        email.setUpdateTime(DateUtils.format(new Date()));
         int updateDeleteStatus = emailDao.updateDeleteStatus(email);
         return ModifyResult.operateResult(updateDeleteStatus,"修改" + email.getUid() + "对应的email数据",
                 ResponseStatusCodeEnum.SUCCESS.getCode());

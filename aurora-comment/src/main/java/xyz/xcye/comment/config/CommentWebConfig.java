@@ -8,8 +8,8 @@ import org.springframework.util.ReflectionUtils;
 import org.springframework.web.servlet.mvc.method.RequestMappingInfoHandlerMapping;
 import springfox.documentation.spring.web.plugins.WebFluxRequestHandlerProvider;
 import springfox.documentation.spring.web.plugins.WebMvcRequestHandlerProvider;
-import xyz.xcye.common.exception.CustomGlobalExceptionHandler;
-import xyz.xcye.common.manager.advice.ResponseResultHandler;
+import xyz.xcye.web.common.exception.CustomGlobalExceptionHandler;
+import xyz.xcye.web.common.manager.advice.ResponseResultHandler;
 
 import java.lang.reflect.Field;
 import java.util.List;

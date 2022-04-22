@@ -3,6 +3,7 @@ package xyz.xcye.admin.controller;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.BindException;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import xyz.xcye.admin.service.RoleService;
@@ -13,6 +14,7 @@ import xyz.xcye.common.dto.PaginationDTO;
 import xyz.xcye.common.entity.result.ModifyResult;
 import xyz.xcye.common.valid.Insert;
 import xyz.xcye.common.valid.Update;
+import xyz.xcye.web.common.service.feign.MessageLogFeignService;
 
 import javax.validation.groups.Default;
 import java.util.List;
@@ -28,6 +30,18 @@ public class RoleController {
 
     @Autowired
     private RoleService roleService;
+
+    @Autowired
+    private MessageLogFeignService messageLogFeignService;
+
+    @GetMapping("/test")
+    public void test() throws BindException, InstantiationException, IllegalAccessException {
+        //return messageLogFeignService.queryMessageLogByUid(1515675699672301568L);
+        //return messageLogFeignService.insertMessageLog(null);
+
+        System.out.println(messageLogFeignService.queryMessageLogByUid(1515675699672301568L));
+        System.out.println();
+    }
 
     @ResponseResult
     @ApiOperation(value = "插入角色")

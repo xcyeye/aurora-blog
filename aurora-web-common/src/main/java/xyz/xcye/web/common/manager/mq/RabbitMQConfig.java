@@ -1,5 +1,4 @@
-/*
-package xyz.xcye.admin.config;
+package xyz.xcye.web.common.manager.mq;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.core.ReturnedMessage;
@@ -8,36 +7,32 @@ import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.BindException;
-import xyz.xcye.admin.feign.MessageLogFeignService;
 import xyz.xcye.common.dos.MessageLogDO;
+import xyz.xcye.web.common.service.feign.MessageLogFeignService;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 
-*/
 /**
  * rabbitmq相关的配置
- * *//*
-
+ * */
 
 @Component
 @Slf4j
 public class RabbitMQConfig implements RabbitTemplate.ConfirmCallback,RabbitTemplate.ReturnsCallback {
 
-    @Autowired
+    @Resource
     private MessageLogFeignService messageLogFeignService;
 
     @Autowired
     RabbitTemplate rabbitTemplate;
 
-    */
-/**
+    /**
      * 设置消息确认
      * @param correlationData
      * @param ack
      * @param cause
-     *//*
-
+     */
     @Override
     public void confirm(CorrelationData correlationData, boolean ack, String cause) {
         if (ack) {
@@ -60,13 +55,11 @@ public class RabbitMQConfig implements RabbitTemplate.ConfirmCallback,RabbitTemp
                 // 可能因为服务未开启或者是网络不可用，造成的异常
             }
         } else {
-            */
-/*
-            * 可能是由于routingKey错误或者是交换机的名字错误，导致交换机没有找到
-            * 如果在生产者那里，交换机的名字写错了，那么此处ack的值会为false和returnedMessage都会执行，但是如果只是由于routingKey错误，
-            * 交换机正常，那么就只会导致ack的值为false
-            * *//*
-
+            /*
+             * 可能是由于routingKey错误或者是交换机的名字错误，导致交换机没有找到
+             * 如果在生产者那里，交换机的名字写错了，那么此处ack的值会为false和returnedMessage都会执行，但是如果只是由于routingKey错误，
+             * 交换机正常，那么就只会导致ack的值为false
+             * */
             MessageLogDO messageLogDO = null;
             try {
                 messageLogDO = getMessageLogDO(correlationData);
@@ -99,25 +92,21 @@ public class RabbitMQConfig implements RabbitTemplate.ConfirmCallback,RabbitTemp
 
     }
 
-    */
-/**
+    /**
      * 初始化rabbitmqTemplate
-     *//*
-
+     */
     @PostConstruct
     public void init() {
         rabbitTemplate.setConfirmCallback(this);
     }
 
-    */
-/**
+    /**
      * 从数据库中获取mq消息
      * @param correlationDataId
      * @return
      * @throws InstantiationException
      * @throws IllegalAccessException
-     *//*
-
+     */
     private MessageLogDO getMessageLogFromDb(String correlationDataId) throws InstantiationException, IllegalAccessException {
         if (correlationDataId == null) {
             return null;
@@ -125,7 +114,7 @@ public class RabbitMQConfig implements RabbitTemplate.ConfirmCallback,RabbitTemp
 
         long uid = 0L;
         try {
-           uid = new Long(correlationDataId);
+            uid = new Long(correlationDataId);
         } catch (NumberFormatException e) {
             e.printStackTrace();
             return null;
@@ -148,7 +137,7 @@ public class RabbitMQConfig implements RabbitTemplate.ConfirmCallback,RabbitTemp
         if (messageLogDO == null || messageLogDO.getUid() == null) {
             return null;
         }
-
+        
         return messageLogDO;
     }
-}*/
+}

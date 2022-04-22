@@ -1,11 +1,7 @@
 package xyz.xcye.common.entity.result;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.util.HashMap;
 
 /**
  * 这是增加，删除，修改数据表之后，返回的公用实体
@@ -13,8 +9,9 @@ import java.util.HashMap;
  * @author qsyyke
  */
 
-@Builder
+@JsonIgnoreProperties(value = {"code","message"})
 @Data
+@Builder
 public class ModifyResult {
     /**
      * 影响的行数
@@ -29,13 +26,12 @@ public class ModifyResult {
     /**
      * 成功或者失败的消息
      */
-    @JsonIgnore
+    //@JsonIgnore
     private String message;
 
     /**
      * 响应码
      */
-    @JsonIgnore
     private int code;
 
     /**
