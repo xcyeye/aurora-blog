@@ -5,6 +5,7 @@ import org.springframework.amqp.core.ReturnedMessage;
 import org.springframework.amqp.rabbit.connection.CorrelationData;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.BindException;
 import xyz.xcye.common.dos.MessageLogDO;
@@ -21,7 +22,7 @@ import javax.annotation.Resource;
 @Slf4j
 public class RabbitMQConfig implements RabbitTemplate.ConfirmCallback,RabbitTemplate.ReturnsCallback {
 
-    @Resource
+    @Autowired
     private MessageLogFeignService messageLogFeignService;
 
     @Autowired

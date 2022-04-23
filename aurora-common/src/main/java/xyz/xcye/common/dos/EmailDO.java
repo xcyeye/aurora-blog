@@ -1,6 +1,9 @@
 package xyz.xcye.common.dos;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
 import xyz.xcye.common.valid.Delete;
 import xyz.xcye.common.valid.Insert;
@@ -15,6 +18,9 @@ import javax.validation.constraints.NotNull;
  * @author qsyyke
  */
 
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Data
 public class EmailDO {
     /**
@@ -26,7 +32,6 @@ public class EmailDO {
     /**
      * 此邮箱配置对应哪个用户 可以为null
      */
-    @NotNull(message = "user_uid不能为null",groups = {Insert.class})
     private Long userUid;
 
     /**
@@ -54,25 +59,25 @@ public class EmailDO {
     /**
      * 回复评论模板 不能为null 长度没有限制
      */
-    @ValidateString(value = "邮箱-配置中的回复评论模板",max = FieldLengthConstant.EMAIL_TEMPLATE,groups = {Insert.class})
+    @Length(max = FieldLengthConstant.EMAIL_TEMPLATE,message = "邮箱-配置中的回复评论模板长度不能超过{max}")
     private String replyCommentTemplate;
 
     /**
      * 验证身份模板 不能为null 长度没有限制
      */
-    @ValidateString(value = "邮箱-配置中的验证身份模板",max = FieldLengthConstant.EMAIL_TEMPLATE,groups = {Insert.class})
+    @Length(max = FieldLengthConstant.EMAIL_TEMPLATE,message = "邮箱-配置中的验证账户信息的模板长度不能超过{max}")
     private String verifyAccountTemplate;
 
     /**
      * 普通的通知模板 不能为null 长度没有限制
      */
-    @ValidateString(value = "邮箱-配置中的普通通知模板",max = FieldLengthConstant.EMAIL_TEMPLATE,groups = {Insert.class})
+    @Length(max = FieldLengthConstant.EMAIL_TEMPLATE,message = "邮箱-配置中的提醒通知模板长度不能超过{max}")
     private String noticeTemplate;
 
     /**
      * 有用户评论的模板 不能为null 长度没有限制
      */
-    @ValidateString(value = "邮箱-配置中的有用户评论的模板",max = FieldLengthConstant.EMAIL_TEMPLATE,groups = {Insert.class})
+    @Length(max = FieldLengthConstant.EMAIL_TEMPLATE,message = "邮箱-配置中的收到评论模板长度不能超过{max}")
     private String receiveCommentTemplate;
 
     /**
@@ -97,25 +102,25 @@ public class EmailDO {
     /**
      * 默认回复评论的标题
      */
-    @ValidateString(value = "邮箱-回复评论的标题",max = FieldLengthConstant.EMAIL_SUBJECT,groups = {Insert.class})
+    @Length(max = FieldLengthConstant.EMAIL_SUBJECT,message = "邮箱-回复评论的标题长度不能超过{max}")
     private String replyCommentSubject;
 
     /**
      * 使用该邮箱发送验证账户时的默认标题
      */
-    @ValidateString(value = "邮箱-验证账户的标题",max = FieldLengthConstant.EMAIL_SUBJECT,groups = {Insert.class})
+    @Length(max = FieldLengthConstant.EMAIL_SUBJECT,message = "邮箱-验证账户的标题长度不能超过{max}")
     private String verifyAccountSubject;
 
     /**
      * 使用该邮箱发送收到评论时的默认标题
      */
-    @ValidateString(value = "邮箱-收到评论的标题",max = FieldLengthConstant.EMAIL_SUBJECT,groups = {Insert.class})
+    @Length(max = FieldLengthConstant.EMAIL_SUBJECT,message = "邮箱-收到评论的标题长度不能超过{max}")
     private String receiveCommentSubject;
 
     /**
      * 使用该邮箱发送普通通知时的默认标题
      */
-    @ValidateString(value = "邮箱-普通通知的标题",max = FieldLengthConstant.EMAIL_SUBJECT,groups = {Insert.class})
+    @Length(max = FieldLengthConstant.EMAIL_SUBJECT,message = "邮箱-普通通知的标题长度不能超过{max}")
     private String noticeSubject;
 
     /**

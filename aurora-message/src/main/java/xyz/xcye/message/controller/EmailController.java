@@ -10,6 +10,7 @@ import xyz.xcye.common.dos.EmailDO;
 import xyz.xcye.common.dto.PaginationDTO;
 import xyz.xcye.common.entity.result.ModifyResult;
 import xyz.xcye.common.enums.ResponseStatusCodeEnum;
+import xyz.xcye.common.exception.email.EmailException;
 import xyz.xcye.common.valid.Insert;
 import xyz.xcye.common.valid.Update;
 import xyz.xcye.message.service.EmailService;
@@ -34,7 +35,7 @@ public class EmailController {
     @ApiOperation(value = "向数据库中插入新的邮箱记录，比如主机，授权码等")
     @ResponseResult
     @PostMapping("")
-    public ModifyResult insertEmail(@Validated({Insert.class,Default.class}) EmailDO email) {
+    public ModifyResult insertEmail(@Validated({Insert.class,Default.class}) EmailDO email) throws EmailException {
         return emailService.insertEmail(email);
     }
 
@@ -64,8 +65,29 @@ public class EmailController {
     @GetMapping("")
     public List<EmailDO> queryAll(@RequestParam(required = false) EmailDO email, PaginationDTO pagination) {
         if (email == null) {
-            email = new EmailDO();
+            email = EmailDO.builder().build();
         }
         return emailService.queryAllEmail(email,pagination);
+    }
+
+    @ApiOperation(value = "根据uid查询")
+    @ResponseResult
+    @GetMapping("/{uid}")
+    public EmailDO queryByUid(@PathVariable("uid") long uid) {
+        return emailService.queryByUid(uid);
+    }
+
+    @ApiOperation(value = "根据userUid进行查询")
+    @ResponseResult
+    @GetMapping("/userUid/{userUid}")
+    public EmailDO queryByUserUid(@PathVariable("userUid") long userUid) {
+        return emailService.queryByUserUid(userUid);
+    }
+
+    @ApiOperation(value = "根据邮箱号进行查询")
+    @ResponseResult
+    @GetMapping("/email/{email}")
+    public EmailDO queryByEmail(@PathVariable("email") String email) {
+        return emailService.queryByEmail(email);
     }
 }

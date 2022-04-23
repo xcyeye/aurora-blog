@@ -4,7 +4,10 @@ import xyz.xcye.common.dos.CommentDO;
 import xyz.xcye.common.dos.EmailDO;
 import xyz.xcye.common.dto.EmailCommonNoticeDTO;
 import xyz.xcye.common.dto.EmailVerifyAccountDTO;
+import xyz.xcye.common.util.DateUtils;
 import xyz.xcye.message.enums.EmailTemplateReplaceRegex;
+
+import java.util.Date;
 
 /**
  * 这是一个解析邮件模板的类
@@ -106,7 +109,8 @@ public class ParseEmailTemplate {
 
         //替换内容
         String content = verifyAccountTemplate.replaceAll(EmailTemplateReplaceRegex.VERIFY_ACCOUNT_URL,verifyAccount.getVerifyAccountUrl());
-        content = content.replaceAll(EmailTemplateReplaceRegex.VERIFY_ACCOUNT_EXPIRATION_TIME,verifyAccount.getExpirationTime());
+        content = content.replaceAll(EmailTemplateReplaceRegex.VERIFY_ACCOUNT_EXPIRATION_TIME,
+                DateUtils.format(new Date(verifyAccount.getExpirationTime())));
         return content;
     };
 }

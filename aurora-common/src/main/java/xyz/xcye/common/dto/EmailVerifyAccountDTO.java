@@ -1,5 +1,6 @@
 package xyz.xcye.common.dto;
 
+import lombok.Builder;
 import lombok.Data;
 
 /**
@@ -7,6 +8,7 @@ import lombok.Data;
  * @author qsyyke
  */
 
+@Builder
 @Data
 public class EmailVerifyAccountDTO {
     /**
@@ -22,5 +24,15 @@ public class EmailVerifyAccountDTO {
     /**
      * 此验证链接失效时间
      */
-    private String expirationTime;
+    private Long expirationTime;
+
+    /**
+     * 此userUid需要保证在数据库中存在验证账户的邮件发送模板，推荐填写管理员的userUid
+     */
+    private Long userUid;
+
+    /**
+     * 邮件发送的标题
+     */
+    private String subject;
 }

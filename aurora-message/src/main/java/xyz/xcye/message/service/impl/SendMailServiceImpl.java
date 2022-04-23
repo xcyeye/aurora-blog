@@ -199,7 +199,7 @@ public class SendMailServiceImpl implements SendMailService {
     }
 
     private List<EmailDO> getEmailsByUserUid(long userUid) {
-        EmailDO queryEmail = new EmailDO();
+        EmailDO queryEmail = EmailDO.builder().build();
         queryEmail.setUserUid(userUid);
         return emailService.queryAllEmail(queryEmail, null);
     }

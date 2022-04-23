@@ -10,6 +10,7 @@ import xyz.xcye.common.constant.FieldLengthConstant;
 import xyz.xcye.common.valid.validator.ValidateString;
 
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 
 /**
  * 数据库中的aurora_user表的映射
@@ -18,7 +19,9 @@ import javax.validation.constraints.NotNull;
 
 @Builder
 @Data
-public class UserDO {
+public class UserDO implements Serializable {
+    public static final long serialVersionUID = 42L;
+
     /**
      * 用户唯一id
      */

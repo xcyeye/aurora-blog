@@ -164,7 +164,17 @@
         <!--临时依赖，这个是出现bug，临时的依赖可以解决-->
 
         <!--解决seata序列化问题-->
+        <dependency>
+            <groupId>com.esotericsoftware</groupId>
+            <artifactId>kryo</artifactId>
+            <version>${kryo.version}</version>
+        </dependency>
 
+        <dependency>
+            <groupId>de.javakaffee</groupId>
+            <artifactId>kryo-serializers</artifactId>
+            <version>${kryo-serializers.version}</version>
+        </dependency>
     </dependencies>
 
     <build>

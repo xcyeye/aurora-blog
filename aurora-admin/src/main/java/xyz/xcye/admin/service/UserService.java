@@ -1,7 +1,9 @@
 package xyz.xcye.admin.service;
 
 import org.springframework.validation.BindException;
-import xyz.xcye.admin.exception.UserException;
+import xyz.xcye.common.dos.EmailDO;
+import xyz.xcye.common.exception.email.EmailException;
+import xyz.xcye.common.exception.user.UserException;
 import xyz.xcye.admin.vo.UserVO;
 import xyz.xcye.common.dos.UserAccountDO;
 import xyz.xcye.common.dos.UserDO;
@@ -24,7 +26,7 @@ public interface UserService {
      * @throws BindException 对象属性错误
      * @throws UserException 插入，更新异常
      */
-    ModifyResult insertUser(UserDO userDO, UserAccountDO userAccountDO) throws UserException, InstantiationException, IllegalAccessException;
+    ModifyResult insertUser(UserDO userDO, UserAccountDO userAccountDO, EmailDO emailDO) throws UserException, InstantiationException, IllegalAccessException, BindException, EmailException;
 
     /**
      * 更新用户信息

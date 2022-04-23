@@ -26,6 +26,12 @@ seata:
       password: "nacos"
 
 spring:
+  thymeleaf:
+    cache: false
+    prefix: classpath:/templates/
+    encoding: UTF-8 #编码
+    suffix: .html #模板后缀
+    mode: HTML #模板
   main:
     allow-circular-references: true
   redis:
@@ -65,7 +71,7 @@ mybatis:
   mapper-locations: classpath:mapper/**
   configuration:
     map-underscore-to-camel-case: true
-    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
 management:
   endpoints:
@@ -93,6 +99,11 @@ aurora:
       avatar: https://aurora.xcye.xyz/avatar.jpg
       nickname: aurora
       gender: 男
+    verify:
+      account:
+        # 邮件发送验证账户的链接有效时间，毫秒
+        expiration-time: 120000
+        email-prefix-path: http://localhost:8088/admin/verifyAccount/email
 
 # 分页插件
 pagehelper:
@@ -103,7 +114,7 @@ pagehelper:
 
 logging:
   level:
-    xyz.xcye.comment.service.MessageLogFeignService: DEBUG
+    xyz.xcye.web.common.service.feign.MessageLogFeignService: DEBUG
 
 feign:
   circuitbreaker:
@@ -113,7 +124,11 @@ feign:
   client:
     refresh-enabled: true
     config:
-      aurora-message-admin:
+      adminAuroraMessageEmail:
 #        connectTimeout: 10000
 #        readTimeout: 10000
+        loggerLevel: basic
+      globalAuroraMessageLog:
+        #        connectTimeout: 10000
+        #        readTimeout: 10000
         loggerLevel: basic

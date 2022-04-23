@@ -51,6 +51,8 @@
         <userAgentUtils.version>1.20</userAgentUtils.version>
         <seata.version>1.4.2</seata.version>
         <nacos-client.version>2.0.4</nacos-client.version>
+        <kryo.version>4.0.2</kryo.version>
+        <kryo-serializers.version>0.44</kryo-serializers.version>
     </properties>
 
     <!--统一依赖管理-->

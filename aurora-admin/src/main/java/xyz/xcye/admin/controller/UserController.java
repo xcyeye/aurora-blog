@@ -7,9 +7,10 @@ import org.springframework.validation.BindException;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import xyz.xcye.admin.entity.DefaultValueEntity;
-import xyz.xcye.admin.exception.UserException;
+import xyz.xcye.common.dos.EmailDO;
+import xyz.xcye.common.exception.email.EmailException;
+import xyz.xcye.common.exception.user.UserException;
 import xyz.xcye.admin.service.UserService;
-import xyz.xcye.admin.vo.RoleVO;
 import xyz.xcye.admin.vo.UserVO;
 import xyz.xcye.common.annotaion.ResponseResult;
 import xyz.xcye.common.dos.UserAccountDO;
@@ -18,6 +19,7 @@ import xyz.xcye.common.dto.PaginationDTO;
 import xyz.xcye.common.entity.result.ModifyResult;
 import xyz.xcye.common.valid.Insert;
 import xyz.xcye.common.valid.Update;
+import xyz.xcye.web.common.service.feign.MessageLogFeignService;
 
 import javax.validation.groups.Default;
 import java.util.List;
@@ -35,15 +37,13 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @Autowired
-    private DefaultValueEntity defaultValueEntity;
-
     @PostMapping("")
     @ResponseResult
     @ApiOperation(value = "添加新用户")
     public ModifyResult insertUser(@Validated({Insert.class, Default.class})UserDO userDO,
-                                   @Validated({Insert.class, Default.class}) UserAccountDO userAccountDO) throws BindException, UserException, InstantiationException, IllegalAccessException {
-        return userService.insertUser(userDO,userAccountDO);
+                                   @Validated({Insert.class, Default.class}) UserAccountDO userAccountDO,
+                                   @Validated({Insert.class,Default.class})EmailDO email) throws BindException, UserException, InstantiationException, IllegalAccessException, EmailException {
+        return userService.insertUser(userDO,userAccountDO,email);
     }
 
     @PutMapping("")

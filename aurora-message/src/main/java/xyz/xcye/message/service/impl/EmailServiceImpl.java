@@ -2,6 +2,7 @@ package xyz.xcye.message.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import io.seata.core.context.RootContext;
 import org.apache.ibatis.annotations.Param;
 import org.bouncycastle.math.raw.Mod;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import xyz.xcye.common.dos.EmailDO;
 import xyz.xcye.common.dto.PaginationDTO;
 import xyz.xcye.common.entity.result.ModifyResult;
 import xyz.xcye.common.enums.ResponseStatusCodeEnum;
+import xyz.xcye.common.exception.email.EmailException;
 import xyz.xcye.common.util.DateUtils;
 import xyz.xcye.common.util.id.GenerateInfoUtils;
 import xyz.xcye.message.dao.EmailDao;
@@ -56,16 +58,24 @@ public class EmailServiceImpl implements EmailService {
     private int defaultPageSize;
 
     @Override
-    public ModifyResult insertEmail(EmailDO email) {
+    public ModifyResult insertEmail(EmailDO email) throws EmailException {
+        System.out.println(DateUtils.format(new Date()) + RootContext.getXID());
+        // 判断邮箱是否已经存在
+        if (queryByEmail(email.getEmail()) != null) {
+            throw new EmailException(ResponseStatusCodeEnum.EXCEPTION_EMAIL_EXISTS.getMessage(),
+                    ResponseStatusCodeEnum.EXCEPTION_EMAIL_EXISTS.getCode());
+        }
+
         //生成一个uid
         long uid = GenerateInfoUtils.generateUid(workerId, datacenterId);
 
         //其中user_uid应该在调用的此方法的时候，就已经赋值在email对象里面
         email.setUid(uid);
+        email.setDelete(false);
         email.setCreateTime(DateUtils.format(new Date()));
         int insertEmailNum = emailDao.insertEmail(email);
         return ModifyResult.operateResult(insertEmailNum,"插入email数据",
-                 ResponseStatusCodeEnum.SUCCESS.getCode());
+                 ResponseStatusCodeEnum.SUCCESS.getCode(),email.getUid(),uid);
     }
 
     @Override
@@ -92,7 +102,7 @@ public class EmailServiceImpl implements EmailService {
         email.setUpdateTime(DateUtils.format(new Date()));
         int updateDeleteStatus = emailDao.updateDeleteStatus(email);
         return ModifyResult.operateResult(updateDeleteStatus,"修改" + email.getUid() + "对应的email数据",
-                ResponseStatusCodeEnum.SUCCESS.getCode());
+                ResponseStatusCodeEnum.SUCCESS.getCode(),email.getUid());
     }
 
     @Override
@@ -128,5 +138,10 @@ public class EmailServiceImpl implements EmailService {
     @Override
     public EmailDO queryByUserUid(long userUid) {
         return emailDao.queryByUserUid(userUid);
+    }
+
+    @Override
+    public EmailDO queryByEmail(String email) {
+        return emailDao.queryByEmail(email);
     }
 }

@@ -53,4 +53,6 @@ public class RabbitMQNameConstant {
     public static final String AURORA_SEND_EMAIL_DEAD_LETTER_EXCHANGE = "aurora.send.email.dead.letter.exchange";
     /** 如果生产者生产的消息不合法，那么都会被该交换机接收 **/
     public static final String MISTAKE_MESSAGE_EXCHANGE = "aurora.send.mistake.exchange";
+    /** 发送操作邮件的交换机 **/
+    public static final String AURORA_SEND_OPERATE_EMAIL = "aurora.send.operate.email";
 }

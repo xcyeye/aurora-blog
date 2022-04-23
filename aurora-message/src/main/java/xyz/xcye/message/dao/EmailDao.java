@@ -26,4 +26,5 @@ public interface EmailDao {
 
     EmailDO queryByUid(@Param("uid") long uid);
     EmailDO queryByUserUid(@Param("userUid") long userUid);
+    EmailDO queryByEmail(@Param("email") String email);
 }

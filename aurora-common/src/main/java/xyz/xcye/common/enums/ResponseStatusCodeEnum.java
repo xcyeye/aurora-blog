@@ -42,6 +42,8 @@ public enum ResponseStatusCodeEnum {
     EXCEPTION_EMAIL_SEND_PROTOCOL_MISTAKE(13130,"发件者邮箱协议错误"),
     EXCEPTION_EMAIL_RECEIVE_SEND_FAILURE(13210,"邮件发送失败"),
     EXCEPTION_EMAIL_SEND_CONTENT_TO_LONG(13220,"发送的邮件内容太长"),
+    EXCEPTION_EMAIL_EXISTS(13310,"邮箱已存在"),
+    EXCEPTION_EMAIL_NOT_EXISTS(13310,"邮箱未存在"),
 
 
     //----------------------异常相关的响应码--------超时异常

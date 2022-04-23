@@ -9,6 +9,7 @@ import xyz.xcye.common.constant.FieldLengthConstant;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
+import java.io.Serializable;
 
 /**
  * 数据表 au_user_permission
@@ -17,7 +18,9 @@ import javax.validation.constraints.Pattern;
 
 @Builder
 @Data
-public class UserAccountDO {
+public class UserAccountDO implements Serializable {
+
+    public static final long serialVersionUID = 42L;
 
     /**
      * 唯一uid

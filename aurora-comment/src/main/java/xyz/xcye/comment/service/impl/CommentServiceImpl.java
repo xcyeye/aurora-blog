@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.validation.BindException;
 import xyz.xcye.comment.dao.CommentDao;
 import xyz.xcye.common.dto.comment.CommentDTO;
-import xyz.xcye.comment.manager.mq.RabbitMQSendService;
+import xyz.xcye.comment.manager.mq.CommentRabbitMQSendService;
 import xyz.xcye.comment.service.CommentService;
 import xyz.xcye.common.enums.ResponseStatusCodeEnum;
 import xyz.xcye.common.vo.CommentVO;
@@ -20,9 +20,7 @@ import xyz.xcye.common.dto.PaginationDTO;
 import xyz.xcye.common.entity.result.ModifyResult;
 import xyz.xcye.common.util.DateUtils;
 import xyz.xcye.common.util.id.GenerateInfoUtils;
-import xyz.xcye.web.common.service.feign.MessageLogFeignService;
 
-import javax.annotation.Resource;
 import java.util.*;
 
 /**
@@ -61,7 +59,7 @@ public class CommentServiceImpl implements CommentService {
     private CommentDao commentDao;
 
     @Autowired
-    private RabbitMQSendService rabbitMQSendService;
+    private CommentRabbitMQSendService commentRabbitMQSendService;
 
     @GlobalTransactional(rollbackFor = Exception.class)
     @Override
@@ -91,12 +89,12 @@ public class CommentServiceImpl implements CommentService {
 
         // 使用rabbitmq发送邮件通知对方
         if (isReplyCommentFlag) {
-            rabbitMQSendService.sendReplyCommentNotice(commentDO,repliedCommentDOByUid);
+            commentRabbitMQSendService.sendReplyCommentNotice(commentDO,repliedCommentDOByUid);
         }else {
             //不是回复评论 设置ReplyCommentUid标识
             commentDO.setReplyCommentUid(0L);
             //交换机发送消息 如果此commentDO.getUserUid()用户在au_email中不存在记录的话，会使用默认的模板进行邮件通知
-            rabbitMQSendService.sendReceiveCommentNotice(commentDO);
+            commentRabbitMQSendService.sendReceiveCommentNotice(commentDO);
         }
 
         //如果运行到这里，说明邮件发送成功，修改发送状态

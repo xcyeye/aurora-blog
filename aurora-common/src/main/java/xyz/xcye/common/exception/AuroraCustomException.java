@@ -8,11 +8,11 @@ import lombok.Data;
  */
 
 @Data
-public class AuroraGlobalException extends Exception {
+public class AuroraCustomException extends Exception {
     /** 响应码 **/
     public Integer statusCode;
 
-    public AuroraGlobalException(String message, Integer statusCode) {
+    public AuroraCustomException(String message, Integer statusCode) {
         super(message);
         this.statusCode = statusCode;
     }

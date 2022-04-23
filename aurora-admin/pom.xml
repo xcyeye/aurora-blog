@@ -54,6 +54,11 @@
             <artifactId>spring-boot-starter-amqp</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+        </dependency>
+
 
         <!--spring cloud系-->
         <dependency>
@@ -156,22 +161,22 @@
         <!--临时依赖，这个是出现bug，临时的依赖可以解决-->
 
         <!--解决seata序列化问题-->
-        <dependency>
+        <!--<dependency>
             <groupId>com.esotericsoftware.kryo</groupId>
             <artifactId>kryo</artifactId>
             <version>2.24.0</version>
-        </dependency>
+        </dependency>-->
 
         <dependency>
             <groupId>com.esotericsoftware</groupId>
             <artifactId>kryo</artifactId>
-            <version>4.0.2</version>
+            <version>${kryo.version}</version>
         </dependency>
 
         <dependency>
             <groupId>de.javakaffee</groupId>
             <artifactId>kryo-serializers</artifactId>
-            <version>0.44</version>
+            <version>${kryo-serializers.version}</version>
         </dependency>
 
         <dependency>

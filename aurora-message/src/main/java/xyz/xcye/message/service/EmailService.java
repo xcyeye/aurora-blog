@@ -4,6 +4,7 @@ import org.apache.ibatis.annotations.Param;
 import xyz.xcye.common.dos.EmailDO;
 import xyz.xcye.common.dto.PaginationDTO;
 import xyz.xcye.common.entity.result.ModifyResult;
+import xyz.xcye.common.exception.email.EmailException;
 
 import java.util.List;
 
@@ -18,7 +19,7 @@ public interface EmailService {
      * @param email email对象
      * @return
      */
-    ModifyResult insertEmail(EmailDO email);
+    ModifyResult insertEmail(EmailDO email) throws EmailException;
 
     /**
      * 根据uid删除一条记录
@@ -60,4 +61,6 @@ public interface EmailService {
      * @return
      */
     EmailDO queryByUserUid(@Param("userUid") long userUid);
+
+    EmailDO queryByEmail(String email);
 }

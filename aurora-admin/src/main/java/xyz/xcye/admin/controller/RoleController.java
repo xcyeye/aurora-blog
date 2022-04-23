@@ -31,18 +31,6 @@ public class RoleController {
     @Autowired
     private RoleService roleService;
 
-    @Autowired
-    private MessageLogFeignService messageLogFeignService;
-
-    @GetMapping("/test")
-    public void test() throws BindException, InstantiationException, IllegalAccessException {
-        //return messageLogFeignService.queryMessageLogByUid(1515675699672301568L);
-        //return messageLogFeignService.insertMessageLog(null);
-
-        System.out.println(messageLogFeignService.queryMessageLogByUid(1515675699672301568L));
-        System.out.println();
-    }
-
     @ResponseResult
     @ApiOperation(value = "插入角色")
     @PostMapping("")

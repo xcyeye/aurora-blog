@@ -14,7 +14,7 @@
 
         values (
         #{email.uid},#{email.replyCommentTemplate},#{email.verifyAccountTemplate},#{email.noticeTemplate},#{email.receiveCommentTemplate},
-        #{email.email},#{email.deleteStatus},#{email.port},
+        #{email.email},#{email.delete},#{email.port},
         #{email.replyCommentSubject},#{email.verifyAccountSubject},#{email.receiveCommentSubject},#{email.noticeSubject}
         ,#{email.userUid},#{email.emailHost},#{email.emailPassword},#{email.protocol},#{email.createTime},#{email.updateTime}
         )
@@ -176,5 +176,17 @@
                reply_comment_subject,verify_account_subject,receive_comment_subject,notice_subject,
                user_uid,email_host,protocol,create_time,update_time from au_email
         where user_uid=#{userUid}
+    </select>
+
+    <select id="queryByEmail" resultMap="emailMap">
+        select uid,
+               reply_comment_template,verify_account_template,notice_template,receive_comment_template,
+               email,is_delete,port,
+               reply_comment_subject,verify_account_subject,receive_comment_subject,notice_subject,
+               user_uid,email_host,protocol,create_time,update_time
+        from
+            au_email
+        where
+            email=#{email}
     </select>
 </mapper>
