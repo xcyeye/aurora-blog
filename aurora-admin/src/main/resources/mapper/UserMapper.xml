@@ -4,9 +4,11 @@
 
 <mapper namespace="xyz.xcye.admin.dao.UserDao">
 
-    <resultMap id="userResultMap" type="xyz.xcye.admin.vo.UserVO">
+    <resultMap id="userResultMap" type="xyz.xcye.common.dos.UserDO">
         <result column="is_delete" property="delete"/>
         <result column="is_verify_email" property="verifyEmail"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="create_time" property="createTime"/>
     </resultMap>
 
     <insert id="insertUser">

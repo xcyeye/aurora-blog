@@ -44,6 +44,8 @@ public enum ResponseStatusCodeEnum {
     EXCEPTION_EMAIL_SEND_CONTENT_TO_LONG(13220,"发送的邮件内容太长"),
     EXCEPTION_EMAIL_EXISTS(13310,"邮箱已存在"),
     EXCEPTION_EMAIL_NOT_EXISTS(13310,"邮箱未存在"),
+    EXCEPTION_EMAIL_FAIL_BINDING(13410,"邮箱绑定失败"),
+    EXCEPTION_EMAIL_HAD_BINDING(13510,"邮箱已经绑定"),
 
 
     //----------------------异常相关的响应码--------超时异常

@@ -7,13 +7,13 @@ import org.springframework.validation.BindException;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import xyz.xcye.admin.service.RoleService;
-import xyz.xcye.admin.vo.RoleVO;
 import xyz.xcye.common.annotaion.ResponseResult;
 import xyz.xcye.common.dos.RoleDO;
 import xyz.xcye.common.dto.PaginationDTO;
 import xyz.xcye.common.entity.result.ModifyResult;
 import xyz.xcye.common.valid.Insert;
 import xyz.xcye.common.valid.Update;
+import xyz.xcye.common.vo.RoleVO;
 import xyz.xcye.web.common.service.feign.MessageLogFeignService;
 
 import javax.validation.groups.Default;

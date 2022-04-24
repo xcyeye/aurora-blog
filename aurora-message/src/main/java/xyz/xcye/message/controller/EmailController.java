@@ -3,6 +3,7 @@ package xyz.xcye.message.controller;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.BindException;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import xyz.xcye.common.annotaion.ResponseResult;
@@ -11,6 +12,7 @@ import xyz.xcye.common.dto.PaginationDTO;
 import xyz.xcye.common.entity.result.ModifyResult;
 import xyz.xcye.common.enums.ResponseStatusCodeEnum;
 import xyz.xcye.common.exception.email.EmailException;
+import xyz.xcye.common.exception.user.UserException;
 import xyz.xcye.common.valid.Insert;
 import xyz.xcye.common.valid.Update;
 import xyz.xcye.message.service.EmailService;
@@ -35,7 +37,7 @@ public class EmailController {
     @ApiOperation(value = "向数据库中插入新的邮箱记录，比如主机，授权码等")
     @ResponseResult
     @PostMapping("")
-    public ModifyResult insertEmail(@Validated({Insert.class,Default.class}) EmailDO email) throws EmailException {
+    public ModifyResult insertEmail(@Validated({Insert.class,Default.class}) EmailDO email) throws EmailException, BindException, UserException, InstantiationException, IllegalAccessException {
         return emailService.insertEmail(email);
     }
 
@@ -57,7 +59,7 @@ public class EmailController {
     @ResponseResult
     @PutMapping("")
     public ModifyResult updateEmailByUid(@Validated({Update.class, Default.class}) EmailDO email) {
-        return emailService.updateEmailByUid(email);
+        return emailService.updateEmail(email);
     }
 
     @ApiOperation(value = "根据EmailDO实体中的字段以及分页参数查询所有数据，返回一个集合",notes = "部分字段使用了模糊查询")

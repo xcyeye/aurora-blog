@@ -1,14 +1,16 @@
-package xyz.xcye.web.common.manager.mq;
+package xyz.xcye.message.config;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.core.ReturnedMessage;
 import org.springframework.amqp.rabbit.connection.CorrelationData;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.BindException;
 import xyz.xcye.common.dos.MessageLogDO;
+import xyz.xcye.message.service.MessageLogService;
+import xyz.xcye.web.common.manager.mq.MistakeMessageSendService;
 import xyz.xcye.web.common.service.feign.MessageLogFeignService;
 
 import javax.annotation.PostConstruct;
@@ -20,13 +22,14 @@ import javax.annotation.Resource;
 
 @Component
 @Slf4j
-public class RabbitMQConfig implements RabbitTemplate.ConfirmCallback,RabbitTemplate.ReturnsCallback {
+public class MessageRabbitMQConfig implements RabbitTemplate.ConfirmCallback,RabbitTemplate.ReturnsCallback {
 
-    @Autowired
-    private MessageLogFeignService messageLogFeignService;
 
     @Autowired
     RabbitTemplate rabbitTemplate;
+
+    @Autowired
+    private MessageLogService messageLogService;
 
     /**
      * 设置消息确认
@@ -36,6 +39,7 @@ public class RabbitMQConfig implements RabbitTemplate.ConfirmCallback,RabbitTemp
      */
     @Override
     public void confirm(CorrelationData correlationData, boolean ack, String cause) {
+        log.error("发布确认了-> ack:{},id:{}",ack,"correlationData.getId()");
         if (ack) {
             MessageLogDO messageLogDO = null;
             try {
@@ -50,7 +54,7 @@ public class RabbitMQConfig implements RabbitTemplate.ConfirmCallback,RabbitTemp
             //更新消息投递状态
             messageLogDO.setAckStatus(true);
             try {
-                messageLogFeignService.updateMessageLog(messageLogDO);
+                messageLogService.updateMessageLog(messageLogDO);
             } catch (BindException e) {
                 e.printStackTrace();
                 // 可能因为服务未开启或者是网络不可用，造成的异常
@@ -76,7 +80,7 @@ public class RabbitMQConfig implements RabbitTemplate.ConfirmCallback,RabbitTemp
             //设置错误消息
             messageLogDO.setErrorMessage(cause);
             try {
-                messageLogFeignService.updateMessageLog(messageLogDO);
+                messageLogService.updateMessageLog(messageLogDO);
             } catch (BindException e) {
                 e.printStackTrace();
                 // 可能会由于网络不可用，造成异常
@@ -108,7 +112,7 @@ public class RabbitMQConfig implements RabbitTemplate.ConfirmCallback,RabbitTemp
      * @throws InstantiationException
      * @throws IllegalAccessException
      */
-    private MessageLogDO getMessageLogFromDb(String correlationDataId) throws InstantiationException, IllegalAccessException {
+    private MessageLogDO getMessageLogFromDb(String correlationDataId) {
         if (correlationDataId == null) {
             return null;
         }
@@ -121,7 +125,7 @@ public class RabbitMQConfig implements RabbitTemplate.ConfirmCallback,RabbitTemp
             return null;
         }
 
-        return messageLogFeignService.queryMessageLogByUid(uid);
+        return messageLogService.queryByUid(uid);
     }
 
     private MessageLogDO getMessageLogDO(CorrelationData correlationData) throws InstantiationException, IllegalAccessException {
@@ -140,5 +144,10 @@ public class RabbitMQConfig implements RabbitTemplate.ConfirmCallback,RabbitTemp
         }
         
         return messageLogDO;
+    }
+
+    @Bean
+    public MistakeMessageSendService mistakeMessageSendService() {
+        return new MistakeMessageSendService(rabbitTemplate);
     }
 }

@@ -1,7 +1,9 @@
 package xyz.xcye.common.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * 邮箱验证账户实体
@@ -9,6 +11,8 @@ import lombok.Data;
  */
 
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Data
 public class EmailVerifyAccountDTO {
     /**

@@ -1,5 +1,8 @@
 package xyz.xcye.common.util;
 
+import cn.hutool.core.date.DatePattern;
+import cn.hutool.core.date.DateTime;
+import cn.hutool.core.date.DateUtil;
 import xyz.xcye.common.enums.CommonFormatEnum;
 
 import java.util.Date;
@@ -162,6 +165,14 @@ public class DateUtils {
     }
 
     /**
+     * 将指定当前日期格式化为默认格式
+     * @return
+     */
+    public static String format() {
+        return cn.hutool.core.date.DateUtil.format(new Date(), CommonFormatEnum.DATE_FORMAT.getFormat());
+    }
+
+    /**
      * 返回随机区间内的随机秒数
      * @param min 最小
      * @param max 最大
@@ -169,5 +180,28 @@ public class DateUtils {
      */
     public static long getRandomSecond(int min,int max) {
         return min + new Random().nextInt(max - min);
+    }
+
+    public static String parse(CharSequence dateStr) {
+        // 先进行yyyy-MM-dd HH:mm:ss解析
+        DateTime parse = null;
+        try {
+            parse = DateUtil.parse(dateStr, DatePattern.NORM_DATETIME_PATTERN);
+        } catch (Exception e) {
+            // 进行yyyy-MM-dd HH:mm解析
+            try {
+                parse = DateUtil.parse(dateStr,DatePattern.NORM_DATETIME_MINUTE_PATTERN);
+            } catch (Exception ex) {
+                // 进行yyyy-MM-dd解析
+                try {
+                    parse = DateUtil.parse(dateStr,DatePattern.NORM_DATE_PATTERN);
+                } catch (Exception exc) {
+                    // 如果这是还是报错的话，则直接返回宇宙出生时间o(╥﹏╥)o
+                    return DateUtils.format(new Date(0));
+                }
+            }
+        }
+
+        return DateUtil.format(parse,CommonFormatEnum.DATE_FORMAT.getFormat());
     }
 }

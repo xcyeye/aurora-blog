@@ -5,7 +5,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import xyz.xcye.admin.dao.UserAccountDao;
 import xyz.xcye.admin.service.UserAccountService;
-import xyz.xcye.admin.vo.UserAccountVO;
 import xyz.xcye.common.dos.UserAccountDO;
 import xyz.xcye.common.dto.PaginationDTO;
 import xyz.xcye.common.entity.result.ModifyResult;
@@ -13,6 +12,7 @@ import xyz.xcye.common.enums.ResponseStatusCodeEnum;
 import xyz.xcye.common.util.BeanCopyUtils;
 import xyz.xcye.common.util.DateUtils;
 import xyz.xcye.common.util.id.GenerateInfoUtils;
+import xyz.xcye.common.vo.UserAccountVO;
 
 import java.util.Date;
 import java.util.List;
@@ -67,20 +67,20 @@ public class UserAccountServiceImpl implements UserAccountService {
     public ModifyResult update(UserAccountDO userAccountDO) {
         userAccountDO.setUpdateTime(DateUtils.format(new Date()));
         return ModifyResult.operateResult(userAccountDao.update(userAccountDO),"修改账户信息",
-                ResponseStatusCodeEnum.SUCCESS.getCode());
+                ResponseStatusCodeEnum.SUCCESS.getCode(), userAccountDO.getUid());
     }
 
     @Override
     public ModifyResult updateDeleteStatus(UserAccountDO userAccountDO) {
         userAccountDO.setUpdateTime(DateUtils.format(new Date()));
         return ModifyResult.operateResult(userAccountDao.update(userAccountDO),"修改账户删除状态",
-                ResponseStatusCodeEnum.SUCCESS.getCode());
+                ResponseStatusCodeEnum.SUCCESS.getCode(), userAccountDO.getUid());
     }
 
     @Override
     public ModifyResult deleteByUid(long uid) {
         return ModifyResult.operateResult(userAccountDao.deleteByUid(uid),"删除账户信息",
-                ResponseStatusCodeEnum.SUCCESS.getCode());
+                ResponseStatusCodeEnum.SUCCESS.getCode(), uid);
     }
 
     @Override

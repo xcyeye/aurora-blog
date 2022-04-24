@@ -1,24 +1,28 @@
 package xyz.xcye.admin.controller;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindException;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import xyz.xcye.admin.entity.DefaultValueEntity;
 import xyz.xcye.common.dos.EmailDO;
+import xyz.xcye.common.dos.MessageLogDO;
+import xyz.xcye.common.entity.result.R;
 import xyz.xcye.common.exception.email.EmailException;
 import xyz.xcye.common.exception.user.UserException;
 import xyz.xcye.admin.service.UserService;
-import xyz.xcye.admin.vo.UserVO;
 import xyz.xcye.common.annotaion.ResponseResult;
 import xyz.xcye.common.dos.UserAccountDO;
 import xyz.xcye.common.dos.UserDO;
 import xyz.xcye.common.dto.PaginationDTO;
 import xyz.xcye.common.entity.result.ModifyResult;
+import xyz.xcye.common.util.ObjectConvertJson;
 import xyz.xcye.common.valid.Insert;
 import xyz.xcye.common.valid.Update;
+import xyz.xcye.common.vo.UserVO;
 import xyz.xcye.web.common.service.feign.MessageLogFeignService;
 
 import javax.validation.groups.Default;
@@ -41,9 +45,8 @@ public class UserController {
     @ResponseResult
     @ApiOperation(value = "添加新用户")
     public ModifyResult insertUser(@Validated({Insert.class, Default.class})UserDO userDO,
-                                   @Validated({Insert.class, Default.class}) UserAccountDO userAccountDO,
-                                   @Validated({Insert.class,Default.class})EmailDO email) throws BindException, UserException, InstantiationException, IllegalAccessException, EmailException {
-        return userService.insertUser(userDO,userAccountDO,email);
+                                   @Validated({Insert.class, Default.class}) UserAccountDO userAccountDO) throws BindException, UserException, InstantiationException, IllegalAccessException, EmailException {
+        return userService.insertUser(userDO,userAccountDO);
     }
 
     @PutMapping("")
@@ -70,7 +73,7 @@ public class UserController {
     @GetMapping("/{uid}")
     @ResponseResult
     @ApiOperation(value = "通过uid查询用户信息")
-    public UserVO insertUser(@PathVariable("uid") long uid) throws InstantiationException, IllegalAccessException {
+    public UserVO queryUserByUid(@PathVariable("uid") long uid) throws InstantiationException, IllegalAccessException {
         return userService.queryByUid(uid);
     }
 
@@ -79,5 +82,12 @@ public class UserController {
     @ApiOperation(value = "查询所有满足要求的用户信息")
     public List<UserVO> insertUser(UserDO userDO, PaginationDTO pagination) throws InstantiationException, IllegalAccessException {
         return userService.queryAll(userDO,pagination);
+    }
+
+    @ApiOperation("绑定邮箱")
+    @ResponseResult
+    @PutMapping("/bindingEmail")
+    public ModifyResult bindingEmail(@Validated({Insert.class,Default.class}) EmailDO emailDO) throws BindException {
+        return userService.bindingEmail(emailDO);
     }
 }

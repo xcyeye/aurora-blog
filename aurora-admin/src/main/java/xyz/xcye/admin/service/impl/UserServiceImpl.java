@@ -2,6 +2,9 @@ package xyz.xcye.admin.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import io.seata.spring.annotation.GlobalTransactional;
+import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -11,17 +14,16 @@ import org.springframework.util.StringUtils;
 import org.springframework.validation.BindException;
 import xyz.xcye.admin.dao.UserDao;
 import xyz.xcye.admin.entity.DefaultValueEntity;
+import xyz.xcye.admin.manager.mq.send.VerifyAccountSendService;
 import xyz.xcye.admin.util.AccountInfoUtils;
 import xyz.xcye.common.dos.EmailDO;
 import xyz.xcye.common.dto.EmailVerifyAccountDTO;
+import xyz.xcye.common.entity.result.R;
 import xyz.xcye.common.exception.email.EmailException;
 import xyz.xcye.common.exception.user.UserException;
-import xyz.xcye.admin.manager.mq.AdminRabbitMQSendService;
 import xyz.xcye.admin.service.RoleService;
 import xyz.xcye.admin.service.UserAccountService;
 import xyz.xcye.admin.service.UserService;
-import xyz.xcye.admin.vo.UserAccountVO;
-import xyz.xcye.admin.vo.UserVO;
 import xyz.xcye.common.dos.RoleDO;
 import xyz.xcye.common.dos.UserAccountDO;
 import xyz.xcye.common.dos.UserDO;
@@ -30,10 +32,13 @@ import xyz.xcye.common.entity.result.ModifyResult;
 import xyz.xcye.common.enums.ResponseStatusCodeEnum;
 import xyz.xcye.common.util.BeanCopyUtils;
 import xyz.xcye.common.util.DateUtils;
+import xyz.xcye.common.util.JSONUtils;
+import xyz.xcye.common.util.ObjectConvertJson;
 import xyz.xcye.common.util.id.GenerateInfoUtils;
+import xyz.xcye.common.vo.UserAccountVO;
+import xyz.xcye.common.vo.UserVO;
 import xyz.xcye.web.common.service.feign.MessageLogFeignService;
 
-import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -41,6 +46,7 @@ import java.util.List;
  * @author qsyyke
  */
 
+@Slf4j
 @Service
 public class UserServiceImpl implements UserService {
 
@@ -94,31 +100,22 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private DefaultValueEntity defaultValueEntity;
     @Autowired
-    private AdminRabbitMQSendService adminRabbitMQSendService;
-    @Autowired
     private MessageLogFeignService messageLogFeignService;
+    @Autowired
+    private VerifyAccountSendService verifyAccountSendService;
 
     @GlobalTransactional(rollbackFor = Exception.class)
     @Override
-    public ModifyResult insertUser(UserDO userDO, UserAccountDO userAccountDO, EmailDO emailDO) throws UserException, InstantiationException, IllegalAccessException, BindException, EmailException {
+    public ModifyResult insertUser(UserDO userDO, UserAccountDO userAccountDO) throws UserException, InstantiationException, IllegalAccessException, BindException, EmailException {
         // 判断用户名是否存在
         if (existsUsername(userDO.getUsername())) {
             return ModifyResult.operateResult(ResponseStatusCodeEnum.PERMISSION_USER_EXIST.getMessage(),
-                    0,ResponseStatusCodeEnum.PERMISSION_USER_EXIST.getCode());
+                    0,ResponseStatusCodeEnum.PERMISSION_USER_EXIST.getCode(), 0);
         }
 
         // 设置默认属性
-        userDO = setUserProperties(userDO,emailDO);
+        userDO = setUserProperties(userDO);
         userAccountDO = setUserAccountProperties(userDO,userAccountDO);
-
-        // 先远程调用插入邮箱
-        emailDO.setUserUid(userDO.getUid());
-        ModifyResult insertModifyResult = messageLogFeignService.insertEmail(emailDO);
-        EmailDO queriedEmailDO = messageLogFeignService.queryByUid(insertModifyResult.getUid());
-        if (queriedEmailDO == null) {
-            throw new EmailException(ResponseStatusCodeEnum.EXCEPTION_EMAIL_NOT_EXISTS.getMessage(),
-                    ResponseStatusCodeEnum.EXCEPTION_EMAIL_NOT_EXISTS.getCode());
-        }
 
         // 插入
         int insertUserNum = userDao.insertUser(userDO);
@@ -134,12 +131,6 @@ public class UserServiceImpl implements UserService {
             throw new UserException(ResponseStatusCodeEnum.PERMISSION_USER_FAIL_ADD.getMessage(),
                     ResponseStatusCodeEnum.PERMISSION_USER_FAIL_ADD.getCode());
         }
-        // 执行到这里，插入用户成功，发送验证账户的邮件
-        EmailVerifyAccountDTO verifyAccountDTO = EmailVerifyAccountDTO.builder().verifyAccountUrl(AccountInfoUtils.generateVerifyAccountPath(userDO.getUid(),
-                        emailVerifyAccountPrefixPath)).expirationTime(new Date().getTime() + emailVerifyAccountExpirationTime)
-                .receiverEmail(emailDO.getEmail()).build();
-
-        adminRabbitMQSendService.sendVerifyAccount(verifyAccountDTO, userDO);
 
         return ModifyResult.operateResult(insertUserNum,"插入用户" + userDO.getUsername(),
                 ResponseStatusCodeEnum.SUCCESS.getCode(),userDO.getUid());
@@ -173,7 +164,7 @@ public class UserServiceImpl implements UserService {
         UserAccountVO queriedUserAccountVO = userAccountService.queryByUserUid(userDO.getUid());
         if (queriedUserAccountVO == null) {
             return ModifyResult.operateResult(userDO.getUid() + ResponseStatusCodeEnum.PERMISSION_USER_NOT_EXIST.getMessage(),
-                    0,ResponseStatusCodeEnum.PERMISSION_USER_NOT_EXIST.getCode());
+                    0,ResponseStatusCodeEnum.PERMISSION_USER_NOT_EXIST.getCode(), 0);
         }
 
         userDO = UserDO.builder()
@@ -190,7 +181,7 @@ public class UserServiceImpl implements UserService {
         }
 
         return ModifyResult.operateResult("更新" + userDO.getUid() + "用户删除状态",
-                1,ResponseStatusCodeEnum.SUCCESS.getCode());
+                1,ResponseStatusCodeEnum.SUCCESS.getCode(), userDO.getUid());
     }
 
     @Transactional
@@ -204,11 +195,11 @@ public class UserServiceImpl implements UserService {
         int deleteUserNum = userDao.deleteByUid(uid);
         ModifyResult deleteUserAccountResult = userAccountService.deleteByUid(userAccountVO.getUid());
 
-        if (deleteUserAccountResult.getAffectedRows() != deleteUserNum) {
+        if (!deleteUserAccountResult.isSuccess()) {
             throw new UserException(ResponseStatusCodeEnum.PERMISSION_USER_FAIL_DELETE.getMessage(),
                     ResponseStatusCodeEnum.PERMISSION_USER_FAIL_DELETE.getCode());
         }
-        return ModifyResult.operateResult("删除" + uid + "用户",1,ResponseStatusCodeEnum.SUCCESS.getCode());
+        return ModifyResult.operateResult("删除" + uid + "用户",deleteUserNum,ResponseStatusCodeEnum.SUCCESS.getCode(), uid);
     }
 
     @Override
@@ -227,6 +218,28 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDO queryByUsername(String username) {
         return userDao.queryByUsername(username);
+    }
+
+    @GlobalTransactional
+    @Override
+    public ModifyResult bindingEmail(EmailDO emailDO) throws BindException {
+        UserDO userDO = UserDO.builder().emailUid(emailDO.getUid()).uid(emailDO.getUserUid())
+                .updateTime(DateUtils.format(new Date())).build();
+
+        int updateUserNum = userDao.updateUser(userDO);
+        log.info("绑定邮箱,用户uid:{},邮箱信息{},绑定结果:{}",userDO.getUid(),emailDO,updateUserNum);
+        if (updateUserNum == 1) {
+            EmailVerifyAccountDTO verifyAccountInfo = EmailVerifyAccountDTO.builder()
+                    .userUid(userDO.getUid())
+                    .expirationTime((long) emailVerifyAccountExpirationTime)
+                    .verifyAccountUrl(AccountInfoUtils.generateVerifyAccountPath(userDO.getUid(), emailVerifyAccountPrefixPath))
+                    .receiverEmail(emailDO.getEmail()).subject(null).build();
+            verifyAccountSendService.sendVerifyAccount(verifyAccountInfo);
+        }
+
+        // 绑定成功 发送验证邮箱
+        return ModifyResult.operateResult(updateUserNum, "绑定邮箱",
+                ResponseStatusCodeEnum.SUCCESS.getCode(), emailDO.getUserUid());
     }
 
     /**
@@ -280,13 +293,12 @@ public class UserServiceImpl implements UserService {
         return true;
     }
 
-    private UserDO setUserProperties(UserDO userDO, EmailDO emailDO) {
+    private UserDO setUserProperties(UserDO userDO) {
         userDO.setCreateTime(DateUtils.format(new Date()));
         userDO.setDelete(false);
         userDO.setVerifyEmail(false);
         userDO.setPassword(passwordEncoder.encode(userDO.getPassword()));
         userDO.setUid(GenerateInfoUtils.generateUid(workerId,datacenterId));
-        userDO.setEmailUid(emailDO.getUid());
 
         if (!StringUtils.hasLength(userDO.getNickname())) {
             userDO.setNickname(defaultValueEntity.getNickname());

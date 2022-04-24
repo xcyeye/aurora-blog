@@ -51,7 +51,7 @@ public class EmailLogServiceImpl implements EmailLogService {
         int insertEmailLogNum = emailLogDao.insertEmailLog(emailLog);
         return ModifyResult.operateResult(
                 insertEmailLogNum,"插入邮件发送日志",
-                ResponseStatusCodeEnum.SUCCESS.getCode());
+                ResponseStatusCodeEnum.SUCCESS.getCode(), emailLog.getUid());
     }
 
     @Override
@@ -66,14 +66,14 @@ public class EmailLogServiceImpl implements EmailLogService {
             emailLog = queryByUid(emailLog.getUid());
         }
         return ModifyResult.operateResult(updateEmailLogNum, "修改邮件发送日志",
-                ResponseStatusCodeEnum.SUCCESS.getCode());
+                ResponseStatusCodeEnum.SUCCESS.getCode(), emailLog.getUid());
     }
 
     @Override
     public ModifyResult deleteEmailLog(long uid) {
         int deleteEmailLogNum = emailLogDao.deleteEmailLog(uid);
         return ModifyResult.operateResult(deleteEmailLogNum,"删除" + uid + "对应的邮件发送日志",
-                ResponseStatusCodeEnum.SUCCESS.getCode());
+                ResponseStatusCodeEnum.SUCCESS.getCode(), uid);
     }
 
     @Override

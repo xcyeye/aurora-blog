@@ -47,6 +47,16 @@ public class RabbitMQNameConstant {
     /** 生产者生产的消息不合法的routingKey **/
     public static final String MISTAKE_MESSAGE_ROUTING_KEY = "aurora.mistake.routing.key";
 
+    /** 绑定邮箱的队列 **/
+    public static final String OPERATE_USER_BINDING_EMAIL_QUEUE = "aurora.operate.user.binding.email.queue";
+    /** 绑定邮箱的路由key **/
+    public static final String OPERATE_USER_BINDING_EMAIL_ROUTING_KEY = "aurora.operate.user.binding.email.routing";
+
+    /** 绑定邮箱的死信队列 **/
+    public static final String DEAD_LETTER_OPERATE_USER_BINDING_EMAIL_QUEUE = "aurora.operate.user.binding.email.dead.letter.queue";
+    /** 绑定邮箱的死信队列路由key **/
+    public static final String DEAD_LETTER_OPERATE_USER_BINDING_EMAIL_ROUTING_KEY = "aurora.operate.user.binding.email.dead.letter.routing";
+
     /** 发送邮件的普通交换机名称 **/
     public static final String AURORA_SEND_EMAIL_COMMON_EXCHANGE = "aurora.send.email.common.exchange";
     /** 发送邮件的死信交换机名称 **/
@@ -54,5 +64,7 @@ public class RabbitMQNameConstant {
     /** 如果生产者生产的消息不合法，那么都会被该交换机接收 **/
     public static final String MISTAKE_MESSAGE_EXCHANGE = "aurora.send.mistake.exchange";
     /** 发送操作邮件的交换机 **/
-    public static final String AURORA_SEND_OPERATE_EMAIL = "aurora.send.operate.email";
+    public static final String AURORA_SEND_OPERATE_USER_EXCHANGE = "aurora.send.operate.user.exchange";
+    /** 发送操作邮件的死信交换机 **/
+    public static final String AURORA_SEND_OPERATE_USER_DEAD_LETTER_EXCHANGE = "aurora.send.operate.user.dead.letter.exchange";
 }

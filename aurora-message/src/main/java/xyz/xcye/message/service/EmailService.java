@@ -1,10 +1,12 @@
 package xyz.xcye.message.service;
 
 import org.apache.ibatis.annotations.Param;
+import org.springframework.validation.BindException;
 import xyz.xcye.common.dos.EmailDO;
 import xyz.xcye.common.dto.PaginationDTO;
 import xyz.xcye.common.entity.result.ModifyResult;
 import xyz.xcye.common.exception.email.EmailException;
+import xyz.xcye.common.exception.user.UserException;
 
 import java.util.List;
 
@@ -19,7 +21,7 @@ public interface EmailService {
      * @param email email对象
      * @return
      */
-    ModifyResult insertEmail(EmailDO email) throws EmailException;
+    ModifyResult insertEmail(EmailDO email) throws EmailException, BindException, InstantiationException, IllegalAccessException, UserException;
 
     /**
      * 根据uid删除一条记录
@@ -38,7 +40,7 @@ public interface EmailService {
     /**
      * 根据uid修改记录 修改的内容在email对象中
      */
-    ModifyResult updateEmailByUid(EmailDO email);
+    ModifyResult updateEmail(EmailDO email);
 
     /**
      * 根据自定义条件查询对应的内容

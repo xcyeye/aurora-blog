@@ -74,14 +74,14 @@ public class MessageLogServiceImpl implements MessageLogService {
         int insertMessageLogNum = messageLogDao.insertMessageLog(messageLogDO);
 
         return ModifyResult.operateResult(insertMessageLogNum,"插入消息投递日志",
-                 ResponseStatusCodeEnum.SUCCESS.getCode());
+                 ResponseStatusCodeEnum.SUCCESS.getCode(), messageLogDO.getUid());
     }
 
     @Override
     public ModifyResult deleteMessageLog(long uid) {
         int deleteMessageLogNum = messageLogDao.deleteMessageLog(uid);
         return ModifyResult.operateResult(deleteMessageLogNum,"删除消息投递日志",
-                ResponseStatusCodeEnum.SUCCESS.getCode());
+                ResponseStatusCodeEnum.SUCCESS.getCode(), uid);
     }
 
     @Override
@@ -93,7 +93,7 @@ public class MessageLogServiceImpl implements MessageLogService {
 
         //如果修改成功，返回最新的数据
         return ModifyResult.operateResult(updateMessageLogNum,"修改消息投递日志",
-                ResponseStatusCodeEnum.SUCCESS.getCode());
+                ResponseStatusCodeEnum.SUCCESS.getCode(), messageLogDO.getUid());
     }
 
     @Override

@@ -114,7 +114,7 @@ public class CommentServiceImpl implements CommentService {
         BeanUtils.copyProperties(commentDO,commentDTO);
 
         return ModifyResult.operateResult(insertCommentNum,"插入评论",
-                 ResponseStatusCodeEnum.SUCCESS.getCode());
+                 ResponseStatusCodeEnum.SUCCESS.getCode(), commentDO.getUid());
     }
 
     @Override
@@ -122,14 +122,14 @@ public class CommentServiceImpl implements CommentService {
         // 直接修改
         int updateNum = commentDao.setCommentDeleteStatus(uid);
         return ModifyResult.operateResult(updateNum,"对应的删除状态",
-                ResponseStatusCodeEnum.SUCCESS.getCode());
+                ResponseStatusCodeEnum.SUCCESS.getCode(), uid);
     }
 
     @Override
     public ModifyResult deleteComment(Long uid) {
         int deleteCommentNum = commentDao.deleteComment(uid);
         return ModifyResult.operateResult(deleteCommentNum,"删除" + uid + "对应的评论",
-                ResponseStatusCodeEnum.SUCCESS.getCode());
+                ResponseStatusCodeEnum.SUCCESS.getCode(), uid);
     }
 
     @Override
@@ -139,7 +139,7 @@ public class CommentServiceImpl implements CommentService {
         if (!existsComment) {
             // 数据库中不存在此uid的记录，直接返回
             return ModifyResult.operateResult("此" + commentDO.getUid() + "不存在",
-                    0,ResponseStatusCodeEnum.COMMON_RECORD_NOT_EXISTS.getCode());
+                    0,ResponseStatusCodeEnum.COMMON_RECORD_NOT_EXISTS.getCode(), commentDO.getUid());
         }
 
         //设置最后修改时间
@@ -148,7 +148,7 @@ public class CommentServiceImpl implements CommentService {
         CommentDTO commentDTO = new CommentDTO();
         BeanUtils.copyProperties(commentDO,commentDTO);
         return ModifyResult.operateResult(updateCommentNum,"删除评论",
-                ResponseStatusCodeEnum.SUCCESS.getCode());
+                ResponseStatusCodeEnum.SUCCESS.getCode(), commentDO.getUid());
     }
 
     @Override

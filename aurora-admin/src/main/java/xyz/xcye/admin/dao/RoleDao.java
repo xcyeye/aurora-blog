@@ -2,10 +2,8 @@ package xyz.xcye.admin.dao;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import xyz.xcye.admin.vo.RoleVO;
 import xyz.xcye.common.dos.RoleDO;
-import xyz.xcye.common.dto.PaginationDTO;
-import xyz.xcye.common.entity.result.ModifyResult;
+import xyz.xcye.common.vo.RoleVO;
 
 import java.util.List;
 

@@ -76,9 +76,10 @@
         where uid=#{email.uid}
     </update>
 
-    <update id="deleteEmailByUid">
+    <update id="updateEmail">
         delete from au_email where uid=#{uid}
     </update>
+
     <update id="updateDeleteStatus">
         update
             au_email
@@ -87,6 +88,10 @@
         where
             uid=#{email.uid}
     </update>
+
+    <delete id="deleteEmailByUid">
+        delete from au_email where uid=#{uid}
+    </delete>
 
     <select id="queryAllEmail" resultMap="emailMap">
         select uid,

@@ -1,6 +1,7 @@
 package xyz.xcye.common.util;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 
 /**
  * 将一个对象转换成json格式的字符串工具类

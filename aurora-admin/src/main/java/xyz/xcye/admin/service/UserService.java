@@ -4,11 +4,11 @@ import org.springframework.validation.BindException;
 import xyz.xcye.common.dos.EmailDO;
 import xyz.xcye.common.exception.email.EmailException;
 import xyz.xcye.common.exception.user.UserException;
-import xyz.xcye.admin.vo.UserVO;
 import xyz.xcye.common.dos.UserAccountDO;
 import xyz.xcye.common.dos.UserDO;
 import xyz.xcye.common.dto.PaginationDTO;
 import xyz.xcye.common.entity.result.ModifyResult;
+import xyz.xcye.common.vo.UserVO;
 
 import java.util.List;
 
@@ -26,7 +26,7 @@ public interface UserService {
      * @throws BindException 对象属性错误
      * @throws UserException 插入，更新异常
      */
-    ModifyResult insertUser(UserDO userDO, UserAccountDO userAccountDO, EmailDO emailDO) throws UserException, InstantiationException, IllegalAccessException, BindException, EmailException;
+    ModifyResult insertUser(UserDO userDO, UserAccountDO userAccountDO) throws UserException, InstantiationException, IllegalAccessException, BindException, EmailException;
 
     /**
      * 更新用户信息
@@ -71,5 +71,18 @@ public interface UserService {
      */
     UserVO queryByUid(long uid) throws InstantiationException, IllegalAccessException;
 
+    /**
+     * 根据用户名查询用户信息
+     * @param username
+     * @return
+     */
     UserDO queryByUsername(String username);
+
+    /**
+     * 绑定邮箱
+     * @param emailDO
+     * @return
+     * @throws BindException
+     */
+    ModifyResult bindingEmail(EmailDO emailDO) throws BindException;
 }

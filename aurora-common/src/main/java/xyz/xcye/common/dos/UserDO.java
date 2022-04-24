@@ -1,7 +1,9 @@
 package xyz.xcye.common.dos;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
 import xyz.xcye.common.valid.Delete;
 import xyz.xcye.common.valid.Insert;
@@ -18,6 +20,8 @@ import java.io.Serializable;
  */
 
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Data
 public class UserDO implements Serializable {
     public static final long serialVersionUID = 42L;

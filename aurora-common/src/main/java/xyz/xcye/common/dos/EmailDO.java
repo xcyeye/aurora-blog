@@ -32,6 +32,7 @@ public class EmailDO {
     /**
      * 此邮箱配置对应哪个用户 可以为null
      */
+    @NotNull
     private Long userUid;
 
     /**
@@ -57,30 +58,6 @@ public class EmailDO {
     private String protocol;
 
     /**
-     * 回复评论模板 不能为null 长度没有限制
-     */
-    @Length(max = FieldLengthConstant.EMAIL_TEMPLATE,message = "邮箱-配置中的回复评论模板长度不能超过{max}")
-    private String replyCommentTemplate;
-
-    /**
-     * 验证身份模板 不能为null 长度没有限制
-     */
-    @Length(max = FieldLengthConstant.EMAIL_TEMPLATE,message = "邮箱-配置中的验证账户信息的模板长度不能超过{max}")
-    private String verifyAccountTemplate;
-
-    /**
-     * 普通的通知模板 不能为null 长度没有限制
-     */
-    @Length(max = FieldLengthConstant.EMAIL_TEMPLATE,message = "邮箱-配置中的提醒通知模板长度不能超过{max}")
-    private String noticeTemplate;
-
-    /**
-     * 有用户评论的模板 不能为null 长度没有限制
-     */
-    @Length(max = FieldLengthConstant.EMAIL_TEMPLATE,message = "邮箱-配置中的收到评论模板长度不能超过{max}")
-    private String receiveCommentTemplate;
-
-    /**
      * 删除状态
      */
     @NotNull(groups = Update.class)
@@ -98,30 +75,6 @@ public class EmailDO {
     @Length(max = FieldLengthConstant.EMAIL_NUMBER)
     @javax.validation.constraints.Email(message = "邮件的邮箱号不满足要求")
     private String email;
-
-    /**
-     * 默认回复评论的标题
-     */
-    @Length(max = FieldLengthConstant.EMAIL_SUBJECT,message = "邮箱-回复评论的标题长度不能超过{max}")
-    private String replyCommentSubject;
-
-    /**
-     * 使用该邮箱发送验证账户时的默认标题
-     */
-    @Length(max = FieldLengthConstant.EMAIL_SUBJECT,message = "邮箱-验证账户的标题长度不能超过{max}")
-    private String verifyAccountSubject;
-
-    /**
-     * 使用该邮箱发送收到评论时的默认标题
-     */
-    @Length(max = FieldLengthConstant.EMAIL_SUBJECT,message = "邮箱-收到评论的标题长度不能超过{max}")
-    private String receiveCommentSubject;
-
-    /**
-     * 使用该邮箱发送普通通知时的默认标题
-     */
-    @Length(max = FieldLengthConstant.EMAIL_SUBJECT,message = "邮箱-普通通知的标题长度不能超过{max}")
-    private String noticeSubject;
 
     /**
      * 创建时间

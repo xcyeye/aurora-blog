@@ -1,4 +1,4 @@
-package xyz.xcye.message.manager.mq;
+package xyz.xcye.admin.manager.mq.register.queue;
 
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.core.QueueBuilder;
@@ -7,13 +7,12 @@ import org.springframework.stereotype.Component;
 import xyz.xcye.common.constant.RabbitMQNameConstant;
 
 /**
- * 注册队列以及交换机
+ * 注册操作邮件的队列
  * @author qsyyke
  */
 
 @Component
-public class MessageRabbitMQQueueRegister {
-
+public class RegisterOperateMailQueue {
     /**
      * 发送普通邮件通知的队列
      * @return
@@ -93,14 +92,4 @@ public class MessageRabbitMQQueueRegister {
     public Queue mailVerifyAccountNoticeDeadLetterQueue() {
         return new Queue(RabbitMQNameConstant.DEAD_LETTER_MAIL_VERIFY_ACCOUNT_NOTICE_QUEUE_NAME, true);
     }
-
-    /**
-     * 注册一个生产者生产错误消息的队列
-     * @return
-     */
-    @Bean
-    public Queue mistakeMessageQueue() {
-        return new Queue(RabbitMQNameConstant.MISTAKE_MESSAGE_QUEUE,true,true,false);
-    }
-
 }

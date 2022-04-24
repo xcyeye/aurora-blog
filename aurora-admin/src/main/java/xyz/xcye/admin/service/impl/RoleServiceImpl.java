@@ -1,20 +1,18 @@
 package xyz.xcye.admin.service.impl;
 
 import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import xyz.xcye.admin.dao.RoleDao;
 import xyz.xcye.admin.service.RoleService;
-import xyz.xcye.admin.vo.RoleVO;
 import xyz.xcye.common.dos.RoleDO;
 import xyz.xcye.common.dto.PaginationDTO;
 import xyz.xcye.common.entity.result.ModifyResult;
 import xyz.xcye.common.enums.ResponseStatusCodeEnum;
 import xyz.xcye.common.util.BeanCopyUtils;
 import xyz.xcye.common.util.DateUtils;
+import xyz.xcye.common.vo.RoleVO;
 
 import java.util.Date;
 import java.util.List;
@@ -48,29 +46,29 @@ public class RoleServiceImpl implements RoleService {
                 .createTime(DateUtils.format(new Date())).build();
         if (roleExists(roleDO.getRole())) {
              return ModifyResult.operateResult("此" + roleDO.getRole() + "已经存在",0,
-                    ResponseStatusCodeEnum.SUCCESS.getCode());
+                    ResponseStatusCodeEnum.SUCCESS.getCode(), roleDO.getUid());
         }
 
         int insertNum = roleDao.insert(roleDO);
         return ModifyResult.operateResult(insertNum,"添加角色信息" + roleDO.getRole(),
-                ResponseStatusCodeEnum.SUCCESS.getCode());
+                ResponseStatusCodeEnum.SUCCESS.getCode(), roleDO.getUid());
     }
 
     @Override
     public ModifyResult update(RoleDO roleDO) throws InstantiationException, IllegalAccessException {
         if (roleExists(roleDO.getRole())) {
             return ModifyResult.operateResult("此" + roleDO.getRole() + "已经存在",0,
-                    ResponseStatusCodeEnum.SUCCESS.getCode());
+                    ResponseStatusCodeEnum.SUCCESS.getCode(), roleDO.getUid());
         }
 
         return ModifyResult.operateResult(roleDao.update(roleDO),"修改角色信息",
-                ResponseStatusCodeEnum.SUCCESS.getCode());
+                ResponseStatusCodeEnum.SUCCESS.getCode(), roleDO.getUid());
     }
 
     @Override
     public ModifyResult deleteByUid(int uid) {
         return ModifyResult.operateResult(roleDao.deleteByUid(uid),"删除" + uid + "角色信息",
-                ResponseStatusCodeEnum.SUCCESS.getCode());
+                ResponseStatusCodeEnum.SUCCESS.getCode(), uid);
     }
 
     @Override

@@ -20,7 +20,7 @@ public interface EmailDao {
 
     int updateDeleteStatus(@Param("email") EmailDO email);
 
-    int updateEmailByUid(@Param("email") EmailDO email);
+    int updateEmail(@Param("email") EmailDO email);
 
     List<EmailDO> queryAllEmail(@Param("email") EmailDO email);
 

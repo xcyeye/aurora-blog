@@ -1,4 +1,4 @@
-package xyz.xcye.comment.manager.mq;
+package xyz.xcye.admin.manager.mq.register.exchange;
 
 import org.springframework.amqp.core.Exchange;
 import org.springframework.amqp.core.TopicExchange;
@@ -7,19 +7,17 @@ import org.springframework.stereotype.Component;
 import xyz.xcye.common.constant.RabbitMQNameConstant;
 
 /**
- * 注册队列以及交换机
  * @author qsyyke
  */
 
 @Component
-public class CommentRabbitMQExchangeRegister {
-
+public class RegisterSendMailExchange {
     /**
      * 注册一个普通发送邮件的交换机
      * @return
      */
     @Bean
-    public Exchange mailReplyCommentNoticeExchange() {
+    public Exchange commonSendMailExchange() {
         return new TopicExchange(RabbitMQNameConstant.AURORA_SEND_EMAIL_COMMON_EXCHANGE,
                 true,true);
     }
@@ -33,5 +31,4 @@ public class CommentRabbitMQExchangeRegister {
         return new TopicExchange(RabbitMQNameConstant.AURORA_SEND_EMAIL_DEAD_LETTER_EXCHANGE,
                 true, false);
     }
-
 }

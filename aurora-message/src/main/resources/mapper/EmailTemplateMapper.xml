@@ -1,0 +1,93 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="xyz.xcye.message.dao.EmailTemplateDao">
+
+    <insert id="insertEmailTemplate" keyColumn="uid">
+        insert into au_email_template
+        (
+         reply_comment_template,verify_account_template,notice_template,receive_comment_template,
+         reply_comment_subject,verify_account_subject,receive_comment_subject,notice_subject,
+         create_time,update_time)
+
+        values (
+                   #{emailTemplate.replyCommentTemplate},#{emailTemplate.verifyAccountTemplate},#{emailTemplate.noticeTemplate},#{emailTemplate.receiveCommentTemplate},
+                   #{emailTemplate.replyCommentSubject},#{emailTemplate.verifyAccountSubject},#{emailTemplate.receiveCommentSubject},#{emailTemplate.noticeSubject}
+                   ,#{emailTemplate.createTime},#{emailTemplate.updateTime}
+               )
+    </insert>
+
+    <update id="updateEmailTemplate">
+        update au_email_template
+        <set>
+            <if test="emailTemplate.noticeSubject != null">
+                notice_subject=#{emailTemplate.noticeSubject},
+            </if>
+            <if test="emailTemplate.receiveCommentSubject != null">
+                receive_comment_subject=#{emailTemplate.receiveCommentSubject},
+            </if>
+            <if test="emailTemplate.verifyAccountSubject != null">
+                verify_account_subject=#{emailTemplate.verifyAccountSubject},
+            </if>
+            <if test="emailTemplate.replyCommentSubject != null">
+                reply_comment_subject=#{emailTemplate.replyCommentSubject},
+            </if>
+            <if test="emailTemplate.emailTemplate != null">
+                emailTemplate=#{emailTemplate.emailTemplate},
+            </if>
+            <if test="emailTemplate.receiveCommentTemplate != null">
+                receive_comment_template=#{emailTemplate.receiveCommentTemplate},
+            </if>
+            <if test="emailTemplate.noticeTemplate != null">
+                notice_template=#{emailTemplate.noticeTemplate},
+            </if>
+            <if test="emailTemplate.verifyAccountTemplate != null">
+                verify_account_template=#{emailTemplate.verifyAccountTemplate},
+            </if>
+            <if test="emailTemplate.replyCommentTemplate != null">
+                reply_comment_template=#{emailTemplate.replyCommentTemplate},
+            </if>
+            <if test="emailTemplate.updateTime != null">
+                update_time=#{emailTemplate.updateTime}
+            </if>
+        </set>
+
+        where uid=#{emailTemplate.uid}
+    </update>
+
+    <delete id="deleteEmailTemplate">
+        delete from au_email_template where uid=#{uid}
+    </delete>
+
+    <select id="queryAllEmailTemplate" resultMap="emailTemplateMap">
+        select
+            uid,reply_comment_template,verify_account_template,notice_template,
+            receive_comment_template,reply_comment_subject,verify_account_subject,
+            receive_comment_subject,notice_subject,create_time,update_time,is_delete
+        from
+          au_email_template
+        <where>
+            <if test="condition.startTime != null condition.endTime != null">
+                and create_time between #{condition.startTime} and #{condition.endTime}
+            </if>
+            <if test="condition.uid != null">
+                and uid=#{condition.uid}
+            </if>
+        </where>
+    </select>
+
+    <resultMap id="emailTemplateMap" type="xyz.xcye.common.dos.EmailTemplateDO">
+        <id column="uid" property="uid"/>
+        <result column="reply_comment_template" property="replyCommentTemplate"/>
+        <result column="verify_Account_template" property="verifyAccountTemplate"/>
+        <result column="notice_template" property="noticeTemplate"/>
+        <result column="receive_comment_template" property="receiveCommentTemplate"/>
+        <result column="reply_comment_subject" property="replyCommentSubject"/>
+        <result column="verify_account_subject" property="verifyAccountSubject"/>
+        <result column="receive_comment_subject" property="receiveCommentSubject"/>
+        <result column="notice_subject" property="noticeSubject"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="create_time" property="createTime"/>
+    </resultMap>
+</mapper>

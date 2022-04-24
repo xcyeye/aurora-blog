@@ -39,7 +39,7 @@ public class ModifyResult {
      */
     private long uid;
 
-    public static ModifyResult operateResult(int affectedRows, String prefix, int code, long... uid) {
+    public static ModifyResult operateResult(int affectedRows, String prefix, int code, long uid) {
         String msg = "";
         if (affectedRows == 1) {
             msg = prefix + "成功";
@@ -47,23 +47,14 @@ public class ModifyResult {
             msg = prefix + "失败";
         }
 
-        long insertUid = 0L;
-        if (uid.length >= 1) {
-            insertUid = uid[0];
-        }
-
         return ModifyResult.builder()
-                .affectedRows(affectedRows).message(msg).uid(insertUid)
+                .affectedRows(affectedRows).message(msg).uid(uid)
                 .success(affectedRows == 1).code(code).build();
     }
 
-    public static ModifyResult operateResult(String msg, int affectedRows,int code, long... uid) {
-        long insertUid = 0L;
-        if (uid.length >= 1) {
-            insertUid = uid[0];
-        }
+    public static ModifyResult operateResult(String msg, int affectedRows,int code, long uid) {
         return ModifyResult.builder()
-                .code(code).affectedRows(affectedRows).uid(insertUid)
+                .code(code).affectedRows(affectedRows).uid(uid)
                 .success(affectedRows == 1).message(msg).build();
 
     }

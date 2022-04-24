@@ -67,11 +67,11 @@ public class MessageLogController {
     @ResponseResult
     @GetMapping("/{uid}")
     public MessageLogDO queryMessageLogByUid(@PathVariable("uid") long uid) {
-        try {
+        /*try {
             rabbitMQSchedule.reconsumeMQMessageTask();
         } catch (BindException e) {
             e.printStackTrace();
-        }
+        }*/
         return messageLogService.queryByUid(uid);
     }
 }

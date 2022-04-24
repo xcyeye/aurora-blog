@@ -68,7 +68,7 @@ public class FileServiceImpl implements FileService {
 
         if (fileEntity.getName() == null || fileEntity.getInputStream() == null) {
             return ModifyResult.operateResult(ResponseStatusCodeEnum.EXCEPTION_FILE_FAIL_PROPERTY.getMessage(),
-                    0,ResponseStatusCodeEnum.EXCEPTION_FILE_FAIL_PROPERTY.getCode());
+                    0,ResponseStatusCodeEnum.EXCEPTION_FILE_FAIL_PROPERTY.getCode(), 0);
         }
         //生成一个uid
         long uid = GenerateInfoUtils.generateUid(workerId,datacenterId);
@@ -103,7 +103,7 @@ public class FileServiceImpl implements FileService {
             modifiedFile = fileList.get(0);
         }
         return ModifyResult.operateResult(updateRow,"更新文件",
-                ResponseStatusCodeEnum.SUCCESS.getCode());
+                ResponseStatusCodeEnum.SUCCESS.getCode(), file.getUid());
     }
 
     @Override
@@ -115,7 +115,7 @@ public class FileServiceImpl implements FileService {
         if (fileList.size() == 0) {
             //此uid无效 这里会存在一个问题，因为deleteStatus默认为false，如果你已经删除了文件，但是只传入uid，也会进入到这里
             return ModifyResult.operateResult(ResponseStatusCodeEnum.COMMON_RECORD_NOT_EXISTS.getMessage(),
-                    0,ResponseStatusCodeEnum.COMMON_RECORD_NOT_EXISTS.getCode());
+                    0,ResponseStatusCodeEnum.COMMON_RECORD_NOT_EXISTS.getCode(), uid);
         }
 
         FileDO deleteFileInfo = fileList.get(0);
@@ -123,7 +123,7 @@ public class FileServiceImpl implements FileService {
         //如果已经删除，直接返回
         if (deleteFileInfo.getDelete()) {
             return ModifyResult.operateResult(deleteFileInfo.getFileName() + ResponseStatusCodeEnum.EXCEPTION_FILE_FAIL_HAD_DELETED.getMessage(),
-                    0,ResponseStatusCodeEnum.EXCEPTION_FILE_FAIL_HAD_DELETED.getCode());
+                    0,ResponseStatusCodeEnum.EXCEPTION_FILE_FAIL_HAD_DELETED.getCode(), uid);
         }
 
         //获取此文件的存储模式，然后删除文件
@@ -133,7 +133,7 @@ public class FileServiceImpl implements FileService {
         if (!fileStorageService.delete(deleteFileInfo.getStoragePath())) {
             //没有删除成功，直接返回null
             return ModifyResult.operateResult(ResponseStatusCodeEnum.EXCEPTION_FILE_FAIL_DELETE.getMessage() + " 可能原因：文件不存在",
-                    0,ResponseStatusCodeEnum.EXCEPTION_FILE_FAIL_DELETE.getCode());
+                    0,ResponseStatusCodeEnum.EXCEPTION_FILE_FAIL_DELETE.getCode(), uid);
         }
 
         //删除成功，修改数据表文件的状态

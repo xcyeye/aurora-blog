@@ -1,5 +1,6 @@
 package xyz.xcye.message.service.impl;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.MailException;
@@ -31,6 +32,7 @@ import java.util.List;
  * @author qsyyke
  */
 
+@Slf4j
 @Component
 public class SendMailServiceImpl implements SendMailService {
 
@@ -61,7 +63,7 @@ public class SendMailServiceImpl implements SendMailService {
         EmailDO emailDO = emailService.queryByUserUid(userUid);
         if (emailDO == null) {
             return ModifyResult.operateResult(userUid + "邮件" + ResponseStatusCodeEnum.COMMON_RECORD_NOT_EXISTS.getMessage(),
-                    0,ResponseStatusCodeEnum.COMMON_RECORD_NOT_EXISTS.getCode());
+                    0,ResponseStatusCodeEnum.COMMON_RECORD_NOT_EXISTS.getCode(), userUid);
         }
 
         //判断传入的subject是否为null或者空
@@ -82,7 +84,7 @@ public class SendMailServiceImpl implements SendMailService {
         EmailDO emailDO = emailService.queryByUserUid(userUid);
         if (emailDO == null) {
             return ModifyResult.operateResult(userUid + "邮件" + ResponseStatusCodeEnum.COMMON_RECORD_NOT_EXISTS.getMessage(),
-                    0,ResponseStatusCodeEnum.COMMON_RECORD_NOT_EXISTS.getCode());
+                    0,ResponseStatusCodeEnum.COMMON_RECORD_NOT_EXISTS.getCode(), userUid);
         }
 
         //判断传入的subject是否为null或者空或者长度超过限制
@@ -103,7 +105,7 @@ public class SendMailServiceImpl implements SendMailService {
         EmailDO emailDO = emailService.queryByUserUid(userUid);
         if (emailDO == null) {
             return ModifyResult.operateResult(userUid + "邮件" + ResponseStatusCodeEnum.COMMON_RECORD_NOT_EXISTS.getMessage(),
-                    0,ResponseStatusCodeEnum.COMMON_RECORD_NOT_EXISTS.getCode());
+                    0,ResponseStatusCodeEnum.COMMON_RECORD_NOT_EXISTS.getCode(), userUid);
         }
 
         //判断传入的subject是否为null或者空
@@ -123,7 +125,7 @@ public class SendMailServiceImpl implements SendMailService {
         EmailDO emailDO = emailService.queryByUserUid(userUid);
         if (emailDO == null) {
             return ModifyResult.operateResult(userUid + "邮件" + ResponseStatusCodeEnum.COMMON_RECORD_NOT_EXISTS.getMessage(),
-                    0,ResponseStatusCodeEnum.COMMON_RECORD_NOT_EXISTS.getCode());
+                    0,ResponseStatusCodeEnum.COMMON_RECORD_NOT_EXISTS.getCode(), userUid);
         }
 
         //判断传入的subject是否为null或者空
@@ -132,7 +134,8 @@ public class SendMailServiceImpl implements SendMailService {
         //解析邮件发送内容
         String sendContent = ParseEmailTemplate.sendVerifyAccountMail(verifyAccount,emailDO);
 
-        return sendEmail(subject,sendContent,emailDO.getEmail());
+        log.info("正在发送邮件到{}，邮件信息:{}",);
+        return sendEmail(subject,sendContent,);
     }
 
     @Override

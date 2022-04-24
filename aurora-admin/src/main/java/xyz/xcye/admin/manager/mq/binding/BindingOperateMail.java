@@ -1,4 +1,4 @@
-package xyz.xcye.message.manager.mq;
+package xyz.xcye.admin.manager.mq.binding;
 
 import org.springframework.amqp.core.*;
 import org.springframework.context.annotation.Bean;
@@ -6,11 +6,12 @@ import org.springframework.stereotype.Component;
 import xyz.xcye.common.constant.RabbitMQNameConstant;
 
 /**
+ * 将操作邮件相关的队列和交换机绑定起来
  * @author qsyyke
  */
 
 @Component
-public class BindingConfig {
+public class BindingOperateMail {
 
     //====================普通队列和普通交换机绑定
     /**
@@ -98,19 +99,8 @@ public class BindingConfig {
      */
     @Bean
     public Binding mailVerifyAccountNoticeDeadLetterBinding() {
-        return BindingBuilder.bind(new Queue(RabbitMQNameConstant.MAIL_VERIFY_ACCOUNT_NOTICE_QUEUE_NAME))
+        return BindingBuilder.bind(new Queue(RabbitMQNameConstant.DEAD_LETTER_MAIL_VERIFY_ACCOUNT_NOTICE_QUEUE_NAME))
                 .to(new TopicExchange(RabbitMQNameConstant.AURORA_SEND_EMAIL_DEAD_LETTER_EXCHANGE))
                 .with(RabbitMQNameConstant.DEAD_LETTER_MAIL_VERIFY_ACCOUNT_NOTICE_ROUTING_KEY);
-    }
-
-    /**
-     * 将mistakeMessageExchange交换机和队列绑定起来
-     * @return
-     */
-    @Bean
-    public Binding mistakeMessageBinding() {
-        return BindingBuilder.bind(new Queue(RabbitMQNameConstant.MISTAKE_MESSAGE_QUEUE))
-                .to(new DirectExchange(RabbitMQNameConstant.MISTAKE_MESSAGE_EXCHANGE))
-                .with(RabbitMQNameConstant.MISTAKE_MESSAGE_ROUTING_KEY);
     }
 }

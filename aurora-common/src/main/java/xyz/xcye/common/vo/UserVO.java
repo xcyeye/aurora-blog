@@ -1,4 +1,4 @@
-package xyz.xcye.admin.vo;
+package xyz.xcye.common.vo;
 
 import lombok.Data;
 import xyz.xcye.common.dos.LoginInfoDO;

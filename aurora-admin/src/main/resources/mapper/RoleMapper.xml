@@ -4,7 +4,7 @@
 
 <mapper namespace="xyz.xcye.admin.dao.RoleDao">
 
-    <resultMap id="roleResultMap" type="xyz.xcye.admin.vo.RoleVO">
+    <resultMap id="roleResultMap" type="xyz.xcye.common.vo.RoleVO">
         <id column="uid" property="uid"/>
         <result column="role" property="role"/>
         <result column="create_time" property="createTime"/>
