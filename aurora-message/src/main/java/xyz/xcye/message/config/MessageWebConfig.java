@@ -13,6 +13,7 @@ import springfox.documentation.spring.web.plugins.WebFluxRequestHandlerProvider;
 import springfox.documentation.spring.web.plugins.WebMvcRequestHandlerProvider;
 import xyz.xcye.message.interceptor.MessageGlobalHandlerInterceptor;
 import xyz.xcye.web.common.exception.CustomGlobalExceptionHandler;
+import xyz.xcye.web.common.manager.advice.GlobalLogAop;
 import xyz.xcye.web.common.manager.advice.ResponseResultHandler;
 
 import java.lang.reflect.Field;
@@ -76,5 +77,10 @@ public class MessageWebConfig implements WebMvcConfigurer {
     @Bean
     public ResponseResultHandler responseResultHandler() {
         return new ResponseResultHandler();
+    }
+
+    @Bean
+    public GlobalLogAop globalLogAop() {
+        return new GlobalLogAop();
     }
 }

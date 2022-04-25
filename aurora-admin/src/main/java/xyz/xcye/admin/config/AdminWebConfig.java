@@ -14,6 +14,7 @@ import springfox.documentation.spring.web.plugins.WebFluxRequestHandlerProvider;
 import springfox.documentation.spring.web.plugins.WebMvcRequestHandlerProvider;
 import xyz.xcye.admin.interceptor.AdminGlobalHandlerInterceptor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import xyz.xcye.web.common.manager.advice.GlobalLogAop;
 
 import java.lang.reflect.Field;
 import java.util.List;
@@ -118,4 +119,9 @@ public class AdminWebConfig implements WebMvcConfigurer {
     public HttpMessageConverters messageConverters(ObjectProvider<HttpMessageConverter<?>> converters) {
         return new HttpMessageConverters(converters.orderedStream().collect(Collectors.toList()));
     }*/
+
+    @Bean
+    public GlobalLogAop globalLogAop() {
+        return new GlobalLogAop();
+    }
 }

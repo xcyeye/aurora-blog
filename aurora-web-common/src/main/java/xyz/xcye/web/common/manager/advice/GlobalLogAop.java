@@ -5,7 +5,6 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.reflect.MethodSignature;
-import org.springframework.stereotype.Component;
 import xyz.xcye.common.entity.result.ModifyResult;
 import xyz.xcye.common.util.LogUtils;
 
@@ -17,7 +16,6 @@ import java.lang.reflect.Method;
  */
 
 @Slf4j
-@Component
 @Aspect
 public class GlobalLogAop {
 
@@ -56,7 +54,7 @@ public class GlobalLogAop {
      * @return
      * @throws Throwable
      */
-    @Around("execution(public * *..service..insert*(..))")
+    @Around("execution(public * xyz.xcye.*.service..*.insert*(..))")
     public Object saveInsertLog(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
         MethodSignature signature = (MethodSignature) proceedingJoinPoint.getSignature();
         Method method = signature.getMethod();
