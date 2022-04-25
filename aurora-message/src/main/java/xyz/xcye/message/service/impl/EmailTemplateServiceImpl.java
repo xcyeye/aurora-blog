@@ -1,22 +1,17 @@
 package xyz.xcye.message.service.impl;
 
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.validation.BindException;
 import xyz.xcye.common.dos.EmailTemplateDO;
 import xyz.xcye.common.dto.ConditionDTO;
 import xyz.xcye.common.entity.result.ModifyResult;
 import xyz.xcye.common.enums.ResponseStatusCodeEnum;
-import xyz.xcye.common.exception.email.EmailException;
-import xyz.xcye.common.exception.user.UserException;
-import xyz.xcye.common.util.BeanCopyUtils;
+import xyz.xcye.common.util.BeanUtils;
 import xyz.xcye.common.util.DateUtils;
 import xyz.xcye.common.vo.EmailTemplateVO;
 import xyz.xcye.message.dao.EmailTemplateDao;
 import xyz.xcye.message.service.EmailTemplateService;
 
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -52,21 +47,22 @@ public class EmailTemplateServiceImpl implements EmailTemplateService {
     }
 
     @Override
-    public List<EmailTemplateVO> queryAllEmailTemplate(ConditionDTO<Long> condition) throws InstantiationException, IllegalAccessException {
-        condition.init();
-        return BeanCopyUtils.copyList(emailTemplateDao.queryAllEmailTemplate(condition),EmailTemplateVO.class);
+    public List<EmailTemplateVO> queryAllEmailTemplate(ConditionDTO condition) throws InstantiationException, IllegalAccessException {
+        condition = ConditionDTO.init(condition);
+        return BeanUtils.copyList(emailTemplateDao.queryAllEmailTemplate(condition),EmailTemplateVO.class);
     }
 
     @Override
     public EmailTemplateVO queryEmailTemplateByUid(long uid) throws InstantiationException, IllegalAccessException {
         ConditionDTO<Object> condition = new ConditionDTO<>();
         condition.setUid(uid);
-        List<EmailTemplateDO> templateDOList = emailTemplateDao.queryAllEmailTemplate(condition);
+        return BeanUtils.getSingleObjFromList(emailTemplateDao.queryAllEmailTemplate(condition), EmailTemplateVO.class);
+    }
 
-        if (templateDOList.isEmpty()) {
-            return null;
-        }else {
-            return BeanCopyUtils.copyProperties(templateDOList.get(0),EmailTemplateVO.class);
-        }
+    @Override
+    public EmailTemplateVO queryEmailTemplateByUserUid(long userUid) throws InstantiationException, IllegalAccessException {
+        ConditionDTO<Object> condition = new ConditionDTO<>();
+        condition.setOtherUid(userUid);
+        return BeanUtils.getSingleObjFromList(emailTemplateDao.queryAllEmailTemplate(condition), EmailTemplateVO.class);
     }
 }

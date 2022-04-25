@@ -9,7 +9,7 @@ import xyz.xcye.common.dos.UserAccountDO;
 import xyz.xcye.common.dto.PaginationDTO;
 import xyz.xcye.common.entity.result.ModifyResult;
 import xyz.xcye.common.enums.ResponseStatusCodeEnum;
-import xyz.xcye.common.util.BeanCopyUtils;
+import xyz.xcye.common.util.BeanUtils;
 import xyz.xcye.common.util.DateUtils;
 import xyz.xcye.common.util.id.GenerateInfoUtils;
 import xyz.xcye.common.vo.UserAccountVO;
@@ -86,16 +86,16 @@ public class UserAccountServiceImpl implements UserAccountService {
     @Override
     public List<UserAccountVO> queryAll(UserAccountDO userAccountDO, PaginationDTO paginationDTO) throws InstantiationException, IllegalAccessException {
         paginationDTO = PaginationDTO.initPagination(paginationDTO,defaultPageNum,defaultPageSize);
-        return BeanCopyUtils.copyList(userAccountDao.queryAll(userAccountDO,paginationDTO),UserAccountVO.class);
+        return BeanUtils.copyList(userAccountDao.queryAll(userAccountDO,paginationDTO),UserAccountVO.class);
     }
 
     @Override
     public UserAccountVO queryByUid(long uid) throws InstantiationException, IllegalAccessException {
-        return BeanCopyUtils.copyProperties(userAccountDao.queryByUid(uid),UserAccountVO.class);
+        return BeanUtils.copyProperties(userAccountDao.queryByUid(uid),UserAccountVO.class);
     }
 
     @Override
     public UserAccountVO queryByUserUid(long userUid) throws InstantiationException, IllegalAccessException {
-        return BeanCopyUtils.copyProperties(userAccountDao.queryByUserUid(userUid),UserAccountVO.class);
+        return BeanUtils.copyProperties(userAccountDao.queryByUserUid(userUid),UserAccountVO.class);
     }
 }

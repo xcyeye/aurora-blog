@@ -17,6 +17,7 @@ import xyz.xcye.common.entity.result.ModifyResult;
 import xyz.xcye.message.service.SendMailService;
 
 import javax.mail.MessagingException;
+import java.io.IOException;
 import java.math.BigInteger;
 
 /**
@@ -37,7 +38,8 @@ public class SendMailController {
     @PostMapping("/notice")
     public ModifyResult sendCommonNotice(@RequestParam(value = "userUid") long userUid,
                                          EmailCommonNoticeDTO emailCommonNotice,
-                                         @RequestParam(value = "subject",required = false) String subject) throws MessagingException {
+                                         @RequestParam(value = "subject",required = false) String subject)
+            throws MessagingException, IOException, InstantiationException, IllegalAccessException {
         return sendMailService.sendCommonNoticeMail(emailCommonNotice,userUid,subject);
     }
 
@@ -46,7 +48,8 @@ public class SendMailController {
     @PostMapping("/replyComment")
     public ModifyResult sendReplyCommentMail(@RequestParam("replying") CommentDO replyingCommentInfo, @RequestParam("replied") CommentDO repliedCommentInfo,
                                              @RequestParam(value = "userUid") long userUid,
-                                             @RequestParam(value = "subject",required = false) String subject) throws MessagingException, BindException {
+                                             @RequestParam(value = "subject",required = false) String subject)
+            throws MessagingException, BindException, IOException, InstantiationException, IllegalAccessException {
         return sendMailService.sendReplyCommentMail(replyingCommentInfo,repliedCommentInfo,userUid,subject);
     }
 
@@ -55,7 +58,8 @@ public class SendMailController {
     @PostMapping("/receiveComment")
     public ModifyResult sendReceiveCommentMail(CommentDO receiveCommentInfo,
                                                @RequestParam(value = "userUid") long userUid,
-                                               @RequestParam(value = "subject",required = false) String subject) throws MessagingException, BindException {
+                                               @RequestParam(value = "subject",required = false) String subject)
+            throws MessagingException, BindException, IOException, InstantiationException, IllegalAccessException {
         return sendMailService.sendReceiveCommentMail(receiveCommentInfo,userUid,subject);
     }
 
@@ -69,7 +73,8 @@ public class SendMailController {
     @PostMapping("/verifyAccount")
     public ModifyResult sendVerifyAccountMail(EmailVerifyAccountDTO verifyAccount,
                                               @RequestParam(value = "userUid") long userUid,
-                                              @RequestParam(value = "subject",required = false) String subject) throws MessagingException {
+                                              @RequestParam(value = "subject",required = false) String subject)
+            throws MessagingException, IOException, InstantiationException, IllegalAccessException {
         return sendMailService.sendVerifyAccountMail(verifyAccount,userUid,subject);
     }
 

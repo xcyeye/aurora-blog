@@ -8,11 +8,13 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import xyz.xcye.common.annotaion.ResponseResult;
 import xyz.xcye.common.dos.EmailLogDO;
+import xyz.xcye.common.dto.ConditionDTO;
 import xyz.xcye.common.dto.PaginationDTO;
 import xyz.xcye.common.entity.result.ModifyResult;
 import xyz.xcye.common.entity.result.R;
 import xyz.xcye.common.valid.Insert;
 import xyz.xcye.common.valid.Update;
+import xyz.xcye.common.vo.EmailLogVO;
 import xyz.xcye.message.service.EmailLogService;
 
 import javax.validation.groups.Default;
@@ -56,15 +58,8 @@ public class EmailLogController {
     @ApiOperation(value = "查询所有邮件发送日志")
     @ResponseResult
     @GetMapping("")
-    public List<EmailLogDO> queryAllEmailLog(EmailLogDO emailLog, PaginationDTO pagination) {
-        if (emailLog == null) {
-            emailLog = new EmailLogDO();
-        }
-
-        if (pagination == null) {
-            pagination = new PaginationDTO();
-        }
-
-        return emailLogService.queryAll(emailLog,pagination);
+    public List<EmailLogVO> queryAllEmailLog(ConditionDTO<Long> condition)
+            throws InstantiationException, IllegalAccessException {
+        return emailLogService.queryAll(condition);
     }
 }

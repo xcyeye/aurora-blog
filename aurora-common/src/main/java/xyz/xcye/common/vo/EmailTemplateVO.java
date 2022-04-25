@@ -28,6 +28,11 @@ public class EmailTemplateVO {
     private Long uid;
 
     /**
+     * 用户uid
+     */
+    private Long userUid;
+
+    /**
      * 回复评论模板 不能为null 长度没有限制
      */
     private String replyCommentTemplate;

@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.BindException;
 import xyz.xcye.common.dos.MessageLogDO;
+import xyz.xcye.common.dto.ConditionDTO;
 import xyz.xcye.common.vo.MessageLogVO;
 import xyz.xcye.message.service.MessageLogService;
 
@@ -43,7 +44,7 @@ public class RabbitMQSchedule {
         messageLogDO.setConsumeStatus(false);
         List<MessageLogVO> messageLogVOList = null;
         try {
-            messageLogVOList = messageLogService.queryAllMessageLog(messageLogDO, null);
+            messageLogVOList = messageLogService.queryAllMessageLog(new ConditionDTO<>());
         } catch (InstantiationException | IllegalAccessException e) {
             e.printStackTrace();
             log.error("定时器获取rabbitmq消费日志失败: {}",e.getMessage());
@@ -68,8 +69,6 @@ public class RabbitMQSchedule {
             BeanUtils.copyProperties(messageLogVO,resendMsgMessageLogDO);
             resendMsgMessageLogDO.setTryCount(messageLogVO.getTryCount() + 1);
             messageLogService.updateMessageLog(resendMsgMessageLogDO);
-
-            System.out.println(1);
         }
     }
 }

@@ -7,6 +7,7 @@ import xyz.xcye.common.dto.EmailVerifyAccountDTO;
 import xyz.xcye.common.entity.result.ModifyResult;
 
 import javax.mail.MessagingException;
+import java.io.IOException;
 import java.math.BigInteger;
 
 /**
@@ -24,7 +25,7 @@ public interface SendMailService {
      * @return
      * @throws MessagingException
      */
-    ModifyResult sendCommonNoticeMail(EmailCommonNoticeDTO emailCommonNotice, long userUid, String subject) throws MessagingException;
+    ModifyResult sendCommonNoticeMail(EmailCommonNoticeDTO emailCommonNotice, long userUid, String subject) throws MessagingException, InstantiationException, IllegalAccessException, IOException;
 
     /**
      * 如果有用户回复某条评论，则会调用该解析方法进行解析，模板存放与数据库中
@@ -36,7 +37,7 @@ public interface SendMailService {
      * @throws MessagingException
      * @throws BindException
      */
-    ModifyResult sendReplyCommentMail(CommentDO replyingCommentInfo, CommentDO repliedCommentInfo, long userUid, String subject) throws MessagingException, BindException;
+    ModifyResult sendReplyCommentMail(CommentDO replyingCommentInfo, CommentDO repliedCommentInfo, long userUid, String subject) throws MessagingException, BindException, InstantiationException, IllegalAccessException, IOException;
 
     /**
      * 如果有用户发布了评论，那么就使用该方法进行模板内容的替换
@@ -47,7 +48,7 @@ public interface SendMailService {
      * @throws MessagingException
      * @throws BindException
      */
-    ModifyResult sendReceiveCommentMail(CommentDO receiveCommentInfo,long userUid,String subject) throws MessagingException, BindException;
+    ModifyResult sendReceiveCommentMail(CommentDO receiveCommentInfo,long userUid,String subject) throws MessagingException, BindException, InstantiationException, IllegalAccessException, IOException;
 
     /**
      * 发送验证账户的邮件
@@ -57,7 +58,7 @@ public interface SendMailService {
      * @return
      * @throws MessagingException 发送失败
      */
-    ModifyResult sendVerifyAccountMail(EmailVerifyAccountDTO verifyAccount, long userUid, String subject) throws MessagingException;
+    ModifyResult sendVerifyAccountMail(EmailVerifyAccountDTO verifyAccount, long userUid, String subject) throws MessagingException, InstantiationException, IllegalAccessException, IOException;
 
     /**
      * 发送简单的邮件

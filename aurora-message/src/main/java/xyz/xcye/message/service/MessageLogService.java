@@ -2,6 +2,7 @@ package xyz.xcye.message.service;
 
 import org.springframework.validation.BindException;
 import xyz.xcye.common.dos.MessageLogDO;
+import xyz.xcye.common.dto.ConditionDTO;
 import xyz.xcye.common.dto.PaginationDTO;
 import xyz.xcye.common.entity.result.ModifyResult;
 import xyz.xcye.common.vo.MessageLogVO;
@@ -39,18 +40,18 @@ public interface MessageLogService {
 
     /**
      * 根据分页条件和自定义条件查询所有满足要求的数据
-     * @param messageLogDO
-     * @param paginationDTO
+     * @param condition 查询条件，其中keyword对应routingKey,status对应consume_status
      * @return
      * @throws InstantiationException
      * @throws IllegalAccessException
      */
-    List<MessageLogVO> queryAllMessageLog(MessageLogDO messageLogDO, PaginationDTO paginationDTO) throws InstantiationException, IllegalAccessException;
+    List<MessageLogVO> queryAllMessageLog(ConditionDTO<Long> condition)
+            throws InstantiationException, IllegalAccessException;
 
     /**
      * 根据uid查询对应mq消息
      * @param uid
      * @return
      */
-    MessageLogDO queryByUid(long uid);
+    MessageLogVO queryByUid(long uid) throws InstantiationException, IllegalAccessException;
 }

@@ -64,6 +64,7 @@ public class EmailLogDO {
     /**
      * 邮件发送的状态 true：已成功发送 false：未发送成功
      */
+    @NotNull(groups = Insert.class)
     private Boolean send;
 
     /**

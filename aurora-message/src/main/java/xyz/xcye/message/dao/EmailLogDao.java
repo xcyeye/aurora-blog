@@ -3,6 +3,8 @@ package xyz.xcye.message.dao;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import xyz.xcye.common.dos.EmailLogDO;
+import xyz.xcye.common.dto.ConditionDTO;
+import xyz.xcye.common.vo.EmailLogVO;
 
 import java.math.BigInteger;
 import java.util.List;
@@ -16,6 +18,11 @@ public interface EmailLogDao {
     int insertEmailLog(@Param("emailLog") EmailLogDO emailLog);
     int updateEmailLog(@Param("emailLog") EmailLogDO emailLog);
     int deleteEmailLog(@Param("uid") long uid);
-    List<EmailLogDO> queryAll(@Param("emailLog") EmailLogDO emailLog);
-    EmailLogDO queryByUid(@Param("uid") long uid);
+
+    /**
+     *
+     * @param condition 查询条件 其中keyword为接收者邮箱号,发送状态为status
+     * @return
+     */
+    List<EmailLogDO> queryAll(@Param("condition") ConditionDTO condition);
 }

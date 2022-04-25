@@ -16,7 +16,7 @@ import java.util.List;
 
 public interface EmailTemplateService {
     /**
-     * 向数据库中插入一条email
+     * 向数据库中插入一条emailTemplate
      * @param emailTemplate email对象
      * @return
      */
@@ -30,15 +30,29 @@ public interface EmailTemplateService {
     ModifyResult deleteEmailTemplateByUid(long uid);
 
     /**
-     * 根据uid修改记录 修改的内容在email对象中
+     * 根据uid修改记录 修改的内容在emailTemplate对象中
      */
     ModifyResult updateEmailTemplate(EmailTemplateDO emailTemplate);
 
     /**
      * 根据自定义条件查询对应的内容
-     * @param condition 存放查询条件
+     * @param condition 查询条件,只需要设置uid和create_time
      */
     List<EmailTemplateVO> queryAllEmailTemplate(ConditionDTO<Long> condition) throws InstantiationException, IllegalAccessException;
 
+    /**
+     * 通过uid查询邮件发送模板
+     * @param uid
+     * @return
+     * @throws InstantiationException
+     * @throws IllegalAccessException
+     */
     EmailTemplateVO queryEmailTemplateByUid(long uid) throws InstantiationException, IllegalAccessException;
+
+    /**
+     * 通过userUid查询
+     * @param userUid
+     * @return
+     */
+    EmailTemplateVO queryEmailTemplateByUserUid(long userUid) throws InstantiationException, IllegalAccessException;
 }

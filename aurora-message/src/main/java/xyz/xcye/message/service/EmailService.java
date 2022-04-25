@@ -3,10 +3,12 @@ package xyz.xcye.message.service;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.validation.BindException;
 import xyz.xcye.common.dos.EmailDO;
+import xyz.xcye.common.dto.ConditionDTO;
 import xyz.xcye.common.dto.PaginationDTO;
 import xyz.xcye.common.entity.result.ModifyResult;
 import xyz.xcye.common.exception.email.EmailException;
 import xyz.xcye.common.exception.user.UserException;
+import xyz.xcye.common.vo.EmailVO;
 
 import java.util.List;
 
@@ -21,7 +23,8 @@ public interface EmailService {
      * @param email email对象
      * @return
      */
-    ModifyResult insertEmail(EmailDO email) throws EmailException, BindException, InstantiationException, IllegalAccessException, UserException;
+    ModifyResult insertEmail(EmailDO email)
+            throws EmailException, BindException, InstantiationException, IllegalAccessException, UserException;
 
     /**
      * 根据uid删除一条记录
@@ -31,38 +34,40 @@ public interface EmailService {
     ModifyResult deleteEmailByUid(long uid);
 
     /**
-     * 修改email.uid对应的delete状态
-     * @param email
-     * @return
-     */
-    ModifyResult updateDeleteStatus(EmailDO email);
-
-    /**
      * 根据uid修改记录 修改的内容在email对象中
      */
     ModifyResult updateEmail(EmailDO email);
 
     /**
      * 根据自定义条件查询对应的内容
-     * @param email 存放查询条件
-     * @param pagination 分页条件
+     * @param condition 其中keyword对应email,otherUid对应userUid
      * @return
+     * @throws InstantiationException
+     * @throws IllegalAccessException
      */
-    List<EmailDO> queryAllEmail(EmailDO email, PaginationDTO pagination);
+    List<EmailVO> queryAllEmail(ConditionDTO<Long> condition)
+            throws InstantiationException, IllegalAccessException;
 
     /**
      * 通过uid进行查询
      * @param uid
      * @return
      */
-    EmailDO queryByUid(long uid);
+    EmailVO queryByUid(long uid) throws InstantiationException, IllegalAccessException;
 
     /**
      * 查询数据库中，userUid这个用户所对应的邮件模板
      * @param userUid
      * @return
      */
-    EmailDO queryByUserUid(@Param("userUid") long userUid);
+    EmailVO queryByUserUid(@Param("userUid") long userUid) throws InstantiationException, IllegalAccessException;
 
-    EmailDO queryByEmail(String email);
+    /**
+     * 根据邮箱号进行查询
+     * @param email
+     * @return
+     * @throws InstantiationException
+     * @throws IllegalAccessException
+     */
+    EmailVO queryByEmail(String email) throws InstantiationException, IllegalAccessException;
 }

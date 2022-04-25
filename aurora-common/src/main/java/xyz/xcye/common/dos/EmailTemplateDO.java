@@ -31,6 +31,12 @@ public class EmailTemplateDO {
     private Long uid;
 
     /**
+     * 此邮件发送模板是哪个用户创建的
+     */
+    @NotNull(groups = {Insert.class,Update.class})
+    private Long userUid;
+
+    /**
      * 回复评论模板 不能为null 长度没有限制
      */
     @ValidateString(max = FieldLengthConstant.EMAIL_TEMPLATE, value = "邮箱-配置中的回复评论模板")

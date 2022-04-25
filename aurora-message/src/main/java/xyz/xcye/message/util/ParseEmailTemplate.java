@@ -5,6 +5,7 @@ import xyz.xcye.common.dos.EmailDO;
 import xyz.xcye.common.dto.EmailCommonNoticeDTO;
 import xyz.xcye.common.dto.EmailVerifyAccountDTO;
 import xyz.xcye.common.util.DateUtils;
+import xyz.xcye.common.vo.EmailTemplateVO;
 import xyz.xcye.message.enums.EmailTemplateReplaceRegex;
 
 import java.util.Date;
@@ -20,12 +21,12 @@ public class ParseEmailTemplate {
     /**
      * 根据数据库中某个用户的邮件普通通知模板，把特定内容替换成emailCommonNotice中所存放的内容
      * @param emailCommonNotice
-     * @param senderEmailInfo
+     * @param emailTemplateInfo
      * @return 解析之后的邮件发送内容，包含html，content
      */
-    public static String sendCommonNoticeMail(EmailCommonNoticeDTO emailCommonNotice, EmailDO senderEmailInfo) {
+    public static String sendCommonNoticeMail(EmailCommonNoticeDTO emailCommonNotice, EmailTemplateVO emailTemplateInfo) {
         //获取通知html模板
-        String noticeTemplate = senderEmailInfo.getNoticeTemplate();
+        String noticeTemplate = emailTemplateInfo.getNoticeTemplate();
 
         //使用正则表达式的方式进行替换模板中的内容
         //替换通知内容
@@ -44,12 +45,12 @@ public class ParseEmailTemplate {
      * 如果有用户回复某条评论，则会调用该解析方法进行解析，模板存放与数据库中
      * @param replyingCommentInfo
      * @param repliedCommentInfo
-     * @param senderEmailInfo
+     * @param emailTemplateInfo
      * @return 邮件发送的content，包含html，content
      */
-    public static String sendReplyCommentMail(CommentDO replyingCommentInfo, CommentDO repliedCommentInfo, EmailDO senderEmailInfo) {
+    public static String sendReplyCommentMail(CommentDO replyingCommentInfo, CommentDO repliedCommentInfo, EmailTemplateVO emailTemplateInfo) {
         //回复评论的模板
-        String replyCommentTemplate = senderEmailInfo.getReplyCommentTemplate();
+        String replyCommentTemplate = emailTemplateInfo.getReplyCommentTemplate();
 
         //进行内容替换 先设置被回复的评论信息
 
@@ -78,12 +79,12 @@ public class ParseEmailTemplate {
     /**
      * 如果有用户发布了评论，那么就使用该方法进行模板内容的替换
      * @param receiveCommentInfo
-     * @param senderEmailInfo
+     * @param emailTemplateInfo
      * @return 邮件发送的内容，包含html，content
      */
-    public static String sendReceiveCommentMail(CommentDO receiveCommentInfo,EmailDO senderEmailInfo) {
+    public static String sendReceiveCommentMail(CommentDO receiveCommentInfo,EmailTemplateVO emailTemplateInfo) {
         //回复评论的模板
-        String receiveCommentTemplate = senderEmailInfo.getReceiveCommentTemplate();
+        String receiveCommentTemplate = emailTemplateInfo.getReceiveCommentTemplate();
 
         //被回复的评论内容
         String content = receiveCommentTemplate.replaceAll(EmailTemplateReplaceRegex.REPLIED_COMMENT_CONTENT,receiveCommentInfo.getContent());
@@ -101,11 +102,11 @@ public class ParseEmailTemplate {
     /**
      * 邮件验证url的模板解析
      * @param verifyAccount
-     * @param senderEmailInfo
+     * @param emailTemplateInfo
      * @return 邮件发送的content，html
      */
-    public static String sendVerifyAccountMail(EmailVerifyAccountDTO verifyAccount, EmailDO senderEmailInfo) {
-        String verifyAccountTemplate = senderEmailInfo.getVerifyAccountTemplate();
+    public static String sendVerifyAccountMail(EmailVerifyAccountDTO verifyAccount, EmailTemplateVO emailTemplateInfo) {
+        String verifyAccountTemplate = emailTemplateInfo.getVerifyAccountTemplate();
 
         //替换内容
         String content = verifyAccountTemplate.replaceAll(EmailTemplateReplaceRegex.VERIFY_ACCOUNT_URL,verifyAccount.getVerifyAccountUrl());

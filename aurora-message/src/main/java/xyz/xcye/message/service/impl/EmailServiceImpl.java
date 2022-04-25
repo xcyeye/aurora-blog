@@ -2,11 +2,7 @@ package xyz.xcye.message.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import io.seata.core.context.RootContext;
 import io.seata.spring.annotation.GlobalTransactional;
-import lombok.extern.slf4j.Slf4j;
-import org.apache.ibatis.annotations.Param;
-import org.bouncycastle.math.raw.Mod;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,16 +10,19 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindException;
 import xyz.xcye.common.dos.EmailDO;
+import xyz.xcye.common.dto.ConditionDTO;
 import xyz.xcye.common.dto.PaginationDTO;
 import xyz.xcye.common.entity.result.ModifyResult;
 import xyz.xcye.common.entity.result.R;
 import xyz.xcye.common.enums.ResponseStatusCodeEnum;
 import xyz.xcye.common.exception.email.EmailException;
 import xyz.xcye.common.exception.user.UserException;
+import xyz.xcye.common.util.BeanUtils;
 import xyz.xcye.common.util.DateUtils;
 import xyz.xcye.common.util.JSONUtils;
 import xyz.xcye.common.util.ObjectConvertJson;
 import xyz.xcye.common.util.id.GenerateInfoUtils;
+import xyz.xcye.common.vo.EmailVO;
 import xyz.xcye.common.vo.UserVO;
 import xyz.xcye.message.dao.EmailDao;
 import xyz.xcye.message.feign.UserFeignService;
@@ -60,18 +59,6 @@ public class EmailServiceImpl implements EmailService {
     @Value("${aurora.snow-flake.datacenterId}")
     private int datacenterId;
 
-    /**
-     * 查询时默认的初始页数
-     */
-    @Value("${aurora.pagination.pageNum}")
-    private int defaultPageNum;
-
-    /**
-     * 查询时默认的返回数目
-     */
-    @Value("${aurora.pagination.pageSize}")
-    private int defaultPageSize;
-
     @Autowired
     private UserFeignService userFeignService;
 
@@ -102,7 +89,6 @@ public class EmailServiceImpl implements EmailService {
         long uid = GenerateInfoUtils.generateUid(workerId, datacenterId);
         //其中user_uid应该在调用的此方法的时候，就已经赋值在email对象里面
         email.setUid(uid);
-        email.setDelete(false);
         email.setCreateTime(DateUtils.format(new Date()));
         int insertEmailNum = emailDao.insertEmail(email);
 
@@ -127,24 +113,10 @@ public class EmailServiceImpl implements EmailService {
             return ModifyResult.operateResult(ResponseStatusCodeEnum.PARAM_IS_INVALID.getMessage(),
                     0,ResponseStatusCodeEnum.PARAM_IS_INVALID.getCode(),uid);
         }
-
         //删除
         int deleteEmailNum = emailDao.deleteEmailByUid(uid);
         return ModifyResult.operateResult(deleteEmailNum,"删除" + uid + "对应的email数据",
                 ResponseStatusCodeEnum.SUCCESS.getCode(),uid);
-    }
-
-    @Override
-    public ModifyResult updateDeleteStatus(EmailDO email) {
-        //验证uid是否有效
-        if (email.getUid() == 0) {
-            return ModifyResult.operateResult(ResponseStatusCodeEnum.PARAM_IS_INVALID.getMessage(),
-                    0,ResponseStatusCodeEnum.PARAM_IS_INVALID.getCode(), email.getUid());
-        }
-        email.setUpdateTime(DateUtils.format(new Date()));
-        int updateDeleteStatus = emailDao.updateDeleteStatus(email);
-        return ModifyResult.operateResult(updateDeleteStatus,"修改" + email.getUid() + "对应的email数据",
-                ResponseStatusCodeEnum.SUCCESS.getCode(),email.getUid());
     }
 
     @Override
@@ -155,35 +127,36 @@ public class EmailServiceImpl implements EmailService {
                     0,ResponseStatusCodeEnum.PARAM_IS_INVALID.getCode(), email.getUid());
         }
         email.setUpdateTime(DateUtils.format(new Date()));
-        int updateEmailByUidNum = emailDao.updateEmailByUid(email);
-
-        //根据uid查询修改之后的email
-        EmailDO queryEmail = queryByUid(email.getUid());
+        int updateEmailByUidNum = emailDao.updateEmail(email);
         return ModifyResult.operateResult(updateEmailByUidNum,"修改" + email.getUid() + "对应的email数据",
                 ResponseStatusCodeEnum.SUCCESS.getCode(), email.getUid());
     }
 
     @Override
-    public List<EmailDO> queryAllEmail(EmailDO email, PaginationDTO pagination) {
-        pagination = PaginationDTO.initPagination(pagination,defaultPageNum,defaultPageSize);
-        PageHelper.startPage(pagination.getPageNum(),pagination.getPageSize(),pagination.getOrderBy());
-        List<EmailDO> emails = emailDao.queryAllEmail(email);
-        PageInfo<EmailDO> filePageInfo = new PageInfo<>(emails);
-        return filePageInfo.getList();
+    public List<EmailVO> queryAllEmail(ConditionDTO condition) throws InstantiationException, IllegalAccessException {
+        condition = ConditionDTO.init(condition);
+        PageHelper.startPage(condition.getPageNum(),condition.getPageSize(),condition.getOrderBy());
+        return BeanUtils.copyList(emailDao.queryAllEmail(condition), EmailVO.class);
     }
 
     @Override
-    public EmailDO queryByUid(long uid) {
-        return emailDao.queryByUid(uid);
+    public EmailVO queryByUid(long uid) throws InstantiationException, IllegalAccessException {
+        ConditionDTO<Long> condition = new ConditionDTO<>();
+        condition.setUid(uid);
+        return BeanUtils.getSingleObjFromList(emailDao.queryAllEmail(condition),EmailVO.class);
     }
 
     @Override
-    public EmailDO queryByUserUid(long userUid) {
-        return emailDao.queryByUserUid(userUid);
+    public EmailVO queryByUserUid(long userUid) throws InstantiationException, IllegalAccessException {
+        ConditionDTO<Long> conditionDTO = new ConditionDTO<>();
+        conditionDTO.setOtherUid(userUid);
+        return BeanUtils.getSingleObjFromList(emailDao.queryAllEmail(conditionDTO), EmailVO.class);
     }
 
     @Override
-    public EmailDO queryByEmail(String email) {
-        return emailDao.queryByEmail(email);
+    public EmailVO queryByEmail(String email) throws InstantiationException, IllegalAccessException {
+        ConditionDTO<Long> conditionDTO = new ConditionDTO();
+        conditionDTO.setKeyword(email);
+        return BeanUtils.getSingleObjFromList(emailDao.queryAllEmail(conditionDTO), EmailVO.class);
     }
 }

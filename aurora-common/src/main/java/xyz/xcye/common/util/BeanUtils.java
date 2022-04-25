@@ -1,7 +1,6 @@
 package xyz.xcye.common.util;
 
 import com.github.pagehelper.PageInfo;
-import org.springframework.beans.BeanUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +10,7 @@ import java.util.List;
  */
 
 
-public class BeanCopyUtils {
+public class BeanUtils {
     public static <T,S> List<T> copyList(List<S> sourceList,Class<T> target) throws InstantiationException, IllegalAccessException {
         if (sourceList.isEmpty() || target == null) {
             return new ArrayList<>();
@@ -21,7 +20,7 @@ public class BeanCopyUtils {
         List<T> copyBeanList = new ArrayList<>();
         for (S sourceBean : sourcePageInfoList) {
             T t = target.newInstance();
-            BeanUtils.copyProperties(sourceBean,t);
+            org.springframework.beans.BeanUtils.copyProperties(sourceBean,t);
             copyBeanList.add(t);
         }
         return copyBeanList;
@@ -32,7 +31,17 @@ public class BeanCopyUtils {
             return null;
         }
         T t = target.newInstance();
-        BeanUtils.copyProperties(source,t);
+        org.springframework.beans.BeanUtils.copyProperties(source,t);
         return t;
+    }
+
+    public static <T,S> T getSingleObjFromList(List<S> objList, Class<T> target) throws InstantiationException, IllegalAccessException {
+        if (objList.isEmpty()) {
+            return null;
+        }
+
+        // 返回第一个
+        S s = objList.get(0);
+        return BeanUtils.copyProperties(s,target);
     }
 }

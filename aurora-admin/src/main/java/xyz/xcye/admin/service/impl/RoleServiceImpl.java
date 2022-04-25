@@ -10,7 +10,7 @@ import xyz.xcye.common.dos.RoleDO;
 import xyz.xcye.common.dto.PaginationDTO;
 import xyz.xcye.common.entity.result.ModifyResult;
 import xyz.xcye.common.enums.ResponseStatusCodeEnum;
-import xyz.xcye.common.util.BeanCopyUtils;
+import xyz.xcye.common.util.BeanUtils;
 import xyz.xcye.common.util.DateUtils;
 import xyz.xcye.common.vo.RoleVO;
 
@@ -75,12 +75,12 @@ public class RoleServiceImpl implements RoleService {
     public List<RoleVO> queryAll(RoleDO roleDO, PaginationDTO paginationDTO) throws InstantiationException, IllegalAccessException {
         paginationDTO = PaginationDTO.initPagination(paginationDTO,defaultPageNum,defaultPageSize);
         PageHelper.startPage(paginationDTO.getPageNum(),paginationDTO.getPageSize(), paginationDTO.getOrderBy());
-        return BeanCopyUtils.copyList(roleDao.queryAll(roleDO),RoleVO.class);
+        return BeanUtils.copyList(roleDao.queryAll(roleDO),RoleVO.class);
     }
 
     @Override
     public RoleVO queryByUid(int uid) throws InstantiationException, IllegalAccessException {
-        return BeanCopyUtils.copyProperties(roleDao.queryByUid(uid),RoleVO.class);
+        return BeanUtils.copyProperties(roleDao.queryByUid(uid),RoleVO.class);
     }
 
     /**

@@ -3,6 +3,8 @@ package xyz.xcye.message.dao;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import xyz.xcye.common.dos.MessageLogDO;
+import xyz.xcye.common.dto.ConditionDTO;
+import xyz.xcye.common.vo.MessageLogVO;
 
 import java.util.List;
 
@@ -15,7 +17,12 @@ public interface MessageLogDao {
     int insertMessageLog(@Param("messageDO") MessageLogDO messageLogDO);
     int deleteMessageLog(@Param("uid") long uid);
     int updateMessageLog(@Param("messageDO") MessageLogDO messageLogDO);
-    List<MessageLogDO> queryAllMessageLog(@Param("messageDO") MessageLogDO messageLogDO);
-    MessageLogDO queryByUid(@Param("uid") long uid);
+
+    /**
+     *
+     * @param condition 查询条件，其中keyword对应routingKey,status对应consume_status
+     * @return
+     */
+    List<MessageLogDO> queryAllMessageLog(@Param("condition") ConditionDTO condition);
 
 }

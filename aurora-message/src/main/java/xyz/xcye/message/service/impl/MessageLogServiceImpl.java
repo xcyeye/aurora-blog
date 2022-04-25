@@ -2,17 +2,16 @@ package xyz.xcye.message.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import io.seata.core.context.RootContext;
-import io.seata.spring.annotation.GlobalTransactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 import org.springframework.validation.BindException;
 import xyz.xcye.common.dos.MessageLogDO;
+import xyz.xcye.common.dto.ConditionDTO;
 import xyz.xcye.common.dto.PaginationDTO;
 import xyz.xcye.common.entity.result.ModifyResult;
 import xyz.xcye.common.enums.ResponseStatusCodeEnum;
-import xyz.xcye.common.util.BeanCopyUtils;
+import xyz.xcye.common.util.BeanUtils;
 import xyz.xcye.common.util.DateUtils;
 import xyz.xcye.common.util.ValidationUtils;
 import xyz.xcye.common.util.id.GenerateInfoUtils;
@@ -24,7 +23,6 @@ import xyz.xcye.common.vo.MessageLogVO;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Random;
 
 /**
  * @author qsyyke
@@ -32,18 +30,6 @@ import java.util.Random;
 
 @Service
 public class MessageLogServiceImpl implements MessageLogService {
-
-    /**
-     * 查询时默认的初始页数
-     */
-    @Value("${aurora.pagination.pageNum}")
-    private int defaultPageNum;
-
-    /**
-     * 查询时默认的返回数目
-     */
-    @Value("${aurora.pagination.pageSize}")
-    private int defaultPageSize;
 
     /**
      * 当前机器的id
@@ -63,16 +49,12 @@ public class MessageLogServiceImpl implements MessageLogService {
     @Override
     public ModifyResult insertMessageLog(MessageLogDO messageLogDO) throws BindException {
         ValidationUtils.valid(messageLogDO, Insert.class);
-
-        System.out.println("全局xid" + RootContext.getXID() + "是否绑定" + RootContext.inGlobalTransaction());
-
         //设置创建时间
         messageLogDO.setCreateTime(DateUtils.format(new Date()));
         if (messageLogDO.getUid() == null || messageLogDO.getUid() == 0) {
             messageLogDO.setUid(GenerateInfoUtils.generateUid(workerId,datacenterId));
         }
         int insertMessageLogNum = messageLogDao.insertMessageLog(messageLogDO);
-
         return ModifyResult.operateResult(insertMessageLogNum,"插入消息投递日志",
                  ResponseStatusCodeEnum.SUCCESS.getCode(), messageLogDO.getUid());
     }
@@ -97,18 +79,18 @@ public class MessageLogServiceImpl implements MessageLogService {
     }
 
     @Override
-    public List<MessageLogVO> queryAllMessageLog(MessageLogDO messageLogDO, PaginationDTO paginationDTO) throws InstantiationException, IllegalAccessException {
-        paginationDTO = PaginationDTO.initPagination(paginationDTO,defaultPageNum,defaultPageSize);
-        PageHelper.startPage(paginationDTO.getPageNum(),paginationDTO.getPageSize(),paginationDTO.getOrderBy());
-        List<MessageLogDO> messageLogDOList = messageLogDao.queryAllMessageLog(messageLogDO);
-        return BeanCopyUtils.copyList(messageLogDOList,MessageLogVO.class);
+    public List<MessageLogVO> queryAllMessageLog(ConditionDTO condition)
+            throws InstantiationException, IllegalAccessException {
+        condition = ConditionDTO.init(condition);
+        PageHelper.startPage(condition.getPageNum(),condition.getPageSize(),condition.getOrderBy());
+        List<MessageLogDO> messageLogDOList = messageLogDao.queryAllMessageLog(condition);
+        return BeanUtils.copyList(messageLogDOList,MessageLogVO.class);
     }
 
     @Override
-    public MessageLogDO queryByUid(long uid) {
-        if (uid == 0) {
-            return null;
-        }
-        return messageLogDao.queryByUid(uid);
+    public MessageLogVO queryByUid(long uid) throws InstantiationException, IllegalAccessException {
+        ConditionDTO<Long> conditionDTO = new ConditionDTO<>();
+        conditionDTO.setUid(uid);
+        return BeanUtils.getSingleObjFromList(messageLogDao.queryAllMessageLog(conditionDTO),MessageLogVO.class);
     }
 }

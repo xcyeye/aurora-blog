@@ -3,6 +3,8 @@ package xyz.xcye.message.dao;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import xyz.xcye.common.dos.EmailDO;
+import xyz.xcye.common.dto.ConditionDTO;
+import xyz.xcye.common.vo.UserVO;
 
 import java.util.List;
 
@@ -14,17 +16,31 @@ import java.util.List;
 @Mapper
 public interface EmailDao {
 
+    /**
+     * 插入邮箱记录
+     * @param email
+     * @return
+     */
     int insertEmail(@Param("email") EmailDO email);
 
+    /**
+     * 根据uid删除邮箱
+     * @param uid
+     * @return
+     */
     int deleteEmailByUid(@Param("uid") long uid);
 
-    int updateDeleteStatus(@Param("email") EmailDO email);
-
+    /**
+     * 更新邮箱记录
+     * @param email
+     * @return
+     */
     int updateEmail(@Param("email") EmailDO email);
 
-    List<EmailDO> queryAllEmail(@Param("email") EmailDO email);
-
-    EmailDO queryByUid(@Param("uid") long uid);
-    EmailDO queryByUserUid(@Param("userUid") long userUid);
-    EmailDO queryByEmail(@Param("email") String email);
+    /**
+     *
+     * @param condition 其中keyword对应email,otherUid对应userUid
+     * @return
+     */
+    List<EmailDO> queryAllEmail(@Param("condition")ConditionDTO condition);
 }

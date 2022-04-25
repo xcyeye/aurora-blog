@@ -1,8 +1,9 @@
 package xyz.xcye.common.dto;
 
-import lombok.Builder;
 import lombok.Data;
+import xyz.xcye.common.constant.PaginationConstant;
 import xyz.xcye.common.util.DateUtils;
+import xyz.xcye.common.util.NameUtils;
 
 /**
  * 这是查询的条件
@@ -32,9 +33,14 @@ public class ConditionDTO<T> {
     private T otherUid;
 
     /**
-     * 是否删除
+     * 是否显示
      */
     private Boolean show;
+
+    /**
+     * 状态，比如发送状态，发布状态
+     */
+    private Boolean status;
 
     /**
      * 查询的关键词
@@ -57,12 +63,38 @@ public class ConditionDTO<T> {
     private String orderBy;
 
     public void setStartTime(String startTime) {
-        System.out.println("set方法");
         this.startTime = this.initTime(startTime);
     }
 
     public void setEndTime(String endTime) {
         this.endTime = this.initTime(endTime);
+    }
+
+    /**
+     * 初始化排序字段
+     * @param orderBy
+     */
+    public void setOrderBy(String orderBy) {
+        if (orderBy != null) {
+            orderBy = NameUtils.getUnderlineName(orderBy);
+        }else {
+            orderBy = NameUtils.getUnderlineName(PaginationConstant.ORDER_BY);
+        }
+        this.orderBy = orderBy;
+    }
+
+    public void setPageNum(Integer pageNum) {
+        if (pageNum == null) {
+            pageNum = PaginationConstant.PAGE_NUM;
+        }
+        this.pageNum = pageNum;
+    }
+
+    public void setPageSize(Integer pageSize) {
+        if (pageSize == null) {
+            pageSize = PaginationConstant.PAGE_SIZE;
+        }
+        this.pageSize = pageSize;
     }
 
     /**
@@ -72,9 +104,23 @@ public class ConditionDTO<T> {
         return DateUtils.parse(dateStr);
     }
 
-    public void init() {
-        if (this.show == null) {
-            this.show = false;
+    public static ConditionDTO init(ConditionDTO condition) {
+        if (condition == null) {
+            condition = new ConditionDTO<>();
         }
+        if (condition.status == null) {
+            condition.setStatus(true);
+        }
+        if (condition.show == null) {
+            condition.setShow(true);
+        }
+        if (condition.pageNum == null) {
+            condition.setPageNum(0);
+        }
+        if (condition.pageSize == null) {
+            condition.setPageSize(10);
+        }
+
+        return condition;
     }
 }

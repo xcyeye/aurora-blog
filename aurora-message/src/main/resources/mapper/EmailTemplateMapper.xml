@@ -9,12 +9,12 @@
         (
          reply_comment_template,verify_account_template,notice_template,receive_comment_template,
          reply_comment_subject,verify_account_subject,receive_comment_subject,notice_subject,
-         create_time,update_time)
+         create_time,update_time,user_uid)
 
         values (
                    #{emailTemplate.replyCommentTemplate},#{emailTemplate.verifyAccountTemplate},#{emailTemplate.noticeTemplate},#{emailTemplate.receiveCommentTemplate},
                    #{emailTemplate.replyCommentSubject},#{emailTemplate.verifyAccountSubject},#{emailTemplate.receiveCommentSubject},#{emailTemplate.noticeSubject}
-                   ,#{emailTemplate.createTime},#{emailTemplate.updateTime}
+                   ,#{emailTemplate.createTime},#{emailTemplate.updateTime},#{emailTemplate.userUid}
                )
     </insert>
 
@@ -32,9 +32,6 @@
             </if>
             <if test="emailTemplate.replyCommentSubject != null">
                 reply_comment_subject=#{emailTemplate.replyCommentSubject},
-            </if>
-            <if test="emailTemplate.emailTemplate != null">
-                emailTemplate=#{emailTemplate.emailTemplate},
             </if>
             <if test="emailTemplate.receiveCommentTemplate != null">
                 receive_comment_template=#{emailTemplate.receiveCommentTemplate},
@@ -64,15 +61,18 @@
         select
             uid,reply_comment_template,verify_account_template,notice_template,
             receive_comment_template,reply_comment_subject,verify_account_subject,
-            receive_comment_subject,notice_subject,create_time,update_time,is_delete
+            receive_comment_subject,notice_subject,create_time,update_time
         from
           au_email_template
         <where>
-            <if test="condition.startTime != null condition.endTime != null">
+            <if test="condition.startTime != null and condition.endTime != null">
                 and create_time between #{condition.startTime} and #{condition.endTime}
             </if>
             <if test="condition.uid != null">
                 and uid=#{condition.uid}
+            </if>
+            <if test="condition.otherUid != null">
+                and user_uid=#{condition.otherUid}
             </if>
         </where>
     </select>

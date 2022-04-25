@@ -2,8 +2,10 @@ package xyz.xcye.message.service;
 
 import org.springframework.validation.BindException;
 import xyz.xcye.common.dos.EmailLogDO;
+import xyz.xcye.common.dto.ConditionDTO;
 import xyz.xcye.common.dto.PaginationDTO;
 import xyz.xcye.common.entity.result.ModifyResult;
+import xyz.xcye.common.vo.EmailLogVO;
 
 import java.math.BigInteger;
 import java.util.List;
@@ -33,11 +35,15 @@ public interface EmailLogService {
 
     /**
      * 查询所有满足要求的邮件发送日志
+     * @param condition 查询条件 其中keyword为接收者邮箱号,发送状态为status
+     * @return
+     * @throws InstantiationException
+     * @throws IllegalAccessException
      */
-    List<EmailLogDO> queryAll(EmailLogDO emailLog, PaginationDTO pagination);
+    List<EmailLogVO> queryAll(ConditionDTO<Long> condition) throws InstantiationException, IllegalAccessException;
 
     /**
      * 查询uid所对应的邮件发送日志
      */
-    EmailLogDO queryByUid(long uid);
+    EmailLogVO queryByUid(long uid) throws InstantiationException, IllegalAccessException;
 }

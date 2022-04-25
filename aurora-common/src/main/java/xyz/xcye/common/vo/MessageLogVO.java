@@ -6,6 +6,8 @@ import xyz.xcye.common.valid.Insert;
 import xyz.xcye.common.valid.Update;
 import xyz.xcye.common.valid.validator.ValidateString;
 
+import javax.validation.constraints.NotNull;
+
 /**
  * @author qsyyke
  */
@@ -21,6 +23,11 @@ public class MessageLogVO {
      * 生产者生产的消息
      */
     private String message;
+
+    /**
+     * 如果发生错误，则错误消息是什么
+     */
+    private String errorMessage;
 
     /**
      * 交换机
@@ -46,6 +53,8 @@ public class MessageLogVO {
      * 消息消费的状态，true
      */
     private Boolean consumeStatus;
+
+    private Boolean ackStatus;
 
     /**
      * 创建时间

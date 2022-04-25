@@ -3,8 +3,6 @@ package xyz.xcye.admin.service.impl;
 import com.github.pagehelper.PageHelper;
 import io.seata.spring.annotation.GlobalTransactional;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -18,7 +16,6 @@ import xyz.xcye.admin.manager.mq.send.VerifyAccountSendService;
 import xyz.xcye.admin.util.AccountInfoUtils;
 import xyz.xcye.common.dos.EmailDO;
 import xyz.xcye.common.dto.EmailVerifyAccountDTO;
-import xyz.xcye.common.entity.result.R;
 import xyz.xcye.common.exception.email.EmailException;
 import xyz.xcye.common.exception.user.UserException;
 import xyz.xcye.admin.service.RoleService;
@@ -30,10 +27,8 @@ import xyz.xcye.common.dos.UserDO;
 import xyz.xcye.common.dto.PaginationDTO;
 import xyz.xcye.common.entity.result.ModifyResult;
 import xyz.xcye.common.enums.ResponseStatusCodeEnum;
-import xyz.xcye.common.util.BeanCopyUtils;
+import xyz.xcye.common.util.BeanUtils;
 import xyz.xcye.common.util.DateUtils;
-import xyz.xcye.common.util.JSONUtils;
-import xyz.xcye.common.util.ObjectConvertJson;
 import xyz.xcye.common.util.id.GenerateInfoUtils;
 import xyz.xcye.common.vo.UserAccountVO;
 import xyz.xcye.common.vo.UserVO;
@@ -207,12 +202,12 @@ public class UserServiceImpl implements UserService {
         paginationDTO = PaginationDTO.initPagination(paginationDTO,defaultPageNum,defaultPageSize);
         PageHelper.startPage(paginationDTO.getPageNum(),paginationDTO.getPageSize(),paginationDTO.getOrderBy());
         List<UserDO> userDOList = userDao.queryAll(userDO);
-        return BeanCopyUtils.copyList(userDOList,UserVO.class);
+        return BeanUtils.copyList(userDOList,UserVO.class);
     }
 
     @Override
     public UserVO queryByUid(long uid) throws InstantiationException, IllegalAccessException {
-        return BeanCopyUtils.copyProperties(userDao.queryByUid(uid),UserVO.class);
+        return BeanUtils.copyProperties(userDao.queryByUid(uid),UserVO.class);
     }
 
     @Override

@@ -37,7 +37,7 @@ public interface EmailTemplateDao {
 
     /**
      * 查询所有的邮件发送模板，查询的条件只能是删除状态的true或者false
-     * @param condition 查询条件
+     * @param condition 查询条件,只需要设置uid和create_time
      * @return
      */
     List<EmailTemplateDO> queryAllEmailTemplate(@Param("condition") ConditionDTO condition);

@@ -5,50 +5,21 @@
 <mapper namespace="xyz.xcye.message.dao.EmailDao">
 
     <insert id="insertEmail" keyColumn="uid">
-        insert into au_email
-        (uid,
-        reply_comment_template,verify_account_template,notice_template,receive_comment_template,
-        email,is_delete,port,
-        reply_comment_subject,verify_account_subject,receive_comment_subject,notice_subject,
-        user_uid,email_host,email_password,protocol,create_time,update_time)
-
+        insert into
+            au_email
+        (uid,email,port,user_uid,email_host,email_password,protocol,create_time,update_time)
         values (
-        #{email.uid},#{email.replyCommentTemplate},#{email.verifyAccountTemplate},#{email.noticeTemplate},#{email.receiveCommentTemplate},
-        #{email.email},#{email.delete},#{email.port},
-        #{email.replyCommentSubject},#{email.verifyAccountSubject},#{email.receiveCommentSubject},#{email.noticeSubject}
-        ,#{email.userUid},#{email.emailHost},#{email.emailPassword},#{email.protocol},#{email.createTime},#{email.updateTime}
+        #{email.uid},#{email.email},#{email.port},#{email.userUid},#{email.emailHost},
+        #{email.emailPassword},#{email.protocol},#{email.createTime},#{email.updateTime}
         )
     </insert>
 
-    <update id="updateEmailByUid">
-        update au_email
+    <update id="updateEmail">
+        update
+            au_email
         <set>
-            <if test="email.noticeSubject != null">
-                notice_subject=#{email.noticeSubject},
-            </if>
-            <if test="email.receiveCommentSubject != null">
-                receive_comment_subject=#{email.receiveCommentSubject},
-            </if>
-            <if test="email.verifyAccountSubject != null">
-                verify_account_subject=#{email.verifyAccountSubject},
-            </if>
-            <if test="email.replyCommentSubject != null">
-                reply_comment_subject=#{email.replyCommentSubject},
-            </if>
             <if test="email.email != null">
                 email=#{email.email},
-            </if>
-            <if test="email.receiveCommentTemplate != null">
-                receive_comment_template=#{email.receiveCommentTemplate},
-            </if>
-            <if test="email.noticeTemplate != null">
-                notice_template=#{email.noticeTemplate},
-            </if>
-            <if test="email.verifyAccountTemplate != null">
-                verify_account_template=#{email.verifyAccountTemplate},
-            </if>
-            <if test="email.replyCommentTemplate != null">
-                reply_comment_template=#{email.replyCommentTemplate},
             </if>
             <if test="email.protocol != null">
                 protocol=#{email.protocol},
@@ -59,12 +30,6 @@
             <if test="email.emailHost != null">
                 email_host=#{email.emailHost},
             </if>
-            <if test="email.noticeTemplate != null">
-                user_uid=#{email.userUid},
-            </if>
-            <if test="email.delete != null">
-                is_delete=#{email.delete},
-            </if>
             <if test="email.port != null">
                 port=#{email.port},
             </if>
@@ -73,18 +38,6 @@
             </if>
         </set>
 
-        where uid=#{email.uid}
-    </update>
-
-    <update id="updateEmail">
-        delete from au_email where uid=#{uid}
-    </update>
-
-    <update id="updateDeleteStatus">
-        update
-            au_email
-        set
-            is_delete=#{email.delete},update_time=#{email.updateTime}
         where
             uid=#{email.uid}
     </update>
@@ -94,54 +47,22 @@
     </delete>
 
     <select id="queryAllEmail" resultMap="emailMap">
-        select uid,
-        reply_comment_template,verify_account_template,notice_template,receive_comment_template,
-        email,is_delete,port,
-        reply_comment_subject,verify_account_subject,receive_comment_subject,notice_subject,
-        user_uid,email_host,protocol,create_time,update_time from au_email
-
+        select
+            uid,email,port,user_uid,email_host,email_password,protocol,create_time,update_time
+        from
+          au_email
         <where>
-            <if test="email.noticeSubject != null">
-                notice_subject like contact('%',#{email.noticeSubject},'%')
+            <if test="condition.startTime != null and condition.endTime != null">
+                and create_time between #{condition.startTime} and #{condition.endTime}
             </if>
-            <if test="email.receiveCommentSubject != null">
-                and receive_comment_subject like contact('%',#{email.receiveCommentSubject},'%')
+            <if test="condition.uid != null">
+                and uid=#{condition.uid}
             </if>
-            <if test="email.verifyAccountSubject != null">
-                and verify_account_subject like contact('%',#{email.verifyAccountSubject},'%')
+            <if test="condition.keyword != null">
+                email=#{condition.keyword}
             </if>
-            <if test="email.replyCommentSubject != null">
-                and reply_comment_subject like contact('%',#{email.replyCommentSubject},'%')
-            </if>
-            <if test="email.email != null">
-                and email like contact('%',#{email.email},'%')
-            </if>
-            <if test="email.receiveCommentTemplate != null">
-                and receive_comment_template=#{email.receiveCommentTemplate}
-            </if>
-            <if test="email.noticeTemplate != null">
-                and notice_template=#{email.noticeTemplate}
-            </if>
-            <if test="email.verifyAccountTemplate != null">
-                and verift_account_template=#{email.verifyAccountTemplate}
-            </if>
-            <if test="email.replyCommentTemplate != null">
-                and reply_comment_template=#{email.replyCommentTemplate}
-            </if>
-            <if test="email.protocol != null">
-                and protocol like contact('%',#{email.protocol},'%')
-            </if>
-            <if test="email.emailHost != null">
-                and email_host like contact('%',#{email.emailHost},'%')
-            </if>
-            <if test="email.noticeTemplate != null">
-                and user_uid=#{email.userUid}
-            </if>
-            <if test="email.uid != null">
-                and uid=#{email.uid}
-            </if>
-            <if test="email.delete != null">
-                and is_delete=#{email.delete}
+            <if test="condition.otherUid != null">
+                user_uid=#{condition.otherUid}
             </if>
         </where>
     </select>
@@ -151,47 +72,9 @@
         <result column="userUid" property="userUid"/>
         <result column="email_host" property="emailHost"/>
         <result column="protocol" property="protocol"/>
-        <result column="reply_comment_template" property="replyCommentTemplate"/>
-        <result column="verify_Account_template" property="verifyAccountTemplate"/>
-        <result column="notice_template" property="noticeTemplate"/>
-        <result column="receive_comment_template" property="receiveCommentTemplate"/>
         <result column="email" property="email"/>
-        <result column="is_delete" property="delete"/>
         <result column="port" property="port"/>
-        <result column="reply_comment_subject" property="replyCommentSubject"/>
-        <result column="verify_account_subject" property="verifyAccountSubject"/>
-        <result column="receive_comment_subject" property="receiveCommentSubject"/>
-        <result column="notice_subject" property="noticeSubject"/>
         <result column="update_time" property="updateTime"/>
         <result column="create_time" property="createTime"/>
     </resultMap>
-
-    <select id="queryByUid" resultMap="emailMap">
-        select uid,
-               reply_comment_template,verify_account_template,notice_template,receive_comment_template,
-               email,is_delete,port,
-               reply_comment_subject,verify_account_subject,receive_comment_subject,notice_subject,
-               user_uid,email_host,protocol,create_time,update_time from au_email
-        where uid=#{uid}
-    </select>
-    <select id="queryByUserUid" resultMap="emailMap">
-        select uid,
-               reply_comment_template,verify_account_template,notice_template,receive_comment_template,
-               email,is_delete,port,
-               reply_comment_subject,verify_account_subject,receive_comment_subject,notice_subject,
-               user_uid,email_host,protocol,create_time,update_time from au_email
-        where user_uid=#{userUid}
-    </select>
-
-    <select id="queryByEmail" resultMap="emailMap">
-        select uid,
-               reply_comment_template,verify_account_template,notice_template,receive_comment_template,
-               email,is_delete,port,
-               reply_comment_subject,verify_account_subject,receive_comment_subject,notice_subject,
-               user_uid,email_host,protocol,create_time,update_time
-        from
-            au_email
-        where
-            email=#{email}
-    </select>
 </mapper>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div style="width: calc(100vw);height: auto;background: antiquewhite;">
+    <h2 style="font-weight: bold;">
+        <span>你的评论被回复了</span>
+    </h2>
+
+    下面的都是邮件的内容
+
+    <div style="background-color: aqua;">
+        <span>你有新的通知了</span>
+    </div>
+    <div style="margin-top: 2rem;background-color: aquamarine;margin-bottom: 2rem;">
+        你的评论内容<br>
+        <span>{{replyingCommentContent}}</span>
+        创建时间<div>{{replyingCommentTime}}</div>
+        你的用户名<div>{{replyingCommentUsername}}</div>
+        <a href="{{replyingCommentUserSite}}">你的站点</a>
+    </div>
+
+    <div style="margin-top: 2rem;background-color: #404993;margin-bottom: 2rem;">
+        回复你的内容<br>
+        <span>{{repliedCommentContent}}</span>
+        创建时间<div>{{repliedCommentCreatedAt}}</div>
+        你的用户名<div>{{repliedCommentUsername}}</div>
+        <a href="{{repliedCommentUserSite}}">你的站点</a>
+    </div>
+
+    <a href="{{commentPath}}">点击快速查看</a>
+</div>
+</body>
+</html>

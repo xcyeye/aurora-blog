@@ -15,8 +15,10 @@ import xyz.xcye.common.dos.MessageLogDO;
 import xyz.xcye.common.dto.EmailVerifyAccountDTO;
 import xyz.xcye.common.entity.result.ModifyResult;
 import xyz.xcye.common.constant.RabbitMQNameConstant;
+import xyz.xcye.common.util.BeanUtils;
 import xyz.xcye.common.util.ValidationUtils;
 import xyz.xcye.common.valid.Insert;
+import xyz.xcye.common.vo.MessageLogVO;
 import xyz.xcye.message.service.MessageLogService;
 import xyz.xcye.message.service.SendMailService;
 import xyz.xcye.web.common.manager.mq.MistakeMessageSendService;
@@ -54,7 +56,8 @@ public class RabbitMQConsumer {
      * @throws IOException
      */
     @RabbitListener(queues = RabbitMQNameConstant.MAIL_RECEIVE_COMMENT_NOTICE_QUEUE_NAME,ackMode = "MANUAL")
-    public void receiveCommentNotice(String msgJson, Channel channel, Message message) throws MessagingException, BindException, IOException {
+    public void receiveCommentNotice(String msgJson, Channel channel, Message message)
+            throws MessagingException, BindException, IOException, InstantiationException, IllegalAccessException {
         log.info("消费者replyCommentNotice执行{}",msgJson);
         // 获取唯一id
         String correlationDataId = null;
@@ -96,7 +99,8 @@ public class RabbitMQConsumer {
      * @throws IOException
      */
     @RabbitListener(queues = RabbitMQNameConstant.MAIL_REPLY_COMMENT_NOTICE_QUEUE_NAME,ackMode = "MANUAL")
-    public void replyCommentNotice(String msgJson, Channel channel, Message message) throws MessagingException, BindException, IOException {
+    public void replyCommentNotice(String msgJson, Channel channel, Message message)
+            throws MessagingException, BindException, IOException, InstantiationException, IllegalAccessException {
         log.info("消费者replyCommentNotice执行{}",msgJson);
         CommentDO replyingCommentInfo = null;
         CommentDO repliedCommentInfo = null;
@@ -129,7 +133,8 @@ public class RabbitMQConsumer {
     }
 
     @RabbitListener(queues = RabbitMQNameConstant.MAIL_VERIFY_ACCOUNT_NOTICE_QUEUE_NAME,ackMode = "MANUAL")
-    public void verifyAccountNotice(String msgJson, Channel channel, Message message) throws MessagingException, BindException, IOException {
+    public void verifyAccountNotice(String msgJson, Channel channel, Message message)
+            throws MessagingException, BindException, IOException, InstantiationException, IllegalAccessException {
         log.info("mq消费者接收到消息:{}",msgJson);
         // 获取唯一id
         String correlationDataId = null;
@@ -161,7 +166,8 @@ public class RabbitMQConsumer {
      * @throws IOException
      */
     @RabbitListener(queues = RabbitMQNameConstant.DEAD_LETTER_MAIL_REPLY_COMMENT_NOTICE_QUEUE_NAME,ackMode = "MANUAL")
-    public void deadLetterReplyCommentNotice(String msgJson,Channel channel,Message message) throws MessagingException, BindException, IOException {
+    public void deadLetterReplyCommentNotice(String msgJson,Channel channel,Message message)
+            throws MessagingException, BindException, IOException, InstantiationException, IllegalAccessException {
         log.error("死信队列执行 {}",msgJson);
         replyCommentNotice(msgJson,channel,message);
     }
@@ -176,7 +182,8 @@ public class RabbitMQConsumer {
      * @throws IOException
      */
     @RabbitListener(queues = RabbitMQNameConstant.DEAD_LETTER_MAIL_RECEIVE_COMMENT_NOTICE_QUEUE_NAME,ackMode = "MANUAL")
-    public void deadLetterReceiveCommentNotice(String msgJson,Channel channel,Message message) throws MessagingException, BindException, IOException {
+    public void deadLetterReceiveCommentNotice(String msgJson,Channel channel,Message message)
+            throws MessagingException, BindException, IOException, InstantiationException, IllegalAccessException {
         log.error("死信队列执行 {}",msgJson);
         receiveCommentNotice(msgJson,channel,message);
     }
@@ -189,16 +196,17 @@ public class RabbitMQConsumer {
      * @param errorMessage
      * @throws BindException
      */
-    private void updateMessageLogInfo(String correlationDataId, boolean ackStatus, boolean consumeStatus, String errorMessage) throws BindException {
-        MessageLogDO messageLogDO = messageLogService.queryByUid(Long.parseLong(correlationDataId));
+    private void updateMessageLogInfo(String correlationDataId, boolean ackStatus,
+                                      boolean consumeStatus, String errorMessage)
+            throws BindException, InstantiationException, IllegalAccessException {
+        MessageLogVO messageLogVO = messageLogService.queryByUid(Long.parseLong(correlationDataId));
 
-        if (messageLogDO == null) {
+        if (messageLogVO == null) {
             return;
         }
-
-        messageLogDO.setAckStatus(ackStatus);
-        messageLogDO.setConsumeStatus(consumeStatus);
-        messageLogDO.setErrorMessage(errorMessage);
-        messageLogService.updateMessageLog(messageLogDO);
+        messageLogVO.setAckStatus(ackStatus);
+        messageLogVO.setConsumeStatus(consumeStatus);
+        messageLogVO.setErrorMessage(errorMessage);
+        messageLogService.updateMessageLog(BeanUtils.copyProperties(messageLogVO,MessageLogDO.class));
     }
 }

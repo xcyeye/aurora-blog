@@ -1,11 +1,19 @@
 package xyz.xcye.common.vo;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonView;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
+import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import lombok.Data;
 import xyz.xcye.common.dos.LoginInfoDO;
 import xyz.xcye.common.dos.NavigationDO;
 
+//@JsonInclude(JsonInclude.Include.NON_NULL)
 @Data
 public class UserVO {
+
     /**
      * 用户唯一id
      */
@@ -97,5 +105,4 @@ public class UserVO {
     private NavigationDO navigationDO;
 
     private LoginInfoDO loginInfoDO;
-
 }

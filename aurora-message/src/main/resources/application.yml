@@ -75,7 +75,7 @@ mybatis:
   mapper-locations: classpath:mapper/**
   configuration:
     map-underscore-to-camel-case: true
-#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
 management:
   endpoints:

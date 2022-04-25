@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.BindException;
 import xyz.xcye.common.dos.MessageLogDO;
+import xyz.xcye.common.util.BeanUtils;
 import xyz.xcye.message.service.MessageLogService;
 import xyz.xcye.web.common.manager.mq.MistakeMessageSendService;
 import xyz.xcye.web.common.service.feign.MessageLogFeignService;
@@ -112,7 +113,8 @@ public class MessageRabbitMQConfig implements RabbitTemplate.ConfirmCallback,Rab
      * @throws InstantiationException
      * @throws IllegalAccessException
      */
-    private MessageLogDO getMessageLogFromDb(String correlationDataId) {
+    private MessageLogDO getMessageLogFromDb(String correlationDataId)
+            throws InstantiationException, IllegalAccessException {
         if (correlationDataId == null) {
             return null;
         }
@@ -125,7 +127,7 @@ public class MessageRabbitMQConfig implements RabbitTemplate.ConfirmCallback,Rab
             return null;
         }
 
-        return messageLogService.queryByUid(uid);
+        return BeanUtils.copyProperties(messageLogService.queryByUid(uid),MessageLogDO.class);
     }
 
     private MessageLogDO getMessageLogDO(CorrelationData correlationData) throws InstantiationException, IllegalAccessException {

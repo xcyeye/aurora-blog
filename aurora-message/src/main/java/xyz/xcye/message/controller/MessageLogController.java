@@ -10,6 +10,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import xyz.xcye.common.annotaion.ResponseResult;
 import xyz.xcye.common.dos.MessageLogDO;
+import xyz.xcye.common.dto.ConditionDTO;
 import xyz.xcye.common.dto.PaginationDTO;
 import xyz.xcye.common.entity.result.ModifyResult;
 import xyz.xcye.common.valid.Insert;
@@ -38,7 +39,8 @@ public class MessageLogController {
     @ApiOperation(value = "插入新消费消息",notes = "插入新消费消息")
     @ResponseResult
     @PostMapping("")
-    public ModifyResult insertMessageLog(@Validated({Insert.class,Default.class}) MessageLogDO messageLogDO) throws BindException {
+    public ModifyResult insertMessageLog(@Validated({Insert.class,Default.class}) MessageLogDO messageLogDO)
+            throws BindException {
         return messageLogService.insertMessageLog(messageLogDO);
     }
 
@@ -59,14 +61,16 @@ public class MessageLogController {
     @ApiOperation(value = "查询所有消费消息")
     @ResponseResult
     @GetMapping("")
-    public List<MessageLogVO> queryAllMessageLog(MessageLogDO messageLogDO, PaginationDTO paginationDTO) throws InstantiationException, IllegalAccessException {
-        return messageLogService.queryAllMessageLog(messageLogDO,paginationDTO);
+    public List<MessageLogVO> queryAllMessageLog(ConditionDTO<Long> condition)
+            throws InstantiationException, IllegalAccessException {
+        return messageLogService.queryAllMessageLog(condition);
     }
 
     @ApiOperation(value = "根据uid查询消费消息")
     @ResponseResult
     @GetMapping("/{uid}")
-    public MessageLogDO queryMessageLogByUid(@PathVariable("uid") long uid) {
+    public MessageLogVO queryMessageLogByUid(@PathVariable("uid") long uid)
+            throws InstantiationException, IllegalAccessException {
         /*try {
             rabbitMQSchedule.reconsumeMQMessageTask();
         } catch (BindException e) {
