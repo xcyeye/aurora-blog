@@ -1,7 +1,7 @@
 package xyz.xcye.file.interfaces;
-import xyz.xcye.file.exception.CustomFileException;
-import xyz.xcye.common.dto.FileEntityDTO;
 
+import xyz.xcye.common.dto.FileEntityDTO;
+import xyz.xcye.common.exception.file.FileException;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -18,7 +18,7 @@ public interface FileStorageService {
      * @return 文件实体
      * @throws IOException 异常
      */
-    FileEntityDTO upload(InputStream inputStream, FileEntityDTO fileEntity) throws CustomFileException;
+    FileEntityDTO upload(InputStream inputStream, FileEntityDTO fileEntity) throws FileException;
 
     /**
      * 将文件从存储服务上下载下来
@@ -30,7 +30,7 @@ public interface FileStorageService {
 
     /**
      * 根据objectName查询文件
-     * @param objectName objectName
+     * @param objectName 文件的绝对路径或者是oss的objectName
      * @return 文件实体
      * @throws IOException 异常
      */

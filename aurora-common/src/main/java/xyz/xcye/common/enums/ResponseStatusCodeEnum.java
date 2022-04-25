@@ -31,6 +31,7 @@ public enum ResponseStatusCodeEnum {
     EXCEPTION_FILE_NOT_FOUND(11300,"未发现该文件"),
     EXCEPTION_FILE_ALREADY_EXIST(11400,"已经存在该文件"),
     EXCEPTION_FILE_FAIL_PROPERTY(11500,"获取文件属性失败"),
+    EXCEPTION_FILE_EXCEED_MAX_SIZE(11600,"上传文件超过最大上传大小"),
 
 
     //----------------------异常相关的响应码--------未知异常

@@ -31,22 +31,6 @@ spring:
   application:
     name: aurora-file
   cloud:
-    stream:
-      binders:
-        defaultRabbit:
-          type: rabbit
-          environment:
-            spring:
-              rabbitmq:
-                host: 127.0.0.1
-                port: 5672
-                username: admin
-                password: 123456
-      bindings:
-        output:
-          destination: auroraTestSender
-          contentType: application/json
-          binder: defaultRabbit
     nacos:
       discovery:
         server-addr: 127.0.0.1:8848

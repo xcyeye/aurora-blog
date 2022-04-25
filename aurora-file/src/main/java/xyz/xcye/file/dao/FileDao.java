@@ -2,6 +2,7 @@ package xyz.xcye.file.dao;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import xyz.xcye.common.dto.ConditionDTO;
 import xyz.xcye.common.entity.table.FileDO;
 
 import java.util.List;
@@ -35,10 +36,8 @@ public interface FileDao {
 
     /**
      * 向数据库中查询文件
-     * @param file FileEntity对象
+     * @param condition 查询条件，其中keyword为文件名(file_name)
      * @return FileEntity对象集合
      */
-    List<FileDO> query(@Param("file") FileDO file);
-
-    FileDO queryByUid(@Param("uid") long uid);
+    List<FileDO> queryAll(@Param("condition") ConditionDTO condition);
 }

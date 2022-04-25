@@ -5,15 +5,16 @@
 <mapper namespace="xyz.xcye.file.dao.FileDao">
 
     <cache type="xyz.xcye.file.manager.cache.RedisCache"/>
+
     <insert id="insertFile"
             parameterType="xyz.xcye.common.entity.table.FileDO"
     >
-        INSERT INTO au_file
-            (uid,create_time,delete_time,file_name,size,is_delete,summary,path,storage_mode,storage_path)
-        VALUES(
-             #{file.uid},#{file.createTime},#{file.deleteTime},#{file.fileName},
-               #{file.size},#{file.delete},#{file.summary},#{file.path},#{file.storageMode},#{file.storagePath}
-            )
+        INSERT INTO
+            au_file
+            (uid,create_time,file_name,size,summary,path,storage_mode,storage_path,is_delete)
+        VALUES
+            (#{file.uid},#{file.createTime},#{file.fileName},
+            #{file.size},#{file.summary},#{file.path},#{file.storageMode},#{file.storagePath},#{file.delete})
     </insert>
 
     <!--
@@ -24,63 +25,59 @@
             parameterType="xyz.xcye.common.entity.table.FileDO"
             keyColumn="uid"
     >
-        update au_file
+        update
+            au_file
             <set>
-                <if test="file.deleteTime != null">
-                    delete_time=#{file.deleteTime},
-                </if>
                 <if test="file.summary != null">
                     summary=#{file.summary},
                 </if>
-                is_delete=#{file.delete}
+                <if test="file.delete != null">
+                    is_delete=#{file.delete},
+                </if>
+                <if test="file.deleteTime != null">
+                    delete_time=#{file.deleteTime}
+                </if>
             </set>
-            where uid=#{file.uid}
+            where
+                uid=#{file.uid}
     </update>
 
     <delete id="deleteFile">
-        delete from au_file where uid=#{file.uid}
+        delete from
+            au_file
+        where
+            uid=#{file.uid}
     </delete>
 
-    <select id="query" resultMap="fileResult">
-        select uid,create_time,delete_time,file_name,size,is_delete,summary,path,storage_mode,storage_path from au_file
+    <select id="queryAll" resultMap="fileResult">
+        select
+            uid,create_time,file_name,`size`,summary,`path`,storage_mode,storage_path,is_delete,delete_time
+        from
+          au_file
         <where>
-            <if test="file.uid != null">
-                uid=#{file.uid}
+            <if test="condition.startTime != null and condition.endTime != null">
+                and create_time between #{condition.startTime} and #{condition.endTime}
             </if>
-            <if test="file.createTime != null">
-                and create_time=#{file.createTime}
+            <if test="condition.uid != null">
+                and uid=#{condition.uid}
             </if>
-            <if test="file.deleteTime != null">
-                and delete_time=#{file.deleteTime}
+            <if test="condition.keyword != null">
+                and file_name like concat('%', #{condition.keyword}, '%')
             </if>
-            <if test="file.fileName != null">
-                and file_name like concat('%', #{file.fileName},'%')
-            </if>
-            <if test="file.summary != null">
-                and summary like concat ('%', #{file.summary}, '%')
-            </if>
-            <if test="file.path != null">
-                and path=#{file.path}
-            </if>
-            <if test="file.delete != null">
-                and is_delete=#{file.delete}
+            <if test="condition.status != null">
+                and is_delete=#{condition.status}
             </if>
         </where>
-    </select>
-
-    <select id="queryByUid" resultMap="fileResult">
-        select uid,create_time,delete_time,file_name,size,is_delete,summary,path,storage_mode,storage_path from au_file
-        where uid=#{uid}
     </select>
 
     <resultMap id="fileResult" type="xyz.xcye.common.entity.table.FileDO">
         <id column="uid" property="uid"/>
         <result column="create_time" property="createTime"/>
-        <result column="is_delete" property="delete"/>
         <result column="file_name" property="fileName"/>
         <result column="size" property="size"/>
-        <result column="delete_time" property="deleteTime"/>
         <result column="summary" property="summary"/>
         <result column="path" property="path"/>
+        <result column="is_delete" property="delete"/>
+        <result column="delete_time" property="deleteTime"/>
     </resultMap>
 </mapper>

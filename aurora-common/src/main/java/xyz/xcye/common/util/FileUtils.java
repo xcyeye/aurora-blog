@@ -1,5 +1,6 @@
 package xyz.xcye.common.util;
 
+import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.io.IORuntimeException;
 import cn.hutool.core.io.IoUtil;
 import cn.hutool.core.util.CharsetUtil;
@@ -251,5 +252,13 @@ public class FileUtils {
         return file.delete();
     }
 
+    /**
+     * 获取文件最后一次修改时间
+     * @param path
+     * @return
+     */
+    public static String lastModifiedTime(String path) {
+        return DateUtils.format(FileUtil.lastModifiedTime(path));
+    }
 
 }

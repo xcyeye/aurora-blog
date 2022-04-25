@@ -8,6 +8,7 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.multipart.MaxUploadSizeExceededException;
 import xyz.xcye.common.entity.result.ExceptionResultEntity;
 import xyz.xcye.common.enums.ResponseStatusCodeEnum;
 
@@ -96,6 +97,17 @@ public class CustomGlobalExceptionHandler {
         response.setStatus(500);
         return new ExceptionResultEntity(ResponseStatusCodeEnum.EXCEPTION_NULL_POINTER.getMessage(),
                 requestURI, ResponseStatusCodeEnum.EXCEPTION_NULL_POINTER.getCode());
+    }
+
+    @ExceptionHandler(MaxUploadSizeExceededException.class)
+    public ExceptionResultEntity maxUploadSizeExceededExceptionHandler(MaxUploadSizeExceededException exception, HttpServletRequest request, HttpServletResponse response) {
+        exception.printStackTrace();
+        String requestURI = request.getRequestURI();
+
+        // 设置响应码，否则出现异常，seata不会回滚
+        response.setStatus(500);
+        return new ExceptionResultEntity(ResponseStatusCodeEnum.EXCEPTION_FILE_EXCEED_MAX_SIZE.getMessage(),
+                requestURI, ResponseStatusCodeEnum.EXCEPTION_FILE_EXCEED_MAX_SIZE.getCode());
     }
 
     /**

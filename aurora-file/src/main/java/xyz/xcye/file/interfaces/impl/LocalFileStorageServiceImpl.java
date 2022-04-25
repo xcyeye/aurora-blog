@@ -4,9 +4,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import xyz.xcye.common.dto.FileEntityDTO;
 import xyz.xcye.common.enums.ResponseStatusCodeEnum;
+import xyz.xcye.common.exception.file.FileException;
 import xyz.xcye.common.util.DateUtils;
 import xyz.xcye.common.util.FileUtils;
-import xyz.xcye.file.exception.CustomFileException;
 import xyz.xcye.file.interfaces.FileStorageService;
 
 import java.io.File;
@@ -15,6 +15,7 @@ import java.io.InputStream;
 import java.util.Date;
 
 /**
+ * TODO 部分功能未实现
  * 这是本地存储实现类
  * <p>目的是将上传的文件存放在本地(服务器上)</p>
  * @author qsyyke
@@ -60,7 +61,7 @@ public class LocalFileStorageServiceImpl implements FileStorageService {
      * @throws IOException
      */
     @Override
-    public FileEntityDTO upload(InputStream inputStream, FileEntityDTO fileEntity) throws CustomFileException {
+    public FileEntityDTO upload(InputStream inputStream, FileEntityDTO fileEntity) throws FileException {
         //获取上传文件的扩展名
         String extName = FileUtils.getExtName(fileEntity.getName());
 
@@ -87,7 +88,7 @@ public class LocalFileStorageServiceImpl implements FileStorageService {
             writeFile = FileUtils.writeByStream(inputStream, filePath);
         } catch (IOException e) {
             e.printStackTrace();
-            throw new CustomFileException(ResponseStatusCodeEnum.EXCEPTION_FILE_FAIL_UPLOAD.getMessage(), ResponseStatusCodeEnum.EXCEPTION_FILE_FAIL_UPLOAD.getCode());
+            throw new FileException(ResponseStatusCodeEnum.EXCEPTION_FILE_FAIL_UPLOAD.getMessage(), ResponseStatusCodeEnum.EXCEPTION_FILE_FAIL_UPLOAD.getCode());
         }
 
         String fileRemoteUrl = host + FileUtils.getFileSplitPath(nginxRootPath,writeFile.getAbsolutePath());
@@ -97,13 +98,17 @@ public class LocalFileStorageServiceImpl implements FileStorageService {
 
     @Override
     public FileEntityDTO download(String objectName) throws IOException {
-        //FileUtils.getOutputStream()
-        return null;
+        return query(objectName);
     }
 
     @Override
     public FileEntityDTO query(String objectName) throws IOException {
-        return null;
+        InputStream inputStream = FileUtils.getInputStream(objectName);
+        return FileEntityDTO.builder()
+                .inputStream(inputStream).name(FileUtils.getFileName(objectName))
+                .createTime(FileUtils.lastModifiedTime(objectName))
+                .storagePath(objectName).size(FileUtils.getSize(objectName))
+                .remoteUrl(getRemoteUrl(objectName)).build();
     }
 
     /**
@@ -114,6 +119,19 @@ public class LocalFileStorageServiceImpl implements FileStorageService {
     @Override
     public boolean delete(String objectName) {
         return FileUtils.deleteFile(objectName);
+    }
+
+    /**
+     * 根据绝对路径，获取文件的远程地址
+     * @param absolutePath
+     * @return
+     */
+    private String getRemoteUrl(String absolutePath) {
+        if (!nginxRootPath.endsWith(File.separator)) {
+            nginxRootPath = nginxRootPath + File.separator;
+        }
+
+        return host + FileUtils.getFileSplitPath(nginxRootPath,absolutePath);
     }
 
     /**
@@ -139,9 +157,9 @@ public class LocalFileStorageServiceImpl implements FileStorageService {
      * @param filePath 指定文件
      * @param folderPath 指定目录
      * @return true创建成功，反之
-     * @throws CustomFileException
+     * @throws FileException
      */
-    private boolean createFile(String filePath,String folderPath) throws CustomFileException {
+    private boolean createFile(String filePath,String folderPath) throws FileException {
         //文件夹是否存在
         boolean folderExists = new File(folderPath).exists();
 
@@ -149,7 +167,8 @@ public class LocalFileStorageServiceImpl implements FileStorageService {
             //创建文件夹
             if (!FileUtils.createFile(folderPath, true)) {
                 //创建文件夹失败
-                throw new CustomFileException(ResponseStatusCodeEnum.EXCEPTION_FILE_FAIL_CREATE.getMessage(), ResponseStatusCodeEnum.EXCEPTION_FILE_FAIL_CREATE.getCode());
+                throw new FileException(ResponseStatusCodeEnum.EXCEPTION_FILE_FAIL_CREATE.getMessage(),
+                        ResponseStatusCodeEnum.EXCEPTION_FILE_FAIL_CREATE.getCode());
             }
         }
 
@@ -159,7 +178,8 @@ public class LocalFileStorageServiceImpl implements FileStorageService {
         boolean isCreateFile = FileUtils.createFile(filePath, false);
         if (!isCreateFile) {
             //创建文件夹失败
-            throw new CustomFileException(ResponseStatusCodeEnum.EXCEPTION_FILE_FAIL_CREATE.getMessage(), ResponseStatusCodeEnum.EXCEPTION_FILE_FAIL_CREATE.getCode());
+            throw new FileException(ResponseStatusCodeEnum.EXCEPTION_FILE_FAIL_CREATE.getMessage(),
+                    ResponseStatusCodeEnum.EXCEPTION_FILE_FAIL_CREATE.getCode());
         }
 
         return isCreateFile;
