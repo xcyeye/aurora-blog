@@ -59,17 +59,17 @@
                 and uid=#{condition.uid}
             </if>
             <if test="condition.keyword != null">
-                email=#{condition.keyword}
+                and email like concat('%', #{condition.keyword}, '%')
             </if>
             <if test="condition.otherUid != null">
-                user_uid=#{condition.otherUid}
+                and user_uid=#{condition.otherUid}
             </if>
         </where>
     </select>
 
-    <resultMap id="emailMap" type="xyz.xcye.common.dos.EmailDO">
+    <resultMap id="emailMap" type="xyz.xcye.common.entity.table.EmailDO">
         <id column="uid" property="uid"/>
-        <result column="userUid" property="userUid"/>
+        <result column="user_uid" property="userUid"/>
         <result column="email_host" property="emailHost"/>
         <result column="protocol" property="protocol"/>
         <result column="email" property="email"/>

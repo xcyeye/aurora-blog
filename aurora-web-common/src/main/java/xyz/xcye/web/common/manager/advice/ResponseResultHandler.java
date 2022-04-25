@@ -1,7 +1,6 @@
 package xyz.xcye.web.common.manager.advice;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.serializer.FieldSerializer;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
@@ -59,11 +58,11 @@ public class ResponseResultHandler implements ResponseBodyAdvice<Object> {
             // 判断返回体是不是ModifyResult类型
             if (responseBody instanceof ModifyResult) {
                 ModifyResult modifyResult = (ModifyResult) responseBody;
-                return R.success(modifyResult.getCode(), modifyResult.getMessage(),responseBody);
+                return R.success(modifyResult.getCode(), modifyResult.getMessage(),responseBody, modifyResult.isSuccess());
             }
 
             R r = R.success(ResponseStatusCodeEnum.SUCCESS.getCode(),
-                    ResponseStatusCodeEnum.SUCCESS.getMessage(), responseBody);
+                    ResponseStatusCodeEnum.SUCCESS.getMessage(), responseBody, true);
             // 需要R对象整体传入
             return fieldFilter(r, method);
         }

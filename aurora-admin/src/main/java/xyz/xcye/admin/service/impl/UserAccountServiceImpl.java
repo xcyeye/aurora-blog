@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import xyz.xcye.admin.dao.UserAccountDao;
 import xyz.xcye.admin.service.UserAccountService;
-import xyz.xcye.common.dos.UserAccountDO;
+import xyz.xcye.common.entity.table.UserAccountDO;
 import xyz.xcye.common.dto.PaginationDTO;
 import xyz.xcye.common.entity.result.ModifyResult;
 import xyz.xcye.common.enums.ResponseStatusCodeEnum;

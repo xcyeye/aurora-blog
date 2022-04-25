@@ -1,17 +1,14 @@
 package xyz.xcye.message.controller;
 
-import io.seata.core.context.RootContext;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.util.StringUtils;
 import org.springframework.validation.BindException;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import xyz.xcye.common.annotaion.ResponseResult;
-import xyz.xcye.common.dos.MessageLogDO;
+import xyz.xcye.common.entity.table.MessageLogDO;
 import xyz.xcye.common.dto.ConditionDTO;
-import xyz.xcye.common.dto.PaginationDTO;
 import xyz.xcye.common.entity.result.ModifyResult;
 import xyz.xcye.common.valid.Insert;
 import xyz.xcye.common.valid.Update;
@@ -53,7 +50,7 @@ public class MessageLogController {
 
     @ApiOperation(value = "删除消费消息")
     @ResponseResult
-    @DeleteMapping("/delete/{uid}")
+    @DeleteMapping("/{uid}")
     public ModifyResult deleteMessageLog(@PathVariable("uid") long uid) {
         return messageLogService.deleteMessageLog(uid);
     }

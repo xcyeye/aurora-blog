@@ -9,6 +9,7 @@ public enum ResponseStatusCodeEnum {
     //----------------------成功相关的响应码
     SUCCESS(21000,"成功"),
     COMMON_RECORD_NOT_EXISTS(22000,"记录不存在"),
+    EXCEPTION_NULL_POINTER(223000,"空指针异常"),
 
 
     //----------------------参数相关的响应码

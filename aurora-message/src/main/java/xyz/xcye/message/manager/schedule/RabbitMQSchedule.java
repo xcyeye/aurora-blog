@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.BindException;
-import xyz.xcye.common.dos.MessageLogDO;
+import xyz.xcye.common.entity.table.MessageLogDO;
 import xyz.xcye.common.dto.ConditionDTO;
 import xyz.xcye.common.vo.MessageLogVO;
 import xyz.xcye.message.service.MessageLogService;

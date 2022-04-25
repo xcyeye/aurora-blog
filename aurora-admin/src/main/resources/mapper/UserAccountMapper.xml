@@ -4,7 +4,7 @@
 
 <mapper namespace="xyz.xcye.admin.dao.UserAccountDao">
 
-    <resultMap id="userAccountResultMap" type="xyz.xcye.common.dos.UserAccountDO">
+    <resultMap id="userAccountResultMap" type="xyz.xcye.common.entity.table.UserAccountDO">
         <result column="is_delete" property="delete"/>
         <result column="is_account_locked" property="accountLocked"/>
         <result column="is_account_expired" property="accountExpired"/>
@@ -61,7 +61,7 @@
             uid=#{uid}
     </delete>
 
-    <select id="queryAll" resultType="xyz.xcye.common.dos.UserAccountDO">
+    <select id="queryAll" resultType="xyz.xcye.common.entity.table.UserAccountDO">
         select
         uid,role,permission,is_account_locked,is_account_expired,user_uid,create_time,update_time,is_delete
         from

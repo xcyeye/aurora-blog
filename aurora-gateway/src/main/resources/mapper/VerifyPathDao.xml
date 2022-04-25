@@ -6,7 +6,7 @@
 <mapper namespace="xyz.xcye.wg.dao.VerifyPathDao">
 
     <!--配置映射-->
-    <resultMap id="permissionResultMap" type="xyz.xcye.common.dos.VerifyPathDO">
+    <resultMap id="permissionResultMap" type="xyz.xcye.common.entity.table.VerifyPathDO">
         <id column="uid" property="uid"/>
         <result column="role" property="role"/>
         <result column="permission" property="permission"/>

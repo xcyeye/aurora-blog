@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import xyz.xcye.common.entity.result.ExceptionResultEntity;
@@ -21,23 +22,6 @@ import java.util.Map;
 @RestControllerAdvice
 @Component
 public class CustomGlobalExceptionHandler {
-
-    /**
-     * 不知道的异常名称
-     * @param e
-     * @param request
-     * @return
-     */
-    @ExceptionHandler
-    public ExceptionResultEntity result(Exception e, HttpServletRequest request, HttpServletResponse response) {
-        //log.error("发生异常：message:{},uri:{},消息信息:{}",e.getMessage(),request.getRequestURI(),e.getStackTrace());
-        e.printStackTrace();
-        String requestURI = request.getRequestURI();
-
-        // 设置响应码，否则出现异常，seata不会回滚
-        response.setStatus(500);
-        return new ExceptionResultEntity(e.getMessage(),requestURI, ResponseStatusCodeEnum.UNKNOWN.getCode());
-    }
 
     /**
      * 参数类型校验失败
@@ -77,5 +61,57 @@ public class CustomGlobalExceptionHandler {
                 ResponseStatusCodeEnum.PARAM_IS_INVALID.getMessage(),
                 ResponseStatusCodeEnum.PARAM_IS_INVALID.getCode(),
                 requestURI,errorsList);
+    }
+
+    /**
+     * spring的参数缺失处理
+     * @param exception
+     * @return
+     */
+    @ExceptionHandler(MissingServletRequestParameterException.class)
+    public ExceptionResultEntity missingServletRequestParameterExceptionHandler(
+            MissingServletRequestParameterException exception,
+            HttpServletRequest request,
+            HttpServletResponse response) {
+
+        String requestURI = request.getRequestURI();
+
+        // 设置响应码，否则出现异常，seata不会回滚
+        response.setStatus(500);
+
+        String parameterName = exception.getParameterName();
+        String parameterType = exception.getParameterType();
+        String message = ResponseStatusCodeEnum.PARAM_NOT_COMPLETE.getMessage() +
+                " 缺失字段:" + parameterName + " 字段类型:" + parameterType;
+
+        return new ExceptionResultEntity(message,requestURI, ResponseStatusCodeEnum.PARAM_NOT_COMPLETE.getCode());
+    }
+
+    @ExceptionHandler(NullPointerException.class)
+    public ExceptionResultEntity nullPointerExceptionHandler(NullPointerException exception, HttpServletRequest request, HttpServletResponse response) {
+        exception.printStackTrace();
+        String requestURI = request.getRequestURI();
+
+        // 设置响应码，否则出现异常，seata不会回滚
+        response.setStatus(500);
+        return new ExceptionResultEntity(ResponseStatusCodeEnum.EXCEPTION_NULL_POINTER.getMessage(),
+                requestURI, ResponseStatusCodeEnum.EXCEPTION_NULL_POINTER.getCode());
+    }
+
+    /**
+     * 不知道的异常名称
+     * @param e
+     * @param request
+     * @return
+     */
+    @ExceptionHandler
+    public ExceptionResultEntity result(Exception e, HttpServletRequest request, HttpServletResponse response) {
+        //log.error("发生异常：message:{},uri:{},消息信息:{}",e.getMessage(),request.getRequestURI(),e.getStackTrace());
+        e.printStackTrace();
+        String requestURI = request.getRequestURI();
+
+        // 设置响应码，否则出现异常，seata不会回滚
+        response.setStatus(500);
+        return new ExceptionResultEntity(e.getMessage(),requestURI, ResponseStatusCodeEnum.UNKNOWN.getCode());
     }
 }

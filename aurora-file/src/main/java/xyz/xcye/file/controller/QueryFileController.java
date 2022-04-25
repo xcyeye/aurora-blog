@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import xyz.xcye.common.annotaion.ResponseResult;
-import xyz.xcye.common.dos.FileDO;
+import xyz.xcye.common.entity.table.FileDO;
 import xyz.xcye.common.dto.PaginationDTO;
 import xyz.xcye.file.service.FileService;
 import java.util.List;

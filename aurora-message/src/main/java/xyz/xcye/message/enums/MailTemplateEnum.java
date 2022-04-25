@@ -1,4 +1,4 @@
-package xyz.xcye.message.constant;
+package xyz.xcye.message.enums;
 
 import lombok.Getter;
 
@@ -36,4 +36,12 @@ public enum MailTemplateEnum {
         this.templateFolderPath = templateFolderPath;
         this.subject = subject;
     }
+
+    public static class DefaultValueConstant {
+        /**
+         * 普通通知的默认通知地址
+         **/
+        public static final String COMMON_NOTICE_PATH = "https://aurora.xcye.xyz";
+    }
 }
+

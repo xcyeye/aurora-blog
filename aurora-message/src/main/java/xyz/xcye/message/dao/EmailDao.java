@@ -2,9 +2,8 @@ package xyz.xcye.message.dao;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import xyz.xcye.common.dos.EmailDO;
 import xyz.xcye.common.dto.ConditionDTO;
-import xyz.xcye.common.vo.UserVO;
+import xyz.xcye.common.entity.table.EmailDO;
 
 import java.util.List;
 

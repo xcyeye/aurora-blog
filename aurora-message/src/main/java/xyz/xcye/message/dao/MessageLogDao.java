@@ -2,9 +2,8 @@ package xyz.xcye.message.dao;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import xyz.xcye.common.dos.MessageLogDO;
+import xyz.xcye.common.entity.table.MessageLogDO;
 import xyz.xcye.common.dto.ConditionDTO;
-import xyz.xcye.common.vo.MessageLogVO;
 
 import java.util.List;
 

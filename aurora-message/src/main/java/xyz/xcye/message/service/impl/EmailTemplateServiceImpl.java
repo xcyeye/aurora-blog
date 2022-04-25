@@ -1,8 +1,9 @@
 package xyz.xcye.message.service.impl;
 
+import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import xyz.xcye.common.dos.EmailTemplateDO;
+import xyz.xcye.common.entity.table.EmailTemplateDO;
 import xyz.xcye.common.dto.ConditionDTO;
 import xyz.xcye.common.entity.result.ModifyResult;
 import xyz.xcye.common.enums.ResponseStatusCodeEnum;
@@ -49,6 +50,7 @@ public class EmailTemplateServiceImpl implements EmailTemplateService {
     @Override
     public List<EmailTemplateVO> queryAllEmailTemplate(ConditionDTO<Long> condition) throws InstantiationException, IllegalAccessException {
         condition = condition.init(condition);
+        PageHelper.startPage(condition.getPageNum(),condition.getPageSize(),condition.getOrderBy());
         return BeanUtils.copyList(emailTemplateDao.queryAllEmailTemplate(condition),EmailTemplateVO.class);
     }
 

@@ -62,7 +62,7 @@
             uid=#{uid}
     </delete>
 
-    <select id="queryAllMessageLog" resultType="xyz.xcye.common.dos.MessageLogDO">
+    <select id="queryAllMessageLog" resultType="xyz.xcye.common.entity.table.MessageLogDO">
         select
             uid,message,exchange,queue,routing_key,try_count,consume_status,create_time,update_time,exchange_type,ack_status,error_message
         from
@@ -75,10 +75,10 @@
                 and uid=#{condition.uid}
             </if>
             <if test="condition.keyword != null">
-                routing_key=#{condition.keyword}
+                and routing_key like concat('%', #{condition.keyword}, '%')
             </if>
             <if test="condition.status != null">
-                consume_status=#{condition.status}
+                and consume_status=#{condition.status}
             </if>
         </where>
     </select>

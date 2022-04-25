@@ -2,7 +2,7 @@ package xyz.xcye.message.util;
 
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.util.StringUtils;
-import xyz.xcye.message.constant.MailTemplateEnum;
+import xyz.xcye.message.enums.MailTemplateEnum;
 
 import java.io.*;
 

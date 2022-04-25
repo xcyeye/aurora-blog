@@ -1,6 +1,6 @@
 package xyz.xcye.file.service;
 
-import xyz.xcye.common.dos.FileDO;
+import xyz.xcye.common.entity.table.FileDO;
 import xyz.xcye.file.exception.CustomFileException;
 import xyz.xcye.common.dto.FileEntityDTO;
 import xyz.xcye.common.dto.PaginationDTO;

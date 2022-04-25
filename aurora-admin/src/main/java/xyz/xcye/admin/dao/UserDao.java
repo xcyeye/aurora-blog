@@ -2,7 +2,7 @@ package xyz.xcye.admin.dao;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import xyz.xcye.common.dos.UserDO;
+import xyz.xcye.common.entity.table.UserDO;
 
 import java.util.List;
 

@@ -2,7 +2,7 @@ package xyz.xcye.file.dao;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import xyz.xcye.common.dos.FileDO;
+import xyz.xcye.common.entity.table.FileDO;
 
 import java.util.List;
 

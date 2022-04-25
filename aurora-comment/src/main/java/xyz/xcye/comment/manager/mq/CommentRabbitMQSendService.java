@@ -9,8 +9,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.BindException;
 import xyz.xcye.common.constant.RabbitMQNameConstant;
-import xyz.xcye.common.dos.CommentDO;
-import xyz.xcye.common.dos.MessageLogDO;
+import xyz.xcye.common.entity.table.CommentDO;
+import xyz.xcye.common.entity.table.MessageLogDO;
 import xyz.xcye.common.util.ObjectConvertJson;
 import xyz.xcye.common.util.ValidationUtils;
 import xyz.xcye.common.util.id.GenerateInfoUtils;
@@ -93,10 +93,12 @@ public class CommentRabbitMQSendService {
         long uid = GenerateInfoUtils.generateUid(workerId, datacenterId);
         CorrelationData correlationData = new CorrelationData(uid + "");
 
+        // 组装评论对象
         commentMap.put("replyingCommentInfo",replyingCommentInfo);
         commentMap.put("repliedCommentInfo",repliedCommentInfo);
         commentMap.put("correlationDataId",correlationData.getId());
 
+        // 将组装的map集合转换成json字符串，发送到交换机
         String commentJson = ObjectConvertJson.jsonToString(commentMap);
 
         //向au_message_log表中插入生产信息

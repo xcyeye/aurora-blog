@@ -1,7 +1,7 @@
 package xyz.xcye.admin.service;
 
 
-import xyz.xcye.common.dos.UserAccountDO;
+import xyz.xcye.common.entity.table.UserAccountDO;
 import xyz.xcye.common.dto.PaginationDTO;
 import xyz.xcye.common.entity.result.ModifyResult;
 import xyz.xcye.common.vo.UserAccountVO;

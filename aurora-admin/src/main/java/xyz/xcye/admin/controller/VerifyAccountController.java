@@ -7,12 +7,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import xyz.xcye.admin.service.redis.UserRedisService;
-import xyz.xcye.common.dos.EmailDO;
-import xyz.xcye.common.entity.result.ModifyResult;
 import xyz.xcye.common.exception.user.UserException;
-import xyz.xcye.web.common.service.feign.MessageLogFeignService;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 

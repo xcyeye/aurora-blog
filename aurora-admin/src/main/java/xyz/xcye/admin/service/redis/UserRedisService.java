@@ -1,6 +1,5 @@
 package xyz.xcye.admin.service.redis;
 
-import xyz.xcye.common.dos.UserDO;
 import xyz.xcye.common.dto.EmailVerifyAccountDTO;
 import xyz.xcye.common.exception.user.UserException;
 

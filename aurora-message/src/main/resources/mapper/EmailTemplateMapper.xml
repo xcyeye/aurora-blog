@@ -61,7 +61,7 @@
         select
             uid,reply_comment_template,verify_account_template,notice_template,
             receive_comment_template,reply_comment_subject,verify_account_subject,
-            receive_comment_subject,notice_subject,create_time,update_time
+            receive_comment_subject,notice_subject,create_time,update_time,user_uid
         from
           au_email_template
         <where>
@@ -77,7 +77,7 @@
         </where>
     </select>
 
-    <resultMap id="emailTemplateMap" type="xyz.xcye.common.dos.EmailTemplateDO">
+    <resultMap id="emailTemplateMap" type="xyz.xcye.common.entity.table.EmailTemplateDO">
         <id column="uid" property="uid"/>
         <result column="reply_comment_template" property="replyCommentTemplate"/>
         <result column="verify_Account_template" property="verifyAccountTemplate"/>

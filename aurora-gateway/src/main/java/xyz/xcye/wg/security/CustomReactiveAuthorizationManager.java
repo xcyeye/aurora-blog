@@ -16,7 +16,7 @@ import org.springframework.util.AntPathMatcher;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 import xyz.xcye.common.annotaion.Log;
-import xyz.xcye.common.dos.VerifyPathDO;
+import xyz.xcye.common.entity.table.VerifyPathDO;
 import xyz.xcye.common.dto.JwtEntityDTO;
 import xyz.xcye.common.enums.ResponseStatusCodeEnum;
 import xyz.xcye.common.util.DateUtils;

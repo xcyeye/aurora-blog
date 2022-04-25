@@ -1,6 +1,5 @@
 package xyz.xcye.common.dto;
 
-import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -79,12 +78,12 @@ public class ConditionDTO<T> {
      */
     private String orderBy;
 
-    public ConditionDTO<T> setStartTime(String startTime) {
+    public ConditionDTO setStartTime(String startTime) {
         this.startTime = this.initTime(startTime);
         return this;
     }
 
-    public ConditionDTO<T> setEndTime(String endTime) {
+    public ConditionDTO setEndTime(String endTime) {
         this.endTime = this.initTime(endTime);
         return this;
     }
@@ -93,13 +92,13 @@ public class ConditionDTO<T> {
      * 初始化排序字段
      * @param orderBy
      */
-    public ConditionDTO<T> setOrderBy(String orderBy) {
+    public ConditionDTO setOrderBy(String orderBy) {
         orderBy = NameUtils.getUnderlineName(Objects.requireNonNullElse(orderBy, PaginationConstant.ORDER_BY));
         this.orderBy = orderBy;
         return this;
     }
 
-    public ConditionDTO<T> setPageNum(Integer pageNum) {
+    public ConditionDTO setPageNum(Integer pageNum) {
         if (pageNum == null) {
             pageNum = PaginationConstant.PAGE_NUM;
         }
@@ -107,7 +106,7 @@ public class ConditionDTO<T> {
         return this;
     }
 
-    public ConditionDTO<T> setPageSize(Integer pageSize) {
+    public ConditionDTO setPageSize(Integer pageSize) {
         if (pageSize == null) {
             pageSize = PaginationConstant.PAGE_SIZE;
         }
@@ -133,6 +132,9 @@ public class ConditionDTO<T> {
         }
         if (condition.status == null) {
             condition.setStatus(true);
+        }
+        if (condition.show == null) {
+            condition.setShow(true);
         }
         if (condition.pageNum == null) {
             condition.setPageNum(0);

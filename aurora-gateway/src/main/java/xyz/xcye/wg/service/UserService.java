@@ -1,6 +1,5 @@
 package xyz.xcye.wg.service;
 
-import xyz.xcye.common.dos.UserDO;
 import xyz.xcye.wg.dto.SecurityUserDTO;
 
 /**

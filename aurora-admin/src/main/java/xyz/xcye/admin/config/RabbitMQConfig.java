@@ -9,14 +9,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.BindException;
-import xyz.xcye.common.dos.MessageLogDO;
+import xyz.xcye.common.entity.table.MessageLogDO;
 import xyz.xcye.common.entity.result.R;
 import xyz.xcye.common.util.ObjectConvertJson;
 import xyz.xcye.web.common.manager.mq.MistakeMessageSendService;
 import xyz.xcye.web.common.service.feign.MessageLogFeignService;
 
 import javax.annotation.PostConstruct;
-import javax.annotation.Resource;
 
 /**
  * rabbitmq相关的配置

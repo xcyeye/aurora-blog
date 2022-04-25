@@ -27,6 +27,11 @@ public class R {
     private String message;
 
     /**
+     * true表示成功，false表示失败
+     */
+    private Boolean success;
+
+    /**
      * 数据
      */
     private Object data;
@@ -37,7 +42,7 @@ public class R {
      */
     public static R success() {
         return success(ResponseStatusCodeEnum.SUCCESS.getCode(),
-                ResponseStatusCodeEnum.SUCCESS.getMessage(),new HashMap<>());
+                ResponseStatusCodeEnum.SUCCESS.getMessage(),new HashMap<>(),true);
     }
 
     /**
@@ -46,8 +51,8 @@ public class R {
      * @param message 消息
      * @return R对象
      */
-    public static R success(Integer code,String message) {
-        return success(code,message,new HashMap<>());
+    public static R success(Integer code,String message, boolean success) {
+        return success(code,message,new HashMap<>(),success);
     }
 
     /**
@@ -57,11 +62,11 @@ public class R {
      * @param data 需要返回的数据，不需要传入map对象，会自动放在data里
      * @return R对象
      */
-    public static R success(Integer code,String message,Object data) {
+    public static R success(Integer code,String message,Object data, boolean success) {
         if (data == null) {
             data = new HashMap<>();
         }
-        return R.builder().code(code).message(message).data(data).build();
+        return R.builder().code(code).message(message).data(data).success(success).build();
     }
 
     /**
@@ -94,6 +99,6 @@ public class R {
         if (data == null) {
             data = new HashMap<>();
         }
-        return R.builder().code(code).message(message).data(data).build();
+        return R.builder().code(code).message(message).data(data).success(false).build();
     }
 }

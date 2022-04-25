@@ -4,7 +4,7 @@
 
 <mapper namespace="xyz.xcye.admin.dao.UserDao">
 
-    <resultMap id="userResultMap" type="xyz.xcye.common.dos.UserDO">
+    <resultMap id="userResultMap" type="xyz.xcye.common.entity.table.UserDO">
         <result column="is_delete" property="delete"/>
         <result column="is_verify_email" property="verifyEmail"/>
         <result column="update_time" property="updateTime"/>

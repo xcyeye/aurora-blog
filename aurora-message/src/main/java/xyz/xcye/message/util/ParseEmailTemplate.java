@@ -1,7 +1,6 @@
 package xyz.xcye.message.util;
 
-import xyz.xcye.common.dos.CommentDO;
-import xyz.xcye.common.dos.EmailDO;
+import xyz.xcye.common.entity.table.CommentDO;
 import xyz.xcye.common.dto.EmailCommonNoticeDTO;
 import xyz.xcye.common.dto.EmailVerifyAccountDTO;
 import xyz.xcye.common.util.DateUtils;

@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindException;
-import xyz.xcye.common.dos.EmailDO;
+import xyz.xcye.common.entity.table.EmailDO;
 import xyz.xcye.common.dto.ConditionDTO;
 import xyz.xcye.common.entity.result.ModifyResult;
 import xyz.xcye.common.entity.result.R;
@@ -58,7 +58,8 @@ public class EmailServiceImpl implements EmailService {
 
     @GlobalTransactional
     @Override
-    public ModifyResult insertEmail(EmailDO email) throws EmailException, InstantiationException, IllegalAccessException, UserException, BindException {
+    public ModifyResult insertEmail(EmailDO email)
+            throws EmailException, InstantiationException, IllegalAccessException, UserException, BindException {
         // 判断邮箱是否已经存在
         if (queryByEmail(email.getEmail()) != null) {
             throw new EmailException(ResponseStatusCodeEnum.EXCEPTION_EMAIL_EXISTS.getMessage(),
@@ -127,7 +128,8 @@ public class EmailServiceImpl implements EmailService {
     }
 
     @Override
-    public List<EmailVO> queryAllEmail(ConditionDTO<Long> condition) throws InstantiationException, IllegalAccessException {
+    public List<EmailVO> queryAllEmail(ConditionDTO<Long> condition)
+            throws InstantiationException, IllegalAccessException {
         condition = condition.init(condition);
         PageHelper.startPage(condition.getPageNum(),condition.getPageSize(),condition.getOrderBy());
         return BeanUtils.copyList(emailDao.queryAllEmail(condition), EmailVO.class);

@@ -10,13 +10,12 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.BindException;
 import xyz.xcye.common.constant.RabbitMQNameConstant;
-import xyz.xcye.common.dos.EmailDO;
-import xyz.xcye.common.dos.MessageLogDO;
+import xyz.xcye.common.entity.table.EmailDO;
+import xyz.xcye.common.entity.table.MessageLogDO;
 import xyz.xcye.common.util.ObjectConvertJson;
 import xyz.xcye.common.util.ValidationUtils;
 import xyz.xcye.common.util.id.GenerateInfoUtils;
 import xyz.xcye.common.valid.Insert;
-import xyz.xcye.message.service.MessageLogService;
 
 import javax.validation.groups.Default;
 import java.nio.charset.StandardCharsets;

@@ -2,11 +2,9 @@ package xyz.xcye.message.dao;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import xyz.xcye.common.dos.EmailLogDO;
+import xyz.xcye.common.entity.table.EmailLogDO;
 import xyz.xcye.common.dto.ConditionDTO;
-import xyz.xcye.common.vo.EmailLogVO;
 
-import java.math.BigInteger;
 import java.util.List;
 
 /**

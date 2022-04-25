@@ -1,4 +1,4 @@
-package xyz.xcye.common.dos;
+package xyz.xcye.common.entity.table;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;

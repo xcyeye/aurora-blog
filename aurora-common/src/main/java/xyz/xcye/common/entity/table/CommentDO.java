@@ -1,13 +1,14 @@
-package xyz.xcye.common.dos;
+package xyz.xcye.common.entity.table;
 
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
+import xyz.xcye.common.constant.FieldLengthConstant;
 import xyz.xcye.common.valid.Delete;
 import xyz.xcye.common.valid.Insert;
 import xyz.xcye.common.valid.Update;
-import xyz.xcye.common.constant.FieldLengthConstant;
 import xyz.xcye.common.valid.validator.ValidateString;
 
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import java.io.Serializable;
@@ -30,7 +31,7 @@ public class CommentDO implements Serializable {
     /**
      * 此评论对应注册用户中的哪个用户
      */
-    @NotNull(groups = {Insert.class,Update.class})
+    @NotNull(groups = {Insert.class})
     private Long userUid;
 
     /**
@@ -60,12 +61,9 @@ public class CommentDO implements Serializable {
      */
     @Length(max = FieldLengthConstant.EMAIL_NUMBER)
     @Pattern(regexp = "^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\\.[a-zA-Z0-9_-]+)+$")
+    @NotNull
+    @NotEmpty
     private String email;
-
-    /**
-     * 删除状态 true：已删除 false：未删除
-     */
-    private Boolean delete;
 
     /**
      * 创建时间 不能为null

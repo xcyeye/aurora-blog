@@ -1,14 +1,13 @@
 package xyz.xcye.message.service;
 
 import org.springframework.validation.BindException;
-import xyz.xcye.common.dos.CommentDO;
+import xyz.xcye.common.entity.table.CommentDO;
 import xyz.xcye.common.dto.EmailCommonNoticeDTO;
 import xyz.xcye.common.dto.EmailVerifyAccountDTO;
 import xyz.xcye.common.entity.result.ModifyResult;
 
 import javax.mail.MessagingException;
 import java.io.IOException;
-import java.math.BigInteger;
 
 /**
  * 邮件发送服务
@@ -58,7 +57,7 @@ public interface SendMailService {
      * @return
      * @throws MessagingException 发送失败
      */
-    ModifyResult sendVerifyAccountMail(EmailVerifyAccountDTO verifyAccount, long userUid, String subject) throws MessagingException, InstantiationException, IllegalAccessException, IOException;
+    ModifyResult sendVerifyAccountMail(EmailVerifyAccountDTO verifyAccount, long userUid, String subject) throws MessagingException, InstantiationException, IllegalAccessException, IOException, BindException;
 
     /**
      * 发送简单的邮件

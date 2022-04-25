@@ -54,7 +54,7 @@
           au_email_log
         <where>
             <if test="condition.keyword != null">
-                and receiver=#{condition.keyword}
+                and receiver like concat('%', #{condition.keyword}, '%')
             </if>
             <if test="condition.status != null">
                 and is_send=#{condition.status}
@@ -68,7 +68,7 @@
         </where>
     </select>
 
-    <resultMap id="emailLogMap" type="xyz.xcye.common.dos.EmailLogDO">
+    <resultMap id="emailLogMap" type="xyz.xcye.common.entity.table.EmailLogDO">
         <id column="uid" property="uid"/>
         <result column="sender" property="sender"/>
         <result column="subject" property="subject"/>
@@ -76,6 +76,6 @@
         <result column="receiver" property="receiver"/>
         <result column="create_time" property="createTime"/>
         <result column="update_time" property="updateTime"/>
-        <result column="send" property="sender"/>
+        <result column="is_send" property="send"/>
     </resultMap>
 </mapper>

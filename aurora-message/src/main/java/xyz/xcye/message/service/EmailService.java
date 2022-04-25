@@ -2,9 +2,8 @@ package xyz.xcye.message.service;
 
 import org.apache.ibatis.annotations.Param;
 import org.springframework.validation.BindException;
-import xyz.xcye.common.dos.EmailDO;
+import xyz.xcye.common.entity.table.EmailDO;
 import xyz.xcye.common.dto.ConditionDTO;
-import xyz.xcye.common.dto.PaginationDTO;
 import xyz.xcye.common.entity.result.ModifyResult;
 import xyz.xcye.common.exception.email.EmailException;
 import xyz.xcye.common.exception.user.UserException;

@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import xyz.xcye.admin.dao.RoleDao;
 import xyz.xcye.admin.service.RoleService;
-import xyz.xcye.common.dos.RoleDO;
+import xyz.xcye.common.entity.table.RoleDO;
 import xyz.xcye.common.dto.PaginationDTO;
 import xyz.xcye.common.entity.result.ModifyResult;
 import xyz.xcye.common.enums.ResponseStatusCodeEnum;

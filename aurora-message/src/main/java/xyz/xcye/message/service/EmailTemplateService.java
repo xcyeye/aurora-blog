@@ -1,11 +1,8 @@
 package xyz.xcye.message.service;
 
-import org.springframework.validation.BindException;
-import xyz.xcye.common.dos.EmailTemplateDO;
+import xyz.xcye.common.entity.table.EmailTemplateDO;
 import xyz.xcye.common.dto.ConditionDTO;
 import xyz.xcye.common.entity.result.ModifyResult;
-import xyz.xcye.common.exception.email.EmailException;
-import xyz.xcye.common.exception.user.UserException;
 import xyz.xcye.common.vo.EmailTemplateVO;
 
 import java.util.List;

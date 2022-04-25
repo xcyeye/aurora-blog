@@ -1,8 +1,8 @@
-package xyz.xcye.common.dos;
+package xyz.xcye.common.entity.table;
 
 import lombok.Data;
-import xyz.xcye.common.valid.Insert;
 import xyz.xcye.common.constant.FieldLengthConstant;
+import xyz.xcye.common.valid.Insert;
 import xyz.xcye.common.valid.validator.ValidateString;
 
 import javax.validation.constraints.NotNull;

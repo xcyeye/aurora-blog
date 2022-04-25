@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-import xyz.xcye.common.dos.FileDO;
+import xyz.xcye.common.entity.table.FileDO;
 import xyz.xcye.common.dto.FileEntityDTO;
 import xyz.xcye.common.entity.result.ModifyResult;
 import xyz.xcye.file.service.FileService;

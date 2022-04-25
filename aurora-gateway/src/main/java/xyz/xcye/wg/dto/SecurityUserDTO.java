@@ -1,7 +1,7 @@
 package xyz.xcye.wg.dto;
 
 import lombok.Data;
-import xyz.xcye.common.dos.UserAccountDO;
+import xyz.xcye.common.entity.table.UserAccountDO;
 
 /**
  * @author qsyyke

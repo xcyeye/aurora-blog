@@ -1,7 +1,7 @@
 package xyz.xcye.common.vo;
 
 import lombok.Data;
-import xyz.xcye.common.dto.comment.CommentDTO;
+import xyz.xcye.common.dto.CommentDTO;
 
 import java.util.List;
 

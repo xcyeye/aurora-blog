@@ -3,11 +3,9 @@ package xyz.xcye.admin.manager.mq.consumer;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.rabbitmq.client.Channel;
-import io.seata.core.context.RootContext;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
-import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.messaging.MessagingException;
@@ -18,22 +16,19 @@ import xyz.xcye.admin.service.UserService;
 import xyz.xcye.admin.service.redis.UserRedisService;
 import xyz.xcye.admin.util.AccountInfoUtils;
 import xyz.xcye.common.constant.RabbitMQNameConstant;
-import xyz.xcye.common.dos.CommentDO;
-import xyz.xcye.common.dos.EmailDO;
-import xyz.xcye.common.dos.MessageLogDO;
-import xyz.xcye.common.dos.UserDO;
+import xyz.xcye.common.entity.table.EmailDO;
+import xyz.xcye.common.entity.table.MessageLogDO;
+import xyz.xcye.common.entity.table.UserDO;
 import xyz.xcye.common.dto.EmailVerifyAccountDTO;
 import xyz.xcye.common.entity.result.ModifyResult;
 import xyz.xcye.common.exception.user.UserException;
 import xyz.xcye.common.util.ValidationUtils;
-import xyz.xcye.common.valid.Insert;
 import xyz.xcye.common.valid.Update;
 import xyz.xcye.web.common.manager.mq.MistakeMessageSendService;
 import xyz.xcye.web.common.service.feign.MessageLogFeignService;
 
 import javax.annotation.Resource;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 
 /**
  * 消费者

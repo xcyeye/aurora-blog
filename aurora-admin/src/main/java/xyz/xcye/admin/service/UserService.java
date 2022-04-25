@@ -1,11 +1,11 @@
 package xyz.xcye.admin.service;
 
 import org.springframework.validation.BindException;
-import xyz.xcye.common.dos.EmailDO;
+import xyz.xcye.common.entity.table.EmailDO;
 import xyz.xcye.common.exception.email.EmailException;
 import xyz.xcye.common.exception.user.UserException;
-import xyz.xcye.common.dos.UserAccountDO;
-import xyz.xcye.common.dos.UserDO;
+import xyz.xcye.common.entity.table.UserAccountDO;
+import xyz.xcye.common.entity.table.UserDO;
 import xyz.xcye.common.dto.PaginationDTO;
 import xyz.xcye.common.entity.result.ModifyResult;
 import xyz.xcye.common.vo.UserVO;

@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import xyz.xcye.admin.constant.RedisConstant;
 import xyz.xcye.admin.service.UserService;
 import xyz.xcye.admin.service.redis.UserRedisService;
-import xyz.xcye.common.dos.UserDO;
+import xyz.xcye.common.entity.table.UserDO;
 import xyz.xcye.common.dto.EmailVerifyAccountDTO;
 import xyz.xcye.common.entity.result.ModifyResult;
 import xyz.xcye.common.exception.user.UserException;

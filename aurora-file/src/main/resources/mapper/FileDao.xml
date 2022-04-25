@@ -6,7 +6,7 @@
 
     <cache type="xyz.xcye.file.manager.cache.RedisCache"/>
     <insert id="insertFile"
-            parameterType="xyz.xcye.common.dos.FileDO"
+            parameterType="xyz.xcye.common.entity.table.FileDO"
     >
         INSERT INTO au_file
             (uid,create_time,delete_time,file_name,size,is_delete,summary,path,storage_mode,storage_path)
@@ -21,7 +21,7 @@
     不提供修改的字段有（因为没有意义）:createdAt,size,file_name,path
     -->
     <update id="updateFile"
-            parameterType="xyz.xcye.common.dos.FileDO"
+            parameterType="xyz.xcye.common.entity.table.FileDO"
             keyColumn="uid"
     >
         update au_file
@@ -73,7 +73,7 @@
         where uid=#{uid}
     </select>
 
-    <resultMap id="fileResult" type="xyz.xcye.common.dos.FileDO">
+    <resultMap id="fileResult" type="xyz.xcye.common.entity.table.FileDO">
         <id column="uid" property="uid"/>
         <result column="create_time" property="createTime"/>
         <result column="is_delete" property="delete"/>

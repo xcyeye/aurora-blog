@@ -32,7 +32,7 @@ public class SecurityResultHandler {
         setContentType(exchange);
         Map<String,Object> grantedAuthoritiesMap = new HashMap<>();
         grantedAuthoritiesMap.put("permission",grantedAuthorities);
-        R success = R.success(ResponseStatusCodeEnum.SUCCESS.getCode(), ResponseStatusCodeEnum.SUCCESS.getMessage(),grantedAuthoritiesMap);
+        R success = R.success(ResponseStatusCodeEnum.SUCCESS.getCode(), ResponseStatusCodeEnum.SUCCESS.getMessage(),grantedAuthoritiesMap, true);
 
         String s = ObjectConvertJson.jsonToString(success);
         return getMonoTypeResult(s,exchange);

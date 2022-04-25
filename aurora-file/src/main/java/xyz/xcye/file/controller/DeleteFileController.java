@@ -3,14 +3,11 @@ package xyz.xcye.file.controller;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import xyz.xcye.common.dos.FileDO;
 import xyz.xcye.file.exception.CustomFileException;
 import xyz.xcye.file.service.FileService;
 import xyz.xcye.common.annotaion.ResponseResult;
 import xyz.xcye.common.entity.result.ModifyResult;
-import xyz.xcye.common.valid.Delete;
 
 /**
  * 这是删除文件的api

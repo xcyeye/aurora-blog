@@ -10,8 +10,8 @@ import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.BindException;
-import xyz.xcye.common.dos.CommentDO;
-import xyz.xcye.common.dos.MessageLogDO;
+import xyz.xcye.common.entity.table.CommentDO;
+import xyz.xcye.common.entity.table.MessageLogDO;
 import xyz.xcye.common.dto.EmailVerifyAccountDTO;
 import xyz.xcye.common.entity.result.ModifyResult;
 import xyz.xcye.common.constant.RabbitMQNameConstant;
@@ -23,11 +23,9 @@ import xyz.xcye.message.service.MessageLogService;
 import xyz.xcye.message.service.SendMailService;
 import xyz.xcye.web.common.manager.mq.MistakeMessageSendService;
 
-import javax.annotation.Resource;
 import javax.mail.MessagingException;
 import javax.validation.groups.Default;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 
 /**
  * 消费者

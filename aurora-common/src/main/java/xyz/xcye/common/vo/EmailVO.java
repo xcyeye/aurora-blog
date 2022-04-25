@@ -1,16 +1,6 @@
 package xyz.xcye.common.vo;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.hibernate.validator.constraints.Length;
-import xyz.xcye.common.constant.FieldLengthConstant;
-import xyz.xcye.common.valid.Delete;
-import xyz.xcye.common.valid.Insert;
-import xyz.xcye.common.valid.Update;
-
-import javax.validation.constraints.NotNull;
 
 /**
  * 数据表 au_email
@@ -40,11 +30,6 @@ public class EmailVO {
      * <p>length < 10</p>
      */
     private String protocol;
-
-    /**
-     * 删除状态
-     */
-    private Boolean delete;
 
     /**
      * 邮件服务的端口

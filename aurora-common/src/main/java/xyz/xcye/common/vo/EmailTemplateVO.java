@@ -4,12 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import xyz.xcye.common.constant.FieldLengthConstant;
-import xyz.xcye.common.valid.Delete;
-import xyz.xcye.common.valid.Update;
-import xyz.xcye.common.valid.validator.ValidateString;
-
-import javax.validation.constraints.NotNull;
 
 /**
  * 数据表 au_email_template
@@ -51,11 +45,6 @@ public class EmailTemplateVO {
      * 有用户评论的模板 不能为null 长度没有限制
      */
     private String receiveCommentTemplate;
-
-    /**
-     * 删除状态
-     */
-    private Boolean delete;
 
     /**
      * 默认回复评论的标题

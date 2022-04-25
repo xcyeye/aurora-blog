@@ -9,7 +9,7 @@ import lombok.*;
  * @author qsyyke
  */
 
-@JsonIgnoreProperties(value = {"code","message"})
+@JsonIgnoreProperties(value = {"code","message","success"})
 @Data
 @Builder
 public class ModifyResult {

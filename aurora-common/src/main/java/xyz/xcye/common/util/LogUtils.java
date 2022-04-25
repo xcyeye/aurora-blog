@@ -1,9 +1,5 @@
 package xyz.xcye.common.util;
 
-import xyz.xcye.common.dos.EmailDO;
-import xyz.xcye.common.dos.UserDO;
-import xyz.xcye.common.entity.result.ModifyResult;
-
 /**
  * 日志打印工具类
  * @author qsyyke

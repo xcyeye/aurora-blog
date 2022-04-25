@@ -2,7 +2,7 @@ package xyz.xcye.message.dao;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import xyz.xcye.common.dos.EmailTemplateDO;
+import xyz.xcye.common.entity.table.EmailTemplateDO;
 import xyz.xcye.common.dto.ConditionDTO;
 
 import java.util.List;

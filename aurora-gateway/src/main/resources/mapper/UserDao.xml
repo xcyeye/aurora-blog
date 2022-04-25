@@ -10,7 +10,7 @@
         <result property="delete" column="is_delete"/>
         <result property="noLoginDay" column="no_login_day" javaType="_int"/>
 
-        <association property="userAccountDO" javaType="xyz.xcye.common.dos.UserAccountDO">
+        <association property="userAccountDO" javaType="xyz.xcye.common.entity.table.UserAccountDO">
             <result property="role" column="role"/>
             <result property="permission" column="permission"/>
             <result property="accountExpired" column="is_account-expired"/>

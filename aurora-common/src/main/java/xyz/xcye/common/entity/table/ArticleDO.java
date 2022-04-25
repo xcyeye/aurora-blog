@@ -1,4 +1,4 @@
-package xyz.xcye.common.dos;
+package xyz.xcye.common.entity.table;
 
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;

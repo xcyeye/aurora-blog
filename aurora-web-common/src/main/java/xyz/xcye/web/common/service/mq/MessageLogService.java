@@ -2,11 +2,9 @@ package xyz.xcye.web.common.service.mq;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.BindException;
-import xyz.xcye.common.constant.RabbitMQNameConstant;
-import xyz.xcye.common.dos.MessageLogDO;
+import xyz.xcye.common.entity.table.MessageLogDO;
 import xyz.xcye.common.entity.result.ModifyResult;
 import xyz.xcye.common.util.ValidationUtils;
 import xyz.xcye.common.valid.Insert;

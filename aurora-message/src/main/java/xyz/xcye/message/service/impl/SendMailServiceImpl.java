@@ -7,16 +7,16 @@ import org.springframework.mail.MailException;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.BindException;
-import xyz.xcye.common.dos.CommentDO;
-import xyz.xcye.common.dos.EmailLogDO;
 import xyz.xcye.common.dto.EmailCommonNoticeDTO;
 import xyz.xcye.common.dto.EmailVerifyAccountDTO;
 import xyz.xcye.common.entity.result.ModifyResult;
+import xyz.xcye.common.entity.table.CommentDO;
+import xyz.xcye.common.entity.table.EmailLogDO;
 import xyz.xcye.common.util.DateUtils;
 import xyz.xcye.common.util.ValidationUtils;
 import xyz.xcye.common.valid.Insert;
 import xyz.xcye.common.vo.EmailTemplateVO;
-import xyz.xcye.message.constant.MailTemplateEnum;
+import xyz.xcye.message.enums.MailTemplateEnum;
 import xyz.xcye.message.mail.SendMailRealize;
 import xyz.xcye.message.service.EmailLogService;
 import xyz.xcye.message.service.EmailTemplateService;
@@ -25,10 +25,9 @@ import xyz.xcye.message.util.MailTemplateUtils;
 import xyz.xcye.message.util.ParseEmailTemplate;
 
 import javax.mail.MessagingException;
+import javax.validation.groups.Default;
 import java.io.IOException;
-import java.math.BigInteger;
 import java.util.Date;
-import java.util.List;
 
 /**
  * @author qsyyke
@@ -65,11 +64,16 @@ public class SendMailServiceImpl implements SendMailService {
         //根据userUid获取对应的邮件发送模板对象
         EmailTemplateVO emailTemplateVO = emailTemplateService.queryEmailTemplateByUserUid(userUid);
         if (emailTemplateVO == null) {
+            emailTemplateVO = new EmailTemplateVO();
             // 数据库中不存在此用户对应的邮件发送模板，使用默认的
             String noticeTemplateContent = MailTemplateUtils.readContentFromTemplateFile(MailTemplateEnum.COMMON_NOTICE.getTemplateName(),
                     MailTemplateEnum.COMMON_NOTICE.getTemplateFolderPath());
             emailTemplateVO.setNoticeTemplate(noticeTemplateContent);
             emailTemplateVO.setNoticeSubject(MailTemplateEnum.COMMON_NOTICE.getSubject());
+        }
+
+        if (!StringUtils.hasLength(emailCommonNotice.getNoticePath())) {
+            emailCommonNotice.setNoticePath(MailTemplateEnum.DefaultValueConstant.COMMON_NOTICE_PATH);
         }
 
         //判断传入的subject是否为null或者空
@@ -89,11 +93,15 @@ public class SendMailServiceImpl implements SendMailService {
         //根据userUid获取对应的Email对象
         EmailTemplateVO emailTemplateVO = emailTemplateService.queryEmailTemplateByUserUid(userUid);
         if (emailTemplateVO == null) {
+            emailTemplateVO = new EmailTemplateVO();
             String templateContent = MailTemplateUtils.readContentFromTemplateFile(MailTemplateEnum.REPLY_COMMENT.getTemplateName(),
                     MailTemplateEnum.REPLY_COMMENT.getTemplateFolderPath());
             emailTemplateVO.setReplyCommentTemplate(templateContent);
             emailTemplateVO.setReplyCommentSubject(MailTemplateEnum.REPLY_COMMENT.getSubject());
         }
+
+        ValidationUtils.valid(repliedCommentInfo,Insert.class,Default.class);
+        ValidationUtils.valid(replyingCommentInfo,Insert.class,Default.class);
 
         //判断传入的subject是否为null或者空或者长度超过限制
         subject = getRightSubject(subject,emailTemplateVO.getReplyCommentSubject());
@@ -113,16 +121,20 @@ public class SendMailServiceImpl implements SendMailService {
         //根据userUid获取对应的Email对象
         EmailTemplateVO emailTemplateVO = emailTemplateService.queryEmailTemplateByUserUid(userUid);
         if (emailTemplateVO == null) {
+            emailTemplateVO = new EmailTemplateVO();
             String templateContent = MailTemplateUtils.readContentFromTemplateFile(MailTemplateEnum.RECEIVE_COMMENT.getTemplateName(),
                     MailTemplateEnum.RECEIVE_COMMENT.getTemplateFolderPath());
-            emailTemplateVO.setReplyCommentTemplate(templateContent);
-            emailTemplateVO.setReplyCommentSubject(MailTemplateEnum.RECEIVE_COMMENT.getSubject());
+            emailTemplateVO.setReceiveCommentTemplate(templateContent);
+            emailTemplateVO.setReceiveCommentSubject(MailTemplateEnum.RECEIVE_COMMENT.getSubject());
         }
 
         //判断传入的subject是否为null或者空
         subject = getRightSubject(subject,emailTemplateVO.getReceiveCommentSubject());
-
         ValidationUtils.valid(receiveCommentInfo, Insert.class);
+
+        if (!StringUtils.hasLength(receiveCommentInfo.getCreateTime())) {
+            receiveCommentInfo.setCreateTime(DateUtils.format(new Date()));
+        }
 
         //解析邮件发送内容
         String sendContent = ParseEmailTemplate.sendReceiveCommentMail(receiveCommentInfo,emailTemplateVO);
@@ -132,19 +144,21 @@ public class SendMailServiceImpl implements SendMailService {
 
     @Override
     public ModifyResult sendVerifyAccountMail(EmailVerifyAccountDTO verifyAccount, long userUid, String subject)
-            throws MessagingException, InstantiationException, IllegalAccessException, IOException {
+            throws MessagingException, InstantiationException, IllegalAccessException, IOException, BindException {
         // 根据userUid获取对应的Email对象
         EmailTemplateVO emailTemplateVO = emailTemplateService.queryEmailTemplateByUserUid(userUid);
         if (emailTemplateVO == null) {
+            emailTemplateVO = new EmailTemplateVO();
             String templateContent = MailTemplateUtils.readContentFromTemplateFile(MailTemplateEnum.VERIFY_ACCOUNT.getTemplateName(),
                     MailTemplateEnum.VERIFY_ACCOUNT.getTemplateFolderPath());
-            emailTemplateVO.setReplyCommentTemplate(templateContent);
-            emailTemplateVO.setReplyCommentSubject(MailTemplateEnum.VERIFY_ACCOUNT.getSubject());
+            emailTemplateVO.setVerifyAccountTemplate(templateContent);
+            emailTemplateVO.setVerifyAccountSubject(MailTemplateEnum.VERIFY_ACCOUNT.getSubject());
         }
 
         //判断传入的subject是否为null或者空
         subject = getRightSubject(subject,emailTemplateVO.getVerifyAccountSubject());
 
+        ValidationUtils.valid(verifyAccount,Insert.class, Default.class);
         //解析邮件发送内容
         String sendContent = ParseEmailTemplate.sendVerifyAccountMail(verifyAccount,emailTemplateVO);
         return sendEmail(subject,sendContent, verifyAccount.getReceiverEmail());

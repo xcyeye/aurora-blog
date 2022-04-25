@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
-import xyz.xcye.common.dos.UserAccountDO;
+import xyz.xcye.common.entity.table.UserAccountDO;
 import xyz.xcye.common.util.jwt.JwtUtils;
 import xyz.xcye.wg.enums.TokenEnum;
 import xyz.xcye.wg.util.SecurityResultHandler;

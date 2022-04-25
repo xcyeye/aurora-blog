@@ -2,7 +2,7 @@ package xyz.xcye.wg.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import xyz.xcye.common.dos.VerifyPathDO;
+import xyz.xcye.common.entity.table.VerifyPathDO;
 import xyz.xcye.wg.dao.VerifyPathDao;
 import xyz.xcye.wg.service.VerifyPathService;
 
