@@ -47,8 +47,8 @@ public class EmailTemplateServiceImpl implements EmailTemplateService {
     }
 
     @Override
-    public List<EmailTemplateVO> queryAllEmailTemplate(ConditionDTO condition) throws InstantiationException, IllegalAccessException {
-        condition = ConditionDTO.init(condition);
+    public List<EmailTemplateVO> queryAllEmailTemplate(ConditionDTO<Long> condition) throws InstantiationException, IllegalAccessException {
+        condition = condition.init(condition);
         return BeanUtils.copyList(emailTemplateDao.queryAllEmailTemplate(condition),EmailTemplateVO.class);
     }
 

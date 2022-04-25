@@ -1,16 +1,23 @@
 package xyz.xcye.common.dto;
 
-import lombok.Data;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+import lombok.experimental.Accessors;
 import xyz.xcye.common.constant.PaginationConstant;
 import xyz.xcye.common.util.DateUtils;
 import xyz.xcye.common.util.NameUtils;
+
+import java.util.Objects;
 
 /**
  * 这是查询的条件
  * @author qsyyke
  */
 
-@Data
+@ToString
+@Getter
 public class ConditionDTO<T> {
     /**
      * 开始时间
@@ -25,26 +32,36 @@ public class ConditionDTO<T> {
     /**
      * 根据唯一id
      */
+    @Setter
+    @Accessors(chain = true)
     private Long uid;
 
     /**
      * 其他的uid
      */
+    @Setter
+    @Accessors(chain = true)
     private T otherUid;
 
     /**
      * 是否显示
      */
+    @Setter
+    @Accessors(chain = true)
     private Boolean show;
 
     /**
      * 状态，比如发送状态，发布状态
      */
+    @Setter
+    @Accessors(chain = true)
     private Boolean status;
 
     /**
      * 查询的关键词
      */
+    @Setter
+    @Accessors(chain = true)
     private String keyword;
 
     /**
@@ -62,39 +79,40 @@ public class ConditionDTO<T> {
      */
     private String orderBy;
 
-    public void setStartTime(String startTime) {
+    public ConditionDTO<T> setStartTime(String startTime) {
         this.startTime = this.initTime(startTime);
+        return this;
     }
 
-    public void setEndTime(String endTime) {
+    public ConditionDTO<T> setEndTime(String endTime) {
         this.endTime = this.initTime(endTime);
+        return this;
     }
 
     /**
      * 初始化排序字段
      * @param orderBy
      */
-    public void setOrderBy(String orderBy) {
-        if (orderBy != null) {
-            orderBy = NameUtils.getUnderlineName(orderBy);
-        }else {
-            orderBy = NameUtils.getUnderlineName(PaginationConstant.ORDER_BY);
-        }
+    public ConditionDTO<T> setOrderBy(String orderBy) {
+        orderBy = NameUtils.getUnderlineName(Objects.requireNonNullElse(orderBy, PaginationConstant.ORDER_BY));
         this.orderBy = orderBy;
+        return this;
     }
 
-    public void setPageNum(Integer pageNum) {
+    public ConditionDTO<T> setPageNum(Integer pageNum) {
         if (pageNum == null) {
             pageNum = PaginationConstant.PAGE_NUM;
         }
         this.pageNum = pageNum;
+        return this;
     }
 
-    public void setPageSize(Integer pageSize) {
+    public ConditionDTO<T> setPageSize(Integer pageSize) {
         if (pageSize == null) {
             pageSize = PaginationConstant.PAGE_SIZE;
         }
         this.pageSize = pageSize;
+        return this;
     }
 
     /**
@@ -104,15 +122,17 @@ public class ConditionDTO<T> {
         return DateUtils.parse(dateStr);
     }
 
-    public static ConditionDTO init(ConditionDTO condition) {
+    /**
+     * 初始化查询条件，防止一些数据被返回
+     * @param condition
+     * @return
+     */
+    public ConditionDTO<T> init(ConditionDTO<T> condition) {
         if (condition == null) {
             condition = new ConditionDTO<>();
         }
         if (condition.status == null) {
             condition.setStatus(true);
-        }
-        if (condition.show == null) {
-            condition.setShow(true);
         }
         if (condition.pageNum == null) {
             condition.setPageNum(0);
@@ -120,7 +140,6 @@ public class ConditionDTO<T> {
         if (condition.pageSize == null) {
             condition.setPageSize(10);
         }
-
         return condition;
     }
 }

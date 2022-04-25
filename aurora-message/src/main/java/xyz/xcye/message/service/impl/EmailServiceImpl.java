@@ -1,7 +1,6 @@
 package xyz.xcye.message.service.impl;
 
 import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import io.seata.spring.annotation.GlobalTransactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,7 +10,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.validation.BindException;
 import xyz.xcye.common.dos.EmailDO;
 import xyz.xcye.common.dto.ConditionDTO;
-import xyz.xcye.common.dto.PaginationDTO;
 import xyz.xcye.common.entity.result.ModifyResult;
 import xyz.xcye.common.entity.result.R;
 import xyz.xcye.common.enums.ResponseStatusCodeEnum;
@@ -26,13 +24,9 @@ import xyz.xcye.common.vo.EmailVO;
 import xyz.xcye.common.vo.UserVO;
 import xyz.xcye.message.dao.EmailDao;
 import xyz.xcye.message.feign.UserFeignService;
-import xyz.xcye.message.manager.mq.send.OperateUserSendService;
 import xyz.xcye.message.service.EmailService;
-import xyz.xcye.web.common.service.feign.MessageLogFeignService;
 
-import java.math.BigInteger;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -133,8 +127,8 @@ public class EmailServiceImpl implements EmailService {
     }
 
     @Override
-    public List<EmailVO> queryAllEmail(ConditionDTO condition) throws InstantiationException, IllegalAccessException {
-        condition = ConditionDTO.init(condition);
+    public List<EmailVO> queryAllEmail(ConditionDTO<Long> condition) throws InstantiationException, IllegalAccessException {
+        condition = condition.init(condition);
         PageHelper.startPage(condition.getPageNum(),condition.getPageSize(),condition.getOrderBy());
         return BeanUtils.copyList(emailDao.queryAllEmail(condition), EmailVO.class);
     }

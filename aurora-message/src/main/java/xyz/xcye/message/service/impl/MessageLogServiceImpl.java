@@ -1,14 +1,12 @@
 package xyz.xcye.message.service.impl;
 
 import com.github.pagehelper.PageHelper;
-import io.seata.core.context.RootContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindException;
 import xyz.xcye.common.dos.MessageLogDO;
 import xyz.xcye.common.dto.ConditionDTO;
-import xyz.xcye.common.dto.PaginationDTO;
 import xyz.xcye.common.entity.result.ModifyResult;
 import xyz.xcye.common.enums.ResponseStatusCodeEnum;
 import xyz.xcye.common.util.BeanUtils;
@@ -17,9 +15,9 @@ import xyz.xcye.common.util.ValidationUtils;
 import xyz.xcye.common.util.id.GenerateInfoUtils;
 import xyz.xcye.common.valid.Insert;
 import xyz.xcye.common.valid.Update;
+import xyz.xcye.common.vo.MessageLogVO;
 import xyz.xcye.message.dao.MessageLogDao;
 import xyz.xcye.message.service.MessageLogService;
-import xyz.xcye.common.vo.MessageLogVO;
 
 import java.util.Date;
 import java.util.List;
@@ -79,9 +77,9 @@ public class MessageLogServiceImpl implements MessageLogService {
     }
 
     @Override
-    public List<MessageLogVO> queryAllMessageLog(ConditionDTO condition)
+    public List<MessageLogVO> queryAllMessageLog(ConditionDTO<Long> condition)
             throws InstantiationException, IllegalAccessException {
-        condition = ConditionDTO.init(condition);
+        condition = condition.init(condition);
         PageHelper.startPage(condition.getPageNum(),condition.getPageSize(),condition.getOrderBy());
         List<MessageLogDO> messageLogDOList = messageLogDao.queryAllMessageLog(condition);
         return BeanUtils.copyList(messageLogDOList,MessageLogVO.class);
