@@ -12,9 +12,20 @@ import java.util.List;
  */
 
 @Mapper
-public interface RoleDao {
+public interface RoleDao<findByUid> {
+    /**
+     * 插入一条角色记录
+     */
     int insert(@Param("roleDO") RoleDO roleDO);
+
+    /**
+     * 更新角色记录
+     */
     int update(@Param("roleDO") RoleDO roleDO);
+
+    /**
+     * 根据uid删除角色记录
+     */
     int deleteByUid(@Param("uid") int uid);
 
     /**

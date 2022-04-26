@@ -1,105 +1,480 @@
-2022-04-02 12:23:27:835 INFO  74255 -- background-preinit org.hibernate.validator.internal.util.Version--<clinit>  -HV000001: Hibernate Validator 6.2.2.Final
-2022-04-02 12:23:32:865 WARN  74255 -- main org.springframework.boot.StartupInfoLogger--appendOn  -InetAddress.getLocalHost().getHostName() took 5003 milliseconds to respond. Please verify your network configuration (macOS machines may need to add entries to /etc/hosts).
-2022-04-02 12:23:37:876 INFO  74255 -- main xyz.xcye.message.AuroraMessageRun--logStarting  -Starting AuroraMessageRun using Java 1.8.0_202 on auroradeMacBook-Pro.local with PID 74255 (/Volumes/Code/Java-code/aurora-theme/aurora-message/target/classes started by aurora in /Volumes/Code/Java-code/aurora-theme)
-2022-04-02 12:23:37:877 INFO  74255 -- main xyz.xcye.message.AuroraMessageRun--logStartupProfileInfo  -No active profile set, falling back to 1 default profile: "default"
-2022-04-02 12:23:38:801 INFO  74255 -- main o.s.d.r.config.RepositoryConfigurationDelegate--multipleStoresDetected  -Multiple Spring Data modules found, entering strict repository configuration mode!
-2022-04-02 12:23:38:802 INFO  74255 -- main o.s.d.r.config.RepositoryConfigurationDelegate--registerRepositoriesIn  -Bootstrapping Spring Data JDBC repositories in DEFAULT mode.
-2022-04-02 12:23:38:810 INFO  74255 -- main o.s.d.r.config.RepositoryConfigurationDelegate--registerRepositoriesIn  -Finished Spring Data repository scanning in 4 ms. Found 0 JDBC repository interfaces.
-2022-04-02 12:23:38:818 INFO  74255 -- main o.s.d.r.config.RepositoryConfigurationDelegate--multipleStoresDetected  -Multiple Spring Data modules found, entering strict repository configuration mode!
-2022-04-02 12:23:38:819 INFO  74255 -- main o.s.d.r.config.RepositoryConfigurationDelegate--registerRepositoriesIn  -Bootstrapping Spring Data Redis repositories in DEFAULT mode.
-2022-04-02 12:23:38:827 INFO  74255 -- main o.s.d.r.config.RepositoryConfigurationDelegate--registerRepositoriesIn  -Finished Spring Data repository scanning in 1 ms. Found 0 Redis repository interfaces.
-2022-04-02 12:23:38:946 WARN  74255 -- main org.mybatis.spring.mapper.ClassPathMapperScanner--warn  -No MyBatis mapper was found in '[xyz.xcye.message]' package. Please check your configuration.
-2022-04-02 12:23:39:013 INFO  74255 -- main o.springframework.cloud.context.scope.GenericScope--setSerializationId  -BeanFactory id=d445e51b-7100-3cae-bf37-6d4314c0d7a8
-2022-04-02 12:23:39:138 INFO  74255 -- main o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker--postProcessAfterInitialization  -Bean 'fileWebConfig' of type [xyz.xcye.message.config.FileWebConfig$$EnhancerBySpringCGLIB$$5745d8c4] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
-2022-04-02 12:23:39:356 INFO  74255 -- main o.s.boot.web.embedded.tomcat.TomcatWebServer--initialize  -Tomcat initialized with port(s): 7070 (http)
-2022-04-02 12:23:39:363 INFO  74255 -- main org.apache.coyote.http11.Http11NioProtocol--log  -Initializing ProtocolHandler ["http-nio-7070"]
-2022-04-02 12:23:39:363 INFO  74255 -- main org.apache.catalina.core.StandardService--log  -Starting service [Tomcat]
-2022-04-02 12:23:39:364 INFO  74255 -- main org.apache.catalina.core.StandardEngine--log  -Starting Servlet engine: [Apache Tomcat/9.0.58]
-2022-04-02 12:23:39:434 INFO  74255 -- main o.a.c.core.ContainerBase.[Tomcat].[localhost].[/]--log  -Initializing Spring embedded WebApplicationContext
-2022-04-02 12:23:39:434 INFO  74255 -- main o.s.b.w.s.c.ServletWebServerApplicationContext--prepareWebApplicationContext  -Root WebApplicationContext: initialization completed in 1516 ms
-2022-04-02 12:23:40:068 INFO  74255 -- main o.s.b.actuate.endpoint.web.EndpointLinksResolver--<init>  -Exposing 18 endpoint(s) beneath base path '/actuator'
-2022-04-02 12:23:40:650 INFO  74255 -- main com.alibaba.druid.pool.DruidDataSource--init  -{dataSource-1} inited
-2022-04-02 12:23:40:882 WARN  74255 -- main o.s.c.l.c.LoadBalancerCacheAutoConfiguration$LoadBalancerCaffeineWarnLogger--logWarning  -Spring Cloud LoadBalancer is currently working with the default cache. While this cache implementation is useful for development and tests, it's recommended to use Caffeine cache in production.You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
-2022-04-02 12:23:46:029 INFO  74255 -- main org.apache.coyote.http11.Http11NioProtocol--log  -Starting ProtocolHandler ["http-nio-7070"]
-2022-04-02 12:23:46:054 INFO  74255 -- main o.s.boot.web.embedded.tomcat.TomcatWebServer--start  -Tomcat started on port(s): 7070 (http) with context path ''
-2022-04-02 12:23:46:064 INFO  74255 -- main c.a.cloud.nacos.registry.NacosServiceRegistry--register  -nacos registry, DEFAULT_GROUP aurora-file 100.64.83.44:7070 register finished
-2022-04-02 12:23:46:221 INFO  74255 -- main xyz.xcye.message.AuroraMessageRun--logStarted  -Started AuroraMessageRun in 28.815 seconds (JVM running for 34.501)
-2022-04-02 12:23:46:522 INFO  74255 -- RMI TCP Connection(2)-100.64.83.44 o.a.c.core.ContainerBase.[Tomcat].[localhost].[/]--log  -Initializing Spring DispatcherServlet 'dispatcherServlet'
-2022-04-02 12:23:46:522 INFO  74255 -- RMI TCP Connection(2)-100.64.83.44 org.springframework.web.servlet.DispatcherServlet--initServletBean  -Initializing Servlet 'dispatcherServlet'
-2022-04-02 12:23:46:524 INFO  74255 -- RMI TCP Connection(2)-100.64.83.44 org.springframework.web.servlet.DispatcherServlet--initServletBean  -Completed initialization in 1 ms
-2022-04-02 12:24:32:750 WARN  74255 -- Thread-57 com.alibaba.nacos.common.notify.NotifyCenter--shutdown  -[NotifyCenter] Start destroying Publisher
-2022-04-02 12:24:32:750 WARN  74255 -- Thread-47 com.alibaba.nacos.common.http.HttpClientBeanHolder--shutdown  -[HttpClientBeanHolder] Start destroying common HttpClient
-2022-04-02 12:24:32:751 WARN  74255 -- Thread-57 com.alibaba.nacos.common.notify.NotifyCenter--shutdown  -[NotifyCenter] Destruction of the end
-2022-04-02 12:24:32:751 WARN  74255 -- Thread-47 com.alibaba.nacos.common.http.HttpClientBeanHolder--shutdown  -[HttpClientBeanHolder] Destruction of the end
-2022-04-02 12:24:32:800 INFO  74255 -- SpringApplicationShutdownHook c.a.cloud.nacos.registry.NacosServiceRegistry--deregister  -De-registering from Nacos Server now...
-2022-04-02 12:24:32:802 INFO  74255 -- SpringApplicationShutdownHook c.a.cloud.nacos.registry.NacosServiceRegistry--deregister  -De-registration finished.
-2022-04-02 12:24:56:395 INFO  74862 -- background-preinit org.hibernate.validator.internal.util.Version--<clinit>  -HV000001: Hibernate Validator 6.2.2.Final
-2022-04-02 12:25:01:426 WARN  74862 -- main org.springframework.boot.StartupInfoLogger--appendOn  -InetAddress.getLocalHost().getHostName() took 5006 milliseconds to respond. Please verify your network configuration (macOS machines may need to add entries to /etc/hosts).
-2022-04-02 12:25:06:436 INFO  74862 -- main xyz.xcye.message.AuroraMessageRun--logStarting  -Starting AuroraMessageRun using Java 1.8.0_202 on auroradeMacBook-Pro.local with PID 74862 (/Volumes/Code/Java-code/aurora-theme/aurora-message/target/classes started by aurora in /Volumes/Code/Java-code/aurora-theme)
-2022-04-02 12:25:06:438 INFO  74862 -- main xyz.xcye.message.AuroraMessageRun--logStartupProfileInfo  -No active profile set, falling back to 1 default profile: "default"
-2022-04-02 12:25:07:356 INFO  74862 -- main o.s.d.r.config.RepositoryConfigurationDelegate--multipleStoresDetected  -Multiple Spring Data modules found, entering strict repository configuration mode!
-2022-04-02 12:25:07:356 INFO  74862 -- main o.s.d.r.config.RepositoryConfigurationDelegate--registerRepositoriesIn  -Bootstrapping Spring Data JDBC repositories in DEFAULT mode.
-2022-04-02 12:25:07:363 INFO  74862 -- main o.s.d.r.config.RepositoryConfigurationDelegate--registerRepositoriesIn  -Finished Spring Data repository scanning in 3 ms. Found 0 JDBC repository interfaces.
-2022-04-02 12:25:07:371 INFO  74862 -- main o.s.d.r.config.RepositoryConfigurationDelegate--multipleStoresDetected  -Multiple Spring Data modules found, entering strict repository configuration mode!
-2022-04-02 12:25:07:372 INFO  74862 -- main o.s.d.r.config.RepositoryConfigurationDelegate--registerRepositoriesIn  -Bootstrapping Spring Data Redis repositories in DEFAULT mode.
-2022-04-02 12:25:07:380 INFO  74862 -- main o.s.d.r.config.RepositoryConfigurationDelegate--registerRepositoriesIn  -Finished Spring Data repository scanning in 1 ms. Found 0 Redis repository interfaces.
-2022-04-02 12:25:07:497 WARN  74862 -- main org.mybatis.spring.mapper.ClassPathMapperScanner--warn  -No MyBatis mapper was found in '[xyz.xcye.message]' package. Please check your configuration.
-2022-04-02 12:25:07:562 INFO  74862 -- main o.springframework.cloud.context.scope.GenericScope--setSerializationId  -BeanFactory id=d445e51b-7100-3cae-bf37-6d4314c0d7a8
-2022-04-02 12:25:07:689 INFO  74862 -- main o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker--postProcessAfterInitialization  -Bean 'fileWebConfig' of type [xyz.xcye.message.config.FileWebConfig$$EnhancerBySpringCGLIB$$e7fbe31a] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
-2022-04-02 12:25:07:912 INFO  74862 -- main o.s.boot.web.embedded.tomcat.TomcatWebServer--initialize  -Tomcat initialized with port(s): 7070 (http)
-2022-04-02 12:25:07:919 INFO  74862 -- main org.apache.coyote.http11.Http11NioProtocol--log  -Initializing ProtocolHandler ["http-nio-7070"]
-2022-04-02 12:25:07:920 INFO  74862 -- main org.apache.catalina.core.StandardService--log  -Starting service [Tomcat]
-2022-04-02 12:25:07:920 INFO  74862 -- main org.apache.catalina.core.StandardEngine--log  -Starting Servlet engine: [Apache Tomcat/9.0.58]
-2022-04-02 12:25:07:987 INFO  74862 -- main o.a.c.core.ContainerBase.[Tomcat].[localhost].[/]--log  -Initializing Spring embedded WebApplicationContext
-2022-04-02 12:25:07:988 INFO  74862 -- main o.s.b.w.s.c.ServletWebServerApplicationContext--prepareWebApplicationContext  -Root WebApplicationContext: initialization completed in 1510 ms
-2022-04-02 12:25:08:594 INFO  74862 -- main o.s.b.actuate.endpoint.web.EndpointLinksResolver--<init>  -Exposing 18 endpoint(s) beneath base path '/actuator'
-2022-04-02 12:25:09:177 INFO  74862 -- main com.alibaba.druid.pool.DruidDataSource--init  -{dataSource-1} inited
-2022-04-02 12:25:09:398 WARN  74862 -- main o.s.c.l.c.LoadBalancerCacheAutoConfiguration$LoadBalancerCaffeineWarnLogger--logWarning  -Spring Cloud LoadBalancer is currently working with the default cache. While this cache implementation is useful for development and tests, it's recommended to use Caffeine cache in production.You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
-2022-04-02 12:25:14:541 INFO  74862 -- main org.apache.coyote.http11.Http11NioProtocol--log  -Starting ProtocolHandler ["http-nio-7070"]
-2022-04-02 12:25:14:567 INFO  74862 -- main o.s.boot.web.embedded.tomcat.TomcatWebServer--start  -Tomcat started on port(s): 7070 (http) with context path ''
-2022-04-02 12:25:14:578 INFO  74862 -- main c.a.cloud.nacos.registry.NacosServiceRegistry--register  -nacos registry, DEFAULT_GROUP aurora-file 100.64.83.44:7070 register finished
-2022-04-02 12:25:14:760 INFO  74862 -- main xyz.xcye.message.AuroraMessageRun--logStarted  -Started AuroraMessageRun in 28.775 seconds (JVM running for 34.372)
-2022-04-02 12:25:14:971 INFO  74862 -- RMI TCP Connection(4)-100.64.83.44 o.a.c.core.ContainerBase.[Tomcat].[localhost].[/]--log  -Initializing Spring DispatcherServlet 'dispatcherServlet'
-2022-04-02 12:25:14:971 INFO  74862 -- RMI TCP Connection(4)-100.64.83.44 org.springframework.web.servlet.DispatcherServlet--initServletBean  -Initializing Servlet 'dispatcherServlet'
-2022-04-02 12:25:14:974 INFO  74862 -- RMI TCP Connection(4)-100.64.83.44 org.springframework.web.servlet.DispatcherServlet--initServletBean  -Completed initialization in 2 ms
-2022-04-02 12:25:20:304 WARN  74862 -- Thread-47 com.alibaba.nacos.common.http.HttpClientBeanHolder--shutdown  -[HttpClientBeanHolder] Start destroying common HttpClient
-2022-04-02 12:25:20:305 WARN  74862 -- Thread-56 com.alibaba.nacos.common.notify.NotifyCenter--shutdown  -[NotifyCenter] Start destroying Publisher
-2022-04-02 12:25:20:305 WARN  74862 -- Thread-56 com.alibaba.nacos.common.notify.NotifyCenter--shutdown  -[NotifyCenter] Destruction of the end
-2022-04-02 12:25:20:305 WARN  74862 -- Thread-47 com.alibaba.nacos.common.http.HttpClientBeanHolder--shutdown  -[HttpClientBeanHolder] Destruction of the end
-2022-04-02 12:25:20:334 INFO  74862 -- SpringApplicationShutdownHook c.a.cloud.nacos.registry.NacosServiceRegistry--deregister  -De-registering from Nacos Server now...
-2022-04-02 12:25:20:336 INFO  74862 -- SpringApplicationShutdownHook c.a.cloud.nacos.registry.NacosServiceRegistry--deregister  -De-registration finished.
-2022-04-02 12:25:39:673 INFO  75164 -- background-preinit org.hibernate.validator.internal.util.Version--<clinit>  -HV000001: Hibernate Validator 6.2.2.Final
-2022-04-02 12:25:44:704 WARN  75164 -- main org.springframework.boot.StartupInfoLogger--appendOn  -InetAddress.getLocalHost().getHostName() took 5004 milliseconds to respond. Please verify your network configuration (macOS machines may need to add entries to /etc/hosts).
-2022-04-02 12:25:49:716 INFO  75164 -- main xyz.xcye.message.AuroraMessageRun--logStarting  -Starting AuroraMessageRun using Java 1.8.0_202 on auroradeMacBook-Pro.local with PID 75164 (/Volumes/Code/Java-code/aurora-theme/aurora-message/target/classes started by aurora in /Volumes/Code/Java-code/aurora-theme)
-2022-04-02 12:25:49:718 INFO  75164 -- main xyz.xcye.message.AuroraMessageRun--logStartupProfileInfo  -No active profile set, falling back to 1 default profile: "default"
-2022-04-02 12:25:50:785 INFO  75164 -- main o.s.d.r.config.RepositoryConfigurationDelegate--multipleStoresDetected  -Multiple Spring Data modules found, entering strict repository configuration mode!
-2022-04-02 12:25:50:787 INFO  75164 -- main o.s.d.r.config.RepositoryConfigurationDelegate--registerRepositoriesIn  -Bootstrapping Spring Data JDBC repositories in DEFAULT mode.
-2022-04-02 12:25:50:803 INFO  75164 -- main o.s.d.r.config.RepositoryConfigurationDelegate--registerRepositoriesIn  -Finished Spring Data repository scanning in 8 ms. Found 0 JDBC repository interfaces.
-2022-04-02 12:25:50:825 INFO  75164 -- main o.s.d.r.config.RepositoryConfigurationDelegate--multipleStoresDetected  -Multiple Spring Data modules found, entering strict repository configuration mode!
-2022-04-02 12:25:50:828 INFO  75164 -- main o.s.d.r.config.RepositoryConfigurationDelegate--registerRepositoriesIn  -Bootstrapping Spring Data Redis repositories in DEFAULT mode.
-2022-04-02 12:25:50:846 INFO  75164 -- main o.s.d.r.config.RepositoryConfigurationDelegate--registerRepositoriesIn  -Finished Spring Data repository scanning in 1 ms. Found 0 Redis repository interfaces.
-2022-04-02 12:25:51:011 WARN  75164 -- main org.mybatis.spring.mapper.ClassPathMapperScanner--warn  -No MyBatis mapper was found in '[xyz.xcye.message]' package. Please check your configuration.
-2022-04-02 12:25:51:096 INFO  75164 -- main o.springframework.cloud.context.scope.GenericScope--setSerializationId  -BeanFactory id=d445e51b-7100-3cae-bf37-6d4314c0d7a8
-2022-04-02 12:25:51:222 INFO  75164 -- main o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker--postProcessAfterInitialization  -Bean 'fileWebConfig' of type [xyz.xcye.message.config.FileWebConfig$$EnhancerBySpringCGLIB$$5745d8c4] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
-2022-04-02 12:25:51:493 INFO  75164 -- main o.s.boot.web.embedded.tomcat.TomcatWebServer--initialize  -Tomcat initialized with port(s): 7070 (http)
-2022-04-02 12:25:51:501 INFO  75164 -- main org.apache.coyote.http11.Http11NioProtocol--log  -Initializing ProtocolHandler ["http-nio-7070"]
-2022-04-02 12:25:51:502 INFO  75164 -- main org.apache.catalina.core.StandardService--log  -Starting service [Tomcat]
-2022-04-02 12:25:51:502 INFO  75164 -- main org.apache.catalina.core.StandardEngine--log  -Starting Servlet engine: [Apache Tomcat/9.0.58]
-2022-04-02 12:25:51:596 INFO  75164 -- main o.a.c.core.ContainerBase.[Tomcat].[localhost].[/]--log  -Initializing Spring embedded WebApplicationContext
-2022-04-02 12:25:51:597 INFO  75164 -- main o.s.b.w.s.c.ServletWebServerApplicationContext--prepareWebApplicationContext  -Root WebApplicationContext: initialization completed in 1830 ms
-2022-04-02 12:25:52:263 INFO  75164 -- main o.s.b.actuate.endpoint.web.EndpointLinksResolver--<init>  -Exposing 18 endpoint(s) beneath base path '/actuator'
-2022-04-02 12:25:52:873 INFO  75164 -- main com.alibaba.druid.pool.DruidDataSource--init  -{dataSource-1} inited
-2022-04-02 12:25:53:062 WARN  75164 -- main o.s.c.l.c.LoadBalancerCacheAutoConfiguration$LoadBalancerCaffeineWarnLogger--logWarning  -Spring Cloud LoadBalancer is currently working with the default cache. While this cache implementation is useful for development and tests, it's recommended to use Caffeine cache in production.You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
-2022-04-02 12:25:58:219 INFO  75164 -- main org.apache.coyote.http11.Http11NioProtocol--log  -Starting ProtocolHandler ["http-nio-7070"]
-2022-04-02 12:25:58:245 INFO  75164 -- main o.s.boot.web.embedded.tomcat.TomcatWebServer--start  -Tomcat started on port(s): 7070 (http) with context path ''
-2022-04-02 12:25:58:255 INFO  75164 -- main c.a.cloud.nacos.registry.NacosServiceRegistry--register  -nacos registry, DEFAULT_GROUP aurora-file 100.64.83.44:7070 register finished
-2022-04-02 12:25:58:413 INFO  75164 -- main xyz.xcye.message.AuroraMessageRun--logStarted  -Started AuroraMessageRun in 29.166 seconds (JVM running for 34.732)
-2022-04-02 12:25:58:785 INFO  75164 -- RMI TCP Connection(3)-100.64.83.44 o.a.c.core.ContainerBase.[Tomcat].[localhost].[/]--log  -Initializing Spring DispatcherServlet 'dispatcherServlet'
-2022-04-02 12:25:58:786 INFO  75164 -- RMI TCP Connection(3)-100.64.83.44 org.springframework.web.servlet.DispatcherServlet--initServletBean  -Initializing Servlet 'dispatcherServlet'
-2022-04-02 12:25:58:788 INFO  75164 -- RMI TCP Connection(3)-100.64.83.44 org.springframework.web.servlet.DispatcherServlet--initServletBean  -Completed initialization in 2 ms
-2022-04-02 12:26:08:843 WARN  75164 -- Thread-57 com.alibaba.nacos.common.notify.NotifyCenter--shutdown  -[NotifyCenter] Start destroying Publisher
-2022-04-02 12:26:08:843 WARN  75164 -- Thread-48 com.alibaba.nacos.common.http.HttpClientBeanHolder--shutdown  -[HttpClientBeanHolder] Start destroying common HttpClient
-2022-04-02 12:26:08:844 WARN  75164 -- Thread-57 com.alibaba.nacos.common.notify.NotifyCenter--shutdown  -[NotifyCenter] Destruction of the end
-2022-04-02 12:26:08:844 WARN  75164 -- Thread-48 com.alibaba.nacos.common.http.HttpClientBeanHolder--shutdown  -[HttpClientBeanHolder] Destruction of the end
-2022-04-02 12:26:08:872 INFO  75164 -- SpringApplicationShutdownHook c.a.cloud.nacos.registry.NacosServiceRegistry--deregister  -De-registering from Nacos Server now...
-2022-04-02 12:26:08:874 INFO  75164 -- SpringApplicationShutdownHook c.a.cloud.nacos.registry.NacosServiceRegistry--deregister  -De-registration finished.
+2022-04-26 20:37:46:040 INFO  29815 -- background-preinit org.hibernate.validator.internal.util.Version--<clinit>  -HV000001: Hibernate Validator 6.2.2.Final
+2022-04-26 20:37:46:158 INFO  29815 -- main xyz.xcye.message.AuroraMessageRun--logStarting  -Starting AuroraMessageRun using Java 11.0.13 on auroradeMacBook-Pro.local with PID 29815 (/Volumes/Code/Java-code/aurora-theme/aurora-message/target/classes started by aurora in /Volumes/Code/Java-code/aurora-theme)
+2022-04-26 20:37:46:163 INFO  29815 -- main xyz.xcye.message.AuroraMessageRun--logStartupProfileInfo  -No active profile set, falling back to 1 default profile: "default"
+2022-04-26 20:37:48:158 INFO  29815 -- main o.s.d.r.config.RepositoryConfigurationDelegate--multipleStoresDetected  -Multiple Spring Data modules found, entering strict repository configuration mode!
+2022-04-26 20:37:48:159 INFO  29815 -- main o.s.d.r.config.RepositoryConfigurationDelegate--registerRepositoriesIn  -Bootstrapping Spring Data JDBC repositories in DEFAULT mode.
+2022-04-26 20:37:48:173 INFO  29815 -- main o.s.d.r.config.RepositoryConfigurationDelegate--registerRepositoriesIn  -Finished Spring Data repository scanning in 8 ms. Found 0 JDBC repository interfaces.
+2022-04-26 20:37:48:188 INFO  29815 -- main o.s.d.r.config.RepositoryConfigurationDelegate--multipleStoresDetected  -Multiple Spring Data modules found, entering strict repository configuration mode!
+2022-04-26 20:37:48:189 INFO  29815 -- main o.s.d.r.config.RepositoryConfigurationDelegate--registerRepositoriesIn  -Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2022-04-26 20:37:48:202 INFO  29815 -- main o.s.d.r.config.RepositoryConfigurationDelegate--registerRepositoriesIn  -Finished Spring Data repository scanning in 3 ms. Found 0 Redis repository interfaces.
+2022-04-26 20:37:48:524 INFO  29815 -- main o.springframework.cloud.context.scope.GenericScope--setSerializationId  -BeanFactory id=e6aede3a-36f7-36ea-b229-5858401da8ac
+2022-04-26 20:37:48:643 INFO  29815 -- main o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker--postProcessAfterInitialization  -Bean 'io.seata.spring.boot.autoconfigure.SeataAutoConfiguration' of type [io.seata.spring.boot.autoconfigure.SeataAutoConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-04-26 20:37:48:685 INFO  29815 -- main o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker--postProcessAfterInitialization  -Bean 'failureHandler' of type [io.seata.tm.api.DefaultFailureHandlerImpl] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-04-26 20:37:48:695 INFO  29815 -- main o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker--postProcessAfterInitialization  -Bean 'org.springframework.cloud.commons.config.CommonsConfigAutoConfiguration' of type [org.springframework.cloud.commons.config.CommonsConfigAutoConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-04-26 20:37:48:697 INFO  29815 -- main o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker--postProcessAfterInitialization  -Bean 'org.springframework.cloud.client.loadbalancer.LoadBalancerDefaultMappingsProviderAutoConfiguration' of type [org.springframework.cloud.client.loadbalancer.LoadBalancerDefaultMappingsProviderAutoConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-04-26 20:37:48:698 INFO  29815 -- main o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker--postProcessAfterInitialization  -Bean 'loadBalancerClientsDefaultsMappingsProvider' of type [org.springframework.cloud.client.loadbalancer.LoadBalancerDefaultMappingsProviderAutoConfiguration$$Lambda$550/0x000000080056e840] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-04-26 20:37:48:700 INFO  29815 -- main o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker--postProcessAfterInitialization  -Bean 'defaultsBindHandlerAdvisor' of type [org.springframework.cloud.commons.config.DefaultsBindHandlerAdvisor] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-04-26 20:37:48:706 INFO  29815 -- main o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker--postProcessAfterInitialization  -Bean 'springCloudAlibabaConfiguration' of type [io.seata.spring.boot.autoconfigure.properties.SpringCloudAlibabaConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-04-26 20:37:48:709 INFO  29815 -- main o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker--postProcessAfterInitialization  -Bean 'seataProperties' of type [io.seata.spring.boot.autoconfigure.properties.SeataProperties] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-04-26 20:37:48:711 INFO  29815 -- main i.s.s.boot.autoconfigure.SeataAutoConfiguration--globalTransactionScanner  -Automatically configure Seata
+2022-04-26 20:37:48:716 INFO  29815 -- main io.seata.config.FileConfiguration--<init>  -The file name of the operation is registry
+2022-04-26 20:37:48:779 INFO  29815 -- main io.seata.config.ConfigurationFactory--load  -load Configuration:FileConfiguration$$EnhancerByCGLIB$$862af1eb
+2022-04-26 20:37:48:786 INFO  29815 -- main o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker--postProcessAfterInitialization  -Bean 'configProperties' of type [io.seata.spring.boot.autoconfigure.properties.config.ConfigProperties] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-04-26 20:37:48:799 INFO  29815 -- main o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker--postProcessAfterInitialization  -Bean 'configNacosProperties' of type [io.seata.spring.boot.autoconfigure.properties.config.ConfigNacosProperties] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-04-26 20:37:49:095 INFO  29815 -- main com.alibaba.nacos.common.remote.client--lambda$createClient$0  -[RpcClientFactory] create a new rpc client of c889914a-dc69-4777-b793-ef226d952ab0_config-0
+2022-04-26 20:37:49:163 INFO  29815 -- main org.reflections.Reflections--scan  -Reflections took 35 ms to scan 1 urls, producing 3 keys and 6 values 
+2022-04-26 20:37:49:201 INFO  29815 -- main org.reflections.Reflections--scan  -Reflections took 18 ms to scan 1 urls, producing 4 keys and 9 values 
+2022-04-26 20:37:49:218 INFO  29815 -- main org.reflections.Reflections--scan  -Reflections took 14 ms to scan 1 urls, producing 3 keys and 10 values 
+2022-04-26 20:37:49:223 WARN  29815 -- main org.reflections.Reflections--scan  -given scan urls are empty. set urls in the configuration
+2022-04-26 20:37:49:249 INFO  29815 -- main org.reflections.Reflections--scan  -Reflections took 25 ms to scan 1 urls, producing 1 keys and 5 values 
+2022-04-26 20:37:49:263 INFO  29815 -- main org.reflections.Reflections--scan  -Reflections took 11 ms to scan 1 urls, producing 1 keys and 7 values 
+2022-04-26 20:37:49:277 INFO  29815 -- main org.reflections.Reflections--scan  -Reflections took 10 ms to scan 1 urls, producing 2 keys and 8 values 
+2022-04-26 20:37:49:280 WARN  29815 -- main org.reflections.Reflections--scan  -given scan urls are empty. set urls in the configuration
+2022-04-26 20:37:49:281 INFO  29815 -- main com.alibaba.nacos.common.remote.client--printIfInfoEnabled  -[c889914a-dc69-4777-b793-ef226d952ab0_config-0] RpcClient init label, labels = {module=config, Vipserver-Tag=null, source=sdk, Amory-Tag=null, Location-Tag=null, taskId=0, AppName=unknown}
+2022-04-26 20:37:49:282 INFO  29815 -- main com.alibaba.nacos.common.remote.client--printIfInfoEnabled  -[c889914a-dc69-4777-b793-ef226d952ab0_config-0] Register server push request handler:com.alibaba.nacos.client.config.impl.ClientWorker$ConfigRpcTransportClient$$Lambda$568/0x000000080056a040
+2022-04-26 20:37:49:282 INFO  29815 -- main com.alibaba.nacos.common.remote.client--printIfInfoEnabled  -[c889914a-dc69-4777-b793-ef226d952ab0_config-0] Register server push request handler:com.alibaba.nacos.client.config.impl.ClientWorker$ConfigRpcTransportClient$$Lambda$569/0x000000080056a440
+2022-04-26 20:37:49:283 INFO  29815 -- main com.alibaba.nacos.common.remote.client--printIfInfoEnabled  -[c889914a-dc69-4777-b793-ef226d952ab0_config-0] Registry connection listener to current client:com.alibaba.nacos.client.config.impl.ClientWorker$ConfigRpcTransportClient$1
+2022-04-26 20:37:49:284 INFO  29815 -- main com.alibaba.nacos.common.remote.client--printIfInfoEnabled  -[c889914a-dc69-4777-b793-ef226d952ab0_config-0] RpcClient init, ServerListFactory = com.alibaba.nacos.client.config.impl.ClientWorker$ConfigRpcTransportClient$2
+2022-04-26 20:37:49:294 INFO  29815 -- main com.alibaba.nacos.common.remote.client--printIfInfoEnabled  -[c889914a-dc69-4777-b793-ef226d952ab0_config-0] Try to connect to server on start up, server: {serverIp = '127.0.0.1', server main port = 8848}
+2022-04-26 20:37:52:691 ERROR 29815 -- main c.a.nacos.common.remote.client.grpc.GrpcClient--printIfErrorEnabled  -Server check fail, please check server 127.0.0.1 ,port 9848 is available , error ={}
+java.util.concurrent.TimeoutException: Waited 3000 milliseconds (plus 2 milliseconds, 551552 nanoseconds delay) for com.alibaba.nacos.shaded.io.grpc.stub.ClientCalls$GrpcFuture@5724c7da[status=PENDING, info=[GrpcFuture{clientCall={delegate={delegate=ClientCallImpl{method=MethodDescriptor{fullMethodName=Request/request, type=UNARY, idempotent=false, safe=false, sampledToLocalTracing=true, requestMarshaller=com.alibaba.nacos.shaded.io.grpc.protobuf.lite.ProtoLiteUtils$MessageMarshaller@18d22ecf, responseMarshaller=com.alibaba.nacos.shaded.io.grpc.protobuf.lite.ProtoLiteUtils$MessageMarshaller@73d83141, schemaDescriptor=com.alibaba.nacos.api.grpc.auto.RequestGrpc$RequestMethodDescriptorSupplier@31443680}}}}}]]
+	at com.alibaba.nacos.shaded.com.google.common.util.concurrent.AbstractFuture.get(AbstractFuture.java:508)
+	at com.alibaba.nacos.common.remote.client.grpc.GrpcClient.serverCheck(GrpcClient.java:148)
+	at com.alibaba.nacos.common.remote.client.grpc.GrpcClient.connectToServer(GrpcClient.java:264)
+	at com.alibaba.nacos.common.remote.client.RpcClient.start(RpcClient.java:390)
+	at com.alibaba.nacos.client.config.impl.ClientWorker$ConfigRpcTransportClient.ensureRpcClient(ClientWorker.java:885)
+	at com.alibaba.nacos.client.config.impl.ClientWorker$ConfigRpcTransportClient.getOneRunningClient(ClientWorker.java:1044)
+	at com.alibaba.nacos.client.config.impl.ClientWorker$ConfigRpcTransportClient.queryConfig(ClientWorker.java:940)
+	at com.alibaba.nacos.client.config.impl.ClientWorker.getServerConfig(ClientWorker.java:397)
+	at com.alibaba.nacos.client.config.NacosConfigService.getConfigInner(NacosConfigService.java:166)
+	at com.alibaba.nacos.client.config.NacosConfigService.getConfig(NacosConfigService.java:94)
+	at io.seata.config.nacos.NacosConfiguration.initSeataConfig(NacosConfiguration.java:301)
+	at io.seata.config.nacos.NacosConfiguration.<init>(NacosConfiguration.java:101)
+	at io.seata.config.nacos.NacosConfiguration.getInstance(NacosConfiguration.java:87)
+	at io.seata.config.nacos.NacosConfigurationProvider.provide(NacosConfigurationProvider.java:29)
+	at io.seata.config.ConfigurationFactory.buildConfiguration(ConfigurationFactory.java:131)
+	at io.seata.config.ConfigurationFactory.getInstance(ConfigurationFactory.java:94)
+	at io.seata.spring.annotation.GlobalTransactionScanner.<init>(GlobalTransactionScanner.java:87)
+	at io.seata.spring.annotation.GlobalTransactionScanner.<init>(GlobalTransactionScanner.java:143)
+	at io.seata.spring.boot.autoconfigure.SeataAutoConfiguration.globalTransactionScanner(SeataAutoConfiguration.java:55)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiate(SimpleInstantiationStrategy.java:154)
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiate(ConstructorResolver.java:653)
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiateUsingFactoryMethod(ConstructorResolver.java:638)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateUsingFactoryMethod(AbstractAutowireCapableBeanFactory.java:1352)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1195)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:582)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:542)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:335)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:333)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:213)
+	at org.springframework.context.support.PostProcessorRegistrationDelegate.registerBeanPostProcessors(PostProcessorRegistrationDelegate.java:258)
+	at org.springframework.context.support.AbstractApplicationContext.registerBeanPostProcessors(AbstractApplicationContext.java:762)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:567)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:145)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:740)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:415)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:303)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1312)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1301)
+	at xyz.xcye.message.AuroraMessageRun.main(AuroraMessageRun.java:23)
+2022-04-26 20:37:52:694 INFO  29815 -- main com.alibaba.nacos.common.remote.client--printIfInfoEnabled  -[c889914a-dc69-4777-b793-ef226d952ab0_config-0] Try to connect to server on start up, server: {serverIp = '127.0.0.1', server main port = 8848}
+2022-04-26 20:37:55:108 INFO  29815 -- main com.alibaba.nacos.common.remote.client--printIfInfoEnabled  -[c889914a-dc69-4777-b793-ef226d952ab0_config-0] Success to connect to server [127.0.0.1:8848] on start up, connectionId = 1650976674901_127.0.0.1_63487
+2022-04-26 20:37:55:109 INFO  29815 -- com.alibaba.nacos.client.remote.worker com.alibaba.nacos.common.remote.client--printIfInfoEnabled  -[c889914a-dc69-4777-b793-ef226d952ab0_config-0] Notify connected event to listeners.
+2022-04-26 20:37:55:110 INFO  29815 -- main com.alibaba.nacos.common.remote.client--printIfInfoEnabled  -[c889914a-dc69-4777-b793-ef226d952ab0_config-0] Register server push request handler:com.alibaba.nacos.common.remote.client.RpcClient$ConnectResetRequestHandler
+2022-04-26 20:37:55:111 INFO  29815 -- main com.alibaba.nacos.common.remote.client--printIfInfoEnabled  -[c889914a-dc69-4777-b793-ef226d952ab0_config-0] Register server push request handler:com.alibaba.nacos.common.remote.client.RpcClient$$Lambda$582/0x00000008005dc440
+2022-04-26 20:37:55:211 INFO  29815 -- main i.seata.spring.annotation.GlobalTransactionScanner--initClient  -Initializing Global Transaction Clients ... 
+2022-04-26 20:37:55:319 INFO  29815 -- main io.seata.core.rpc.netty.NettyClientBootstrap--start  -NettyClientBootstrap has started
+2022-04-26 20:37:55:320 INFO  29815 -- main i.seata.spring.annotation.GlobalTransactionScanner--initClient  -Transaction Manager Client is initialized. applicationId[applicationName] txServiceGroup[aurora_blog_tx_group]
+2022-04-26 20:37:55:332 INFO  29815 -- main io.seata.rm.datasource.AsyncWorker--<init>  -Async Commit Buffer Limit: 10000
+2022-04-26 20:37:55:333 INFO  29815 -- main io.seata.rm.datasource.xa.ResourceManagerXA--init  -ResourceManagerXA init ...
+2022-04-26 20:37:55:340 INFO  29815 -- main io.seata.core.rpc.netty.NettyClientBootstrap--start  -NettyClientBootstrap has started
+2022-04-26 20:37:55:340 INFO  29815 -- main i.seata.spring.annotation.GlobalTransactionScanner--initClient  -Resource Manager is initialized. applicationId[applicationName] txServiceGroup[aurora_blog_tx_group]
+2022-04-26 20:37:55:340 INFO  29815 -- main i.seata.spring.annotation.GlobalTransactionScanner--initClient  -Global Transaction Clients are initialized. 
+2022-04-26 20:37:55:342 INFO  29815 -- main o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker--postProcessAfterInitialization  -Bean 'io.seata.spring.boot.autoconfigure.SeataDataSourceAutoConfiguration' of type [io.seata.spring.boot.autoconfigure.SeataDataSourceAutoConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-04-26 20:37:55:514 INFO  29815 -- main o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker--postProcessAfterInitialization  -Bean 'messageGlobalHandlerInterceptor' of type [xyz.xcye.message.interceptor.MessageGlobalHandlerInterceptor] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-04-26 20:37:55:517 INFO  29815 -- main o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker--postProcessAfterInitialization  -Bean 'messageWebConfig' of type [xyz.xcye.message.config.MessageWebConfig$$EnhancerBySpringCGLIB$$7812b2d1] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-04-26 20:37:55:541 INFO  29815 -- main o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker--postProcessAfterInitialization  -Bean 'com.alibaba.cloud.seata.feign.SeataFeignClientAutoConfiguration$FeignBeanPostProcessorConfiguration' of type [com.alibaba.cloud.seata.feign.SeataFeignClientAutoConfiguration$FeignBeanPostProcessorConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-04-26 20:37:55:544 INFO  29815 -- main o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker--postProcessAfterInitialization  -Bean 'seataFeignObjectWrapper' of type [com.alibaba.cloud.seata.feign.SeataFeignObjectWrapper] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-04-26 20:37:55:883 INFO  29815 -- main o.s.boot.web.embedded.tomcat.TomcatWebServer--initialize  -Tomcat initialized with port(s): 7070 (http)
+2022-04-26 20:37:55:896 INFO  29815 -- main org.apache.coyote.http11.Http11NioProtocol--log  -Initializing ProtocolHandler ["http-nio-7070"]
+2022-04-26 20:37:55:897 INFO  29815 -- main org.apache.catalina.core.StandardService--log  -Starting service [Tomcat]
+2022-04-26 20:37:55:897 INFO  29815 -- main org.apache.catalina.core.StandardEngine--log  -Starting Servlet engine: [Apache Tomcat/9.0.58]
+2022-04-26 20:37:56:010 INFO  29815 -- main o.a.c.core.ContainerBase.[Tomcat].[localhost].[/]--log  -Initializing Spring embedded WebApplicationContext
+2022-04-26 20:37:56:010 INFO  29815 -- main o.s.b.w.s.c.ServletWebServerApplicationContext--prepareWebApplicationContext  -Root WebApplicationContext: initialization completed in 9749 ms
+2022-04-26 20:37:56:665 INFO  29815 -- main i.s.s.a.datasource.SeataAutoDataSourceProxyCreator--getAdvicesAndAdvisorsForBean  -Auto proxy of [messageDruidDataSource]
+2022-04-26 20:37:56:841 INFO  29815 -- main com.alibaba.druid.pool.DruidDataSource--init  -{dataSource-1} inited
+2022-04-26 20:37:57:227 INFO  29815 -- main com.alibaba.nacos.common.remote.client--lambda$createClient$0  -[RpcClientFactory] create a new rpc client of f6d4c20e-2909-4db9-9309-17a27c06dce4
+2022-04-26 20:37:57:228 INFO  29815 -- main com.alibaba.nacos.common.remote.client--printIfInfoEnabled  -[f6d4c20e-2909-4db9-9309-17a27c06dce4] RpcClient init label, labels = {module=naming, source=sdk}
+2022-04-26 20:37:57:231 INFO  29815 -- main com.alibaba.nacos.common.remote.client--printIfInfoEnabled  -[f6d4c20e-2909-4db9-9309-17a27c06dce4] RpcClient init, ServerListFactory = com.alibaba.nacos.client.naming.core.ServerListManager
+2022-04-26 20:37:57:231 INFO  29815 -- main com.alibaba.nacos.common.remote.client--printIfInfoEnabled  -[f6d4c20e-2909-4db9-9309-17a27c06dce4] Registry connection listener to current client:com.alibaba.nacos.client.naming.remote.gprc.redo.NamingGrpcRedoService
+2022-04-26 20:37:57:232 INFO  29815 -- main com.alibaba.nacos.common.remote.client--printIfInfoEnabled  -[f6d4c20e-2909-4db9-9309-17a27c06dce4] Register server push request handler:com.alibaba.nacos.client.naming.remote.gprc.NamingPushRequestHandler
+2022-04-26 20:37:57:234 INFO  29815 -- main com.alibaba.nacos.common.remote.client--printIfInfoEnabled  -[f6d4c20e-2909-4db9-9309-17a27c06dce4] Try to connect to server on start up, server: {serverIp = '127.0.0.1', server main port = 8848}
+2022-04-26 20:37:57:374 INFO  29815 -- main com.alibaba.nacos.common.remote.client--printIfInfoEnabled  -[f6d4c20e-2909-4db9-9309-17a27c06dce4] Success to connect to server [127.0.0.1:8848] on start up, connectionId = 1650976677253_127.0.0.1_63489
+2022-04-26 20:37:57:375 INFO  29815 -- com.alibaba.nacos.client.remote.worker com.alibaba.nacos.common.remote.client--printIfInfoEnabled  -[f6d4c20e-2909-4db9-9309-17a27c06dce4] Notify connected event to listeners.
+2022-04-26 20:37:57:375 INFO  29815 -- main com.alibaba.nacos.common.remote.client--printIfInfoEnabled  -[f6d4c20e-2909-4db9-9309-17a27c06dce4] Register server push request handler:com.alibaba.nacos.common.remote.client.RpcClient$ConnectResetRequestHandler
+2022-04-26 20:37:57:375 INFO  29815 -- main com.alibaba.nacos.common.remote.client--printIfInfoEnabled  -[f6d4c20e-2909-4db9-9309-17a27c06dce4] Register server push request handler:com.alibaba.nacos.common.remote.client.RpcClient$$Lambda$582/0x00000008005dc440
+2022-04-26 20:37:57:406 INFO  29815 -- main io.seata.core.rpc.netty.NettyClientChannelManager--acquireChannel  -will connect to 100.64.83.44:8091
+2022-04-26 20:37:57:406 INFO  29815 -- main io.seata.core.rpc.netty.RmNettyRemotingClient--lambda$getPoolKeyFunction$0  -RM will register :jdbc:mysql://127.0.0.1:3306/aurora_email
+2022-04-26 20:37:57:409 INFO  29815 -- main io.seata.core.rpc.netty.NettyPoolableFactory--makeObject  -NettyPool create channel to transactionRole:RMROLE,address:100.64.83.44:8091,msg:< RegisterRMRequest{resourceIds='jdbc:mysql://127.0.0.1:3306/aurora_email', applicationId='applicationName', transactionServiceGroup='aurora_blog_tx_group'} >
+2022-04-26 20:37:57:576 INFO  29815 -- main io.seata.core.rpc.netty.RmNettyRemotingClient--onRegisterMsgSuccess  -register RM success. client version:1.4.2, server version:1.4.2,channel:[id: 0x2f803c19, L:/100.64.83.44:63490 - R:/100.64.83.44:8091]
+2022-04-26 20:37:57:585 INFO  29815 -- main io.seata.core.rpc.netty.NettyPoolableFactory--makeObject  -register success, cost 91 ms, version:1.4.2,role:RMROLE,channel:[id: 0x2f803c19, L:/100.64.83.44:63490 - R:/100.64.83.44:8091]
+2022-04-26 20:37:57:941 INFO  29815 -- nacos-grpc-client-executor-7 com.alibaba.nacos.common.remote.client--printIfInfoEnabled  -[f6d4c20e-2909-4db9-9309-17a27c06dce4] Receive server push request, request = NotifySubscriberRequest, requestId = 1561
+2022-04-26 20:37:57:943 INFO  29815 -- nacos-grpc-client-executor-7 com.alibaba.nacos.common.remote.client--printIfInfoEnabled  -[f6d4c20e-2909-4db9-9309-17a27c06dce4] Ack server push request, request = NotifySubscriberRequest, requestId = 1561
+2022-04-26 20:37:58:088 INFO  29815 -- main o.s.cloud.openfeign.FeignClientFactoryBean--getTarget  -For 'aurora-admin' URL not provided. Will try picking an instance via load-balancing.
+2022-04-26 20:37:58:213 INFO  29815 -- main i.seata.spring.annotation.GlobalTransactionScanner--wrapIfNecessary  -Bean[xyz.xcye.message.service.impl.EmailServiceImpl$$EnhancerBySpringCGLIB$$d31d31f9] with name [emailServiceImpl] would use interceptor [io.seata.spring.annotation.GlobalTransactionalInterceptor]
+2022-04-26 20:37:58:812 INFO  29815 -- main com.alibaba.nacos.common.remote.client--lambda$createClient$0  -[RpcClientFactory] create a new rpc client of 4598024c-1e2a-4e0f-aba8-df86a0070cbe
+2022-04-26 20:37:58:813 INFO  29815 -- main com.alibaba.nacos.common.remote.client--printIfInfoEnabled  -[4598024c-1e2a-4e0f-aba8-df86a0070cbe] RpcClient init label, labels = {module=naming, source=sdk}
+2022-04-26 20:37:58:813 INFO  29815 -- main com.alibaba.nacos.common.remote.client--printIfInfoEnabled  -[4598024c-1e2a-4e0f-aba8-df86a0070cbe] RpcClient init, ServerListFactory = com.alibaba.nacos.client.naming.core.ServerListManager
+2022-04-26 20:37:58:813 INFO  29815 -- main com.alibaba.nacos.common.remote.client--printIfInfoEnabled  -[4598024c-1e2a-4e0f-aba8-df86a0070cbe] Registry connection listener to current client:com.alibaba.nacos.client.naming.remote.gprc.redo.NamingGrpcRedoService
+2022-04-26 20:37:58:814 INFO  29815 -- main com.alibaba.nacos.common.remote.client--printIfInfoEnabled  -[4598024c-1e2a-4e0f-aba8-df86a0070cbe] Register server push request handler:com.alibaba.nacos.client.naming.remote.gprc.NamingPushRequestHandler
+2022-04-26 20:37:58:814 INFO  29815 -- main com.alibaba.nacos.common.remote.client--printIfInfoEnabled  -[4598024c-1e2a-4e0f-aba8-df86a0070cbe] Try to connect to server on start up, server: {serverIp = '127.0.0.1', server main port = 8848}
+2022-04-26 20:37:58:947 INFO  29815 -- main com.alibaba.nacos.common.remote.client--printIfInfoEnabled  -[4598024c-1e2a-4e0f-aba8-df86a0070cbe] Success to connect to server [127.0.0.1:8848] on start up, connectionId = 1650976678828_127.0.0.1_63491
+2022-04-26 20:37:58:948 INFO  29815 -- com.alibaba.nacos.client.remote.worker com.alibaba.nacos.common.remote.client--printIfInfoEnabled  -[4598024c-1e2a-4e0f-aba8-df86a0070cbe] Notify connected event to listeners.
+2022-04-26 20:37:58:948 INFO  29815 -- main com.alibaba.nacos.common.remote.client--printIfInfoEnabled  -[4598024c-1e2a-4e0f-aba8-df86a0070cbe] Register server push request handler:com.alibaba.nacos.common.remote.client.RpcClient$ConnectResetRequestHandler
+2022-04-26 20:37:58:948 INFO  29815 -- main com.alibaba.nacos.common.remote.client--printIfInfoEnabled  -[4598024c-1e2a-4e0f-aba8-df86a0070cbe] Register server push request handler:com.alibaba.nacos.common.remote.client.RpcClient$$Lambda$582/0x00000008005dc440
+2022-04-26 20:37:59:204 INFO  29815 -- main o.s.b.actuate.endpoint.web.EndpointLinksResolver--<init>  -Exposing 18 endpoint(s) beneath base path '/actuator'
+2022-04-26 20:38:00:833 INFO  29815 -- main org.apache.coyote.http11.Http11NioProtocol--log  -Starting ProtocolHandler ["http-nio-7070"]
+2022-04-26 20:38:00:851 INFO  29815 -- main o.s.boot.web.embedded.tomcat.TomcatWebServer--start  -Tomcat started on port(s): 7070 (http) with context path ''
+2022-04-26 20:38:00:861 INFO  29815 -- main c.a.cloud.nacos.registry.NacosServiceRegistry--register  -nacos registry, DEFAULT_GROUP aurora-message 100.64.83.44:7070 register finished
+2022-04-26 20:38:01:330 INFO  29815 -- main o.s.a.rabbit.connection.CachingConnectionFactory--connectAddresses  -Attempting to connect to: [localhost:5672]
+2022-04-26 20:38:01:363 INFO  29815 -- main o.s.a.rabbit.connection.CachingConnectionFactory--createBareConnection  -Created new connection: rabbitConnectionFactory#5b78a946:0/SimpleConnection@5d95c7c2 [delegate=amqp://admin@127.0.0.1:5672/, localPort= 63493]
+2022-04-26 20:38:01:431 INFO  29815 -- nacos-grpc-client-executor-9 com.alibaba.nacos.common.remote.client--printIfInfoEnabled  -[4598024c-1e2a-4e0f-aba8-df86a0070cbe] Receive server push request, request = NotifySubscriberRequest, requestId = 1562
+2022-04-26 20:38:01:433 INFO  29815 -- nacos-grpc-client-executor-9 com.alibaba.nacos.common.remote.client--printIfInfoEnabled  -[4598024c-1e2a-4e0f-aba8-df86a0070cbe] Ack server push request, request = NotifySubscriberRequest, requestId = 1562
+2022-04-26 20:38:01:453 INFO  29815 -- main xyz.xcye.message.AuroraMessageRun--logStarted  -Started AuroraMessageRun in 16.583 seconds (JVM running for 23.915)
+2022-04-26 20:38:01:618 INFO  29815 -- RMI TCP Connection(2)-100.64.83.44 o.a.c.core.ContainerBase.[Tomcat].[localhost].[/]--log  -Initializing Spring DispatcherServlet 'dispatcherServlet'
+2022-04-26 20:38:01:619 INFO  29815 -- RMI TCP Connection(2)-100.64.83.44 org.springframework.web.servlet.DispatcherServlet--initServletBean  -Initializing Servlet 'dispatcherServlet'
+2022-04-26 20:38:01:624 INFO  29815 -- RMI TCP Connection(2)-100.64.83.44 org.springframework.web.servlet.DispatcherServlet--initServletBean  -Completed initialization in 5 ms
+2022-04-26 20:38:55:307 INFO  29815 -- timeoutChecker_1_1 io.seata.core.rpc.netty.NettyClientChannelManager--acquireChannel  -will connect to 100.64.83.44:8091
+2022-04-26 20:39:00:314 INFO  29815 -- timeoutChecker_1_1 io.seata.core.rpc.netty.NettyPoolableFactory--makeObject  -NettyPool create channel to transactionRole:TMROLE,address:100.64.83.44:8091,msg:< RegisterTMRequest{applicationId='applicationName', transactionServiceGroup='aurora_blog_tx_group'} >
+2022-04-26 20:39:00:332 INFO  29815 -- timeoutChecker_1_1 io.seata.core.rpc.netty.TmNettyRemotingClient--onRegisterMsgSuccess  -register TM success. client version:1.4.2, server version:1.4.2,channel:[id: 0xe40b7d74, L:/100.64.83.44:63514 - R:/100.64.83.44:8091]
+2022-04-26 20:39:00:333 INFO  29815 -- timeoutChecker_1_1 io.seata.core.rpc.netty.NettyPoolableFactory--makeObject  -register success, cost 16 ms, version:1.4.2,role:TMROLE,channel:[id: 0xe40b7d74, L:/100.64.83.44:63514 - R:/100.64.83.44:8091]
+2022-04-26 20:39:39:400 WARN  29815 -- Thread-7 com.alibaba.nacos.common.notify.NotifyCenter--shutdown  -[NotifyCenter] Start destroying Publisher
+2022-04-26 20:39:39:401 WARN  29815 -- Thread-2 com.alibaba.nacos.common.http.HttpClientBeanHolder--shutdown  -[HttpClientBeanHolder] Start destroying common HttpClient
+2022-04-26 20:39:39:401 WARN  29815 -- Thread-7 com.alibaba.nacos.common.notify.NotifyCenter--shutdown  -[NotifyCenter] Destruction of the end
+2022-04-26 20:39:39:403 WARN  29815 -- Thread-2 com.alibaba.nacos.common.http.HttpClientBeanHolder--shutdown  -[HttpClientBeanHolder] Destruction of the end
+2022-04-26 20:39:39:409 INFO  29815 -- SpringContextShutdownHook o.s.a.r.listener.SimpleMessageListenerContainer--doShutdown  -Waiting for workers to finish.
+2022-04-26 21:06:49:230 INFO  46623 -- background-preinit org.hibernate.validator.internal.util.Version--<clinit>  -HV000001: Hibernate Validator 6.2.2.Final
+2022-04-26 21:06:49:517 INFO  46623 -- main xyz.xcye.message.AuroraMessageRun--logStarting  -Starting AuroraMessageRun using Java 11.0.13 on auroradeMacBook-Pro.local with PID 46623 (/Volumes/Code/Java-code/aurora-theme/aurora-message/target/classes started by aurora in /Volumes/Code/Java-code/aurora-theme)
+2022-04-26 21:06:49:522 INFO  46623 -- main xyz.xcye.message.AuroraMessageRun--logStartupProfileInfo  -No active profile set, falling back to 1 default profile: "default"
+2022-04-26 21:06:54:200 INFO  46623 -- main o.s.d.r.config.RepositoryConfigurationDelegate--multipleStoresDetected  -Multiple Spring Data modules found, entering strict repository configuration mode!
+2022-04-26 21:06:54:203 INFO  46623 -- main o.s.d.r.config.RepositoryConfigurationDelegate--registerRepositoriesIn  -Bootstrapping Spring Data JDBC repositories in DEFAULT mode.
+2022-04-26 21:06:54:236 INFO  46623 -- main o.s.d.r.config.RepositoryConfigurationDelegate--registerRepositoriesIn  -Finished Spring Data repository scanning in 22 ms. Found 0 JDBC repository interfaces.
+2022-04-26 21:06:54:264 INFO  46623 -- main o.s.d.r.config.RepositoryConfigurationDelegate--multipleStoresDetected  -Multiple Spring Data modules found, entering strict repository configuration mode!
+2022-04-26 21:06:54:267 INFO  46623 -- main o.s.d.r.config.RepositoryConfigurationDelegate--registerRepositoriesIn  -Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2022-04-26 21:06:54:296 INFO  46623 -- main o.s.d.r.config.RepositoryConfigurationDelegate--registerRepositoriesIn  -Finished Spring Data repository scanning in 6 ms. Found 0 Redis repository interfaces.
+2022-04-26 21:06:55:101 INFO  46623 -- main o.springframework.cloud.context.scope.GenericScope--setSerializationId  -BeanFactory id=e6aede3a-36f7-36ea-b229-5858401da8ac
+2022-04-26 21:06:55:346 INFO  46623 -- main o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker--postProcessAfterInitialization  -Bean 'io.seata.spring.boot.autoconfigure.SeataAutoConfiguration' of type [io.seata.spring.boot.autoconfigure.SeataAutoConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-04-26 21:06:55:435 INFO  46623 -- main o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker--postProcessAfterInitialization  -Bean 'failureHandler' of type [io.seata.tm.api.DefaultFailureHandlerImpl] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-04-26 21:06:55:456 INFO  46623 -- main o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker--postProcessAfterInitialization  -Bean 'org.springframework.cloud.commons.config.CommonsConfigAutoConfiguration' of type [org.springframework.cloud.commons.config.CommonsConfigAutoConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-04-26 21:06:55:459 INFO  46623 -- main o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker--postProcessAfterInitialization  -Bean 'org.springframework.cloud.client.loadbalancer.LoadBalancerDefaultMappingsProviderAutoConfiguration' of type [org.springframework.cloud.client.loadbalancer.LoadBalancerDefaultMappingsProviderAutoConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-04-26 21:06:55:460 INFO  46623 -- main o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker--postProcessAfterInitialization  -Bean 'loadBalancerClientsDefaultsMappingsProvider' of type [org.springframework.cloud.client.loadbalancer.LoadBalancerDefaultMappingsProviderAutoConfiguration$$Lambda$622/0x00000007c0919040] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-04-26 21:06:55:463 INFO  46623 -- main o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker--postProcessAfterInitialization  -Bean 'defaultsBindHandlerAdvisor' of type [org.springframework.cloud.commons.config.DefaultsBindHandlerAdvisor] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-04-26 21:06:55:475 INFO  46623 -- main o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker--postProcessAfterInitialization  -Bean 'springCloudAlibabaConfiguration' of type [io.seata.spring.boot.autoconfigure.properties.SpringCloudAlibabaConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-04-26 21:06:55:481 INFO  46623 -- main o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker--postProcessAfterInitialization  -Bean 'seataProperties' of type [io.seata.spring.boot.autoconfigure.properties.SeataProperties] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-04-26 21:06:55:484 INFO  46623 -- main i.s.s.boot.autoconfigure.SeataAutoConfiguration--globalTransactionScanner  -Automatically configure Seata
+2022-04-26 21:06:55:494 INFO  46623 -- main io.seata.config.FileConfiguration--<init>  -The file name of the operation is registry
+2022-04-26 21:06:55:687 INFO  46623 -- main io.seata.config.ConfigurationFactory--load  -load Configuration:FileConfiguration$$EnhancerByCGLIB$$1
+2022-04-26 21:06:55:696 INFO  46623 -- main o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker--postProcessAfterInitialization  -Bean 'configProperties' of type [io.seata.spring.boot.autoconfigure.properties.config.ConfigProperties] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-04-26 21:06:55:715 INFO  46623 -- main o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker--postProcessAfterInitialization  -Bean 'configNacosProperties' of type [io.seata.spring.boot.autoconfigure.properties.config.ConfigNacosProperties] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-04-26 21:06:56:225 INFO  46623 -- main com.alibaba.nacos.common.remote.client--lambda$createClient$0  -[RpcClientFactory] create a new rpc client of dc11b675-52dd-4b3a-9829-7bc2e4b9d8ff_config-0
+2022-04-26 21:06:56:350 INFO  46623 -- main org.reflections.Reflections--scan  -Reflections took 69 ms to scan 1 urls, producing 3 keys and 6 values 
+2022-04-26 21:06:56:411 INFO  46623 -- main org.reflections.Reflections--scan  -Reflections took 20 ms to scan 1 urls, producing 4 keys and 9 values 
+2022-04-26 21:06:56:434 INFO  46623 -- main org.reflections.Reflections--scan  -Reflections took 16 ms to scan 1 urls, producing 3 keys and 10 values 
+2022-04-26 21:06:56:442 WARN  46623 -- main org.reflections.Reflections--scan  -given scan urls are empty. set urls in the configuration
+2022-04-26 21:06:56:459 INFO  46623 -- main org.reflections.Reflections--scan  -Reflections took 15 ms to scan 1 urls, producing 1 keys and 5 values 
+2022-04-26 21:06:56:480 INFO  46623 -- main org.reflections.Reflections--scan  -Reflections took 15 ms to scan 1 urls, producing 1 keys and 7 values 
+2022-04-26 21:06:56:502 INFO  46623 -- main org.reflections.Reflections--scan  -Reflections took 16 ms to scan 1 urls, producing 2 keys and 8 values 
+2022-04-26 21:06:56:507 WARN  46623 -- main org.reflections.Reflections--scan  -given scan urls are empty. set urls in the configuration
+2022-04-26 21:06:56:509 INFO  46623 -- main com.alibaba.nacos.common.remote.client--printIfInfoEnabled  -[dc11b675-52dd-4b3a-9829-7bc2e4b9d8ff_config-0] RpcClient init label, labels = {module=config, Vipserver-Tag=null, source=sdk, Amory-Tag=null, Location-Tag=null, taskId=0, AppName=unknown}
+2022-04-26 21:06:56:511 INFO  46623 -- main com.alibaba.nacos.common.remote.client--printIfInfoEnabled  -[dc11b675-52dd-4b3a-9829-7bc2e4b9d8ff_config-0] Register server push request handler:com.alibaba.nacos.client.config.impl.ClientWorker$ConfigRpcTransportClient$$Lambda$640/0x00000007c091c040
+2022-04-26 21:06:56:512 INFO  46623 -- main com.alibaba.nacos.common.remote.client--printIfInfoEnabled  -[dc11b675-52dd-4b3a-9829-7bc2e4b9d8ff_config-0] Register server push request handler:com.alibaba.nacos.client.config.impl.ClientWorker$ConfigRpcTransportClient$$Lambda$641/0x00000007c091c440
+2022-04-26 21:06:56:514 INFO  46623 -- main com.alibaba.nacos.common.remote.client--printIfInfoEnabled  -[dc11b675-52dd-4b3a-9829-7bc2e4b9d8ff_config-0] Registry connection listener to current client:com.alibaba.nacos.client.config.impl.ClientWorker$ConfigRpcTransportClient$1
+2022-04-26 21:06:56:515 INFO  46623 -- main com.alibaba.nacos.common.remote.client--printIfInfoEnabled  -[dc11b675-52dd-4b3a-9829-7bc2e4b9d8ff_config-0] RpcClient init, ServerListFactory = com.alibaba.nacos.client.config.impl.ClientWorker$ConfigRpcTransportClient$2
+2022-04-26 21:06:56:538 INFO  46623 -- main com.alibaba.nacos.common.remote.client--printIfInfoEnabled  -[dc11b675-52dd-4b3a-9829-7bc2e4b9d8ff_config-0] Try to connect to server on start up, server: {serverIp = '127.0.0.1', server main port = 8848}
+2022-04-26 21:07:00:222 ERROR 46623 -- main c.a.nacos.common.remote.client.grpc.GrpcClient--printIfErrorEnabled  -Server check fail, please check server 127.0.0.1 ,port 9848 is available , error ={}
+java.util.concurrent.TimeoutException: Waited 3000 milliseconds (plus 4 milliseconds, 119672 nanoseconds delay) for com.alibaba.nacos.shaded.io.grpc.stub.ClientCalls$GrpcFuture@3e4ead73[status=PENDING, info=[GrpcFuture{clientCall={delegate={delegate=ClientCallImpl{method=MethodDescriptor{fullMethodName=Request/request, type=UNARY, idempotent=false, safe=false, sampledToLocalTracing=true, requestMarshaller=com.alibaba.nacos.shaded.io.grpc.protobuf.lite.ProtoLiteUtils$MessageMarshaller@6406b84d, responseMarshaller=com.alibaba.nacos.shaded.io.grpc.protobuf.lite.ProtoLiteUtils$MessageMarshaller@5274acd1, schemaDescriptor=com.alibaba.nacos.api.grpc.auto.RequestGrpc$RequestMethodDescriptorSupplier@5fd5d6d1}}}}}]]
+	at com.alibaba.nacos.shaded.com.google.common.util.concurrent.AbstractFuture.get(AbstractFuture.java:508)
+	at com.alibaba.nacos.common.remote.client.grpc.GrpcClient.serverCheck(GrpcClient.java:148)
+	at com.alibaba.nacos.common.remote.client.grpc.GrpcClient.connectToServer(GrpcClient.java:264)
+	at com.alibaba.nacos.common.remote.client.RpcClient.start(RpcClient.java:390)
+	at com.alibaba.nacos.client.config.impl.ClientWorker$ConfigRpcTransportClient.ensureRpcClient(ClientWorker.java:885)
+	at com.alibaba.nacos.client.config.impl.ClientWorker$ConfigRpcTransportClient.getOneRunningClient(ClientWorker.java:1044)
+	at com.alibaba.nacos.client.config.impl.ClientWorker$ConfigRpcTransportClient.queryConfig(ClientWorker.java:940)
+	at com.alibaba.nacos.client.config.impl.ClientWorker.getServerConfig(ClientWorker.java:397)
+	at com.alibaba.nacos.client.config.NacosConfigService.getConfigInner(NacosConfigService.java:166)
+	at com.alibaba.nacos.client.config.NacosConfigService.getConfig(NacosConfigService.java:94)
+	at io.seata.config.nacos.NacosConfiguration.initSeataConfig(NacosConfiguration.java:301)
+	at io.seata.config.nacos.NacosConfiguration.<init>(NacosConfiguration.java:101)
+	at io.seata.config.nacos.NacosConfiguration.getInstance(NacosConfiguration.java:87)
+	at io.seata.config.nacos.NacosConfigurationProvider.provide(NacosConfigurationProvider.java:29)
+	at io.seata.config.ConfigurationFactory.buildConfiguration(ConfigurationFactory.java:131)
+	at io.seata.config.ConfigurationFactory.getInstance(ConfigurationFactory.java:94)
+	at io.seata.spring.annotation.GlobalTransactionScanner.<init>(GlobalTransactionScanner.java:87)
+	at io.seata.spring.annotation.GlobalTransactionScanner.<init>(GlobalTransactionScanner.java:143)
+	at io.seata.spring.boot.autoconfigure.SeataAutoConfiguration.globalTransactionScanner(SeataAutoConfiguration.java:55)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiate(SimpleInstantiationStrategy.java:154)
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiate(ConstructorResolver.java:653)
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiateUsingFactoryMethod(ConstructorResolver.java:638)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateUsingFactoryMethod(AbstractAutowireCapableBeanFactory.java:1352)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1195)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:582)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:542)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:335)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:333)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:213)
+	at org.springframework.context.support.PostProcessorRegistrationDelegate.registerBeanPostProcessors(PostProcessorRegistrationDelegate.java:258)
+	at org.springframework.context.support.AbstractApplicationContext.registerBeanPostProcessors(AbstractApplicationContext.java:762)
+	at org.springframework.context.support.AbstractApplicationContext.__refresh(AbstractApplicationContext.java:567)
+	at org.springframework.context.support.AbstractApplicationContext.jrLockAndRefresh(AbstractApplicationContext.java:40002)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:41008)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:145)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:740)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:415)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:303)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1312)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1301)
+	at xyz.xcye.message.AuroraMessageRun.main(AuroraMessageRun.java:23)
+2022-04-26 21:07:00:228 INFO  46623 -- main com.alibaba.nacos.common.remote.client--printIfInfoEnabled  -[dc11b675-52dd-4b3a-9829-7bc2e4b9d8ff_config-0] Try to connect to server on start up, server: {serverIp = '127.0.0.1', server main port = 8848}
+2022-04-26 21:07:02:782 INFO  46623 -- main com.alibaba.nacos.common.remote.client--printIfInfoEnabled  -[dc11b675-52dd-4b3a-9829-7bc2e4b9d8ff_config-0] Success to connect to server [127.0.0.1:8848] on start up, connectionId = 1650978422526_127.0.0.1_63788
+2022-04-26 21:07:02:784 INFO  46623 -- com.alibaba.nacos.client.remote.worker com.alibaba.nacos.common.remote.client--printIfInfoEnabled  -[dc11b675-52dd-4b3a-9829-7bc2e4b9d8ff_config-0] Notify connected event to listeners.
+2022-04-26 21:07:02:785 INFO  46623 -- main com.alibaba.nacos.common.remote.client--printIfInfoEnabled  -[dc11b675-52dd-4b3a-9829-7bc2e4b9d8ff_config-0] Register server push request handler:com.alibaba.nacos.common.remote.client.RpcClient$ConnectResetRequestHandler
+2022-04-26 21:07:02:786 INFO  46623 -- main com.alibaba.nacos.common.remote.client--printIfInfoEnabled  -[dc11b675-52dd-4b3a-9829-7bc2e4b9d8ff_config-0] Register server push request handler:com.alibaba.nacos.common.remote.client.RpcClient$$Lambda$654/0x00000007c0a6f840
+2022-04-26 21:07:02:993 INFO  46623 -- main i.seata.spring.annotation.GlobalTransactionScanner--initClient  -Initializing Global Transaction Clients ... 
+2022-04-26 21:07:03:210 INFO  46623 -- main io.seata.core.rpc.netty.NettyClientBootstrap--start  -NettyClientBootstrap has started
+2022-04-26 21:07:03:211 INFO  46623 -- main i.seata.spring.annotation.GlobalTransactionScanner--initClient  -Transaction Manager Client is initialized. applicationId[applicationName] txServiceGroup[aurora_blog_tx_group]
+2022-04-26 21:07:03:238 INFO  46623 -- main io.seata.rm.datasource.AsyncWorker--<init>  -Async Commit Buffer Limit: 10000
+2022-04-26 21:07:03:239 INFO  46623 -- main io.seata.rm.datasource.xa.ResourceManagerXA--init  -ResourceManagerXA init ...
+2022-04-26 21:07:03:246 INFO  46623 -- main io.seata.core.rpc.netty.NettyClientBootstrap--start  -NettyClientBootstrap has started
+2022-04-26 21:07:03:246 INFO  46623 -- main i.seata.spring.annotation.GlobalTransactionScanner--initClient  -Resource Manager is initialized. applicationId[applicationName] txServiceGroup[aurora_blog_tx_group]
+2022-04-26 21:07:03:247 INFO  46623 -- main i.seata.spring.annotation.GlobalTransactionScanner--initClient  -Global Transaction Clients are initialized. 
+2022-04-26 21:07:03:249 INFO  46623 -- main o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker--postProcessAfterInitialization  -Bean 'io.seata.spring.boot.autoconfigure.SeataDataSourceAutoConfiguration' of type [io.seata.spring.boot.autoconfigure.SeataDataSourceAutoConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-04-26 21:07:03:531 INFO  46623 -- main o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker--postProcessAfterInitialization  -Bean 'messageGlobalHandlerInterceptor' of type [xyz.xcye.message.interceptor.MessageGlobalHandlerInterceptor] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-04-26 21:07:03:534 INFO  46623 -- main o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker--postProcessAfterInitialization  -Bean 'messageWebConfig' of type [xyz.xcye.message.config.MessageWebConfig$$EnhancerBySpringCGLIB$$1] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-04-26 21:07:03:577 INFO  46623 -- main o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker--postProcessAfterInitialization  -Bean 'com.alibaba.cloud.seata.feign.SeataFeignClientAutoConfiguration$FeignBeanPostProcessorConfiguration' of type [com.alibaba.cloud.seata.feign.SeataFeignClientAutoConfiguration$FeignBeanPostProcessorConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-04-26 21:07:03:579 INFO  46623 -- main o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker--postProcessAfterInitialization  -Bean 'seataFeignObjectWrapper' of type [com.alibaba.cloud.seata.feign.SeataFeignObjectWrapper] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-04-26 21:07:04:142 INFO  46623 -- main o.s.boot.web.embedded.tomcat.TomcatWebServer--initialize  -Tomcat initialized with port(s): 7070 (http)
+2022-04-26 21:07:04:162 INFO  46623 -- main org.apache.coyote.http11.Http11NioProtocol--log  -Initializing ProtocolHandler ["http-nio-7070"]
+2022-04-26 21:07:04:163 INFO  46623 -- main org.apache.catalina.core.StandardService--log  -Starting service [Tomcat]
+2022-04-26 21:07:04:163 INFO  46623 -- main org.apache.catalina.core.StandardEngine--log  -Starting Servlet engine: [Apache Tomcat/9.0.58]
+2022-04-26 21:07:04:373 INFO  46623 -- main o.a.c.core.ContainerBase.[Tomcat].[localhost].[/]--log  -Initializing Spring embedded WebApplicationContext
+2022-04-26 21:07:04:374 INFO  46623 -- main o.s.b.w.s.c.ServletWebServerApplicationContext--prepareWebApplicationContext  -Root WebApplicationContext: initialization completed in 14644 ms
+2022-04-26 21:07:05:341 INFO  46623 -- main i.s.s.a.datasource.SeataAutoDataSourceProxyCreator--getAdvicesAndAdvisorsForBean  -Auto proxy of [messageDruidDataSource]
+2022-04-26 21:07:05:828 INFO  46623 -- main com.alibaba.druid.pool.DruidDataSource--init  -{dataSource-1} inited
+2022-04-26 21:07:06:455 INFO  46623 -- main com.alibaba.nacos.common.remote.client--lambda$createClient$0  -[RpcClientFactory] create a new rpc client of 304a7b37-37d2-41e3-bb4c-cc1e5351c9c7
+2022-04-26 21:07:06:456 INFO  46623 -- main com.alibaba.nacos.common.remote.client--printIfInfoEnabled  -[304a7b37-37d2-41e3-bb4c-cc1e5351c9c7] RpcClient init label, labels = {module=naming, source=sdk}
+2022-04-26 21:07:06:460 INFO  46623 -- main com.alibaba.nacos.common.remote.client--printIfInfoEnabled  -[304a7b37-37d2-41e3-bb4c-cc1e5351c9c7] RpcClient init, ServerListFactory = com.alibaba.nacos.client.naming.core.ServerListManager
+2022-04-26 21:07:06:461 INFO  46623 -- main com.alibaba.nacos.common.remote.client--printIfInfoEnabled  -[304a7b37-37d2-41e3-bb4c-cc1e5351c9c7] Registry connection listener to current client:com.alibaba.nacos.client.naming.remote.gprc.redo.NamingGrpcRedoService
+2022-04-26 21:07:06:462 INFO  46623 -- main com.alibaba.nacos.common.remote.client--printIfInfoEnabled  -[304a7b37-37d2-41e3-bb4c-cc1e5351c9c7] Register server push request handler:com.alibaba.nacos.client.naming.remote.gprc.NamingPushRequestHandler
+2022-04-26 21:07:06:463 INFO  46623 -- main com.alibaba.nacos.common.remote.client--printIfInfoEnabled  -[304a7b37-37d2-41e3-bb4c-cc1e5351c9c7] Try to connect to server on start up, server: {serverIp = '127.0.0.1', server main port = 8848}
+2022-04-26 21:07:06:603 INFO  46623 -- main com.alibaba.nacos.common.remote.client--printIfInfoEnabled  -[304a7b37-37d2-41e3-bb4c-cc1e5351c9c7] Success to connect to server [127.0.0.1:8848] on start up, connectionId = 1650978426480_127.0.0.1_63794
+2022-04-26 21:07:06:604 INFO  46623 -- com.alibaba.nacos.client.remote.worker com.alibaba.nacos.common.remote.client--printIfInfoEnabled  -[304a7b37-37d2-41e3-bb4c-cc1e5351c9c7] Notify connected event to listeners.
+2022-04-26 21:07:06:604 INFO  46623 -- main com.alibaba.nacos.common.remote.client--printIfInfoEnabled  -[304a7b37-37d2-41e3-bb4c-cc1e5351c9c7] Register server push request handler:com.alibaba.nacos.common.remote.client.RpcClient$ConnectResetRequestHandler
+2022-04-26 21:07:06:606 INFO  46623 -- main com.alibaba.nacos.common.remote.client--printIfInfoEnabled  -[304a7b37-37d2-41e3-bb4c-cc1e5351c9c7] Register server push request handler:com.alibaba.nacos.common.remote.client.RpcClient$$Lambda$654/0x00000007c0a6f840
+2022-04-26 21:07:06:664 INFO  46623 -- main io.seata.core.rpc.netty.NettyClientChannelManager--acquireChannel  -will connect to 100.64.83.44:8091
+2022-04-26 21:07:06:665 INFO  46623 -- main io.seata.core.rpc.netty.RmNettyRemotingClient--lambda$getPoolKeyFunction$0  -RM will register :jdbc:mysql://127.0.0.1:3306/aurora_email
+2022-04-26 21:07:06:672 INFO  46623 -- main io.seata.core.rpc.netty.NettyPoolableFactory--makeObject  -NettyPool create channel to transactionRole:RMROLE,address:100.64.83.44:8091,msg:< RegisterRMRequest{resourceIds='jdbc:mysql://127.0.0.1:3306/aurora_email', applicationId='applicationName', transactionServiceGroup='aurora_blog_tx_group'} >
+2022-04-26 21:07:06:975 INFO  46623 -- main io.seata.core.rpc.netty.RmNettyRemotingClient--onRegisterMsgSuccess  -register RM success. client version:1.4.2, server version:1.4.2,channel:[id: 0xc83ed7e2, L:/100.64.83.44:63795 - R:/100.64.83.44:8091]
+2022-04-26 21:07:06:985 INFO  46623 -- main io.seata.core.rpc.netty.NettyPoolableFactory--makeObject  -register success, cost 150 ms, version:1.4.2,role:RMROLE,channel:[id: 0xc83ed7e2, L:/100.64.83.44:63795 - R:/100.64.83.44:8091]
+2022-04-26 21:07:07:227 INFO  46623 -- nacos-grpc-client-executor-7 com.alibaba.nacos.common.remote.client--printIfInfoEnabled  -[304a7b37-37d2-41e3-bb4c-cc1e5351c9c7] Receive server push request, request = NotifySubscriberRequest, requestId = 1563
+2022-04-26 21:07:07:229 INFO  46623 -- nacos-grpc-client-executor-7 com.alibaba.nacos.common.remote.client--printIfInfoEnabled  -[304a7b37-37d2-41e3-bb4c-cc1e5351c9c7] Ack server push request, request = NotifySubscriberRequest, requestId = 1563
+2022-04-26 21:07:07:986 INFO  46623 -- main o.s.cloud.openfeign.FeignClientFactoryBean--getTarget  -For 'aurora-admin' URL not provided. Will try picking an instance via load-balancing.
+2022-04-26 21:07:08:186 INFO  46623 -- main i.seata.spring.annotation.GlobalTransactionScanner--wrapIfNecessary  -Bean[xyz.xcye.message.service.impl.EmailServiceImpl$$EnhancerBySpringCGLIB$$1] with name [emailServiceImpl] would use interceptor [io.seata.spring.annotation.GlobalTransactionalInterceptor]
+2022-04-26 21:07:09:067 INFO  46623 -- main com.alibaba.nacos.common.remote.client--lambda$createClient$0  -[RpcClientFactory] create a new rpc client of 0620f28b-3939-4cf6-857b-d5451de0b21a
+2022-04-26 21:07:09:069 INFO  46623 -- main com.alibaba.nacos.common.remote.client--printIfInfoEnabled  -[0620f28b-3939-4cf6-857b-d5451de0b21a] RpcClient init label, labels = {module=naming, source=sdk}
+2022-04-26 21:07:09:069 INFO  46623 -- main com.alibaba.nacos.common.remote.client--printIfInfoEnabled  -[0620f28b-3939-4cf6-857b-d5451de0b21a] RpcClient init, ServerListFactory = com.alibaba.nacos.client.naming.core.ServerListManager
+2022-04-26 21:07:09:070 INFO  46623 -- main com.alibaba.nacos.common.remote.client--printIfInfoEnabled  -[0620f28b-3939-4cf6-857b-d5451de0b21a] Registry connection listener to current client:com.alibaba.nacos.client.naming.remote.gprc.redo.NamingGrpcRedoService
+2022-04-26 21:07:09:070 INFO  46623 -- main com.alibaba.nacos.common.remote.client--printIfInfoEnabled  -[0620f28b-3939-4cf6-857b-d5451de0b21a] Register server push request handler:com.alibaba.nacos.client.naming.remote.gprc.NamingPushRequestHandler
+2022-04-26 21:07:09:071 INFO  46623 -- main com.alibaba.nacos.common.remote.client--printIfInfoEnabled  -[0620f28b-3939-4cf6-857b-d5451de0b21a] Try to connect to server on start up, server: {serverIp = '127.0.0.1', server main port = 8848}
+2022-04-26 21:07:09:203 INFO  46623 -- main com.alibaba.nacos.common.remote.client--printIfInfoEnabled  -[0620f28b-3939-4cf6-857b-d5451de0b21a] Success to connect to server [127.0.0.1:8848] on start up, connectionId = 1650978429086_127.0.0.1_63796
+2022-04-26 21:07:09:204 INFO  46623 -- com.alibaba.nacos.client.remote.worker com.alibaba.nacos.common.remote.client--printIfInfoEnabled  -[0620f28b-3939-4cf6-857b-d5451de0b21a] Notify connected event to listeners.
+2022-04-26 21:07:09:204 INFO  46623 -- main com.alibaba.nacos.common.remote.client--printIfInfoEnabled  -[0620f28b-3939-4cf6-857b-d5451de0b21a] Register server push request handler:com.alibaba.nacos.common.remote.client.RpcClient$ConnectResetRequestHandler
+2022-04-26 21:07:09:204 INFO  46623 -- main com.alibaba.nacos.common.remote.client--printIfInfoEnabled  -[0620f28b-3939-4cf6-857b-d5451de0b21a] Register server push request handler:com.alibaba.nacos.common.remote.client.RpcClient$$Lambda$654/0x00000007c0a6f840
+2022-04-26 21:07:09:570 INFO  46623 -- main o.s.b.actuate.endpoint.web.EndpointLinksResolver--<init>  -Exposing 18 endpoint(s) beneath base path '/actuator'
+2022-04-26 21:07:12:651 INFO  46623 -- main org.apache.coyote.http11.Http11NioProtocol--log  -Starting ProtocolHandler ["http-nio-7070"]
+2022-04-26 21:07:12:709 INFO  46623 -- main o.s.boot.web.embedded.tomcat.TomcatWebServer--start  -Tomcat started on port(s): 7070 (http) with context path ''
+2022-04-26 21:07:12:742 INFO  46623 -- main c.a.cloud.nacos.registry.NacosServiceRegistry--register  -nacos registry, DEFAULT_GROUP aurora-message 100.64.83.44:7070 register finished
+2022-04-26 21:07:13:196 INFO  46623 -- nacos-grpc-client-executor-10 com.alibaba.nacos.common.remote.client--printIfInfoEnabled  -[0620f28b-3939-4cf6-857b-d5451de0b21a] Receive server push request, request = NotifySubscriberRequest, requestId = 1564
+2022-04-26 21:07:13:199 INFO  46623 -- nacos-grpc-client-executor-10 com.alibaba.nacos.common.remote.client--printIfInfoEnabled  -[0620f28b-3939-4cf6-857b-d5451de0b21a] Ack server push request, request = NotifySubscriberRequest, requestId = 1564
+2022-04-26 21:07:14:182 INFO  46623 -- main o.s.a.rabbit.connection.CachingConnectionFactory--connectAddresses  -Attempting to connect to: [localhost:5672]
+2022-04-26 21:07:14:263 INFO  46623 -- main o.s.a.rabbit.connection.CachingConnectionFactory--createBareConnection  -Created new connection: rabbitConnectionFactory#69a14512:0/SimpleConnection@7e5e5bf9 [delegate=amqp://admin@127.0.0.1:5672/, localPort= 63800]
+2022-04-26 21:07:14:451 INFO  46623 -- main xyz.xcye.message.AuroraMessageRun--logStarted  -Started AuroraMessageRun in 27.068 seconds (JVM running for 39.725)
+2022-04-26 21:07:14:780 INFO  46623 -- RMI TCP Connection(3)-100.64.83.44 o.a.c.core.ContainerBase.[Tomcat].[localhost].[/]--log  -Initializing Spring DispatcherServlet 'dispatcherServlet'
+2022-04-26 21:07:14:782 INFO  46623 -- RMI TCP Connection(3)-100.64.83.44 org.springframework.web.servlet.DispatcherServlet--initServletBean  -Initializing Servlet 'dispatcherServlet'
+2022-04-26 21:07:14:796 INFO  46623 -- RMI TCP Connection(3)-100.64.83.44 org.springframework.web.servlet.DispatcherServlet--initServletBean  -Completed initialization in 14 ms
+2022-04-26 21:07:43:253 WARN  46623 -- Thread-14 com.alibaba.nacos.common.http.HttpClientBeanHolder--shutdown  -[HttpClientBeanHolder] Start destroying common HttpClient
+2022-04-26 21:07:43:261 WARN  46623 -- Thread-19 com.alibaba.nacos.common.notify.NotifyCenter--shutdown  -[NotifyCenter] Start destroying Publisher
+2022-04-26 21:07:43:262 WARN  46623 -- Thread-19 com.alibaba.nacos.common.notify.NotifyCenter--shutdown  -[NotifyCenter] Destruction of the end
+2022-04-26 21:07:43:262 WARN  46623 -- Thread-14 com.alibaba.nacos.common.http.HttpClientBeanHolder--shutdown  -[HttpClientBeanHolder] Destruction of the end
+2022-04-26 21:07:43:276 INFO  46623 -- SpringApplicationShutdownHook o.s.a.r.listener.SimpleMessageListenerContainer--doShutdown  -Waiting for workers to finish.
+2022-04-26 21:07:43:469 INFO  46623 -- SpringApplicationShutdownHook o.s.a.r.listener.SimpleMessageListenerContainer--doShutdown  -Successfully waited for workers to finish.
+2022-04-26 21:07:43:473 INFO  46623 -- SpringApplicationShutdownHook o.s.a.r.listener.SimpleMessageListenerContainer--doShutdown  -Waiting for workers to finish.
+2022-04-26 21:07:43:482 INFO  46623 -- SpringApplicationShutdownHook o.s.a.r.listener.SimpleMessageListenerContainer--doShutdown  -Successfully waited for workers to finish.
+2022-04-26 21:07:43:484 INFO  46623 -- SpringApplicationShutdownHook o.s.a.r.listener.SimpleMessageListenerContainer--doShutdown  -Waiting for workers to finish.
+2022-04-26 21:32:52:907 INFO  62297 -- background-preinit org.hibernate.validator.internal.util.Version--<clinit>  -HV000001: Hibernate Validator 6.2.2.Final
+2022-04-26 21:32:59:803 WARN  62297 -- main org.springframework.boot.StartupInfoLogger--appendOn  -InetAddress.getLocalHost().getHostName() took 5005 milliseconds to respond. Please verify your network configuration (macOS machines may need to add entries to /etc/hosts).
+2022-04-26 21:32:59:806 INFO  62297 -- main xyz.xcye.message.AuroraMessageRun--logStarting  -Starting AuroraMessageRun using Java 11.0.13 on auroradeMacBook-Pro.local with PID 62297 (/Volumes/Code/Java-code/aurora-theme/aurora-message/target/classes started by aurora in /Volumes/Code/Java-code/aurora-theme)
+2022-04-26 21:32:59:807 INFO  62297 -- main xyz.xcye.message.AuroraMessageRun--logStartupProfileInfo  -No active profile set, falling back to 1 default profile: "default"
+2022-04-26 21:33:03:693 INFO  62297 -- main o.s.d.r.config.RepositoryConfigurationDelegate--multipleStoresDetected  -Multiple Spring Data modules found, entering strict repository configuration mode!
+2022-04-26 21:33:03:699 INFO  62297 -- main o.s.d.r.config.RepositoryConfigurationDelegate--registerRepositoriesIn  -Bootstrapping Spring Data JDBC repositories in DEFAULT mode.
+2022-04-26 21:33:03:756 INFO  62297 -- main o.s.d.r.config.RepositoryConfigurationDelegate--registerRepositoriesIn  -Finished Spring Data repository scanning in 23 ms. Found 0 JDBC repository interfaces.
+2022-04-26 21:33:03:792 INFO  62297 -- main o.s.d.r.config.RepositoryConfigurationDelegate--multipleStoresDetected  -Multiple Spring Data modules found, entering strict repository configuration mode!
+2022-04-26 21:33:03:795 INFO  62297 -- main o.s.d.r.config.RepositoryConfigurationDelegate--registerRepositoriesIn  -Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2022-04-26 21:33:03:840 INFO  62297 -- main o.s.d.r.config.RepositoryConfigurationDelegate--registerRepositoriesIn  -Finished Spring Data repository scanning in 7 ms. Found 0 Redis repository interfaces.
+2022-04-26 21:33:05:153 INFO  62297 -- main o.springframework.cloud.context.scope.GenericScope--setSerializationId  -BeanFactory id=e6aede3a-36f7-36ea-b229-5858401da8ac
+2022-04-26 21:33:05:496 INFO  62297 -- main o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker--postProcessAfterInitialization  -Bean 'io.seata.spring.boot.autoconfigure.SeataAutoConfiguration' of type [io.seata.spring.boot.autoconfigure.SeataAutoConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-04-26 21:33:05:667 INFO  62297 -- main o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker--postProcessAfterInitialization  -Bean 'failureHandler' of type [io.seata.tm.api.DefaultFailureHandlerImpl] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-04-26 21:33:05:700 INFO  62297 -- main o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker--postProcessAfterInitialization  -Bean 'org.springframework.cloud.commons.config.CommonsConfigAutoConfiguration' of type [org.springframework.cloud.commons.config.CommonsConfigAutoConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-04-26 21:33:05:704 INFO  62297 -- main o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker--postProcessAfterInitialization  -Bean 'org.springframework.cloud.client.loadbalancer.LoadBalancerDefaultMappingsProviderAutoConfiguration' of type [org.springframework.cloud.client.loadbalancer.LoadBalancerDefaultMappingsProviderAutoConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-04-26 21:33:05:706 INFO  62297 -- main o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker--postProcessAfterInitialization  -Bean 'loadBalancerClientsDefaultsMappingsProvider' of type [org.springframework.cloud.client.loadbalancer.LoadBalancerDefaultMappingsProviderAutoConfiguration$$Lambda$620/0x00000007c0946840] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-04-26 21:33:05:710 INFO  62297 -- main o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker--postProcessAfterInitialization  -Bean 'defaultsBindHandlerAdvisor' of type [org.springframework.cloud.commons.config.DefaultsBindHandlerAdvisor] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-04-26 21:33:05:735 INFO  62297 -- main o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker--postProcessAfterInitialization  -Bean 'springCloudAlibabaConfiguration' of type [io.seata.spring.boot.autoconfigure.properties.SpringCloudAlibabaConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-04-26 21:33:05:745 INFO  62297 -- main o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker--postProcessAfterInitialization  -Bean 'seataProperties' of type [io.seata.spring.boot.autoconfigure.properties.SeataProperties] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-04-26 21:33:05:748 INFO  62297 -- main i.s.s.boot.autoconfigure.SeataAutoConfiguration--globalTransactionScanner  -Automatically configure Seata
+2022-04-26 21:33:05:780 INFO  62297 -- main io.seata.config.FileConfiguration--<init>  -The file name of the operation is registry
+2022-04-26 21:33:06:133 INFO  62297 -- main io.seata.config.ConfigurationFactory--load  -load Configuration:FileConfiguration$$EnhancerByCGLIB$$1
+2022-04-26 21:33:06:147 INFO  62297 -- main o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker--postProcessAfterInitialization  -Bean 'configProperties' of type [io.seata.spring.boot.autoconfigure.properties.config.ConfigProperties] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-04-26 21:33:06:171 INFO  62297 -- main o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker--postProcessAfterInitialization  -Bean 'configNacosProperties' of type [io.seata.spring.boot.autoconfigure.properties.config.ConfigNacosProperties] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-04-26 21:33:06:956 INFO  62297 -- main com.alibaba.nacos.common.remote.client--lambda$createClient$0  -[RpcClientFactory] create a new rpc client of 835989b2-7ba5-4dd1-874c-265f78397a89_config-0
+2022-04-26 21:33:07:198 INFO  62297 -- main org.reflections.Reflections--scan  -Reflections took 133 ms to scan 1 urls, producing 3 keys and 6 values 
+2022-04-26 21:33:07:334 INFO  62297 -- main org.reflections.Reflections--scan  -Reflections took 39 ms to scan 1 urls, producing 4 keys and 9 values 
+2022-04-26 21:33:07:367 INFO  62297 -- main org.reflections.Reflections--scan  -Reflections took 22 ms to scan 1 urls, producing 3 keys and 10 values 
+2022-04-26 21:33:07:378 WARN  62297 -- main org.reflections.Reflections--scan  -given scan urls are empty. set urls in the configuration
+2022-04-26 21:33:07:396 INFO  62297 -- main org.reflections.Reflections--scan  -Reflections took 17 ms to scan 1 urls, producing 1 keys and 5 values 
+2022-04-26 21:33:07:425 INFO  62297 -- main org.reflections.Reflections--scan  -Reflections took 20 ms to scan 1 urls, producing 1 keys and 7 values 
+2022-04-26 21:33:07:452 INFO  62297 -- main org.reflections.Reflections--scan  -Reflections took 19 ms to scan 1 urls, producing 2 keys and 8 values 
+2022-04-26 21:33:07:460 WARN  62297 -- main org.reflections.Reflections--scan  -given scan urls are empty. set urls in the configuration
+2022-04-26 21:33:07:463 INFO  62297 -- main com.alibaba.nacos.common.remote.client--printIfInfoEnabled  -[835989b2-7ba5-4dd1-874c-265f78397a89_config-0] RpcClient init label, labels = {module=config, Vipserver-Tag=null, source=sdk, Amory-Tag=null, Location-Tag=null, taskId=0, AppName=unknown}
+2022-04-26 21:33:07:465 INFO  62297 -- main com.alibaba.nacos.common.remote.client--printIfInfoEnabled  -[835989b2-7ba5-4dd1-874c-265f78397a89_config-0] Register server push request handler:com.alibaba.nacos.client.config.impl.ClientWorker$ConfigRpcTransportClient$$Lambda$638/0x00000007c0942040
+2022-04-26 21:33:07:466 INFO  62297 -- main com.alibaba.nacos.common.remote.client--printIfInfoEnabled  -[835989b2-7ba5-4dd1-874c-265f78397a89_config-0] Register server push request handler:com.alibaba.nacos.client.config.impl.ClientWorker$ConfigRpcTransportClient$$Lambda$639/0x00000007c0942440
+2022-04-26 21:33:07:470 INFO  62297 -- main com.alibaba.nacos.common.remote.client--printIfInfoEnabled  -[835989b2-7ba5-4dd1-874c-265f78397a89_config-0] Registry connection listener to current client:com.alibaba.nacos.client.config.impl.ClientWorker$ConfigRpcTransportClient$1
+2022-04-26 21:33:07:472 INFO  62297 -- main com.alibaba.nacos.common.remote.client--printIfInfoEnabled  -[835989b2-7ba5-4dd1-874c-265f78397a89_config-0] RpcClient init, ServerListFactory = com.alibaba.nacos.client.config.impl.ClientWorker$ConfigRpcTransportClient$2
+2022-04-26 21:33:07:511 INFO  62297 -- main com.alibaba.nacos.common.remote.client--printIfInfoEnabled  -[835989b2-7ba5-4dd1-874c-265f78397a89_config-0] Try to connect to server on start up, server: {serverIp = '127.0.0.1', server main port = 8848}
+2022-04-26 21:33:11:863 ERROR 62297 -- main c.a.nacos.common.remote.client.grpc.GrpcClient--printIfErrorEnabled  -Server check fail, please check server 127.0.0.1 ,port 9848 is available , error ={}
+java.util.concurrent.TimeoutException: Waited 3000 milliseconds (plus 2 milliseconds, 51833 nanoseconds delay) for com.alibaba.nacos.shaded.io.grpc.stub.ClientCalls$GrpcFuture@2a06432b[status=PENDING, info=[GrpcFuture{clientCall={delegate={delegate=ClientCallImpl{method=MethodDescriptor{fullMethodName=Request/request, type=UNARY, idempotent=false, safe=false, sampledToLocalTracing=true, requestMarshaller=com.alibaba.nacos.shaded.io.grpc.protobuf.lite.ProtoLiteUtils$MessageMarshaller@44b48a5d, responseMarshaller=com.alibaba.nacos.shaded.io.grpc.protobuf.lite.ProtoLiteUtils$MessageMarshaller@35287058, schemaDescriptor=com.alibaba.nacos.api.grpc.auto.RequestGrpc$RequestMethodDescriptorSupplier@6ef00239}}}}}]]
+	at com.alibaba.nacos.shaded.com.google.common.util.concurrent.AbstractFuture.get(AbstractFuture.java:508)
+	at com.alibaba.nacos.common.remote.client.grpc.GrpcClient.serverCheck(GrpcClient.java:148)
+	at com.alibaba.nacos.common.remote.client.grpc.GrpcClient.connectToServer(GrpcClient.java:264)
+	at com.alibaba.nacos.common.remote.client.RpcClient.start(RpcClient.java:390)
+	at com.alibaba.nacos.client.config.impl.ClientWorker$ConfigRpcTransportClient.ensureRpcClient(ClientWorker.java:885)
+	at com.alibaba.nacos.client.config.impl.ClientWorker$ConfigRpcTransportClient.getOneRunningClient(ClientWorker.java:1044)
+	at com.alibaba.nacos.client.config.impl.ClientWorker$ConfigRpcTransportClient.queryConfig(ClientWorker.java:940)
+	at com.alibaba.nacos.client.config.impl.ClientWorker.getServerConfig(ClientWorker.java:397)
+	at com.alibaba.nacos.client.config.NacosConfigService.getConfigInner(NacosConfigService.java:166)
+	at com.alibaba.nacos.client.config.NacosConfigService.getConfig(NacosConfigService.java:94)
+	at io.seata.config.nacos.NacosConfiguration.initSeataConfig(NacosConfiguration.java:301)
+	at io.seata.config.nacos.NacosConfiguration.<init>(NacosConfiguration.java:101)
+	at io.seata.config.nacos.NacosConfiguration.getInstance(NacosConfiguration.java:87)
+	at io.seata.config.nacos.NacosConfigurationProvider.provide(NacosConfigurationProvider.java:29)
+	at io.seata.config.ConfigurationFactory.buildConfiguration(ConfigurationFactory.java:131)
+	at io.seata.config.ConfigurationFactory.getInstance(ConfigurationFactory.java:94)
+	at io.seata.spring.annotation.GlobalTransactionScanner.<init>(GlobalTransactionScanner.java:87)
+	at io.seata.spring.annotation.GlobalTransactionScanner.<init>(GlobalTransactionScanner.java:143)
+	at io.seata.spring.boot.autoconfigure.SeataAutoConfiguration.globalTransactionScanner(SeataAutoConfiguration.java:55)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiate(SimpleInstantiationStrategy.java:154)
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiate(ConstructorResolver.java:653)
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiateUsingFactoryMethod(ConstructorResolver.java:638)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateUsingFactoryMethod(AbstractAutowireCapableBeanFactory.java:1352)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1195)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:582)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:542)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:335)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:333)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:213)
+	at org.springframework.context.support.PostProcessorRegistrationDelegate.registerBeanPostProcessors(PostProcessorRegistrationDelegate.java:258)
+	at org.springframework.context.support.AbstractApplicationContext.registerBeanPostProcessors(AbstractApplicationContext.java:762)
+	at org.springframework.context.support.AbstractApplicationContext.__refresh(AbstractApplicationContext.java:567)
+	at org.springframework.context.support.AbstractApplicationContext.jrLockAndRefresh(AbstractApplicationContext.java:40002)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:41008)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:145)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:740)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:415)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:303)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1312)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1301)
+	at xyz.xcye.message.AuroraMessageRun.main(AuroraMessageRun.java:23)
+2022-04-26 21:33:11:870 INFO  62297 -- main com.alibaba.nacos.common.remote.client--printIfInfoEnabled  -[835989b2-7ba5-4dd1-874c-265f78397a89_config-0] Try to connect to server on start up, server: {serverIp = '127.0.0.1', server main port = 8848}
+2022-04-26 21:33:14:900 INFO  62297 -- main com.alibaba.nacos.common.remote.client--printIfInfoEnabled  -[835989b2-7ba5-4dd1-874c-265f78397a89_config-0] Success to connect to server [127.0.0.1:8848] on start up, connectionId = 1650979994543_127.0.0.1_64321
+2022-04-26 21:33:14:902 INFO  62297 -- com.alibaba.nacos.client.remote.worker com.alibaba.nacos.common.remote.client--printIfInfoEnabled  -[835989b2-7ba5-4dd1-874c-265f78397a89_config-0] Notify connected event to listeners.
+2022-04-26 21:33:14:903 INFO  62297 -- main com.alibaba.nacos.common.remote.client--printIfInfoEnabled  -[835989b2-7ba5-4dd1-874c-265f78397a89_config-0] Register server push request handler:com.alibaba.nacos.common.remote.client.RpcClient$ConnectResetRequestHandler
+2022-04-26 21:33:14:904 INFO  62297 -- main com.alibaba.nacos.common.remote.client--printIfInfoEnabled  -[835989b2-7ba5-4dd1-874c-265f78397a89_config-0] Register server push request handler:com.alibaba.nacos.common.remote.client.RpcClient$$Lambda$652/0x00000007c0a06c40
+2022-04-26 21:33:15:303 INFO  62297 -- main i.seata.spring.annotation.GlobalTransactionScanner--initClient  -Initializing Global Transaction Clients ... 
+2022-04-26 21:33:15:726 INFO  62297 -- main io.seata.core.rpc.netty.NettyClientBootstrap--start  -NettyClientBootstrap has started
+2022-04-26 21:33:15:727 INFO  62297 -- main i.seata.spring.annotation.GlobalTransactionScanner--initClient  -Transaction Manager Client is initialized. applicationId[applicationName] txServiceGroup[aurora_blog_tx_group]
+2022-04-26 21:33:15:776 INFO  62297 -- main io.seata.rm.datasource.AsyncWorker--<init>  -Async Commit Buffer Limit: 10000
+2022-04-26 21:33:15:781 INFO  62297 -- main io.seata.rm.datasource.xa.ResourceManagerXA--init  -ResourceManagerXA init ...
+2022-04-26 21:33:15:815 INFO  62297 -- main io.seata.core.rpc.netty.NettyClientBootstrap--start  -NettyClientBootstrap has started
+2022-04-26 21:33:15:816 INFO  62297 -- main i.seata.spring.annotation.GlobalTransactionScanner--initClient  -Resource Manager is initialized. applicationId[applicationName] txServiceGroup[aurora_blog_tx_group]
+2022-04-26 21:33:15:817 INFO  62297 -- main i.seata.spring.annotation.GlobalTransactionScanner--initClient  -Global Transaction Clients are initialized. 
+2022-04-26 21:33:15:826 INFO  62297 -- main o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker--postProcessAfterInitialization  -Bean 'io.seata.spring.boot.autoconfigure.SeataDataSourceAutoConfiguration' of type [io.seata.spring.boot.autoconfigure.SeataDataSourceAutoConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-04-26 21:33:16:718 INFO  62297 -- main o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker--postProcessAfterInitialization  -Bean 'messageGlobalHandlerInterceptor' of type [xyz.xcye.message.interceptor.MessageGlobalHandlerInterceptor] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-04-26 21:33:16:726 INFO  62297 -- main o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker--postProcessAfterInitialization  -Bean 'messageWebConfig' of type [xyz.xcye.message.config.MessageWebConfig$$EnhancerBySpringCGLIB$$1] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-04-26 21:33:16:817 INFO  62297 -- main o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker--postProcessAfterInitialization  -Bean 'com.alibaba.cloud.seata.feign.SeataFeignClientAutoConfiguration$FeignBeanPostProcessorConfiguration' of type [com.alibaba.cloud.seata.feign.SeataFeignClientAutoConfiguration$FeignBeanPostProcessorConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-04-26 21:33:16:822 INFO  62297 -- main o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker--postProcessAfterInitialization  -Bean 'seataFeignObjectWrapper' of type [com.alibaba.cloud.seata.feign.SeataFeignObjectWrapper] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-04-26 21:33:18:171 INFO  62297 -- main o.s.boot.web.embedded.tomcat.TomcatWebServer--initialize  -Tomcat initialized with port(s): 7070 (http)
+2022-04-26 21:33:18:270 INFO  62297 -- main org.apache.coyote.http11.Http11NioProtocol--log  -Initializing ProtocolHandler ["http-nio-7070"]
+2022-04-26 21:33:18:271 INFO  62297 -- main org.apache.catalina.core.StandardService--log  -Starting service [Tomcat]
+2022-04-26 21:33:18:271 INFO  62297 -- main org.apache.catalina.core.StandardEngine--log  -Starting Servlet engine: [Apache Tomcat/9.0.58]
+2022-04-26 21:33:18:717 INFO  62297 -- main o.a.c.core.ContainerBase.[Tomcat].[localhost].[/]--log  -Initializing Spring embedded WebApplicationContext
+2022-04-26 21:33:18:718 INFO  62297 -- main o.s.b.w.s.c.ServletWebServerApplicationContext--prepareWebApplicationContext  -Root WebApplicationContext: initialization completed in 18811 ms
+2022-04-26 21:33:20:653 INFO  62297 -- main i.s.s.a.datasource.SeataAutoDataSourceProxyCreator--getAdvicesAndAdvisorsForBean  -Auto proxy of [messageDruidDataSource]
+2022-04-26 21:33:21:181 INFO  62297 -- main com.alibaba.druid.pool.DruidDataSource--init  -{dataSource-1} inited
+2022-04-26 21:33:22:239 INFO  62297 -- main com.alibaba.nacos.common.remote.client--lambda$createClient$0  -[RpcClientFactory] create a new rpc client of 09b6ff7a-766b-4afd-bb21-9615ece8bbf5
+2022-04-26 21:33:22:240 INFO  62297 -- main com.alibaba.nacos.common.remote.client--printIfInfoEnabled  -[09b6ff7a-766b-4afd-bb21-9615ece8bbf5] RpcClient init label, labels = {module=naming, source=sdk}
+2022-04-26 21:33:22:250 INFO  62297 -- main com.alibaba.nacos.common.remote.client--printIfInfoEnabled  -[09b6ff7a-766b-4afd-bb21-9615ece8bbf5] RpcClient init, ServerListFactory = com.alibaba.nacos.client.naming.core.ServerListManager
+2022-04-26 21:33:22:251 INFO  62297 -- main com.alibaba.nacos.common.remote.client--printIfInfoEnabled  -[09b6ff7a-766b-4afd-bb21-9615ece8bbf5] Registry connection listener to current client:com.alibaba.nacos.client.naming.remote.gprc.redo.NamingGrpcRedoService
+2022-04-26 21:33:22:253 INFO  62297 -- main com.alibaba.nacos.common.remote.client--printIfInfoEnabled  -[09b6ff7a-766b-4afd-bb21-9615ece8bbf5] Register server push request handler:com.alibaba.nacos.client.naming.remote.gprc.NamingPushRequestHandler
+2022-04-26 21:33:22:255 INFO  62297 -- main com.alibaba.nacos.common.remote.client--printIfInfoEnabled  -[09b6ff7a-766b-4afd-bb21-9615ece8bbf5] Try to connect to server on start up, server: {serverIp = '127.0.0.1', server main port = 8848}
+2022-04-26 21:33:22:474 INFO  62297 -- main com.alibaba.nacos.common.remote.client--printIfInfoEnabled  -[09b6ff7a-766b-4afd-bb21-9615ece8bbf5] Success to connect to server [127.0.0.1:8848] on start up, connectionId = 1650980002284_127.0.0.1_64327
+2022-04-26 21:33:22:476 INFO  62297 -- main com.alibaba.nacos.common.remote.client--printIfInfoEnabled  -[09b6ff7a-766b-4afd-bb21-9615ece8bbf5] Register server push request handler:com.alibaba.nacos.common.remote.client.RpcClient$ConnectResetRequestHandler
+2022-04-26 21:33:22:476 INFO  62297 -- com.alibaba.nacos.client.remote.worker com.alibaba.nacos.common.remote.client--printIfInfoEnabled  -[09b6ff7a-766b-4afd-bb21-9615ece8bbf5] Notify connected event to listeners.
+2022-04-26 21:33:22:477 INFO  62297 -- main com.alibaba.nacos.common.remote.client--printIfInfoEnabled  -[09b6ff7a-766b-4afd-bb21-9615ece8bbf5] Register server push request handler:com.alibaba.nacos.common.remote.client.RpcClient$$Lambda$652/0x00000007c0a06c40
+2022-04-26 21:33:22:584 INFO  62297 -- main io.seata.core.rpc.netty.NettyClientChannelManager--acquireChannel  -will connect to 100.64.83.44:8091
+2022-04-26 21:33:22:585 INFO  62297 -- main io.seata.core.rpc.netty.RmNettyRemotingClient--lambda$getPoolKeyFunction$0  -RM will register :jdbc:mysql://127.0.0.1:3306/aurora_email
+2022-04-26 21:33:22:597 INFO  62297 -- main io.seata.core.rpc.netty.NettyPoolableFactory--makeObject  -NettyPool create channel to transactionRole:RMROLE,address:100.64.83.44:8091,msg:< RegisterRMRequest{resourceIds='jdbc:mysql://127.0.0.1:3306/aurora_email', applicationId='applicationName', transactionServiceGroup='aurora_blog_tx_group'} >
+2022-04-26 21:33:23:151 INFO  62297 -- nacos-grpc-client-executor-7 com.alibaba.nacos.common.remote.client--printIfInfoEnabled  -[09b6ff7a-766b-4afd-bb21-9615ece8bbf5] Receive server push request, request = NotifySubscriberRequest, requestId = 1573
+2022-04-26 21:33:23:154 INFO  62297 -- nacos-grpc-client-executor-7 com.alibaba.nacos.common.remote.client--printIfInfoEnabled  -[09b6ff7a-766b-4afd-bb21-9615ece8bbf5] Ack server push request, request = NotifySubscriberRequest, requestId = 1573
+2022-04-26 21:33:27:928 INFO  62297 -- main io.seata.core.rpc.netty.RmNettyRemotingClient--onRegisterMsgSuccess  -register RM success. client version:1.4.2, server version:1.4.2,channel:[id: 0xa2800ed6, L:/100.64.83.44:64332 - R:/100.64.83.44:8091]
+2022-04-26 21:33:27:935 INFO  62297 -- main io.seata.core.rpc.netty.NettyPoolableFactory--makeObject  -register success, cost 142 ms, version:1.4.2,role:RMROLE,channel:[id: 0xa2800ed6, L:/100.64.83.44:64332 - R:/100.64.83.44:8091]
+2022-04-26 21:33:28:862 INFO  62297 -- main o.s.cloud.openfeign.FeignClientFactoryBean--getTarget  -For 'aurora-admin' URL not provided. Will try picking an instance via load-balancing.
+2022-04-26 21:33:29:106 INFO  62297 -- main i.seata.spring.annotation.GlobalTransactionScanner--wrapIfNecessary  -Bean[xyz.xcye.message.service.impl.EmailServiceImpl$$EnhancerBySpringCGLIB$$1] with name [emailServiceImpl] would use interceptor [io.seata.spring.annotation.GlobalTransactionalInterceptor]
+2022-04-26 21:33:30:233 INFO  62297 -- main com.alibaba.nacos.common.remote.client--lambda$createClient$0  -[RpcClientFactory] create a new rpc client of 4a7d6cc6-9dc8-49b7-b83f-794f56e3cb2a
+2022-04-26 21:33:30:234 INFO  62297 -- main com.alibaba.nacos.common.remote.client--printIfInfoEnabled  -[4a7d6cc6-9dc8-49b7-b83f-794f56e3cb2a] RpcClient init label, labels = {module=naming, source=sdk}
+2022-04-26 21:33:30:235 INFO  62297 -- main com.alibaba.nacos.common.remote.client--printIfInfoEnabled  -[4a7d6cc6-9dc8-49b7-b83f-794f56e3cb2a] RpcClient init, ServerListFactory = com.alibaba.nacos.client.naming.core.ServerListManager
+2022-04-26 21:33:30:235 INFO  62297 -- main com.alibaba.nacos.common.remote.client--printIfInfoEnabled  -[4a7d6cc6-9dc8-49b7-b83f-794f56e3cb2a] Registry connection listener to current client:com.alibaba.nacos.client.naming.remote.gprc.redo.NamingGrpcRedoService
+2022-04-26 21:33:30:236 INFO  62297 -- main com.alibaba.nacos.common.remote.client--printIfInfoEnabled  -[4a7d6cc6-9dc8-49b7-b83f-794f56e3cb2a] Register server push request handler:com.alibaba.nacos.client.naming.remote.gprc.NamingPushRequestHandler
+2022-04-26 21:33:30:236 INFO  62297 -- main com.alibaba.nacos.common.remote.client--printIfInfoEnabled  -[4a7d6cc6-9dc8-49b7-b83f-794f56e3cb2a] Try to connect to server on start up, server: {serverIp = '127.0.0.1', server main port = 8848}
+2022-04-26 21:33:30:380 INFO  62297 -- main com.alibaba.nacos.common.remote.client--printIfInfoEnabled  -[4a7d6cc6-9dc8-49b7-b83f-794f56e3cb2a] Success to connect to server [127.0.0.1:8848] on start up, connectionId = 1650980010256_127.0.0.1_64333
+2022-04-26 21:33:30:381 INFO  62297 -- com.alibaba.nacos.client.remote.worker com.alibaba.nacos.common.remote.client--printIfInfoEnabled  -[4a7d6cc6-9dc8-49b7-b83f-794f56e3cb2a] Notify connected event to listeners.
+2022-04-26 21:33:30:381 INFO  62297 -- main com.alibaba.nacos.common.remote.client--printIfInfoEnabled  -[4a7d6cc6-9dc8-49b7-b83f-794f56e3cb2a] Register server push request handler:com.alibaba.nacos.common.remote.client.RpcClient$ConnectResetRequestHandler
+2022-04-26 21:33:30:381 INFO  62297 -- main com.alibaba.nacos.common.remote.client--printIfInfoEnabled  -[4a7d6cc6-9dc8-49b7-b83f-794f56e3cb2a] Register server push request handler:com.alibaba.nacos.common.remote.client.RpcClient$$Lambda$652/0x00000007c0a06c40
+2022-04-26 21:33:30:827 INFO  62297 -- main o.s.b.actuate.endpoint.web.EndpointLinksResolver--<init>  -Exposing 18 endpoint(s) beneath base path '/actuator'
+2022-04-26 21:33:33:704 INFO  62297 -- main org.apache.coyote.http11.Http11NioProtocol--log  -Starting ProtocolHandler ["http-nio-7070"]
+2022-04-26 21:33:33:741 INFO  62297 -- main o.s.boot.web.embedded.tomcat.TomcatWebServer--start  -Tomcat started on port(s): 7070 (http) with context path ''
+2022-04-26 21:33:33:761 INFO  62297 -- main c.a.cloud.nacos.registry.NacosServiceRegistry--register  -nacos registry, DEFAULT_GROUP aurora-message 100.64.83.44:7070 register finished
+2022-04-26 21:33:34:200 INFO  62297 -- nacos-grpc-client-executor-9 com.alibaba.nacos.common.remote.client--printIfInfoEnabled  -[4a7d6cc6-9dc8-49b7-b83f-794f56e3cb2a] Receive server push request, request = NotifySubscriberRequest, requestId = 1574
+2022-04-26 21:33:34:202 INFO  62297 -- nacos-grpc-client-executor-9 com.alibaba.nacos.common.remote.client--printIfInfoEnabled  -[4a7d6cc6-9dc8-49b7-b83f-794f56e3cb2a] Ack server push request, request = NotifySubscriberRequest, requestId = 1574
+2022-04-26 21:33:34:558 INFO  62297 -- main o.s.a.rabbit.connection.CachingConnectionFactory--connectAddresses  -Attempting to connect to: [localhost:5672]
+2022-04-26 21:33:34:644 INFO  62297 -- main o.s.a.rabbit.connection.CachingConnectionFactory--createBareConnection  -Created new connection: rabbitConnectionFactory#65007753:0/SimpleConnection@37fbb046 [delegate=amqp://admin@127.0.0.1:5672/, localPort= 64335]
+2022-04-26 21:33:34:846 INFO  62297 -- main xyz.xcye.message.AuroraMessageRun--logStarted  -Started AuroraMessageRun in 44.671 seconds (JVM running for 56.963)
+2022-04-26 21:33:35:026 INFO  62297 -- RMI TCP Connection(2)-100.64.83.44 o.a.c.core.ContainerBase.[Tomcat].[localhost].[/]--log  -Initializing Spring DispatcherServlet 'dispatcherServlet'
+2022-04-26 21:33:35:027 INFO  62297 -- RMI TCP Connection(2)-100.64.83.44 org.springframework.web.servlet.DispatcherServlet--initServletBean  -Initializing Servlet 'dispatcherServlet'
+2022-04-26 21:33:35:034 INFO  62297 -- RMI TCP Connection(2)-100.64.83.44 org.springframework.web.servlet.DispatcherServlet--initServletBean  -Completed initialization in 7 ms
+2022-04-26 21:34:15:702 INFO  62297 -- timeoutChecker_1_1 io.seata.core.rpc.netty.NettyClientChannelManager--acquireChannel  -will connect to 100.64.83.44:8091
+2022-04-26 21:34:20:706 INFO  62297 -- timeoutChecker_1_1 io.seata.core.rpc.netty.NettyPoolableFactory--makeObject  -NettyPool create channel to transactionRole:TMROLE,address:100.64.83.44:8091,msg:< RegisterTMRequest{applicationId='applicationName', transactionServiceGroup='aurora_blog_tx_group'} >
+2022-04-26 21:34:20:724 INFO  62297 -- timeoutChecker_1_1 io.seata.core.rpc.netty.TmNettyRemotingClient--onRegisterMsgSuccess  -register TM success. client version:1.4.2, server version:1.4.2,channel:[id: 0x0b8513ee, L:/100.64.83.44:64346 - R:/100.64.83.44:8091]
+2022-04-26 21:34:20:724 INFO  62297 -- timeoutChecker_1_1 io.seata.core.rpc.netty.NettyPoolableFactory--makeObject  -register success, cost 16 ms, version:1.4.2,role:TMROLE,channel:[id: 0x0b8513ee, L:/100.64.83.44:64346 - R:/100.64.83.44:8091]

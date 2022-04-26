@@ -85,7 +85,7 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private VerifyAccountSendService verifyAccountSendService;
 
-    @GlobalTransactional
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public ModifyResult insertUser(UserDO userDO, UserAccountDO userAccountDO)
             throws UserException, ReflectiveOperationException {
@@ -115,6 +115,7 @@ public class UserServiceImpl implements UserService {
         if (!updateUser(userDO).isSuccess()) {
             throw new UserException(ResponseStatusCodeEnum.PERMISSION_USER_FAIL_ADD);
         }
+
         return ModifyResult.operateResult(insertUserNum,"插入用户" + usernameTemp,
                 ResponseStatusCodeEnum.SUCCESS.getCode(),userDO.getUid());
     }

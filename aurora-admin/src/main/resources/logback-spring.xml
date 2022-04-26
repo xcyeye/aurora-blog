@@ -11,7 +11,7 @@
     <!-- 文件中打印 -->
     <property name="log_note" value="%d{yyyy-MM-dd HH:mm:ss:SSS} %-5level ${PID:-} -- %t %logger{50}--%method  -%msg%n"/>
     <!-- 当前项目的日志存放在哪个文件夹中 -->
-    <property name="log_folder" value="aurora-file"/>
+    <property name="log_folder" value="aurora-admin"/>
     <!-- 控制台输出 -->
     <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>

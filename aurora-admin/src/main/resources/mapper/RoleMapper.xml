@@ -57,4 +57,12 @@
             </if>
         </where>
     </select>
+    <update id="updateRoleByUidFalseAndRoleAndRoleAndRoleAfter">
+        update role_dO
+        set role = #{role,jdbcType=VARCHAR}
+        where uid = false
+          AND role = #{oldRole,jdbcType=VARCHAR}
+          AND role = #{oldRole,jdbcType=VARCHAR}
+          AND role > #{oldRole,jdbcType=VARCHAR}
+    </update>
 </mapper>

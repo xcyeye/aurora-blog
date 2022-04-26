@@ -1,4 +1,4 @@
-package xyz.xcye.web.common.manager.advice;
+package xyz.xcye.web.common.manager.aop;
 
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -19,35 +19,6 @@ import java.lang.reflect.Method;
 @Aspect
 public class GlobalLogAop {
 
-    //private Logger logger = (Logger) LoggerFactory.getLogger("sdf");
-
-    /*@Around("execution(public * xyz.xcye.admin.controller.*.*(..))")
-    public Object noteLog(ProceedingJoinPoint point) throws Throwable {
-        //方法开始执行的时间戳
-        long startTimeMillis = System.currentTimeMillis();
-
-        //执行的目标controller类
-        Signature signature = point.getSignature();
-
-        //controller控制器类全限定名称
-        String declaringTypeName = signature.getDeclaringTypeName();
-        //所有参数
-        Object[] args = point.getArgs();
-        Object proceed = point.proceed();
-
-        List<Object> argList = new ArrayList<>();
-        for (Object arg : args) {
-            if (!(arg instanceof RequestFacade)) {
-                argList.add(arg);
-            }
-        }
-
-        String jsonToString = ObjectConvertJson.jsonToString(argList);
-
-        log.info("访问{}类中的{}方法，参数为{},总共花费{}ms",declaringTypeName,"",jsonToString,(System.currentTimeMillis() - startTimeMillis));
-        return proceed;
-    }*/
-
     /**
      * 记录所有插入数据的日志
      * @param proceedingJoinPoint
@@ -58,23 +29,25 @@ public class GlobalLogAop {
     public Object saveInsertLog(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
         MethodSignature signature = (MethodSignature) proceedingJoinPoint.getSignature();
         Method method = signature.getMethod();
-        String className = proceedingJoinPoint.getTarget().getClass().getName();
-        String methodName = method.getName();
 
         // 方法的参数
         Object[] args = proceedingJoinPoint.getArgs();
         // 打印插入日志
-        log.info(LogUtils.insert(0,0,false,args));
+        log.info(LogUtils.insert(0,0,false, false,args));
 
         //记录时间
         Object result = proceedingJoinPoint.proceed();
 
         if (result instanceof ModifyResult) {
             ModifyResult modifyResult = (ModifyResult) result;
-            log.info(LogUtils.insert(modifyResult.getUid(),modifyResult.getAffectedRows(),true,args));
+            if (modifyResult.isSuccess()) {
+                log.info(LogUtils.insert(modifyResult.getUid(),modifyResult.getAffectedRows(),true, true, args));
+            }else {
+                log.info(LogUtils.insert(modifyResult.getUid(),modifyResult.getAffectedRows(),true, false, modifyResult.getMessage()));
+            }
         }else {
             // 返回值不是ModifyResult类型
-            log.info(LogUtils.insert(0,0,true,result));
+            log.info(LogUtils.insert(0,0,true, true,result));
         }
         return result;
     }
@@ -85,21 +58,25 @@ public class GlobalLogAop {
      * @return
      * @throws Throwable
      */
-    @Around("execution(public * *..service..update*(..))")
+    @Around("execution(public * xyz.xcye.*.service..*.update*(..))")
     public Object saveUpdateLog(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
         // 方法的参数
         Object[] args = proceedingJoinPoint.getArgs();
         // 打印插入日志
-        log.info(LogUtils.update(0,0,false,args));
+        log.info(LogUtils.update(0,0,false, true, args));
 
         Object result = proceedingJoinPoint.proceed();
 
         if (result instanceof ModifyResult) {
             ModifyResult modifyResult = (ModifyResult) result;
-            log.info(LogUtils.update(modifyResult.getUid(),modifyResult.getAffectedRows(),true,args));
+            if (modifyResult.isSuccess()) {
+                log.info(LogUtils.update(modifyResult.getUid(),modifyResult.getAffectedRows(),true, true,args));
+            }else {
+                log.info(LogUtils.update(modifyResult.getUid(),modifyResult.getAffectedRows(),true, false,modifyResult.getMessage()));
+            }
         }else {
             // 返回值不是ModifyResult类型
-            log.info(LogUtils.update(0,0,true,result));
+            log.info(LogUtils.update(0,0,true, true, result));
         }
         return result;
     }
@@ -110,7 +87,7 @@ public class GlobalLogAop {
      * @return
      * @throws Throwable
      */
-    @Around("execution(public * *..service..delete*(..))")
+    @Around("execution(public * xyz.xcye.*.service..*.delete*(..))")
     public Object saveDeleteLog(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
         // 方法的参数
         Object[] args = proceedingJoinPoint.getArgs();
@@ -119,10 +96,14 @@ public class GlobalLogAop {
 
         if (result instanceof ModifyResult) {
             ModifyResult modifyResult = (ModifyResult) result;
-            log.info(LogUtils.delete(0,true,modifyResult.getAffectedRows()));
+            if (modifyResult.isSuccess()) {
+                log.info(LogUtils.delete(0,true, true,modifyResult.getAffectedRows()));
+            }else {
+                log.info(LogUtils.delete(0,true, false, 0,modifyResult.getMessage()));
+            }
         }else {
             // 返回值不是ModifyResult类型
-            log.info(LogUtils.delete(0,true,1));
+            log.info(LogUtils.delete(0,true, true,1));
         }
         return result;
     }
@@ -133,7 +114,8 @@ public class GlobalLogAop {
      * @return
      * @throws Throwable
      */
-    @Around("execution(public * *..service..query*(..))")
+    //@Around("execution(public * *..service..query*(..))")
+    @Around("execution(public * xyz.xcye.*.service..*.query*(..))")
     public Object saveQueryLog(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
         // 方法的参数
         Object[] args = proceedingJoinPoint.getArgs();

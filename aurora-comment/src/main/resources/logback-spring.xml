@@ -3,11 +3,15 @@
     <!-- 日志存放路径 -->
     <property name="log_path" value="/Volumes/Code/Java-code/aurora-theme/log" />
     <!-- 控制台打印 -->
-    <property name="log_pattern" value="%d{yyyy-MM-dd HH:mm:ss:SSS}  %highlight(%-5level) ${PID:-} --- [%t] %logger{40} - %blue(%method)  : %msg%n" />
+    <property name="log_pattern" value="%d{yyyy-MM-dd HH:mm:ss:SSS}  %green(%-5level) %magenta(${PID:-}) --- [%t] %cyan(%logger{10}) : %msg%n" />
+    <!-- 打印请求处理时间 -->
+    <property name="log_logRequestTime" value="%d{yyyy-MM-dd HH:mm:ss:SSS} ${PID:-} --- [%t] : %msg%n" />
+    <!--记录service层处理数据的操作-->
+    <property name="service-process-data-pattern" value="%d{yyyy-MM-dd HH:mm:ss:SSS} ${PID:-} --- [%t] : %msg%n" />
     <!-- 文件中打印 -->
     <property name="log_note" value="%d{yyyy-MM-dd HH:mm:ss:SSS} %-5level ${PID:-} -- %t %logger{50}--%method  -%msg%n"/>
     <!-- 当前项目的日志存放在哪个文件夹中 -->
-    <property name="log_folder" value="aurora-message"/>
+    <property name="log_folder" value="aurora-comment"/>
     <!-- 控制台输出 -->
     <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
@@ -44,20 +48,33 @@
         </filter>
     </appender>
 
-    <!-- 用户访问日志输出  -->
-    <appender name="sys-user" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>${log_path}/${log_folder}/sys-user.log</file>
+    <!-- 操作service层的数据  -->
+    <appender name="service-process-data" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${log_path}/${log_folder}/service-process-data.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <!-- 按天回滚 daily -->
-            <fileNamePattern>${log_path}/${log_folder}/sys-user-rolling/sys-user-%d{yyyy-MM-dd}.log</fileNamePattern>
+            <fileNamePattern>${log_path}/${log_folder}/service-process-data-rolling/service-process-data-%d{yyyy-MM-dd}.log</fileNamePattern>
             <!-- 日志最大的历史 60天 -->
             <maxHistory>0.01</maxHistory>
         </rollingPolicy>
         <encoder>
-            <pattern>${log_note}</pattern>
+            <pattern>${service-process-data-pattern}</pattern>
         </encoder>
     </appender>
 
+    <!-- 处理请求时间  -->
+    <appender name="user-processRequestTime" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${log_path}/${log_folder}/process-request-time.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- 按天回滚 daily -->
+            <fileNamePattern>${log_path}/${log_folder}/process-request-time-rolling/process-request-time-%d{yyyy-MM-dd}.log</fileNamePattern>
+            <!-- 日志最大的历史 60天 -->
+            <maxHistory>0.01</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>${log_logRequestTime}</pattern>
+        </encoder>
+    </appender>
 
     <!-- 发生异常日志输出  -->
     <appender name="sys-exception" class="ch.qos.logback.core.rolling.RollingFileAppender">
@@ -73,14 +90,19 @@
         </encoder>
     </appender>
 
-    <!-- 用户访问controller时打印的日志xyz.xcye.aop.LogAop  -->
-    <logger name="xyz.xcye.file.aop.LogAop" level="INFO" additivity="false">
-        <appender-ref ref="sys-user"/>
+    <!-- 记录处理service的结果，增删改查操作  -->
+    <logger name="xyz.xcye.web.common.manager.aop.GlobalLogAop" level="INFO" additivity="true">
+        <appender-ref ref="service-process-data"/>
+    </logger>
+
+    <!-- 打印处理请求花费的时间  -->
+    <logger name="xyz.xcye.web.common.manager.aop.GlobalLogRequestAop" level="INFO" additivity="false">
+        <appender-ref ref="user-processRequestTime"/>
     </logger>
 
     <!--sys-exception-->
     <!-- 全局异常处理里面的异常信息  -->
-    <logger name="xyz.xcye.file.exception.GlobalExceptionHandler" level="WARN" additivity="false">
+    <logger name="xyz.xcye.web.common.exception.CustomGlobalExceptionHandler" level="WARN" additivity="true">
         <appender-ref ref="sys-exception"/>
     </logger>
 

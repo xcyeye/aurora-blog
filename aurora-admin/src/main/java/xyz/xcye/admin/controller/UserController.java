@@ -2,6 +2,7 @@ package xyz.xcye.admin.controller;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindException;
 import org.springframework.validation.annotation.Validated;
@@ -25,7 +26,7 @@ import java.util.List;
  * @author qsyyke
  */
 
-
+@Slf4j
 @RequestMapping("/admin/user")
 @RestController
 @Api(tags = "用户相关写操作")
@@ -40,7 +41,6 @@ public class UserController {
     public ModifyResult insertUser(@Validated({Insert.class, Default.class})UserDO userDO,
                                    @Validated({Insert.class, Default.class}) UserAccountDO userAccountDO)
             throws ReflectiveOperationException, UserException {
-
         return userService.insertUser(userDO,userAccountDO);
     }
 

@@ -31,9 +31,10 @@ public class CustomGlobalExceptionHandler {
      * @return
      */
     @ExceptionHandler(BindException.class)
-    public ExceptionResultEntity bing(BindException e,HttpServletRequest request, HttpServletResponse response) {
-        //log.error("发生异常：message:{},uri:{},消息信息:{}",e.getMessage(),request.getRequestURI(),e.getStackTrace());
-        e.printStackTrace();
+    public ExceptionResultEntity bing(BindException e,
+                                      HttpServletRequest request,
+                                      HttpServletResponse response) {
+        logExceptionInfo(e);
         String requestURI = request.getRequestURI();
         //所有的字段验证错误信息
         List<Map<String,Object>> errorsList = new ArrayList<>();
@@ -58,6 +59,7 @@ public class CustomGlobalExceptionHandler {
         });
 
         response.setStatus(500);
+
         return new ExceptionResultEntity(
                 ResponseStatusCodeEnum.PARAM_IS_INVALID.getMessage(),
                 ResponseStatusCodeEnum.PARAM_IS_INVALID.getCode(),
@@ -76,10 +78,9 @@ public class CustomGlobalExceptionHandler {
             HttpServletResponse response) {
 
         String requestURI = request.getRequestURI();
-
         // 设置响应码，否则出现异常，seata不会回滚
         response.setStatus(500);
-
+        logExceptionInfo(exception);
         String parameterName = exception.getParameterName();
         String parameterType = exception.getParameterType();
         String message = ResponseStatusCodeEnum.PARAM_NOT_COMPLETE.getMessage() +
@@ -89,22 +90,25 @@ public class CustomGlobalExceptionHandler {
     }
 
     @ExceptionHandler(NullPointerException.class)
-    public ExceptionResultEntity nullPointerExceptionHandler(NullPointerException exception, HttpServletRequest request, HttpServletResponse response) {
-        exception.printStackTrace();
+    public ExceptionResultEntity nullPointerExceptionHandler(NullPointerException exception,
+                                                             HttpServletRequest request,
+                                                             HttpServletResponse response) {
         String requestURI = request.getRequestURI();
 
         // 设置响应码，否则出现异常，seata不会回滚
         response.setStatus(500);
+        logExceptionInfo(exception);
         return new ExceptionResultEntity(ResponseStatusCodeEnum.EXCEPTION_NULL_POINTER.getMessage(),
                 requestURI, ResponseStatusCodeEnum.EXCEPTION_NULL_POINTER.getCode());
     }
 
     @ExceptionHandler(MaxUploadSizeExceededException.class)
-    public ExceptionResultEntity maxUploadSizeExceededExceptionHandler(MaxUploadSizeExceededException exception, HttpServletRequest request, HttpServletResponse response) {
-        exception.printStackTrace();
+    public ExceptionResultEntity maxUploadSizeExceededExceptionHandler(MaxUploadSizeExceededException exception,
+                                                                       HttpServletRequest request,
+                                                                       HttpServletResponse response) {
         String requestURI = request.getRequestURI();
-
         // 设置响应码，否则出现异常，seata不会回滚
+        logExceptionInfo(exception);
         response.setStatus(500);
         return new ExceptionResultEntity(ResponseStatusCodeEnum.EXCEPTION_FILE_EXCEED_MAX_SIZE.getMessage(),
                 requestURI, ResponseStatusCodeEnum.EXCEPTION_FILE_EXCEED_MAX_SIZE.getCode());
@@ -117,13 +121,17 @@ public class CustomGlobalExceptionHandler {
      * @return
      */
     @ExceptionHandler
-    public ExceptionResultEntity result(Exception e, HttpServletRequest request, HttpServletResponse response) {
-        //log.error("发生异常：message:{},uri:{},消息信息:{}",e.getMessage(),request.getRequestURI(),e.getStackTrace());
-        e.printStackTrace();
+    public ExceptionResultEntity result(Exception e,
+                                        HttpServletRequest request,
+                                        HttpServletResponse response) {
         String requestURI = request.getRequestURI();
-
         // 设置响应码，否则出现异常，seata不会回滚
         response.setStatus(500);
+        logExceptionInfo(e);
         return new ExceptionResultEntity(e.getMessage(),requestURI, ResponseStatusCodeEnum.UNKNOWN.getCode());
+    }
+
+    private void logExceptionInfo(Exception e) {
+        log.error("错误消息: {}",e.getMessage(),e);
     }
 }
