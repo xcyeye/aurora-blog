@@ -33,7 +33,7 @@ public class ConditionDTO<T> {
      */
     @Setter
     @Accessors(chain = true)
-    private Long uid;
+    private T uid;
 
     /**
      * 其他的uid
@@ -142,6 +142,39 @@ public class ConditionDTO<T> {
         if (condition.pageSize == null) {
             condition.setPageSize(10);
         }
+        return condition;
+    }
+
+    /**
+     * 根据uid，创建一个条件实例
+     * @param uid
+     * @param uidType
+     * @param <T>
+     * @param isUid true表示是uid字段，false表示是otherUid字段
+     * @return
+     */
+    public static <T> ConditionDTO<T> instant(T uid, Class<T> uidType, boolean isUid) {
+        ConditionDTO<T> condition = new ConditionDTO<>();
+        condition.init(condition);
+        if (isUid) {
+            condition.setUid(uid);
+        }else {
+            condition.setOtherUid(uid);
+        }
+        return condition;
+    }
+
+    /**
+     * 根据keyword，创建一个条件实例
+     * @param keyword
+     * @param uidType
+     * @param <T>
+     * @return
+     */
+    public static <T> ConditionDTO<T> instant(String keyword, Class<T> uidType) {
+        ConditionDTO<T> condition = new ConditionDTO<>();
+        condition.init(condition);
+        condition.setKeyword(keyword);
         return condition;
     }
 }

@@ -54,24 +54,21 @@ public class MailTemplateController {
     @ResponseResult
     @GetMapping
     @ApiOperation("查询所有邮件模板")
-    public List<EmailTemplateVO> queryAllMailTemplate(ConditionDTO<Long> condition)
-            throws InstantiationException, IllegalAccessException {
+    public List<EmailTemplateVO> queryAllMailTemplate(ConditionDTO<Long> condition) throws ReflectiveOperationException {
         return emailTemplateService.queryAllEmailTemplate(condition);
     }
 
     @ResponseResult
     @GetMapping("/{uid}")
     @ApiOperation("根据uid查询邮件模板")
-    public EmailTemplateVO queryMailTemplateByUid(@PathVariable("uid") long uid)
-            throws InstantiationException, IllegalAccessException {
+    public EmailTemplateVO queryMailTemplateByUid(@PathVariable("uid") long uid) throws ReflectiveOperationException {
         return emailTemplateService.queryEmailTemplateByUid(uid);
     }
 
     @ResponseResult
     @GetMapping("/userUid/{userUid}")
     @ApiOperation("根据userUid查询邮件模板")
-    public EmailTemplateVO queryMailTemplateByUserUid(@PathVariable("userUid") long userUid)
-            throws InstantiationException, IllegalAccessException {
+    public EmailTemplateVO queryMailTemplateByUserUid(@PathVariable("userUid") long userUid) throws ReflectiveOperationException {
         return emailTemplateService.queryEmailTemplateByUserUid(userUid);
     }
 }

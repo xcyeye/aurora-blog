@@ -55,8 +55,7 @@ public class EmailLogController {
     @ApiOperation(value = "查询所有邮件发送日志")
     @ResponseResult
     @GetMapping("")
-    public List<EmailLogVO> queryAllEmailLog(ConditionDTO<Long> condition)
-            throws InstantiationException, IllegalAccessException {
+    public List<EmailLogVO> queryAllEmailLog(ConditionDTO<Long> condition) throws ReflectiveOperationException {
         return emailLogService.queryAll(condition);
     }
 }

@@ -18,7 +18,7 @@ import xyz.xcye.common.exception.user.UserException;
 public interface UserFeignService {
 
     @GetMapping("/admin/user/{uid}")
-    R queryUserByUid(@PathVariable("uid") long uid) throws InstantiationException, IllegalAccessException;
+    R queryUserByUid(@PathVariable("uid") long uid) throws ReflectiveOperationException;
 
     @PutMapping("/admin/user")
     ModifyResult updateUser(@SpringQueryMap UserDO userDO) throws UserException;

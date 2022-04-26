@@ -43,7 +43,7 @@ public class MessageRabbitMQConfig implements RabbitTemplate.ConfirmCallback,Rab
             MessageLogDO messageLogDO = null;
             try {
                 messageLogDO = getMessageLogDO(correlationData);
-            } catch (InstantiationException | IllegalAccessException e) {
+            } catch (ReflectiveOperationException e) {
                 e.printStackTrace();
             }
             if (messageLogDO == null) {
@@ -67,7 +67,7 @@ public class MessageRabbitMQConfig implements RabbitTemplate.ConfirmCallback,Rab
             MessageLogDO messageLogDO = null;
             try {
                 messageLogDO = getMessageLogDO(correlationData);
-            } catch (InstantiationException | IllegalAccessException e) {
+            } catch (ReflectiveOperationException e) {
                 e.printStackTrace();
             }
             if (messageLogDO == null) {
@@ -112,7 +112,7 @@ public class MessageRabbitMQConfig implements RabbitTemplate.ConfirmCallback,Rab
      * @throws IllegalAccessException
      */
     private MessageLogDO getMessageLogFromDb(String correlationDataId)
-            throws InstantiationException, IllegalAccessException {
+            throws ReflectiveOperationException {
         if (correlationDataId == null) {
             return null;
         }
@@ -128,7 +128,7 @@ public class MessageRabbitMQConfig implements RabbitTemplate.ConfirmCallback,Rab
         return BeanUtils.copyProperties(messageLogService.queryByUid(uid),MessageLogDO.class);
     }
 
-    private MessageLogDO getMessageLogDO(CorrelationData correlationData) throws InstantiationException, IllegalAccessException {
+    private MessageLogDO getMessageLogDO(CorrelationData correlationData) throws ReflectiveOperationException {
         if (correlationData == null) {
             //生产者发送的消息不规范，不做任何处理
             return null;

@@ -7,9 +7,9 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import xyz.xcye.admin.service.RoleService;
 import xyz.xcye.common.annotaion.ResponseResult;
-import xyz.xcye.common.entity.table.RoleDO;
-import xyz.xcye.common.dto.PaginationDTO;
+import xyz.xcye.common.dto.ConditionDTO;
 import xyz.xcye.common.entity.result.ModifyResult;
+import xyz.xcye.common.entity.table.RoleDO;
 import xyz.xcye.common.valid.Insert;
 import xyz.xcye.common.valid.Update;
 import xyz.xcye.common.vo.RoleVO;
@@ -32,14 +32,14 @@ public class RoleController {
     @ResponseResult
     @ApiOperation(value = "插入角色")
     @PostMapping("")
-    public ModifyResult insertRole(@Validated({Insert.class, Default.class}) RoleDO roleDO) throws InstantiationException, IllegalAccessException {
+    public ModifyResult insertRole(@Validated({Insert.class, Default.class}) RoleDO roleDO) {
         return roleService.insert(roleDO);
     }
 
     @ResponseResult
     @ApiOperation(value = "修改角色信息")
     @PutMapping("")
-    public ModifyResult updateRole(@Validated({Update.class, Default.class}) RoleDO roleDO) throws InstantiationException, IllegalAccessException {
+    public ModifyResult updateRole(@Validated({Update.class, Default.class}) RoleDO roleDO) {
         return roleService.update(roleDO);
     }
 
@@ -53,14 +53,14 @@ public class RoleController {
     @ResponseResult
     @ApiOperation(value = "根据uid查询角色")
     @GetMapping("/{uid}")
-    public RoleVO queryRoleByUid(@PathVariable("uid") int uid) throws InstantiationException, IllegalAccessException {
+    public RoleVO queryRoleByUid(@PathVariable("uid") int uid) throws ReflectiveOperationException {
         return roleService.queryByUid(uid);
     }
 
     @ResponseResult
     @ApiOperation(value = "查询满足要求的所有角色信息")
     @GetMapping("")
-    public List<RoleVO> queryRoleByUid(RoleDO roleDO, PaginationDTO pagination) throws InstantiationException, IllegalAccessException {
-        return roleService.queryAll(roleDO,pagination);
+    public List<RoleVO> queryRoleByUid(ConditionDTO<Long> condition) throws ReflectiveOperationException {
+        return roleService.queryAllByCondition(condition);
     }
 }

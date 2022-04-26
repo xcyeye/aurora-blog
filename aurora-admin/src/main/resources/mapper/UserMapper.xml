@@ -5,7 +5,6 @@
 <mapper namespace="xyz.xcye.admin.dao.UserDao">
 
     <resultMap id="userResultMap" type="xyz.xcye.common.entity.table.UserDO">
-        <result column="is_delete" property="delete"/>
         <result column="is_verify_email" property="verifyEmail"/>
         <result column="update_time" property="updateTime"/>
         <result column="create_time" property="createTime"/>
@@ -13,14 +12,14 @@
 
     <insert id="insertUser">
         insert into au_user (
-         uid,user_summary,nickname,gender,login_uid,is_delete,
+         uid,user_summary,nickname,gender,login_uid,
          site_uid,avatar,password,username,profession,is_verify_email,
          email_uid,user_account_uid,create_time,update_time
          )
 
          values (
                  #{userDO.uid},#{userDO.userSummary},#{userDO.nickname},#{userDO.gender},#{userDO.loginUid},
-                 #{userDO.delete},#{userDO.siteUid},#{userDO.avatar},#{userDO.password},#{userDO.username},
+                 #{userDO.siteUid},#{userDO.avatar},#{userDO.password},#{userDO.username},
                  #{userDO.profession},#{userDO.verifyEmail},#{userDO.emailUid},#{userDO.userAccountUid},
                  #{userDO.createTime},#{userDO.updateTime}
                 )
@@ -55,20 +54,12 @@
                 is_verify_email=#{userDO.verifyEmail},
             </if>
             <if test="userDO.updateTime != null">
-                update_time=#{userDO.updateTime}
+                update_time=#{userDO.updateTime},
             </if>
             <if test="userDO.userAccountUid != null">
                 user_account_uid=#{userDO.userAccountUid}
             </if>
         </set>
-        where uid=#{userDO.uid}
-    </update>
-
-    <update id="updateDeleteStatus">
-        update
-            au_user
-        set
-            is_delete=#{userDO.delete},update_time=#{userDO.updateTime}
         where
             uid=#{userDO.uid}
     </update>
@@ -80,72 +71,29 @@
             uid=#{uid}
     </delete>
 
-    <select id="queryAll" resultMap="userResultMap">
+    <select id="queryAllByCondition" resultMap="userResultMap">
         select
-            uid,user_summary,nickname,gender,login_uid,is_delete,
+            uid,user_summary,nickname,gender,login_uid,
             site_uid,avatar,password,username,profession,is_verify_email,
             email_uid,user_account_uid,create_time,update_time
         from
             au_user
         <where>
-            <if test="userDO.uid != null">
-                uid=#{userDO.uid}
+            <if test="condition.startTime != null and condition.endTime != null">
+                and create_time between #{condition.startTime} and #{condition.endTime}
             </if>
-            <if test="userDO.nickname != null">
-                and nickname=#{userDO.nickname}
+            <if test="condition.uid != null">
+                and uid=#{condition.uid}
             </if>
-            <if test="userDO.gender != null">
-                and gender=#{userDO.gender}
+            <if test="condition.keyword != null">
+                and username like concat('%', #{condition.keyword}, '%')
             </if>
-            <if test="userDO.loginUid != null">
-                and login_uid=#{userDO.loginUid}
+            <if test="condition.otherUid != null">
+                and user_account_uid=#{condition.otherUid}
             </if>
-            <if test="userDO.delete != null">
-                and is_delete=#{userDO.delete}
-            </if>
-            <if test="userDO.siteUid != null">
-                and site_uid=#{userDO.siteUid}
-            </if>
-            <if test="userDO.username != null">
-                and username=#{userDO.username}
-            </if>
-            <if test="userDO.verifyEmail != null">
-                and is_verify_email=#{userDO.verifyEmail}
-            </if>
-            <if test="userDO.emailUid != null">
-                and email_uid=#{userDO.emailUid}
-            </if>
-            <if test="userDO.userAccountUid != null">
-                and user_account_uid=#{userDO.userAccountUid}
-            </if>
-            <if test="userDO.createTime != null">
-                and create_time=#{userDO.createTime}
-            </if>
-            <if test="userDO.updateTime != null">
-                and update_time=#{userDO.updateTime}
+            <if test="condition.otherUid != null">
+                and is_verify_email=#{condition.status}
             </if>
         </where>
-    </select>
-
-    <select id="queryByUid" resultMap="userResultMap">
-        select
-            uid,user_summary,nickname,gender,login_uid,is_delete,
-            site_uid,avatar,password,username,profession,is_verify_email,
-            email_uid,user_account_uid,create_time,update_time
-        from
-            au_user
-        where
-            uid=#{uid}
-    </select>
-
-    <select id="queryByUsername" resultMap="userResultMap">
-        select
-            uid,user_summary,nickname,gender,login_uid,is_delete,
-            site_uid,avatar,password,username,profession,is_verify_email,
-            email_uid,user_account_uid,create_time,update_time
-        from
-            au_user
-        where
-            username=#{username}
     </select>
 </mapper>

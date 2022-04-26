@@ -7,11 +7,10 @@ import org.springframework.validation.BindException;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import xyz.xcye.common.annotaion.ResponseResult;
-import xyz.xcye.common.entity.table.EmailDO;
 import xyz.xcye.common.dto.ConditionDTO;
 import xyz.xcye.common.entity.result.ModifyResult;
-import xyz.xcye.common.exception.email.EmailException;
-import xyz.xcye.common.exception.user.UserException;
+import xyz.xcye.common.entity.table.EmailDO;
+import xyz.xcye.common.exception.AuroraGlobalException;
 import xyz.xcye.common.valid.Insert;
 import xyz.xcye.common.valid.Update;
 import xyz.xcye.common.vo.EmailVO;
@@ -37,7 +36,7 @@ public class EmailController {
     @ResponseResult
     @PostMapping("")
     public ModifyResult insertEmail(@Validated({Insert.class,Default.class}) EmailDO email)
-            throws EmailException, BindException, UserException, InstantiationException, IllegalAccessException {
+            throws BindException, ReflectiveOperationException, AuroraGlobalException {
         return emailService.insertEmail(email);
     }
 
@@ -58,32 +57,28 @@ public class EmailController {
     @ApiOperation(value = "根据EmailDO实体中的字段以及分页参数查询所有数据，返回一个集合",notes = "部分字段使用了模糊查询")
     @ResponseResult
     @GetMapping("")
-    public List<EmailVO> queryAll(ConditionDTO<Long> condition)
-            throws InstantiationException, IllegalAccessException {
+    public List<EmailVO> queryAll(ConditionDTO<Long> condition) throws ReflectiveOperationException {
         return emailService.queryAllEmail(condition);
     }
 
     @ApiOperation(value = "根据uid查询")
     @ResponseResult
     @GetMapping("/{uid}")
-    public EmailVO queryByUid(@PathVariable("uid") long uid)
-            throws InstantiationException, IllegalAccessException {
+    public EmailVO queryByUid(@PathVariable("uid") long uid) throws ReflectiveOperationException {
         return emailService.queryByUid(uid);
     }
 
     @ApiOperation(value = "根据userUid进行查询")
     @ResponseResult
     @GetMapping("/userUid/{userUid}")
-    public EmailVO queryByUserUid(@PathVariable("userUid") long userUid)
-            throws InstantiationException, IllegalAccessException {
+    public EmailVO queryByUserUid(@PathVariable("userUid") long userUid) throws ReflectiveOperationException {
         return emailService.queryByUserUid(userUid);
     }
 
     @ApiOperation(value = "根据邮箱号进行查询")
     @ResponseResult
     @GetMapping("/email/{email}")
-    public EmailVO queryByEmail(@PathVariable("email") String email)
-            throws InstantiationException, IllegalAccessException {
+    public EmailVO queryByEmail(@PathVariable("email") String email) throws ReflectiveOperationException {
         return emailService.queryByEmail(email);
     }
 }

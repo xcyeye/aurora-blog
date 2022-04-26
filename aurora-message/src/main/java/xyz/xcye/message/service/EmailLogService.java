@@ -38,10 +38,10 @@ public interface EmailLogService {
      * @throws InstantiationException
      * @throws IllegalAccessException
      */
-    List<EmailLogVO> queryAll(ConditionDTO<Long> condition) throws InstantiationException, IllegalAccessException;
+    List<EmailLogVO> queryAll(ConditionDTO<Long> condition) throws ReflectiveOperationException;
 
     /**
      * 查询uid所对应的邮件发送日志
      */
-    EmailLogVO queryByUid(long uid) throws InstantiationException, IllegalAccessException;
+    EmailLogVO queryByUid(long uid) throws ReflectiveOperationException;
 }

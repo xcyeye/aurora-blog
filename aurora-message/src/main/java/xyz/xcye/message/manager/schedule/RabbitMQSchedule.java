@@ -49,6 +49,8 @@ public class RabbitMQSchedule {
             e.printStackTrace();
             log.error("定时器获取rabbitmq消费日志失败: {}",e.getMessage());
             return;
+        } catch (ReflectiveOperationException e) {
+            e.printStackTrace();
         }
 
         for (MessageLogVO messageLogVO : messageLogVOList) {

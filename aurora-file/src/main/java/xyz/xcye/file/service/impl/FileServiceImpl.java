@@ -54,7 +54,7 @@ public class FileServiceImpl implements FileService {
 
     @Override
     public FileVO insertFile(FileEntityDTO fileEntity, FileDO file, int storageMode)
-            throws FileException, InstantiationException, IllegalAccessException {
+            throws FileException, ReflectiveOperationException {
 
         if (fileEntity.getName() == null || fileEntity.getInputStream() == null) {
             throw new FileException(ResponseStatusCodeEnum.EXCEPTION_FILE_FAIL_UPLOAD.getMessage() + "原因: 文件名为null或者获取文件流失败",
@@ -73,7 +73,7 @@ public class FileServiceImpl implements FileService {
                 null,file.getSummary(),
                 uploadFileEntity.getRemoteUrl(),storageMode,uploadFileEntity.getStoragePath());
 
-        int insertFileNum = fileDao.insertFile(file);
+        fileDao.insertFile(file);
         return queryByUid(file.getUid());
     }
 
@@ -86,7 +86,7 @@ public class FileServiceImpl implements FileService {
 
     @Override
     public ModifyResult deleteFile(long uid)
-            throws InstantiationException, IllegalAccessException, IOException, FileException {
+            throws IOException, FileException, ReflectiveOperationException {
         // 查询出此uid对应的文件的存储位置
         FileDO deleteFileInfo = getFileDOByUid(uid);
 
@@ -119,16 +119,14 @@ public class FileServiceImpl implements FileService {
 
 
     @Override
-    public List<FileVO> queryAllFile(ConditionDTO<Long> condition)
-            throws InstantiationException, IllegalAccessException {
+    public List<FileVO> queryAllFile(ConditionDTO<Long> condition) throws ReflectiveOperationException {
         condition.init(condition);
         PageHelper.startPage(condition.getPageNum(), condition.getPageSize(), condition.getOrderBy());
         return BeanUtils.copyList(fileDao.queryAll(condition), FileVO.class);
     }
 
     @Override
-    public FileVO queryByUid(long uid)
-            throws InstantiationException, IllegalAccessException {
+    public FileVO queryByUid(long uid) throws ReflectiveOperationException {
         ConditionDTO<Long> conditionDTO = new ConditionDTO<>();
         conditionDTO.setUid(uid);
         return BeanUtils.getSingleObjFromList(fileDao.queryAll(conditionDTO), FileVO.class);
@@ -148,7 +146,7 @@ public class FileServiceImpl implements FileService {
 
     @Override
     public FileEntityDTO downloadFile(long uid)
-            throws InstantiationException, IllegalAccessException, FileException, IOException {
+            throws FileException, IOException, ReflectiveOperationException {
         FileDO deleteFileInfo = getFileDOByUid(uid);
         //获取此文件的存储模式，然后删除文件
         FileStorageService fileStorageService = getNeedFileStorageService(deleteFileInfo.getStorageMode());
@@ -158,7 +156,7 @@ public class FileServiceImpl implements FileService {
     }
 
     private FileDO getFileDOByUid(long uid)
-            throws FileException, InstantiationException, IllegalAccessException {
+            throws FileException, ReflectiveOperationException {
         // 查询出此uid对应的文件的存储位置
         FileDO deleteFileInfo = BeanUtils.copyProperties(queryByUid(uid), FileDO.class);
         if (deleteFileInfo == null) {

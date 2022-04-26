@@ -55,7 +55,7 @@ public class CommentServiceImpl implements CommentService {
     @GlobalTransactional(rollbackFor = Exception.class)
     @Override
     public ModifyResult insertComment(CommentDO commentDO)
-            throws BindException, InstantiationException, IllegalAccessException {
+            throws BindException, ReflectiveOperationException {
         // 初始化值
         commentDO.setUid(GenerateInfoUtils.generateUid(workerId,datacenterId));
         commentDO.setCreateTime(DateUtils.format(new Date()));
@@ -113,8 +113,7 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public CommentVO queryArticleComments(long[] arrayUid)
-            throws InstantiationException, IllegalAccessException {
+    public CommentVO queryArticleComments(long[] arrayUid) throws ReflectiveOperationException {
         // 获取arrayUid中可用的uid
         List<Long> effectiveCommentUidList = getEffectiveCommentUid(arrayUid);
 
@@ -160,8 +159,7 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public CommentDTO queryByUid(long uid)
-            throws InstantiationException, IllegalAccessException {
+    public CommentDTO queryByUid(long uid) throws ReflectiveOperationException {
         ConditionDTO<Long> conditionDTO = new ConditionDTO();
         conditionDTO.setUid(uid);
         conditionDTO.init(conditionDTO);
@@ -175,8 +173,7 @@ public class CommentServiceImpl implements CommentService {
      * @param commentDO
      * @return true是回复评论
      */
-    private boolean isReplyComment(CommentDO commentDO)
-            throws InstantiationException, IllegalAccessException {
+    private boolean isReplyComment(CommentDO commentDO) throws ReflectiveOperationException {
         //此评论就是单独新建的一条评论
         if (commentDO.getReplyCommentUid() == 0) {
             return false;
@@ -190,8 +187,7 @@ public class CommentServiceImpl implements CommentService {
      * @param commentUid
      * @return
      */
-    private CommentDO getCommentDOByUid(Long commentUid)
-            throws InstantiationException, IllegalAccessException {
+    private CommentDO getCommentDOByUid(Long commentUid) throws ReflectiveOperationException {
         //此评论就是单独新建的一条评论
         if (commentUid == null || commentUid == 0) {
             return null;
@@ -208,8 +204,7 @@ public class CommentServiceImpl implements CommentService {
      * @param uid
      * @return
      */
-    private boolean isExistsComment(Long uid)
-            throws InstantiationException, IllegalAccessException {
+    private boolean isExistsComment(Long uid) throws ReflectiveOperationException {
         CommentDO commentDO = getCommentDOByUid(uid);
         return commentDO != null;
     }
@@ -219,8 +214,7 @@ public class CommentServiceImpl implements CommentService {
      * @param arrayUid
      * @return
      */
-    private List<Long> getEffectiveCommentUid(long[] arrayUid)
-            throws InstantiationException, IllegalAccessException {
+    private List<Long> getEffectiveCommentUid(long[] arrayUid) throws ReflectiveOperationException {
         List<Long> listUid = new ArrayList<>();
         for (Long uid : arrayUid) {
             if (isExistsComment(uid)) {
@@ -235,8 +229,7 @@ public class CommentServiceImpl implements CommentService {
      * @param commentDTO
      * @return
      */
-    private CommentDTO getAllSingleParentNodeList(CommentDTO commentDTO)
-            throws InstantiationException, IllegalAccessException {
+    private CommentDTO getAllSingleParentNodeList(CommentDTO commentDTO) throws ReflectiveOperationException {
         List<Long> uidList = parseUidArray(commentDTO.getNextCommentUidArray());
         if (uidList.isEmpty()) {
             //commentDTO下没有任何的子评论，直接返回

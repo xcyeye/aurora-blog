@@ -58,16 +58,14 @@ public class MessageLogController {
     @ApiOperation(value = "查询所有消费消息")
     @ResponseResult
     @GetMapping("")
-    public List<MessageLogVO> queryAllMessageLog(ConditionDTO<Long> condition)
-            throws InstantiationException, IllegalAccessException {
+    public List<MessageLogVO> queryAllMessageLog(ConditionDTO<Long> condition) throws ReflectiveOperationException {
         return messageLogService.queryAllMessageLog(condition);
     }
 
     @ApiOperation(value = "根据uid查询消费消息")
     @ResponseResult
     @GetMapping("/{uid}")
-    public MessageLogVO queryMessageLogByUid(@PathVariable("uid") long uid)
-            throws InstantiationException, IllegalAccessException {
+    public MessageLogVO queryMessageLogByUid(@PathVariable("uid") long uid) throws ReflectiveOperationException {
         /*try {
             rabbitMQSchedule.reconsumeMQMessageTask();
         } catch (BindException e) {

@@ -1,9 +1,6 @@
 package xyz.xcye.common.vo;
 
 import lombok.Data;
-import xyz.xcye.common.constant.FieldLengthConstant;
-
-import javax.validation.constraints.Pattern;
 
 @Data
 public class UserAccountVO {
@@ -34,11 +31,6 @@ public class UserAccountVO {
      * <p>true表示过期</p>
      */
     private Boolean accountExpired;
-
-    /**
-     * 删除状态
-     */
-    private Boolean delete;
 
     /**
      * 从用户权限是哪个用户拥有的

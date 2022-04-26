@@ -44,13 +44,12 @@ public interface MessageLogService {
      * @throws InstantiationException
      * @throws IllegalAccessException
      */
-    List<MessageLogVO> queryAllMessageLog(ConditionDTO<Long> condition)
-            throws InstantiationException, IllegalAccessException;
+    List<MessageLogVO> queryAllMessageLog(ConditionDTO<Long> condition) throws ReflectiveOperationException;
 
     /**
      * 根据uid查询对应mq消息
      * @param uid
      * @return
      */
-    MessageLogVO queryByUid(long uid) throws InstantiationException, IllegalAccessException;
+    MessageLogVO queryByUid(long uid) throws ReflectiveOperationException;
 }

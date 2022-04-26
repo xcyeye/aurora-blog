@@ -13,6 +13,7 @@ import xyz.xcye.common.dto.ConditionDTO;
 import xyz.xcye.common.entity.result.ModifyResult;
 import xyz.xcye.common.entity.result.R;
 import xyz.xcye.common.enums.ResponseStatusCodeEnum;
+import xyz.xcye.common.exception.AuroraGlobalException;
 import xyz.xcye.common.exception.email.EmailException;
 import xyz.xcye.common.exception.user.UserException;
 import xyz.xcye.common.util.BeanUtils;
@@ -59,25 +60,22 @@ public class EmailServiceImpl implements EmailService {
     @GlobalTransactional
     @Override
     public ModifyResult insertEmail(EmailDO email)
-            throws EmailException, InstantiationException, IllegalAccessException, UserException, BindException {
+            throws BindException, ReflectiveOperationException, AuroraGlobalException {
         // 判断邮箱是否已经存在
         if (queryByEmail(email.getEmail()) != null) {
-            throw new EmailException(ResponseStatusCodeEnum.EXCEPTION_EMAIL_EXISTS.getMessage(),
-                    ResponseStatusCodeEnum.EXCEPTION_EMAIL_EXISTS.getCode());
+            throw new EmailException(ResponseStatusCodeEnum.EXCEPTION_EMAIL_EXISTS);
         }
 
         R userR = userFeignService.queryUserByUid(email.getUserUid());
         UserVO userVO = JSONUtils.parseObjFromResult(ObjectConvertJson.jsonToString(userR), "data", UserVO.class);
 
         if (userVO == null) {
-            throw new UserException(ResponseStatusCodeEnum.PERMISSION_USER_NOT_EXIST.getMessage(),
-                    ResponseStatusCodeEnum.PERMISSION_USER_NOT_EXIST.getCode());
+            throw new UserException(ResponseStatusCodeEnum.PERMISSION_USER_NOT_EXIST);
         }
 
         // 判断是否绑定
         if (userVO.getEmailUid() != null) {
-            throw new EmailException(ResponseStatusCodeEnum.EXCEPTION_EMAIL_HAD_BINDING.getMessage(),
-                    ResponseStatusCodeEnum.EXCEPTION_EMAIL_HAD_BINDING.getCode());
+            throw new EmailException(ResponseStatusCodeEnum.EXCEPTION_EMAIL_HAD_BINDING);
         }
 
         //生成一个uid
@@ -94,8 +92,7 @@ public class EmailServiceImpl implements EmailService {
 
         logger.info("feign绑定邮箱,email的uid:{},绑定结果:{}",email.getUid(),modifyResult);
         if (!modifyResult.isSuccess()) {
-            throw new EmailException(ResponseStatusCodeEnum.EXCEPTION_EMAIL_FAIL_BINDING.getMessage(),
-                    ResponseStatusCodeEnum.EXCEPTION_EMAIL_FAIL_BINDING.getCode());
+            throw new EmailException(ResponseStatusCodeEnum.EXCEPTION_EMAIL_FAIL_BINDING);
         }
         return ModifyResult.operateResult(insertEmailNum,"插入email数据",
                  ResponseStatusCodeEnum.SUCCESS.getCode(),email.getUid());
@@ -128,29 +125,28 @@ public class EmailServiceImpl implements EmailService {
     }
 
     @Override
-    public List<EmailVO> queryAllEmail(ConditionDTO<Long> condition)
-            throws InstantiationException, IllegalAccessException {
+    public List<EmailVO> queryAllEmail(ConditionDTO<Long> condition) throws ReflectiveOperationException {
         condition = condition.init(condition);
         PageHelper.startPage(condition.getPageNum(),condition.getPageSize(),condition.getOrderBy());
         return BeanUtils.copyList(emailDao.queryAllEmail(condition), EmailVO.class);
     }
 
     @Override
-    public EmailVO queryByUid(long uid) throws InstantiationException, IllegalAccessException {
+    public EmailVO queryByUid(long uid) throws ReflectiveOperationException {
         ConditionDTO<Long> condition = new ConditionDTO<>();
         condition.setUid(uid);
         return BeanUtils.getSingleObjFromList(emailDao.queryAllEmail(condition),EmailVO.class);
     }
 
     @Override
-    public EmailVO queryByUserUid(long userUid) throws InstantiationException, IllegalAccessException {
+    public EmailVO queryByUserUid(long userUid) throws ReflectiveOperationException {
         ConditionDTO<Long> conditionDTO = new ConditionDTO<>();
         conditionDTO.setOtherUid(userUid);
         return BeanUtils.getSingleObjFromList(emailDao.queryAllEmail(conditionDTO), EmailVO.class);
     }
 
     @Override
-    public EmailVO queryByEmail(String email) throws InstantiationException, IllegalAccessException {
+    public EmailVO queryByEmail(String email) throws ReflectiveOperationException {
         ConditionDTO<Long> conditionDTO = new ConditionDTO();
         conditionDTO.setKeyword(email);
         return BeanUtils.getSingleObjFromList(emailDao.queryAllEmail(conditionDTO), EmailVO.class);

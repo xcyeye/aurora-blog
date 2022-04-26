@@ -2,11 +2,10 @@ package xyz.xcye.message.service;
 
 import org.apache.ibatis.annotations.Param;
 import org.springframework.validation.BindException;
-import xyz.xcye.common.entity.table.EmailDO;
 import xyz.xcye.common.dto.ConditionDTO;
 import xyz.xcye.common.entity.result.ModifyResult;
-import xyz.xcye.common.exception.email.EmailException;
-import xyz.xcye.common.exception.user.UserException;
+import xyz.xcye.common.entity.table.EmailDO;
+import xyz.xcye.common.exception.AuroraGlobalException;
 import xyz.xcye.common.vo.EmailVO;
 
 import java.util.List;
@@ -23,7 +22,7 @@ public interface EmailService {
      * @return
      */
     ModifyResult insertEmail(EmailDO email)
-            throws EmailException, BindException, InstantiationException, IllegalAccessException, UserException;
+            throws BindException, AuroraGlobalException, ReflectiveOperationException;
 
     /**
      * 根据uid删除一条记录
@@ -44,22 +43,21 @@ public interface EmailService {
      * @throws InstantiationException
      * @throws IllegalAccessException
      */
-    List<EmailVO> queryAllEmail(ConditionDTO<Long> condition)
-            throws InstantiationException, IllegalAccessException;
+    List<EmailVO> queryAllEmail(ConditionDTO<Long> condition) throws ReflectiveOperationException;
 
     /**
      * 通过uid进行查询
      * @param uid
      * @return
      */
-    EmailVO queryByUid(long uid) throws InstantiationException, IllegalAccessException;
+    EmailVO queryByUid(long uid) throws ReflectiveOperationException;
 
     /**
      * 查询数据库中，userUid这个用户所对应的邮件模板
      * @param userUid
      * @return
      */
-    EmailVO queryByUserUid(@Param("userUid") long userUid) throws InstantiationException, IllegalAccessException;
+    EmailVO queryByUserUid(@Param("userUid") long userUid) throws ReflectiveOperationException;
 
     /**
      * 根据邮箱号进行查询
@@ -68,5 +66,5 @@ public interface EmailService {
      * @throws InstantiationException
      * @throws IllegalAccessException
      */
-    EmailVO queryByEmail(String email) throws InstantiationException, IllegalAccessException;
+    EmailVO queryByEmail(String email) throws ReflectiveOperationException;
 }

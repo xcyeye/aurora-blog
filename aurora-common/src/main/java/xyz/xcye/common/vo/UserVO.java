@@ -34,11 +34,6 @@ public class UserVO {
     private Integer rememberMeDay;
 
     /**
-     * 用户的删除状态 true：已删除 false：未删除
-     */
-    private Boolean delete;
-
-    /**
      * 该用户对应的网站设置的uid
      */
     private Long siteUid;

@@ -40,7 +40,7 @@ public class SendMailController {
     public ModifyResult sendCommonNotice(@RequestParam(value = "userUid") long userUid,
                                          @Validated({Insert.class, Default.class}) EmailCommonNoticeDTO emailCommonNotice,
                                          @RequestParam(value = "subject",required = false) String subject)
-            throws MessagingException, IOException, InstantiationException, IllegalAccessException {
+            throws MessagingException, IOException, ReflectiveOperationException {
         return sendMailService.sendCommonNoticeMail(emailCommonNotice,userUid,subject);
     }
 
@@ -51,7 +51,7 @@ public class SendMailController {
                                              @RequestParam("replied") CommentDO repliedCommentInfo,
                                              @RequestParam(value = "userUid") long userUid,
                                              @RequestParam(value = "subject",required = false) String subject)
-            throws MessagingException, BindException, IOException, InstantiationException, IllegalAccessException {
+            throws MessagingException, BindException, IOException, ReflectiveOperationException {
         return sendMailService.sendReplyCommentMail(replyingCommentInfo,repliedCommentInfo,userUid,subject);
     }
 
@@ -61,7 +61,7 @@ public class SendMailController {
     public ModifyResult sendReceiveCommentMail(CommentDO receiveCommentInfo,
                                                @RequestParam(value = "userUid") long userUid,
                                                @RequestParam(value = "subject",required = false) String subject)
-            throws MessagingException, BindException, IOException, InstantiationException, IllegalAccessException {
+            throws MessagingException, BindException, IOException, ReflectiveOperationException {
         return sendMailService.sendReceiveCommentMail(receiveCommentInfo,userUid,subject);
     }
 
@@ -76,7 +76,7 @@ public class SendMailController {
     public ModifyResult sendVerifyAccountMail(EmailVerifyAccountDTO verifyAccount,
                                               @RequestParam(value = "userUid") long userUid,
                                               @RequestParam(value = "subject",required = false) String subject)
-            throws MessagingException, IOException, InstantiationException, IllegalAccessException, BindException {
+            throws MessagingException, IOException, BindException, ReflectiveOperationException {
         return sendMailService.sendVerifyAccountMail(verifyAccount,userUid,subject);
     }
 

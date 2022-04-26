@@ -6,7 +6,6 @@ import org.hibernate.validator.constraints.Length;
 import xyz.xcye.common.constant.FieldLengthConstant;
 import xyz.xcye.common.valid.Update;
 
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import java.io.Serializable;
@@ -25,13 +24,12 @@ public class UserAccountDO implements Serializable {
     /**
      * 唯一uid
      */
+    @NotNull(groups = {Update.class})
     private Long uid;
 
     /**
      * 用户角色，必须满足ROLE_xxx
      */
-    @NotNull
-    @NotEmpty
     @Pattern(regexp = "^(ROLE_)[a-zA-Z]{1,10}",message = "角色命名必须ROLE_XXX，并且总长度不能大于15")
     private String role;
 
@@ -52,12 +50,6 @@ public class UserAccountDO implements Serializable {
      * <p>true表示过期</p>
      */
     private Boolean accountExpired;
-
-    /**
-     * 删除状态
-     */
-    @NotNull(groups = Update.class)
-    private Boolean delete;
 
     /**
      * 从用户权限是哪个用户拥有的

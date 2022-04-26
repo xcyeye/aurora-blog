@@ -35,7 +35,7 @@ public interface EmailTemplateService {
      * 根据自定义条件查询对应的内容
      * @param condition 查询条件,只需要设置uid和create_time
      */
-    List<EmailTemplateVO> queryAllEmailTemplate(ConditionDTO<Long> condition) throws InstantiationException, IllegalAccessException;
+    List<EmailTemplateVO> queryAllEmailTemplate(ConditionDTO<Long> condition) throws ReflectiveOperationException;
 
     /**
      * 通过uid查询邮件发送模板
@@ -44,12 +44,12 @@ public interface EmailTemplateService {
      * @throws InstantiationException
      * @throws IllegalAccessException
      */
-    EmailTemplateVO queryEmailTemplateByUid(long uid) throws InstantiationException, IllegalAccessException;
+    EmailTemplateVO queryEmailTemplateByUid(long uid) throws ReflectiveOperationException;
 
     /**
      * 通过userUid查询
      * @param userUid
      * @return
      */
-    EmailTemplateVO queryEmailTemplateByUserUid(long userUid) throws InstantiationException, IllegalAccessException;
+    EmailTemplateVO queryEmailTemplateByUserUid(long userUid) throws ReflectiveOperationException;
 }

@@ -45,8 +45,10 @@ public class FileController {
     @ResponseResult
     @ApiOperation(value = "上传单个文件",notes = "可以上传任何类型，最大不能操作30M，返回上传之后的文件信息")
     @PostMapping("/single")
-    public FileVO singleUploadFile(@Validated FileDO fileInfo, @RequestParam(value = "file") MultipartFile file,
-                                         @RequestParam(required = false) int storageMode) throws IOException, FileException, InstantiationException, IllegalAccessException {
+    public FileVO singleUploadFile(@Validated FileDO fileInfo,
+                                   @RequestParam(value = "file") MultipartFile file,
+                                   @RequestParam(required = false) int storageMode)
+            throws IOException, FileException, ReflectiveOperationException {
 
         FileEntityDTO fileEntity = new FileEntityDTO(file.getOriginalFilename(),file.getInputStream());
         return fileService.insertFile(fileEntity, fileInfo, storageMode);
@@ -63,7 +65,7 @@ public class FileController {
     public List<FileVO> multiUploadFile(
             @RequestParam(value = "files") MultipartFile[] files,
             @RequestParam(required = false) int storageMode)
-            throws IOException, FileException, InstantiationException, IllegalAccessException {
+            throws IOException, FileException, ReflectiveOperationException {
 
         List<FileVO> fileList = new ArrayList<>();
         for (MultipartFile file : files) {
@@ -82,10 +84,9 @@ public class FileController {
     @ApiOperation(value = "在typora中自动上传图片",notes = "用于在typora中粘贴图片时，将图片上传到本地服务器或者某个对象存储中")
     @PostMapping("/typora")
     public String typoraUploadFile(
-
             @RequestParam(value = "file") MultipartFile file,
             @RequestParam(required = false) int storageMode)
-            throws IOException, InstantiationException, IllegalAccessException, FileException {
+            throws IOException, FileException, ReflectiveOperationException {
 
         FileEntityDTO fileEntity = new FileEntityDTO(file.getOriginalFilename(),file.getInputStream());
         FileDO fileInfo = new FileDO();
@@ -101,16 +102,14 @@ public class FileController {
     @ResponseResult
     @ApiOperation(value = "查询文件数据",notes = "其中keyword为文件的名字")
     @GetMapping
-    public List<FileVO> queryAllFile(ConditionDTO<Long> condition)
-            throws InstantiationException, IllegalAccessException {
+    public List<FileVO> queryAllFile(ConditionDTO<Long> condition) throws ReflectiveOperationException {
         return fileService.queryAllFile(condition);
     }
 
     @ResponseResult
     @ApiOperation(value = "查询文件数据",notes = "其中keyword为文件的名字")
     @GetMapping("/{uid}")
-    public FileVO queryFileByUid(@PathVariable("uid") long uid)
-            throws InstantiationException, IllegalAccessException {
+    public FileVO queryFileByUid(@PathVariable("uid") long uid) throws ReflectiveOperationException {
         return fileService.queryByUid(uid);
     }
 
@@ -135,14 +134,14 @@ public class FileController {
     @ApiOperation(value = "根据uid删除某个文件",notes = "从数据库中删除对应数据，删除与之关联的本地，对象存储中的文件，返回删除成功之后的文件对象")
     @DeleteMapping("/{uid}")
     public ModifyResult deleteFile(@PathVariable("uid") long uid)
-            throws InstantiationException, IllegalAccessException, FileException, IOException {
+            throws FileException, IOException, ReflectiveOperationException {
         return fileService.deleteFile(uid);
     }
 
     @ApiOperation(value = "根据uid下载文件")
     @GetMapping("/download/{uid}")
     public void downloadFile(@PathVariable("uid") long uid, HttpServletResponse response)
-            throws FileException, IOException, InstantiationException, IllegalAccessException {
+            throws FileException, IOException, ReflectiveOperationException {
         FileEntityDTO fileEntityDTO = fileService.downloadFile(uid);
         ServletOutputStream outputStream = response.getOutputStream();
         byte[] bytes = new byte[1024];

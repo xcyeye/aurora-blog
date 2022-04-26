@@ -44,7 +44,7 @@ public class CommentController {
     @PostMapping("")
     public ModifyResult insertComment(@Validated({Default.class, Insert.class}) CommentDO commentDO,
                                       HttpServletRequest request)
-            throws BindException, InstantiationException, IllegalAccessException {
+            throws BindException, ReflectiveOperationException {
         commentDO.setCommentIp(NetWorkUtils.getIpAddr(request));
         commentDO.setOperationSystemInfo(NetWorkUtils.getOperationInfo(request));
         return commentService.insertComment(commentDO);
@@ -66,7 +66,7 @@ public class CommentController {
     @ResponseResult
     @GetMapping("/queryArticleComments")
     public CommentVO queryAllComment(@RequestParam(value = "uidArr") long[] commentUidArr)
-            throws InstantiationException, IllegalAccessException {
+            throws ReflectiveOperationException {
         return commentService.queryArticleComments(commentUidArr);
     }
 
@@ -80,8 +80,7 @@ public class CommentController {
     @ApiOperation(value = "根据uid查询评论")
     @ResponseResult
     @GetMapping("/{uid}")
-    public CommentDTO queryCommentByUid(@PathVariable("uid") long uid)
-            throws InstantiationException, IllegalAccessException {
+    public CommentDTO queryCommentByUid(@PathVariable("uid") long uid) throws ReflectiveOperationException {
         return commentService.queryByUid(uid);
     }
 }

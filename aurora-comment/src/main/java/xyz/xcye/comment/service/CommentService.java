@@ -20,7 +20,7 @@ public interface CommentService {
      * @return
      */
     ModifyResult insertComment(CommentDO commentDO)
-            throws BindException, InstantiationException, IllegalAccessException;
+            throws BindException, ReflectiveOperationException;
 
     /**
      * 根据uid删除对应的记录，是真正的从数据库中删除此条记录
@@ -41,7 +41,7 @@ public interface CommentService {
      * @param arrayCommentUid
      * @return
      */
-    CommentVO queryArticleComments(long[] arrayCommentUid) throws InstantiationException, IllegalAccessException;
+    CommentVO queryArticleComments(long[] arrayCommentUid) throws ReflectiveOperationException;
 
     /**
      * 根据传入的arrayCommentUid评论uid数据，获取对应的所有评论节点数据
@@ -50,5 +50,5 @@ public interface CommentService {
      */
     List<CommentDTO> queryAllComments(ConditionDTO<Long> condition);
 
-    CommentDTO queryByUid(long uid) throws InstantiationException, IllegalAccessException;
+    CommentDTO queryByUid(long uid) throws ReflectiveOperationException;
 }

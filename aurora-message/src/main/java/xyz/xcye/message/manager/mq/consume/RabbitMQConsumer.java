@@ -55,7 +55,7 @@ public class RabbitMQConsumer {
      */
     @RabbitListener(queues = RabbitMQNameConstant.MAIL_RECEIVE_COMMENT_NOTICE_QUEUE_NAME,ackMode = "MANUAL")
     public void receiveCommentNotice(String msgJson, Channel channel, Message message)
-            throws MessagingException, BindException, IOException, InstantiationException, IllegalAccessException {
+            throws MessagingException, BindException, IOException, ReflectiveOperationException {
         log.info("消费者replyCommentNotice执行{}",msgJson);
         // 获取唯一id
         String correlationDataId = null;
@@ -98,7 +98,7 @@ public class RabbitMQConsumer {
      */
     @RabbitListener(queues = RabbitMQNameConstant.MAIL_REPLY_COMMENT_NOTICE_QUEUE_NAME,ackMode = "MANUAL")
     public void replyCommentNotice(String msgJson, Channel channel, Message message)
-            throws MessagingException, BindException, IOException, InstantiationException, IllegalAccessException {
+            throws MessagingException, BindException, IOException, ReflectiveOperationException {
         log.info("消费者replyCommentNotice执行{}",msgJson);
         CommentDO replyingCommentInfo = null;
         CommentDO repliedCommentInfo = null;
@@ -132,7 +132,7 @@ public class RabbitMQConsumer {
 
     @RabbitListener(queues = RabbitMQNameConstant.MAIL_VERIFY_ACCOUNT_NOTICE_QUEUE_NAME,ackMode = "MANUAL")
     public void verifyAccountNotice(String msgJson, Channel channel, Message message)
-            throws MessagingException, BindException, IOException, InstantiationException, IllegalAccessException {
+            throws MessagingException, BindException, IOException, ReflectiveOperationException {
         log.info("mq消费者接收到消息:{}",msgJson);
         // 获取唯一id
         String correlationDataId = null;
@@ -165,7 +165,7 @@ public class RabbitMQConsumer {
      */
     @RabbitListener(queues = RabbitMQNameConstant.DEAD_LETTER_MAIL_REPLY_COMMENT_NOTICE_QUEUE_NAME,ackMode = "MANUAL")
     public void deadLetterReplyCommentNotice(String msgJson,Channel channel,Message message)
-            throws MessagingException, BindException, IOException, InstantiationException, IllegalAccessException {
+            throws MessagingException, BindException, IOException, ReflectiveOperationException {
         log.error("死信队列执行 {}",msgJson);
         replyCommentNotice(msgJson,channel,message);
     }
@@ -181,7 +181,7 @@ public class RabbitMQConsumer {
      */
     @RabbitListener(queues = RabbitMQNameConstant.DEAD_LETTER_MAIL_RECEIVE_COMMENT_NOTICE_QUEUE_NAME,ackMode = "MANUAL")
     public void deadLetterReceiveCommentNotice(String msgJson,Channel channel,Message message)
-            throws MessagingException, BindException, IOException, InstantiationException, IllegalAccessException {
+            throws MessagingException, BindException, IOException, ReflectiveOperationException {
         log.error("死信队列执行 {}",msgJson);
         receiveCommentNotice(msgJson,channel,message);
     }
@@ -196,7 +196,7 @@ public class RabbitMQConsumer {
      */
     private void updateMessageLogInfo(String correlationDataId, boolean ackStatus,
                                       boolean consumeStatus, String errorMessage)
-            throws BindException, InstantiationException, IllegalAccessException {
+            throws BindException, ReflectiveOperationException {
         MessageLogVO messageLogVO = messageLogService.queryByUid(Long.parseLong(correlationDataId));
 
         if (messageLogVO == null) {

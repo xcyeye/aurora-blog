@@ -5,7 +5,6 @@
 <mapper namespace="xyz.xcye.admin.dao.UserAccountDao">
 
     <resultMap id="userAccountResultMap" type="xyz.xcye.common.entity.table.UserAccountDO">
-        <result column="is_delete" property="delete"/>
         <result column="is_account_locked" property="accountLocked"/>
         <result column="is_account_expired" property="accountExpired"/>
     </resultMap>
@@ -13,13 +12,13 @@
     <insert id="insert">
         insert into au_user_account
         (
-         uid,role,permission,is_account_locked,is_account_expired,user_uid,create_time,update_time,is_delete
+         uid,role,permission,is_account_locked,is_account_expired,user_uid,create_time,update_time
         )
         values
         (
          #{userAccountDO.uid},#{userAccountDO.role},#{userAccountDO.permission},
          #{userAccountDO.accountLocked},#{userAccountDO.accountExpired},#{userAccountDO.userUid},
-         #{userAccountDO.createTime},#{userAccountDO.updateTime},#{userAccountDO.delete}
+         #{userAccountDO.createTime},#{userAccountDO.updateTime}
         )
     </insert>
 
@@ -45,15 +44,6 @@
         where uid=#{userAccountDO.uid}
     </update>
 
-    <update id="updateDeleteStatus">
-        update
-            au_user_account
-        set
-            is_delete=#{userAccountDO.delete},update_time=#{userAccountDO.updateTime}
-        where
-            uid=#{userAccountDO.uid}
-    </update>
-
     <delete id="deleteByUid">
         delete
             au_user_account
@@ -61,51 +51,24 @@
             uid=#{uid}
     </delete>
 
-    <select id="queryAll" resultType="xyz.xcye.common.entity.table.UserAccountDO">
+    <select id="queryAllByCondition" resultType="xyz.xcye.common.entity.table.UserAccountDO">
         select
-        uid,role,permission,is_account_locked,is_account_expired,user_uid,create_time,update_time,is_delete
+        uid,role,permission,is_account_locked,is_account_expired,user_uid,create_time,update_time
         from
             au_user_account
         <where>
-            <if test="userAccountDO.role != null">
-                role=#{userAccountDO.role}
+            <if test="condition.startTime != null and condition.endTime != null">
+                and create_time between #{condition.startTime} and #{condition.endTime}
             </if>
-            <if test="userAccountDO.permission != null">
-                and permission like contact('%',#{userAccountDO.permission},'%')
+            <if test="condition.uid != null">
+                and uid=#{condition.uid}
             </if>
-            <if test="userAccountDO.accountLocked != null">
-                and is_account_locked=#{userAccountDO.accountLocked}
+            <if test="condition.keyword != null">
+                and `role` like concat('%', #{condition.keyword}, '%')
             </if>
-            <if test="userAccountDO.accountExpired != null">
-                and is_account_expired=#{userAccountDO.accountExpired}
-            </if>
-            <if test="userAccountDO.createTime != null">
-                and create_time=#{userAccountDO.createTime}
-            </if>
-            <if test="userAccountDO.updateTime != null">
-                and update_time=#{userAccountDO.updateTime}
-            </if>
-            <if test="userAccountDO.delete != null">
-                and is_delete=#{userAccountDO.delete}
+            <if test="condition.otherUid != null">
+                and user_uid=#{condition.otherUid}
             </if>
         </where>
-    </select>
-
-    <select id="queryByUid" resultMap="userAccountResultMap">
-        select
-            uid,role,permission,is_account_locked,is_account_expired,user_uid,create_time,update_time,is_delete
-        from
-            au_user_account
-        where
-            uid=#{uid}
-    </select>
-
-    <select id="queryByUserUid" resultMap="userAccountResultMap">
-        select
-            uid,role,permission,is_account_locked,is_account_expired,user_uid,create_time,update_time,is_delete
-        from
-            au_user_account
-        where
-            user_uid=#{userUid}
     </select>
 </mapper>

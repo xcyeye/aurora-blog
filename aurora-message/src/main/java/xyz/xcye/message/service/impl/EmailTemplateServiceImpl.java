@@ -48,21 +48,21 @@ public class EmailTemplateServiceImpl implements EmailTemplateService {
     }
 
     @Override
-    public List<EmailTemplateVO> queryAllEmailTemplate(ConditionDTO<Long> condition) throws InstantiationException, IllegalAccessException {
+    public List<EmailTemplateVO> queryAllEmailTemplate(ConditionDTO<Long> condition) throws ReflectiveOperationException {
         condition = condition.init(condition);
         PageHelper.startPage(condition.getPageNum(),condition.getPageSize(),condition.getOrderBy());
         return BeanUtils.copyList(emailTemplateDao.queryAllEmailTemplate(condition),EmailTemplateVO.class);
     }
 
     @Override
-    public EmailTemplateVO queryEmailTemplateByUid(long uid) throws InstantiationException, IllegalAccessException {
+    public EmailTemplateVO queryEmailTemplateByUid(long uid) throws ReflectiveOperationException {
         ConditionDTO<Object> condition = new ConditionDTO<>();
         condition.setUid(uid);
         return BeanUtils.getSingleObjFromList(emailTemplateDao.queryAllEmailTemplate(condition), EmailTemplateVO.class);
     }
 
     @Override
-    public EmailTemplateVO queryEmailTemplateByUserUid(long userUid) throws InstantiationException, IllegalAccessException {
+    public EmailTemplateVO queryEmailTemplateByUserUid(long userUid) throws ReflectiveOperationException {
         ConditionDTO<Object> condition = new ConditionDTO<>();
         condition.setOtherUid(userUid);
         return BeanUtils.getSingleObjFromList(emailTemplateDao.queryAllEmailTemplate(condition), EmailTemplateVO.class);

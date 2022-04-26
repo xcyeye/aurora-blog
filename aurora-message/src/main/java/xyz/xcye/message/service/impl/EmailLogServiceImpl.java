@@ -58,14 +58,14 @@ public class EmailLogServiceImpl implements EmailLogService {
     }
 
     @Override
-    public List<EmailLogVO> queryAll(ConditionDTO<Long> condition) throws InstantiationException, IllegalAccessException {
+    public List<EmailLogVO> queryAll(ConditionDTO<Long> condition) throws ReflectiveOperationException {
         condition = condition.init(condition);
         PageHelper.startPage(condition.getPageNum(),condition.getPageSize(),condition.getOrderBy());
         return BeanUtils.copyList(emailLogDao.queryAll(condition),EmailLogVO.class);
     }
 
     @Override
-    public EmailLogVO queryByUid(long uid) throws InstantiationException, IllegalAccessException {
+    public EmailLogVO queryByUid(long uid) throws ReflectiveOperationException {
         ConditionDTO<Long> conditionDTO = new ConditionDTO<>();
         conditionDTO.setUid(uid);
         return BeanUtils.getSingleObjFromList(emailLogDao.queryAll(conditionDTO), EmailLogVO.class);

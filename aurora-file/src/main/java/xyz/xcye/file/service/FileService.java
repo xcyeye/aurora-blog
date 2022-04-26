@@ -24,7 +24,7 @@ public interface FileService {
      * @param storageMode 文件存储模式，值只能在xyz.xcye.common.enums.FileStorageModeEnum中取
      * @return 返回文件的上传情况
      */
-    FileVO insertFile(FileEntityDTO fileEntity, FileDO file, int storageMode) throws FileException, InstantiationException, IllegalAccessException;
+    FileVO insertFile(FileEntityDTO fileEntity, FileDO file, int storageMode) throws FileException, ReflectiveOperationException;
 
     /**
      * 根据传入uid，修改指定文件的数据库信息（不能修改文件本身的信息，比如文件名，存储路径，path，因为没有意义）
@@ -38,21 +38,21 @@ public interface FileService {
      * @param uid
      * @return 删除之后的情况
      */
-    ModifyResult deleteFile(long uid) throws InstantiationException, IllegalAccessException, IOException, FileException;
+    ModifyResult deleteFile(long uid) throws IOException, FileException, ReflectiveOperationException;
 
     /**
      * 向数据库中查询文件
      * @param condition 查询添加，其中keyword为(file_name)
      * @return FileEntity对象
      */
-    List<FileVO> queryAllFile(ConditionDTO<Long> condition) throws InstantiationException, IllegalAccessException;
+    List<FileVO> queryAllFile(ConditionDTO<Long> condition) throws ReflectiveOperationException;
 
-    FileVO queryByUid(long uid) throws InstantiationException, IllegalAccessException;
+    FileVO queryByUid(long uid) throws ReflectiveOperationException;
 
     /**
      * 下载文件
      * @param uid
      * @return
      */
-    FileEntityDTO downloadFile(long uid) throws InstantiationException, IllegalAccessException, FileException, IOException;
+    FileEntityDTO downloadFile(long uid) throws FileException, IOException, ReflectiveOperationException;
 }

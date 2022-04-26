@@ -13,24 +13,22 @@ import org.springframework.validation.BindException;
 import xyz.xcye.admin.dao.UserDao;
 import xyz.xcye.admin.entity.DefaultValueEntity;
 import xyz.xcye.admin.manager.mq.send.VerifyAccountSendService;
-import xyz.xcye.admin.util.AccountInfoUtils;
-import xyz.xcye.common.entity.table.EmailDO;
-import xyz.xcye.common.dto.EmailVerifyAccountDTO;
-import xyz.xcye.common.exception.email.EmailException;
-import xyz.xcye.common.exception.user.UserException;
 import xyz.xcye.admin.service.RoleService;
 import xyz.xcye.admin.service.UserAccountService;
 import xyz.xcye.admin.service.UserService;
+import xyz.xcye.admin.util.AccountInfoUtils;
+import xyz.xcye.common.dto.ConditionDTO;
+import xyz.xcye.common.dto.EmailVerifyAccountDTO;
+import xyz.xcye.common.entity.result.ModifyResult;
+import xyz.xcye.common.entity.table.EmailDO;
 import xyz.xcye.common.entity.table.RoleDO;
 import xyz.xcye.common.entity.table.UserAccountDO;
 import xyz.xcye.common.entity.table.UserDO;
-import xyz.xcye.common.dto.PaginationDTO;
-import xyz.xcye.common.entity.result.ModifyResult;
 import xyz.xcye.common.enums.ResponseStatusCodeEnum;
+import xyz.xcye.common.exception.user.UserException;
 import xyz.xcye.common.util.BeanUtils;
 import xyz.xcye.common.util.DateUtils;
 import xyz.xcye.common.util.id.GenerateInfoUtils;
-import xyz.xcye.common.vo.UserAccountVO;
 import xyz.xcye.common.vo.UserVO;
 import xyz.xcye.web.common.service.feign.MessageLogFeignService;
 
@@ -56,18 +54,6 @@ public class UserServiceImpl implements UserService {
      */
     @Value("${aurora.snow-flake.datacenterId}")
     private int datacenterId;
-
-    /**
-     * 查询时默认的初始页数
-     */
-    @Value("${aurora.pagination.pageNum}")
-    private int defaultPageNum;
-
-    /**
-     * 查询时默认的返回数目
-     */
-    @Value("${aurora.pagination.pageSize}")
-    private int defaultPageSize;
 
     @Value("${aurora.user.remember-me-day}")
     private int rememberMeDay;
@@ -99,9 +85,10 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private VerifyAccountSendService verifyAccountSendService;
 
-    @GlobalTransactional(rollbackFor = Exception.class)
+    @GlobalTransactional
     @Override
-    public ModifyResult insertUser(UserDO userDO, UserAccountDO userAccountDO) throws UserException, InstantiationException, IllegalAccessException, BindException, EmailException {
+    public ModifyResult insertUser(UserDO userDO, UserAccountDO userAccountDO)
+            throws UserException, ReflectiveOperationException {
         // 判断用户名是否存在
         if (existsUsername(userDO.getUsername())) {
             return ModifyResult.operateResult(ResponseStatusCodeEnum.PERMISSION_USER_EXIST.getMessage(),
@@ -115,22 +102,24 @@ public class UserServiceImpl implements UserService {
         // 插入
         int insertUserNum = userDao.insertUser(userDO);
         ModifyResult modifyResult = userAccountService.insert(userAccountDO);
-        if (modifyResult.getAffectedRows() == 1) {
+
+        // 保存临时的用户名
+        String usernameTemp = userDO.getUsername();
+        if (modifyResult.isSuccess()) {
+            // 因为userAccountDO的uid只有插入成功之后，才知道，所以需要调用修改方法进行修改
             userDO = UserDO.builder().uid(userDO.getUid()).userAccountUid(modifyResult.getUid()).build();
         }else {
-            throw new UserException(ResponseStatusCodeEnum.PERMISSION_USER_FAIL_ADD.getMessage(),
-                    ResponseStatusCodeEnum.PERMISSION_USER_FAIL_ADD.getCode());
+            throw new UserException(ResponseStatusCodeEnum.PERMISSION_USER_FAIL_ADD);
         }
 
-        if (updateUser(userDO).getAffectedRows() != 1) {
-            throw new UserException(ResponseStatusCodeEnum.PERMISSION_USER_FAIL_ADD.getMessage(),
-                    ResponseStatusCodeEnum.PERMISSION_USER_FAIL_ADD.getCode());
+        if (!updateUser(userDO).isSuccess()) {
+            throw new UserException(ResponseStatusCodeEnum.PERMISSION_USER_FAIL_ADD);
         }
-
-        return ModifyResult.operateResult(insertUserNum,"插入用户" + userDO.getUsername(),
+        return ModifyResult.operateResult(insertUserNum,"插入用户" + usernameTemp,
                 ResponseStatusCodeEnum.SUCCESS.getCode(),userDO.getUid());
     }
 
+    @Transactional
     @Override
     public ModifyResult updateUser(UserDO userDO) throws UserException {
         if (StringUtils.hasLength(userDO.getPassword())) {
@@ -138,51 +127,21 @@ public class UserServiceImpl implements UserService {
         }
 
         if (StringUtils.hasLength(userDO.getUsername()) && existsUsername(userDO.getUsername())) {
-            throw new UserException(ResponseStatusCodeEnum.PERMISSION_USER_EXIST.getMessage(),
-                    ResponseStatusCodeEnum.PERMISSION_USER_EXIST.getCode());
+            throw new UserException(ResponseStatusCodeEnum.PERMISSION_USER_EXIST);
         }
 
         userDO.setUpdateTime(DateUtils.format(new Date()));
-        if (userDO.getUserAccountUid() != null) {
-            // 用户的权限账户信息应该单独更新
-            userDO.setUserAccountUid(null);
-        }
 
         int updateUserNum = userDao.updateUser(userDO);
         return ModifyResult.operateResult(updateUserNum,"更新" + userDO.getUid() + "用户信息",
                 ResponseStatusCodeEnum.SUCCESS.getCode(),userDO.getUid());
     }
 
-    @Override
-    public ModifyResult updateDeleteStatus(UserDO userDO) throws UserException, InstantiationException, IllegalAccessException {
-        // 先查询此用户对应的account
-        UserAccountVO queriedUserAccountVO = userAccountService.queryByUserUid(userDO.getUid());
-        if (queriedUserAccountVO == null) {
-            return ModifyResult.operateResult(userDO.getUid() + ResponseStatusCodeEnum.PERMISSION_USER_NOT_EXIST.getMessage(),
-                    0,ResponseStatusCodeEnum.PERMISSION_USER_NOT_EXIST.getCode(), 0);
-        }
-
-        userDO = UserDO.builder()
-                .delete(userDO.getDelete()).uid(userDO.getUid())
-                .updateTime(DateUtils.format(new Date())).build();
-        UserAccountDO userAccountDO = UserAccountDO.builder()
-                .uid(queriedUserAccountVO.getUid()).delete(userDO.getDelete())
-                .updateTime(DateUtils.format(new Date())).build();
-        int updateUserDeleteStatusNum = userDao.updateDeleteStatus(userDO);
-        int updateUserAccountDeleteStatusNum = userAccountService.updateDeleteStatus(userAccountDO).getAffectedRows();
-        if (updateUserDeleteStatusNum != updateUserAccountDeleteStatusNum) {
-            throw new UserException("更新" + userDO.getUid() + "用户删除状态失败",
-                    ResponseStatusCodeEnum.SUCCESS.getCode());
-        }
-
-        return ModifyResult.operateResult("更新" + userDO.getUid() + "用户删除状态",
-                1,ResponseStatusCodeEnum.SUCCESS.getCode(), userDO.getUid());
-    }
-
     @Transactional
     @Override
-    public ModifyResult deleteByUid(long uid) throws UserException, InstantiationException, IllegalAccessException {
-        UserAccountVO userAccountVO = userAccountService.queryByUserUid(uid);
+    public ModifyResult deleteByUid(long uid) {
+
+        /*UserAccountVO userAccountVO = userAccountService.queryByUserUid(uid);
         if (userAccountVO == null) {
             throw new UserException(ResponseStatusCodeEnum.PERMISSION_USER_NOT_EXIST.getMessage(),
                     ResponseStatusCodeEnum.PERMISSION_USER_NOT_EXIST.getCode());
@@ -193,26 +152,26 @@ public class UserServiceImpl implements UserService {
         if (!deleteUserAccountResult.isSuccess()) {
             throw new UserException(ResponseStatusCodeEnum.PERMISSION_USER_FAIL_DELETE.getMessage(),
                     ResponseStatusCodeEnum.PERMISSION_USER_FAIL_DELETE.getCode());
-        }
+        }*/
+        int deleteUserNum = userDao.deleteByUid(uid);
         return ModifyResult.operateResult("删除" + uid + "用户",deleteUserNum,ResponseStatusCodeEnum.SUCCESS.getCode(), uid);
     }
 
     @Override
-    public List<UserVO> queryAll(UserDO userDO, PaginationDTO paginationDTO) throws InstantiationException, IllegalAccessException {
-        paginationDTO = PaginationDTO.initPagination(paginationDTO,defaultPageNum,defaultPageSize);
-        PageHelper.startPage(paginationDTO.getPageNum(),paginationDTO.getPageSize(),paginationDTO.getOrderBy());
-        List<UserDO> userDOList = userDao.queryAll(userDO);
-        return BeanUtils.copyList(userDOList,UserVO.class);
+    public List<UserVO> queryAllByCondition(ConditionDTO<Long> condition) throws ReflectiveOperationException {
+        condition.init(condition);
+        PageHelper.startPage(condition.getPageNum(),condition.getPageSize(),condition.getOrderBy());
+        return BeanUtils.copyList(userDao.queryAllByCondition(condition), UserVO.class);
     }
 
     @Override
-    public UserVO queryByUid(long uid) throws InstantiationException, IllegalAccessException {
-        return BeanUtils.copyProperties(userDao.queryByUid(uid),UserVO.class);
+    public UserVO queryByUid(long uid) throws ReflectiveOperationException {
+        return BeanUtils.getSingleObjFromList(userDao.queryAllByCondition(ConditionDTO.instant(uid, Long.class, true)), UserVO.class);
     }
 
     @Override
-    public UserDO queryByUsername(String username) {
-        return userDao.queryByUsername(username);
+    public UserVO queryByUsername(String username) throws ReflectiveOperationException {
+        return BeanUtils.getSingleObjFromList(userDao.queryAllByCondition(ConditionDTO.instant(username,Long.class)), UserVO.class);
     }
 
     @GlobalTransactional
@@ -242,7 +201,7 @@ public class UserServiceImpl implements UserService {
      * @param permission
      * @return
      */
-    private String getEffectivePermission(String permission) throws InstantiationException, IllegalAccessException {
+    private String getEffectivePermission(String permission) throws ReflectiveOperationException {
         if (!StringUtils.hasLength(permission)) {
             return null;
         }
@@ -268,7 +227,7 @@ public class UserServiceImpl implements UserService {
     private boolean existsUsername(String username) {
         UserDO userDO = UserDO.builder()
                 .username(username).build();
-        return !userDao.queryAll(userDO).isEmpty();
+        return !userDao.queryAllByCondition(ConditionDTO.instant(username,Long.class)).isEmpty();
     }
 
     /**
@@ -276,12 +235,12 @@ public class UserServiceImpl implements UserService {
      * @param role
      * @return
      */
-    private boolean existsRole(String role) throws InstantiationException, IllegalAccessException {
+    private boolean existsRole(String role) throws ReflectiveOperationException {
         if (!StringUtils.hasLength(role)) {
             return false;
         }
-        RoleDO roleDO = RoleDO.builder().role(role).build();
-        if (roleService.queryAll(roleDO, null).isEmpty()) {
+        ConditionDTO<Long> condition = ConditionDTO.instant(role, Long.class);
+        if (roleService.queryAllByCondition(condition).isEmpty()) {
             // 不存在 新增
             roleService.insert(RoleDO.builder().role(role).build());
         }
@@ -290,7 +249,6 @@ public class UserServiceImpl implements UserService {
 
     private UserDO setUserProperties(UserDO userDO) {
         userDO.setCreateTime(DateUtils.format(new Date()));
-        userDO.setDelete(false);
         userDO.setVerifyEmail(false);
         userDO.setPassword(passwordEncoder.encode(userDO.getPassword()));
         userDO.setUid(GenerateInfoUtils.generateUid(workerId,datacenterId));
@@ -311,9 +269,8 @@ public class UserServiceImpl implements UserService {
         return userDO;
     }
 
-    private UserAccountDO setUserAccountProperties(UserDO userDO,UserAccountDO userAccountDO) throws InstantiationException, IllegalAccessException {
+    private UserAccountDO setUserAccountProperties(UserDO userDO,UserAccountDO userAccountDO) throws ReflectiveOperationException {
         userAccountDO.setCreateTime(DateUtils.format(new Date()));
-        userAccountDO.setDelete(false);
         userAccountDO.setAccountExpired(false);
         userAccountDO.setAccountLocked(false);
         userAccountDO.setUid(GenerateInfoUtils.generateUid(workerId,datacenterId));

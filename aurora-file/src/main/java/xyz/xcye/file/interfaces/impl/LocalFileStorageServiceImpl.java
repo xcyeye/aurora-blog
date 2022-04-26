@@ -88,7 +88,7 @@ public class LocalFileStorageServiceImpl implements FileStorageService {
             writeFile = FileUtils.writeByStream(inputStream, filePath);
         } catch (IOException e) {
             e.printStackTrace();
-            throw new FileException(ResponseStatusCodeEnum.EXCEPTION_FILE_FAIL_UPLOAD.getMessage(), ResponseStatusCodeEnum.EXCEPTION_FILE_FAIL_UPLOAD.getCode());
+            throw new FileException(ResponseStatusCodeEnum.EXCEPTION_FILE_FAIL_UPLOAD);
         }
 
         String fileRemoteUrl = host + FileUtils.getFileSplitPath(nginxRootPath,writeFile.getAbsolutePath());
@@ -167,8 +167,7 @@ public class LocalFileStorageServiceImpl implements FileStorageService {
             //创建文件夹
             if (!FileUtils.createFile(folderPath, true)) {
                 //创建文件夹失败
-                throw new FileException(ResponseStatusCodeEnum.EXCEPTION_FILE_FAIL_CREATE.getMessage(),
-                        ResponseStatusCodeEnum.EXCEPTION_FILE_FAIL_CREATE.getCode());
+                throw new FileException(ResponseStatusCodeEnum.EXCEPTION_FILE_FAIL_CREATE);
             }
         }
 
@@ -178,10 +177,9 @@ public class LocalFileStorageServiceImpl implements FileStorageService {
         boolean isCreateFile = FileUtils.createFile(filePath, false);
         if (!isCreateFile) {
             //创建文件夹失败
-            throw new FileException(ResponseStatusCodeEnum.EXCEPTION_FILE_FAIL_CREATE.getMessage(),
-                    ResponseStatusCodeEnum.EXCEPTION_FILE_FAIL_CREATE.getCode());
+            throw new FileException(ResponseStatusCodeEnum.EXCEPTION_FILE_FAIL_CREATE);
         }
 
-        return isCreateFile;
+        return true;
     }
 }

@@ -12,7 +12,7 @@ import java.util.List;
 
 public class BeanUtils {
     public static <T,S> List<T> copyList(List<S> sourceList,Class<T> target)
-            throws InstantiationException, IllegalAccessException {
+            throws ReflectiveOperationException {
         if (sourceList.isEmpty() || target == null) {
             return new ArrayList<>();
         }
@@ -28,7 +28,7 @@ public class BeanUtils {
     }
 
     public static <T> T copyProperties(Object source,Class<T> target)
-            throws InstantiationException, IllegalAccessException {
+            throws ReflectiveOperationException {
         if (source == null) {
             return null;
         }
@@ -38,7 +38,7 @@ public class BeanUtils {
     }
 
     public static <T,S> T getSingleObjFromList(List<S> objList, Class<T> target)
-            throws InstantiationException, IllegalAccessException {
+            throws ReflectiveOperationException {
         if (objList.isEmpty()) {
             return null;
         }

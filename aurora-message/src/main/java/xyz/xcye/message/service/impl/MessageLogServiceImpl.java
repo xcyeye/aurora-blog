@@ -77,8 +77,7 @@ public class MessageLogServiceImpl implements MessageLogService {
     }
 
     @Override
-    public List<MessageLogVO> queryAllMessageLog(ConditionDTO<Long> condition)
-            throws InstantiationException, IllegalAccessException {
+    public List<MessageLogVO> queryAllMessageLog(ConditionDTO<Long> condition) throws ReflectiveOperationException {
         condition = condition.init(condition);
         PageHelper.startPage(condition.getPageNum(),condition.getPageSize(),condition.getOrderBy());
         List<MessageLogDO> messageLogDOList = messageLogDao.queryAllMessageLog(condition);
@@ -86,7 +85,7 @@ public class MessageLogServiceImpl implements MessageLogService {
     }
 
     @Override
-    public MessageLogVO queryByUid(long uid) throws InstantiationException, IllegalAccessException {
+    public MessageLogVO queryByUid(long uid) throws ReflectiveOperationException {
         ConditionDTO<Long> conditionDTO = new ConditionDTO<>();
         conditionDTO.setUid(uid);
         return BeanUtils.getSingleObjFromList(messageLogDao.queryAllMessageLog(conditionDTO),MessageLogVO.class);

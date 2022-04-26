@@ -60,7 +60,7 @@ public class SendMailServiceImpl implements SendMailService {
 
     @Override
     public ModifyResult sendCommonNoticeMail(EmailCommonNoticeDTO emailCommonNotice, long userUid , String subject)
-            throws MessagingException, InstantiationException, IllegalAccessException, IOException {
+            throws MessagingException, IOException, ReflectiveOperationException {
         //根据userUid获取对应的邮件发送模板对象
         EmailTemplateVO emailTemplateVO = emailTemplateService.queryEmailTemplateByUserUid(userUid);
         if (emailTemplateVO == null) {
@@ -89,7 +89,7 @@ public class SendMailServiceImpl implements SendMailService {
 
     @Override
     public ModifyResult sendReplyCommentMail(CommentDO replyingCommentInfo, CommentDO repliedCommentInfo, long userUid, String subject)
-            throws MessagingException, BindException, InstantiationException, IllegalAccessException, IOException {
+            throws MessagingException, BindException, IOException, ReflectiveOperationException {
         //根据userUid获取对应的Email对象
         EmailTemplateVO emailTemplateVO = emailTemplateService.queryEmailTemplateByUserUid(userUid);
         if (emailTemplateVO == null) {
@@ -117,7 +117,7 @@ public class SendMailServiceImpl implements SendMailService {
 
     @Override
     public ModifyResult sendReceiveCommentMail(CommentDO receiveCommentInfo, long userUid,String subject)
-            throws MessagingException, BindException, InstantiationException, IllegalAccessException, IOException {
+            throws MessagingException, BindException, IOException, ReflectiveOperationException {
         //根据userUid获取对应的Email对象
         EmailTemplateVO emailTemplateVO = emailTemplateService.queryEmailTemplateByUserUid(userUid);
         if (emailTemplateVO == null) {
@@ -144,7 +144,7 @@ public class SendMailServiceImpl implements SendMailService {
 
     @Override
     public ModifyResult sendVerifyAccountMail(EmailVerifyAccountDTO verifyAccount, long userUid, String subject)
-            throws MessagingException, InstantiationException, IllegalAccessException, IOException, BindException {
+            throws MessagingException, IOException, BindException, ReflectiveOperationException {
         // 根据userUid获取对应的Email对象
         EmailTemplateVO emailTemplateVO = emailTemplateService.queryEmailTemplateByUserUid(userUid);
         if (emailTemplateVO == null) {
