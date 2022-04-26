@@ -52,7 +52,11 @@ public class GlobalLogRequestAop {
             builder.append(simpleName);
             builder.append(",");
         }
-        String allArgTypes = builder.substring(0, builder.length() - 1);
+
+        String allArgTypes = builder + "";
+        if (!"".equals(allArgTypes)) {
+            allArgTypes = allArgTypes.substring(0, builder.length() - 1);
+        }
 
         Object result = point.proceed();
         // 结束时间

@@ -3,9 +3,9 @@ package xyz.xcye.admin.service;
 import org.springframework.validation.BindException;
 import xyz.xcye.common.dto.ConditionDTO;
 import xyz.xcye.common.entity.result.ModifyResult;
-import xyz.xcye.common.entity.table.EmailDO;
 import xyz.xcye.common.entity.table.UserAccountDO;
 import xyz.xcye.common.entity.table.UserDO;
+import xyz.xcye.common.exception.email.EmailException;
 import xyz.xcye.common.exception.user.UserException;
 import xyz.xcye.common.vo.UserVO;
 
@@ -62,6 +62,8 @@ public interface UserService {
      */
     UserVO queryByUid(long uid) throws ReflectiveOperationException;
 
+    UserDO queryByUidContainPassword(String username) throws ReflectiveOperationException;
+
     /**
      * 根据用户名查询用户信息
      * @param username
@@ -71,9 +73,9 @@ public interface UserService {
 
     /**
      * 绑定邮箱
-     * @param emailDO
+     * @param emailUid 邮件记录的uid
      * @return
      * @throws BindException
      */
-    ModifyResult bindingEmail(EmailDO emailDO) throws BindException;
+    ModifyResult bindingEmail(long emailUid) throws BindException, EmailException, ReflectiveOperationException;
 }

@@ -1,9 +1,5 @@
 package xyz.xcye.admin.util;
 
-import xyz.xcye.common.enums.RegexEnum;
-
-import java.util.regex.Pattern;
-
 /**
  * 和用户相关的工具类
  * @author qsyyke
@@ -29,10 +25,11 @@ public class AccountInfoUtils {
      * @return
      */
     private static String getCorrectPrefixPath(String emailPrefixPath) {
-        if (!Pattern.matches(RegexEnum.DOMAIN_REGEX.getRegex(), emailPrefixPath)) {
+        // 此处没有进行网址的验证，因为如果在本地，会使用localhsot进行测试
+        /*if (!Pattern.matches(RegexEnum.DOMAIN_REGEX.getRegex(), emailPrefixPath)) {
             // 地址不对
             return null;
-        }
+        }*/
 
         // 判断是否以/结尾
         if (emailPrefixPath.endsWith("/")) {

@@ -11,9 +11,9 @@ import xyz.xcye.admin.service.UserService;
 import xyz.xcye.common.annotaion.ResponseResult;
 import xyz.xcye.common.dto.ConditionDTO;
 import xyz.xcye.common.entity.result.ModifyResult;
-import xyz.xcye.common.entity.table.EmailDO;
 import xyz.xcye.common.entity.table.UserAccountDO;
 import xyz.xcye.common.entity.table.UserDO;
+import xyz.xcye.common.exception.email.EmailException;
 import xyz.xcye.common.exception.user.UserException;
 import xyz.xcye.common.valid.Insert;
 import xyz.xcye.common.valid.Update;
@@ -74,8 +74,9 @@ public class UserController {
 
     @ApiOperation("绑定邮箱")
     @ResponseResult
-    @PutMapping("/bindingEmail")
-    public ModifyResult bindingEmail(@Validated({Insert.class,Default.class}) EmailDO emailDO) throws BindException {
-        return userService.bindingEmail(emailDO);
+    @PutMapping("/bindingEmail/{emailUid}")
+    public ModifyResult bindingEmail(@PathVariable("emailUid") long emailUid)
+            throws BindException, EmailException, ReflectiveOperationException {
+        return userService.bindingEmail(emailUid);
     }
 }

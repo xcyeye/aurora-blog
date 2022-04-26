@@ -10,5 +10,5 @@ import xyz.xcye.common.exception.user.UserException;
 
 public interface UserRedisService {
     void storageUserVerifyAccountInfo(EmailVerifyAccountDTO verifyAccount, long expirationTime);
-    boolean updateUserVerifyAccountInfo(long userUid) throws UserException;
+    boolean updateUserVerifyAccountInfo(String username, String password) throws UserException, ReflectiveOperationException;
 }

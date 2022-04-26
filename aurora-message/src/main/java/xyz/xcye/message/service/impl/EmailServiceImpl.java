@@ -1,17 +1,16 @@
 package xyz.xcye.message.service.impl;
 
 import com.github.pagehelper.PageHelper;
-import io.seata.spring.annotation.GlobalTransactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindException;
-import xyz.xcye.common.entity.table.EmailDO;
 import xyz.xcye.common.dto.ConditionDTO;
 import xyz.xcye.common.entity.result.ModifyResult;
 import xyz.xcye.common.entity.result.R;
+import xyz.xcye.common.entity.table.EmailDO;
 import xyz.xcye.common.enums.ResponseStatusCodeEnum;
 import xyz.xcye.common.exception.AuroraGlobalException;
 import xyz.xcye.common.exception.email.EmailException;
@@ -57,7 +56,6 @@ public class EmailServiceImpl implements EmailService {
     @Autowired
     private UserFeignService userFeignService;
 
-    @GlobalTransactional
     @Override
     public ModifyResult insertEmail(EmailDO email)
             throws BindException, ReflectiveOperationException, AuroraGlobalException {
@@ -69,12 +67,12 @@ public class EmailServiceImpl implements EmailService {
         R userR = userFeignService.queryUserByUid(email.getUserUid());
         UserVO userVO = JSONUtils.parseObjFromResult(ObjectConvertJson.jsonToString(userR), "data", UserVO.class);
 
-        if (userVO == null) {
+        if (userVO == null || userVO.getUid() == null) {
             throw new UserException(ResponseStatusCodeEnum.PERMISSION_USER_NOT_EXIST);
         }
 
-        // 判断是否绑定
-        if (userVO.getEmailUid() != null) {
+        // 判断是否绑定 如果用户没有验证邮箱，也重新绑定
+        if (userVO.getVerifyEmail()) {
             throw new EmailException(ResponseStatusCodeEnum.EXCEPTION_EMAIL_HAD_BINDING);
         }
 
@@ -84,16 +82,6 @@ public class EmailServiceImpl implements EmailService {
         email.setUid(uid);
         email.setCreateTime(DateUtils.format(new Date()));
         int insertEmailNum = emailDao.insertEmail(email);
-
-        logger.info("插入新邮箱记录: {},结果{}",email,insertEmailNum);
-        // 绑定邮箱
-        R r = userFeignService.bindingEmail(email);
-        ModifyResult modifyResult = JSONUtils.parseObjFromResult(ObjectConvertJson.jsonToString(r), "data", ModifyResult.class);
-
-        logger.info("feign绑定邮箱,email的uid:{},绑定结果:{}",email.getUid(),modifyResult);
-        if (!modifyResult.isSuccess()) {
-            throw new EmailException(ResponseStatusCodeEnum.EXCEPTION_EMAIL_FAIL_BINDING);
-        }
         return ModifyResult.operateResult(insertEmailNum,"插入email数据",
                  ResponseStatusCodeEnum.SUCCESS.getCode(),email.getUid());
     }

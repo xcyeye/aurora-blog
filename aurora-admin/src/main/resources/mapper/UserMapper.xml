@@ -59,6 +59,9 @@
             <if test="userDO.userAccountUid != null">
                 user_account_uid=#{userDO.userAccountUid}
             </if>
+            <if test="userDO.emailUid != null">
+                email_uid=#{userDO.emailUid}
+            </if>
         </set>
         where
             uid=#{userDO.uid}

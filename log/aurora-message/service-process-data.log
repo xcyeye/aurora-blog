@@ -1,0 +1,59 @@
+2022-04-27 00:12:18:122 98207 --- [http-nio-7070-exec-1] : 插入=== 待插入的数据:EmailDO(uid=null, userUid=1518950793165193216, emailHost=null, emailPassword=null, protocol=null, port=null, email=2604400276@qq.com, createTime=null, updateTime=null)
+2022-04-27 00:12:23:686 98207 --- [http-nio-7070-exec-4] : 插入=== 待插入的数据:EmailDO(uid=null, userUid=1518950793165193216, emailHost=null, emailPassword=null, protocol=null, port=null, email=2604400276@qq.com, createTime=null, updateTime=null)
+2022-04-27 00:15:52:153 98207 --- [http-nio-7070-exec-6] : 插入=== 待插入的数据:EmailDO(uid=null, userUid=1518950793165193216, emailHost=null, emailPassword=null, protocol=null, port=null, email=2604400276@qq.com, createTime=null, updateTime=null)
+2022-04-27 00:15:59:646 98207 --- [http-nio-7070-exec-8] : 插入=== 待插入的数据:EmailDO(uid=null, userUid=1518950793165193216, emailHost=null, emailPassword=null, protocol=null, port=null, email=2604400276@qq.com, createTime=null, updateTime=null)
+2022-04-27 00:17:07:959 61946 --- [http-nio-7070-exec-1] : 插入=== 待插入的数据:EmailDO(uid=null, userUid=1518950793165193216, emailHost=null, emailPassword=null, protocol=null, port=null, email=2604400276@qq.com, createTime=null, updateTime=null)
+2022-04-27 00:17:44:678 61946 --- [http-nio-7070-exec-4] : 插入=== 待插入的数据:EmailDO(uid=null, userUid=1518950793165193216, emailHost=null, emailPassword=null, protocol=null, port=null, email=2604400276@qq.com, createTime=null, updateTime=null)
+2022-04-27 00:18:42:621 61946 --- [http-nio-7070-exec-6] : 插入=== 待插入的数据:EmailDO(uid=null, userUid=1518986260233371648, emailHost=null, emailPassword=null, protocol=null, port=null, email=2604400276@qq.com, createTime=null, updateTime=null)
+2022-04-27 00:18:42:883 61946 --- [http-nio-7070-exec-6] : 插入成功=== 生成的uid:1518987947643813888  影响行数:1  插入的数据:EmailDO(uid=1518987947643813888, userUid=1518986260233371648, emailHost=null, emailPassword=null, protocol=null, port=null, email=2604400276@qq.com, createTime=2022-04-27 00:18:42, updateTime=null)
+2022-04-27 00:19:21:960 61946 --- [http-nio-7070-exec-7] : 查询条件=== 1518959327667863552
+2022-04-27 00:19:29:165 61946 --- [http-nio-7070-exec-8] : 查询条件=== 1518987947643813888
+2022-04-27 00:19:29:795 61946 --- [http-nio-7070-exec-9] : 插入=== 待插入的数据:MessageLogDO(uid=1518988142888665088, message={"correlationDataId":"1518988142888665088","verifyAccountInfo":{"expirationTime":120000,"receiverEmail":"2604400276@qq.com","userUid":1518986260233371648,"verifyAccountUrl":"http://localhost:8088/admin/verifyAccount/login"}}, errorMessage=, exchange=aurora.send.email.common.exchange, queue=, routingKey=mail.verify.account.routing, tryCount=0, consumeStatus=false, ackStatus=false, createTime=null, updateTime=null, exchangeType=topic)
+2022-04-27 00:19:29:897 61946 --- [http-nio-7070-exec-9] : 插入成功=== 生成的uid:1518988142888665088  影响行数:1  插入的数据:MessageLogDO(uid=1518988142888665088, message={"correlationDataId":"1518988142888665088","verifyAccountInfo":{"expirationTime":120000,"receiverEmail":"2604400276@qq.com","userUid":1518986260233371648,"verifyAccountUrl":"http://localhost:8088/admin/verifyAccount/login"}}, errorMessage=, exchange=aurora.send.email.common.exchange, queue=, routingKey=mail.verify.account.routing, tryCount=0, consumeStatus=false, ackStatus=false, createTime=2022-04-27 00:19:29, updateTime=null, exchangeType=topic)
+2022-04-27 00:19:29:958 61946 --- [http-nio-7070-exec-10] : 查询条件=== 1518988142888665088
+2022-04-27 00:19:29:995 61946 --- [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#2-1] : 查询条件=== 1518986260233371648
+2022-04-27 00:19:30:049 61946 --- [http-nio-7070-exec-2] : 修改=== 待修改的uid:0  待更新的数据:MessageLogDO(uid=1518988142888665088, message={"correlationDataId":"1518988142888665088","verifyAccountInfo":{"expirationTime":120000,"receiverEmail":"2604400276@qq.com","userUid":1518986260233371648,"verifyAccountUrl":"http://localhost:8088/admin/verifyAccount/login"}}, errorMessage=, exchange=aurora.send.email.common.exchange, queue=, routingKey=mail.verify.account.routing, tryCount=0, consumeStatus=false, ackStatus=true, createTime=2022-04-27 00:19:29, updateTime=null, exchangeType=topic)
+2022-04-27 00:19:30:092 61946 --- [http-nio-7070-exec-2] : 修改成功=== 被修改的uid:1518988142888665088  影响行数:1  更新的数据:MessageLogDO(uid=1518988142888665088, message={"correlationDataId":"1518988142888665088","verifyAccountInfo":{"expirationTime":120000,"receiverEmail":"2604400276@qq.com","userUid":1518986260233371648,"verifyAccountUrl":"http://localhost:8088/admin/verifyAccount/login"}}, errorMessage=, exchange=aurora.send.email.common.exchange, queue=, routingKey=mail.verify.account.routing, tryCount=0, consumeStatus=false, ackStatus=true, createTime=2022-04-27 00:19:29, updateTime=2022-04-27 00:19:30, exchangeType=topic)
+2022-04-27 00:19:36:858 61946 --- [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#2-1] : 插入=== 待插入的数据:EmailLogDO(uid=null, subject=请验证你的账户, content=
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div style="width: calc(100vw);height: auto;background: aqua;">
+    你的账户需要验证，你需要点击下面的链接进行验证
+    <div>
+        <a href="http://localhost:8088/admin/verifyAccount/login">
+            <li style="width: 90%;height: 5rem;background: #2093ab">链接</li>
+        </a>
+    </div>
+
+    此验证的有效时间截止为1970-01-01 08:02:00
+</div>
+</body>
+</html>, receiver=2604400276@qq.com, sender=2291308094@qq.com, send=true, createTime=2022-04-27 00:19:36, updateTime=)
+2022-04-27 00:19:36:912 61946 --- [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#2-1] : 插入成功=== 生成的uid:1038  影响行数:1  插入的数据:EmailLogDO(uid=1038, subject=请验证你的账户, content=
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div style="width: calc(100vw);height: auto;background: aqua;">
+    你的账户需要验证，你需要点击下面的链接进行验证
+    <div>
+        <a href="http://localhost:8088/admin/verifyAccount/login">
+            <li style="width: 90%;height: 5rem;background: #2093ab">链接</li>
+        </a>
+    </div>
+
+    此验证的有效时间截止为1970-01-01 08:02:00
+</div>
+</body>
+</html>, receiver=2604400276@qq.com, sender=2291308094@qq.com, send=true, createTime=2022-04-27 00:19:36, updateTime=)
+2022-04-27 00:19:36:914 61946 --- [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#2-1] : 查询条件=== 1518988142888665088
+2022-04-27 00:19:36:926 61946 --- [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#2-1] : 修改=== 待修改的uid:0  待更新的数据:MessageLogDO(uid=1518988142888665088, message={"correlationDataId":"1518988142888665088","verifyAccountInfo":{"expirationTime":120000,"receiverEmail":"2604400276@qq.com","userUid":1518986260233371648,"verifyAccountUrl":"http://localhost:8088/admin/verifyAccount/login"}}, errorMessage=null, exchange=aurora.send.email.common.exchange, queue=, routingKey=mail.verify.account.routing, tryCount=0, consumeStatus=true, ackStatus=true, createTime=2022-04-27 00:19:29, updateTime=2022-04-27 00:19:30, exchangeType=topic)
+2022-04-27 00:19:36:950 61946 --- [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#2-1] : 修改成功=== 被修改的uid:1518988142888665088  影响行数:1  更新的数据:MessageLogDO(uid=1518988142888665088, message={"correlationDataId":"1518988142888665088","verifyAccountInfo":{"expirationTime":120000,"receiverEmail":"2604400276@qq.com","userUid":1518986260233371648,"verifyAccountUrl":"http://localhost:8088/admin/verifyAccount/login"}}, errorMessage=null, exchange=aurora.send.email.common.exchange, queue=, routingKey=mail.verify.account.routing, tryCount=0, consumeStatus=true, ackStatus=true, createTime=2022-04-27 00:19:29, updateTime=2022-04-27 00:19:36, exchangeType=topic)

@@ -5,11 +5,12 @@ import org.springframework.cloud.openfeign.SpringQueryMap;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.BindException;
 import org.springframework.web.bind.annotation.*;
-import xyz.xcye.common.entity.table.EmailDO;
-import xyz.xcye.common.entity.table.MessageLogDO;
 import xyz.xcye.common.dto.PaginationDTO;
 import xyz.xcye.common.entity.result.ModifyResult;
 import xyz.xcye.common.entity.result.R;
+import xyz.xcye.common.entity.table.EmailDO;
+import xyz.xcye.common.entity.table.MessageLogDO;
+import xyz.xcye.common.vo.EmailVO;
 import xyz.xcye.common.vo.MessageLogVO;
 
 import java.util.List;
@@ -30,7 +31,7 @@ public interface MessageLogFeignService {
     ModifyResult deleteMessageLog(@PathVariable("uid") long uid);
 
     @GetMapping("/message/messageLog")
-    List<MessageLogVO> queryAllMessageLog(@SpringQueryMap MessageLogDO messageLogDO, @SpringQueryMap PaginationDTO paginationDTO) throws InstantiationException, IllegalAccessException;
+    List<MessageLogVO> queryAllMessageLog(@SpringQueryMap MessageLogDO messageLogDO, @SpringQueryMap PaginationDTO paginationDTO) throws ReflectiveOperationException;
 
     @GetMapping("/message/messageLog/{uid}")
     R queryMessageLogByUid(@PathVariable("uid") long uid);
@@ -48,7 +49,7 @@ public interface MessageLogFeignService {
     ModifyResult updateEmailByUid(@SpringQueryMap EmailDO email);
 
     @GetMapping("/message/email/{uid}")
-    EmailDO queryByUid(@PathVariable("uid") long uid);
+    R queryEmailByUid(@PathVariable("uid") long uid);
 
     @GetMapping("/message/email/userUid/{userUid}")
     EmailDO queryByUserUid(@PathVariable("userUid") long userUid);
