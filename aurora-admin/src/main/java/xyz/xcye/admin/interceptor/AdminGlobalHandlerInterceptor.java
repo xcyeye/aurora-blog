@@ -50,7 +50,7 @@ public class AdminGlobalHandlerInterceptor implements HandlerInterceptor {
             R failureResult = R.failure(ResponseStatusCodeEnum.PERMISSION_TOKEN_EXPIRATION.getCode(),
                     ResponseStatusCodeEnum.PERMISSION_TOKEN_EXPIRATION.getMessage());
 
-            String jsonToString = ObjectConvertJson.jsonToString(failureResult);
+            String jsonToString = ConvertObjectUtils.jsonToString(failureResult);
 
             log.error(jsonToString);
 

@@ -12,7 +12,7 @@ import org.springframework.validation.BindException;
 import xyz.xcye.common.constant.RabbitMQNameConstant;
 import xyz.xcye.common.entity.table.EmailDO;
 import xyz.xcye.common.entity.table.MessageLogDO;
-import xyz.xcye.common.util.ObjectConvertJson;
+import xyz.xcye.common.util.ConvertObjectUtils;
 import xyz.xcye.common.util.id.GenerateInfoUtils;
 
 import java.nio.charset.StandardCharsets;
@@ -63,7 +63,7 @@ public class OperateUserSendService {
         messageMap.put("emailDO",emailDO);
 
         //将发送的回复评论数据组装成一个map集合
-        String jsonToString = ObjectConvertJson.jsonToString(messageMap);
+        String jsonToString = ConvertObjectUtils.jsonToString(messageMap);
         log.error("sendBindingEmail恢复全局事务{}", RootContext.getXID());
         RootContext.bind(xid);
         insertMessageLog(jsonToString,uid);

@@ -11,7 +11,7 @@ import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 import xyz.xcye.common.entity.result.R;
 import xyz.xcye.common.enums.ResponseStatusCodeEnum;
-import xyz.xcye.common.util.ObjectConvertJson;
+import xyz.xcye.common.util.ConvertObjectUtils;
 
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
@@ -34,7 +34,7 @@ public class SecurityResultHandler {
         grantedAuthoritiesMap.put("permission",grantedAuthorities);
         R success = R.success(ResponseStatusCodeEnum.SUCCESS.getCode(), ResponseStatusCodeEnum.SUCCESS.getMessage(),grantedAuthoritiesMap, true);
 
-        String s = ObjectConvertJson.jsonToString(success);
+        String s = ConvertObjectUtils.jsonToString(success);
         return getMonoTypeResult(s,exchange);
     }
 
@@ -67,7 +67,7 @@ public class SecurityResultHandler {
 
         String s = "";
         try {
-            s = ObjectConvertJson.jsonToString(failureResult);
+            s = ConvertObjectUtils.jsonToString(failureResult);
         } catch (Exception e) {
             e.printStackTrace();
         }

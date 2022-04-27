@@ -7,7 +7,7 @@ import org.aspectj.lang.Signature;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.springframework.stereotype.Component;
-import xyz.xcye.common.util.ObjectConvertJson;
+import xyz.xcye.common.util.ConvertObjectUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,7 +45,7 @@ public class LogAop {
             }
         }
 
-        String jsonToString = ObjectConvertJson.jsonToString(argList);
+        String jsonToString = ConvertObjectUtils.jsonToString(argList);
 
         log.info("访问{}类中的{}方法，参数为{},总共花费{}ms",declaringTypeName,"",jsonToString,(System.currentTimeMillis() - startTimeMillis));
         return proceed;

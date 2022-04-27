@@ -2,6 +2,7 @@ package xyz.xcye.message.service;
 
 import xyz.xcye.common.dto.StorageSendMailInfo;
 import xyz.xcye.common.entity.result.ModifyResult;
+import xyz.xcye.common.exception.email.EmailException;
 
 import javax.mail.MessagingException;
 import java.io.IOException;
@@ -20,7 +21,7 @@ public interface SendMailService {
      * @throws MessagingException 发送失败
      */
     ModifyResult sendHtmlMail(StorageSendMailInfo storageSendMailInfo)
-            throws MessagingException, IOException, ReflectiveOperationException;
+            throws MessagingException, IOException, ReflectiveOperationException, EmailException;
 
     /**
      * 发送简单的邮件

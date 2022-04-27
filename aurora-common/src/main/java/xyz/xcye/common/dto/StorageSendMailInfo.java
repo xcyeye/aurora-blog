@@ -1,8 +1,7 @@
 package xyz.xcye.common.dto;
 
 import lombok.Data;
-import xyz.xcye.common.constant.FieldLengthConstant;
-import xyz.xcye.common.valid.validator.ValidateString;
+import xyz.xcye.common.enums.SendHtmlMailKeyNameEnum;
 
 import javax.validation.constraints.NotNull;
 import java.util.Map;
@@ -18,7 +17,12 @@ public class StorageSendMailInfo {
     /**
      * 存放替换邮件模板中的key和value值，其中key不需要加上{{}},[[]]这些
      */
-    private Map<String,String> replacingMap;
+    private Map<String,String> replacedMap;
+
+    /**
+     * 额外的数据，比如回复评论，需要组装一个被回复的评论对象
+     */
+    private Map<String,Object> additionalData;
 
     /**
      * 使用哪个用户的模板，如果此模板不存在，则使用默认的
@@ -29,16 +33,14 @@ public class StorageSendMailInfo {
     /**
      * 发送的标题
      */
-    @ValidateString(value = "邮件发送的标题", max = FieldLengthConstant.EMAIL_SUBJECT)
     private String subject;
 
     /**
      * 收件人的邮箱号
      */
-    @ValidateString(value = "邮件发送的接收者邮箱号", max = FieldLengthConstant.EMAIL_NUMBER)
     private String receiverEmail;
 
-    private String type;
+    private SendHtmlMailKeyNameEnum sendType;
 
     /**
      * mq发送消息的唯一id

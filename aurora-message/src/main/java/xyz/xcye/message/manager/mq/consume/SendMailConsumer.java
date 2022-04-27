@@ -1,5 +1,7 @@
 package xyz.xcye.message.manager.mq.consume;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.rabbitmq.client.Channel;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.core.Message;
@@ -12,17 +14,23 @@ import org.springframework.validation.BindException;
 import xyz.xcye.common.constant.RabbitMQNameConstant;
 import xyz.xcye.common.dto.StorageSendMailInfo;
 import xyz.xcye.common.entity.result.ModifyResult;
+import xyz.xcye.common.entity.table.CommentDO;
 import xyz.xcye.common.entity.table.MessageLogDO;
+import xyz.xcye.common.enums.SendHtmlMailKeyNameEnum;
+import xyz.xcye.common.exception.email.EmailException;
 import xyz.xcye.common.util.BeanUtils;
-import xyz.xcye.common.util.ValidationUtils;
+import xyz.xcye.common.util.ConvertObjectUtils;
 import xyz.xcye.common.vo.MessageLogVO;
 import xyz.xcye.message.service.MessageLogService;
 import xyz.xcye.message.service.SendMailService;
 import xyz.xcye.web.common.manager.mq.MistakeMessageSendService;
 
 import javax.mail.MessagingException;
-import javax.validation.groups.Default;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 发送邮件的mq消费者
@@ -53,7 +61,7 @@ public class SendMailConsumer {
      */
     @RabbitListener(queues = RabbitMQNameConstant.SEND_HTML_MAIL_QUEUE_NAME, ackMode = "MANUAL")
     public void sendHtmlMailConsumer(String msgJson, Channel channel, Message message)
-            throws IOException, ReflectiveOperationException, BindException, MessagingException {
+            throws IOException, ReflectiveOperationException, BindException, MessagingException, EmailException {
         // 待替换的key和value的map
         StorageSendMailInfo storageSendMailInfo = parseMessage.getStorageSendMailInfoFromMsg(msgJson,channel,message);
         if (!isLegitimateHtmlData(storageSendMailInfo)) {
@@ -61,18 +69,16 @@ public class SendMailConsumer {
             return;
         }
 
-        try {
-            ValidationUtils.valid(storageSendMailInfo, Default.class);
-        } catch (BindException e) {
-            // 属性验证失败
+        if (storageSendMailInfo.getUserUid() == null) {
             mistakeMessageSendService.sendMistakeMessageToExchange(msgJson,channel,message);
-            updateMessageLogInfo(storageSendMailInfo.getCorrelationDataId(),true,false,"xyz.xcye.common.dto.StorageSendMailInfo.java对象中的属性字段不满足要求");
+            updateMessageLogInfo(storageSendMailInfo.getCorrelationDataId(),true,false,"邮件发送中，没有传入userUid");
         }
 
         // 运行到此处，说明一切正常，将数据插入到数据库中 并且修改消息的消费状态
         channel.basicAck(message.getMessageProperties().getDeliveryTag(),false);
         ModifyResult modifyResult = sendMailService.sendHtmlMail(storageSendMailInfo);
 
+        isReplyComment(storageSendMailInfo);
         updateMessageLogInfo(storageSendMailInfo.getCorrelationDataId(),true,true,null);
     }
 
@@ -84,7 +90,7 @@ public class SendMailConsumer {
      */
     @RabbitListener(queues = RabbitMQNameConstant.SEND_HTML_MAIL_DEAD_LETTER_QUEUE_NAME, ackMode = "MANUAL")
     public void sendHtmlMailDeadLetterConsumer(String msgJson, Channel channel, Message message)
-            throws ReflectiveOperationException, MessagingException, BindException, IOException {
+            throws ReflectiveOperationException, MessagingException, BindException, IOException, EmailException {
         sendHtmlMailConsumer(msgJson,channel,message);
     }
 
@@ -177,10 +183,43 @@ public class SendMailConsumer {
             return false;
         }
 
-        if (storageSendMailInfo.getReceiverEmail() == null) {
-            return false;
+        return true;
+    }
+
+    /**
+     * 判断是否是回复评论的mq消息，如果是，那么还需要发送消息给被回复的这个评论的用户
+     * @param storageSendMailInfo
+     * @return
+     */
+    private void isReplyComment(StorageSendMailInfo storageSendMailInfo)
+            throws ReflectiveOperationException, MessagingException, EmailException, IOException {
+        if (storageSendMailInfo.getSendType() != SendHtmlMailKeyNameEnum.REPLY_COMMENT) {
+            return;
         }
 
-        return true;
+        // 是回复评论，则组装一个新的数据，用于发送收到评论的邮件
+        Map<String, Object> additionalData = storageSendMailInfo.getAdditionalData();
+        if (additionalData == null) {
+            // 可能会存在用户消息乱发送请求，则直接跳过
+            return;
+        }
+
+        JSONObject jsonObject = JSON.parseObject(ConvertObjectUtils.jsonToString(additionalData));
+        CommentDO commentDO = JSON.parseObject(jsonObject.getString(SendHtmlMailKeyNameEnum.ADDITIONAL_DATA.getKeyName()), CommentDO.class);
+
+        StorageSendMailInfo receiveCommentMailInfo = new StorageSendMailInfo();
+        // 设置属性
+        receiveCommentMailInfo.setUserUid(commentDO.getUserUid());
+        receiveCommentMailInfo.setSubject(commentDO.getContent());
+        receiveCommentMailInfo.setSendType(SendHtmlMailKeyNameEnum.RECEIVE_COMMENT);
+        receiveCommentMailInfo.setCorrelationDataId(storageSendMailInfo.getCorrelationDataId());
+
+        List<Map<String,Object>> list = new ArrayList<>();
+        Map<String,Object> map = new HashMap<>();
+        map.put(SendHtmlMailKeyNameEnum.RECEIVE_COMMENT.getKeyName(), commentDO);
+        list.add(map);
+
+        receiveCommentMailInfo = ConvertObjectUtils.generateMailInfo(receiveCommentMailInfo, list);
+        sendMailService.sendHtmlMail(receiveCommentMailInfo);
     }
 }

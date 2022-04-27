@@ -19,7 +19,7 @@ public class FieldLengthConstant {
     /** 邮件协议 **/
     public static final int EMAIL_PROTOCOL = 15;
     /** 邮件标题 **/
-    public static final int EMAIL_SUBJECT = 100;
+    public static final int EMAIL_SUBJECT = 50;
     /** 邮箱号 **/
     public static final int EMAIL_NUMBER = 254;
     /** 邮件模板 **/

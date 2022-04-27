@@ -18,7 +18,7 @@ import xyz.xcye.common.exception.user.UserException;
 import xyz.xcye.common.util.BeanUtils;
 import xyz.xcye.common.util.DateUtils;
 import xyz.xcye.common.util.JSONUtils;
-import xyz.xcye.common.util.ObjectConvertJson;
+import xyz.xcye.common.util.ConvertObjectUtils;
 import xyz.xcye.common.util.id.GenerateInfoUtils;
 import xyz.xcye.common.vo.EmailVO;
 import xyz.xcye.common.vo.UserVO;
@@ -65,7 +65,7 @@ public class EmailServiceImpl implements EmailService {
         }
 
         R userR = userFeignService.queryUserByUid(email.getUserUid());
-        UserVO userVO = JSONUtils.parseObjFromResult(ObjectConvertJson.jsonToString(userR), "data", UserVO.class);
+        UserVO userVO = JSONUtils.parseObjFromResult(ConvertObjectUtils.jsonToString(userR), "data", UserVO.class);
 
         if (userVO == null || userVO.getUid() == null) {
             throw new UserException(ResponseStatusCodeEnum.PERMISSION_USER_NOT_EXIST);

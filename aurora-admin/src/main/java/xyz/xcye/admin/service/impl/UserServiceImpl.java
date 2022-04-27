@@ -29,7 +29,7 @@ import xyz.xcye.common.exception.user.UserException;
 import xyz.xcye.common.util.BeanUtils;
 import xyz.xcye.common.util.DateUtils;
 import xyz.xcye.common.util.JSONUtils;
-import xyz.xcye.common.util.ObjectConvertJson;
+import xyz.xcye.common.util.ConvertObjectUtils;
 import xyz.xcye.common.util.id.GenerateInfoUtils;
 import xyz.xcye.common.vo.EmailVO;
 import xyz.xcye.common.vo.UserVO;
@@ -199,7 +199,7 @@ public class UserServiceImpl implements UserService {
 
         // 远程调用aurora-message服务，判断此email的uid是否存在
         R r = messageLogFeignService.queryEmailByUid(emailUid);
-        EmailVO queriedEmailInfo = JSONUtils.parseObjFromResult(ObjectConvertJson.jsonToString(r), "data", EmailVO.class);
+        EmailVO queriedEmailInfo = JSONUtils.parseObjFromResult(ConvertObjectUtils.jsonToString(r), "data", EmailVO.class);
         if (queriedEmailInfo == null || queriedEmailInfo.getUid() == null) {
             throw new EmailException(ResponseStatusCodeEnum.EXCEPTION_EMAIL_NOT_EXISTS);
         }

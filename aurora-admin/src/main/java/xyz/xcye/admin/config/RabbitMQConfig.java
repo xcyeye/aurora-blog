@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.validation.BindException;
 import xyz.xcye.common.entity.table.MessageLogDO;
 import xyz.xcye.common.entity.result.R;
-import xyz.xcye.common.util.ObjectConvertJson;
+import xyz.xcye.common.util.ConvertObjectUtils;
 import xyz.xcye.web.common.manager.mq.MistakeMessageSendService;
 import xyz.xcye.web.common.service.feign.MessageLogFeignService;
 
@@ -126,7 +126,7 @@ public class RabbitMQConfig implements RabbitTemplate.ConfirmCallback,RabbitTemp
         }
 
         R r = messageLogFeignService.queryMessageLogByUid(uid);
-        String json = ObjectConvertJson.jsonToString(r);
+        String json = ConvertObjectUtils.jsonToString(r);
         // 从json中获取data
         MessageLogDO messageLogDO = null;
         try {

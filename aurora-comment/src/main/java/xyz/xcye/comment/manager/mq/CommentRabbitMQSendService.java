@@ -1,7 +1,7 @@
 package xyz.xcye.comment.manager.mq;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.amqp.core.*;
+import org.springframework.amqp.core.Message;
 import org.springframework.amqp.rabbit.connection.CorrelationData;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,9 +9,11 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.BindException;
 import xyz.xcye.common.constant.RabbitMQNameConstant;
+import xyz.xcye.common.dto.StorageSendMailInfo;
 import xyz.xcye.common.entity.table.CommentDO;
 import xyz.xcye.common.entity.table.MessageLogDO;
-import xyz.xcye.common.util.ObjectConvertJson;
+import xyz.xcye.common.enums.SendHtmlMailKeyNameEnum;
+import xyz.xcye.common.util.ConvertObjectUtils;
 import xyz.xcye.common.util.ValidationUtils;
 import xyz.xcye.common.util.id.GenerateInfoUtils;
 import xyz.xcye.common.valid.Insert;
@@ -20,7 +22,10 @@ import xyz.xcye.web.common.service.feign.MessageLogFeignService;
 import javax.annotation.Resource;
 import javax.validation.groups.Default;
 import java.nio.charset.StandardCharsets;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author qsyyke
@@ -58,12 +63,18 @@ public class CommentRabbitMQSendService {
         long uid = GenerateInfoUtils.generateUid(workerId, datacenterId);
         CorrelationData correlationData = new CorrelationData(uid + "");
 
-        Map<String,Object> messageMap = new HashMap<>();
-        messageMap.put("correlationDataId",correlationData.getId());
-        messageMap.put("receiveCommentInfo",receiveCommentInfo);
+        StorageSendMailInfo storageSendMailInfo = new StorageSendMailInfo();
+        storageSendMailInfo.setCorrelationDataId(uid + "");
+        storageSendMailInfo.setSubject(receiveCommentInfo.getContent());
+        storageSendMailInfo.setUserUid(receiveCommentInfo.getUserUid());
+        storageSendMailInfo.setSendType(SendHtmlMailKeyNameEnum.RECEIVE_COMMENT);
 
+        List<Map<String,Object>> list = new ArrayList<>();
+        Map<String, Object> map = new HashMap<>();
+        map.put(SendHtmlMailKeyNameEnum.RECEIVE_COMMENT.getKeyName(),receiveCommentInfo);
+        list.add(map);
         //将发送的回复评论数据组装成一个map集合
-        String jsonToString = ObjectConvertJson.jsonToString(messageMap);
+        String jsonToString = ConvertObjectUtils.generateMailJson(storageSendMailInfo, list);
 
         //向au_message_log表中插入生产信息
         MessageLogDO messageLogDO = setMessageLogDO(jsonToString, uid, RabbitMQNameConstant.AURORA_SEND_MAIL_EXCHANGE, "",
@@ -86,20 +97,35 @@ public class CommentRabbitMQSendService {
      * @return
      */
     public void sendReplyCommentNotice(CommentDO replyingCommentInfo,CommentDO repliedCommentInfo) throws BindException {
-        //将发送的回复评论数据组装成一个map集合
-        Map<String,Object> commentMap = new HashMap<>();
-
         //此uid用于存放消息投递记录中的uid字段
         long uid = GenerateInfoUtils.generateUid(workerId, datacenterId);
         CorrelationData correlationData = new CorrelationData(uid + "");
 
         // 组装评论对象
-        commentMap.put("replyingCommentInfo",replyingCommentInfo);
-        commentMap.put("repliedCommentInfo",repliedCommentInfo);
-        commentMap.put("correlationDataId",correlationData.getId());
+        StorageSendMailInfo mailInfo = new StorageSendMailInfo();
+        mailInfo.setSubject(replyingCommentInfo.getContent());
+        mailInfo.setUserUid(repliedCommentInfo.getUserUid());
+        mailInfo.setCorrelationDataId(uid + "");
+
+        // 如果不是回复评论的话，则直接传入userUid便可以，会通过此userUid查询对应的email，但是如果是回复评论，则需要在此处进行设置收件人邮箱
+        // 优先级：receiverEmail > 通过userUid查询到的email
+        mailInfo.setReceiverEmail(repliedCommentInfo.getEmail());
+        mailInfo.setSendType(SendHtmlMailKeyNameEnum.REPLY_COMMENT);
+
+        List<Map<String,Object>> list = new ArrayList<>();
+        Map<String, Object> map = new HashMap<>();
+        map.put(SendHtmlMailKeyNameEnum.RECEIVE_COMMENT.getKeyName(),replyingCommentInfo);
+        map.put(SendHtmlMailKeyNameEnum.REPLY_COMMENT.getKeyName(), repliedCommentInfo);
+        list.add(map);
 
         // 将组装的map集合转换成json字符串，发送到交换机
-        String commentJson = ObjectConvertJson.jsonToString(commentMap);
+        mailInfo = ConvertObjectUtils.generateMailInfo(mailInfo, list);
+
+        // 组装一个存放被回复评论对象的数据
+        Map<String,Object> repliedMap = new HashMap<>();
+        repliedMap.put(SendHtmlMailKeyNameEnum.ADDITIONAL_DATA.getKeyName(), replyingCommentInfo);
+        mailInfo.setAdditionalData(repliedMap);
+        String commentJson = ConvertObjectUtils.jsonToString(mailInfo);
 
         //向au_message_log表中插入生产信息
         MessageLogDO messageLogDO = setMessageLogDO(commentJson, uid, RabbitMQNameConstant.AURORA_SEND_MAIL_EXCHANGE, "",

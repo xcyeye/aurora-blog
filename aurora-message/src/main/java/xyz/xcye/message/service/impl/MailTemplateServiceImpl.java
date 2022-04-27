@@ -29,7 +29,6 @@ public class MailTemplateServiceImpl implements MailTemplateService {
     @Override
     public ModifyResult insertMailTemplate(MailTemplateDO mailTemplate) {
         mailTemplate.setCreateTime(DateUtils.format());
-        mailTemplate.setReplaceArr(getCorrectReplaceArrStr(mailTemplate.getReplaceArr()));
         int insertMailTemplate = mailTemplateDao.insertMailTemplate(mailTemplate);
         return ModifyResult.operateResult(insertMailTemplate, "插入邮件模板",
                 ResponseStatusCodeEnum.SUCCESS.getCode(), mailTemplate.getUid());
