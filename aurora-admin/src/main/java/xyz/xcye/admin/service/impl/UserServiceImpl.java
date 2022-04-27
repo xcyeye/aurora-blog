@@ -15,6 +15,7 @@ import xyz.xcye.admin.manager.mq.send.VerifyAccountSendService;
 import xyz.xcye.admin.service.RoleService;
 import xyz.xcye.admin.service.UserAccountService;
 import xyz.xcye.admin.service.UserService;
+import xyz.xcye.web.common.util.AccountInfoUtils;
 import xyz.xcye.common.dto.ConditionDTO;
 import xyz.xcye.common.dto.EmailVerifyAccountDTO;
 import xyz.xcye.common.entity.result.ModifyResult;
@@ -173,8 +174,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDO queryByUidContainPassword(String username) throws ReflectiveOperationException {
+    public UserDO queryByUsernameContainPassword(String username) throws ReflectiveOperationException {
         return BeanUtils.getSingleObjFromList(userDao.queryAllByCondition(ConditionDTO.instant(username, Long.class)), UserDO.class);
+    }
+
+    @Override
+    public UserDO queryByUidContainPassword(long uid) throws ReflectiveOperationException {
+        return BeanUtils.getSingleObjFromList(userDao.queryAllByCondition(ConditionDTO.instant(uid, Long.class, true)), UserDO.class);
     }
 
     @Override
@@ -314,7 +320,7 @@ public class UserServiceImpl implements UserService {
         EmailVerifyAccountDTO verifyAccountInfo = EmailVerifyAccountDTO.builder()
                 .userUid(userVO.getUid())
                 .expirationTime((long) emailVerifyAccountExpirationTime)
-                .verifyAccountUrl(emailVerifyAccountPrefixPath)
+                .verifyAccountUrl(AccountInfoUtils.generateVerifyAccountPath(userVO.getUid(), emailVerifyAccountPrefixPath, userVO.getUsername()))
                 .receiverEmail(emailVO.getEmail()).subject(null).build();
         verifyAccountSendService.sendVerifyAccount(verifyAccountInfo);
     }

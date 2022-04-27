@@ -62,7 +62,8 @@ public interface UserService {
      */
     UserVO queryByUid(long uid) throws ReflectiveOperationException;
 
-    UserDO queryByUidContainPassword(String username) throws ReflectiveOperationException;
+    UserDO queryByUsernameContainPassword(String username) throws ReflectiveOperationException;
+    UserDO queryByUidContainPassword(long uid) throws ReflectiveOperationException;
 
     /**
      * 根据用户名查询用户信息

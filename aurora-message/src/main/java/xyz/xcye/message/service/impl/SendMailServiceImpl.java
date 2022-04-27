@@ -161,6 +161,7 @@ public class SendMailServiceImpl implements SendMailService {
         ValidationUtils.valid(verifyAccount,Insert.class, Default.class);
         //解析邮件发送内容
         String sendContent = ParseEmailTemplate.sendVerifyAccountMail(verifyAccount,emailTemplateVO);
+
         return sendEmail(subject,sendContent, verifyAccount.getReceiverEmail());
     }
 

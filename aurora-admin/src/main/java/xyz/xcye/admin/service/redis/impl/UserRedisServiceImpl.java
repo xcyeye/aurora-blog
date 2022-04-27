@@ -1,9 +1,10 @@
 package xyz.xcye.admin.service.redis.impl;
 
+import cn.hutool.crypto.digest.DigestAlgorithm;
+import cn.hutool.crypto.digest.Digester;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import xyz.xcye.admin.constant.RedisConstant;
@@ -13,6 +14,7 @@ import xyz.xcye.common.dto.EmailVerifyAccountDTO;
 import xyz.xcye.common.entity.result.ModifyResult;
 import xyz.xcye.common.entity.table.UserDO;
 import xyz.xcye.common.exception.user.UserException;
+import xyz.xcye.web.common.util.AccountInfoUtils;
 
 import java.time.Duration;
 
@@ -30,8 +32,7 @@ public class UserRedisServiceImpl implements UserRedisService {
     @Autowired
     private UserService userService;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+    private static final Digester md5 = new Digester(DigestAlgorithm.MD5);
 
     @Override
     public void storageUserVerifyAccountInfo(EmailVerifyAccountDTO verifyAccount, long expirationTime) {
@@ -42,18 +43,19 @@ public class UserRedisServiceImpl implements UserRedisService {
     }
 
     @Override
-    public boolean updateUserVerifyAccountInfo(String username, String password)
+    public boolean updateUserVerifyAccountInfo(long userUid, String secretKey)
             throws UserException, ReflectiveOperationException {
-        if (!StringUtils.hasLength(username) || !StringUtils.hasLength(password)) {
+
+        // 查询用户是否绑定
+        UserDO userDO = userService.queryByUidContainPassword(userUid);
+        if (userDO == null || !StringUtils.hasLength(secretKey) || userDO.getUid() == null) {
             return false;
         }
-        // 查询用户是否绑定
-        UserDO userDO = userService.queryByUidContainPassword(username);
-        // 进行密码匹配
-        boolean matches = passwordEncoder.matches(password, userDO.getPassword());
-        if (!matches) {
+        // 通过username+userUid+salt验证前后的秘钥是否一直
+        String md5Str = md5.digestHex(userDO.getUsername() + userDO.getUid() + AccountInfoUtils.SALT_SECRET_KEY);
+
+        if (!md5Str.equals(secretKey)) {
             // 密码错误
-            log.error("{},{}的密码错误，",username,password);
             return false;
         }
 

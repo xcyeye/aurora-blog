@@ -14,13 +14,11 @@ import org.springframework.validation.BindException;
 import xyz.xcye.admin.manager.mq.send.VerifyAccountSendService;
 import xyz.xcye.admin.service.UserService;
 import xyz.xcye.admin.service.redis.UserRedisService;
-import xyz.xcye.admin.util.AccountInfoUtils;
 import xyz.xcye.common.constant.RabbitMQNameConstant;
+import xyz.xcye.common.entity.result.ModifyResult;
 import xyz.xcye.common.entity.table.EmailDO;
 import xyz.xcye.common.entity.table.MessageLogDO;
 import xyz.xcye.common.entity.table.UserDO;
-import xyz.xcye.common.dto.EmailVerifyAccountDTO;
-import xyz.xcye.common.entity.result.ModifyResult;
 import xyz.xcye.common.exception.user.UserException;
 import xyz.xcye.common.util.ValidationUtils;
 import xyz.xcye.common.valid.Update;
@@ -96,7 +94,7 @@ public class RabbitMQBindEmailConsumer {
         ModifyResult modifyResult = userService.updateUser(userDO);
         updateMessageLogInfo(correlationDataId,true,true,null);
 
-        if (modifyResult.isSuccess()) {
+        /*if (modifyResult.isSuccess()) {
             // 如果更新成功，则发送验证账户的邮件
             String verifyAccountPath = AccountInfoUtils.generateVerifyAccountPath(modifyResult.getUid(), emailVerifyAccountPrefixPath);
             EmailVerifyAccountDTO verifyAccountDTO = EmailVerifyAccountDTO.builder().receiverEmail(emailDO.getEmail())
@@ -104,7 +102,7 @@ public class RabbitMQBindEmailConsumer {
                     .expirationTime((long) emailVerifyAccountExpirationTime)
                     .userUid(modifyResult.getUid()).build();
             verifyAccountSendService.sendVerifyAccount(verifyAccountDTO);
-        }
+        }*/
     }
 
     /**

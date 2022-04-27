@@ -4,7 +4,6 @@ import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import xyz.xcye.admin.service.redis.UserRedisService;
@@ -26,22 +25,17 @@ public class VerifyAccountController {
     @Autowired
     private UserRedisService userRedisService;
 
-    @PostMapping("/")
-    public String emailVerifyAccount(@RequestParam("username") String username,
-                                     @RequestParam("password") String password,
+    @GetMapping()
+    public String emailVerifyAccount(@RequestParam("userUid") long userUid,
+                                     @RequestParam("secretKey") String secretKey,
                                      HttpServletRequest request) throws UserException, ReflectiveOperationException {
-        boolean verifyAccountInfo = userRedisService.updateUserVerifyAccountInfo(username, password);
-        request.setAttribute("username",username);
+        boolean verifyAccountInfo = userRedisService.updateUserVerifyAccountInfo(userUid, secretKey);
+        request.setAttribute("username",userUid);
 
         if (verifyAccountInfo) {
             return "verifyAccountSuccess.html";
         }else {
             return "verifyAccountFail.html";
         }
-    }
-
-    @GetMapping("/login")
-    public String emailVerifyAccountLogin() {
-        return "verifyLogin.html";
     }
 }
