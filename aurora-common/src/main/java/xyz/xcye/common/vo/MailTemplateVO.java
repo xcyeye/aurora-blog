@@ -1,13 +1,6 @@
 package xyz.xcye.common.vo;
 
-import lombok.Builder;
 import lombok.Data;
-import xyz.xcye.common.constant.FieldLengthConstant;
-import xyz.xcye.common.valid.Insert;
-import xyz.xcye.common.valid.Update;
-import xyz.xcye.common.valid.validator.ValidateString;
-
-import javax.validation.constraints.NotNull;
 
 @Data
 public class MailTemplateVO {
@@ -28,11 +21,6 @@ public class MailTemplateVO {
      * 邮件html模板
      */
     private String template;
-
-    /**
-     * 替换模板中的特定字符的字符串集合
-     */
-    private String replaceArr;
 
     /**
      * 默认的发送标题，如果没有指定的话

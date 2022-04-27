@@ -6,26 +6,22 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.MailException;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
-import org.springframework.validation.BindException;
-import xyz.xcye.common.dto.EmailCommonNoticeDTO;
-import xyz.xcye.common.dto.EmailVerifyAccountDTO;
+import xyz.xcye.common.dto.ConditionDTO;
+import xyz.xcye.common.dto.StorageSendMailInfo;
 import xyz.xcye.common.entity.result.ModifyResult;
-import xyz.xcye.common.entity.table.CommentDO;
 import xyz.xcye.common.entity.table.EmailLogDO;
+import xyz.xcye.common.util.BeanUtils;
 import xyz.xcye.common.util.DateUtils;
-import xyz.xcye.common.util.ValidationUtils;
-import xyz.xcye.common.valid.Insert;
-import xyz.xcye.common.vo.EmailTemplateVO;
+import xyz.xcye.common.vo.MailTemplateVO;
 import xyz.xcye.message.enums.MailTemplateEnum;
 import xyz.xcye.message.mail.SendMailRealize;
 import xyz.xcye.message.service.EmailLogService;
-import xyz.xcye.message.service.EmailTemplateService;
+import xyz.xcye.message.service.MailTemplateService;
 import xyz.xcye.message.service.SendMailService;
 import xyz.xcye.message.util.MailTemplateUtils;
 import xyz.xcye.message.util.ParseEmailTemplate;
 
 import javax.mail.MessagingException;
-import javax.validation.groups.Default;
 import java.io.IOException;
 import java.util.Date;
 
@@ -44,7 +40,7 @@ public class SendMailServiceImpl implements SendMailService {
     private EmailLogService emailLogService;
 
     @Autowired
-    private EmailTemplateService emailTemplateService;
+    private MailTemplateService mailTemplateService;
 
     /**
      * 配置文件中的发送者的邮箱号
@@ -59,110 +55,31 @@ public class SendMailServiceImpl implements SendMailService {
     private int maxSubjectLength;
 
     @Override
-    public ModifyResult sendCommonNoticeMail(EmailCommonNoticeDTO emailCommonNotice, long userUid , String subject)
+    public ModifyResult sendHtmlMail(StorageSendMailInfo storageSendMailInfo)
             throws MessagingException, IOException, ReflectiveOperationException {
-        //根据userUid获取对应的邮件发送模板对象
-        EmailTemplateVO emailTemplateVO = emailTemplateService.queryEmailTemplateByUserUid(userUid);
-        if (emailTemplateVO == null) {
-            emailTemplateVO = new EmailTemplateVO();
-            // 数据库中不存在此用户对应的邮件发送模板，使用默认的
-            String noticeTemplateContent = MailTemplateUtils.readContentFromTemplateFile(MailTemplateEnum.COMMON_NOTICE.getTemplateName(),
-                    MailTemplateEnum.COMMON_NOTICE.getTemplateFolderPath());
-            emailTemplateVO.setNoticeTemplate(noticeTemplateContent);
-            emailTemplateVO.setNoticeSubject(MailTemplateEnum.COMMON_NOTICE.getSubject());
-        }
+        String type = storageSendMailInfo.getType();
 
-        if (!StringUtils.hasLength(emailCommonNotice.getNoticePath())) {
-            emailCommonNotice.setNoticePath(MailTemplateEnum.DefaultValueConstant.COMMON_NOTICE_PATH);
-        }
+        // 1. 根据userUid和type从数据库中获取模板，如果没有的话，则使用默认的
+        ConditionDTO<Long> condition = new ConditionDTO();
+        condition.setOtherUid(storageSendMailInfo.getUserUid());
+        condition.setKeyword(type);
+        MailTemplateVO mailTemplateVO = BeanUtils.getSingleObjFromList(mailTemplateService.queryAllMailTemplate(condition), MailTemplateVO.class);
 
-        //判断传入的subject是否为null或者空
-        subject = getRightSubject(subject,emailTemplateVO.getNoticeSubject());
-
-        //设置时间
-        emailCommonNotice.setNoticeTime(DateUtils.format(new Date()));
-
-        //获取解析之后的待发送内容
-        String sendContent = ParseEmailTemplate.sendCommonNoticeMail(emailCommonNotice, emailTemplateVO);
-        return sendEmail(subject,sendContent,emailCommonNotice.getReceiverEmail());
-    }
-
-    @Override
-    public ModifyResult sendReplyCommentMail(CommentDO replyingCommentInfo, CommentDO repliedCommentInfo, long userUid, String subject)
-            throws MessagingException, BindException, IOException, ReflectiveOperationException {
-        //根据userUid获取对应的Email对象
-        EmailTemplateVO emailTemplateVO = emailTemplateService.queryEmailTemplateByUserUid(userUid);
-        if (emailTemplateVO == null) {
-            emailTemplateVO = new EmailTemplateVO();
-            String templateContent = MailTemplateUtils.readContentFromTemplateFile(MailTemplateEnum.REPLY_COMMENT.getTemplateName(),
-                    MailTemplateEnum.REPLY_COMMENT.getTemplateFolderPath());
-            emailTemplateVO.setReplyCommentTemplate(templateContent);
-            emailTemplateVO.setReplyCommentSubject(MailTemplateEnum.REPLY_COMMENT.getSubject());
-        }
-
-        ValidationUtils.valid(repliedCommentInfo,Insert.class,Default.class);
-        ValidationUtils.valid(replyingCommentInfo,Insert.class,Default.class);
-
-        //判断传入的subject是否为null或者空或者长度超过限制
-        subject = getRightSubject(subject,emailTemplateVO.getReplyCommentSubject());
-
-        //解析邮件发送内容
-        String sendContent = ParseEmailTemplate.sendReplyCommentMail(replyingCommentInfo, repliedCommentInfo, emailTemplateVO);
-
-        // 用户回复评论，除了被回复的评论的用户会收到提醒，发布评论所对应的页面(文章)的作者也会收到
-        sendReceiveCommentMail(replyingCommentInfo,userUid,"");
-
-        return sendEmail(subject,sendContent,repliedCommentInfo.getEmail());
-    }
-
-    @Override
-    public ModifyResult sendReceiveCommentMail(CommentDO receiveCommentInfo, long userUid,String subject)
-            throws MessagingException, BindException, IOException, ReflectiveOperationException {
-        //根据userUid获取对应的Email对象
-        EmailTemplateVO emailTemplateVO = emailTemplateService.queryEmailTemplateByUserUid(userUid);
-        if (emailTemplateVO == null) {
-            emailTemplateVO = new EmailTemplateVO();
-            String templateContent = MailTemplateUtils.readContentFromTemplateFile(MailTemplateEnum.RECEIVE_COMMENT.getTemplateName(),
-                    MailTemplateEnum.RECEIVE_COMMENT.getTemplateFolderPath());
-            emailTemplateVO.setReceiveCommentTemplate(templateContent);
-            emailTemplateVO.setReceiveCommentSubject(MailTemplateEnum.RECEIVE_COMMENT.getSubject());
+        if (mailTemplateVO == null || !StringUtils.hasLength(mailTemplateVO.getTemplate())) {
+            mailTemplateVO = new MailTemplateVO();
+            String templateContent = MailTemplateUtils.readContentFromTemplateFile(getDefaultTemplate(type).getTemplateName(),
+                    getDefaultTemplate(type).getTemplateFolderPath());
+            mailTemplateVO.setTemplate(templateContent);
+            mailTemplateVO.setSubject(getDefaultTemplate(type).getSubject());
         }
 
         //判断传入的subject是否为null或者空
-        subject = getRightSubject(subject,emailTemplateVO.getReceiveCommentSubject());
-        ValidationUtils.valid(receiveCommentInfo, Insert.class);
-
-        if (!StringUtils.hasLength(receiveCommentInfo.getCreateTime())) {
-            receiveCommentInfo.setCreateTime(DateUtils.format(new Date()));
-        }
+        String subject = getRightSubject(storageSendMailInfo.getSubject(), mailTemplateVO.getSubject());
 
         //解析邮件发送内容
-        String sendContent = ParseEmailTemplate.sendReceiveCommentMail(receiveCommentInfo,emailTemplateVO);
-        // 因为收到评论，一般都是博主
-        return sendEmail(subject,sendContent, senderEmail);
-    }
+        String sendContent = ParseEmailTemplate.parseHtmlMailTemplate(storageSendMailInfo.getReplacingMap(), mailTemplateVO.getTemplate());
 
-    @Override
-    public ModifyResult sendVerifyAccountMail(EmailVerifyAccountDTO verifyAccount, long userUid, String subject)
-            throws MessagingException, IOException, BindException, ReflectiveOperationException {
-        // 根据userUid获取对应的Email对象
-        EmailTemplateVO emailTemplateVO = emailTemplateService.queryEmailTemplateByUserUid(userUid);
-        if (emailTemplateVO == null) {
-            emailTemplateVO = new EmailTemplateVO();
-            String templateContent = MailTemplateUtils.readContentFromTemplateFile(MailTemplateEnum.VERIFY_ACCOUNT.getTemplateName(),
-                    MailTemplateEnum.VERIFY_ACCOUNT.getTemplateFolderPath());
-            emailTemplateVO.setVerifyAccountTemplate(templateContent);
-            emailTemplateVO.setVerifyAccountSubject(MailTemplateEnum.VERIFY_ACCOUNT.getSubject());
-        }
-
-        //判断传入的subject是否为null或者空
-        subject = getRightSubject(subject,emailTemplateVO.getVerifyAccountSubject());
-
-        ValidationUtils.valid(verifyAccount,Insert.class, Default.class);
-        //解析邮件发送内容
-        String sendContent = ParseEmailTemplate.sendVerifyAccountMail(verifyAccount,emailTemplateVO);
-
-        return sendEmail(subject,sendContent, verifyAccount.getReceiverEmail());
+        return sendEmail(subject, sendContent, storageSendMailInfo.getReceiverEmail());
     }
 
     @Override
@@ -226,5 +143,21 @@ public class SendMailServiceImpl implements SendMailService {
         EmailLogDO emailLog = new EmailLogDO(null,subject,sendContent,receiverEmail,
                 senderEmail, sendFlag,DateUtils.format(new Date()),"");
         return emailLogService.insertEmailLog(emailLog);
+    }
+
+    private MailTemplateEnum getDefaultTemplate(String type) throws IOException {
+        switch (type) {
+            case "receiveComment":
+                return MailTemplateEnum.RECEIVE_COMMENT;
+            case "replyComment":
+                return MailTemplateEnum.REPLY_COMMENT;
+            case "commonNotice":
+                return MailTemplateEnum.COMMON_NOTICE;
+            case "verifyAccount":
+                return MailTemplateEnum.VERIFY_ACCOUNT;
+            default:
+                return MailTemplateEnum.DEFAULT;
+        }
+
     }
 }

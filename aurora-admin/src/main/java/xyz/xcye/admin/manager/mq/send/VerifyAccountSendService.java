@@ -64,13 +64,13 @@ public class VerifyAccountSendService {
         //将发送的回复评论数据组装成一个map集合
         String jsonToString = ObjectConvertJson.jsonToString(messageMap);
         messageLogService.remoteInsertMessageLog(jsonToString,uid,
-                RabbitMQNameConstant.AURORA_SEND_EMAIL_COMMON_EXCHANGE,"",
-                RabbitMQNameConstant.MAIL_VERIFY_ACCOUNT_NOTICE_ROUTING_KEY,false,0,
+                RabbitMQNameConstant.AURORA_SEND_MAIL_EXCHANGE,"",
+                RabbitMQNameConstant.SEND_HTML_MAIL_ROUTING_KEY,false,0,
                 "topic",false,"");
 
         // 存储验证信息
-        rabbitTemplate.send(RabbitMQNameConstant.AURORA_SEND_EMAIL_COMMON_EXCHANGE,
-                RabbitMQNameConstant.MAIL_VERIFY_ACCOUNT_NOTICE_ROUTING_KEY,
+        rabbitTemplate.send(RabbitMQNameConstant.AURORA_SEND_MAIL_EXCHANGE,
+                RabbitMQNameConstant.SEND_HTML_MAIL_ROUTING_KEY,
                 new Message(jsonToString.getBytes(StandardCharsets.UTF_8)),correlationData);
         log.info("发送mq验证账户消息，消息信息{}，验证账户信息{}",jsonToString,verifyAccountInfo);
         // 发送成功 向redis中插入待验证的账户信息

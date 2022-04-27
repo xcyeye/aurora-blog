@@ -66,16 +66,16 @@ public class CommentRabbitMQSendService {
         String jsonToString = ObjectConvertJson.jsonToString(messageMap);
 
         //向au_message_log表中插入生产信息
-        MessageLogDO messageLogDO = setMessageLogDO(jsonToString, uid, RabbitMQNameConstant.AURORA_SEND_EMAIL_COMMON_EXCHANGE, "",
-                RabbitMQNameConstant.MAIL_RECEIVE_COMMENT_NOTICE_ROUTING_KEY, false, 0, "topic",
+        MessageLogDO messageLogDO = setMessageLogDO(jsonToString, uid, RabbitMQNameConstant.AURORA_SEND_MAIL_EXCHANGE, "",
+                RabbitMQNameConstant.SEND_HTML_MAIL_ROUTING_KEY, false, 0, "topic",
                 false, "");
 
         // 验证messageLogDO对象属性是否合法
         ValidationUtils.valid(messageLogDO, Insert.class, Default.class);
         messageLogFeignService.insertMessageLog(messageLogDO);
 
-        rabbitTemplate.send(RabbitMQNameConstant.AURORA_SEND_EMAIL_COMMON_EXCHANGE,
-                RabbitMQNameConstant.MAIL_RECEIVE_COMMENT_NOTICE_ROUTING_KEY,
+        rabbitTemplate.send(RabbitMQNameConstant.AURORA_SEND_MAIL_EXCHANGE,
+                RabbitMQNameConstant.SEND_HTML_MAIL_ROUTING_KEY,
                 new Message(jsonToString.getBytes(StandardCharsets.UTF_8)),correlationData);
     }
 
@@ -102,16 +102,16 @@ public class CommentRabbitMQSendService {
         String commentJson = ObjectConvertJson.jsonToString(commentMap);
 
         //向au_message_log表中插入生产信息
-        MessageLogDO messageLogDO = setMessageLogDO(commentJson, uid, RabbitMQNameConstant.AURORA_SEND_EMAIL_COMMON_EXCHANGE, "",
-                RabbitMQNameConstant.MAIL_REPLY_COMMENT_NOTICE_ROUTING_KEY, false, 0, "topic",
+        MessageLogDO messageLogDO = setMessageLogDO(commentJson, uid, RabbitMQNameConstant.AURORA_SEND_MAIL_EXCHANGE, "",
+                RabbitMQNameConstant.SEND_HTML_MAIL_ROUTING_KEY, false, 0, "topic",
                 false, "");
 
         // 验证messageLogDO对象属性是否合法
         ValidationUtils.valid(messageLogDO,Insert.class,Default.class);
         messageLogFeignService.insertMessageLog(messageLogDO);
 
-        rabbitTemplate.send(RabbitMQNameConstant.AURORA_SEND_EMAIL_COMMON_EXCHANGE,
-                RabbitMQNameConstant.MAIL_REPLY_COMMENT_NOTICE_ROUTING_KEY,
+        rabbitTemplate.send(RabbitMQNameConstant.AURORA_SEND_MAIL_EXCHANGE,
+                RabbitMQNameConstant.SEND_HTML_MAIL_ROUTING_KEY,
                 new Message(commentJson.getBytes(StandardCharsets.UTF_8)));
     }
 

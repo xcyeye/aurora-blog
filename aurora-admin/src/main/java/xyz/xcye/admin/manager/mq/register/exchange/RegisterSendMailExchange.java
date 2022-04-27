@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 import xyz.xcye.common.constant.RabbitMQNameConstant;
 
 /**
+ * 发送邮件的交换机只注册两种，发送邮件的交换机和发送邮件的死信交换机
  * @author qsyyke
  */
 
@@ -17,8 +18,8 @@ public class RegisterSendMailExchange {
      * @return
      */
     @Bean
-    public Exchange commonSendMailExchange() {
-        return new TopicExchange(RabbitMQNameConstant.AURORA_SEND_EMAIL_COMMON_EXCHANGE,
+    public Exchange commonSendSimpleTextMailExchange() {
+        return new TopicExchange(RabbitMQNameConstant.AURORA_SEND_MAIL_EXCHANGE,
                 true,true);
     }
 
@@ -28,7 +29,7 @@ public class RegisterSendMailExchange {
      */
     @Bean
     public Exchange mailReceiveCommentNoticeExchange() {
-        return new TopicExchange(RabbitMQNameConstant.AURORA_SEND_EMAIL_DEAD_LETTER_EXCHANGE,
+        return new TopicExchange(RabbitMQNameConstant.AURORA_SEND_MAIL_DEAD_LETTER_EXCHANGE,
                 true, false);
     }
 }

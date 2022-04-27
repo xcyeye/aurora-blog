@@ -14,6 +14,7 @@ public enum MailTemplateEnum {
     RECEIVE_COMMENT("receiveComment.html","mailTemplate","你收到新评论了"),
     REPLY_COMMENT("replyComment.html","mailTemplate","你的评论有新回复了"),
     VERIFY_ACCOUNT("verifyAccount.html","mailTemplate","请验证你的账户"),
+    DEFAULT("","",""),
     APPLICATION_MAIN_CONFIG("application.yml","","");
 
     /**

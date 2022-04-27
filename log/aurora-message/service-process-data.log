@@ -318,3 +318,77 @@
 2022-04-27 14:10:01:286 20556 --- [http-nio-7070-exec-2] : 查询条件=== 256
 2022-04-27 14:10:08:105 20556 --- [http-nio-7070-exec-3] : 查询条件=== 256
 2022-04-27 14:10:08:326 20556 --- [http-nio-7070-exec-4] : 查询条件=== 256
+2022-04-27 17:19:20:700 28150 --- [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#2-1] : 插入=== 待插入的数据:EmailLogDO(uid=null, subject=简单文本, content=这是一个简单文本, receiver=2291308094@qq.com, sender=2291308094@qq.com, send=true, createTime=2022-04-27 17:19:06, updateTime=)
+2022-04-27 17:19:33:406 28150 --- [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#2-1] : 插入成功=== 生成的uid:1041  影响行数:1  插入的数据:EmailLogDO(uid=1041, subject=简单文本, content=这是一个简单文本, receiver=2291308094@qq.com, sender=2291308094@qq.com, send=true, createTime=2022-04-27 17:19:23, updateTime=)
+2022-04-27 17:53:15:477 50051 --- [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#2-1] : 插入=== 待插入的数据:EmailLogDO(uid=null, subject=简单文本, content=这是一个简单文本, receiver=2291308094@qq.com, sender=2291308094@qq.com, send=true, createTime=2022-04-27 17:53:15, updateTime=)
+2022-04-27 17:53:16:135 50051 --- [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#2-1] : 插入成功=== 生成的uid:1042  影响行数:1  插入的数据:EmailLogDO(uid=1042, subject=简单文本, content=这是一个简单文本, receiver=2291308094@qq.com, sender=2291308094@qq.com, send=true, createTime=2022-04-27 17:53:15, updateTime=)
+2022-04-27 17:53:16:492 50051 --- [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#6-1] : 插入=== 待插入的数据:EmailLogDO(uid=null, subject=简单文本, content=这是一个简单文本, receiver=2291308094@qq.com, sender=2291308094@qq.com, send=true, createTime=2022-04-27 17:53:16, updateTime=)
+2022-04-27 17:53:16:499 50051 --- [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#6-1] : 插入成功=== 生成的uid:1043  影响行数:1  插入的数据:EmailLogDO(uid=1043, subject=简单文本, content=这是一个简单文本, receiver=2291308094@qq.com, sender=2291308094@qq.com, send=true, createTime=2022-04-27 17:53:16, updateTime=)
+2022-04-27 17:53:46:080 50051 --- [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#2-1] : 插入=== 待插入的数据:EmailLogDO(uid=null, subject=简单文本, content=这是一个简单文本, receiver=2291308094@qq.com, sender=2291308094@qq.com, send=true, createTime=2022-04-27 17:53:46, updateTime=)
+2022-04-27 17:53:46:087 50051 --- [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#2-1] : 插入成功=== 生成的uid:1044  影响行数:1  插入的数据:EmailLogDO(uid=1044, subject=简单文本, content=这是一个简单文本, receiver=2291308094@qq.com, sender=2291308094@qq.com, send=true, createTime=2022-04-27 17:53:46, updateTime=)
+2022-04-27 17:53:47:918 50051 --- [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#10-1] : 插入=== 待插入的数据:EmailLogDO(uid=null, subject=简单文本, content=这是一个简单文本, receiver=2291308094@qq.com, sender=2291308094@qq.com, send=true, createTime=2022-04-27 17:53:47, updateTime=)
+2022-04-27 17:53:47:924 50051 --- [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#10-1] : 插入成功=== 生成的uid:1045  影响行数:1  插入的数据:EmailLogDO(uid=1045, subject=简单文本, content=这是一个简单文本, receiver=2291308094@qq.com, sender=2291308094@qq.com, send=true, createTime=2022-04-27 17:53:47, updateTime=)
+2022-04-27 17:53:50:242 50051 --- [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#6-1] : 插入=== 待插入的数据:EmailLogDO(uid=null, subject=简单文本, content=这是一个简单文本, receiver=2291308094@qq.com, sender=2291308094@qq.com, send=true, createTime=2022-04-27 17:53:50, updateTime=)
+2022-04-27 17:53:50:248 50051 --- [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#6-1] : 插入成功=== 生成的uid:1046  影响行数:1  插入的数据:EmailLogDO(uid=1046, subject=简单文本, content=这是一个简单文本, receiver=2291308094@qq.com, sender=2291308094@qq.com, send=true, createTime=2022-04-27 17:53:50, updateTime=)
+2022-04-27 18:05:59:681 56959 --- [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#2-7] : 插入=== 待插入的数据:EmailLogDO(uid=null, subject=简单文本, content=这是一个简单文本, receiver=2291308094@qq.com, sender=2291308094@qq.com, send=true, createTime=2022-04-27 18:05:59, updateTime=)
+2022-04-27 18:06:00:422 56959 --- [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#2-7] : 插入成功=== 生成的uid:1047  影响行数:1  插入的数据:EmailLogDO(uid=1047, subject=简单文本, content=这是一个简单文本, receiver=2291308094@qq.com, sender=2291308094@qq.com, send=true, createTime=2022-04-27 18:05:59, updateTime=)
+2022-04-27 18:06:01:556 56959 --- [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#2-7] : 插入=== 待插入的数据:EmailLogDO(uid=null, subject=简单文本, content=这是一个简单文本, receiver=2291308094@qq.com, sender=2291308094@qq.com, send=true, createTime=2022-04-27 18:06:01, updateTime=)
+2022-04-27 18:06:01:568 56959 --- [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#2-7] : 插入成功=== 生成的uid:1048  影响行数:1  插入的数据:EmailLogDO(uid=1048, subject=简单文本, content=这是一个简单文本, receiver=2291308094@qq.com, sender=2291308094@qq.com, send=true, createTime=2022-04-27 18:06:01, updateTime=)
+2022-04-27 18:06:36:976 56959 --- [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#2-7] : 插入=== 待插入的数据:EmailLogDO(uid=null, subject=简单文本, content=这是一个简单文本, receiver=2291308094@qq.com, sender=2291308094@qq.com, send=true, createTime=2022-04-27 18:06:36, updateTime=)
+2022-04-27 18:06:36:985 56959 --- [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#2-7] : 插入成功=== 生成的uid:1049  影响行数:1  插入的数据:EmailLogDO(uid=1049, subject=简单文本, content=这是一个简单文本, receiver=2291308094@qq.com, sender=2291308094@qq.com, send=true, createTime=2022-04-27 18:06:36, updateTime=)
+2022-04-27 18:07:16:623 56959 --- [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#2-7] : 插入=== 待插入的数据:EmailLogDO(uid=null, subject=this is send message, content=这是一个简单文本, receiver=2291308094@qq.com, sender=2291308094@qq.com, send=true, createTime=2022-04-27 18:07:16, updateTime=)
+2022-04-27 18:07:16:630 56959 --- [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#2-7] : 插入成功=== 生成的uid:1050  影响行数:1  插入的数据:EmailLogDO(uid=1050, subject=this is send message, content=这是一个简单文本, receiver=2291308094@qq.com, sender=2291308094@qq.com, send=true, createTime=2022-04-27 18:07:16, updateTime=)
+2022-04-27 18:22:34:877 56959 --- [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#4-1] : 查询条件=== ConditionDTO(startTime=null, endTime=null, uid=null, otherUid=2387463476523, show=null, status=null, keyword=receiverComment, pageNum=null, pageSize=null, orderBy=null)
+2022-04-27 18:23:24:015 56959 --- [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#0-1] : 查询条件=== ConditionDTO(startTime=null, endTime=null, uid=null, otherUid=2387463476523, show=null, status=null, keyword=receiveComment, pageNum=null, pageSize=null, orderBy=null)
+2022-04-27 18:24:33:513 56959 --- [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#0-1] : 插入=== 待插入的数据:EmailLogDO(uid=null, subject=简单文本, content=
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div style="width: calc(100vw);height: auto;background: antiquewhite;">
+    <h2 style="font-weight: bold;">
+        <span>你收到了新的评论了</span>
+    </h2>
+
+
+    <div style="margin-top: 2rem;background-color: #404993;margin-bottom: 2rem;">
+        收到的评论内容<br>
+        <span>这是被回复的内容</span>
+        创建时间<div>2022-04-27 18:19:01</div>
+        你的用户名<div>青衫烟雨客</div>
+        <a href="{{repliedCommentUserSite}}">:au你的站点ua:</a>
+    </div>
+
+    <a href="{{commentPath}}">点击快速查看</a>
+</div>
+</body>
+</html>, receiver=2291308094@qq.com, sender=2291308094@qq.com, send=true, createTime=2022-04-27 18:24:33, updateTime=)
+2022-04-27 18:24:33:593 56959 --- [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#0-1] : 插入成功=== 生成的uid:1051  影响行数:1  插入的数据:EmailLogDO(uid=1051, subject=简单文本, content=
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div style="width: calc(100vw);height: auto;background: antiquewhite;">
+    <h2 style="font-weight: bold;">
+        <span>你收到了新的评论了</span>
+    </h2>
+
+
+    <div style="margin-top: 2rem;background-color: #404993;margin-bottom: 2rem;">
+        收到的评论内容<br>
+        <span>这是被回复的内容</span>
+        创建时间<div>2022-04-27 18:19:01</div>
+        你的用户名<div>青衫烟雨客</div>
+        <a href="{{repliedCommentUserSite}}">:au你的站点ua:</a>
+    </div>
+
+    <a href="{{commentPath}}">点击快速查看</a>
+</div>
+</body>
+</html>, receiver=2291308094@qq.com, sender=2291308094@qq.com, send=true, createTime=2022-04-27 18:24:33, updateTime=)

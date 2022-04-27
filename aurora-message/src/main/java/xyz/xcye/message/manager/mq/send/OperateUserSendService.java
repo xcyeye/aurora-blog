@@ -13,15 +13,15 @@ import xyz.xcye.common.constant.RabbitMQNameConstant;
 import xyz.xcye.common.entity.table.EmailDO;
 import xyz.xcye.common.entity.table.MessageLogDO;
 import xyz.xcye.common.util.ObjectConvertJson;
-import xyz.xcye.common.util.ValidationUtils;
 import xyz.xcye.common.util.id.GenerateInfoUtils;
-import xyz.xcye.common.valid.Insert;
 
-import javax.validation.groups.Default;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * TODO 此类暂时不用
+ */
 
 @Slf4j
 @Component
@@ -76,14 +76,14 @@ public class OperateUserSendService {
     }
 
     private void insertMessageLog(String jsonToString, long uid) throws BindException {
-        //向au_message_log表中插入生产信息
-        MessageLogDO messageLogDO = setMessageLogDO(jsonToString, uid, RabbitMQNameConstant.AURORA_SEND_EMAIL_COMMON_EXCHANGE, "",
+        /*//向au_message_log表中插入生产信息
+        MessageLogDO messageLogDO = setMessageLogDO(jsonToString, uid, RabbitMQNameConstant.AURORA_SEND_MAIL_EXCHANGE, "",
                 RabbitMQNameConstant.MAIL_VERIFY_ACCOUNT_NOTICE_ROUTING_KEY, false, 0, "topic",
                 false, "");
 
         // 验证messageLogDO对象属性是否合法
         ValidationUtils.valid(messageLogDO, Insert.class, Default.class);
-        //messageLogService.insertMessageLog(messageLogDO);
+        //messageLogService.insertMessageLog(messageLogDO);*/
     }
 
     private MessageLogDO setMessageLogDO(String message,long uid,String exchange,

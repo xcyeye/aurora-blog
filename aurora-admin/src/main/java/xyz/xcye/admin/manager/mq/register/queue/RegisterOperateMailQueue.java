@@ -7,89 +7,50 @@ import org.springframework.stereotype.Component;
 import xyz.xcye.common.constant.RabbitMQNameConstant;
 
 /**
- * 注册操作邮件的队列
+ * 注册操作邮件的队列，只注册一个就行了
  * @author qsyyke
  */
 
 @Component
 public class RegisterOperateMailQueue {
     /**
-     * 发送普通邮件通知的队列
+     * 发送html邮件的队列
      * @return
      */
     @Bean
-    public Queue mailCommonNoticeQueue() {
-        return QueueBuilder.durable(RabbitMQNameConstant.MAIL_COMMON_NOTICE_QUEUE_NAME)
-                .deadLetterExchange(RabbitMQNameConstant.AURORA_SEND_EMAIL_DEAD_LETTER_EXCHANGE)
-                .deadLetterRoutingKey(RabbitMQNameConstant.DEAD_LETTER_MAIL_COMMON_NOTICE_ROUTING_KEY).build();
+    public Queue mailSendHtmlQueue() {
+        return QueueBuilder.durable(RabbitMQNameConstant.SEND_HTML_MAIL_QUEUE_NAME)
+                .deadLetterExchange(RabbitMQNameConstant.AURORA_SEND_MAIL_DEAD_LETTER_EXCHANGE)
+                .deadLetterRoutingKey(RabbitMQNameConstant.SEND_HTML_MAIL_DEAD_LETTER_ROUTING_KEY).build();
     }
 
     /**
-     * 发送回复评论邮件通知的队列
+     * 发送简单文本邮件的队列
      * @return
      */
     @Bean
-    public Queue mailReplyCommentNoticeQueue() {
-        return QueueBuilder.durable(RabbitMQNameConstant.MAIL_REPLY_COMMENT_NOTICE_QUEUE_NAME)
-                .deadLetterExchange(RabbitMQNameConstant.AURORA_SEND_EMAIL_DEAD_LETTER_EXCHANGE)
-                .deadLetterRoutingKey(RabbitMQNameConstant.DEAD_LETTER_MAIL_REPLY_COMMENT_NOTICE_ROUTING_KEY).build();
+    public Queue mailSendSimpleTextQueue() {
+        return QueueBuilder.durable(RabbitMQNameConstant.SEND_SIMPLE_TEXT_MAIL_QUEUE_NAME)
+                .deadLetterExchange(RabbitMQNameConstant.AURORA_SEND_MAIL_DEAD_LETTER_EXCHANGE)
+                .deadLetterRoutingKey(RabbitMQNameConstant.SEND_SIMPLE_TEXT_MAIL_DEAD_LETTER_ROUTING_KEY).build();
+    }
+
+
+    /**
+     * 发送html邮件的死信队列
+     * @return
+     */
+    @Bean
+    public Queue sendHtmlMailDeadLetterQueue() {
+        return new Queue(RabbitMQNameConstant.SEND_HTML_MAIL_DEAD_LETTER_QUEUE_NAME, true);
     }
 
     /**
-     * 发送收到评论提醒的邮件通知队列
+     * 发送简单文本邮件的死信队列
      * @return
      */
     @Bean
-    public Queue mailReceiveCommentNoticeQueue() {
-        return QueueBuilder.durable(RabbitMQNameConstant.MAIL_RECEIVE_COMMENT_NOTICE_QUEUE_NAME)
-                .deadLetterExchange(RabbitMQNameConstant.AURORA_SEND_EMAIL_DEAD_LETTER_EXCHANGE)
-                .deadLetterRoutingKey(RabbitMQNameConstant.DEAD_LETTER_MAIL_RECEIVE_COMMENT_NOTICE_ROUTING_KEY).build();
-    }
-
-    /**
-     * 发送验证账户提醒的邮件通知队列
-     * @return
-     */
-    @Bean
-    public Queue mailVerifyAccountNoticeQueue() {
-        return QueueBuilder.durable(RabbitMQNameConstant.MAIL_VERIFY_ACCOUNT_NOTICE_QUEUE_NAME)
-                .deadLetterExchange(RabbitMQNameConstant.AURORA_SEND_EMAIL_DEAD_LETTER_EXCHANGE)
-                .deadLetterRoutingKey(RabbitMQNameConstant.DEAD_LETTER_MAIL_VERIFY_ACCOUNT_NOTICE_ROUTING_KEY).build();
-    }
-
-    /**
-     * 发送收到死信通知的邮件通知队列
-     * @return
-     */
-    @Bean
-    public Queue mailCommonNoticeDeadLetterQueue() {
-        return new Queue(RabbitMQNameConstant.DEAD_LETTER_MAIL_COMMON_NOTICE_QUEUE_NAME, true);
-    }
-
-    /**
-     * 回复评论邮件通知的死信队列
-     * @return
-     */
-    @Bean
-    public Queue mailReplyCommentNoticeDeadLetterQueue() {
-        return new Queue(RabbitMQNameConstant.DEAD_LETTER_MAIL_REPLY_COMMENT_NOTICE_QUEUE_NAME, true);
-    }
-
-    /**
-     * 收到评论邮件通知的死信队列
-     * @return
-     */
-    @Bean
-    public Queue mailReceiveCommentNoticeDeadLetterQueue() {
-        return new Queue(RabbitMQNameConstant.DEAD_LETTER_MAIL_RECEIVE_COMMENT_NOTICE_QUEUE_NAME, true);
-    }
-
-    /**
-     * 验证账户的邮件通知的死信队列
-     * @return
-     */
-    @Bean
-    public Queue mailVerifyAccountNoticeDeadLetterQueue() {
-        return new Queue(RabbitMQNameConstant.DEAD_LETTER_MAIL_VERIFY_ACCOUNT_NOTICE_QUEUE_NAME, true);
+    public Queue sendSimpleTextMailDeadLetterQueue() {
+        return new Queue(RabbitMQNameConstant.SEND_SIMPLE_TEXT_MAIL_DEAD_LETTER_QUEUE_NAME, true);
     }
 }

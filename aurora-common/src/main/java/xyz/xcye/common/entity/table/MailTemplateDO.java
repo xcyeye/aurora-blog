@@ -39,12 +39,6 @@ public class MailTemplateDO {
     private String template;
 
     /**
-     * 替换模板中的特定字符的字符串集合
-     */
-    @ValidateString(value = "替换邮件模板中的字符", max = FieldLengthConstant.EMAIL_MAX_REPLACE, groups = {Insert.class})
-    private String replaceArr;
-
-    /**
      * 默认的发送标题，如果没有指定的话
      */
     @ValidateString(value = "邮件-邮件默认发送标题", max = FieldLengthConstant.EMAIL_SUBJECT, groups = Insert.class)

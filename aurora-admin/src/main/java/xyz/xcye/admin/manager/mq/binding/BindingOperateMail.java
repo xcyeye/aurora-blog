@@ -15,92 +15,46 @@ public class BindingOperateMail {
 
     //====================普通队列和普通交换机绑定
     /**
-     * 将普通通知队列和普通邮件发送交换机绑定起来
+     * 将发送html邮件的交换机和队列绑定起来
      * @return
      */
     @Bean
-    public Binding mailCommonNoticeBinding() {
-        return BindingBuilder.bind(new Queue(RabbitMQNameConstant.MAIL_COMMON_NOTICE_QUEUE_NAME))
-                .to(new TopicExchange(RabbitMQNameConstant.AURORA_SEND_EMAIL_COMMON_EXCHANGE))
-                .with(RabbitMQNameConstant.MAIL_COMMON_NOTICE_ROUTING_KEY);
+    public Binding sendHtmlMailBinding() {
+        return BindingBuilder.bind(new Queue(RabbitMQNameConstant.SEND_HTML_MAIL_QUEUE_NAME))
+                .to(new TopicExchange(RabbitMQNameConstant.AURORA_SEND_MAIL_EXCHANGE))
+                .with(RabbitMQNameConstant.SEND_HTML_MAIL_ROUTING_KEY);
     }
 
     /**
-     * 将回复评论通知队列和普通邮件发送交换机绑定起来
+     * 将发送html邮件的死信交换机和死信队列绑定起来
      * @return
      */
     @Bean
-    public Binding mailReplyCommentNoticeBinding() {
-        return BindingBuilder.bind(new Queue(RabbitMQNameConstant.MAIL_REPLY_COMMENT_NOTICE_QUEUE_NAME))
-                .to(new TopicExchange(RabbitMQNameConstant.AURORA_SEND_EMAIL_COMMON_EXCHANGE))
-                .with(RabbitMQNameConstant.MAIL_REPLY_COMMENT_NOTICE_ROUTING_KEY);
+    public Binding sendHtmlMailDeadLetterBinding() {
+        return BindingBuilder.bind(new Queue(RabbitMQNameConstant.SEND_HTML_MAIL_DEAD_LETTER_QUEUE_NAME))
+                .to(new TopicExchange(RabbitMQNameConstant.AURORA_SEND_MAIL_DEAD_LETTER_EXCHANGE))
+                .with(RabbitMQNameConstant.SEND_HTML_MAIL_DEAD_LETTER_ROUTING_KEY);
     }
 
     /**
-     * 收到评论通知队列和普通邮件发送交换机绑定起来
+     * 将发送简单文本邮件的交换机和队列绑定起来
      * @return
      */
     @Bean
-    public Binding mailReceiveCommentNoticeBinding() {
-        return BindingBuilder.bind(new Queue(RabbitMQNameConstant.MAIL_RECEIVE_COMMENT_NOTICE_QUEUE_NAME))
-                .to(new TopicExchange(RabbitMQNameConstant.AURORA_SEND_EMAIL_COMMON_EXCHANGE))
-                .with(RabbitMQNameConstant.MAIL_RECEIVE_COMMENT_NOTICE_ROUTING_KEY);
+    public Binding sendSimpleTextBinding() {
+        return BindingBuilder.bind(new Queue(RabbitMQNameConstant.SEND_SIMPLE_TEXT_MAIL_QUEUE_NAME))
+                .to(new TopicExchange(RabbitMQNameConstant.AURORA_SEND_MAIL_EXCHANGE))
+                .with(RabbitMQNameConstant.SEND_SIMPLE_TEXT_MAIL_ROUTING_KEY);
     }
 
     /**
-     * 将验证账户通知队列和普通邮件发送交换机绑定起来
+     * 将发送简单文本邮件的死信交换机和死信队列绑定起来
      * @return
      */
     @Bean
-    public Binding mailVerifyAccountNoticeBinding() {
-        return BindingBuilder.bind(new Queue(RabbitMQNameConstant.MAIL_VERIFY_ACCOUNT_NOTICE_QUEUE_NAME))
-                .to(new TopicExchange(RabbitMQNameConstant.AURORA_SEND_EMAIL_COMMON_EXCHANGE))
-                .with(RabbitMQNameConstant.MAIL_VERIFY_ACCOUNT_NOTICE_ROUTING_KEY);
-    }
-
-    // ===================死信队列和死信交换机绑定
-
-    /**
-     * 将普通邮件通知队列和死信邮件发送交换机绑定起来
-     * @return
-     */
-    @Bean
-    public Binding mailCommonNoticeDeadLetterBinding() {
-        return BindingBuilder.bind(new Queue(RabbitMQNameConstant.DEAD_LETTER_MAIL_COMMON_NOTICE_QUEUE_NAME))
-                .to(new TopicExchange(RabbitMQNameConstant.AURORA_SEND_EMAIL_DEAD_LETTER_EXCHANGE))
-                .with(RabbitMQNameConstant.DEAD_LETTER_MAIL_COMMON_NOTICE_ROUTING_KEY);
-    }
-
-    /**
-     * 将回复评论通知队列和死信邮件发送交换机绑定起来
-     * @return
-     */
-    @Bean
-    public Binding mailReplyCommentNoticeDeadLetterBinding() {
-        return BindingBuilder.bind(new Queue(RabbitMQNameConstant.DEAD_LETTER_MAIL_REPLY_COMMENT_NOTICE_QUEUE_NAME))
-                .to(new TopicExchange(RabbitMQNameConstant.AURORA_SEND_EMAIL_DEAD_LETTER_EXCHANGE))
-                .with(RabbitMQNameConstant.DEAD_LETTER_MAIL_REPLY_COMMENT_NOTICE_ROUTING_KEY);
-    }
-
-    /**
-     * 将收到评论通知队列和死信邮件发送交换机绑定起来
-     * @return
-     */
-    @Bean
-    public Binding mailReceiveCommentNoticeDeadLetterBinding() {
-        return BindingBuilder.bind(new Queue(RabbitMQNameConstant.DEAD_LETTER_MAIL_RECEIVE_COMMENT_NOTICE_QUEUE_NAME))
-                .to(new TopicExchange(RabbitMQNameConstant.AURORA_SEND_EMAIL_DEAD_LETTER_EXCHANGE))
-                .with(RabbitMQNameConstant.DEAD_LETTER_MAIL_RECEIVE_COMMENT_NOTICE_ROUTING_KEY);
-    }
-
-    /**
-     * 将验证账户通知队列和死信邮件发送交换机绑定起来
-     * @return
-     */
-    @Bean
-    public Binding mailVerifyAccountNoticeDeadLetterBinding() {
-        return BindingBuilder.bind(new Queue(RabbitMQNameConstant.DEAD_LETTER_MAIL_VERIFY_ACCOUNT_NOTICE_QUEUE_NAME))
-                .to(new TopicExchange(RabbitMQNameConstant.AURORA_SEND_EMAIL_DEAD_LETTER_EXCHANGE))
-                .with(RabbitMQNameConstant.DEAD_LETTER_MAIL_VERIFY_ACCOUNT_NOTICE_ROUTING_KEY);
+    public Binding sendSimpleTextDeadLetterBinding() {
+        return BindingBuilder.bind(new Queue(RabbitMQNameConstant.SEND_SIMPLE_TEXT_MAIL_DEAD_LETTER_QUEUE_NAME))
+                .to(new TopicExchange(RabbitMQNameConstant.AURORA_SEND_MAIL_DEAD_LETTER_EXCHANGE))
+                .with(RabbitMQNameConstant.SEND_SIMPLE_TEXT_MAIL_DEAD_LETTER_ROUTING_KEY);
     }
 }

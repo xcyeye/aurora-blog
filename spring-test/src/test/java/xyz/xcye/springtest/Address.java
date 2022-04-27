@@ -5,7 +5,6 @@ import lombok.ToString;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 
 @Data
@@ -25,19 +24,25 @@ public class Address {
     }
     @Test
     public void test1() {
-        Map<String,Object> map = new HashMap<>();
-        map.put("s1","v1");
-        map.put("s2","v2");
-        map.put("s3","v3");
-        map.put("s4","v4");
-
-        Iterator<Map.Entry<String, Object>> iterator = map.entrySet().iterator();
-        while (iterator.hasNext()) {
-            Map.Entry<String, Object> next = iterator.next();
-            String key = next.getKey();
-            Object value = next.getValue();
-            System.out.println(key + "--->" + value);
+        String key = "k1";
+        switch (key) {
+            case "k1":
+                System.out.println(1);
+                break;
+            case "k2":
+                System.out.println(2);
+                break;
+            default:
+                System.out.println("dea");
         }
+    }
+
+    @Test
+    public void testsdf() {
+        Map<String,String> map = new HashMap<>();
+        map.put("uid","23489634");
+        map.put("k1","v1");
+
     }
 
 }
