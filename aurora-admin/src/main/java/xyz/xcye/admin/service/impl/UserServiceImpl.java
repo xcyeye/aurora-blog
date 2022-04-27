@@ -127,7 +127,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public ModifyResult updateUser(UserDO userDO) throws UserException {
         if (StringUtils.hasLength(userDO.getPassword())) {
-            userDO.setPassword(passwordEncoder.encode(userDO.getPassword()));
+            // 密码应该单独修改
+            userDO.setPassword(null);
         }
 
         if (StringUtils.hasLength(userDO.getUsername()) && existsUsername(userDO.getUsername())) {

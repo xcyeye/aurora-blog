@@ -26,6 +26,10 @@ public class FieldLengthConstant {
     public static final int EMAIL_TEMPLATE = 1000000;
     /** 邮件授权码 **/
     public static final int EMAIL_PASSWORD = 60;
+    /** 替换模板中的特殊字符的集合疮毒 **/
+    public static final int EMAIL_MAX_REPLACE = 100000;
+    /** 邮件模板的类型 **/
+    public static final int EMAIL_TEMPLATE_TYPE = 25;
 
 
     //-----------------------------------用户信息相关

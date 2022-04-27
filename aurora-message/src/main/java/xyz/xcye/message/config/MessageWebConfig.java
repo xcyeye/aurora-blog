@@ -13,8 +13,9 @@ import springfox.documentation.spring.web.plugins.WebFluxRequestHandlerProvider;
 import springfox.documentation.spring.web.plugins.WebMvcRequestHandlerProvider;
 import xyz.xcye.message.interceptor.MessageGlobalHandlerInterceptor;
 import xyz.xcye.web.common.exception.CustomGlobalExceptionHandler;
-import xyz.xcye.web.common.manager.aop.GlobalLogAop;
 import xyz.xcye.web.common.manager.advice.ResponseResultHandler;
+import xyz.xcye.web.common.manager.aop.GlobalLogAop;
+import xyz.xcye.web.common.manager.aop.GlobalLogRequestAop;
 
 import java.lang.reflect.Field;
 import java.util.List;
@@ -82,5 +83,10 @@ public class MessageWebConfig implements WebMvcConfigurer {
     @Bean
     public GlobalLogAop globalLogAop() {
         return new GlobalLogAop();
+    }
+
+    @Bean
+    public GlobalLogRequestAop globalLogRequestAop() {
+        return new GlobalLogRequestAop();
     }
 }
