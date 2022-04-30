@@ -16,7 +16,7 @@ import xyz.xcye.common.entity.table.CommentDO;
 import xyz.xcye.common.entity.table.EmailLogDO;
 import xyz.xcye.common.enums.RegexEnum;
 import xyz.xcye.common.enums.ResponseStatusCodeEnum;
-import xyz.xcye.common.enums.SendHtmlMailKeyNameEnum;
+import xyz.xcye.common.enums.SendHtmlMailTypeNameEnum;
 import xyz.xcye.common.exception.email.EmailException;
 import xyz.xcye.common.util.BeanUtils;
 import xyz.xcye.common.util.ConvertObjectUtils;
@@ -79,7 +79,7 @@ public class SendMailServiceImpl implements SendMailService {
          * 如果storageSendMailInfo中的receiverEmail为null或者没有长度的话，那么便更具userUid从数据库中查找
          * 如果数据库中都没有的话，那么抛出异常
          */
-        storageSendMailInfo = setReceiverEmail(storageSendMailInfo);
+        setReceiverEmail(storageSendMailInfo);
 
         if (mailTemplateVO == null || !StringUtils.hasLength(mailTemplateVO.getTemplate())) {
             mailTemplateVO = new MailTemplateVO();
@@ -161,7 +161,7 @@ public class SendMailServiceImpl implements SendMailService {
         return emailLogService.insertEmailLog(emailLog);
     }
 
-    private MailTemplateEnum getDefaultTemplate(SendHtmlMailKeyNameEnum mailKeyNameEnum) throws IOException {
+    private MailTemplateEnum getDefaultTemplate(SendHtmlMailTypeNameEnum mailKeyNameEnum) throws IOException {
         switch (mailKeyNameEnum) {
             case RECEIVE_COMMENT:
                 // 使用默认的收到评论html
@@ -188,7 +188,7 @@ public class SendMailServiceImpl implements SendMailService {
      * @throws ReflectiveOperationException
      * @throws EmailException
      */
-    private StorageSendMailInfo setReceiverEmail(StorageSendMailInfo storageSendMailInfo)
+    private void setReceiverEmail(StorageSendMailInfo storageSendMailInfo)
             throws ReflectiveOperationException, EmailException {
         if (!StringUtils.hasLength(storageSendMailInfo.getReceiverEmail())) {
             EmailVO emailVO = emailService.queryByUserUid(storageSendMailInfo.getUserUid());
@@ -204,12 +204,10 @@ public class SendMailServiceImpl implements SendMailService {
         if(!Pattern.matches(RegexEnum.MAIL_REGEX.getRegex(), storageSendMailInfo.getReceiverEmail())) {
             throw new EmailException(ResponseStatusCodeEnum.EXCEPTION_EMAIL_MISTAKE);
         }
-
-        return storageSendMailInfo;
     }
 
     private CommentDO getRepliedComment(StorageSendMailInfo storageSendMailInfo) {
-        if (storageSendMailInfo.getSendType() != SendHtmlMailKeyNameEnum.REPLY_COMMENT) {
+        if (storageSendMailInfo.getSendType() != SendHtmlMailTypeNameEnum.REPLY_COMMENT) {
             return null;
         }
 
@@ -221,6 +219,6 @@ public class SendMailServiceImpl implements SendMailService {
         }
 
         JSONObject jsonObject = JSON.parseObject(ConvertObjectUtils.jsonToString(additionalData));
-        return JSON.parseObject(jsonObject.getString(SendHtmlMailKeyNameEnum.ADDITIONAL_DATA.getKeyName()), CommentDO.class);
+        return JSON.parseObject(jsonObject.getString(SendHtmlMailTypeNameEnum.ADDITIONAL_DATA.getKeyName()), CommentDO.class);
     }
 }

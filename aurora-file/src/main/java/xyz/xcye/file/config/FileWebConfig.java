@@ -8,9 +8,9 @@ import org.springframework.util.ReflectionUtils;
 import org.springframework.web.servlet.mvc.method.RequestMappingInfoHandlerMapping;
 import springfox.documentation.spring.web.plugins.WebFluxRequestHandlerProvider;
 import springfox.documentation.spring.web.plugins.WebMvcRequestHandlerProvider;
-import xyz.xcye.web.common.exception.CustomGlobalExceptionHandler;
-import xyz.xcye.web.common.manager.aop.GlobalLogAop;
-import xyz.xcye.web.common.manager.advice.ResponseResultHandler;
+import xyz.xcye.web.common.exception.AuroraGlobalExceptionHandler;
+import xyz.xcye.web.common.manager.aop.AuroraGlobalLogAop;
+import xyz.xcye.web.common.manager.advice.AuroraResponseResultHandler;
 
 import java.lang.reflect.Field;
 import java.util.List;
@@ -58,8 +58,8 @@ public class FileWebConfig {
      * @return
      */
     @Bean
-    public CustomGlobalExceptionHandler customGlobalExceptionHandler() {
-        return new CustomGlobalExceptionHandler();
+    public AuroraGlobalExceptionHandler customGlobalExceptionHandler() {
+        return new AuroraGlobalExceptionHandler();
     }
 
     /**
@@ -67,12 +67,12 @@ public class FileWebConfig {
      * @return
      */
     @Bean
-    public ResponseResultHandler responseResultHandler() {
-        return new ResponseResultHandler();
+    public AuroraResponseResultHandler responseResultHandler() {
+        return new AuroraResponseResultHandler();
     }
 
     @Bean
-    public GlobalLogAop globalLogAop() {
-        return new GlobalLogAop();
+    public AuroraGlobalLogAop globalLogAop() {
+        return new AuroraGlobalLogAop();
     }
 }

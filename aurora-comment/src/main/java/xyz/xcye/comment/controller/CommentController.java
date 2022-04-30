@@ -12,10 +12,12 @@ import xyz.xcye.common.dto.CommentDTO;
 import xyz.xcye.common.dto.ConditionDTO;
 import xyz.xcye.common.entity.result.ModifyResult;
 import xyz.xcye.common.entity.table.CommentDO;
+import xyz.xcye.common.exception.AuroraGlobalException;
 import xyz.xcye.common.util.NetWorkUtils;
 import xyz.xcye.common.valid.Insert;
 import xyz.xcye.common.valid.Update;
 import xyz.xcye.common.vo.CommentVO;
+import xyz.xcye.web.common.service.mq.SendMQMessageService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.groups.Default;
@@ -32,6 +34,9 @@ public class CommentController {
     @Autowired
     private CommentService commentService;
 
+    @Autowired
+    private SendMQMessageService sendMQMessageService;
+
     @ApiOperation(value = "更新评论")
     @ResponseResult
     @PutMapping("")
@@ -44,7 +49,7 @@ public class CommentController {
     @PostMapping("")
     public ModifyResult insertComment(@Validated({Default.class, Insert.class}) CommentDO commentDO,
                                       HttpServletRequest request)
-            throws BindException, ReflectiveOperationException {
+            throws BindException, ReflectiveOperationException, AuroraGlobalException {
         commentDO.setCommentIp(NetWorkUtils.getIpAddr(request));
         commentDO.setOperationSystemInfo(NetWorkUtils.getOperationInfo(request));
         return commentService.insertComment(commentDO);

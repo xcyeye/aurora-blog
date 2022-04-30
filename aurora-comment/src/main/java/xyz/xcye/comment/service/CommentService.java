@@ -5,6 +5,7 @@ import xyz.xcye.common.dto.ConditionDTO;
 import xyz.xcye.common.dto.CommentDTO;
 import xyz.xcye.common.entity.result.ModifyResult;
 import xyz.xcye.common.entity.table.CommentDO;
+import xyz.xcye.common.exception.AuroraGlobalException;
 import xyz.xcye.common.vo.CommentVO;
 
 import java.util.List;
@@ -20,7 +21,7 @@ public interface CommentService {
      * @return
      */
     ModifyResult insertComment(CommentDO commentDO)
-            throws BindException, ReflectiveOperationException;
+            throws BindException, ReflectiveOperationException, AuroraGlobalException;
 
     /**
      * 根据uid删除对应的记录，是真正的从数据库中删除此条记录

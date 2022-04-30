@@ -6,7 +6,6 @@ import com.rabbitmq.client.Channel;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
-import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
@@ -16,14 +15,14 @@ import xyz.xcye.common.dto.StorageSendMailInfo;
 import xyz.xcye.common.entity.result.ModifyResult;
 import xyz.xcye.common.entity.table.CommentDO;
 import xyz.xcye.common.entity.table.MessageLogDO;
-import xyz.xcye.common.enums.SendHtmlMailKeyNameEnum;
+import xyz.xcye.common.enums.SendHtmlMailTypeNameEnum;
 import xyz.xcye.common.exception.email.EmailException;
 import xyz.xcye.common.util.BeanUtils;
 import xyz.xcye.common.util.ConvertObjectUtils;
 import xyz.xcye.common.vo.MessageLogVO;
 import xyz.xcye.message.service.MessageLogService;
 import xyz.xcye.message.service.SendMailService;
-import xyz.xcye.web.common.manager.mq.MistakeMessageSendService;
+import xyz.xcye.web.common.manager.amqp.MistakeMessageSendService;
 
 import javax.mail.MessagingException;
 import java.io.IOException;
@@ -44,8 +43,6 @@ public class SendMailConsumer {
 
     @Autowired
     private SendMailService sendMailService;
-    @Autowired
-    private RabbitTemplate rabbitTemplate;
     @Autowired
     private MessageLogService messageLogService;
     @Autowired
@@ -193,7 +190,7 @@ public class SendMailConsumer {
      */
     private void isReplyComment(StorageSendMailInfo storageSendMailInfo)
             throws ReflectiveOperationException, MessagingException, EmailException, IOException {
-        if (storageSendMailInfo.getSendType() != SendHtmlMailKeyNameEnum.REPLY_COMMENT) {
+        if (storageSendMailInfo.getSendType() != SendHtmlMailTypeNameEnum.REPLY_COMMENT) {
             return;
         }
 
@@ -205,21 +202,21 @@ public class SendMailConsumer {
         }
 
         JSONObject jsonObject = JSON.parseObject(ConvertObjectUtils.jsonToString(additionalData));
-        CommentDO commentDO = JSON.parseObject(jsonObject.getString(SendHtmlMailKeyNameEnum.ADDITIONAL_DATA.getKeyName()), CommentDO.class);
+        CommentDO commentDO = JSON.parseObject(jsonObject.getString(SendHtmlMailTypeNameEnum.ADDITIONAL_DATA.getKeyName()), CommentDO.class);
 
         StorageSendMailInfo receiveCommentMailInfo = new StorageSendMailInfo();
         // 设置属性
         receiveCommentMailInfo.setUserUid(commentDO.getUserUid());
         receiveCommentMailInfo.setSubject(commentDO.getContent());
-        receiveCommentMailInfo.setSendType(SendHtmlMailKeyNameEnum.RECEIVE_COMMENT);
+        receiveCommentMailInfo.setSendType(SendHtmlMailTypeNameEnum.RECEIVE_COMMENT);
         receiveCommentMailInfo.setCorrelationDataId(storageSendMailInfo.getCorrelationDataId());
 
         List<Map<String,Object>> list = new ArrayList<>();
         Map<String,Object> map = new HashMap<>();
-        map.put(SendHtmlMailKeyNameEnum.RECEIVE_COMMENT.getKeyName(), commentDO);
+        map.put(SendHtmlMailTypeNameEnum.RECEIVE_COMMENT.getKeyName(), commentDO);
         list.add(map);
 
-        receiveCommentMailInfo = ConvertObjectUtils.generateMailInfo(receiveCommentMailInfo, list);
+        ConvertObjectUtils.generateMailInfo(receiveCommentMailInfo, list);
         sendMailService.sendHtmlMail(receiveCommentMailInfo);
     }
 }

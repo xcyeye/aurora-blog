@@ -30,7 +30,7 @@ public class MailTemplateDO {
     private Long userUid;
 
     @ValidateString(value = "此邮件模板是验证哪种类型，比如收到评论", max = FieldLengthConstant.EMAIL_TEMPLATE_TYPE)
-    private String type;
+    private String typeName;
 
     /**
      * 邮件html模板

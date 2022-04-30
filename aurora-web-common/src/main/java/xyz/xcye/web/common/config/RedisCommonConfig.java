@@ -13,7 +13,6 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
  * @author qsyyke
  */
 
-
 public class RedisCommonConfig {
 
     public static RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory factory){

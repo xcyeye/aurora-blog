@@ -3,6 +3,7 @@ package xyz.xcye.admin.controller;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.BindException;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import xyz.xcye.admin.service.RoleService;
@@ -32,7 +33,7 @@ public class RoleController {
     @ResponseResult
     @ApiOperation(value = "插入角色")
     @PostMapping("")
-    public ModifyResult insertRole(@Validated({Insert.class, Default.class}) RoleDO roleDO) {
+    public ModifyResult insertRole(@Validated({Insert.class, Default.class}) RoleDO roleDO) throws BindException {
         return roleService.insert(roleDO);
     }
 

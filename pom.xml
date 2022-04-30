@@ -24,6 +24,7 @@
         <module>aurora-message</module>
         <module>aurora-common</module>
         <module>aurora-web-common</module>
+        <module>aurora-spring-boot-autoconfigure</module>
     </modules>
 
     <properties>

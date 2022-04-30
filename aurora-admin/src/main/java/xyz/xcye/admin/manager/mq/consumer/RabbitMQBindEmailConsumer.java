@@ -1,39 +1,13 @@
 package xyz.xcye.admin.manager.mq.consumer;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
-import com.rabbitmq.client.Channel;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.amqp.core.Message;
-import org.springframework.amqp.rabbit.annotation.RabbitListener;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.messaging.MessagingException;
-import org.springframework.stereotype.Component;
 import org.springframework.validation.BindException;
-import xyz.xcye.admin.manager.mq.send.VerifyAccountSendService;
-import xyz.xcye.admin.service.UserService;
-import xyz.xcye.admin.service.redis.UserRedisService;
-import xyz.xcye.common.constant.RabbitMQNameConstant;
-import xyz.xcye.common.entity.result.ModifyResult;
-import xyz.xcye.common.entity.table.EmailDO;
-import xyz.xcye.common.entity.table.MessageLogDO;
-import xyz.xcye.common.entity.table.UserDO;
-import xyz.xcye.common.exception.user.UserException;
-import xyz.xcye.common.util.ValidationUtils;
-import xyz.xcye.common.valid.Update;
-import xyz.xcye.web.common.manager.mq.MistakeMessageSendService;
-import xyz.xcye.web.common.service.feign.MessageLogFeignService;
-
-import javax.annotation.Resource;
-import java.io.IOException;
 
 /**
  * 消费者
  * @author qsyyke
  */
 
-@Slf4j
+/*@Slf4j
 @Component
 public class RabbitMQBindEmailConsumer {
 
@@ -65,12 +39,12 @@ public class RabbitMQBindEmailConsumer {
             JSONObject jsonObject = JSON.parseObject(msgJson);
             correlationDataId = JSON.parseObject(jsonObject.getString("correlationDataId"), String.class);
             emailDO = JSON.parseObject(jsonObject.getString("emailDO"), EmailDO.class);
-            /*try {
+            *//*try {
                 xid = JSON.parseObject(jsonObject.getString("xid"), String.class);
             } catch (Exception e) {
                 String[] split = msgJson.split("\",\"correlationDataId\":\"")[0].split("\\{\"xid\":\"");
                 xid = split[1];
-            }*/
+            }*//*
         } catch (Exception e) {
             e.printStackTrace();
             mistakeMessageSendService.sendMistakeMessageToExchange(msgJson,channel,message);
@@ -94,7 +68,7 @@ public class RabbitMQBindEmailConsumer {
         ModifyResult modifyResult = userService.updateUser(userDO);
         updateMessageLogInfo(correlationDataId,true,true,null);
 
-        /*if (modifyResult.isSuccess()) {
+        *//*if (modifyResult.isSuccess()) {
             // 如果更新成功，则发送验证账户的邮件
             String verifyAccountPath = AccountInfoUtils.generateVerifyAccountPath(modifyResult.getUid(), emailVerifyAccountPrefixPath);
             EmailVerifyAccountDTO verifyAccountDTO = EmailVerifyAccountDTO.builder().receiverEmail(emailDO.getEmail())
@@ -102,17 +76,17 @@ public class RabbitMQBindEmailConsumer {
                     .expirationTime((long) emailVerifyAccountExpirationTime)
                     .userUid(modifyResult.getUid()).build();
             verifyAccountSendService.sendVerifyAccount(verifyAccountDTO);
-        }*/
+        }*//*
     }
 
-    /**
+    *//**
      * 更新数据库中的mq消息的信息
      * @param correlationDataId
      * @param ackStatus
      * @param consumeStatus
      * @param errorMessage
      * @throws BindException
-     */
+     *//*
     private void updateMessageLogInfo(String correlationDataId, boolean ackStatus, boolean consumeStatus, String errorMessage) throws BindException {
         MessageLogDO messageLogDO = null;
         messageLogFeignService.queryMessageLogByUid(Long.parseLong(correlationDataId));
@@ -127,4 +101,4 @@ public class RabbitMQBindEmailConsumer {
         ModifyResult modifyResult = messageLogFeignService.updateMessageLog(messageLogDO);
         log.info("更新mq消息发送日志:{},结果:{}",messageLogDO,modifyResult.isSuccess());
     }
-}
+}*/

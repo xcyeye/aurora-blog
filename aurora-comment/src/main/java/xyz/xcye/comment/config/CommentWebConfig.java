@@ -4,13 +4,13 @@ import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.util.ReflectionUtils;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.mvc.method.RequestMappingInfoHandlerMapping;
 import springfox.documentation.spring.web.plugins.WebFluxRequestHandlerProvider;
 import springfox.documentation.spring.web.plugins.WebMvcRequestHandlerProvider;
-import xyz.xcye.web.common.exception.CustomGlobalExceptionHandler;
-import xyz.xcye.web.common.manager.aop.GlobalLogAop;
-import xyz.xcye.web.common.manager.advice.ResponseResultHandler;
 
 import java.lang.reflect.Field;
 import java.util.List;
@@ -18,8 +18,10 @@ import java.util.List;
 /**
  * 配置swagger
  */
+
 @Configuration
-public class CommentWebConfig {
+public class CommentWebConfig implements WebMvcConfigurer {
+
     @Bean(name = "commentBeanPostProcessor")
     public BeanPostProcessor springfoxHandlerProviderBeanPostProcessor() {
         return new BeanPostProcessor() {
@@ -47,22 +49,19 @@ public class CommentWebConfig {
      * 自定义全局异常处理
      * @return
      */
-    @Bean
-    public CustomGlobalExceptionHandler customGlobalExceptionHandler() {
-        return new CustomGlobalExceptionHandler();
-    }
-
-    /**
-     * 响应结果封装
-     * @return
-     */
-    @Bean
-    public ResponseResultHandler responseResultHandler() {
-        return new ResponseResultHandler();
-    }
+    /*@Bean
+    public AuroraGlobalExceptionHandler customGlobalExceptionHandler() {
+        return new AuroraGlobalExceptionHandler();
+    }*/
 
     @Bean
-    public GlobalLogAop globalLogAop() {
-        return new GlobalLogAop();
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
+
+    /*@Bean
+    @ConditionalOnMissingBean
+    public HttpMessageConverters messageConverters(ObjectProvider<HttpMessageConverter<?>> converters) {
+        return new HttpMessageConverters(converters.orderedStream().collect(Collectors.toList()));
+    }*/
 }

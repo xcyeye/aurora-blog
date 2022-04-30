@@ -1,10 +1,10 @@
 package xyz.xcye.common.util;
 
 import com.alibaba.fastjson.JSON;
+import org.springframework.beans.BeanUtils;
 import xyz.xcye.common.dto.StorageSendMailInfo;
 
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -36,20 +36,22 @@ public class ConvertObjectUtils {
      */
     public static String generateMailJson(StorageSendMailInfo mailInfo, List<Map<String,Object>> replacedObjList) {
         // replacedMap添加到mailInfo中
-        mailInfo.setReplacedMap(createReplacedMap(replacedObjList));
+        StorageSendMailInfo sendMailInfo = new StorageSendMailInfo(createReplacedMap(replacedObjList));
+        BeanUtils.copyProperties(mailInfo, sendMailInfo);
         return jsonToString(mailInfo);
     }
 
     /**
-     * 返回一个StorageSendMailInfo
+     * 返回一个StorageSendMailInfo，并不是原来的对象
      * @param mailInfo
      * @param replacedObjList
      * @return
      */
     public static StorageSendMailInfo generateMailInfo(StorageSendMailInfo mailInfo, List<Map<String,Object>> replacedObjList) {
         // replacedMap添加到mailInfo中
-        mailInfo.setReplacedMap(createReplacedMap(replacedObjList));
-        return mailInfo;
+        StorageSendMailInfo sendMailInfo = new StorageSendMailInfo(createReplacedMap(replacedObjList));
+        BeanUtils.copyProperties(mailInfo, sendMailInfo);
+        return sendMailInfo;
     }
 
     /**
@@ -59,22 +61,22 @@ public class ConvertObjectUtils {
      */
     private static Map<String,String> createReplacedMap(List<Map<String,Object>> replacedObjList) {
         Map<String,String> replacedMap = new HashMap<>();
+
+        if (replacedObjList == null) {
+            return replacedMap;
+        }
         for (Map<String, Object> objectMap : replacedObjList) {
-            Iterator<Map.Entry<String, Object>> iterator = objectMap.entrySet().iterator();
             // 因为replacedObjList集合中的map只会保存一个，所以不需要使用while进行迭代
-            while (iterator.hasNext()) {
-                Map.Entry<String, Object> next = iterator.next();
+            for (Map.Entry<String, Object> next : objectMap.entrySet()) {
                 String key = next.getKey();
                 Object replacedObj = next.getValue();
 
                 String replacedJson = jsonToString(replacedObj);
-                Map<String,Object> tempMap = JSON.parseObject(replacedJson, Map.class);
+                Map<String, Object> tempMap = JSON.parseObject(replacedJson, Map.class);
                 // 迭代的方式，获取key
-                Iterator<Map.Entry<String, Object>> iteratorTemp = tempMap.entrySet().iterator();
-                while (iteratorTemp.hasNext()) {
-                    Map.Entry<String, Object> nextTemp = iteratorTemp.next();
+                for (Map.Entry<String, Object> nextTemp : tempMap.entrySet()) {
                     String tempKey = key + ":" + nextTemp.getKey();
-                    replacedMap.put(tempKey,nextTemp.getValue() + "");
+                    replacedMap.put(tempKey, nextTemp.getValue() + "");
                 }
             }
         }

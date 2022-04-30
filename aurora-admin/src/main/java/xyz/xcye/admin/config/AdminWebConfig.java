@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.util.ReflectionUtils;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -14,8 +15,10 @@ import springfox.documentation.spring.web.plugins.WebFluxRequestHandlerProvider;
 import springfox.documentation.spring.web.plugins.WebMvcRequestHandlerProvider;
 import xyz.xcye.admin.interceptor.AdminGlobalHandlerInterceptor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import xyz.xcye.web.common.manager.aop.GlobalLogAop;
-import xyz.xcye.web.common.manager.aop.GlobalLogRequestAop;
+import xyz.xcye.web.common.config.GlobalRabbitMQConfirmConfig;
+import xyz.xcye.web.common.manager.aop.AuroraGlobalLogAop;
+import xyz.xcye.web.common.manager.aop.AuroraGlobalLogRequestAop;
+import xyz.xcye.web.common.service.mq.impl.SendMQMessageServiceImpl;
 
 import java.lang.reflect.Field;
 import java.util.List;
@@ -23,6 +26,8 @@ import java.util.List;
 /**
  * 配置swagger
  */
+
+@Import({SendMQMessageServiceImpl.class, GlobalRabbitMQConfirmConfig.class})
 @Configuration
 public class AdminWebConfig implements WebMvcConfigurer {
 
@@ -70,8 +75,8 @@ public class AdminWebConfig implements WebMvcConfigurer {
      * @return
      */
     /*@Bean
-    public CustomGlobalExceptionHandler customGlobalExceptionHandler() {
-        return new CustomGlobalExceptionHandler();
+    public AuroraGlobalExceptionHandler customGlobalExceptionHandler() {
+        return new AuroraGlobalExceptionHandler();
     }*/
 
     @Bean
@@ -80,54 +85,18 @@ public class AdminWebConfig implements WebMvcConfigurer {
     }
 
     /*@Bean
-    public HttpMessageConverters fastJsonConfigure() {
-        FastJsonHttpMessageConverter converter = new FastJsonHttpMessageConverter();
-        ArrayList<MediaType> supportedMediaTypes = new ArrayList<>(32);
-        supportedMediaTypes.add(MediaType.APPLICATION_JSON);
-        supportedMediaTypes.add(MediaType.APPLICATION_JSON_UTF8);
-        supportedMediaTypes.add(MediaType.APPLICATION_ATOM_XML);
-        supportedMediaTypes.add(MediaType.APPLICATION_FORM_URLENCODED);
-        supportedMediaTypes.add(MediaType.APPLICATION_OCTET_STREAM);
-        supportedMediaTypes.add(MediaType.APPLICATION_PDF);
-        supportedMediaTypes.add(MediaType.APPLICATION_RSS_XML);
-        supportedMediaTypes.add(MediaType.APPLICATION_XHTML_XML);
-        supportedMediaTypes.add(MediaType.APPLICATION_XML);
-        supportedMediaTypes.add(MediaType.IMAGE_GIF);
-        supportedMediaTypes.add(MediaType.IMAGE_JPEG);
-        supportedMediaTypes.add(MediaType.IMAGE_PNG);
-        supportedMediaTypes.add(MediaType.TEXT_EVENT_STREAM);
-        supportedMediaTypes.add(MediaType.TEXT_HTML);
-        supportedMediaTypes.add(MediaType.TEXT_MARKDOWN);
-        supportedMediaTypes.add(MediaType.TEXT_PLAIN);
-        supportedMediaTypes.add(MediaType.TEXT_XML);
-        converter.setSupportedMediaTypes(supportedMediaTypes);
-        FastJsonConfig fastJsonConfig = new FastJsonConfig();
-        fastJsonConfig.setSerializerFeatures(SerializerFeature.WriteDateUseDateFormat,
-                SerializerFeature.WriteMapNullValue,
-                SerializerFeature.WriteEnumUsingToString,
-                SerializerFeature.WriteNullListAsEmpty,
-                SerializerFeature.WriteNullStringAsEmpty,
-                SerializerFeature.WriteNullBooleanAsFalse,
-                SerializerFeature.DisableCircularReferenceDetect);
-        //日期格式化
-        fastJsonConfig.setDateFormat("yyyy-MM-dd HH:mm:ss");
-        converter.setFastJsonConfig(fastJsonConfig);
-        return new HttpMessageConverters(converter);
-    }*/
-
-    /*@Bean
     @ConditionalOnMissingBean
     public HttpMessageConverters messageConverters(ObjectProvider<HttpMessageConverter<?>> converters) {
         return new HttpMessageConverters(converters.orderedStream().collect(Collectors.toList()));
     }*/
 
     @Bean
-    public GlobalLogAop globalLogAop() {
-        return new GlobalLogAop();
+    public AuroraGlobalLogAop globalLogAop() {
+        return new AuroraGlobalLogAop();
     }
 
     @Bean
-    public GlobalLogRequestAop logRequestAop() {
-        return new GlobalLogRequestAop();
+    public AuroraGlobalLogRequestAop logRequestAop() {
+        return new AuroraGlobalLogRequestAop();
     }
 }

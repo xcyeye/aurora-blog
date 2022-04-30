@@ -79,6 +79,9 @@ public enum ResponseStatusCodeEnum {
     //----------------------未知错误相关的响应码
     UNKNOWN(50000,"未知错误"),
 
+
+    //----------------------和消息中间件相关的异常
+
     //----------------------数据相关的响应码
     SEATA_GLOBAL_TRANSACTIONAL_NOT_BINDING(60000,"seata全局事务未绑定");
 

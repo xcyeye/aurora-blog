@@ -6,14 +6,9 @@ import org.springframework.stereotype.Component;
 import org.springframework.validation.BindException;
 import org.springframework.web.bind.annotation.*;
 import xyz.xcye.common.dto.PaginationDTO;
-import xyz.xcye.common.entity.result.ModifyResult;
 import xyz.xcye.common.entity.result.R;
 import xyz.xcye.common.entity.table.EmailDO;
 import xyz.xcye.common.entity.table.MessageLogDO;
-import xyz.xcye.common.vo.EmailVO;
-import xyz.xcye.common.vo.MessageLogVO;
-
-import java.util.List;
 
 @Component
 @FeignClient(value = "aurora-message",name = "aurora-message",
@@ -22,16 +17,16 @@ import java.util.List;
 public interface MessageLogFeignService {
 
     @PostMapping("/message/messageLog")
-    ModifyResult insertMessageLog(@SpringQueryMap MessageLogDO messageLogDO) throws BindException;
+    R insertMessageLog(@SpringQueryMap MessageLogDO messageLogDO) throws BindException;
 
     @PutMapping("/message/messageLog")
-    ModifyResult updateMessageLog(@SpringQueryMap MessageLogDO messageLogDO) throws BindException;
+    R updateMessageLog(@SpringQueryMap MessageLogDO messageLogDO) throws BindException;
 
     @DeleteMapping("/message/messageLog/delete/{uid}")
-    ModifyResult deleteMessageLog(@PathVariable("uid") long uid);
+    R deleteMessageLog(@PathVariable("uid") long uid);
 
     @GetMapping("/message/messageLog")
-    List<MessageLogVO> queryAllMessageLog(@SpringQueryMap MessageLogDO messageLogDO, @SpringQueryMap PaginationDTO paginationDTO) throws ReflectiveOperationException;
+    R queryAllMessageLog(@SpringQueryMap MessageLogDO messageLogDO, @SpringQueryMap PaginationDTO paginationDTO) throws ReflectiveOperationException;
 
     @GetMapping("/message/messageLog/{uid}")
     R queryMessageLogByUid(@PathVariable("uid") long uid);
@@ -40,20 +35,20 @@ public interface MessageLogFeignService {
     R insertEmail(@SpringQueryMap EmailDO email);
 
     @DeleteMapping("/message/email/{uid}")
-    ModifyResult deleteEmailByUid(@PathVariable(value = "uid") long uid);
+    R deleteEmailByUid(@PathVariable(value = "uid") long uid);
 
     @DeleteMapping("/message/email/deleteStatus")
-    ModifyResult updateDeleteStatus(@SpringQueryMap EmailDO email);
+    R updateDeleteStatus(@SpringQueryMap EmailDO email);
 
     @PutMapping("/message/email")
-    ModifyResult updateEmailByUid(@SpringQueryMap EmailDO email);
+    R updateEmailByUid(@SpringQueryMap EmailDO email);
 
     @GetMapping("/message/email/{uid}")
     R queryEmailByUid(@PathVariable("uid") long uid);
 
     @GetMapping("/message/email/userUid/{userUid}")
-    EmailDO queryByUserUid(@PathVariable("userUid") long userUid);
+    R queryByUserUid(@PathVariable("userUid") long userUid);
 
     @GetMapping("/message/email/email/{email}")
-    EmailDO queryByEmail(@PathVariable("email") String email);
+    R queryByEmail(@PathVariable("email") String email);
 }

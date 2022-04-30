@@ -7,7 +7,7 @@ import org.springframework.amqp.core.Message;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import xyz.xcye.common.dto.StorageSendMailInfo;
-import xyz.xcye.web.common.manager.mq.MistakeMessageSendService;
+import xyz.xcye.web.common.manager.amqp.MistakeMessageSendService;
 
 import java.io.IOException;
 

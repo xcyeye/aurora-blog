@@ -5,7 +5,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.BindException;
 import xyz.xcye.common.entity.table.MessageLogDO;
-import xyz.xcye.common.entity.result.ModifyResult;
 import xyz.xcye.common.util.ValidationUtils;
 import xyz.xcye.common.valid.Insert;
 import xyz.xcye.web.common.service.feign.MessageLogFeignService;
@@ -34,8 +33,7 @@ public class MessageLogService {
 
         // 验证messageLogDO对象属性是否合法
         ValidationUtils.valid(messageLogDO, Insert.class, Default.class);
-        ModifyResult modifyResult = messageLogFeignService.insertMessageLog(messageLogDO);
-        log.info("使用feign插入mq消息发送日志: {}",modifyResult);
+        messageLogFeignService.insertMessageLog(messageLogDO);
     }
 
     private MessageLogDO setMessageLogDO(String message,long uid,String exchange,

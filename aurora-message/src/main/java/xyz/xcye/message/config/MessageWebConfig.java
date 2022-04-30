@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 import org.springframework.util.ReflectionUtils;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -12,14 +13,16 @@ import org.springframework.web.servlet.mvc.method.RequestMappingInfoHandlerMappi
 import springfox.documentation.spring.web.plugins.WebFluxRequestHandlerProvider;
 import springfox.documentation.spring.web.plugins.WebMvcRequestHandlerProvider;
 import xyz.xcye.message.interceptor.MessageGlobalHandlerInterceptor;
-import xyz.xcye.web.common.exception.CustomGlobalExceptionHandler;
-import xyz.xcye.web.common.manager.advice.ResponseResultHandler;
-import xyz.xcye.web.common.manager.aop.GlobalLogAop;
-import xyz.xcye.web.common.manager.aop.GlobalLogRequestAop;
+import xyz.xcye.web.common.exception.AuroraGlobalExceptionHandler;
+import xyz.xcye.web.common.manager.advice.AuroraResponseResultHandler;
+import xyz.xcye.web.common.manager.aop.AuroraGlobalLogAop;
+import xyz.xcye.web.common.manager.aop.AuroraGlobalLogRequestAop;
+import xyz.xcye.web.common.manager.amqp.MistakeMessageSendService;
 
 import java.lang.reflect.Field;
 import java.util.List;
 
+@Import({MistakeMessageSendService.class})
 @Configuration
 public class MessageWebConfig implements WebMvcConfigurer {
 
@@ -67,8 +70,8 @@ public class MessageWebConfig implements WebMvcConfigurer {
      * @return
      */
     @Bean
-    public CustomGlobalExceptionHandler customGlobalExceptionHandler() {
-        return new CustomGlobalExceptionHandler();
+    public AuroraGlobalExceptionHandler customGlobalExceptionHandler() {
+        return new AuroraGlobalExceptionHandler();
     }
 
     /**
@@ -76,17 +79,17 @@ public class MessageWebConfig implements WebMvcConfigurer {
      * @return
      */
     @Bean
-    public ResponseResultHandler responseResultHandler() {
-        return new ResponseResultHandler();
+    public AuroraResponseResultHandler responseResultHandler() {
+        return new AuroraResponseResultHandler();
     }
 
     @Bean
-    public GlobalLogAop globalLogAop() {
-        return new GlobalLogAop();
+    public AuroraGlobalLogAop globalLogAop() {
+        return new AuroraGlobalLogAop();
     }
 
     @Bean
-    public GlobalLogRequestAop globalLogRequestAop() {
-        return new GlobalLogRequestAop();
+    public AuroraGlobalLogRequestAop globalLogRequestAop() {
+        return new AuroraGlobalLogRequestAop();
     }
 }
