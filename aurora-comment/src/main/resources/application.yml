@@ -83,13 +83,6 @@ management:
 
 
 # 自定义的配置
-aurora:
-  snow-flake:
-    workerId: 12
-    datacenterId: 20
-  pagination:
-    pageNum: 1
-    pageSize: 10
 
 # 分页插件
 pagehelper:
@@ -98,19 +91,19 @@ pagehelper:
   supportMethodsArguments: true
   params: count=countSql
 
-logging:
-  level:
-    xyz.xcye.comment.service.MessageLogFeignService: DEBUG
 
 feign:
-  circuitbreaker:
-    enabled: true
-    group:
-      enabled: true
   client:
-    refresh-enabled: true
     config:
-      aurora-message-messageLog:
-        connectTimeout: 10000000
-        readTimeout: 100000000
-        loggerLevel: basic
+      aurora-message:
+        connectTimeout: 100000
+        readTimeout: 7000
+  httpclient:
+    enabled: true
+
+aurora:
+  snow-flake-datacenter-id: 5
+  snow-flake-worker-id: 23
+logging:
+  level:
+    xyz.xcye.aurora.feign.MessageLogFeignService: debug

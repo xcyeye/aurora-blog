@@ -5,7 +5,7 @@ import org.springframework.validation.BindException;
 import xyz.xcye.common.dto.ConditionDTO;
 import xyz.xcye.common.entity.result.ModifyResult;
 import xyz.xcye.common.entity.table.EmailDO;
-import xyz.xcye.common.exception.AuroraGlobalException;
+import xyz.xcye.common.exception.AuroraException;
 import xyz.xcye.common.vo.EmailVO;
 
 import java.util.List;
@@ -22,7 +22,7 @@ public interface EmailService {
      * @return
      */
     ModifyResult insertEmail(EmailDO email)
-            throws BindException, AuroraGlobalException, ReflectiveOperationException;
+            throws BindException, AuroraException, ReflectiveOperationException;
 
     /**
      * 根据uid删除一条记录

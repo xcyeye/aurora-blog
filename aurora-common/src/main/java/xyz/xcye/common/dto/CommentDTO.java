@@ -23,6 +23,11 @@ public class CommentDTO {
     private String username;
 
     /**
+     * 逻辑删除
+     */
+    private Boolean delete;
+
+    /**
      * 头像地址 可以为null
      * <p>length < 255</p>
      */

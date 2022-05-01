@@ -35,6 +35,8 @@ public interface CommentDao {
      */
     int updateComment(@Param("commentDO") CommentDO commentDO);
 
+    int updateDeleteStatus(@Param("comment") CommentDO comment);
+
     /**
      * 根据传入的commentDO，查询多条评论数据
      * @param condition

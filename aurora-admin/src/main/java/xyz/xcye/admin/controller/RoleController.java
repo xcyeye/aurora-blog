@@ -3,7 +3,6 @@ package xyz.xcye.admin.controller;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.validation.BindException;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import xyz.xcye.admin.service.RoleService;
@@ -33,7 +32,7 @@ public class RoleController {
     @ResponseResult
     @ApiOperation(value = "插入角色")
     @PostMapping("")
-    public ModifyResult insertRole(@Validated({Insert.class, Default.class}) RoleDO roleDO) throws BindException {
+    public ModifyResult insertRole(@Validated({Insert.class, Default.class}) RoleDO roleDO) {
         return roleService.insert(roleDO);
     }
 
@@ -61,7 +60,7 @@ public class RoleController {
     @ResponseResult
     @ApiOperation(value = "查询满足要求的所有角色信息")
     @GetMapping("")
-    public List<RoleVO> queryRoleByUid(ConditionDTO<Long> condition) throws ReflectiveOperationException {
+    public List<RoleVO> queryRoleByUid(ConditionDTO<Integer> condition) throws ReflectiveOperationException {
         return roleService.queryAllByCondition(condition);
     }
 }

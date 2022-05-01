@@ -3,8 +3,8 @@ package xyz.xcye.file.service.impl;
 import com.github.pagehelper.PageHelper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import xyz.xcye.aurora.properties.AuroraProperties;
 import xyz.xcye.common.constant.FileStorageModeConstant;
 import xyz.xcye.common.dto.ConditionDTO;
 import xyz.xcye.common.dto.FileEntityDTO;
@@ -36,21 +36,10 @@ public class FileServiceImpl implements FileService {
 
     @Autowired
     private FileDao fileDao;
-
-    /**
-     * 当前机器的id
-     */
-    @Value("${aurora.snow-flake.workerId}")
-    private int workerId;
-
-    /**
-     * 该台机器对应的数据中心id
-     */
-    @Value("${aurora.snow-flake.datacenterId}")
-    private int datacenterId;
-
     @Autowired
     private LocalFileStorageServiceImpl localStorageService;
+    @Autowired
+    private AuroraProperties auroraProperties;
 
     @Override
     public FileVO insertFile(FileEntityDTO fileEntity, FileDO file, int storageMode)
@@ -60,8 +49,9 @@ public class FileServiceImpl implements FileService {
             throw new FileException(ResponseStatusCodeEnum.EXCEPTION_FILE_FAIL_UPLOAD.getMessage() + "原因: 文件名为null或者获取文件流失败",
                     ResponseStatusCodeEnum.EXCEPTION_FILE_FAIL_UPLOAD.getCode());
         }
+
         //生成一个uid
-        long uid = GenerateInfoUtils.generateUid(workerId,datacenterId);
+        long uid = GenerateInfoUtils.generateUid(auroraProperties.getSnowFlakeWorkerId(),auroraProperties.getSnowFlakeDatacenterId());
 
         //根据storageMode获取需要使用的文件存储方式
         FileStorageService fileStorageService = getNeedFileStorageService(storageMode);

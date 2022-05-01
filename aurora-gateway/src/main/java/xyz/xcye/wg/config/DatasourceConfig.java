@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
-import xyz.xcye.web.common.config.RedisCommonConfig;
+import xyz.xcye.aurora.config.RedisCommonConfig;
 
 /**
  * @author qsyyke

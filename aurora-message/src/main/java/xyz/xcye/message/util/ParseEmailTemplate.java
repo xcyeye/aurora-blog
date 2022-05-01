@@ -1,5 +1,6 @@
 package xyz.xcye.message.util;
 
+import lombok.extern.slf4j.Slf4j;
 import xyz.xcye.common.constant.MailTemplateConstant;
 
 import java.util.Iterator;
@@ -10,7 +11,7 @@ import java.util.Map;
  * @author qsyyke
  */
 
-
+@Slf4j
 public class ParseEmailTemplate {
 
     /**
@@ -33,6 +34,7 @@ public class ParseEmailTemplate {
             // 切结替换的正则表达式，不能使用{{ [[等特殊符号
             String replacingRegex = MailTemplateConstant.REPLACE_CHARACTER_PREFIX + key + MailTemplateConstant.REPLACE_CHARACTER_SUFFIX;
             mailTemplate = mailTemplate.replaceAll(replacingRegex, value);
+            log.info(value);
         }
         // 从迭代器中，获取每一个
         //替换内容

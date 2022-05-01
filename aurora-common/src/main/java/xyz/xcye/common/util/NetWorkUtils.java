@@ -86,7 +86,7 @@ public class NetWorkUtils {
         try {
             versionStr = version.getVersion();
         } catch (Exception e) {
-            e.printStackTrace();
+
         }
         return versionStr;
     }

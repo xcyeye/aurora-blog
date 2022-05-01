@@ -12,7 +12,7 @@ import java.util.List;
  */
 
 @Mapper
-public interface RoleDao<findByUid> {
+public interface RoleDao {
     /**
      * 插入一条角色记录
      */
@@ -33,5 +33,5 @@ public interface RoleDao<findByUid> {
      * @param condition keyword->role
      * @return
      */
-    List<RoleDO> queryAllByCondition(@Param("condition") ConditionDTO condition);
+    List<RoleDO> queryAllByCondition(@Param("condition") ConditionDTO<Integer> condition);
 }

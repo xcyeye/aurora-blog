@@ -2,10 +2,10 @@ package xyz.xcye.admin.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import xyz.xcye.admin.dao.UserAccountDao;
 import xyz.xcye.admin.service.UserAccountService;
+import xyz.xcye.aurora.properties.AuroraProperties;
 import xyz.xcye.common.dto.ConditionDTO;
 import xyz.xcye.common.entity.result.ModifyResult;
 import xyz.xcye.common.entity.table.UserAccountDO;
@@ -25,29 +25,8 @@ import java.util.List;
 @Service
 public class UserAccountServiceImpl implements UserAccountService {
 
-    /**
-     * 查询时默认的初始页数
-     */
-    @Value("${aurora.pagination.pageNum}")
-    private int defaultPageNum;
-
-    /**
-     * 查询时默认的返回数目
-     */
-    @Value("${aurora.pagination.pageSize}")
-    private int defaultPageSize;
-
-    /**
-     * 当前机器的id
-     */
-    @Value("${aurora.snow-flake.workerId}")
-    private int workerId;
-
-    /**
-     * 该台机器对应的数据中心id
-     */
-    @Value("${aurora.snow-flake.datacenterId}")
-    private int datacenterId;
+    @Autowired
+    private AuroraProperties auroraProperties;
 
     @Autowired
     private UserAccountDao userAccountDao;
@@ -55,10 +34,11 @@ public class UserAccountServiceImpl implements UserAccountService {
     @Override
     public ModifyResult insert(UserAccountDO userAccountDO) {
         userAccountDO = UserAccountDO.builder()
-                .uid(GenerateInfoUtils.generateUid(workerId,datacenterId))
+                .uid(GenerateInfoUtils.generateUid(auroraProperties.getSnowFlakeWorkerId(),auroraProperties.getSnowFlakeDatacenterId()))
                 .createTime(DateUtils.format(new Date())).accountLocked(false)
                 .accountExpired(false).role(userAccountDO.getRole())
                 .permission(userAccountDO.getPermission())
+                .delete(false)
                 .userUid(userAccountDO.getUserUid()).build();
         return ModifyResult.operateResult(userAccountDao.insert(userAccountDO),"插入账户信息",
                 ResponseStatusCodeEnum.SUCCESS.getCode(),userAccountDO.getUid());

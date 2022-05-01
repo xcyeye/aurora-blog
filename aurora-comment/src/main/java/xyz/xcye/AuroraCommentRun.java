@@ -6,7 +6,7 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import springfox.documentation.oas.annotations.EnableOpenApi;
-import xyz.xcye.web.common.service.feign.MessageLogFeignService;
+import xyz.xcye.aurora.feign.MessageLogFeignService;
 
 /**
  * @author qsyyke

@@ -38,7 +38,7 @@ public class ConvertObjectUtils {
         // replacedMap添加到mailInfo中
         StorageSendMailInfo sendMailInfo = new StorageSendMailInfo(createReplacedMap(replacedObjList));
         BeanUtils.copyProperties(mailInfo, sendMailInfo);
-        return jsonToString(mailInfo);
+        return jsonToString(sendMailInfo);
     }
 
     /**

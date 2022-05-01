@@ -2,18 +2,15 @@ package xyz.xcye.comment.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import io.seata.core.context.RootContext;
-import io.seata.core.exception.TransactionException;
 import io.seata.spring.annotation.GlobalTransactional;
-import io.seata.tm.api.GlobalTransaction;
-import io.seata.tm.api.GlobalTransactionContext;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
-import org.springframework.validation.BindException;
+import xyz.xcye.aurora.properties.AuroraProperties;
+import xyz.xcye.aurora.service.amqp.SendMQMessageService;
 import xyz.xcye.comment.dao.CommentDao;
 import xyz.xcye.comment.service.CommentService;
 import xyz.xcye.common.constant.RabbitMQNameConstant;
@@ -24,11 +21,9 @@ import xyz.xcye.common.entity.result.ModifyResult;
 import xyz.xcye.common.entity.table.CommentDO;
 import xyz.xcye.common.enums.ResponseStatusCodeEnum;
 import xyz.xcye.common.enums.SendHtmlMailTypeNameEnum;
-import xyz.xcye.common.exception.AuroraGlobalException;
 import xyz.xcye.common.util.DateUtils;
 import xyz.xcye.common.util.id.GenerateInfoUtils;
 import xyz.xcye.common.vo.CommentVO;
-import xyz.xcye.web.common.service.mq.SendMQMessageService;
 
 import java.util.*;
 
@@ -40,17 +35,8 @@ import java.util.*;
 @Service
 public class CommentServiceImpl implements CommentService {
 
-    /**
-     * 当前机器的id
-     */
-    @Value("${aurora.snow-flake.workerId}")
-    private int workerId;
-
-    /**
-     * 该台机器对应的数据中心id
-     */
-    @Value("${aurora.snow-flake.datacenterId}")
-    private int datacenterId;
+    @Autowired
+    private AuroraProperties auroraProperties;
 
     @Autowired
     private CommentDao commentDao;
@@ -61,50 +47,27 @@ public class CommentServiceImpl implements CommentService {
     @GlobalTransactional(rollbackFor = Exception.class)
     @Override
     public ModifyResult insertComment(CommentDO commentDO)
-            throws BindException, ReflectiveOperationException, AuroraGlobalException {
-
-        System.out.println(3487);
-        System.out.println(349857);
-        System.out.println(348763476);
-        log.info("最开始的xid{}，是否绑定{}",RootContext.getXID(),RootContext.inGlobalTransaction());
-        //TransactionManager tm = TransactionManagerHolder.get();
-        GlobalTransaction create = GlobalTransactionContext.getCurrentOrCreate();
-        try {
-            create.begin();
-        } catch (TransactionException e) {
-            e.printStackTrace();
-        }
-        /*String xid = null;
-        try {
-            xid = tm.begin("aurora-comment", "default", "comment", 10000);
-        } catch (TransactionException e) {
-            e.printStackTrace();
-        }*/
-        log.info("手动开启的xid{},是否绑定{}","xid", RootContext.inGlobalTransaction());
-        log.info("是否绑定{},xid{}",RootContext.inGlobalTransaction(),RootContext.getXID());
-
+            throws Throwable {
+        Assert.notNull(commentDO,"评论不能为null");
         // 初始化值
-        commentDO.setUid(GenerateInfoUtils.generateUid(workerId,datacenterId));
+        commentDO.setUid(GenerateInfoUtils.generateUid(auroraProperties.getSnowFlakeWorkerId(),auroraProperties.getSnowFlakeDatacenterId()));
         commentDO.setCreateTime(DateUtils.format(new Date()));
         commentDO.setShowComment(true);
         // 设置email的发送状态，这里目前只能保证消息是否成功投递到rabbitmq交换机中，不能保证email是否发送成功
         commentDO.setEmailNotice(false);
+        commentDO.setDelete(false);
 
-        /*
-         * 判断该条评论是回复评论还是单独的一条评论
-         * 如果此条评论的replyCommentUid在数据库中不存在，则标记为新建的单独评论
-         */
+        // 判断该条评论是回复评论还是单独的一条评论
+        // 如果此条评论的replyCommentUid在数据库中不存在，则标记为新建的单独评论
         CommentDO queriedRepliedCommentDO = getCommentDOByUid(commentDO.getReplyCommentUid());
         boolean isReplyCommentFlag = queriedRepliedCommentDO != null;
 
         //向数据库中插入此条评论
         int insertCommentNum = commentDao.insertComment(commentDO);
 
-        /*
-         * 使用rabbitmq发送邮件通知对方 因为使用rabbitmq发送消息到交换机的过程是同步的，并且我们已经开启了seata的全局事务功能
-         * 所以如果在发送mq消息的过程中，出现异常，能够回滚，从而能够保证插入评论后，能够保证评论和mq发送到交换机的消息同时成功或者失败
-         * 因为发布确认是异步的，如果能进入到发布确认代码中，那么前面插入评论和消息一定都成功保存到数据库中了
-         */
+        // 使用rabbitmq发送邮件通知对方 因为使用rabbitmq发送消息到交换机的过程是同步的，并且我们已经开启了seata的全局事务功能
+        // 所以如果在发送mq消息的过程中，出现异常，能够回滚，从而能够保证插入评论后，能够保证评论和mq发送到交换机的消息同时成功或者失败
+        // 因为发布确认是异步的，如果能进入到发布确认代码中，那么前面插入评论和消息一定都成功保存到数据库中了
         if (isReplyCommentFlag) {
             sendMQMessageService.sendReplyMail(commentDO, queriedRepliedCommentDO,
                     RabbitMQNameConstant.AURORA_SEND_MAIL_EXCHANGE,
@@ -116,7 +79,6 @@ public class CommentServiceImpl implements CommentService {
             StorageSendMailInfo mailInfo = createReceiveCommentMailInfo(commentDO);
             sendMQMessageService.sendCommonMail(mailInfo, RabbitMQNameConstant.AURORA_SEND_MAIL_EXCHANGE,
                     "topic", RabbitMQNameConstant.SEND_HTML_MAIL_ROUTING_KEY, createReceiveList(commentDO));
-
         }
 
         //如果运行到这里，不能确保邮件发送成功，但还是修改一下邮件发送状态
@@ -134,8 +96,7 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public ModifyResult deleteComment(Long uid) {
-        int deleteCommentNum = commentDao.deleteComment(uid);
-        return ModifyResult.operateResult(deleteCommentNum,"删除" + uid + "对应的评论",
+        return ModifyResult.operateResult(commentDao.deleteComment(uid),"删除" + uid + "对应的评论",
                 ResponseStatusCodeEnum.SUCCESS.getCode(), uid);
     }
 
@@ -143,8 +104,16 @@ public class CommentServiceImpl implements CommentService {
     public ModifyResult updateComment(CommentDO commentDO) {
         // 设置最后修改时间
         commentDO.setUpdateTime(DateUtils.format());
-        int updateCommentNum = commentDao.updateComment(commentDO);
-        return ModifyResult.operateResult(updateCommentNum,"修改评论",
+        return ModifyResult.operateResult(commentDao.updateComment(commentDO),"修改评论",
+                ResponseStatusCodeEnum.SUCCESS.getCode(), commentDO.getUid());
+    }
+
+    @Override
+    public ModifyResult updateDeleteStatus(CommentDO commentDO) {
+        Assert.notNull(commentDO, () -> "更新评论删除状态，不能为null");
+        commentDO.setUpdateTime(DateUtils.format());
+        commentDO.setDelete(Optional.ofNullable(commentDO.getDelete()).orElse(false));
+        return ModifyResult.operateResult(commentDao.updateDeleteStatus(commentDO),"删除评论",
                 ResponseStatusCodeEnum.SUCCESS.getCode(), commentDO.getUid());
     }
 
@@ -241,8 +210,7 @@ public class CommentServiceImpl implements CommentService {
      * @return
      */
     private boolean isExistsComment(Long uid) throws ReflectiveOperationException {
-        CommentDO commentDO = getCommentDOByUid(uid);
-        return commentDO != null;
+        return getCommentDOByUid(uid) != null;
     }
 
     /**
@@ -305,7 +273,7 @@ public class CommentServiceImpl implements CommentService {
         List<Long> uidList = new ArrayList<>();
         for (String uidStr : arraySplit) {
             try {
-                uidList.add(new Long(uidStr));
+                uidList.add(Long.valueOf(uidStr));
             } catch (NumberFormatException e) {
                 e.printStackTrace();
             }
@@ -331,7 +299,8 @@ public class CommentServiceImpl implements CommentService {
         StorageSendMailInfo mailInfo = new StorageSendMailInfo();
         mailInfo.setUserUid(commentDO.getUserUid());
         mailInfo.setSendType(SendHtmlMailTypeNameEnum.RECEIVE_COMMENT);
-        mailInfo.setCorrelationDataId(GenerateInfoUtils.generateUid(workerId, datacenterId) + "");
+        mailInfo.setCorrelationDataId(GenerateInfoUtils.generateUid(auroraProperties.getSnowFlakeWorkerId(),
+                auroraProperties.getSnowFlakeDatacenterId()) + "");
         mailInfo.setSubject(commentDO.getContent());
         return mailInfo;
     }

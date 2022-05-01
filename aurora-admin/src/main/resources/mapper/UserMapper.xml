@@ -8,20 +8,21 @@
         <result column="is_verify_email" property="verifyEmail"/>
         <result column="update_time" property="updateTime"/>
         <result column="create_time" property="createTime"/>
+        <result column="is_delete" property="delete"/>
     </resultMap>
 
     <insert id="insertUser">
         insert into au_user (
          uid,user_summary,nickname,gender,login_uid,
          site_uid,avatar,password,username,profession,is_verify_email,
-         email_uid,user_account_uid,create_time,update_time
+         email_uid,user_account_uid,create_time,update_time,is_delete
          )
 
          values (
                  #{userDO.uid},#{userDO.userSummary},#{userDO.nickname},#{userDO.gender},#{userDO.loginUid},
                  #{userDO.siteUid},#{userDO.avatar},#{userDO.password},#{userDO.username},
                  #{userDO.profession},#{userDO.verifyEmail},#{userDO.emailUid},#{userDO.userAccountUid},
-                 #{userDO.createTime},#{userDO.updateTime}
+                 #{userDO.createTime},#{userDO.updateTime},#{userDO.delete}
                 )
     </insert>
 
@@ -60,7 +61,10 @@
                 user_account_uid=#{userDO.userAccountUid}
             </if>
             <if test="userDO.emailUid != null">
-                email_uid=#{userDO.emailUid}
+                email_uid=#{userDO.emailUid},
+            </if>
+            <if test="userDO.delete != null">
+                is_delete=#{userDO.delete}
             </if>
         </set>
         where
@@ -78,7 +82,7 @@
         select
             uid,user_summary,nickname,gender,login_uid,
             site_uid,avatar,password,username,profession,is_verify_email,
-            email_uid,user_account_uid,create_time,update_time
+            email_uid,user_account_uid,create_time,update_time,is_delete
         from
             au_user
         <where>

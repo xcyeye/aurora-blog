@@ -5,7 +5,7 @@ import xyz.xcye.common.dto.ConditionDTO;
 import xyz.xcye.common.dto.CommentDTO;
 import xyz.xcye.common.entity.result.ModifyResult;
 import xyz.xcye.common.entity.table.CommentDO;
-import xyz.xcye.common.exception.AuroraGlobalException;
+import xyz.xcye.common.exception.AuroraException;
 import xyz.xcye.common.vo.CommentVO;
 
 import java.util.List;
@@ -21,7 +21,7 @@ public interface CommentService {
      * @return
      */
     ModifyResult insertComment(CommentDO commentDO)
-            throws BindException, ReflectiveOperationException, AuroraGlobalException;
+            throws Throwable;
 
     /**
      * 根据uid删除对应的记录，是真正的从数据库中删除此条记录
@@ -36,6 +36,8 @@ public interface CommentService {
      * @return
      */
     ModifyResult updateComment(CommentDO commentDO);
+
+    ModifyResult updateDeleteStatus(CommentDO commentDO);
 
     /**
      * 根据传入的arrayCommentUid评论uid数据，获取对应的所有评论节点数据

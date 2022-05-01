@@ -3,9 +3,11 @@ package xyz.xcye.admin.config;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanPostProcessor;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.util.ReflectionUtils;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -13,12 +15,10 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.mvc.method.RequestMappingInfoHandlerMapping;
 import springfox.documentation.spring.web.plugins.WebFluxRequestHandlerProvider;
 import springfox.documentation.spring.web.plugins.WebMvcRequestHandlerProvider;
-import xyz.xcye.admin.interceptor.AdminGlobalHandlerInterceptor;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import xyz.xcye.web.common.config.GlobalRabbitMQConfirmConfig;
-import xyz.xcye.web.common.manager.aop.AuroraGlobalLogAop;
-import xyz.xcye.web.common.manager.aop.AuroraGlobalLogRequestAop;
-import xyz.xcye.web.common.service.mq.impl.SendMQMessageServiceImpl;
+import xyz.xcye.admin.properties.AdminDefaultProperties;
+import xyz.xcye.aurora.config.GlobalRabbitMQConfirmConfig;
+import xyz.xcye.aurora.interceptor.AuroraGlobalHandlerInterceptor;
+import xyz.xcye.aurora.service.amqp.impl.SendMQMessageServiceImpl;
 
 import java.lang.reflect.Field;
 import java.util.List;
@@ -27,12 +27,12 @@ import java.util.List;
  * 配置swagger
  */
 
-@Import({SendMQMessageServiceImpl.class, GlobalRabbitMQConfirmConfig.class})
+@EnableConfigurationProperties(AdminDefaultProperties.class)
 @Configuration
 public class AdminWebConfig implements WebMvcConfigurer {
 
     @Autowired
-    private AdminGlobalHandlerInterceptor globalHandlerInterceptor;
+    private AuroraGlobalHandlerInterceptor auroraGlobalHandlerInterceptor;
 
     @Bean(name = "commentBeanPostProcessor")
     public BeanPostProcessor springfoxHandlerProviderBeanPostProcessor() {
@@ -64,39 +64,14 @@ public class AdminWebConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors (InterceptorRegistry registry) {
         //"*/css/**","*/js/**","*/images/**","*/fonts/**"
-        registry.addInterceptor(globalHandlerInterceptor)
+        registry.addInterceptor(auroraGlobalHandlerInterceptor)
                 .addPathPatterns("/**")
                 .excludePathPatterns("/login","/","/css/**","/js/**","/images/**","/fonts/**");
 
     }
 
-    /**
-     * 自定义全局异常处理
-     * @return
-     */
-    /*@Bean
-    public AuroraGlobalExceptionHandler customGlobalExceptionHandler() {
-        return new AuroraGlobalExceptionHandler();
-    }*/
-
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
-    }
-
-    /*@Bean
-    @ConditionalOnMissingBean
-    public HttpMessageConverters messageConverters(ObjectProvider<HttpMessageConverter<?>> converters) {
-        return new HttpMessageConverters(converters.orderedStream().collect(Collectors.toList()));
-    }*/
-
-    @Bean
-    public AuroraGlobalLogAop globalLogAop() {
-        return new AuroraGlobalLogAop();
-    }
-
-    @Bean
-    public AuroraGlobalLogRequestAop logRequestAop() {
-        return new AuroraGlobalLogRequestAop();
     }
 }

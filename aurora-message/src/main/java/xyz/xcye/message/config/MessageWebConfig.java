@@ -5,7 +5,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
 import org.springframework.util.ReflectionUtils;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -13,16 +12,10 @@ import org.springframework.web.servlet.mvc.method.RequestMappingInfoHandlerMappi
 import springfox.documentation.spring.web.plugins.WebFluxRequestHandlerProvider;
 import springfox.documentation.spring.web.plugins.WebMvcRequestHandlerProvider;
 import xyz.xcye.message.interceptor.MessageGlobalHandlerInterceptor;
-import xyz.xcye.web.common.exception.AuroraGlobalExceptionHandler;
-import xyz.xcye.web.common.manager.advice.AuroraResponseResultHandler;
-import xyz.xcye.web.common.manager.aop.AuroraGlobalLogAop;
-import xyz.xcye.web.common.manager.aop.AuroraGlobalLogRequestAop;
-import xyz.xcye.web.common.manager.amqp.MistakeMessageSendService;
 
 import java.lang.reflect.Field;
 import java.util.List;
 
-@Import({MistakeMessageSendService.class})
 @Configuration
 public class MessageWebConfig implements WebMvcConfigurer {
 
@@ -63,33 +56,5 @@ public class MessageWebConfig implements WebMvcConfigurer {
                 .addPathPatterns("/**")
                 .excludePathPatterns("/login","/","/css/**","/js/**","/images/**","/fonts/**");
 
-    }
-
-    /**
-     * 自定义全局异常处理
-     * @return
-     */
-    @Bean
-    public AuroraGlobalExceptionHandler customGlobalExceptionHandler() {
-        return new AuroraGlobalExceptionHandler();
-    }
-
-    /**
-     * 响应结果封装
-     * @return
-     */
-    @Bean
-    public AuroraResponseResultHandler responseResultHandler() {
-        return new AuroraResponseResultHandler();
-    }
-
-    @Bean
-    public AuroraGlobalLogAop globalLogAop() {
-        return new AuroraGlobalLogAop();
-    }
-
-    @Bean
-    public AuroraGlobalLogRequestAop globalLogRequestAop() {
-        return new AuroraGlobalLogRequestAop();
     }
 }

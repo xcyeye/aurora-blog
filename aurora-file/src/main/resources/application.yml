@@ -52,14 +52,10 @@ management:
 aurora:
   file:
     nginx-root-path: /Users/aurora/nginx-upload
-    host: http://localhost
-    upload-folder-name: aurora-upload
-  snow-flake:
-    workerId: 12
-    datacenterId: 20
-  pagination:
-    pageNum: 1
-    pageSize: 10
+    nginx-server-name: http://localhost
+    save-file-folder: aurora-upload
+  snow-flake-worker-id: 12
+  snow-flake-datacenter-id: 23
 
 
 # 分页插件

@@ -35,9 +35,7 @@ public class RoleServiceImpl implements RoleService {
              return ModifyResult.operateResult("此" + roleDO.getRole() + "已经存在",0,
                     ResponseStatusCodeEnum.SUCCESS.getCode(), roleDO.getUid());
         }
-
-        int insertNum = roleDao.insert(roleDO);
-        return ModifyResult.operateResult(insertNum,"添加角色信息" + roleDO.getRole(),
+        return ModifyResult.operateResult(roleDao.insert(roleDO),"添加角色信息" + roleDO.getRole(),
                 ResponseStatusCodeEnum.SUCCESS.getCode(), roleDO.getUid());
     }
 
@@ -59,7 +57,7 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public List<RoleVO> queryAllByCondition(ConditionDTO<Long> condition) throws ReflectiveOperationException {
+    public List<RoleVO> queryAllByCondition(ConditionDTO<Integer> condition) throws ReflectiveOperationException {
         condition.init(condition);
         PageHelper.startPage(condition.getPageNum(),condition.getPageSize(), condition.getOrderBy());
         return BeanUtils.copyList(roleDao.queryAllByCondition(condition),RoleVO.class);
@@ -77,12 +75,8 @@ public class RoleServiceImpl implements RoleService {
      * @return
      */
     private boolean roleExists(String role) {
-        ConditionDTO<Long> condition = ConditionDTO.instant(role, Long.class);
+        ConditionDTO<Integer> condition = ConditionDTO.instant(role, Integer.class);
         List<RoleDO> roleDOList = roleDao.queryAllByCondition(condition);
-        if (!roleDOList.isEmpty()) {
-            return true;
-        }
-
-        return false;
+        return !roleDOList.isEmpty();
     }
 }

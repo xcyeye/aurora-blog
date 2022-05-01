@@ -1,10 +1,10 @@
 package xyz.xcye.message.service.impl;
 
 import com.github.pagehelper.PageHelper;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 import org.springframework.validation.BindException;
+import xyz.xcye.aurora.properties.AuroraProperties;
 import xyz.xcye.common.dto.ConditionDTO;
 import xyz.xcye.common.entity.result.ModifyResult;
 import xyz.xcye.common.entity.table.MessageLogDO;
@@ -12,13 +12,13 @@ import xyz.xcye.common.enums.ResponseStatusCodeEnum;
 import xyz.xcye.common.util.BeanUtils;
 import xyz.xcye.common.util.DateUtils;
 import xyz.xcye.common.util.ValidationUtils;
-import xyz.xcye.common.util.id.GenerateInfoUtils;
 import xyz.xcye.common.valid.Insert;
 import xyz.xcye.common.valid.Update;
 import xyz.xcye.common.vo.MessageLogVO;
 import xyz.xcye.message.dao.MessageLogDao;
 import xyz.xcye.message.service.MessageLogService;
 
+import javax.annotation.Resource;
 import java.util.Date;
 import java.util.List;
 
@@ -29,38 +29,24 @@ import java.util.List;
 @Service
 public class MessageLogServiceImpl implements MessageLogService {
 
-    /**
-     * 当前机器的id
-     */
-    @Value("${aurora.snow-flake.workerId}")
-    private int workerId;
-
-    /**
-     * 该台机器对应的数据中心id
-     */
-    @Value("${aurora.snow-flake.datacenterId}")
-    private int datacenterId;
-
-    @Autowired
+    @Resource
     private MessageLogDao messageLogDao;
+    @Resource
+    private AuroraProperties auroraProperties;
 
     @Override
     public ModifyResult insertMessageLog(MessageLogDO messageLogDO) throws BindException {
         ValidationUtils.valid(messageLogDO, Insert.class);
+        Assert.notNull(messageLogDO, "插入mq消息不能为null");
         //设置创建时间
         messageLogDO.setCreateTime(DateUtils.format(new Date()));
-        if (messageLogDO.getUid() == null || messageLogDO.getUid() == 0) {
-            messageLogDO.setUid(GenerateInfoUtils.generateUid(workerId,datacenterId));
-        }
-        int insertMessageLogNum = messageLogDao.insertMessageLog(messageLogDO);
-        return ModifyResult.operateResult(insertMessageLogNum,"插入消息投递日志",
+        return ModifyResult.operateResult(messageLogDao.insertMessageLog(messageLogDO),"插入消息投递日志",
                  ResponseStatusCodeEnum.SUCCESS.getCode(), messageLogDO.getUid());
     }
 
     @Override
     public ModifyResult deleteMessageLog(long uid) {
-        int deleteMessageLogNum = messageLogDao.deleteMessageLog(uid);
-        return ModifyResult.operateResult(deleteMessageLogNum,"删除消息投递日志",
+        return ModifyResult.operateResult(messageLogDao.deleteMessageLog(uid),"删除消息投递日志",
                 ResponseStatusCodeEnum.SUCCESS.getCode(), uid);
     }
 
@@ -69,10 +55,8 @@ public class MessageLogServiceImpl implements MessageLogService {
         ValidationUtils.valid(messageLogDO, Update.class);
         //设置updateTime
         messageLogDO.setUpdateTime(DateUtils.format(new Date()));
-        int updateMessageLogNum = messageLogDao.updateMessageLog(messageLogDO);
-
         //如果修改成功，返回最新的数据
-        return ModifyResult.operateResult(updateMessageLogNum,"修改消息投递日志",
+        return ModifyResult.operateResult(messageLogDao.updateMessageLog(messageLogDO),"修改消息投递日志",
                 ResponseStatusCodeEnum.SUCCESS.getCode(), messageLogDO.getUid());
     }
 

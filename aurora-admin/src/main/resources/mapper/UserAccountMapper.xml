@@ -12,13 +12,13 @@
     <insert id="insert">
         insert into au_user_account
         (
-         uid,role,permission,is_account_locked,is_account_expired,user_uid,create_time,update_time
+         uid,role,permission,is_account_locked,is_account_expired,user_uid,create_time,update_time,is_delete
         )
         values
         (
          #{userAccountDO.uid},#{userAccountDO.role},#{userAccountDO.permission},
          #{userAccountDO.accountLocked},#{userAccountDO.accountExpired},#{userAccountDO.userUid},
-         #{userAccountDO.createTime},#{userAccountDO.updateTime}
+         #{userAccountDO.createTime},#{userAccountDO.updateTime},#{userAccountDO.delete}
         )
     </insert>
 
@@ -40,6 +40,9 @@
             <if test="userAccountDO.updateTime != null">
                 update_time=#{userAccountDO.updateTime},
             </if>
+            <if test="userAccountDO.delete != null">
+                is_delete=#{userAccountDO.delete}
+            </if>
         </set>
         where uid=#{userAccountDO.uid}
     </update>
@@ -53,7 +56,7 @@
 
     <select id="queryAllByCondition" resultType="xyz.xcye.common.entity.table.UserAccountDO">
         select
-        uid,role,permission,is_account_locked,is_account_expired,user_uid,create_time,update_time
+        uid,role,permission,is_account_locked,is_account_expired,user_uid,create_time,update_time,is_delete
         from
             au_user_account
         <where>
@@ -68,6 +71,9 @@
             </if>
             <if test="condition.otherUid != null">
                 and user_uid=#{condition.otherUid}
+            </if>
+            <if test="condition.delete != null">
+                and is_delete=#{condition.delete}
             </if>
         </where>
     </select>

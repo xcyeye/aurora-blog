@@ -12,6 +12,7 @@ import xyz.xcye.common.valid.Update;
 import xyz.xcye.common.valid.validator.ValidateString;
 
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 
 /**
@@ -38,6 +39,8 @@ public class UserDO implements Serializable {
     @Length(max = FieldLengthConstant.SUMMARY,message = "用户-简介不能超过{max}")
     private String userSummary;
 
+    private Boolean delete;
+
     /**
      * 用户昵称
      */
@@ -47,13 +50,8 @@ public class UserDO implements Serializable {
     /**
      * 用户性别
      */
-    @Length(max = FieldLengthConstant.GENDER)
-    private String gender;
-
-    /**
-     * 用户多少天免登录
-     */
-    // private Integer rememberMeDay;
+    @Size(min = 0,max = 1, message = "用户的性别只能在{min}和{max}之间取值")
+    private Integer gender;
 
     /**
      * 该用户对应的网站设置的uid

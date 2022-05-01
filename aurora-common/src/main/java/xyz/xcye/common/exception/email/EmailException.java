@@ -1,14 +1,14 @@
 package xyz.xcye.common.exception.email;
 
 import xyz.xcye.common.enums.ResponseStatusCodeEnum;
-import xyz.xcye.common.exception.AuroraGlobalException;
+import xyz.xcye.common.exception.AuroraException;
 
 /**
  * @author qsyyke
  */
 
 
-public class EmailException extends AuroraGlobalException {
+public class EmailException extends AuroraException {
 
     public EmailException(String message, Integer statusCode) {
         super(message, statusCode);

@@ -1,16 +1,14 @@
 package xyz.xcye.common.constant;
 
-import lombok.Getter;
-
 /**
  * 这是用户的性别枚举
  * @author qsyyke
  */
 
 public class GenderConstant {
-    public final static String MALE = "男";
+    public static final Integer MALE = 1;
 
-    public final static String FEMALE = "女";
+    public static final Integer FEMALE = 2;
 
-    public final static String SECRET = "秘密";
+    public static final Integer SECRET = 0;
 }

@@ -21,9 +21,7 @@ public class ValidationUtils {
         Set<ConstraintViolation<Object>> validates = validator.validate(validatingObject, groups);
 
         if (validates.size() > 0) {
-
             BindingResult bindingResult = new BeanPropertyBindingResult(validatingObject, validatingObject.getClass().getSimpleName());
-
             for (ConstraintViolation<Object> violation : validates) {
                 //验证失败的消息
                 String message = violation.getMessage();

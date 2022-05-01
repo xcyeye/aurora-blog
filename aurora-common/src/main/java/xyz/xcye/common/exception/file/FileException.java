@@ -1,7 +1,7 @@
 package xyz.xcye.common.exception.file;
 
 import xyz.xcye.common.enums.ResponseStatusCodeEnum;
-import xyz.xcye.common.exception.AuroraGlobalException;
+import xyz.xcye.common.exception.AuroraException;
 
 /**
  * 和文件相关的自定义异常
@@ -9,7 +9,7 @@ import xyz.xcye.common.exception.AuroraGlobalException;
  */
 
 
-public class FileException extends AuroraGlobalException {
+public class FileException extends AuroraException {
 
     public FileException(String message, Integer statusCode) {
         super(message, statusCode);

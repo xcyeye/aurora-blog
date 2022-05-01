@@ -71,7 +71,7 @@ mybatis:
   mapper-locations: classpath:mapper/**
   configuration:
     map-underscore-to-camel-case: true
-#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
 management:
   endpoints:
@@ -79,31 +79,18 @@ management:
       exposure:
         include: "*"
 
-
 # 自定义的配置
 aurora:
-  user:
-    remember-me-day: 7
-    default-role: ROLE_user
-    default-permission: user
-  snow-flake:
-    workerId: 12
-    datacenterId: 20
-  pagination:
-    pageNum: 1
-    pageSize: 10
-  admin:
-    default-value:
-      role: ROLE_user
-      permission: user
-      avatar: https://aurora.xcye.xyz/avatar.jpg
-      nickname: aurora
-      gender: 男
-    verify:
-      account:
-        # 邮件发送验证账户的链接有效时间，毫秒
-        expiration-time: 120000
-        email-prefix-path: http://localhost:8088/admin/verifyAccount/
+  snow-flake-worker-id: 2
+  snow-flake-datacenter-id: 12
+  account:
+    mail-verify-account-expiration-time: 120000
+    mail-verify-account-prefix-path: http://localhost:8088/admin/verifyAccount/
+  default:
+    avatar: https://picture.xcye.xyz/avatar.jpg
+    role: ROLE_user
+    permission: user
+    nickname: aurora-new
 
 # 分页插件
 pagehelper:
@@ -121,14 +108,3 @@ feign:
     enabled: true
     group:
       enabled: true
-  client:
-    refresh-enabled: true
-    config:
-      adminAuroraMessageEmail:
-#        connectTimeout: 10000
-#        readTimeout: 10000
-        loggerLevel: basic
-      globalAuroraMessageLog:
-        #        connectTimeout: 10000
-        #        readTimeout: 10000
-        loggerLevel: basic

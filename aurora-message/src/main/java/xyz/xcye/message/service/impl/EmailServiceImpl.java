@@ -4,21 +4,21 @@ import com.github.pagehelper.PageHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindException;
+import xyz.xcye.aurora.properties.AuroraProperties;
 import xyz.xcye.common.dto.ConditionDTO;
 import xyz.xcye.common.entity.result.ModifyResult;
 import xyz.xcye.common.entity.result.R;
 import xyz.xcye.common.entity.table.EmailDO;
 import xyz.xcye.common.enums.ResponseStatusCodeEnum;
-import xyz.xcye.common.exception.AuroraGlobalException;
+import xyz.xcye.common.exception.AuroraException;
 import xyz.xcye.common.exception.email.EmailException;
 import xyz.xcye.common.exception.user.UserException;
 import xyz.xcye.common.util.BeanUtils;
+import xyz.xcye.common.util.ConvertObjectUtils;
 import xyz.xcye.common.util.DateUtils;
 import xyz.xcye.common.util.JSONUtils;
-import xyz.xcye.common.util.ConvertObjectUtils;
 import xyz.xcye.common.util.id.GenerateInfoUtils;
 import xyz.xcye.common.vo.EmailVO;
 import xyz.xcye.common.vo.UserVO;
@@ -41,24 +41,15 @@ public class EmailServiceImpl implements EmailService {
     @Autowired
     private EmailDao emailDao;
 
-    /**
-     * 当前机器的id
-     */
-    @Value("${aurora.snow-flake.workerId}")
-    private int workerId;
-
-    /**
-     * 该台机器对应的数据中心id
-     */
-    @Value("${aurora.snow-flake.datacenterId}")
-    private int datacenterId;
+    @Autowired
+    private AuroraProperties auroraProperties;
 
     @Autowired
     private UserFeignService userFeignService;
 
     @Override
     public ModifyResult insertEmail(EmailDO email)
-            throws BindException, ReflectiveOperationException, AuroraGlobalException {
+            throws BindException, ReflectiveOperationException, AuroraException {
         // 判断邮箱是否已经存在
         if (queryByEmail(email.getEmail()) != null) {
             throw new EmailException(ResponseStatusCodeEnum.EXCEPTION_EMAIL_EXISTS);
@@ -77,7 +68,7 @@ public class EmailServiceImpl implements EmailService {
         }
 
         //生成一个uid
-        long uid = GenerateInfoUtils.generateUid(workerId, datacenterId);
+        long uid = GenerateInfoUtils.generateUid(auroraProperties.getSnowFlakeWorkerId(), auroraProperties.getSnowFlakeDatacenterId());
         //其中user_uid应该在调用的此方法的时候，就已经赋值在email对象里面
         email.setUid(uid);
         email.setCreateTime(DateUtils.format(new Date()));

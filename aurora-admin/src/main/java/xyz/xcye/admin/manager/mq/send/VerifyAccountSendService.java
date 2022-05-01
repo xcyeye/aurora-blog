@@ -13,8 +13,8 @@ import xyz.xcye.common.constant.RabbitMQNameConstant;
 import xyz.xcye.common.dto.EmailVerifyAccountDTO;
 import xyz.xcye.common.util.ConvertObjectUtils;
 import xyz.xcye.common.util.id.GenerateInfoUtils;
-import xyz.xcye.web.common.service.feign.MessageLogFeignService;
-import xyz.xcye.web.common.service.mq.MessageLogService;
+import xyz.xcye.aurora.feign.MessageLogFeignService;
+import xyz.xcye.aurora.service.amqp.MessageLogService;
 
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;

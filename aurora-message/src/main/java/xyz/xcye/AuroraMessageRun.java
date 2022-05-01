@@ -6,7 +6,6 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import springfox.documentation.oas.annotations.EnableOpenApi;
-import xyz.xcye.message.feign.UserFeignService;
 
 /**
  * @author qsyyke
@@ -14,7 +13,7 @@ import xyz.xcye.message.feign.UserFeignService;
 
 
 @EnableOpenApi
-@EnableFeignClients(basePackageClasses = {UserFeignService.class})
+@EnableFeignClients
 @EnableDiscoveryClient
 @EnableScheduling
 @SpringBootApplication

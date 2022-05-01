@@ -9,12 +9,12 @@
         insert into
             au_comment
         (uid,username,avatar,site,email,create_time,update_time,comment_ip,operation_system_info,
-        is_show_comment,reply_comment_uid,is_email_notice,path,content,user_uid,next_comment_uid_array)
+        is_show_comment,reply_comment_uid,is_email_notice,path,content,user_uid,next_comment_uid_array,is_delete)
 
         values (#{commentDO.uid},#{commentDO.username},#{commentDO.avatar},#{commentDO.site},#{commentDO.email}
                ,#{commentDO.createTime},#{commentDO.updateTime},#{commentDO.commentIp}
                ,#{commentDO.operationSystemInfo},#{commentDO.showComment},#{commentDO.replyCommentUid},#{commentDO.emailNotice}
-               ,#{commentDO.path},#{commentDO.content},#{commentDO.userUid},#{commentDO.nextCommentUidArray})
+               ,#{commentDO.path},#{commentDO.content},#{commentDO.userUid},#{commentDO.nextCommentUidArray},#{commentDO.delete})
     </insert>
 
     <update id="updateComment">
@@ -63,13 +63,19 @@
             <if test="commentDO.nextCommentUidArray != null">
                 next_comment_uid_array=#{commentDO.nextCommentUidArray},
             </if>
-
             <if test="commentDO.userUid != null">
-                user_uid=#{commentDO.userUid}
+                user_uid=#{commentDO.userUid},
             </if>
         </set>
             where
                 uid=#{commentDO.uid}
+    </update>
+
+    <update id="updateDeleteStatus">
+        update
+            au_comment
+        set
+            is_delete=#{comment.delete}
     </update>
 
     <delete id="deleteComment">
@@ -82,7 +88,7 @@
     <select id="queryAllComment" resultMap="commentDO">
         select
             uid,username,avatar,site,email,create_time,update_time,comment_ip,operation_system_info,
-        is_show_comment,reply_comment_uid,is_email_notice,path,content,user_uid,next_comment_uid_array
+        is_show_comment,reply_comment_uid,is_email_notice,path,content,user_uid,next_comment_uid_array,is_delete
         from
           au_comment
         <where>
@@ -97,6 +103,9 @@
             </if>
             <if test="condition.otherUid != null">
                 and user_uid=#{condition.otherUid}
+            </if>
+            <if test="condition.delete != null">
+                and is_delete=#{condition.delete}
             </if>
         </where>
     </select>
@@ -115,5 +124,6 @@
         <result property="nextCommentUidArray" column="next_comment_uid_array"/>
         <result property="path" column="path"/>
         <result property="userUid" column="user_uid"/>
+        <result property="delete" column="is_delete"/>
     </resultMap>
 </mapper>

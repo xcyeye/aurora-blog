@@ -5,6 +5,7 @@ import org.hibernate.validator.constraints.Length;
 import xyz.xcye.common.constant.FieldLengthConstant;
 import xyz.xcye.common.valid.Delete;
 import xyz.xcye.common.valid.Insert;
+import xyz.xcye.common.valid.LogicDelete;
 import xyz.xcye.common.valid.Update;
 import xyz.xcye.common.valid.validator.ValidateString;
 
@@ -33,6 +34,12 @@ public class CommentDO implements Serializable {
      */
     @NotNull(groups = {Insert.class})
     private Long userUid;
+
+    /**
+     * 是否逻辑删除
+     */
+    @NotNull(groups = LogicDelete.class)
+    private Boolean delete;
 
     /**
      * 评论这的用户名 不能为null

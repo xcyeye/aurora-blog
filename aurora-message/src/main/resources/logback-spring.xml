@@ -91,18 +91,18 @@
     </appender>
 
     <!-- 记录处理service的结果，增删改查操作  -->
-    <logger name="xyz.xcye.web.common.manager.aop.AuroraGlobalLogAop" level="INFO" additivity="true">
+    <logger name="xyz.xcye.aurora.manager.aop.AuroraGlobalLogAop" level="INFO" additivity="true">
         <appender-ref ref="service-process-data"/>
     </logger>
 
     <!-- 打印处理请求花费的时间  -->
-    <logger name="xyz.xcye.web.common.manager.aop.AuroraGlobalLogRequestAop" level="INFO" additivity="false">
+    <logger name="xyz.xcye.aurora.manager.aop.AuroraGlobalLogRequestAop" level="INFO" additivity="false">
         <appender-ref ref="user-processRequestTime"/>
     </logger>
 
     <!--sys-exception-->
     <!-- 全局异常处理里面的异常信息  -->
-    <logger name="xyz.xcye.web.common.exception.AuroraGlobalExceptionHandler" level="WARN" additivity="true">
+    <logger name="xyz.xcye.aurora.exception.AuroraGlobalExceptionHandler" level="WARN" additivity="true">
         <appender-ref ref="sys-exception"/>
     </logger>
 

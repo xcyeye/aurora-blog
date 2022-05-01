@@ -57,6 +57,13 @@ public class ConditionDTO<T> {
     private Boolean status;
 
     /**
+     * 是否删除，并不是物理删除，而是逻辑删除
+     */
+    @Setter
+    @Accessors(chain = true)
+    private Boolean delete;
+
+    /**
      * 查询的关键词
      */
     @Setter
@@ -135,6 +142,9 @@ public class ConditionDTO<T> {
         }
         if (condition.show == null) {
             condition.setShow(true);
+        }
+        if (condition.delete == null) {
+            condition.delete = false;
         }
         if (condition.pageNum == null) {
             condition.setPageNum(0);

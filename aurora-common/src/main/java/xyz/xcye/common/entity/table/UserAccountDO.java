@@ -34,6 +34,11 @@ public class UserAccountDO implements Serializable {
     private String role;
 
     /**
+     * 是否删除
+     */
+    private Boolean delete;
+
+    /**
      * 用户权限 多个权限之间，使用,分隔开
      */
     @Length(max = FieldLengthConstant.USER_PERMISSION)

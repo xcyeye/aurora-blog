@@ -1,14 +1,14 @@
 package xyz.xcye.common.exception.user;
 
 import xyz.xcye.common.enums.ResponseStatusCodeEnum;
-import xyz.xcye.common.exception.AuroraGlobalException;
+import xyz.xcye.common.exception.AuroraException;
 
 /**
  * @author qsyyke
  */
 
 
-public class UserException extends AuroraGlobalException {
+public class UserException extends AuroraException {
 
     public UserException(String message, Integer statusCode) {
         super(message, statusCode);

@@ -93,7 +93,13 @@ public class SendMailServiceImpl implements SendMailService {
         String subject = getRightSubject(storageSendMailInfo.getSubject(), mailTemplateVO.getSubject());
 
         //解析邮件发送内容
-        String sendContent = ParseEmailTemplate.parseHtmlMailTemplate(storageSendMailInfo.getReplacedMap(), mailTemplateVO.getTemplate());
+        String sendContent = null;
+        try {
+            sendContent = ParseEmailTemplate.parseHtmlMailTemplate(storageSendMailInfo.getReplacedMap(), mailTemplateVO.getTemplate());
+        } catch (Exception e) {
+            // 如果解析html失败，则直接发送json数据
+            sendContent = ConvertObjectUtils.jsonToString(storageSendMailInfo.getReplacedMap());
+        }
 
         return sendEmail(subject, sendContent, storageSendMailInfo.getReceiverEmail());
     }

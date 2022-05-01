@@ -1,4 +1,0 @@
-# 自定义的配置
-aurora:
-  snow-flake-worker-id: 2
-  snow-flake-datacenter-id: 23

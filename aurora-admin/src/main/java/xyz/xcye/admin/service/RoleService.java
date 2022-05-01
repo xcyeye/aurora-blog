@@ -43,7 +43,7 @@ public interface RoleService {
      * @param condition keyword->role
      * @return
      */
-    List<RoleVO> queryAllByCondition(ConditionDTO<Long> condition) throws ReflectiveOperationException;
+    List<RoleVO> queryAllByCondition(ConditionDTO<Integer> condition) throws ReflectiveOperationException;
 
     /**
      * 根据uid查询权限信息

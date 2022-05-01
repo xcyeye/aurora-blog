@@ -3,21 +3,19 @@ package xyz.xcye.comment.controller;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.validation.BindException;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import xyz.xcye.aurora.feign.MessageLogFeignService;
 import xyz.xcye.comment.service.CommentService;
 import xyz.xcye.common.annotaion.ResponseResult;
 import xyz.xcye.common.dto.CommentDTO;
 import xyz.xcye.common.dto.ConditionDTO;
 import xyz.xcye.common.entity.result.ModifyResult;
 import xyz.xcye.common.entity.table.CommentDO;
-import xyz.xcye.common.exception.AuroraGlobalException;
 import xyz.xcye.common.util.NetWorkUtils;
 import xyz.xcye.common.valid.Insert;
 import xyz.xcye.common.valid.Update;
 import xyz.xcye.common.vo.CommentVO;
-import xyz.xcye.web.common.service.mq.SendMQMessageService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.groups.Default;
@@ -35,7 +33,7 @@ public class CommentController {
     private CommentService commentService;
 
     @Autowired
-    private SendMQMessageService sendMQMessageService;
+    private MessageLogFeignService messageLogFeignService;
 
     @ApiOperation(value = "更新评论")
     @ResponseResult
@@ -49,7 +47,7 @@ public class CommentController {
     @PostMapping("")
     public ModifyResult insertComment(@Validated({Default.class, Insert.class}) CommentDO commentDO,
                                       HttpServletRequest request)
-            throws BindException, ReflectiveOperationException, AuroraGlobalException {
+            throws Throwable {
         commentDO.setCommentIp(NetWorkUtils.getIpAddr(request));
         commentDO.setOperationSystemInfo(NetWorkUtils.getOperationInfo(request));
         return commentService.insertComment(commentDO);

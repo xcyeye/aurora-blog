@@ -10,7 +10,7 @@ import xyz.xcye.common.annotaion.ResponseResult;
 import xyz.xcye.common.dto.ConditionDTO;
 import xyz.xcye.common.entity.result.ModifyResult;
 import xyz.xcye.common.entity.table.EmailDO;
-import xyz.xcye.common.exception.AuroraGlobalException;
+import xyz.xcye.common.exception.AuroraException;
 import xyz.xcye.common.valid.Insert;
 import xyz.xcye.common.valid.Update;
 import xyz.xcye.common.vo.EmailVO;
@@ -36,7 +36,7 @@ public class EmailController {
     @ResponseResult
     @PostMapping("")
     public ModifyResult insertEmail(@Validated({Insert.class,Default.class}) EmailDO email)
-            throws BindException, ReflectiveOperationException, AuroraGlobalException {
+            throws BindException, ReflectiveOperationException, AuroraException {
         return emailService.insertEmail(email);
     }
 

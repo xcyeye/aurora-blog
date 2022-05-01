@@ -66,11 +66,6 @@ public class MessageLogController {
     @ResponseResult
     @GetMapping("/{uid}")
     public MessageLogVO queryMessageLogByUid(@PathVariable("uid") long uid) throws ReflectiveOperationException {
-        /*try {
-            rabbitMQSchedule.reconsumeMQMessageTask();
-        } catch (BindException e) {
-            e.printStackTrace();
-        }*/
         return messageLogService.queryByUid(uid);
     }
 }

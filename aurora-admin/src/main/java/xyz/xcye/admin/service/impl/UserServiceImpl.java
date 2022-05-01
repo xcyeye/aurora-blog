@@ -3,19 +3,20 @@ package xyz.xcye.admin.service.impl;
 import com.github.pagehelper.PageHelper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.BindException;
 import xyz.xcye.admin.dao.UserDao;
-import xyz.xcye.admin.entity.DefaultValueEntity;
+import xyz.xcye.admin.feign.EmailFeignService;
 import xyz.xcye.admin.manager.mq.send.VerifyAccountSendService;
+import xyz.xcye.admin.properties.AdminDefaultProperties;
 import xyz.xcye.admin.service.RoleService;
 import xyz.xcye.admin.service.UserAccountService;
 import xyz.xcye.admin.service.UserService;
-import xyz.xcye.web.common.util.AccountInfoUtils;
+import xyz.xcye.aurora.properties.AuroraProperties;
+import xyz.xcye.aurora.util.AccountInfoUtils;
 import xyz.xcye.common.dto.ConditionDTO;
 import xyz.xcye.common.dto.EmailVerifyAccountDTO;
 import xyz.xcye.common.entity.result.ModifyResult;
@@ -27,16 +28,16 @@ import xyz.xcye.common.enums.ResponseStatusCodeEnum;
 import xyz.xcye.common.exception.email.EmailException;
 import xyz.xcye.common.exception.user.UserException;
 import xyz.xcye.common.util.BeanUtils;
+import xyz.xcye.common.util.ConvertObjectUtils;
 import xyz.xcye.common.util.DateUtils;
 import xyz.xcye.common.util.JSONUtils;
-import xyz.xcye.common.util.ConvertObjectUtils;
 import xyz.xcye.common.util.id.GenerateInfoUtils;
 import xyz.xcye.common.vo.EmailVO;
 import xyz.xcye.common.vo.UserVO;
-import xyz.xcye.web.common.service.feign.MessageLogFeignService;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author qsyyke
@@ -45,33 +46,6 @@ import java.util.List;
 @Slf4j
 @Service
 public class UserServiceImpl implements UserService {
-
-    /**
-     * 当前机器的id
-     */
-    @Value("${aurora.snow-flake.workerId}")
-    private int workerId;
-
-    /**
-     * 该台机器对应的数据中心id
-     */
-    @Value("${aurora.snow-flake.datacenterId}")
-    private int datacenterId;
-
-    @Value("${aurora.user.remember-me-day}")
-    private int rememberMeDay;
-
-    @Value("${aurora.user.default-role}")
-    private String defaultRole;
-
-    @Value("${aurora.user.default-permission}")
-    private String defaultPermission;
-
-    @Value("${aurora.admin.verify.account.expiration-time}")
-    private int emailVerifyAccountExpirationTime;
-
-    @Value("${aurora.admin.verify.account.email-prefix-path}")
-    private String emailVerifyAccountPrefixPath;
 
     @Autowired
     private UserDao userDao;
@@ -82,11 +56,15 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private RoleService roleService;
     @Autowired
-    private DefaultValueEntity defaultValueEntity;
-    @Autowired
-    private MessageLogFeignService messageLogFeignService;
-    @Autowired
     private VerifyAccountSendService verifyAccountSendService;
+    @Autowired
+    private EmailFeignService emailFeignService;
+    @Autowired
+    private AuroraProperties auroraProperties;
+    @Autowired
+    private AuroraProperties.AuroraAccountProperties auroraAccountProperties;
+    @Autowired
+    private AdminDefaultProperties adminDefaultProperties;
 
     @Transactional(rollbackFor = Exception.class)
     @Override
@@ -99,8 +77,8 @@ public class UserServiceImpl implements UserService {
         }
 
         // 设置默认属性
-        userDO = setUserProperties(userDO);
-        userAccountDO = setUserAccountProperties(userDO,userAccountDO);
+        setUserProperties(userDO);
+        setUserAccountProperties(userDO,userAccountDO);
 
         // 插入
         int insertUserNum = userDao.insertUser(userDO);
@@ -145,19 +123,6 @@ public class UserServiceImpl implements UserService {
     @Transactional
     @Override
     public ModifyResult deleteByUid(long uid) {
-
-        /*UserAccountVO userAccountVO = userAccountService.queryByUserUid(uid);
-        if (userAccountVO == null) {
-            throw new UserException(ResponseStatusCodeEnum.PERMISSION_USER_NOT_EXIST.getMessage(),
-                    ResponseStatusCodeEnum.PERMISSION_USER_NOT_EXIST.getCode());
-        }
-        int deleteUserNum = userDao.deleteByUid(uid);
-        ModifyResult deleteUserAccountResult = userAccountService.deleteByUid(userAccountVO.getUid());
-
-        if (!deleteUserAccountResult.isSuccess()) {
-            throw new UserException(ResponseStatusCodeEnum.PERMISSION_USER_FAIL_DELETE.getMessage(),
-                    ResponseStatusCodeEnum.PERMISSION_USER_FAIL_DELETE.getCode());
-        }*/
         int deleteUserNum = userDao.deleteByUid(uid);
         return ModifyResult.operateResult("删除" + uid + "用户",deleteUserNum,ResponseStatusCodeEnum.SUCCESS.getCode(), uid);
     }
@@ -198,11 +163,11 @@ public class UserServiceImpl implements UserService {
         }
 
         // 远程调用aurora-message服务，判断此email的uid是否存在
-        R r = messageLogFeignService.queryEmailByUid(emailUid);
+        R r = emailFeignService.queryByUid(emailUid);
         EmailVO queriedEmailInfo = JSONUtils.parseObjFromResult(ConvertObjectUtils.jsonToString(r), "data", EmailVO.class);
-        if (queriedEmailInfo == null || queriedEmailInfo.getUid() == null) {
+        Optional.ofNullable(queriedEmailInfo).orElseThrow(() -> {
             throw new EmailException(ResponseStatusCodeEnum.EXCEPTION_EMAIL_NOT_EXISTS);
-        }
+        });
 
         UserDO userDO = UserDO.builder().emailUid(queriedEmailInfo.getUid()).uid(queriedEmailInfo.getUserUid())
                 .updateTime(DateUtils.format(new Date())).build();
@@ -214,7 +179,7 @@ public class UserServiceImpl implements UserService {
         }
 
         // 如果email_uid已经有了，则直接发送，不用修改
-        if (userVO.getEmailUid() != null) {
+        if (Optional.ofNullable(userVO.getEmailUid()).isPresent()) {
             sendVerifyEmail(userVO,queriedEmailInfo);
         }
 
@@ -271,7 +236,7 @@ public class UserServiceImpl implements UserService {
         if (!StringUtils.hasLength(role)) {
             return false;
         }
-        ConditionDTO<Long> condition = ConditionDTO.instant(role, Long.class);
+        ConditionDTO<Integer> condition = ConditionDTO.instant(role, Integer.class);
         if (roleService.queryAllByCondition(condition).isEmpty()) {
             // 不存在 新增
             roleService.insert(RoleDO.builder().role(role).build());
@@ -279,49 +244,46 @@ public class UserServiceImpl implements UserService {
         return true;
     }
 
-    private UserDO setUserProperties(UserDO userDO) {
+    private void setUserProperties(UserDO userDO) {
+        userDO.setDelete(false);
         userDO.setCreateTime(DateUtils.format(new Date()));
         userDO.setVerifyEmail(false);
         userDO.setPassword(passwordEncoder.encode(userDO.getPassword()));
-        userDO.setUid(GenerateInfoUtils.generateUid(workerId,datacenterId));
+        userDO.setUid(GenerateInfoUtils.generateUid(auroraProperties.getSnowFlakeWorkerId(),auroraProperties.getSnowFlakeDatacenterId()));
 
         if (!StringUtils.hasLength(userDO.getNickname())) {
-            userDO.setNickname(defaultValueEntity.getNickname());
+            userDO.setNickname(adminDefaultProperties.getNickname());
         }
 
         if (!StringUtils.hasLength(userDO.getAvatar())) {
-            userDO.setAvatar(defaultValueEntity.getAvatar());
+            userDO.setAvatar(adminDefaultProperties.getAvatar());
         }
 
-        // 部分属性值缺失，设置默认值
-        if (!StringUtils.hasLength(userDO.getGender())) {
-            userDO.setGender(defaultValueEntity.getGender());
-        }
-
-        return userDO;
+        // 如果没有性别的话，那么默认是秘密(0)
+        userDO.setGender(Optional.ofNullable(userDO.getGender()).orElse(0));
     }
 
-    private UserAccountDO setUserAccountProperties(UserDO userDO,UserAccountDO userAccountDO) throws ReflectiveOperationException {
+    private void setUserAccountProperties(UserDO userDO,UserAccountDO userAccountDO) throws ReflectiveOperationException {
         userAccountDO.setCreateTime(DateUtils.format(new Date()));
+        userAccountDO.setDelete(false);
         userAccountDO.setAccountExpired(false);
         userAccountDO.setAccountLocked(false);
-        userAccountDO.setUid(GenerateInfoUtils.generateUid(workerId,datacenterId));
+        userAccountDO.setUid(GenerateInfoUtils.generateUid(auroraProperties.getSnowFlakeWorkerId(),auroraProperties.getSnowFlakeDatacenterId()));
         userAccountDO.setUserUid(userDO.getUid());
 
         // 判断用户角色是否存在且正确
         userAccountDO.setPermission(getEffectivePermission(userAccountDO.getPermission()));
         if (!existsRole(userAccountDO.getRole())) {
-            userAccountDO.setRole(defaultValueEntity.getRole());
+            userAccountDO.setRole(adminDefaultProperties.getRole());
         }
-
-        return userAccountDO;
     }
 
     private void sendVerifyEmail(UserVO userVO, EmailVO emailVO) throws BindException {
         EmailVerifyAccountDTO verifyAccountInfo = EmailVerifyAccountDTO.builder()
                 .userUid(userVO.getUid())
-                .expirationTime((long) emailVerifyAccountExpirationTime)
-                .verifyAccountUrl(AccountInfoUtils.generateVerifyAccountPath(userVO.getUid(), emailVerifyAccountPrefixPath, userVO.getUsername()))
+                .expirationTime(auroraAccountProperties.getMailVerifyAccountExpirationTime())
+                .verifyAccountUrl(AccountInfoUtils.generateVerifyAccountPath(userVO.getUid(),
+                        auroraAccountProperties.getMailVerifyAccountPrefixPath(), userVO.getUsername()))
                 .receiverEmail(emailVO.getEmail()).subject(null).build();
         verifyAccountSendService.sendVerifyAccount(verifyAccountInfo);
     }
