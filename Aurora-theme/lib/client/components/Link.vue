@@ -44,7 +44,7 @@
           </div>
         </template>
       </BCenter>
-      <comment :path-name="$route.path" />
+      <comment v-if="false" :path-name="$route.path" />
     </template>
   </common>
 </template>

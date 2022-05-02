@@ -1,7 +1,7 @@
 import myData from'@temp/my-data'
 
 //需要排除的页面url
-let excludes = ['/','/about/','/mood/','/link/','/tag/','/archive/','/photo/','/aurora-coze/','/aurora-register/','/aurora-archive/','/aurora-music/','/404.html']
+let excludes = ['/','/about/','/mood/','/link/','/tag/','/archive/','/photo/','/aurora-coze/','/aurora-register/','/aurora-archive/','/aurora-music/','/404.html','/register/','/next-mood/']
 let categoriesIncludeFolderName = true
 
 let customTagName = "tag"
