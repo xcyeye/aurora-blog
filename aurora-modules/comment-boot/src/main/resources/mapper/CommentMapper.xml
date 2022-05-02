@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="generator.mapper.CommentMapper">
+
+    <resultMap id="BaseResultMap" type="generator.domain.Comment">
+            <id property="uid" column="uid" jdbcType="BIGINT"/>
+            <result property="username" column="username" jdbcType="VARCHAR"/>
+            <result property="avatar" column="avatar" jdbcType="VARCHAR"/>
+            <result property="site" column="site" jdbcType="VARCHAR"/>
+            <result property="email" column="email" jdbcType="VARCHAR"/>
+            <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+            <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+            <result property="commentIp" column="comment_ip" jdbcType="VARCHAR"/>
+            <result property="operationSystemInfo" column="operation_system_info" jdbcType="VARCHAR"/>
+            <result property="isShowComment" column="is_show_comment" jdbcType="TINYINT"/>
+            <result property="replyCommentUid" column="reply_comment_uid" jdbcType="BIGINT"/>
+            <result property="isEmailNotice" column="is_email_notice" jdbcType="TINYINT"/>
+            <result property="path" column="path" jdbcType="VARCHAR"/>
+            <result property="nextCommentUidArray" column="next_comment_uid_array" jdbcType="VARCHAR"/>
+            <result property="content" column="content" jdbcType="VARCHAR"/>
+            <result property="userUid" column="user_uid" jdbcType="BIGINT"/>
+            <result property="isDelete" column="is_delete" jdbcType="TINYINT"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        uid,username,avatar,
+        site,email,create_time,
+        update_time,comment_ip,operation_system_info,
+        is_show_comment,reply_comment_uid,is_email_notice,
+        path,next_comment_uid_array,content,
+        user_uid,is_delete
+    </sql>
+</mapper>

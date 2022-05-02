@@ -1,0 +1,58 @@
+server:
+  port: 6767
+spring:
+  main:
+    allow-circular-references: true
+  servlet:
+    multipart:
+      max-file-size: 30MB
+      max-request-size: 30MB
+  redis:
+    database: 1
+    host: localhost
+    password: ''
+    port: 6379
+    jedis:
+      pool:
+        max-active: 15
+        max-idle: 10
+        min-idle: 0
+        max-wait: -1ms
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/aurora_file?characterEncoding=utf8&connectTimeout=1000&socketTimeout=3000&autoReconnect=true&useUnicode=true&useSSL=false&serverTimezone=UTC
+    username: root
+    password: Cqy19981202
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+  application:
+    name: aurora-file
+mybatis:
+  mapper-locations: classpath:mapper/**
+  configuration:
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+# 自定义的配置
+aurora:
+  file:
+    nginx-root-path: /Users/aurora/nginx-upload
+    nginx-server-name: http://localhost
+    save-file-folder: aurora-upload
+  snow-flake-worker-id: 12
+  snow-flake-datacenter-id: 23
+
+
+# 分页插件
+pagehelper:
+  helperDialect: mysql
+  reasonable: true
+  supportMethodsArguments: true
+  params: count=countSql

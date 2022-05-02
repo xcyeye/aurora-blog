@@ -17,13 +17,10 @@
     </parent>
 
     <modules>
-        <module>aurora-file</module>
-        <module>aurora-comment</module>
-        <module>aurora-gateway</module>
-        <module>aurora-admin</module>
-        <module>aurora-message</module>
-        <module>aurora-common</module>
-        <module>aurora-spring-boot-starter</module>
+        <module>aurora-starter</module>
+        <module>aurora-base</module>
+        <module>aurora-modules</module>
+        <module>common-api</module>
     </modules>
 
     <properties>
@@ -42,7 +39,7 @@
         <spring-alibaba-cloud.version>2021.0.1.0</spring-alibaba-cloud.version>
         <hutool.version>5.7.22</hutool.version>
         <spring-cloud-gateway.version>3.1.1</spring-cloud-gateway.version>
-        <druid.version>1.2.6</druid.version>
+        <druid.version>1.2.8</druid.version>
         <springfox.version>3.0.0</springfox.version>
         <springfox-data-rest.version>3.0.0</springfox-data-rest.version>
         <fastjson.version>1.2.80</fastjson.version>
@@ -53,6 +50,7 @@
         <nacos-client.version>2.0.4</nacos-client.version>
         <kryo.version>4.0.2</kryo.version>
         <kryo-serializers.version>0.44</kryo-serializers.version>
+        <blog.version>1.0-SNAPSHOT</blog.version>
     </properties>
 
     <!--统一依赖管理-->
@@ -108,10 +106,9 @@
                 <version>${pagehelper.version}</version>
             </dependency>
 
-            <!--需要手动引入的数据访问相关依赖-->
             <dependency>
                 <groupId>com.alibaba</groupId>
-                <artifactId>druid</artifactId>
+                <artifactId>druid-spring-boot-starter</artifactId>
                 <version>${druid.version}</version>
             </dependency>
 
@@ -145,11 +142,128 @@
                 <version>${jedis.version}</version>
             </dependency>
 
+            <!--自定义starter-->
+            <dependency>
+                <groupId>xyz.xcye.starter</groupId>
+                <artifactId>aurora-mybatis-starter</artifactId>
+                <version>${blog.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>xyz.xcye.starter</groupId>
+                <artifactId>aurora-redis-starter</artifactId>
+                <version>${blog.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>xyz.xcye.starter</groupId>
+                <artifactId>aurora-datasource-starter</artifactId>
+                <version>${blog.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>xyz.xcye.starter</groupId>
+                <artifactId>aurora-feign-starter</artifactId>
+                <version>${blog.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>xyz.xcye.starter</groupId>
+                <artifactId>aurora-amqp.starter</artifactId>
+                <version>${blog.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>xyz.xcye.starter</groupId>
+                <artifactId>aurora-nacos-starter</artifactId>
+                <version>${blog.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>xyz.xcye.starter</groupId>
+                <artifactId>aurora-seata-starter</artifactId>
+                <version>${blog.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>xyz.xcye.starter</groupId>
+                <artifactId>aurora-swagger-starter</artifactId>
+                <version>${blog.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>xyz.xcye.starter</groupId>
+                <artifactId>aurora-security-starter</artifactId>
+                <version>${blog.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>xyz.xcye.starter</groupId>
+                <artifactId>aurora-spring-boot-starter</artifactId>
+                <version>${blog.version}</version>
+            </dependency>
+
+
+            <!--自己的common-->
+            <dependency>
+                <groupId>xyz.xcye.base</groupId>
+                <artifactId>comment-common</artifactId>
+                <version>${blog.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>xyz.xcye.base</groupId>
+                <artifactId>file-common</artifactId>
+                <version>${blog.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>xyz.xcye.base</groupId>
+                <artifactId>admin-common</artifactId>
+                <version>${blog.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>xyz.xcye.base</groupId>
+                <artifactId>message-common</artifactId>
+                <version>${blog.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>xyz.xcye.base</groupId>
+                <artifactId>aurora-core</artifactId>
+                <version>${blog.version}</version>
+            </dependency>
+
+            <!--自定义api-->
+            <dependency>
+                <groupId>xyz.xcye.api</groupId>
+                <artifactId>amqp-mail-api</artifactId>
+                <version>${blog.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
     <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+        </dependency>
 
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-autoconfigure</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
     </dependencies>
 
 </project>
