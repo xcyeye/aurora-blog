@@ -1,18 +1,14 @@
 package xyz.xcye.file.service.impl;
 
 
-import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import xyz.xcye.aurora.properties.AuroraProperties;
-import xyz.xcye.core.dto.Condition;
-import xyz.xcye.core.entity.PageData;
 import xyz.xcye.core.enums.ResponseStatusCodeEnum;
 import xyz.xcye.core.exception.file.FileException;
 import xyz.xcye.core.util.BeanUtils;
 import xyz.xcye.core.util.DateUtils;
 import xyz.xcye.core.util.LogUtils;
-import xyz.xcye.core.util.PageUtils;
 import xyz.xcye.core.util.id.GenerateInfoUtils;
 import xyz.xcye.file.constant.FileStorageModeConstant;
 import xyz.xcye.file.dao.FileDao;
@@ -22,6 +18,8 @@ import xyz.xcye.file.interfaces.impl.LocalFileStorageServiceImpl;
 import xyz.xcye.file.po.File;
 import xyz.xcye.file.service.FileService;
 import xyz.xcye.file.vo.FileVO;
+import xyz.xcye.mybatis.entity.Condition;
+import xyz.xcye.mybatis.entity.PageData;
 
 import java.io.IOException;
 import java.util.Date;
@@ -115,8 +113,7 @@ public class FileServiceImpl implements FileService {
 
     @Override
     public PageData<FileVO> queryAllFile(Condition<Long> condition) {
-        PageHelper.startPage(condition.getPageNum(), condition.getPageSize(), condition.getOrderBy());
-        return PageUtils.pageList(BeanUtils.copyList(fileDao.queryAll(condition), FileVO.class));
+        return xyz.xcye.mybatis.util.PageUtils.pageList(condition, t -> BeanUtils.copyList(fileDao.queryAll(condition), FileVO.class));
     }
 
     @Override

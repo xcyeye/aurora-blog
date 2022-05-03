@@ -10,14 +10,14 @@ import org.springframework.web.multipart.MultipartFile;
 import xyz.xcye.core.annotaion.controller.ModifyOperation;
 import xyz.xcye.core.annotaion.controller.ResponseRealResult;
 import xyz.xcye.core.annotaion.controller.SelectOperation;
-import xyz.xcye.core.dto.Condition;
-import xyz.xcye.core.entity.PageData;
 import xyz.xcye.core.exception.file.FileException;
 import xyz.xcye.core.valid.Update;
 import xyz.xcye.file.dto.FileEntityDTO;
 import xyz.xcye.file.po.File;
 import xyz.xcye.file.service.FileService;
 import xyz.xcye.file.vo.FileVO;
+import xyz.xcye.mybatis.entity.Condition;
+import xyz.xcye.mybatis.entity.PageData;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;

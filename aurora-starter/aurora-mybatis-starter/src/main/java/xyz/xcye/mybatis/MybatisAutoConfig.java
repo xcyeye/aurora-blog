@@ -40,11 +40,12 @@ public class MybatisAutoConfig {
          //自动将数据库中的下划线转换为驼峰格式
         configuration.setMapUnderscoreToCamelCase(true);
         configuration.setDefaultFetchSize(100);
+        // 设置打印
+        configuration.setLogImpl(org.apache.ibatis.logging.stdout.StdOutImpl.class);
         configuration.setDefaultStatementTimeout(30);
         sqlSessionFactoryBean.setConfiguration(configuration);
         return sqlSessionFactoryBean.getObject();
     }
-
 
     // Spring事务管理器
     @Bean(value = "transactionManager")

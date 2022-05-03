@@ -7,24 +7,24 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.MessagingException;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.BindException;
+import xyz.xcye.amqp.config.service.MistakeMessageSendService;
+import xyz.xcye.api.mail.sendmail.entity.StorageSendMailInfo;
+import xyz.xcye.api.mail.sendmail.util.StorageMailUtils;
+import xyz.xcye.comment.po.Comment;
 import xyz.xcye.core.constant.amqp.RabbitMQNameConstant;
-import xyz.xcye.core.dto.StorageSendMailInfo;
-import xyz.xcye.core.entity.result.ModifyResult;
-import xyz.xcye.common.entity.table.CommentDO;
-import xyz.xcye.message.po.MessageLog;
-import xyz.xcye.core.exception.email.SendHtmlMailTypeNameEnum;
 import xyz.xcye.core.exception.email.EmailException;
+import xyz.xcye.core.exception.email.SendHtmlMailTypeNameEnum;
 import xyz.xcye.core.util.BeanUtils;
 import xyz.xcye.core.util.ConvertObjectUtils;
-import xyz.xcye.message.vo.MessageLogVO;
+import xyz.xcye.message.po.MessageLog;
 import xyz.xcye.message.service.MessageLogService;
-import xyz.xcye.message.mail.service.SendMailService;
-import xyz.xcye.aurora.manager.amqp.MistakeMessageSendService;
+import xyz.xcye.message.service.SendMailService;
+import xyz.xcye.message.vo.MessageLogVO;
 
-import javax.mail.MessagingException;
 import java.io.IOException;
 import java.util.*;
 
@@ -59,19 +59,21 @@ public class SendMailConsumer {
         // 待替换的key和value的map
         StorageSendMailInfo storageSendMailInfo = parseMessage.getStorageSendMailInfoFromMsg(msgJson,channel,message);
         if (!isLegitimateHtmlData(storageSendMailInfo)) {
-            mistakeMessageSendService.sendMistakeMessageToExchange(msgJson,channel,message);
+            mistakeMessageSendService.sendMistakeMessageToExchange(msgJson,channel,message,
+                    RabbitMQNameConstant.MISTAKE_MESSAGE_EXCHANGE, RabbitMQNameConstant.MISTAKE_MESSAGE_ROUTING_KEY);
             return;
         }
 
         if (storageSendMailInfo.getUserUid() == null) {
-            mistakeMessageSendService.sendMistakeMessageToExchange(msgJson,channel,message);
+            mistakeMessageSendService.sendMistakeMessageToExchange(msgJson,channel,message,
+                    RabbitMQNameConstant.MISTAKE_MESSAGE_EXCHANGE, RabbitMQNameConstant.MISTAKE_MESSAGE_ROUTING_KEY);
             updateMessageLogInfo(storageSendMailInfo.getCorrelationDataId(),true,false,"邮件发送中，没有传入userUid");
         }
 
         // 运行到此处，说明一切正常，将数据插入到数据库中 并且修改消息的消费状态
         channel.basicAck(message.getMessageProperties().getDeliveryTag(),false);
         try {
-            ModifyResult modifyResult = sendMailService.sendHtmlMail(storageSendMailInfo);
+            sendMailService.sendHtmlMail(storageSendMailInfo);
         } catch (MessagingException | ReflectiveOperationException | IOException | EmailException e) {
             // 如果发送html的过程中，发生异常，那么修改mq的消息记录
             updateMessageLogInfo(storageSendMailInfo.getCorrelationDataId(),true,true,
@@ -106,7 +108,8 @@ public class SendMailConsumer {
         // 从mq发送的消息中，解析出邮件发送的相关数据
         StorageSendMailInfo storageSendMailInfo = parseMessage.getStorageSendMailInfoFromMsg(msgJson,channel,message);
         if(!isLegitimateSimpleTextData(storageSendMailInfo)) {
-            mistakeMessageSendService.sendMistakeMessageToExchange(msgJson,channel,message);
+            mistakeMessageSendService.sendMistakeMessageToExchange(msgJson,channel,message,
+                    RabbitMQNameConstant.MISTAKE_MESSAGE_EXCHANGE, RabbitMQNameConstant.MISTAKE_MESSAGE_ROUTING_KEY);
             return;
         }
 
@@ -117,7 +120,7 @@ public class SendMailConsumer {
 
         // 运行到此处，说明一切正常，将数据插入到数据库中 并且修改消息的消费状态
         channel.basicAck(message.getMessageProperties().getDeliveryTag(),false);
-        ModifyResult modifyResult = sendMailService.sendSimpleMail(storageSendMailInfo.getReceiverEmail(),
+        sendMailService.sendSimpleMail(storageSendMailInfo.getReceiverEmail(),
                 storageSendMailInfo.getSubject(), storageSendMailInfo.getSimpleText());
 
         updateMessageLogInfo(storageSendMailInfo.getCorrelationDataId(),true,true,null);
@@ -206,21 +209,21 @@ public class SendMailConsumer {
         }
 
         JSONObject jsonObject = JSON.parseObject(ConvertObjectUtils.jsonToString(additionalData));
-        CommentDO commentDO = JSON.parseObject(jsonObject.getString(SendHtmlMailTypeNameEnum.ADDITIONAL_DATA.getKeyName()), CommentDO.class);
+        Comment comment = JSON.parseObject(jsonObject.getString(SendHtmlMailTypeNameEnum.ADDITIONAL_DATA.getKeyName()), Comment.class);
 
         StorageSendMailInfo receiveCommentMailInfo = new StorageSendMailInfo();
         // 设置属性
-        receiveCommentMailInfo.setUserUid(commentDO.getUserUid());
-        receiveCommentMailInfo.setSubject(commentDO.getContent());
+        receiveCommentMailInfo.setUserUid(comment.getUserUid());
+        receiveCommentMailInfo.setSubject(comment.getContent());
         receiveCommentMailInfo.setSendType(SendHtmlMailTypeNameEnum.RECEIVE_COMMENT);
         receiveCommentMailInfo.setCorrelationDataId(storageSendMailInfo.getCorrelationDataId());
 
         List<Map<String,Object>> list = new ArrayList<>();
         Map<String,Object> map = new HashMap<>();
-        map.put(SendHtmlMailTypeNameEnum.RECEIVE_COMMENT.getKeyName(), commentDO);
+        map.put(SendHtmlMailTypeNameEnum.RECEIVE_COMMENT.getKeyName(), comment);
         list.add(map);
 
-        receiveCommentMailInfo = ConvertObjectUtils.generateMailInfo(receiveCommentMailInfo, list);
+        receiveCommentMailInfo = StorageMailUtils.generateMailInfo(receiveCommentMailInfo, list);
         sendMailService.sendHtmlMail(receiveCommentMailInfo);
     }
 }

@@ -6,8 +6,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.core.Message;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import xyz.xcye.core.dto.StorageSendMailInfo;
-import xyz.xcye.aurora.manager.amqp.MistakeMessageSendService;
+import xyz.xcye.amqp.config.service.MistakeMessageSendService;
+import xyz.xcye.api.mail.sendmail.entity.StorageSendMailInfo;
 
 import java.io.IOException;
 

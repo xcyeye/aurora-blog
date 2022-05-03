@@ -1,12 +1,10 @@
 package xyz.xcye.message.service;
 
 import org.springframework.validation.BindException;
+import xyz.xcye.mybatis.entity.Condition;
+import xyz.xcye.mybatis.entity.PageData;
 import xyz.xcye.message.po.MessageLog;
-import xyz.xcye.core.dto.Condition;
-import xyz.xcye.core.entity.result.ModifyResult;
 import xyz.xcye.message.vo.MessageLogVO;
-
-import java.util.List;
 
 /**
  * 操作消息中间件的消费消息日志
@@ -20,14 +18,14 @@ public interface MessageLogService {
      * @return
      * @throws BindException 字段缺失或者某个字段不符合要求
      */
-    ModifyResult insertMessageLog(MessageLog messageLog) throws BindException;
+    int insertMessageLog(MessageLog messageLog) throws BindException;
 
     /**
      * 根据uid删除对应的mq消息 直接删除，不需要先设置删除状态
      * @param uid
      * @return
      */
-    ModifyResult deleteMessageLog(long uid);
+    int deleteMessageLog(long uid);
 
     /**
      * 更新mq消息
@@ -35,7 +33,7 @@ public interface MessageLogService {
      * @return
      * @throws BindException 字段缺失或者不符合要求
      */
-    ModifyResult updateMessageLog(MessageLog messageLog) throws BindException;
+    int updateMessageLog(MessageLog messageLog) throws BindException;
 
     /**
      * 根据分页条件和自定义条件查询所有满足要求的数据
@@ -44,12 +42,12 @@ public interface MessageLogService {
      * @throws InstantiationException
      * @throws IllegalAccessException
      */
-    List<MessageLogVO> queryAllMessageLog(Condition<Long> condition) throws ReflectiveOperationException;
+    PageData<MessageLogVO> queryAllMessageLog(Condition<Long> condition);
 
     /**
      * 根据uid查询对应mq消息
      * @param uid
      * @return
      */
-    MessageLogVO queryByUid(long uid) throws ReflectiveOperationException;
+    MessageLogVO queryByUid(long uid);
 }

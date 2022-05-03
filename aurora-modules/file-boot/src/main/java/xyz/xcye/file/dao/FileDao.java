@@ -3,7 +3,7 @@ package xyz.xcye.file.dao;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import xyz.xcye.core.dto.Condition;
+import xyz.xcye.mybatis.entity.Condition;
 import xyz.xcye.file.po.File;
 
 import java.util.List;

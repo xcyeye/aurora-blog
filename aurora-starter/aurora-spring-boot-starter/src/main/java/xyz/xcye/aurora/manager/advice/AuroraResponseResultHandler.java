@@ -123,6 +123,10 @@ public class AuroraResponseResultHandler implements ResponseBodyAdvice<Object> {
             }
         }
 
-        return R.success();
+        if (responseBody == null) {
+            return R.success();
+        }else {
+            return responseBody;
+        }
     }
 }

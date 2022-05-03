@@ -1,8 +1,7 @@
-package xyz.xcye.message.mail.service;
+package xyz.xcye.message.service;
 
 import org.springframework.messaging.MessagingException;
 import xyz.xcye.api.mail.sendmail.entity.StorageSendMailInfo;
-import xyz.xcye.core.entity.ModifyResult;
 import xyz.xcye.core.exception.email.EmailException;
 
 import java.io.IOException;
@@ -20,7 +19,7 @@ public interface SendMailService {
      * @return
      * @throws MessagingException 发送失败
      */
-    ModifyResult sendHtmlMail(StorageSendMailInfo storageSendMailInfo)
+    int sendHtmlMail(StorageSendMailInfo storageSendMailInfo)
             throws MessagingException, IOException, ReflectiveOperationException, EmailException;
 
     /**
@@ -31,7 +30,7 @@ public interface SendMailService {
      * @return
      * @throws MessagingException
      */
-    ModifyResult sendSimpleMail(String receiverEmail,String subject, String content) throws MessagingException;
+    int sendSimpleMail(String receiverEmail,String subject, String content) throws MessagingException;
 
     /**
      * 发送自定义html邮件
@@ -41,5 +40,5 @@ public interface SendMailService {
      * @return
      * @throws MessagingException
      */
-    ModifyResult sendCustomMail(String receiverEmail,String subject,String content) throws MessagingException;
+    int sendCustomMail(String receiverEmail,String subject,String content) throws MessagingException;
 }

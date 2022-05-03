@@ -241,6 +241,12 @@
                 <artifactId>amqp-mail-api</artifactId>
                 <version>${blog.version}</version>
             </dependency>
+
+            <dependency>
+                <groupId>xyz.xcye.api</groupId>
+                <artifactId>mail-api</artifactId>
+                <version>${blog.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 

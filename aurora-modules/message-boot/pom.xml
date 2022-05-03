@@ -64,6 +64,11 @@
         </dependency>
 
         <dependency>
+            <groupId>xyz.xcye.api</groupId>
+            <artifactId>mail-api</artifactId>
+        </dependency>
+
+        <dependency>
             <groupId>xyz.xcye.base</groupId>
             <artifactId>message-common</artifactId>
         </dependency>

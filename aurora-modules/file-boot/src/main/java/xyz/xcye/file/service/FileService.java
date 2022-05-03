@@ -1,11 +1,11 @@
 package xyz.xcye.file.service;
 
-import xyz.xcye.core.dto.Condition;
-import xyz.xcye.core.entity.PageData;
 import xyz.xcye.core.exception.file.FileException;
 import xyz.xcye.file.dto.FileEntityDTO;
 import xyz.xcye.file.po.File;
 import xyz.xcye.file.vo.FileVO;
+import xyz.xcye.mybatis.entity.Condition;
+import xyz.xcye.mybatis.entity.PageData;
 
 import java.io.IOException;
 

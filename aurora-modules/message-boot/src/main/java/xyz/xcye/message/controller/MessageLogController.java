@@ -6,9 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindException;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import xyz.xcye.core.dto.Condition;
-import xyz.xcye.core.annotaion.ResponseResult;
-import xyz.xcye.core.entity.result.ModifyResult;
+import xyz.xcye.core.annotaion.controller.ModifyOperation;
+import xyz.xcye.core.annotaion.controller.SelectOperation;
+import xyz.xcye.mybatis.entity.Condition;
+import xyz.xcye.mybatis.entity.PageData;
 import xyz.xcye.core.valid.Insert;
 import xyz.xcye.core.valid.Update;
 import xyz.xcye.message.manager.schedule.RabbitMQSchedule;
@@ -17,7 +18,6 @@ import xyz.xcye.message.service.MessageLogService;
 import xyz.xcye.message.vo.MessageLogVO;
 
 import javax.validation.groups.Default;
-import java.util.List;
 
 /**
  * @author qsyyke
@@ -34,38 +34,38 @@ public class MessageLogController {
     private RabbitMQSchedule rabbitMQSchedule;
 
     @ApiOperation(value = "插入新消费消息",notes = "插入新消费消息")
-    @ResponseResult
+    @ModifyOperation
     @PostMapping("")
-    public ModifyResult insertMessageLog(@Validated({Insert.class,Default.class}) MessageLog messageLog)
+    public int insertMessageLog(@Validated({Insert.class,Default.class}) MessageLog messageLog)
             throws BindException {
         return messageLogService.insertMessageLog(messageLog);
     }
 
     @ApiOperation(value = "更新消费消息")
-    @ResponseResult
+    @ModifyOperation
     @PutMapping("")
-    public ModifyResult updateMessageLog(@Validated(Update.class) MessageLog messageLog) throws BindException {
+    public int updateMessageLog(@Validated(Update.class) MessageLog messageLog) throws BindException {
         return messageLogService.updateMessageLog(messageLog);
     }
 
     @ApiOperation(value = "删除消费消息")
-    @ResponseResult
+    @ModifyOperation
     @DeleteMapping("/{uid}")
-    public ModifyResult deleteMessageLog(@PathVariable("uid") long uid) {
+    public int deleteMessageLog(@PathVariable("uid") long uid) {
         return messageLogService.deleteMessageLog(uid);
     }
 
     @ApiOperation(value = "查询所有消费消息")
-    @ResponseResult
+    @SelectOperation
     @GetMapping("")
-    public List<MessageLogVO> queryAllMessageLog(Condition<Long> condition) throws ReflectiveOperationException {
+    public PageData<MessageLogVO> queryAllMessageLog(Condition<Long> condition) {
         return messageLogService.queryAllMessageLog(condition);
     }
 
     @ApiOperation(value = "根据uid查询消费消息")
-    @ResponseResult
+    @SelectOperation
     @GetMapping("/{uid}")
-    public MessageLogVO queryMessageLogByUid(@PathVariable("uid") long uid) throws ReflectiveOperationException {
+    public MessageLogVO queryMessageLogByUid(@PathVariable("uid") long uid) {
         return messageLogService.queryByUid(uid);
     }
 }

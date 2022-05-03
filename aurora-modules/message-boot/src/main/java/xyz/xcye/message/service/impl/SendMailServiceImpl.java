@@ -1,4 +1,4 @@
-package xyz.xcye.message.mail.service;
+package xyz.xcye.message.service.impl;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
@@ -6,33 +6,31 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.MailException;
+import org.springframework.messaging.MessagingException;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
+import xyz.xcye.api.mail.sendmail.entity.StorageSendMailInfo;
+import xyz.xcye.comment.po.Comment;
 import xyz.xcye.core.constant.FieldLengthConstant;
-import xyz.xcye.core.dto.Condition;
-import xyz.xcye.core.dto.StorageSendMailInfo;
-import xyz.xcye.core.entity.result.ModifyResult;
-import xyz.xcye.common.entity.table.CommentDO;
-import xyz.xcye.message.po.EmailLog;
+import xyz.xcye.mybatis.entity.Condition;
 import xyz.xcye.core.enums.RegexEnum;
 import xyz.xcye.core.enums.ResponseStatusCodeEnum;
-import xyz.xcye.core.exception.email.SendHtmlMailTypeNameEnum;
 import xyz.xcye.core.exception.email.EmailException;
-import xyz.xcye.core.util.BeanUtils;
+import xyz.xcye.core.exception.email.SendHtmlMailTypeNameEnum;
 import xyz.xcye.core.util.ConvertObjectUtils;
 import xyz.xcye.core.util.DateUtils;
-import xyz.xcye.message.vo.EmailVO;
-import xyz.xcye.message.vo.MailTemplateVO;
 import xyz.xcye.message.enums.MailTemplateEnum;
 import xyz.xcye.message.mail.SendMailRealize;
+import xyz.xcye.message.po.EmailLog;
 import xyz.xcye.message.service.EmailLogService;
 import xyz.xcye.message.service.EmailService;
 import xyz.xcye.message.service.MailTemplateService;
-import xyz.xcye.message.mail.service.SendMailService;
+import xyz.xcye.message.service.SendMailService;
 import xyz.xcye.message.util.MailTemplateUtils;
 import xyz.xcye.message.util.ParseEmailTemplate;
+import xyz.xcye.message.vo.EmailVO;
+import xyz.xcye.message.vo.MailTemplateVO;
 
-import javax.mail.MessagingException;
 import java.io.IOException;
 import java.util.Date;
 import java.util.Map;
@@ -65,20 +63,18 @@ public class SendMailServiceImpl implements SendMailService {
     private EmailService emailService;
 
     @Override
-    public ModifyResult sendHtmlMail(StorageSendMailInfo storageSendMailInfo)
-            throws MessagingException, IOException, ReflectiveOperationException, EmailException {
+    public int sendHtmlMail(StorageSendMailInfo storageSendMailInfo)
+            throws MessagingException, IOException, EmailException {
         String keyName = storageSendMailInfo.getSendType().getKeyName();
 
         // 1. 根据userUid和type从数据库中获取模板，如果没有的话，则使用默认的
         Condition<Long> condition = new Condition();
         condition.setOtherUid(storageSendMailInfo.getUserUid());
         condition.setKeyword(keyName);
-        MailTemplateVO mailTemplateVO = BeanUtils.getSingleObjFromList(mailTemplateService.queryAllMailTemplate(condition), MailTemplateVO.class);
+        MailTemplateVO mailTemplateVO = mailTemplateService.queryMailTemplateByUserUid(storageSendMailInfo.getUserUid());
 
-        /**
-         * 如果storageSendMailInfo中的receiverEmail为null或者没有长度的话，那么便更具userUid从数据库中查找
-         * 如果数据库中都没有的话，那么抛出异常
-         */
+        // 如果storageSendMailInfo中的receiverEmail为null或者没有长度的话，那么便更具userUid从数据库中查找
+        // 如果数据库中都没有的话，那么抛出异常
         setReceiverEmail(storageSendMailInfo);
 
         if (mailTemplateVO == null || !StringUtils.hasLength(mailTemplateVO.getTemplate())) {
@@ -105,7 +101,7 @@ public class SendMailServiceImpl implements SendMailService {
     }
 
     @Override
-    public ModifyResult sendSimpleMail(String to,String subject, String content) {
+    public int sendSimpleMail(String to, String subject, String content) {
         // 设置标志点
         boolean sendFlag = false;
         try {
@@ -121,7 +117,7 @@ public class SendMailServiceImpl implements SendMailService {
     }
 
     @Override
-    public ModifyResult sendCustomMail(String receiverEmail, String subject, String content) throws MessagingException {
+    public int sendCustomMail(String receiverEmail, String subject, String content) throws MessagingException {
         return sendEmail(subject, content, receiverEmail);
     }
 
@@ -150,7 +146,7 @@ public class SendMailServiceImpl implements SendMailService {
      * @return
      * @throws MessagingException
      */
-    private ModifyResult sendEmail(String subject,String sendContent,String receiverEmail) throws MessagingException {
+    private int sendEmail(String subject,String sendContent,String receiverEmail) throws MessagingException {
         // 设置标志点
         boolean sendFlag = false;
         //发送邮件
@@ -195,7 +191,7 @@ public class SendMailServiceImpl implements SendMailService {
      * @throws EmailException
      */
     private void setReceiverEmail(StorageSendMailInfo storageSendMailInfo)
-            throws ReflectiveOperationException, EmailException {
+            throws EmailException {
         if (!StringUtils.hasLength(storageSendMailInfo.getReceiverEmail())) {
             EmailVO emailVO = emailService.queryByUserUid(storageSendMailInfo.getUserUid());
             if (emailVO == null || !StringUtils.hasLength(emailVO.getEmail())) {
@@ -212,7 +208,7 @@ public class SendMailServiceImpl implements SendMailService {
         }
     }
 
-    private CommentDO getRepliedComment(StorageSendMailInfo storageSendMailInfo) {
+    private Comment getRepliedComment(StorageSendMailInfo storageSendMailInfo) {
         if (storageSendMailInfo.getSendType() != SendHtmlMailTypeNameEnum.REPLY_COMMENT) {
             return null;
         }
@@ -225,6 +221,6 @@ public class SendMailServiceImpl implements SendMailService {
         }
 
         JSONObject jsonObject = JSON.parseObject(ConvertObjectUtils.jsonToString(additionalData));
-        return JSON.parseObject(jsonObject.getString(SendHtmlMailTypeNameEnum.ADDITIONAL_DATA.getKeyName()), CommentDO.class);
+        return JSON.parseObject(jsonObject.getString(SendHtmlMailTypeNameEnum.ADDITIONAL_DATA.getKeyName()), Comment.class);
     }
 }

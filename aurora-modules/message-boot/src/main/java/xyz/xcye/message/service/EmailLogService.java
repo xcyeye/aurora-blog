@@ -1,11 +1,10 @@
 package xyz.xcye.message.service;
 
 import org.springframework.validation.BindException;
+import xyz.xcye.mybatis.entity.Condition;
+import xyz.xcye.mybatis.entity.PageData;
 import xyz.xcye.message.po.EmailLog;
-import xyz.xcye.core.dto.Condition;
 import xyz.xcye.message.vo.EmailLogVO;
-
-import java.util.List;
 
 /**
  * 操作au_email_log数据表的service层
@@ -37,10 +36,10 @@ public interface EmailLogService {
      * @throws InstantiationException
      * @throws IllegalAccessException
      */
-    List<EmailLogVO> queryAll(Condition<Long> condition) throws ReflectiveOperationException;
+    PageData<EmailLogVO> queryAll(Condition<Long> condition);
 
     /**
      * 查询uid所对应的邮件发送日志
      */
-    EmailLogVO queryByUid(long uid) throws ReflectiveOperationException;
+    EmailLogVO queryByUid(long uid);
 }

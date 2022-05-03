@@ -2,8 +2,8 @@ package xyz.xcye.message.service;
 
 import org.apache.ibatis.annotations.Param;
 import org.springframework.validation.BindException;
-import xyz.xcye.core.dto.Condition;
-import xyz.xcye.core.entity.result.PageData;
+import xyz.xcye.mybatis.entity.Condition;
+import xyz.xcye.mybatis.entity.PageData;
 import xyz.xcye.core.exception.AuroraException;
 import xyz.xcye.message.po.Email;
 import xyz.xcye.message.vo.EmailVO;
@@ -20,7 +20,7 @@ public interface EmailService {
      * @return
      */
     int insertEmail(Email email)
-            throws BindException, AuroraException, ReflectiveOperationException;
+            throws BindException, AuroraException;
 
     /**
      * 根据uid删除一条记录
@@ -41,21 +41,21 @@ public interface EmailService {
      * @throws InstantiationException
      * @throws IllegalAccessException
      */
-    PageData<EmailVO> queryAllEmail(Condition<Long> condition) throws ReflectiveOperationException;
+    PageData<EmailVO> queryAllEmail(Condition<Long> condition);
 
     /**
      * 通过uid进行查询
      * @param uid
      * @return
      */
-    EmailVO queryByUid(long uid) throws ReflectiveOperationException;
+    EmailVO queryByUid(long uid);
 
     /**
      * 查询数据库中，userUid这个用户所对应的邮件模板
      * @param userUid
      * @return
      */
-    EmailVO queryByUserUid(@Param("userUid") long userUid) throws ReflectiveOperationException;
+    EmailVO queryByUserUid(@Param("userUid") long userUid);
 
     /**
      * 根据邮箱号进行查询
@@ -64,5 +64,5 @@ public interface EmailService {
      * @throws InstantiationException
      * @throws IllegalAccessException
      */
-    EmailVO queryByEmail(String email) throws ReflectiveOperationException;
+    EmailVO queryByEmail(String email);
 }

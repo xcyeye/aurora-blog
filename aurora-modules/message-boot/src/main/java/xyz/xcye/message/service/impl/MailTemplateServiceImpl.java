@@ -3,17 +3,15 @@ package xyz.xcye.message.service.impl;
 import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import xyz.xcye.core.dto.Condition;
-import xyz.xcye.core.entity.result.ModifyResult;
-import xyz.xcye.message.po.MailTemplate;
-import xyz.xcye.core.enums.ResponseStatusCodeEnum;
+import xyz.xcye.mybatis.entity.Condition;
+import xyz.xcye.mybatis.entity.PageData;
 import xyz.xcye.core.util.BeanUtils;
 import xyz.xcye.core.util.DateUtils;
-import xyz.xcye.message.vo.MailTemplateVO;
+import xyz.xcye.core.util.PageUtils;
 import xyz.xcye.message.dao.MailTemplateDao;
+import xyz.xcye.message.po.MailTemplate;
 import xyz.xcye.message.service.MailTemplateService;
-
-import java.util.List;
+import xyz.xcye.message.vo.MailTemplateVO;
 
 /**
  * @author qsyyke
@@ -27,44 +25,36 @@ public class MailTemplateServiceImpl implements MailTemplateService {
     private MailTemplateDao mailTemplateDao;
 
     @Override
-    public ModifyResult insertMailTemplate(MailTemplate mailTemplate) {
+    public int insertMailTemplate(MailTemplate mailTemplate) {
         mailTemplate.setCreateTime(DateUtils.format());
-        int insertMailTemplate = mailTemplateDao.insertMailTemplate(mailTemplate);
-        return ModifyResult.operateResult(insertMailTemplate, "插入邮件模板",
-                ResponseStatusCodeEnum.SUCCESS.getCode(), mailTemplate.getUid());
+        return mailTemplateDao.insertMailTemplate(mailTemplate);
     }
 
     @Override
-    public ModifyResult updateMailTemplate(MailTemplate mailTemplate) {
+    public int updateMailTemplate(MailTemplate mailTemplate) {
         mailTemplate.setUpdateTime(DateUtils.format());
-        int updateMailTemplate = mailTemplateDao.updateMailTemplate(mailTemplate);
-        return ModifyResult.operateResult(updateMailTemplate, "更新邮件模板",
-                ResponseStatusCodeEnum.SUCCESS.getCode(), mailTemplate.getUid());
+        return mailTemplateDao.updateMailTemplate(mailTemplate);
     }
 
     @Override
-    public ModifyResult deleteMailTemplate(long uid) {
-        int deleteMailTemplate = mailTemplateDao.deleteMailTemplate(uid);
-        return ModifyResult.operateResult(deleteMailTemplate, "删除邮件模板",
-                ResponseStatusCodeEnum.SUCCESS.getCode(), uid);
+    public int deleteMailTemplate(long uid) {
+        return mailTemplateDao.deleteMailTemplate(uid);
     }
 
     @Override
-    public List<MailTemplateVO> queryAllMailTemplate(Condition<Long> condition)
-            throws ReflectiveOperationException {
-        condition.init(condition);
+    public PageData<MailTemplateVO> queryAllMailTemplate(Condition<Long> condition) {
         PageHelper.startPage(condition.getPageNum(), condition.getPageSize(), condition.getOrderBy());
-        return BeanUtils.copyList(mailTemplateDao.queryAllMailTemplate(condition), MailTemplateVO.class);
+        return PageUtils.pageList(BeanUtils.copyList(mailTemplateDao.queryAllMailTemplate(condition), MailTemplateVO.class));
     }
 
     @Override
-    public MailTemplateVO queryMailTemplateByUid(long uid) throws ReflectiveOperationException {
+    public MailTemplateVO queryMailTemplateByUid(long uid) {
         Condition<Long> condition = Condition.instant(uid, Long.class, true);
         return BeanUtils.getSingleObjFromList(mailTemplateDao.queryAllMailTemplate(condition), MailTemplateVO.class);
     }
 
     @Override
-    public MailTemplateVO queryMailTemplateByUserUid(long userUid) throws ReflectiveOperationException {
+    public MailTemplateVO queryMailTemplateByUserUid(long userUid) {
         Condition<Long> condition = Condition.instant(userUid, Long.class, false);
         return BeanUtils.getSingleObjFromList(mailTemplateDao.queryAllMailTemplate(condition), MailTemplateVO.class);
     }

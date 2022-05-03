@@ -1,20 +1,11 @@
 package xyz.xcye.message.manager.schedule;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.amqp.core.Message;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-import org.springframework.validation.BindException;
-import xyz.xcye.message.po.MessageLog;
-import xyz.xcye.core.dto.Condition;
-import xyz.xcye.message.vo.MessageLogVO;
 import xyz.xcye.message.service.MessageLogService;
-
-import java.nio.charset.StandardCharsets;
-import java.util.List;
 
 /**
  * 定时向数据库中查询那些没有被消费的数据，重新发送
@@ -38,7 +29,7 @@ public class RabbitMQSchedule {
      * 重新消费数据库中消费失败的rabbitmq消息
      */
     //@Scheduled(cron = CrontabExpressionConstant.RETRY_CONSUME_MQ_MESSAGE)
-    public void reconsumeMQMessageTask() throws BindException {
+    /*public void reconsumeMQMessageTask() throws BindException {
         // 1. 从数据库中获取所有没有消费的数据
         MessageLog messageLog = new MessageLog();
         messageLog.setConsumeStatus(false);
@@ -72,5 +63,5 @@ public class RabbitMQSchedule {
             resendMsgMessageLog.setTryCount(messageLogVO.getTryCount() + 1);
             messageLogService.updateMessageLog(resendMsgMessageLog);
         }
-    }
+    }*/
 }

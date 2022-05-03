@@ -6,9 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindException;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import xyz.xcye.core.dto.Condition;
-import xyz.xcye.core.annotaion.ResponseResult;
-import xyz.xcye.core.entity.result.ModifyResult;
+import xyz.xcye.core.annotaion.controller.ModifyOperation;
+import xyz.xcye.core.annotaion.controller.SelectOperation;
+import xyz.xcye.mybatis.entity.Condition;
+import xyz.xcye.mybatis.entity.PageData;
 import xyz.xcye.core.valid.Insert;
 import xyz.xcye.core.valid.Update;
 import xyz.xcye.message.po.EmailLog;
@@ -16,7 +17,6 @@ import xyz.xcye.message.service.EmailLogService;
 import xyz.xcye.message.vo.EmailLogVO;
 
 import javax.validation.groups.Default;
-import java.util.List;
 
 /**
  * 操作au_email_log表的controller
@@ -32,30 +32,30 @@ public class EmailLogController {
     private EmailLogService emailLogService;
 
     @ApiOperation(value = "插入邮件发送日志",notes = "插入邮件发送日志")
-    @ResponseResult
+    @ModifyOperation
     @PostMapping("")
-    public ModifyResult insertEmailLog(@Validated({Insert.class, Default.class}) EmailLog emailLog) {
+    public int insertEmailLog(@Validated({Insert.class, Default.class}) EmailLog emailLog) {
         return emailLogService.insertEmailLog(emailLog);
     }
 
     @ApiOperation(value = "根据uid更新邮件发送日志")
-    @ResponseResult
+    @ModifyOperation
     @PutMapping("")
-    public ModifyResult updateEmailLog(@Validated({Update.class}) EmailLog emailLog) throws BindException {
+    public int updateEmailLog(@Validated({Update.class}) EmailLog emailLog) throws BindException {
         return emailLogService.updateEmailLog(emailLog);
     }
 
     @ApiOperation(value = "删除uid对应邮件发送日志")
-    @ResponseResult
+    @SelectOperation
     @DeleteMapping("/{uid}")
-    public ModifyResult deleteEmailLog(@PathVariable("uid") long uid) {
+    public int deleteEmailLog(@PathVariable("uid") long uid) {
         return emailLogService.deleteEmailLog(uid);
     }
 
     @ApiOperation(value = "查询所有邮件发送日志")
-    @ResponseResult
+    @SelectOperation
     @GetMapping("")
-    public List<EmailLogVO> queryAllEmailLog(Condition<Long> condition) throws ReflectiveOperationException {
+    public PageData<EmailLogVO> queryAllEmailLog(Condition<Long> condition) {
         return emailLogService.queryAll(condition);
     }
 }
