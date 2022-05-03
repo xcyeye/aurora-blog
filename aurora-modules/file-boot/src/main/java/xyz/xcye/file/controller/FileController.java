@@ -11,6 +11,7 @@ import xyz.xcye.core.annotaion.controller.ModifyOperation;
 import xyz.xcye.core.annotaion.controller.ResponseRealResult;
 import xyz.xcye.core.annotaion.controller.SelectOperation;
 import xyz.xcye.core.dto.Condition;
+import xyz.xcye.core.entity.PageData;
 import xyz.xcye.core.exception.file.FileException;
 import xyz.xcye.core.valid.Update;
 import xyz.xcye.file.dto.FileEntityDTO;
@@ -50,7 +51,7 @@ public class FileController {
     public FileVO singleUploadFile(@Validated File fileInfo,
                                    @RequestParam(value = "file") MultipartFile file,
                                    @RequestParam(required = false) int storageMode)
-            throws IOException, FileException, ReflectiveOperationException {
+            throws IOException, FileException {
 
         FileEntityDTO fileEntity = new FileEntityDTO(file.getOriginalFilename(),file.getInputStream());
         return fileService.insertFile(fileEntity, fileInfo, storageMode);
@@ -67,7 +68,7 @@ public class FileController {
     public List<FileVO> multiUploadFile(
             @RequestParam(value = "files") MultipartFile[] files,
             @RequestParam(required = false) int storageMode)
-            throws IOException, FileException, ReflectiveOperationException {
+            throws IOException, FileException {
 
         List<FileVO> fileList = new ArrayList<>();
         for (MultipartFile file : files) {
@@ -89,7 +90,7 @@ public class FileController {
     public String typoraUploadFile(
             @RequestParam(value = "file") MultipartFile file,
             @RequestParam(required = false) int storageMode)
-            throws IOException, FileException, ReflectiveOperationException {
+            throws IOException, FileException {
 
         FileEntityDTO fileEntity = new FileEntityDTO(file.getOriginalFilename(),file.getInputStream());
         File fileInfo = new File();
@@ -105,7 +106,7 @@ public class FileController {
     @SelectOperation
     @ApiOperation(value = "查询文件数据",notes = "其中keyword为文件的名字")
     @GetMapping
-    public List<FileVO> queryAllFile(Condition<Long> condition) throws ReflectiveOperationException {
+    public PageData<FileVO> queryAllFile(Condition<Long> condition) {
         return fileService.queryAllFile(condition);
     }
 
@@ -137,7 +138,7 @@ public class FileController {
     @ApiOperation(value = "根据uid删除某个文件",notes = "从数据库中删除对应数据，删除与之关联的本地，对象存储中的文件，返回删除成功之后的文件对象")
     @DeleteMapping("/{uid}")
     public int deleteFile(@PathVariable("uid") long uid)
-            throws FileException, IOException, ReflectiveOperationException {
+            throws FileException, IOException {
         return fileService.deleteFile(uid);
     }
 

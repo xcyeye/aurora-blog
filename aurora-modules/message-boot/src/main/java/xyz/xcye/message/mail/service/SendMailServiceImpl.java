@@ -1,4 +1,4 @@
-package xyz.xcye.message.service.impl;
+package xyz.xcye.message.mail.service;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
@@ -28,7 +28,7 @@ import xyz.xcye.message.mail.SendMailRealize;
 import xyz.xcye.message.service.EmailLogService;
 import xyz.xcye.message.service.EmailService;
 import xyz.xcye.message.service.MailTemplateService;
-import xyz.xcye.message.service.SendMailService;
+import xyz.xcye.message.mail.service.SendMailService;
 import xyz.xcye.message.util.MailTemplateUtils;
 import xyz.xcye.message.util.ParseEmailTemplate;
 

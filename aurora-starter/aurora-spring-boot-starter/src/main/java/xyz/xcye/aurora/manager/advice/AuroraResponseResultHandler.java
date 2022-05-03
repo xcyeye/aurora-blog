@@ -69,8 +69,8 @@ public class AuroraResponseResultHandler implements ResponseBodyAdvice<Object> {
                 Integer influenceRows = (Integer) responseBody;
                 operateStatus = influenceRows == 1;
             }
-            return R.result(ResponseStatusCodeEnum.FAILURE.getCode(),
-                    ResponseStatusCodeEnum.FAILURE.getMessage(), new HashMap<>(), operateStatus);
+            return R.result(ResponseStatusCodeEnum.SUCCESS.getCode(),
+                    ResponseStatusCodeEnum.SUCCESS.getMessage(), new HashMap<>(), operateStatus);
         }
 
         if (responseBody instanceof ExceptionResultEntity) {
@@ -123,6 +123,6 @@ public class AuroraResponseResultHandler implements ResponseBodyAdvice<Object> {
             }
         }
 
-        return responseBody;
+        return R.success();
     }
 }

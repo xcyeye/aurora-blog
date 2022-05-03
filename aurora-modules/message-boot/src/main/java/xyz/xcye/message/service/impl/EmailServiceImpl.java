@@ -89,7 +89,8 @@ public class EmailServiceImpl implements EmailService {
         condition = condition.init(condition);
         Page<Object> page = PageHelper.startPage(condition.getPageNum(), condition.getPageSize(), condition.getOrderBy());
 
-        return BeanUtils.copyList(emailDao.queryAllEmail(condition), EmailVO.class);
+        //return BeanUtils.copyList(emailDao.queryAllEmail(condition), EmailVO.class);
+        return null;
     }
 
     @Override

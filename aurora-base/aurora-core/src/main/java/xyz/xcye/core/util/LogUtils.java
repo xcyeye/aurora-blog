@@ -1,11 +1,13 @@
 package xyz.xcye.core.util;
 
+import lombok.extern.slf4j.Slf4j;
+
 /**
  * 日志打印工具类
  * @author qsyyke
  */
 
-
+@Slf4j
 public class LogUtils {
     /**
      * 打印插入数据的操作
@@ -67,5 +69,9 @@ public class LogUtils {
         }
 
         return insertObjStr.delete(insertObjStr.length() - 1,insertObjStr.length());
+    }
+
+    public static void logExceptionInfo(Exception e) {
+        log.error("错误消息: {}",e.getMessage(),e);
     }
 }

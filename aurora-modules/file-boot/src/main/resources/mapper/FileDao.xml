@@ -38,8 +38,8 @@
                     delete_time=#{file.deleteTime}
                 </if>
             </set>
-            where
-                uid=#{file.uid}
+        where
+            uid=#{file.uid}
     </update>
 
     <delete id="deleteFile">
@@ -65,7 +65,7 @@
                 and file_name like concat('%', #{condition.keyword}, '%')
             </if>
             <if test="condition.status != null">
-                and is_delete=#{condition.status}
+                and is_delete=#{condition.delete}
             </if>
         </where>
     </select>

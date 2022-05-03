@@ -7,6 +7,7 @@ import org.hibernate.validator.constraints.Length;
 import xyz.xcye.core.constant.FieldLengthConstant;
 import xyz.xcye.core.valid.Delete;
 import xyz.xcye.core.valid.Update;
+import xyz.xcye.core.valid.validator.ValidateString;
 
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
@@ -63,7 +64,7 @@ public class File implements Serializable {
      * 此文件的简介 可以为null
      * <p>length < 500</p>
      */
-    @Length(max = FieldLengthConstant.SUMMARY,message = "文件-简介不能超过{max}")
+    @ValidateString(value = "文件，文件简介",max = FieldLengthConstant.SUMMARY)
     private String summary;
 
     /**

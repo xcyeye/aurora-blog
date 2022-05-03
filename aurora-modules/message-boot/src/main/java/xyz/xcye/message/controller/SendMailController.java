@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import xyz.xcye.core.annotaion.ResponseResult;
 import xyz.xcye.core.entity.result.ModifyResult;
-import xyz.xcye.message.service.SendMailService;
+import xyz.xcye.message.mail.service.SendMailService;
 
 import javax.mail.MessagingException;
 

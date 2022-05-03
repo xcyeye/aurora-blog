@@ -29,11 +29,9 @@ spring:
   application:
     name: aurora-file
 mybatis:
-  mapper-locations: classpath:mapper/**
   configuration:
     map-underscore-to-camel-case: true
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
-
 management:
   endpoints:
     web:
@@ -48,7 +46,6 @@ aurora:
     save-file-folder: aurora-upload
   snow-flake-worker-id: 12
   snow-flake-datacenter-id: 23
-
 
 # 分页插件
 pagehelper:

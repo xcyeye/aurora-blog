@@ -2,15 +2,17 @@ package xyz.xcye.file.service.impl;
 
 
 import com.github.pagehelper.PageHelper;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import xyz.xcye.aurora.properties.AuroraProperties;
 import xyz.xcye.core.dto.Condition;
+import xyz.xcye.core.entity.PageData;
 import xyz.xcye.core.enums.ResponseStatusCodeEnum;
 import xyz.xcye.core.exception.file.FileException;
 import xyz.xcye.core.util.BeanUtils;
 import xyz.xcye.core.util.DateUtils;
+import xyz.xcye.core.util.LogUtils;
+import xyz.xcye.core.util.PageUtils;
 import xyz.xcye.core.util.id.GenerateInfoUtils;
 import xyz.xcye.file.constant.FileStorageModeConstant;
 import xyz.xcye.file.dao.FileDao;
@@ -23,14 +25,14 @@ import xyz.xcye.file.vo.FileVO;
 
 import java.io.IOException;
 import java.util.Date;
-import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
 /**
  * 此类中不会存在对对象的属性判断
  * @author qsyyke
  */
 
-@Slf4j
 @Service
 public class FileServiceImpl implements FileService {
 
@@ -43,7 +45,7 @@ public class FileServiceImpl implements FileService {
 
     @Override
     public FileVO insertFile(FileEntityDTO fileEntity, File file, int storageMode)
-            throws FileException, ReflectiveOperationException {
+            throws FileException {
 
         if (fileEntity.getName() == null || fileEntity.getInputStream() == null) {
             throw new FileException(ResponseStatusCodeEnum.EXCEPTION_FILE_FAIL_UPLOAD.getMessage() + "原因: 文件名为null或者获取文件流失败",
@@ -69,18 +71,19 @@ public class FileServiceImpl implements FileService {
 
     @Override
     public int updateFile(File file) {
+        file.setSummary(Optional.ofNullable(file.getSummary()).orElse(" "));
         return fileDao.updateFile(file);
     }
 
     @Override
     public int deleteFile(long uid)
-            throws IOException, FileException, ReflectiveOperationException {
+            throws IOException, FileException {
         // 查询出此uid对应的文件的存储位置
         File deleteFileInfo = getFileDOByUid(uid);
 
         //获取此文件的存储模式，然后删除文件
         FileStorageService fileStorageService = getNeedFileStorageService(deleteFileInfo.getStorageMode());
-
+        Objects.requireNonNull(fileStorageService, "没有发现此文件存储对象");
         // 先获取原文件的数据流
         FileEntityDTO originFileEntity = fileStorageService.query(deleteFileInfo.getStoragePath());
 
@@ -97,23 +100,27 @@ public class FileServiceImpl implements FileService {
 
         //创建一个新对象File最为原始数据对象
         deleteFileInfo.setDeleteTime(DateUtils.format(new Date()));
-        if (updateFile(deleteFileInfo) != 1) {
+        int updateFileNum = 0;
+        try {
+            updateFileNum = updateFile(deleteFileInfo);
+        } catch (Exception e) {
+            LogUtils.logExceptionInfo(e);
+        }
+        if (updateFileNum != 1) {
             // 修改失败，恢复原来的文件
             fileStorageService.upload(originFileEntity.getInputStream(), originFileEntity);
         }
-        return 1;
+        return updateFileNum;
     }
 
-
     @Override
-    public List<FileVO> queryAllFile(Condition<Long> condition) throws ReflectiveOperationException {
-        condition.init(condition);
+    public PageData<FileVO> queryAllFile(Condition<Long> condition) {
         PageHelper.startPage(condition.getPageNum(), condition.getPageSize(), condition.getOrderBy());
-        return BeanUtils.copyList(fileDao.queryAll(condition), FileVO.class);
+        return PageUtils.pageList(BeanUtils.copyList(fileDao.queryAll(condition), FileVO.class));
     }
 
     @Override
-    public FileVO queryByUid(long uid) throws ReflectiveOperationException {
+    public FileVO queryByUid(long uid) {
         Condition<Long> conditionDTO = new Condition<>();
         conditionDTO.setUid(uid);
         return BeanUtils.getSingleObjFromList(fileDao.queryAll(conditionDTO), FileVO.class);
@@ -142,7 +149,7 @@ public class FileServiceImpl implements FileService {
     }
 
     private File getFileDOByUid(long uid)
-            throws FileException, ReflectiveOperationException {
+            throws FileException {
         // 查询出此uid对应的文件的存储位置
         File deleteFileInfo = BeanUtils.copyProperties(queryByUid(uid), File.class);
         if (deleteFileInfo == null) {

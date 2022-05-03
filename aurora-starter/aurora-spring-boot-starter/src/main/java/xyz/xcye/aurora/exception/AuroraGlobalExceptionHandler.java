@@ -14,10 +14,7 @@ import xyz.xcye.core.enums.ResponseStatusCodeEnum;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Slf4j
 @RestControllerAdvice
@@ -94,12 +91,11 @@ public class AuroraGlobalExceptionHandler {
                                                              HttpServletRequest request,
                                                              HttpServletResponse response) {
         String requestURI = request.getRequestURI();
-
         // 设置响应码，否则出现异常，seata不会回滚
         response.setStatus(500);
         logExceptionInfo(exception);
-        return new ExceptionResultEntity(ResponseStatusCodeEnum.EXCEPTION_NULL_POINTER.getMessage(),
-                requestURI, ResponseStatusCodeEnum.EXCEPTION_NULL_POINTER.getCode());
+        String msg = Optional.ofNullable(exception.getMessage()).orElse(ResponseStatusCodeEnum.EXCEPTION_NULL_POINTER.getMessage());
+        return new ExceptionResultEntity(msg, requestURI, ResponseStatusCodeEnum.EXCEPTION_NULL_POINTER.getCode());
     }
 
     @ExceptionHandler(MaxUploadSizeExceededException.class)
@@ -135,3 +131,4 @@ public class AuroraGlobalExceptionHandler {
         log.error("错误消息: {}",e.getMessage(),e);
     }
 }
+

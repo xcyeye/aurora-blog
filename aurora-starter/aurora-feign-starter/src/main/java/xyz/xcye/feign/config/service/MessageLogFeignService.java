@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import xyz.xcye.core.entity.result.R;
+import xyz.xcye.core.entity.R;
 import xyz.xcye.message.po.MessageLog;
 
 /**

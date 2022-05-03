@@ -2,6 +2,8 @@ package xyz.xcye;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.data.redis.core.RedisTemplate;
 
 /**
  * @author qsyyke
@@ -11,6 +13,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class SpringFileMain {
     public static void main(String[] args) {
-        SpringApplication.run(SpringFileMain.class, args);
+        ConfigurableApplicationContext run = SpringApplication.run(SpringFileMain.class, args);
+        System.out.println(run.getBean(RedisTemplate.class));
     }
 }

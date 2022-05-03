@@ -1,10 +1,10 @@
-package xyz.xcye.message.service;
+package xyz.xcye.message.mail.service;
 
-import xyz.xcye.core.dto.StorageSendMailInfo;
-import xyz.xcye.core.entity.result.ModifyResult;
+import org.springframework.messaging.MessagingException;
+import xyz.xcye.api.mail.sendmail.entity.StorageSendMailInfo;
+import xyz.xcye.core.entity.ModifyResult;
 import xyz.xcye.core.exception.email.EmailException;
 
-import javax.mail.MessagingException;
 import java.io.IOException;
 
 /**

@@ -21,7 +21,7 @@ import xyz.xcye.core.util.BeanUtils;
 import xyz.xcye.core.util.ConvertObjectUtils;
 import xyz.xcye.message.vo.MessageLogVO;
 import xyz.xcye.message.service.MessageLogService;
-import xyz.xcye.message.service.SendMailService;
+import xyz.xcye.message.mail.service.SendMailService;
 import xyz.xcye.aurora.manager.amqp.MistakeMessageSendService;
 
 import javax.mail.MessagingException;

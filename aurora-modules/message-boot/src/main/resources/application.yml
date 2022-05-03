@@ -72,7 +72,6 @@ spring:
         acknowledge-mode: manual
 
 mybatis:
-  mapper-locations: classpath:mapper/**
   configuration:
     map-underscore-to-camel-case: true
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
@@ -83,19 +82,12 @@ management:
       exposure:
         include: "*"
 
-
 # 自定义的配置
 aurora:
-  pagination:
-    pageNum: 1
-    pageSize: 10
-  mail:
-    max-subject-length: 50
-  mq:
-    # 最大重新消费次数
-    max-retry-consume: 3
-  snow-flake-worker-id: 12
-  snow-flake-datacenter-id: 23
+  snow-flake-worker-id: 14
+  snow-flake-datacenter-id: 24
+  amqp:
+    amqp-max-retry-consume: 3
 
 # 分页插件
 pagehelper:

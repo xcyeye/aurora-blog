@@ -34,6 +34,11 @@
 
         <dependency>
             <groupId>xyz.xcye.starter</groupId>
+            <artifactId>aurora-redis-starter</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>xyz.xcye.starter</groupId>
             <artifactId>aurora-nacos-starter</artifactId>
         </dependency>
 
@@ -45,6 +50,17 @@
         <dependency>
             <groupId>xyz.xcye.starter</groupId>
             <artifactId>aurora-swagger-starter</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>xyz.xcye.starter</groupId>
+            <artifactId>aurora-spring-boot-starter</artifactId>
+        </dependency>
+
+        <!--引入api-->
+        <dependency>
+            <groupId>xyz.xcye.api</groupId>
+            <artifactId>amqp-mail-api</artifactId>
         </dependency>
 
         <dependency>
