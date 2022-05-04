@@ -36,7 +36,7 @@
               </div>
               <div class="aurora-music-operate">
                 <div>
-                  <span @click="musicSetting" :class="isMusicRandomPlay ? 'aurora-music-geshunxubofang' : 'aurora-music-a-ziyuan156'" class="aurora-music-font aurora-music-cursor"></span>
+                  <span @click="musicSetting" :class="!isMusicRandomPlay ? 'aurora-music-geshunxubofang' : 'aurora-music-a-ziyuan156'" class="aurora-music-font aurora-music-cursor"></span>
                 </div>
               </div>
               <div class="aurora-music-operate">
@@ -222,16 +222,16 @@ export default {
         },
         songSrc: ''
       }).then((data) => {
-        try {
-          let src = data.data.data[0].url
-          if (src === null) {
-            this.requestFailNum++
-            return
-          }
-        }catch (e) {
-          this.requestFailNum++
-          return
-        }
+        // try {
+        //   let src = data.data.data[0].url
+        //   if (src === null) {
+        //     this.requestFailNum++
+        //     return
+        //   }
+        // }catch (e) {
+        //   this.requestFailNum++
+        //   return
+        // }
 
         //这里的歌曲存在url
         network.req({
