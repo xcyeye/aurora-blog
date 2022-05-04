@@ -262,7 +262,8 @@ export default {
             songName,
             singer,
             id: data.data.songs[0].id,
-            songSrc: data.src
+            // 依据那个网易云api文档做了一下修改
+            songSrc: "https://music.163.com/song/media/outer/url?id=" + data.data.songs[0].id
           })
 
           if (this.requestSuccessNum === 1) {
@@ -272,7 +273,7 @@ export default {
               songName,
               singer,
               id: data.data.songs[0].id,
-              songSrc: data.src
+              songSrc: "https://music.163.com/song/media/outer/url?id=" + data.data.songs[0].id
             }
           }
         }).catch((err) => {
@@ -295,19 +296,29 @@ export default {
       this.currentMusicNum = index
       this.autoPlay()
     },
-    getRandomInt(min, max) {
+    // 随机播放第三个参数用来获取与当前播放的音乐不同的num
+    getRandomInt(min, max, now) {
       min = Math.ceil(min);
       max = Math.floor(max);
-      return Math.floor(Math.random() * (max - min)) + min; //不含最大值，含最小值
+      let randomNum = Math.floor(Math.random() * (max - min)) + min;
+      if (randomNum === now && max !== 1) {
+        return this.getRandomInt(min, max, now);
+      } else {
+        return randomNum; //不含最大值，含最小值
+      }
     },
     musicNext() {
-      this.playMusicStatus = false
+      this.playMusicStatus = false;
       //点击下一首
       if (this.isMusicRandomPlay) {
         //循环播放
-        this.currentMusicNum = this.getRandomInt(0,this.musicMapArr.length)
-        this.autoPlay()
-        return
+        this.currentMusicNum = this.getRandomInt(
+          0,
+          this.musicMapArr.length,
+          this.currentMusicNum
+        );
+        this.autoPlay();
+        return;
       }
 
       if ((this.currentMusicNum + 1) > this.musicMapArr.length -1) {
