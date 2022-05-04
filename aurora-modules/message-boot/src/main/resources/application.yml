@@ -1,15 +1,13 @@
 server:
   port: 7070
-
 seata:
   enabled: true
   application-id: applicationName
-  tx-service-group: aurora_blog_tx_group
+  tx-service-group: aurora-blog-tx-group
   enable-auto-data-source-proxy: true
   config:
     type: nacos
     nacos:
-      namespace:
       serverAddr: 127.0.0.1:8848
       group: SEATA_GROUP
       username: "nacos"
@@ -20,9 +18,12 @@ seata:
       application: seata-server
       server-addr: 127.0.0.1:8848
       group: SEATA_GROUP
-      namespace:
+#      namespace:
       username: "nacos"
       password: "nacos"
+  service:
+    vgroup-mapping:
+      aurora-blog-tx-group: default
 
 spring:
   mail:

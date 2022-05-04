@@ -3,7 +3,7 @@ package xyz.xcye.api.mail.sendmail.entity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import xyz.xcye.core.exception.email.SendHtmlMailTypeNameEnum;
+import xyz.xcye.api.mail.sendmail.enums.SendHtmlMailTypeNameEnum;
 
 import javax.validation.constraints.NotNull;
 import java.util.Map;

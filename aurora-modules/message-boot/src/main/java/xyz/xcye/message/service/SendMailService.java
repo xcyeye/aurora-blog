@@ -1,9 +1,9 @@
 package xyz.xcye.message.service;
 
-import org.springframework.messaging.MessagingException;
 import xyz.xcye.api.mail.sendmail.entity.StorageSendMailInfo;
 import xyz.xcye.core.exception.email.EmailException;
 
+import javax.mail.MessagingException;
 import java.io.IOException;
 
 /**

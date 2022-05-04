@@ -64,7 +64,7 @@ public class EmailLog {
     /**
      * 邮件发送的状态 true：已成功发送 false：未发送成功
      */
-    @NotNull(groups = Insert.class)
+    @NotNull(groups = {Insert.class,Update.class})
     private Boolean send;
 
     /**

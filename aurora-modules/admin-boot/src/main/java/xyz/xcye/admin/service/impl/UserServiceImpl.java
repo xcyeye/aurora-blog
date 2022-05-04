@@ -11,29 +11,27 @@ import org.springframework.validation.BindException;
 import xyz.xcye.admin.dao.UserDao;
 import xyz.xcye.admin.feign.EmailFeignService;
 import xyz.xcye.admin.manager.mq.send.VerifyAccountSendService;
+import xyz.xcye.admin.po.RoleDO;
+import xyz.xcye.admin.po.User;
+import xyz.xcye.admin.po.UserAccount;
 import xyz.xcye.admin.properties.AdminDefaultProperties;
-import xyz.xcye.admin.service.RoleService;
 import xyz.xcye.admin.service.UserAccountService;
 import xyz.xcye.admin.service.UserService;
+import xyz.xcye.admin.vo.UserVO;
+import xyz.xcye.api.mail.sendmail.util.AccountInfoUtils;
 import xyz.xcye.aurora.properties.AuroraProperties;
-import xyz.xcye.aurora.util.AccountInfoUtils;
-import xyz.xcye.common.dto.ConditionDTO;
-import xyz.xcye.common.dto.EmailVerifyAccountDTO;
-import xyz.xcye.common.entity.result.ModifyResult;
-import xyz.xcye.common.entity.result.R;
-import xyz.xcye.common.entity.table.RoleDO;
-import xyz.xcye.common.entity.table.UserAccountDO;
-import xyz.xcye.common.entity.table.UserDO;
-import xyz.xcye.common.enums.ResponseStatusCodeEnum;
-import xyz.xcye.common.exception.email.EmailException;
-import xyz.xcye.common.exception.user.UserException;
+import xyz.xcye.core.back.common.dto.EmailVerifyAccountDTO;
+import xyz.xcye.core.entity.ModifyResult;
+import xyz.xcye.core.entity.R;
+import xyz.xcye.core.enums.ResponseStatusCodeEnum;
+import xyz.xcye.core.exception.email.EmailException;
+import xyz.xcye.core.exception.user.UserException;
 import xyz.xcye.core.util.BeanUtils;
 import xyz.xcye.core.util.ConvertObjectUtils;
 import xyz.xcye.core.util.DateUtils;
 import xyz.xcye.core.util.JSONUtils;
 import xyz.xcye.core.util.id.GenerateInfoUtils;
-import xyz.xcye.common.vo.EmailVO;
-import xyz.xcye.common.vo.UserVO;
+import xyz.xcye.message.vo.EmailVO;
 
 import java.util.Date;
 import java.util.List;
@@ -54,8 +52,6 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserAccountService userAccountService;
     @Autowired
-    private RoleService roleService;
-    @Autowired
     private VerifyAccountSendService verifyAccountSendService;
     @Autowired
     private EmailFeignService emailFeignService;
@@ -68,21 +64,20 @@ public class UserServiceImpl implements UserService {
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public ModifyResult insertUser(UserDO userDO, UserAccountDO userAccountDO)
-            throws UserException, ReflectiveOperationException {
+    public int insertUser(User user, UserAccount userAccount)
+            throws UserException {
         // 判断用户名是否存在
-        if (existsUsername(userDO.getUsername())) {
-            return ModifyResult.operateResult(ResponseStatusCodeEnum.PERMISSION_USER_EXIST.getMessage(),
-                    0,ResponseStatusCodeEnum.PERMISSION_USER_EXIST.getCode(), 0);
+        if (existsUsername(user.getUsername())) {
+            throw new UserException(ResponseStatusCodeEnum.PERMISSION_USER_EXIST);
         }
 
         // 设置默认属性
-        setUserProperties(userDO);
-        setUserAccountProperties(userDO,userAccountDO);
+        setUserProperties(user);
+        setUserAccountProperties(user, userAccount);
 
         // 插入
-        int insertUserNum = userDao.insertUser(userDO);
-        ModifyResult modifyResult = userAccountService.insert(userAccountDO);
+        int insertUserNum = userDao.insertUser(user);
+        userAccountService.insert(userAccount);
 
         // 保存临时的用户名
         String usernameTemp = userDO.getUsername();
@@ -263,18 +258,18 @@ public class UserServiceImpl implements UserService {
         userDO.setGender(Optional.ofNullable(userDO.getGender()).orElse(0));
     }
 
-    private void setUserAccountProperties(UserDO userDO,UserAccountDO userAccountDO) throws ReflectiveOperationException {
-        userAccountDO.setCreateTime(DateUtils.format(new Date()));
-        userAccountDO.setDelete(false);
-        userAccountDO.setAccountExpired(false);
-        userAccountDO.setAccountLocked(false);
-        userAccountDO.setUid(GenerateInfoUtils.generateUid(auroraProperties.getSnowFlakeWorkerId(),auroraProperties.getSnowFlakeDatacenterId()));
-        userAccountDO.setUserUid(userDO.getUid());
+    private void setUserAccountProperties(UserDO userDO, UserAccount userAccount) throws ReflectiveOperationException {
+        userAccount.setCreateTime(DateUtils.format(new Date()));
+        userAccount.setDelete(false);
+        userAccount.setAccountExpired(false);
+        userAccount.setAccountLocked(false);
+        userAccount.setUid(GenerateInfoUtils.generateUid(auroraProperties.getSnowFlakeWorkerId(),auroraProperties.getSnowFlakeDatacenterId()));
+        userAccount.setUserUid(userDO.getUid());
 
         // 判断用户角色是否存在且正确
-        userAccountDO.setPermission(getEffectivePermission(userAccountDO.getPermission()));
-        if (!existsRole(userAccountDO.getRole())) {
-            userAccountDO.setRole(adminDefaultProperties.getRole());
+        userAccount.setPermission(getEffectivePermission(userAccount.getPermission()));
+        if (!existsRole(userAccount.getRole())) {
+            userAccount.setRole(adminDefaultProperties.getRole());
         }
     }
 

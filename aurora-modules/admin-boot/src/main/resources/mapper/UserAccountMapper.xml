@@ -4,7 +4,7 @@
 
 <mapper namespace="xyz.xcye.admin.dao.UserAccountDao">
 
-    <resultMap id="userAccountResultMap" type="xyz.xcye.admin.po.UserAccountDO">
+    <resultMap id="userAccountResultMap" type="xyz.xcye.admin.po.UserAccount">
         <result column="is_account_locked" property="accountLocked"/>
         <result column="is_account_expired" property="accountExpired"/>
     </resultMap>
@@ -16,35 +16,35 @@
         )
         values
         (
-         #{userAccountDO.uid},#{userAccountDO.role},#{userAccountDO.permission},
-         #{userAccountDO.accountLocked},#{userAccountDO.accountExpired},#{userAccountDO.userUid},
-         #{userAccountDO.createTime},#{userAccountDO.updateTime},#{userAccountDO.delete}
+         #{userAccount.uid},#{userAccount.role},#{userAccount.permission},
+         #{userAccount.accountLocked},#{userAccount.accountExpired},#{userAccount.userUid},
+         #{userAccount.createTime},#{userAccount.updateTime},#{userAccount.delete}
         )
     </insert>
 
     <update id="update">
         update au_user_account
         <set>
-            <if test="userAccountDO.role != null">
-                role=#{userAccountDO.role},
+            <if test="userAccount.role != null">
+                role=#{userAccount.role},
             </if>
-            <if test="userAccountDO.permission != null">
-                permission=#{userAccountDO.permission},
+            <if test="userAccount.permission != null">
+                permission=#{userAccount.permission},
             </if>
-            <if test="userAccountDO.accountLocked != null">
-                is_account_locked=#{userAccountDO.accountLocked},
+            <if test="userAccount.accountLocked != null">
+                is_account_locked=#{userAccount.accountLocked},
             </if>
-            <if test="userAccountDO.accountExpired != null">
-                is_account_expired=#{userAccountDO.accountExpired},
+            <if test="userAccount.accountExpired != null">
+                is_account_expired=#{userAccount.accountExpired},
             </if>
-            <if test="userAccountDO.updateTime != null">
-                update_time=#{userAccountDO.updateTime},
+            <if test="userAccount.updateTime != null">
+                update_time=#{userAccount.updateTime},
             </if>
-            <if test="userAccountDO.delete != null">
-                is_delete=#{userAccountDO.delete}
+            <if test="userAccount.delete != null">
+                is_delete=#{userAccount.delete}
             </if>
         </set>
-        where uid=#{userAccountDO.uid}
+        where uid=#{userAccount.uid}
     </update>
 
     <delete id="deleteByUid">
@@ -54,7 +54,7 @@
             uid=#{uid}
     </delete>
 
-    <select id="queryAllByCondition" resultType="xyz.xcye.admin.po.UserAccountDO">
+    <select id="queryAllByCondition" resultType="xyz.xcye.admin.po.UserAccount">
         select
         uid,role,permission,is_account_locked,is_account_expired,user_uid,create_time,update_time,is_delete
         from

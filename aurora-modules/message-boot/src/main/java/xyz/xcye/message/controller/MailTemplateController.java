@@ -54,14 +54,14 @@ public class MailTemplateController {
     @SelectOperation
     @GetMapping
     @ApiOperation("查询所有邮件模板")
-    public PageData<MailTemplateVO> queryAllMailTemplate(Condition<Long> condition) throws {
+    public PageData<MailTemplateVO> queryAllMailTemplate(Condition<Long> condition) {
         return mailTemplateService.queryAllMailTemplate(condition);
     }
 
     @SelectOperation
     @GetMapping("/{uid}")
     @ApiOperation("根据uid查询邮件模板")
-    public MailTemplateVO queryMailTemplateByUid(@PathVariable("uid") long uid) throws {
+    public MailTemplateVO queryMailTemplateByUid(@PathVariable("uid") long uid) {
         return mailTemplateService.queryMailTemplateByUid(uid);
     }
 

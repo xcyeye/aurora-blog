@@ -52,7 +52,7 @@ public class MessageLog {
     /**
      * 重试次数
      */
-    @NotNull(message = "消息投递日志的重试次数不能为null", groups={Insert.class,Update.class})
+    @NotNull(message = "消息投递日志的重试次数不能为null", groups={Insert.class})
     private Integer tryCount;
 
     /**

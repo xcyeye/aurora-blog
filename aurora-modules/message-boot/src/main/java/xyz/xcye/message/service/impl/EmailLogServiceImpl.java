@@ -4,17 +4,17 @@ import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindException;
-import xyz.xcye.mybatis.entity.Condition;
-import xyz.xcye.mybatis.entity.PageData;
 import xyz.xcye.core.util.BeanUtils;
 import xyz.xcye.core.util.DateUtils;
-import xyz.xcye.core.util.PageUtils;
 import xyz.xcye.core.util.ValidationUtils;
-import xyz.xcye.core.valid.Insert;
+import xyz.xcye.core.valid.Update;
 import xyz.xcye.message.dao.EmailLogDao;
 import xyz.xcye.message.po.EmailLog;
 import xyz.xcye.message.service.EmailLogService;
 import xyz.xcye.message.vo.EmailLogVO;
+import xyz.xcye.mybatis.entity.Condition;
+import xyz.xcye.mybatis.entity.PageData;
+import xyz.xcye.mybatis.util.PageUtils;
 
 import javax.validation.groups.Default;
 import java.util.Date;
@@ -40,7 +40,7 @@ public class EmailLogServiceImpl implements EmailLogService {
     @Override
     public int updateEmailLog(EmailLog emailLog) throws BindException {
         //参数验证
-        ValidationUtils.valid(emailLog, Insert.class, Default.class);
+        ValidationUtils.valid(emailLog, Update.class, Default.class);
         return emailLogDao.updateEmailLog(emailLog);
     }
 
@@ -52,7 +52,7 @@ public class EmailLogServiceImpl implements EmailLogService {
     @Override
     public PageData<EmailLogVO> queryAll(Condition<Long> condition) {
         PageHelper.startPage(condition.getPageNum(),condition.getPageSize(),condition.getOrderBy());
-        return PageUtils.pageList(BeanUtils.copyList(emailLogDao.queryAll(condition),EmailLogVO.class));
+        return PageUtils.pageList(condition, t -> BeanUtils.copyList(emailLogDao.queryAll(condition),EmailLogVO.class));
     }
 
     @Override

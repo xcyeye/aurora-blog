@@ -1,4 +1,4 @@
-package xyz.xcye.core.exception.email;
+package xyz.xcye.api.mail.sendmail.enums;
 
 import lombok.Getter;
 

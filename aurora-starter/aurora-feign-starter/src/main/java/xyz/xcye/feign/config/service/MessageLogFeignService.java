@@ -2,7 +2,6 @@ package xyz.xcye.feign.config.service;
 
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.cloud.openfeign.SpringQueryMap;
-import org.springframework.stereotype.Component;
 import org.springframework.validation.BindException;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,8 +15,7 @@ import xyz.xcye.message.po.MessageLog;
  * @date Created in 2022/5/2 17:56
  */
 
-@Component
-@FeignClient(value = "aurora-message")
+@FeignClient(value = "aurora-message", name = "aurora-message")
 public interface MessageLogFeignService {
     @PostMapping("/message/messageLog")
     R insertMessageLog(@SpringQueryMap MessageLog messageLog) throws BindException;
@@ -26,5 +24,5 @@ public interface MessageLogFeignService {
     R updateMessageLog(@SpringQueryMap MessageLog messageLog) throws BindException;
 
     @GetMapping("/message/messageLog/{uid}")
-    R queryMessageLogByUid(@PathVariable("uid") long uid) throws ReflectiveOperationException;
+    R queryMessageLogByUid(@PathVariable("uid") long uid);
 }

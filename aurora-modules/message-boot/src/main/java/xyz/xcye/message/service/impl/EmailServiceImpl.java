@@ -6,20 +6,24 @@ import org.springframework.stereotype.Service;
 import org.springframework.validation.BindException;
 import xyz.xcye.admin.vo.UserVO;
 import xyz.xcye.aurora.properties.AuroraProperties;
-import xyz.xcye.mybatis.entity.Condition;
-import xyz.xcye.mybatis.entity.PageData;
 import xyz.xcye.core.entity.R;
 import xyz.xcye.core.enums.ResponseStatusCodeEnum;
 import xyz.xcye.core.exception.AuroraException;
 import xyz.xcye.core.exception.email.EmailException;
 import xyz.xcye.core.exception.user.UserException;
-import xyz.xcye.core.util.*;
+import xyz.xcye.core.util.BeanUtils;
+import xyz.xcye.core.util.ConvertObjectUtils;
+import xyz.xcye.core.util.DateUtils;
+import xyz.xcye.core.util.JSONUtils;
 import xyz.xcye.core.util.id.GenerateInfoUtils;
 import xyz.xcye.mail.api.feign.UserFeignService;
 import xyz.xcye.message.dao.EmailDao;
 import xyz.xcye.message.po.Email;
 import xyz.xcye.message.service.EmailService;
 import xyz.xcye.message.vo.EmailVO;
+import xyz.xcye.mybatis.entity.Condition;
+import xyz.xcye.mybatis.entity.PageData;
+import xyz.xcye.mybatis.util.PageUtils;
 
 import java.util.Date;
 import java.util.Objects;
@@ -83,7 +87,7 @@ public class EmailServiceImpl implements EmailService {
     @Override
     public PageData<EmailVO> queryAllEmail(Condition<Long> condition) {
         PageHelper.startPage(condition.getPageNum(), condition.getPageSize(), condition.getOrderBy());
-        return PageUtils.pageList(BeanUtils.copyList(emailDao.queryAllEmail(condition), EmailVO.class));
+        return PageUtils.pageList(condition, t -> BeanUtils.copyList(emailDao.queryAllEmail(condition), EmailVO.class));
     }
 
     @Override

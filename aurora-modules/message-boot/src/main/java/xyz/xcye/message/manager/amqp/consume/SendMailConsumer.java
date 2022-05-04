@@ -7,7 +7,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.messaging.MessagingException;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.BindException;
@@ -17,7 +16,7 @@ import xyz.xcye.api.mail.sendmail.util.StorageMailUtils;
 import xyz.xcye.comment.po.Comment;
 import xyz.xcye.core.constant.amqp.RabbitMQNameConstant;
 import xyz.xcye.core.exception.email.EmailException;
-import xyz.xcye.core.exception.email.SendHtmlMailTypeNameEnum;
+import xyz.xcye.api.mail.sendmail.enums.SendHtmlMailTypeNameEnum;
 import xyz.xcye.core.util.BeanUtils;
 import xyz.xcye.core.util.ConvertObjectUtils;
 import xyz.xcye.message.po.MessageLog;
@@ -25,6 +24,7 @@ import xyz.xcye.message.service.MessageLogService;
 import xyz.xcye.message.service.SendMailService;
 import xyz.xcye.message.vo.MessageLogVO;
 
+import javax.mail.MessagingException;
 import java.io.IOException;
 import java.util.*;
 

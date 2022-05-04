@@ -41,7 +41,7 @@ public class EmailLogController {
     @ApiOperation(value = "根据uid更新邮件发送日志")
     @ModifyOperation
     @PutMapping("")
-    public int updateEmailLog(@Validated({Update.class}) EmailLog emailLog) throws BindException {
+    public int updateEmailLog(@Validated({Update.class,Default.class}) EmailLog emailLog) throws BindException {
         return emailLogService.updateEmailLog(emailLog);
     }
 

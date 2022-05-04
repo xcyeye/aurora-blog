@@ -64,7 +64,7 @@ public class RabbitMQBindEmailConsumer {
         //RootContext.bind(xid);
         // 运行到此处，说明一切正常，将数据插入到数据库中 并且修改消息的消费状态
         channel.basicAck(message.getMessageProperties().getDeliveryTag(),false);
-        UserDO userDO = UserDO.builder().emailUid(emailDO.getUid()).uid(emailDO.getUserUid()).build();
+        User userDO = User.builder().emailUid(emailDO.getUid()).uid(emailDO.getUserUid()).build();
         ModifyResult modifyResult = userService.updateUser(userDO);
         updateMessageLogInfo(correlationDataId,true,true,null);
 

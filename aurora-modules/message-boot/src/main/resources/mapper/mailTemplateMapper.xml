@@ -4,7 +4,7 @@
 
 <mapper namespace="xyz.xcye.message.dao.MailTemplateDao">
 
-
+    <cache type="xyz.xcye.mybatis.MybatisCacheAutoConfig"/>
     <insert id="insertMailTemplate" useGeneratedKeys="true" keyProperty="uid">
         insert into au_mail_template
             (template, create_time, subject,user_uid,type_name)
@@ -45,7 +45,7 @@
 
     <select id="queryAllMailTemplate" resultMap="mailTemplate">
         select
-            template,replace_arr,create_time,update_time,subject,uid,type_name,user_uid
+            template,create_time,update_time,subject,uid,type_name,user_uid
         from
             au_mail_template
         <where>
@@ -56,7 +56,7 @@
                 and uid=#{condition.uid}
             </if>
             <if test="condition.keyword != null">
-                and type_name like #{condition.keyword}
+                and type_name = #{condition.keyword}
             </if>
             <if test="condition.otherUid != null">
                 and user_uid=#{condition.otherUid}

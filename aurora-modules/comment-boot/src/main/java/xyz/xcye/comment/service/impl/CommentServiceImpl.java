@@ -9,21 +9,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
+import xyz.xcye.api.mail.sendmail.entity.StorageSendMailInfo;
+import xyz.xcye.api.mail.sendmail.enums.SendHtmlMailTypeNameEnum;
+import xyz.xcye.api.mail.sendmail.service.SendMQMessageService;
 import xyz.xcye.aurora.properties.AuroraProperties;
-import xyz.xcye.aurora.service.amqp.SendMQMessageService;
-import xyz.xcye.comment.dao.CommentDao;
+import xyz.xcye.comment.dao.CommentMapper;
+import xyz.xcye.comment.dto.CommentDTO;
+import xyz.xcye.comment.po.Comment;
 import xyz.xcye.comment.service.CommentService;
+import xyz.xcye.comment.vo.CommentVO;
 import xyz.xcye.core.constant.amqp.RabbitMQNameConstant;
-import xyz.xcye.common.dto.CommentDTO;
-import xyz.xcye.core.dto.Condition;
-import xyz.xcye.core.dto.StorageSendMailInfo;
-import xyz.xcye.core.entity.result.ModifyResult;
-import xyz.xcye.common.entity.table.CommentDO;
-import xyz.xcye.core.enums.ResponseStatusCodeEnum;
-import xyz.xcye.core.exception.email.SendHtmlMailTypeNameEnum;
 import xyz.xcye.core.util.DateUtils;
 import xyz.xcye.core.util.id.GenerateInfoUtils;
-import xyz.xcye.common.vo.CommentVO;
+import xyz.xcye.mybatis.entity.Condition;
 
 import java.util.*;
 
@@ -39,99 +37,95 @@ public class CommentServiceImpl implements CommentService {
     private AuroraProperties auroraProperties;
 
     @Autowired
-    private CommentDao commentDao;
+    private CommentMapper commentMapper;
 
     @Autowired
     private SendMQMessageService sendMQMessageService;
 
     @GlobalTransactional(rollbackFor = Exception.class)
     @Override
-    public ModifyResult insertComment(CommentDO commentDO)
+    public int insertComment(Comment comment)
             throws Throwable {
-        Assert.notNull(commentDO,"评论不能为null");
+        Assert.notNull(comment,"评论不能为null");
         // 初始化值
-        commentDO.setUid(GenerateInfoUtils.generateUid(auroraProperties.getSnowFlakeWorkerId(),auroraProperties.getSnowFlakeDatacenterId()));
-        commentDO.setCreateTime(DateUtils.format(new Date()));
-        commentDO.setShowComment(true);
+        comment.setUid(GenerateInfoUtils.generateUid(auroraProperties.getSnowFlakeWorkerId(),auroraProperties.getSnowFlakeDatacenterId()));
+        comment.setCreateTime(DateUtils.format(new Date()));
+        comment.setShowComment(true);
         // 设置email的发送状态，这里目前只能保证消息是否成功投递到rabbitmq交换机中，不能保证email是否发送成功
-        commentDO.setEmailNotice(false);
-        commentDO.setDelete(false);
+        comment.setEmailNotice(false);
+        comment.setDelete(false);
 
         // 判断该条评论是回复评论还是单独的一条评论
         // 如果此条评论的replyCommentUid在数据库中不存在，则标记为新建的单独评论
-        CommentDO queriedRepliedCommentDO = getCommentDOByUid(commentDO.getReplyCommentUid());
+        Comment queriedRepliedCommentDO = getCommentDOByUid(comment.getReplyCommentUid());
         boolean isReplyCommentFlag = queriedRepliedCommentDO != null;
 
         //向数据库中插入此条评论
-        int insertCommentNum = commentDao.insertComment(commentDO);
+        int insertCommentNum = commentMapper.insertComment(comment);
 
         // 使用rabbitmq发送邮件通知对方 因为使用rabbitmq发送消息到交换机的过程是同步的，并且我们已经开启了seata的全局事务功能
         // 所以如果在发送mq消息的过程中，出现异常，能够回滚，从而能够保证插入评论后，能够保证评论和mq发送到交换机的消息同时成功或者失败
         // 因为发布确认是异步的，如果能进入到发布确认代码中，那么前面插入评论和消息一定都成功保存到数据库中了
         if (isReplyCommentFlag) {
-            sendMQMessageService.sendReplyMail(commentDO, queriedRepliedCommentDO,
+            sendMQMessageService.sendReplyMail(comment, queriedRepliedCommentDO,
                     RabbitMQNameConstant.AURORA_SEND_MAIL_EXCHANGE,
                     "topic", RabbitMQNameConstant.SEND_HTML_MAIL_ROUTING_KEY);
         }else {
             //不是回复评论 设置ReplyCommentUid标识
-            commentDO.setReplyCommentUid(0L);
+            comment.setReplyCommentUid(0L);
             //交换机发送消息 如果此commentDO.getUserUid()用户在au_email中不存在记录的话，会使用默认的模板进行邮件通知
-            StorageSendMailInfo mailInfo = createReceiveCommentMailInfo(commentDO);
+            StorageSendMailInfo mailInfo = createReceiveCommentMailInfo(comment);
             sendMQMessageService.sendCommonMail(mailInfo, RabbitMQNameConstant.AURORA_SEND_MAIL_EXCHANGE,
-                    "topic", RabbitMQNameConstant.SEND_HTML_MAIL_ROUTING_KEY, createReceiveList(commentDO));
+                    "topic", RabbitMQNameConstant.SEND_HTML_MAIL_ROUTING_KEY, createReceiveList(comment));
         }
 
         //如果运行到这里，不能确保邮件发送成功，但还是修改一下邮件发送状态
-        commentDO.setEmailNotice(true);
-        updateComment(commentDO);
+        comment.setEmailNotice(true);
+        updateComment(comment);
 
         // 如果插入成功，并且是回复某条评论，则修改此被回复的评论的nextCommentUidArray值
         if (isReplyCommentFlag && insertCommentNum == 1) {
-            queriedRepliedCommentDO.setNextCommentUidArray(getNextCommentUidArrayStr(queriedRepliedCommentDO,commentDO.getUid()));
+            queriedRepliedCommentDO.setNextCommentUidArray(getNextCommentUidArrayStr(queriedRepliedCommentDO,comment.getUid()));
             updateComment(queriedRepliedCommentDO);
         }
-        return ModifyResult.operateResult(insertCommentNum,"插入评论",
-                 ResponseStatusCodeEnum.SUCCESS.getCode(), commentDO.getUid());
+        return insertCommentNum;
     }
 
     @Override
-    public ModifyResult deleteComment(Long uid) {
-        return ModifyResult.operateResult(commentDao.deleteComment(uid),"删除" + uid + "对应的评论",
-                ResponseStatusCodeEnum.SUCCESS.getCode(), uid);
+    public int deleteComment(Long uid) {
+        return commentMapper.deleteComment(uid);
     }
 
     @Override
-    public ModifyResult updateComment(CommentDO commentDO) {
+    public int updateComment(Comment comment) {
         // 设置最后修改时间
-        commentDO.setUpdateTime(DateUtils.format());
-        return ModifyResult.operateResult(commentDao.updateComment(commentDO),"修改评论",
-                ResponseStatusCodeEnum.SUCCESS.getCode(), commentDO.getUid());
+        comment.setUpdateTime(DateUtils.format());
+        return commentMapper.updateComment(comment);
     }
 
     @Override
-    public ModifyResult updateDeleteStatus(CommentDO commentDO) {
-        Assert.notNull(commentDO, () -> "更新评论删除状态，不能为null");
-        commentDO.setUpdateTime(DateUtils.format());
-        commentDO.setDelete(Optional.ofNullable(commentDO.getDelete()).orElse(false));
-        return ModifyResult.operateResult(commentDao.updateDeleteStatus(commentDO),"删除评论",
-                ResponseStatusCodeEnum.SUCCESS.getCode(), commentDO.getUid());
+    public int updateDeleteStatus(Comment comment) {
+        Assert.notNull(comment, () -> "更新评论删除状态，不能为null");
+        comment.setUpdateTime(DateUtils.format());
+        comment.setDelete(Optional.ofNullable(comment.getDelete()).orElse(false));
+        return commentMapper.updateDeleteStatus(comment);
     }
 
     @Override
-    public CommentVO queryArticleComments(long[] arrayUid) throws ReflectiveOperationException {
+    public CommentVO queryArticleComments(long[] arrayUid) {
         // 获取arrayUid中可用的uid
         List<Long> effectiveCommentUidList = getEffectiveCommentUid(arrayUid);
 
         // 获取arrayUid所涉及的所有评论
         List<CommentDTO> allCommentDTOList = new ArrayList<>();
         for (Long uid : effectiveCommentUidList) {
-            CommentDO commentDO = getCommentDOByUid(uid);
+            Comment comment = getCommentDOByUid(uid);
             //没有发布或者已经删除的，也不展示
-            if (commentDO == null || !commentDO.getShowComment()) {
+            if (comment == null || !comment.getShowComment()) {
                 continue;
             }
             CommentDTO copyCommentDTO = new CommentDTO();
-            BeanUtils.copyProperties(commentDO,copyCommentDTO);
+            BeanUtils.copyProperties(comment,copyCommentDTO);
             CommentDTO sonNode = getAllSingleParentNodeList(copyCommentDTO);
             allCommentDTOList.add(sonNode);
         }
@@ -144,12 +138,11 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public List<CommentDTO> queryAllComments(Condition<Long> condition) {
-        condition.init(condition);
         PageHelper.startPage(condition.getPageNum(),condition.getPageSize(),condition.getOrderBy());
 
-        List<CommentDO> commentDOList = commentDao.queryAllComment(condition);
+        List<Comment> commentDOList = commentMapper.queryAllComment(condition);
         List<CommentDTO> queriedCommentDTOList = new ArrayList<>();
-        for (CommentDO queriedCommentDO : commentDOList) {
+        for (Comment queriedCommentDO : commentDOList) {
             CommentDTO queriedCommentDTO = new CommentDTO();
             BeanUtils.copyProperties(queriedCommentDO,queriedCommentDTO);
 
@@ -164,27 +157,26 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public CommentDTO queryByUid(long uid) throws ReflectiveOperationException {
+    public CommentDTO queryByUid(long uid) {
         Condition<Long> condition = new Condition();
         condition.setUid(uid);
-        condition.init(condition);
         return xyz.xcye.core.util.BeanUtils.getSingleObjFromList(
-                commentDao.queryAllComment(condition),CommentDTO.class);
+                commentMapper.queryAllComment(condition),CommentDTO.class);
     }
 
     /**
      * 判断此commentDO中的ReplyCommentUid是不是回复某条评论
      * <p>如果此ReplyCommentUid在数据库中不存在，也标识单独新建的一条评论</p>
-     * @param commentDO
+     * @param comment
      * @return true是回复评论
      */
-    private boolean isReplyComment(CommentDO commentDO) throws ReflectiveOperationException {
+    private boolean isReplyComment(Comment comment) throws ReflectiveOperationException {
         //此评论就是单独新建的一条评论
-        if (commentDO.getReplyCommentUid() == 0) {
+        if (comment.getReplyCommentUid() == 0) {
             return false;
         }
         //判断是否存在
-        return queryByUid(commentDO.getReplyCommentUid()) != null;
+        return queryByUid(comment.getReplyCommentUid()) != null;
     }
 
     /**
@@ -192,7 +184,7 @@ public class CommentServiceImpl implements CommentService {
      * @param commentUid
      * @return
      */
-    private CommentDO getCommentDOByUid(Long commentUid) throws ReflectiveOperationException {
+    private Comment getCommentDOByUid(Long commentUid) {
         //此评论就是单独新建的一条评论
         if (commentUid == null || commentUid == 0) {
             return null;
@@ -200,8 +192,8 @@ public class CommentServiceImpl implements CommentService {
         //判断是否存在
         Condition<Long> condition = new Condition<>();
         condition.setUid(commentUid);
-        List<CommentDO> commentDOList = commentDao.queryAllComment(condition);
-        return xyz.xcye.core.util.BeanUtils.getSingleObjFromList(commentDOList,CommentDO.class);
+        List<Comment> commentDOList = commentMapper.queryAllComment(condition);
+        return xyz.xcye.core.util.BeanUtils.getSingleObjFromList(commentDOList,Comment.class);
     }
 
     /**
@@ -209,7 +201,7 @@ public class CommentServiceImpl implements CommentService {
      * @param uid
      * @return
      */
-    private boolean isExistsComment(Long uid) throws ReflectiveOperationException {
+    private boolean isExistsComment(Long uid) {
         return getCommentDOByUid(uid) != null;
     }
 
@@ -218,7 +210,7 @@ public class CommentServiceImpl implements CommentService {
      * @param arrayUid
      * @return
      */
-    private List<Long> getEffectiveCommentUid(long[] arrayUid) throws ReflectiveOperationException {
+    private List<Long> getEffectiveCommentUid(long[] arrayUid) {
         List<Long> listUid = new ArrayList<>();
         for (Long uid : arrayUid) {
             if (isExistsComment(uid)) {
@@ -233,7 +225,7 @@ public class CommentServiceImpl implements CommentService {
      * @param commentDTO
      * @return
      */
-    private CommentDTO getAllSingleParentNodeList(CommentDTO commentDTO) throws ReflectiveOperationException {
+    private CommentDTO getAllSingleParentNodeList(CommentDTO commentDTO) {
         List<Long> uidList = parseUidArray(commentDTO.getNextCommentUidArray());
         if (uidList.isEmpty()) {
             //commentDTO下没有任何的子评论，直接返回
@@ -243,14 +235,14 @@ public class CommentServiceImpl implements CommentService {
         //存在子评论，循环获取
         for (Long uid : uidList) {
             // 当前的uid对应评论数据
-            CommentDO commentDO = getCommentDOByUid(uid);
-            if (commentDO == null) {
+            Comment comment = getCommentDOByUid(uid);
+            if (comment == null) {
                 continue;
             }
 
             //将此commentDO添加到singleParentCommentDTOList中
             CommentDTO copyCommentDTO = new CommentDTO();
-            BeanUtils.copyProperties(commentDO,copyCommentDTO);
+            BeanUtils.copyProperties(comment,copyCommentDTO);
             if (commentDTO.getSonCommentList() == null) {
                 commentDTO.setSonCommentList(new ArrayList<>());
             }
@@ -287,7 +279,7 @@ public class CommentServiceImpl implements CommentService {
      * @param replyingUid
      * @return
      */
-    private String getNextCommentUidArrayStr(CommentDO repliedCommonDO,Long replyingUid) {
+    private String getNextCommentUidArrayStr(Comment repliedCommonDO,Long replyingUid) {
         if ("".equals(repliedCommonDO.getNextCommentUidArray()) || repliedCommonDO.getNextCommentUidArray() == null) {
             return replyingUid + "";
         }else {
@@ -295,17 +287,17 @@ public class CommentServiceImpl implements CommentService {
         }
     }
 
-    private StorageSendMailInfo createReceiveCommentMailInfo(CommentDO commentDO) {
+    private StorageSendMailInfo createReceiveCommentMailInfo(Comment comment) {
         StorageSendMailInfo mailInfo = new StorageSendMailInfo();
-        mailInfo.setUserUid(commentDO.getUserUid());
+        mailInfo.setUserUid(comment.getUserUid());
         mailInfo.setSendType(SendHtmlMailTypeNameEnum.RECEIVE_COMMENT);
         mailInfo.setCorrelationDataId(GenerateInfoUtils.generateUid(auroraProperties.getSnowFlakeWorkerId(),
                 auroraProperties.getSnowFlakeDatacenterId()) + "");
-        mailInfo.setSubject(commentDO.getContent());
+        mailInfo.setSubject(comment.getContent());
         return mailInfo;
     }
 
-    private List<Map<String,Object>> createReceiveList(CommentDO comment) {
+    private List<Map<String,Object>> createReceiveList(Comment comment) {
         List<Map<String,Object>> list = new ArrayList<>();
         Map<String,Object> map = new HashMap<>();
         map.put(SendHtmlMailTypeNameEnum.RECEIVE_COMMENT.getKeyName(),comment);

@@ -3,14 +3,14 @@ package xyz.xcye.message.controller;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.messaging.MessagingException;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import xyz.xcye.core.annotaion.ResponseResult;
 import xyz.xcye.core.annotaion.controller.ModifyOperation;
 import xyz.xcye.message.service.SendMailService;
+
+import javax.mail.MessagingException;
 
 /**
  * 使用发送请求的方式发送邮件

@@ -3,15 +3,15 @@ package xyz.xcye.message.service.impl;
 import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import xyz.xcye.mybatis.entity.Condition;
-import xyz.xcye.mybatis.entity.PageData;
 import xyz.xcye.core.util.BeanUtils;
 import xyz.xcye.core.util.DateUtils;
-import xyz.xcye.core.util.PageUtils;
 import xyz.xcye.message.dao.MailTemplateDao;
 import xyz.xcye.message.po.MailTemplate;
 import xyz.xcye.message.service.MailTemplateService;
 import xyz.xcye.message.vo.MailTemplateVO;
+import xyz.xcye.mybatis.entity.Condition;
+import xyz.xcye.mybatis.entity.PageData;
+import xyz.xcye.mybatis.util.PageUtils;
 
 /**
  * @author qsyyke
@@ -44,7 +44,7 @@ public class MailTemplateServiceImpl implements MailTemplateService {
     @Override
     public PageData<MailTemplateVO> queryAllMailTemplate(Condition<Long> condition) {
         PageHelper.startPage(condition.getPageNum(), condition.getPageSize(), condition.getOrderBy());
-        return PageUtils.pageList(BeanUtils.copyList(mailTemplateDao.queryAllMailTemplate(condition), MailTemplateVO.class));
+        return PageUtils.pageList(condition, t -> BeanUtils.copyList(mailTemplateDao.queryAllMailTemplate(condition), MailTemplateVO.class));
     }
 
     @Override

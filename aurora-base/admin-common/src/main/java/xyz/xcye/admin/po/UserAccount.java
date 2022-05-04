@@ -17,7 +17,7 @@ import java.io.Serializable;
 
 @Builder
 @Data
-public class UserAccountDO implements Serializable {
+public class UserAccount implements Serializable {
 
     public static final long serialVersionUID = 42L;
 

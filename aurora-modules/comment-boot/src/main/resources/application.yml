@@ -3,12 +3,11 @@ server:
 seata:
   enabled: true
   application-id: applicationName
-  tx-service-group: aurora_blog_tx_group
+  tx-service-group: aurora-blog-tx-group
   enable-auto-data-source-proxy: true
   config:
     type: nacos
     nacos:
-      namespace:
       serverAddr: 127.0.0.1:8848
       group: SEATA_GROUP
       username: "nacos"
@@ -19,10 +18,12 @@ seata:
       application: seata-server
       server-addr: 127.0.0.1:8848
       group: SEATA_GROUP
-      namespace:
+      #      namespace:
       username: "nacos"
       password: "nacos"
-
+  service:
+    vgroup-mapping:
+      aurora-blog-tx-group: default
 spring:
   mail:
     host: smtp.qq.com
@@ -70,19 +71,14 @@ spring:
       simple:
         acknowledge-mode: manual
 mybatis:
-  mapper-locations: classpath:mapper/**
   configuration:
     map-underscore-to-camel-case: true
-#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
 management:
   endpoints:
     web:
       exposure:
         include: "*"
-
-
-# 自定义的配置
 
 # 分页插件
 pagehelper:
@@ -92,18 +88,15 @@ pagehelper:
   params: count=countSql
 
 
-feign:
-  client:
-    config:
-      aurora-message:
-        connectTimeout: 100000
-        readTimeout: 7000
-  httpclient:
-    enabled: true
+#feign:
+#  client:
+#    config:
+#      aurora-message:
+#        connectTimeout: 100000
+#        readTimeout: 7000
+#  httpclient:
+#    enabled: true
 
 aurora:
   snow-flake-datacenter-id: 5
   snow-flake-worker-id: 23
-logging:
-  level:
-    xyz.xcye.aurora.feign.MessageLogFeignService: debug

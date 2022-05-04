@@ -8,14 +8,13 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import xyz.xcye.core.annotaion.controller.ModifyOperation;
 import xyz.xcye.core.annotaion.controller.SelectOperation;
-import xyz.xcye.mybatis.entity.Condition;
-import xyz.xcye.mybatis.entity.PageData;
 import xyz.xcye.core.valid.Insert;
 import xyz.xcye.core.valid.Update;
-import xyz.xcye.message.manager.schedule.RabbitMQSchedule;
 import xyz.xcye.message.po.MessageLog;
 import xyz.xcye.message.service.MessageLogService;
 import xyz.xcye.message.vo.MessageLogVO;
+import xyz.xcye.mybatis.entity.Condition;
+import xyz.xcye.mybatis.entity.PageData;
 
 import javax.validation.groups.Default;
 
@@ -30,8 +29,8 @@ public class MessageLogController {
     @Autowired
     private MessageLogService messageLogService;
 
-    @Autowired
-    private RabbitMQSchedule rabbitMQSchedule;
+    /*@Autowired
+    private RabbitMQSchedule rabbitMQSchedule;*/
 
     @ApiOperation(value = "插入新消费消息",notes = "插入新消费消息")
     @ModifyOperation

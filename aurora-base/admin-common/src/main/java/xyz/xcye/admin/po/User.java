@@ -24,7 +24,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class UserDO implements Serializable {
+public class User implements Serializable {
     public static final long serialVersionUID = 42L;
 
     /**

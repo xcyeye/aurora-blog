@@ -23,6 +23,7 @@ import java.io.Serializable;
 public class Comment implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
     /**
      * 唯一uid 不能为null 主键
      */

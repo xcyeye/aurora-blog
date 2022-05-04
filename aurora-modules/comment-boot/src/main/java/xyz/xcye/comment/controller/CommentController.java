@@ -5,17 +5,17 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import xyz.xcye.aurora.feign.MessageLogFeignService;
+import xyz.xcye.comment.dto.CommentDTO;
+import xyz.xcye.comment.po.Comment;
 import xyz.xcye.comment.service.CommentService;
-import xyz.xcye.common.annotaion.ResponseResult;
-import xyz.xcye.common.dto.CommentDTO;
-import xyz.xcye.core.dto.Condition;
-import xyz.xcye.core.entity.result.ModifyResult;
-import xyz.xcye.common.entity.table.CommentDO;
+import xyz.xcye.comment.vo.CommentVO;
+import xyz.xcye.core.annotaion.controller.ModifyOperation;
+import xyz.xcye.core.annotaion.controller.SelectOperation;
 import xyz.xcye.core.util.NetWorkUtils;
 import xyz.xcye.core.valid.Insert;
 import xyz.xcye.core.valid.Update;
-import xyz.xcye.common.vo.CommentVO;
+import xyz.xcye.feign.config.service.MessageLogFeignService;
+import xyz.xcye.mybatis.entity.Condition;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.groups.Default;
@@ -36,27 +36,27 @@ public class CommentController {
     private MessageLogFeignService messageLogFeignService;
 
     @ApiOperation(value = "更新评论")
-    @ResponseResult
+    @ModifyOperation
     @PutMapping("")
-    public ModifyResult updateComment(@Validated({Update.class}) CommentDO commentDO) {
-        return commentService.updateComment(commentDO);
+    public int updateComment(@Validated({Update.class}) Comment comment) {
+        return commentService.updateComment(comment);
     }
 
     @ApiOperation(value = "插入新评论")
-    @ResponseResult
+    @ModifyOperation
     @PostMapping("")
-    public ModifyResult insertComment(@Validated({Default.class, Insert.class}) CommentDO commentDO,
+    public int insertComment(@Validated({Default.class, Insert.class}) Comment comment,
                                       HttpServletRequest request)
             throws Throwable {
-        commentDO.setCommentIp(NetWorkUtils.getIpAddr(request));
-        commentDO.setOperationSystemInfo(NetWorkUtils.getOperationInfo(request));
-        return commentService.insertComment(commentDO);
+        comment.setCommentIp(NetWorkUtils.getIpAddr(request));
+        comment.setOperationSystemInfo(NetWorkUtils.getOperationInfo(request));
+        return commentService.insertComment(comment);
     }
 
     @ApiOperation(value = "删除单条评论")
-    @ResponseResult
+    @ModifyOperation
     @DeleteMapping("/{uid}")
-    public ModifyResult deleteComment(@PathVariable("uid") Long uid) {
+    public int deleteComment(@PathVariable("uid") Long uid) {
         return commentService.deleteComment(uid);
     }
 
@@ -66,24 +66,23 @@ public class CommentController {
      * @return
      */
     @ApiOperation(value = "查询所有满足要求的所有评论")
-    @ResponseResult
+    @SelectOperation
     @GetMapping("/queryArticleComments")
-    public CommentVO queryAllComment(@RequestParam(value = "uidArr") long[] commentUidArr)
-            throws ReflectiveOperationException {
+    public CommentVO queryAllComment(@RequestParam(value = "uidArr") long[] commentUidArr) {
         return commentService.queryArticleComments(commentUidArr);
     }
 
     @ApiOperation(value = "根据自定义条件查询所有评论")
-    @ResponseResult
+    @SelectOperation
     @GetMapping
     public List<CommentDTO> queryAllCommentByCondition(Condition<Long> condition) {
         return commentService.queryAllComments(condition);
     }
 
     @ApiOperation(value = "根据uid查询评论")
-    @ResponseResult
+    @SelectOperation
     @GetMapping("/{uid}")
-    public CommentDTO queryCommentByUid(@PathVariable("uid") long uid) throws ReflectiveOperationException {
+    public CommentDTO queryCommentByUid(@PathVariable("uid") long uid) {
         return commentService.queryByUid(uid);
     }
 }

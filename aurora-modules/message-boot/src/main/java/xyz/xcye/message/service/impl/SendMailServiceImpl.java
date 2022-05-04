@@ -6,19 +6,18 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.MailException;
-import org.springframework.messaging.MessagingException;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import xyz.xcye.api.mail.sendmail.entity.StorageSendMailInfo;
+import xyz.xcye.api.mail.sendmail.enums.SendHtmlMailTypeNameEnum;
 import xyz.xcye.comment.po.Comment;
 import xyz.xcye.core.constant.FieldLengthConstant;
-import xyz.xcye.mybatis.entity.Condition;
 import xyz.xcye.core.enums.RegexEnum;
 import xyz.xcye.core.enums.ResponseStatusCodeEnum;
 import xyz.xcye.core.exception.email.EmailException;
-import xyz.xcye.core.exception.email.SendHtmlMailTypeNameEnum;
 import xyz.xcye.core.util.ConvertObjectUtils;
 import xyz.xcye.core.util.DateUtils;
+import xyz.xcye.core.util.LogUtils;
 import xyz.xcye.message.enums.MailTemplateEnum;
 import xyz.xcye.message.mail.SendMailRealize;
 import xyz.xcye.message.po.EmailLog;
@@ -30,9 +29,12 @@ import xyz.xcye.message.util.MailTemplateUtils;
 import xyz.xcye.message.util.ParseEmailTemplate;
 import xyz.xcye.message.vo.EmailVO;
 import xyz.xcye.message.vo.MailTemplateVO;
+import xyz.xcye.mybatis.entity.Condition;
 
+import javax.mail.MessagingException;
 import java.io.IOException;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
 
@@ -71,7 +73,11 @@ public class SendMailServiceImpl implements SendMailService {
         Condition<Long> condition = new Condition();
         condition.setOtherUid(storageSendMailInfo.getUserUid());
         condition.setKeyword(keyName);
-        MailTemplateVO mailTemplateVO = mailTemplateService.queryMailTemplateByUserUid(storageSendMailInfo.getUserUid());
+        List<MailTemplateVO> result = mailTemplateService.queryAllMailTemplate(condition).getResult();
+        MailTemplateVO mailTemplateVO = null;
+        if (result.size() > 0) {
+            mailTemplateVO = result.get(0);
+        }
 
         // 如果storageSendMailInfo中的receiverEmail为null或者没有长度的话，那么便更具userUid从数据库中查找
         // 如果数据库中都没有的话，那么抛出异常
@@ -108,7 +114,7 @@ public class SendMailServiceImpl implements SendMailService {
             sendMailRealize.sendSimpleMail(to, subject, content);
             sendFlag = true;
         } catch (MailException e) {
-            e.printStackTrace();
+            LogUtils.logExceptionInfo(e);
         }
 
         EmailLog emailLog = new EmailLog(null, subject, content, to, senderEmail,sendFlag,
@@ -154,7 +160,7 @@ public class SendMailServiceImpl implements SendMailService {
             sendMailRealize.sendHtmlMail(receiverEmail, subject, sendContent);
             sendFlag = true;
         } catch (MessagingException e) {
-            e.printStackTrace();
+            LogUtils.logExceptionInfo(e);
         }
 
         //如果运行到这里，说说邮件发送成功 向数据库中插入数据

@@ -3,7 +3,7 @@ package xyz.xcye.comment.service;
 import xyz.xcye.comment.dto.CommentDTO;
 import xyz.xcye.comment.po.Comment;
 import xyz.xcye.comment.vo.CommentVO;
-import xyz.xcye.core.dto.Condition;
+import xyz.xcye.mybatis.entity.Condition;
 
 import java.util.List;
 
@@ -41,7 +41,7 @@ public interface CommentService {
      * @param arrayCommentUid
      * @return
      */
-    CommentVO queryArticleComments(long[] arrayCommentUid) throws ReflectiveOperationException;
+    CommentVO queryArticleComments(long[] arrayCommentUid);
 
     /**
      * 根据传入的arrayCommentUid评论uid数据，获取对应的所有评论节点数据
@@ -50,5 +50,5 @@ public interface CommentService {
      */
     List<CommentDTO> queryAllComments(Condition<Long> condition);
 
-    CommentDTO queryByUid(long uid) throws ReflectiveOperationException;
+    CommentDTO queryByUid(long uid);
 }

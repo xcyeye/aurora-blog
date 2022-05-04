@@ -4,7 +4,7 @@
 
 <mapper namespace="xyz.xcye.admin.dao.UserDao">
 
-    <resultMap id="userResultMap" type="xyz.xcye.admin.po.UserDO">
+    <resultMap id="userResultMap" type="xyz.xcye.admin.po.User">
         <result column="is_verify_email" property="verifyEmail"/>
         <result column="update_time" property="updateTime"/>
         <result column="create_time" property="createTime"/>
@@ -19,10 +19,10 @@
          )
 
          values (
-                 #{userDO.uid},#{userDO.userSummary},#{userDO.nickname},#{userDO.gender},#{userDO.loginUid},
-                 #{userDO.siteUid},#{userDO.avatar},#{userDO.password},#{userDO.username},
-                 #{userDO.profession},#{userDO.verifyEmail},#{userDO.emailUid},#{userDO.userAccountUid},
-                 #{userDO.createTime},#{userDO.updateTime},#{userDO.delete}
+                 #{user.uid},#{user.userSummary},#{user.nickname},#{user.gender},#{user.loginUid},
+                 #{user.siteUid},#{user.avatar},#{user.password},#{user.username},
+                 #{user.profession},#{user.verifyEmail},#{user.emailUid},#{user.userAccountUid},
+                 #{user.createTime},#{user.updateTime},#{user.delete}
                 )
     </insert>
 
@@ -30,45 +30,45 @@
         update
             au_user
         <set>
-            <if test="userDO.userSummary != null">
-                user_summary=#{userDO.userSummary},
+            <if test="user.userSummary != null">
+                user_summary=#{user.userSummary},
             </if>
-            <if test="userDO.nickname != null">
-                nickname=#{userDO.nickname},
+            <if test="user.nickname != null">
+                nickname=#{user.nickname},
             </if>
-            <if test="userDO.gender != null">
-                gender=#{userDO.gender},
+            <if test="user.gender != null">
+                gender=#{user.gender},
             </if>
-            <if test="userDO.avatar != null">
-                avatar=#{userDO.avatar},
+            <if test="user.avatar != null">
+                avatar=#{user.avatar},
             </if>
-            <if test="userDO.username != null">
-                username=#{userDO.username},
+            <if test="user.username != null">
+                username=#{user.username},
             </if>
-            <if test="userDO.password != null">
-                password=#{userDO.password},
+            <if test="user.password != null">
+                password=#{user.password},
             </if>
-            <if test="userDO.profession != null">
-                profession=#{userDO.profession},
+            <if test="user.profession != null">
+                profession=#{user.profession},
             </if>
-            <if test="userDO.verifyEmail != null">
-                is_verify_email=#{userDO.verifyEmail},
+            <if test="user.verifyEmail != null">
+                is_verify_email=#{user.verifyEmail},
             </if>
-            <if test="userDO.updateTime != null">
-                update_time=#{userDO.updateTime},
+            <if test="user.updateTime != null">
+                update_time=#{user.updateTime},
             </if>
-            <if test="userDO.userAccountUid != null">
-                user_account_uid=#{userDO.userAccountUid}
+            <if test="user.userAccountUid != null">
+                user_account_uid=#{user.userAccountUid}
             </if>
-            <if test="userDO.emailUid != null">
-                email_uid=#{userDO.emailUid},
+            <if test="user.emailUid != null">
+                email_uid=#{user.emailUid},
             </if>
-            <if test="userDO.delete != null">
-                is_delete=#{userDO.delete}
+            <if test="user.delete != null">
+                is_delete=#{user.delete}
             </if>
         </set>
         where
-            uid=#{userDO.uid}
+            uid=#{user.uid}
     </update>
 
     <delete id="deleteByUid">

@@ -5,11 +5,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import org.springframework.validation.BindException;
 import xyz.xcye.aurora.properties.AuroraProperties;
-import xyz.xcye.mybatis.entity.Condition;
-import xyz.xcye.mybatis.entity.PageData;
 import xyz.xcye.core.util.BeanUtils;
 import xyz.xcye.core.util.DateUtils;
-import xyz.xcye.core.util.PageUtils;
 import xyz.xcye.core.util.ValidationUtils;
 import xyz.xcye.core.valid.Insert;
 import xyz.xcye.core.valid.Update;
@@ -17,6 +14,9 @@ import xyz.xcye.message.dao.MessageLogDao;
 import xyz.xcye.message.po.MessageLog;
 import xyz.xcye.message.service.MessageLogService;
 import xyz.xcye.message.vo.MessageLogVO;
+import xyz.xcye.mybatis.entity.Condition;
+import xyz.xcye.mybatis.entity.PageData;
+import xyz.xcye.mybatis.util.PageUtils;
 
 import javax.annotation.Resource;
 import java.util.Date;
@@ -59,13 +59,14 @@ public class MessageLogServiceImpl implements MessageLogService {
     @Override
     public PageData<MessageLogVO> queryAllMessageLog(Condition<Long> condition) {
         PageHelper.startPage(condition.getPageNum(),condition.getPageSize(),condition.getOrderBy());
-        return PageUtils.pageList(BeanUtils.copyList(messageLogDao.queryAllMessageLog(condition),MessageLogVO.class));
+        return PageUtils.pageList(condition, t -> BeanUtils.copyList(messageLogDao.queryAllMessageLog(condition),MessageLogVO.class));
     }
 
     @Override
     public MessageLogVO queryByUid(long uid) {
         Condition<Long> condition = new Condition<>();
         condition.setUid(uid);
+        condition.setStatus(null);
         return BeanUtils.getSingleObjFromList(messageLogDao.queryAllMessageLog(condition),MessageLogVO.class);
     }
 }

@@ -18,6 +18,8 @@ import static xyz.xcye.core.util.ConvertObjectUtils.jsonToString;
 
 public class StorageMailUtils {
 
+    public static final String  SPACE_CHARACTER = ":";
+
     /**
      * 生成一个用户发送html的json字符串
      * @param mailInfo 存储html发送信息的对象
@@ -66,7 +68,7 @@ public class StorageMailUtils {
                 Map<String, Object> tempMap = JSON.parseObject(replacedJson, Map.class);
                 // 迭代的方式，获取key
                 for (Map.Entry<String, Object> nextTemp : tempMap.entrySet()) {
-                    String tempKey = key + ":" + nextTemp.getKey();
+                    String tempKey = key + SPACE_CHARACTER + nextTemp.getKey();
                     replacedMap.put(tempKey, nextTemp.getValue() + "");
                 }
             }

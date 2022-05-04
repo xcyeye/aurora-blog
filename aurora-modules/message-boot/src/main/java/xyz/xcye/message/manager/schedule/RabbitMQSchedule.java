@@ -1,11 +1,7 @@
 package xyz.xcye.message.manager.schedule;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.amqp.rabbit.core.RabbitTemplate;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-import xyz.xcye.message.service.MessageLogService;
 
 /**
  * 定时向数据库中查询那些没有被消费的数据，重新发送
@@ -16,14 +12,14 @@ import xyz.xcye.message.service.MessageLogService;
 @Component
 public class RabbitMQSchedule {
 
-    @Autowired
+    /*@Autowired
     private MessageLogService messageLogService;
 
     @Value("${aurora.mq.max-retry-consume}")
     private int maxRetryConsumeMq;
 
     @Autowired
-    private RabbitTemplate rabbitTemplate;
+    private RabbitTemplate rabbitTemplate;*/
 
     /**
      * 重新消费数据库中消费失败的rabbitmq消息

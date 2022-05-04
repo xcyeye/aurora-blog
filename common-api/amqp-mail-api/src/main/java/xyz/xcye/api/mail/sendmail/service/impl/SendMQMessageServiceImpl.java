@@ -17,7 +17,7 @@ import xyz.xcye.core.enums.RegexEnum;
 import xyz.xcye.core.enums.ResponseStatusCodeEnum;
 import xyz.xcye.core.exception.AuroraException;
 import xyz.xcye.core.exception.email.EmailException;
-import xyz.xcye.core.exception.email.SendHtmlMailTypeNameEnum;
+import xyz.xcye.api.mail.sendmail.enums.SendHtmlMailTypeNameEnum;
 import xyz.xcye.core.util.ConvertObjectUtils;
 import xyz.xcye.core.util.ValidationUtils;
 import xyz.xcye.core.util.id.GenerateInfoUtils;
