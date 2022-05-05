@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import xyz.xcye.admin.service.redis.UserRedisService;
-import xyz.xcye.common.exception.user.UserException;
+import xyz.xcye.core.exception.user.UserException;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -28,7 +28,7 @@ public class VerifyAccountController {
     @GetMapping()
     public String emailVerifyAccount(@RequestParam("userUid") long userUid,
                                      @RequestParam("secretKey") String secretKey,
-                                     HttpServletRequest request) throws UserException, ReflectiveOperationException {
+                                     HttpServletRequest request) throws UserException {
         boolean verifyAccountInfo = userRedisService.updateUserVerifyAccountInfo(userUid, secretKey);
         request.setAttribute("username",userUid);
 

@@ -8,13 +8,12 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import xyz.xcye.admin.constant.RedisConstant;
+import xyz.xcye.admin.po.User;
 import xyz.xcye.admin.service.UserService;
 import xyz.xcye.admin.service.redis.UserRedisService;
-import xyz.xcye.aurora.util.AccountInfoUtils;
-import xyz.xcye.common.dto.EmailVerifyAccountDTO;
-import xyz.xcye.common.entity.result.ModifyResult;
-import xyz.xcye.common.entity.table.UserDO;
-import xyz.xcye.common.exception.user.UserException;
+import xyz.xcye.api.mail.sendmail.util.AccountInfoUtils;
+import xyz.xcye.core.back.common.dto.EmailVerifyAccountDTO;
+import xyz.xcye.core.exception.user.UserException;
 
 import java.time.Duration;
 
@@ -43,38 +42,36 @@ public class UserRedisServiceImpl implements UserRedisService {
     }
 
     @Override
-    public boolean updateUserVerifyAccountInfo(long userUid, String secretKey)
-            throws UserException, ReflectiveOperationException {
-
+    public boolean updateUserVerifyAccountInfo(long userUid, String secretKey) throws UserException {
         // 查询用户是否绑定
-        UserDO userDO = userService.queryByUidContainPassword(userUid);
-        if (userDO == null || !StringUtils.hasLength(secretKey) || userDO.getUid() == null) {
+        User user = userService.queryByUidContainPassword(userUid);
+        if (user == null || !StringUtils.hasLength(secretKey) || user.getUid() == null) {
             return false;
         }
         // 通过username+userUid+salt验证前后的秘钥是否一直
-        String md5Str = md5.digestHex(userDO.getUsername() + userDO.getUid() + AccountInfoUtils.SALT_SECRET_KEY);
+        String md5Str = md5.digestHex(user.getUsername() + user.getUid() + AccountInfoUtils.SALT_SECRET_KEY);
 
         if (!md5Str.equals(secretKey)) {
             // 密码错误
             return false;
         }
 
-        if (userDO.getVerifyEmail()) {
+        if (user.getVerifyEmail()) {
             return true;
         }
 
-        EmailVerifyAccountDTO storageVerifyAccountInfo = (EmailVerifyAccountDTO) redisTemplate.opsForValue().get(RedisConstant.STORAGE_VERIFY_ACCOUNT_PREFIX + userDO.getUid());
+        EmailVerifyAccountDTO storageVerifyAccountInfo = (EmailVerifyAccountDTO) redisTemplate.opsForValue().get(RedisConstant.STORAGE_VERIFY_ACCOUNT_PREFIX + user.getUid());
         if (storageVerifyAccountInfo != null) {
-            UserDO updateUserDO = UserDO.builder().verifyEmail(true).uid(storageVerifyAccountInfo.getUserUid()).build();
-            ModifyResult modifyResult = userService.updateUser(updateUserDO);
+            User updateUser = User.builder().verifyEmail(true).uid(storageVerifyAccountInfo.getUserUid()).build();
+            int updateUserNum = userService.updateUser(updateUser);
 
-            // 判断更新状态
-            if (modifyResult.getUid() != storageVerifyAccountInfo.getUserUid()) {
+            // 更新失败
+            if (updateUserNum != 1) {
                 return false;
             }
 
-            // 从redis中清楚
-            redisTemplate.delete(RedisConstant.STORAGE_VERIFY_ACCOUNT_PREFIX + userDO.getUid());
+            // 从redis中清除
+            redisTemplate.delete(RedisConstant.STORAGE_VERIFY_ACCOUNT_PREFIX + user.getUid());
             return true;
         }
 

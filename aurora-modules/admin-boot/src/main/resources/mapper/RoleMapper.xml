@@ -1,50 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xyz.xcye.admin.dao.RoleMapper">
 
-<mapper namespace="xyz.xcye.admin.dao.RoleDao">
-
-    <resultMap id="roleResultMap" type="xyz.xcye.admin.po.RoleDO">
-        <id column="uid" property="uid"/>
-        <result column="role" property="role"/>
-        <result column="create_time" property="createTime"/>
-        <result column="update_time" property="updateTime"/>
+    <resultMap id="BaseResultMap" type="xyz.xcye.admin.po.Role">
+            <id property="uid" column="uid" jdbcType="BIGINT"/>
+            <result property="name" column="name" jdbcType="VARCHAR"/>
+            <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+            <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+            <result property="status" column="status" jdbcType="TINYINT"/>
     </resultMap>
 
-    <insert id="insert" useGeneratedKeys="true" keyProperty="uid">
-        insert into au_role
-            (role,create_time,update_time)
-        values
-            (#{roleDO.role},#{roleDO.createTime},#{roleDO.updateTime})
-    </insert>
+    <sql id="Base_Column_List">
+        uid,name,create_time,
+        update_time,status
+    </sql>
 
-    <update id="update">
-        update
-            au_role
-        <set>
-            <if test="roleDO.role != null">
-                role=#{roleDO.role},
-            </if>
-            <if test="roleDO.updateTime != null">
-                update_time=#{roleDO.updateTime},
-            </if>
-        </set>
-        where
-            uid=#{roleDO.uid}
-    </update>
-
-    <delete id="deleteByUid">
-        delete from
-            au_role
-        where
-            uid=#{uid}
-    </delete>
-
-    <select id="queryAllByCondition" resultMap="roleResultMap">
+    <select id="selectAllRole" parameterType="java.lang.Long" resultMap="BaseResultMap">
         select
-            uid,role,create_time,update_time
-        from
-            au_role
+        <include refid="Base_Column_List" />
+        from au_role
         <where>
             <if test="condition.startTime != null and condition.endTime != null">
                 and create_time between #{condition.startTime} and #{condition.endTime}
@@ -53,16 +29,43 @@
                 and uid=#{condition.uid}
             </if>
             <if test="condition.keyword != null">
-                and `role`=#{condition.keyword}
+                and name=#{condition.keyword}
+            </if>
+            <if test="condition.status != null">
+                and status=#{condition.status}
             </if>
         </where>
     </select>
-    <update id="updateRoleByUidFalseAndRoleAndRoleAndRoleAfter">
-        update role_dO
-        set role = #{role,jdbcType=VARCHAR}
-        where uid = false
-          AND role = #{oldRole,jdbcType=VARCHAR}
-          AND role = #{oldRole,jdbcType=VARCHAR}
-          AND role > #{oldRole,jdbcType=VARCHAR}
+
+    <delete id="deleteByUid" parameterType="java.lang.Long">
+        delete from au_role
+        where  uid = #{uid,jdbcType=BIGINT} 
+    </delete>
+
+    <insert id="insertRole" keyColumn="uid" keyProperty="uid" parameterType="xyz.xcye.admin.po.Role" useGeneratedKeys="true">
+        insert into au_role
+        ( uid,name,create_time
+        ,update_time,status)
+        values (#{uid,jdbcType=BIGINT},#{name,jdbcType=VARCHAR},#{createTime,jdbcType=TIMESTAMP}
+        ,#{updateTime,jdbcType=TIMESTAMP},#{status,jdbcType=TINYINT})
+    </insert>
+
+    <update id="updateRole" parameterType="xyz.xcye.admin.po.Role">
+        update au_role
+        <set>
+                <if test="name != null">
+                    name = #{name,jdbcType=VARCHAR},
+                </if>
+                <if test="createTime != null">
+                    create_time = #{createTime,jdbcType=TIMESTAMP},
+                </if>
+                <if test="updateTime != null">
+                    update_time = #{updateTime,jdbcType=TIMESTAMP},
+                </if>
+                <if test="status != null">
+                    status = #{status,jdbcType=TINYINT},
+                </if>
+        </set>
+        where   uid = #{uid,jdbcType=BIGINT} 
     </update>
 </mapper>

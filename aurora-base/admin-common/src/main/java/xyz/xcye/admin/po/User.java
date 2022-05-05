@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.Range;
 import xyz.xcye.core.constant.FieldLengthConstant;
 import xyz.xcye.core.valid.Delete;
 import xyz.xcye.core.valid.Insert;
@@ -12,7 +13,6 @@ import xyz.xcye.core.valid.Update;
 import xyz.xcye.core.valid.validator.ValidateString;
 
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import java.io.Serializable;
 
 /**
@@ -39,7 +39,20 @@ public class User implements Serializable {
     @Length(max = FieldLengthConstant.SUMMARY,message = "用户-简介不能超过{max}")
     private String userSummary;
 
+    /**
+     * 是否删除
+     */
     private Boolean delete;
+
+    /**
+     * 账户是否被锁住
+     */
+    private Boolean accountLock;
+
+    /**
+     * 是否验证了邮箱
+     */
+    private Boolean verifyEmail;
 
     /**
      * 用户昵称
@@ -50,7 +63,7 @@ public class User implements Serializable {
     /**
      * 用户性别
      */
-    @Size(min = 0,max = 1, message = "用户的性别只能在{min}和{max}之间取值")
+    @Range(min = 0,max = 1, message = "用户的性别只能在{min}和{max}之间取值")
     private Integer gender;
 
     /**
@@ -83,11 +96,6 @@ public class User implements Serializable {
     private String profession;
 
     /**
-     * 用户的邮箱是否验证过 true：已验证 false：未验证
-     */
-    private Boolean verifyEmail;
-
-    /**
      * 该用户对应的邮箱设置uid
      */
     private Long emailUid;
@@ -96,20 +104,6 @@ public class User implements Serializable {
      * 用户登录记录的uid
      */
     private Long loginUid;
-
-    /**
-     * 角色 角色的命名必须遵循spring security规范，以ROLE_XXX，一个用户只能有一个角色
-     */
-    //@NotNull
-    //@NotEmpty
-    //@Pattern(regexp = "^(ROLE_)[a-zA-Z]{1,10}",message = "角色命名必须ROLE_XXX，并且总长度不能大于15")
-    //private String role;
-
-    /**
-     * 用户权限集合，可以有多个，使用,分割开
-     */
-    //@Length(max = FieldLengthConstant.USER_PERMISSION)
-    //private String permission;
 
     /**
      * 创建时间

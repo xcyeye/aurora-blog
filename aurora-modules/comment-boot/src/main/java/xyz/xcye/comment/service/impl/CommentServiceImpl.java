@@ -297,10 +297,10 @@ public class CommentServiceImpl implements CommentService {
         return mailInfo;
     }
 
-    private List<Map<String,Object>> createReceiveList(Comment comment) {
-        List<Map<String,Object>> list = new ArrayList<>();
-        Map<String,Object> map = new HashMap<>();
-        map.put(SendHtmlMailTypeNameEnum.RECEIVE_COMMENT.getKeyName(),comment);
+    private List<Map<SendHtmlMailTypeNameEnum,Object>> createReceiveList(Comment comment) {
+        List<Map<SendHtmlMailTypeNameEnum,Object>> list = new ArrayList<>();
+        Map<SendHtmlMailTypeNameEnum,Object> map = new HashMap<>();
+        map.put(SendHtmlMailTypeNameEnum.RECEIVE_COMMENT,comment);
         list.add(map);
         return list;
     }

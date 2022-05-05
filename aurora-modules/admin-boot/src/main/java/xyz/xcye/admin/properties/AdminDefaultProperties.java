@@ -9,8 +9,8 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  * @date Created in 2022/4/30 16:26
  */
 
-@Data
 @ConfigurationProperties(prefix = AdminDefaultProperties.ADMIN_DEFAULT_PREFIX)
+@Data
 public class AdminDefaultProperties {
     public static final String ADMIN_DEFAULT_PREFIX = "aurora.default";
 

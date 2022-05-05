@@ -4,6 +4,7 @@ import lombok.Data;
 
 @Data
 public class RoleVO {
+
     /**
      * 唯一uid，不需要雪花生成
      */

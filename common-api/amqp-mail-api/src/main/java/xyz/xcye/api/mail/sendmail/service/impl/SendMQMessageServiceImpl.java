@@ -68,10 +68,10 @@ public class SendMQMessageServiceImpl implements SendMQMessageService {
         mailInfo.setReceiverEmail(repliedCommentInfo.getEmail());
         mailInfo.setSendType(SendHtmlMailTypeNameEnum.REPLY_COMMENT);
 
-        List<Map<String,Object>> list = new ArrayList<>();
-        Map<String, Object> map = new HashMap<>();
-        map.put(SendHtmlMailTypeNameEnum.RECEIVE_COMMENT.getKeyName(),replyingCommentInfo);
-        map.put(SendHtmlMailTypeNameEnum.REPLY_COMMENT.getKeyName(), repliedCommentInfo);
+        List<Map<SendHtmlMailTypeNameEnum,Object>> list = new ArrayList<>();
+        Map<SendHtmlMailTypeNameEnum, Object> map = new HashMap<>();
+        map.put(SendHtmlMailTypeNameEnum.RECEIVE_COMMENT,replyingCommentInfo);
+        map.put(SendHtmlMailTypeNameEnum.REPLY_COMMENT, repliedCommentInfo);
         list.add(map);
 
         // 将组装的map集合转换成json字符串，发送到交换机
@@ -88,7 +88,7 @@ public class SendMQMessageServiceImpl implements SendMQMessageService {
 
     @Override
     public void sendCommonMail(StorageSendMailInfo sendMailInfo, String exchangeName, String exchangeType,
-                               String routingKey, List<Map<String,Object>> replacedObjList)
+                               String routingKey, List<Map<SendHtmlMailTypeNameEnum,Object>> replacedObjList)
             throws AuroraException, BindException {
         if (isLegitimateReceiverEmail(sendMailInfo)) {
             throw new EmailException(ResponseStatusCodeEnum.EXCEPTION_EMAIL_EXISTS);

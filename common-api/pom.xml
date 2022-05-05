@@ -16,6 +16,7 @@
     <modules>
         <module>amqp-mail-api</module>
         <module>mail-api</module>
+        <module>admin-api</module>
     </modules>
 
     <properties>

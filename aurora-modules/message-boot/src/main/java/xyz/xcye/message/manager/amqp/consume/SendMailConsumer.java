@@ -218,9 +218,9 @@ public class SendMailConsumer {
         receiveCommentMailInfo.setSendType(SendHtmlMailTypeNameEnum.RECEIVE_COMMENT);
         receiveCommentMailInfo.setCorrelationDataId(storageSendMailInfo.getCorrelationDataId());
 
-        List<Map<String,Object>> list = new ArrayList<>();
-        Map<String,Object> map = new HashMap<>();
-        map.put(SendHtmlMailTypeNameEnum.RECEIVE_COMMENT.getKeyName(), comment);
+        List<Map<SendHtmlMailTypeNameEnum,Object>> list = new ArrayList<>();
+        Map<SendHtmlMailTypeNameEnum,Object> map = new HashMap<>();
+        map.put(SendHtmlMailTypeNameEnum.RECEIVE_COMMENT, comment);
         list.add(map);
 
         receiveCommentMailInfo = StorageMailUtils.generateMailInfo(receiveCommentMailInfo, list);

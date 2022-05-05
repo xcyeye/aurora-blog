@@ -75,6 +75,9 @@ public enum ResponseStatusCodeEnum {
     PERMISSION_USER_IS_LOCKED(44710,"用户已被锁住"),
     PERMISSION_USER_FAIL_ADD(44800,"添加用户失败"),
     PERMISSION_USER_FAIL_DELETE(44900,"删除用户失败"),
+    PERMISSION_RESOURCE_NOT_RIGHT(44900,"资源路径不正确"),
+    PERMISSION_ROLE_NOT_EXISTS(44900,"角色不存在"),
+    PERMISSION_ROLE_HAD_DISABLED(44900,"角色被禁用"),
 
 
     //----------------------未知错误相关的响应码

@@ -18,6 +18,16 @@ public class UserVO {
     private String userSummary;
 
     /**
+     * 账户是否被锁住
+     */
+    private Boolean accountLock;
+
+    /**
+     * 是否验证了邮箱
+     */
+    private Boolean verifyEmail;
+
+    /**
      * 用户昵称
      */
     private String nickname;
@@ -26,11 +36,6 @@ public class UserVO {
      * 用户性别
      */
     private String gender;
-
-    /**
-     * 用户多少天免登录
-     */
-    private Integer rememberMeDay;
 
     /**
      * 该用户对应的网站设置的uid
@@ -58,24 +63,9 @@ public class UserVO {
     private String profession;
 
     /**
-     * 用户的邮箱是否验证过 true：已验证 false：未验证
-     */
-    private Boolean verifyEmail;
-
-    /**
      * 该用户对应的邮箱设置uid
      */
     private Long emailUid;
-
-    /**
-     * 角色 角色的命名必须遵循spring security规范，以ROLE_XXX，一个用户只能有一个角色
-     */
-    private String role;
-
-    /**
-     * 用户权限集合，可以有多个，使用,分割开
-     */
-    private String permission;
 
     /**
      * 创建时间
@@ -86,8 +76,4 @@ public class UserVO {
      * 更新时间
      */
     private String updateTime;
-
-    /**
-     *
-     */
 }

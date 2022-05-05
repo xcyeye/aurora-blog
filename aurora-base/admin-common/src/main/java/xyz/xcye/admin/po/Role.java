@@ -8,25 +8,26 @@ import xyz.xcye.core.valid.Update;
 import xyz.xcye.core.valid.validator.ValidateString;
 
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 
 /**
- * @author qsyyke
+ * 角色信息
+ * @TableName au_role
  */
-
-@Builder
 @Data
-public class RoleDO {
+@Builder
+public class Role implements Serializable {
     /**
-     * 唯一uid，不需要雪花生成
+     * 唯一uid，自增
      */
     @NotNull(groups = {Delete.class, Update.class})
-    private Integer uid;
+    private Long uid;
 
     /**
-     * 角色或者权限
+     * 角色的名称，不用添加ROLE_
      */
-    @ValidateString(value = "权限或者角色",max = FieldLengthConstant.USER_PERMISSION)
-    private String role;
+    @ValidateString(value = "角色的名称", max = FieldLengthConstant.USER_ROLE)
+    private String name;
 
     /**
      * 创建时间
@@ -37,4 +38,11 @@ public class RoleDO {
      * 最后更新时间
      */
     private String updateTime;
+
+    /**
+     * 用户的状态 1：已禁用 0：未禁用
+     */
+    private Boolean status;
+
+    private static final long serialVersionUID = 1L;
 }

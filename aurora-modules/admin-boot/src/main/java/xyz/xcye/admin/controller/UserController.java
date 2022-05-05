@@ -2,31 +2,28 @@ package xyz.xcye.admin.controller;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindException;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import xyz.xcye.admin.po.User;
 import xyz.xcye.admin.service.UserService;
-import xyz.xcye.common.annotaion.ResponseResult;
-import xyz.xcye.common.dto.ConditionDTO;
-import xyz.xcye.common.entity.result.ModifyResult;
-import xyz.xcye.common.entity.table.UserAccountDO;
-import xyz.xcye.common.entity.table.UserDO;
-import xyz.xcye.common.exception.email.EmailException;
-import xyz.xcye.common.exception.user.UserException;
+import xyz.xcye.admin.vo.UserVO;
+import xyz.xcye.core.annotaion.controller.ModifyOperation;
+import xyz.xcye.core.annotaion.controller.SelectOperation;
+import xyz.xcye.core.exception.email.EmailException;
+import xyz.xcye.core.exception.user.UserException;
 import xyz.xcye.core.valid.Insert;
 import xyz.xcye.core.valid.Update;
-import xyz.xcye.common.vo.UserVO;
+import xyz.xcye.mybatis.entity.Condition;
+import xyz.xcye.mybatis.entity.PageData;
 
 import javax.validation.groups.Default;
-import java.util.List;
 
 /**
  * @author qsyyke
  */
 
-@Slf4j
 @RequestMapping("/admin/user")
 @RestController
 @Api(tags = "用户相关写操作")
@@ -36,47 +33,53 @@ public class UserController {
     private UserService userService;
 
     @PostMapping("")
-    @ResponseResult
+    @ModifyOperation
     @ApiOperation(value = "添加新用户")
-    public ModifyResult insertUser(@Validated({Insert.class, Default.class})UserDO userDO,
-                                   @Validated({Insert.class, Default.class}) UserAccountDO userAccountDO)
-            throws ReflectiveOperationException, UserException {
-        return userService.insertUser(userDO,userAccountDO);
+    public int insertUser(@Validated({Insert.class, Default.class}) User user)
+            throws UserException {
+        return userService.insertUser(user);
     }
 
     @PutMapping("")
-    @ResponseResult
+    @ModifyOperation
     @ApiOperation(value = "修改用户信息")
-    public ModifyResult updateUser(@Validated({Update.class, Default.class})UserDO userDO) throws UserException {
-        return userService.updateUser(userDO);
+    public int updateUser(@Validated({Update.class, Default.class})User user) throws UserException {
+        return userService.updateUser(user);
     }
 
     @DeleteMapping("/{uid}")
-    @ResponseResult
-    @ApiOperation(value = "删除用户信息")
-    public ModifyResult deleteUserByUid(@PathVariable("uid") long uid) {
-        return userService.deleteByUid(uid);
+    @ModifyOperation
+    @ApiOperation(value = "逻辑删除用户信息")
+    public int logicDeleteUserByUid(@PathVariable("uid") long uid) {
+        return userService.logicDeleteByUid(uid);
+    }
+
+    @DeleteMapping("/delete/{uid}")
+    @ModifyOperation
+    @ApiOperation(value = "真正的从数据库中删除用户信息")
+    public int realDeleteUserByUid(@PathVariable("uid") long uid) {
+        return userService.realDeleteByUid(uid);
     }
 
     @GetMapping("/{uid}")
-    @ResponseResult
+    @SelectOperation
     @ApiOperation(value = "通过uid查询用户信息")
-    public UserVO queryUserByUid(@PathVariable("uid") long uid) throws ReflectiveOperationException {
+    public UserVO queryUserByUid(@PathVariable("uid") long uid) {
         return userService.queryByUid(uid);
     }
 
     @GetMapping("")
-    @ResponseResult
+    @SelectOperation
     @ApiOperation(value = "查询所有满足要求的用户信息")
-    public List<UserVO> insertUser(ConditionDTO<Long> condition) throws ReflectiveOperationException {
+    public PageData<UserVO> insertUser(Condition<Long> condition) {
         return userService.queryAllByCondition(condition);
     }
 
     @ApiOperation("绑定邮箱")
-    @ResponseResult
+    @ModifyOperation
     @PutMapping("/bindingEmail/{emailUid}")
-    public ModifyResult bindingEmail(@PathVariable("emailUid") long emailUid)
-            throws BindException, EmailException, ReflectiveOperationException {
+    public int bindingEmail(@PathVariable("emailUid") long emailUid)
+            throws BindException, EmailException {
         return userService.bindingEmail(emailUid);
     }
 }

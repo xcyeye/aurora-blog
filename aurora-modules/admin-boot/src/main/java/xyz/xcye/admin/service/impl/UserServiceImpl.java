@@ -1,6 +1,7 @@
 package xyz.xcye.admin.service.impl;
 
 import com.github.pagehelper.PageHelper;
+import io.seata.spring.annotation.GlobalTransactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -8,20 +9,20 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.BindException;
+import xyz.xcye.admin.api.feign.EmailFeignService;
 import xyz.xcye.admin.dao.UserDao;
-import xyz.xcye.admin.feign.EmailFeignService;
-import xyz.xcye.admin.manager.mq.send.VerifyAccountSendService;
-import xyz.xcye.admin.po.RoleDO;
 import xyz.xcye.admin.po.User;
-import xyz.xcye.admin.po.UserAccount;
 import xyz.xcye.admin.properties.AdminDefaultProperties;
-import xyz.xcye.admin.service.UserAccountService;
 import xyz.xcye.admin.service.UserService;
 import xyz.xcye.admin.vo.UserVO;
+import xyz.xcye.api.mail.sendmail.entity.StorageSendMailInfo;
+import xyz.xcye.api.mail.sendmail.enums.SendHtmlMailTypeNameEnum;
+import xyz.xcye.api.mail.sendmail.service.SendMQMessageService;
 import xyz.xcye.api.mail.sendmail.util.AccountInfoUtils;
 import xyz.xcye.aurora.properties.AuroraProperties;
+import xyz.xcye.core.util.lambda.AssertUtils;
 import xyz.xcye.core.back.common.dto.EmailVerifyAccountDTO;
-import xyz.xcye.core.entity.ModifyResult;
+import xyz.xcye.core.constant.amqp.RabbitMQNameConstant;
 import xyz.xcye.core.entity.R;
 import xyz.xcye.core.enums.ResponseStatusCodeEnum;
 import xyz.xcye.core.exception.email.EmailException;
@@ -32,10 +33,11 @@ import xyz.xcye.core.util.DateUtils;
 import xyz.xcye.core.util.JSONUtils;
 import xyz.xcye.core.util.id.GenerateInfoUtils;
 import xyz.xcye.message.vo.EmailVO;
+import xyz.xcye.mybatis.entity.Condition;
+import xyz.xcye.mybatis.entity.PageData;
+import xyz.xcye.mybatis.util.PageUtils;
 
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * @author qsyyke
@@ -50,10 +52,6 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private PasswordEncoder passwordEncoder;
     @Autowired
-    private UserAccountService userAccountService;
-    @Autowired
-    private VerifyAccountSendService verifyAccountSendService;
-    @Autowired
     private EmailFeignService emailFeignService;
     @Autowired
     private AuroraProperties auroraProperties;
@@ -61,154 +59,102 @@ public class UserServiceImpl implements UserService {
     private AuroraProperties.AuroraAccountProperties auroraAccountProperties;
     @Autowired
     private AdminDefaultProperties adminDefaultProperties;
+    @Autowired
+    private SendMQMessageService sendMQMessageService;
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public int insertUser(User user, UserAccount userAccount)
+    public int insertUser(User user)
             throws UserException {
         // 判断用户名是否存在
-        if (existsUsername(user.getUsername())) {
-            throw new UserException(ResponseStatusCodeEnum.PERMISSION_USER_EXIST);
-        }
-
+        AssertUtils.stateThrow(existsUsername(user.getUsername()),
+                () -> new UserException(ResponseStatusCodeEnum.PERMISSION_USER_EXIST));
         // 设置默认属性
         setUserProperties(user);
-        setUserAccountProperties(user, userAccount);
-
-        // 插入
-        int insertUserNum = userDao.insertUser(user);
-        userAccountService.insert(userAccount);
-
-        // 保存临时的用户名
-        String usernameTemp = userDO.getUsername();
-        if (modifyResult.isSuccess()) {
-            // 因为userAccountDO的uid只有插入成功之后，才知道，所以需要调用修改方法进行修改
-            userDO = UserDO.builder().uid(userDO.getUid()).userAccountUid(modifyResult.getUid()).build();
-        }else {
-            throw new UserException(ResponseStatusCodeEnum.PERMISSION_USER_FAIL_ADD);
-        }
-
-        if (!updateUser(userDO).isSuccess()) {
-            throw new UserException(ResponseStatusCodeEnum.PERMISSION_USER_FAIL_ADD);
-        }
-
-        return ModifyResult.operateResult(insertUserNum,"插入用户" + usernameTemp,
-                ResponseStatusCodeEnum.SUCCESS.getCode(),userDO.getUid());
+       return userDao.insertUser(user);
     }
 
     @Transactional
     @Override
-    public ModifyResult updateUser(UserDO userDO) throws UserException {
-        if (StringUtils.hasLength(userDO.getPassword())) {
+    public int updateUser(User user) throws UserException {
+        Objects.requireNonNull(user, "用户信息不能为null");
+        if (StringUtils.hasLength(user.getPassword())) {
             // 密码应该单独修改
-            userDO.setPassword(null);
+            user.setPassword(null);
         }
 
-        if (StringUtils.hasLength(userDO.getUsername()) && existsUsername(userDO.getUsername())) {
+        if (StringUtils.hasLength(user.getUsername()) && existsUsername(user.getUsername())) {
             throw new UserException(ResponseStatusCodeEnum.PERMISSION_USER_EXIST);
         }
-
-        userDO.setUpdateTime(DateUtils.format(new Date()));
-
-        int updateUserNum = userDao.updateUser(userDO);
-        return ModifyResult.operateResult(updateUserNum,"更新" + userDO.getUid() + "用户信息",
-                ResponseStatusCodeEnum.SUCCESS.getCode(),userDO.getUid());
+        user.setUpdateTime(DateUtils.format(new Date()));
+        return userDao.updateUser(user);
     }
 
     @Transactional
     @Override
-    public ModifyResult deleteByUid(long uid) {
-        int deleteUserNum = userDao.deleteByUid(uid);
-        return ModifyResult.operateResult("删除" + uid + "用户",deleteUserNum,ResponseStatusCodeEnum.SUCCESS.getCode(), uid);
+    public int realDeleteByUid(long uid) {
+        return userDao.deleteByUid(uid);
     }
 
     @Override
-    public List<UserVO> queryAllByCondition(ConditionDTO<Long> condition) throws ReflectiveOperationException {
-        condition.init(condition);
+    public int logicDeleteByUid(long uid) {
+        User user = User.builder().delete(true).uid(uid).build();
+        return updateUser(user);
+    }
+
+    @Override
+    public PageData<UserVO> queryAllByCondition(Condition<Long> condition) {
         PageHelper.startPage(condition.getPageNum(),condition.getPageSize(),condition.getOrderBy());
-        return BeanUtils.copyList(userDao.queryAllByCondition(condition), UserVO.class);
+        return PageUtils.pageList(condition, t -> BeanUtils.copyList(userDao.queryAllByCondition(condition), UserVO.class));
     }
 
     @Override
-    public UserVO queryByUid(long uid) throws ReflectiveOperationException {
-        return BeanUtils.getSingleObjFromList(userDao.queryAllByCondition(ConditionDTO.instant(uid, Long.class, true)), UserVO.class);
+    public UserVO queryByUid(long uid) {
+        return BeanUtils.getSingleObjFromList(userDao.queryAllByCondition(Condition.instant(uid, Long.class, true)), UserVO.class);
     }
 
     @Override
-    public UserDO queryByUsernameContainPassword(String username) throws ReflectiveOperationException {
-        return BeanUtils.getSingleObjFromList(userDao.queryAllByCondition(ConditionDTO.instant(username, Long.class)), UserDO.class);
+    public User queryByUsernameContainPassword(String username) {
+        return BeanUtils.getSingleObjFromList(userDao.queryAllByCondition(Condition.instant(username, Long.class)), User.class);
     }
 
     @Override
-    public UserDO queryByUidContainPassword(long uid) throws ReflectiveOperationException {
-        return BeanUtils.getSingleObjFromList(userDao.queryAllByCondition(ConditionDTO.instant(uid, Long.class, true)), UserDO.class);
+    public User queryByUidContainPassword(long uid) {
+        return BeanUtils.getSingleObjFromList(userDao.queryAllByCondition(Condition.instant(uid, Long.class, true)), User.class);
     }
 
     @Override
-    public UserVO queryByUsername(String username) throws ReflectiveOperationException {
-        return BeanUtils.getSingleObjFromList(userDao.queryAllByCondition(ConditionDTO.instant(username,Long.class)), UserVO.class);
+    public UserVO queryByUsername(String username) {
+        return BeanUtils.getSingleObjFromList(userDao.queryAllByCondition(Condition.instant(username,Long.class)), UserVO.class);
     }
 
-    @Transactional(rollbackFor = Exception.class)
+    @GlobalTransactional(rollbackFor = Exception.class)
     @Override
-    public ModifyResult bindingEmail(long emailUid) throws BindException, EmailException, ReflectiveOperationException {
+    public int bindingEmail(long emailUid) throws BindException, EmailException {
         if (emailUid == 0) {
-            return ModifyResult.operateResult("此邮件的uid不能为0或者null", 0,
-                    ResponseStatusCodeEnum.SUCCESS.getCode(), 0);
+            return 0;
         }
 
         // 远程调用aurora-message服务，判断此email的uid是否存在
         R r = emailFeignService.queryByUid(emailUid);
         EmailVO queriedEmailInfo = JSONUtils.parseObjFromResult(ConvertObjectUtils.jsonToString(r), "data", EmailVO.class);
-        Optional.ofNullable(queriedEmailInfo).orElseThrow(() -> {
-            throw new EmailException(ResponseStatusCodeEnum.EXCEPTION_EMAIL_NOT_EXISTS);
-        });
 
-        UserDO userDO = UserDO.builder().emailUid(queriedEmailInfo.getUid()).uid(queriedEmailInfo.getUserUid())
+        AssertUtils.ifNullThrow(queriedEmailInfo,
+                () -> new EmailException(ResponseStatusCodeEnum.EXCEPTION_EMAIL_NOT_EXISTS));
+        User user = User.builder().emailUid(queriedEmailInfo.getUid()).uid(queriedEmailInfo.getUserUid())
                 .updateTime(DateUtils.format(new Date())).build();
         // 判断该用户是否绑定
-        UserVO userVO = queryByUid(userDO.getUid());
-        if (userVO.getVerifyEmail()) {
-            // 已经验证
-            throw new EmailException(ResponseStatusCodeEnum.EXCEPTION_EMAIL_HAD_BINDING);
-        }
+        UserVO userVO = queryByUid(user.getUid());
 
-        // 如果email_uid已经有了，则直接发送，不用修改
-        if (Optional.ofNullable(userVO.getEmailUid()).isPresent()) {
-            sendVerifyEmail(userVO,queriedEmailInfo);
-        }
+        AssertUtils.stateThrow(userVO.getVerifyEmail(), () ->
+                new EmailException(ResponseStatusCodeEnum.EXCEPTION_EMAIL_HAD_BINDING));
 
-        int updateUserNum = userDao.updateUser(userDO);
+        // 运行到这里，用户没有绑定邮箱，则直接修改，发送，尽管记录里面存在emailUid
+        int updateUserNum = userDao.updateUser(user);
         if (updateUserNum == 1) {
             sendVerifyEmail(userVO, queriedEmailInfo);
         }
-
-        // 绑定成功 发送验证邮箱
-        return ModifyResult.operateResult("绑定链接已发送至您的邮箱",updateUserNum,
-                ResponseStatusCodeEnum.SUCCESS.getCode(), queriedEmailInfo.getUserUid());
-    }
-
-    /**
-     * 获取有效的权限信息
-     * @param permission
-     * @return
-     */
-    private String getEffectivePermission(String permission) throws ReflectiveOperationException {
-        if (!StringUtils.hasLength(permission)) {
-            return null;
-        }
-
-        String[] permissionArr = permission.split(",");
-        permission = "";
-        for (String splitPermission : permissionArr) {
-            if (StringUtils.hasLength(splitPermission)) {
-                if (existsRole(splitPermission)) {
-                    permission = permission + splitPermission + ",";
-                }
-            }
-        }
-        permission = permission.substring(0,permission.length() - 1);
-        return permission;
+        return updateUserNum;
     }
 
     /**
@@ -217,60 +163,27 @@ public class UserServiceImpl implements UserService {
      * @return
      */
     private boolean existsUsername(String username) {
-        UserDO userDO = UserDO.builder()
-                .username(username).build();
-        return !userDao.queryAllByCondition(ConditionDTO.instant(username,Long.class)).isEmpty();
+        return !userDao.queryAllByCondition(Condition.instant(username,Long.class)).isEmpty();
     }
 
-    /**
-     * 判断role是否存在于数据库中
-     * @param role
-     * @return
-     */
-    private boolean existsRole(String role) throws ReflectiveOperationException {
-        if (!StringUtils.hasLength(role)) {
-            return false;
-        }
-        ConditionDTO<Integer> condition = ConditionDTO.instant(role, Integer.class);
-        if (roleService.queryAllByCondition(condition).isEmpty()) {
-            // 不存在 新增
-            roleService.insert(RoleDO.builder().role(role).build());
-        }
-        return true;
-    }
+    private void setUserProperties(User user) {
+        user.setDelete(false);
+        user.setVerifyEmail(false);
+        user.setAccountLock(false);
+        user.setCreateTime(DateUtils.format(new Date()));
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setUid(GenerateInfoUtils.generateUid(auroraProperties.getSnowFlakeWorkerId(),auroraProperties.getSnowFlakeDatacenterId()));
 
-    private void setUserProperties(UserDO userDO) {
-        userDO.setDelete(false);
-        userDO.setCreateTime(DateUtils.format(new Date()));
-        userDO.setVerifyEmail(false);
-        userDO.setPassword(passwordEncoder.encode(userDO.getPassword()));
-        userDO.setUid(GenerateInfoUtils.generateUid(auroraProperties.getSnowFlakeWorkerId(),auroraProperties.getSnowFlakeDatacenterId()));
-
-        if (!StringUtils.hasLength(userDO.getNickname())) {
-            userDO.setNickname(adminDefaultProperties.getNickname());
+        if (!StringUtils.hasLength(user.getNickname())) {
+            user.setNickname(adminDefaultProperties.getNickname());
         }
 
-        if (!StringUtils.hasLength(userDO.getAvatar())) {
-            userDO.setAvatar(adminDefaultProperties.getAvatar());
+        if (!StringUtils.hasLength(user.getAvatar())) {
+            user.setAvatar(adminDefaultProperties.getAvatar());
         }
 
         // 如果没有性别的话，那么默认是秘密(0)
-        userDO.setGender(Optional.ofNullable(userDO.getGender()).orElse(0));
-    }
-
-    private void setUserAccountProperties(UserDO userDO, UserAccount userAccount) throws ReflectiveOperationException {
-        userAccount.setCreateTime(DateUtils.format(new Date()));
-        userAccount.setDelete(false);
-        userAccount.setAccountExpired(false);
-        userAccount.setAccountLocked(false);
-        userAccount.setUid(GenerateInfoUtils.generateUid(auroraProperties.getSnowFlakeWorkerId(),auroraProperties.getSnowFlakeDatacenterId()));
-        userAccount.setUserUid(userDO.getUid());
-
-        // 判断用户角色是否存在且正确
-        userAccount.setPermission(getEffectivePermission(userAccount.getPermission()));
-        if (!existsRole(userAccount.getRole())) {
-            userAccount.setRole(adminDefaultProperties.getRole());
-        }
+        user.setGender(Optional.ofNullable(user.getGender()).orElse(0));
     }
 
     private void sendVerifyEmail(UserVO userVO, EmailVO emailVO) throws BindException {
@@ -280,6 +193,20 @@ public class UserServiceImpl implements UserService {
                 .verifyAccountUrl(AccountInfoUtils.generateVerifyAccountPath(userVO.getUid(),
                         auroraAccountProperties.getMailVerifyAccountPrefixPath(), userVO.getUsername()))
                 .receiverEmail(emailVO.getEmail()).subject(null).build();
-        verifyAccountSendService.sendVerifyAccount(verifyAccountInfo);
+
+        List<Map<SendHtmlMailTypeNameEnum, Object>> list = new ArrayList<>();
+        Map<SendHtmlMailTypeNameEnum, Object> map = new HashMap<>();
+        map.put(SendHtmlMailTypeNameEnum.VERIFY_ACCOUNT, verifyAccountInfo);
+        list.add(map);
+
+        StorageSendMailInfo mailInfo = new StorageSendMailInfo();
+        mailInfo.setReceiverEmail(emailVO.getEmail());
+        mailInfo.setSendType(SendHtmlMailTypeNameEnum.VERIFY_ACCOUNT);
+        mailInfo.setSubject(userVO.getUsername() + " 请验证你的账户信息");
+        mailInfo.setUserUid(userVO.getUid());
+        mailInfo.setCorrelationDataId(GenerateInfoUtils.generateUid(auroraProperties.getSnowFlakeWorkerId(),
+                auroraProperties.getSnowFlakeDatacenterId()) + "");
+        sendMQMessageService.sendCommonMail(mailInfo, RabbitMQNameConstant.AURORA_SEND_MAIL_EXCHANGE,
+                "topic", RabbitMQNameConstant.SEND_HTML_MAIL_ROUTING_KEY, list);
     }
 }

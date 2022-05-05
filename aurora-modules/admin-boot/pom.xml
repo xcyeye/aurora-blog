@@ -39,11 +39,6 @@
 
         <dependency>
             <groupId>xyz.xcye.starter</groupId>
-            <artifactId>aurora-feign-starter</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>xyz.xcye.starter</groupId>
             <artifactId>aurora-seata-starter</artifactId>
         </dependency>
 
@@ -71,6 +66,11 @@
         <dependency>
             <groupId>xyz.xcye.base</groupId>
             <artifactId>admin-common</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>xyz.xcye.api</groupId>
+            <artifactId>admin-api</artifactId>
         </dependency>
     </dependencies>
 

@@ -47,6 +47,9 @@ public class FieldLengthConstant {
     /** 用户权限长度 **/
     public static final int USER_PERMISSION = 50;
 
+    /** 在au_permission表中，路径和方法的组成长度，如GET:https://aurora.xcye.xyz **/
+    public static final int METHOD_AND_PATH = 50;
+
     public static final int USER_ROLE = 15;
 
 

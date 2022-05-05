@@ -3,6 +3,7 @@ package xyz.xcye.api.mail.sendmail.util;
 import com.alibaba.fastjson.JSON;
 import org.springframework.beans.BeanUtils;
 import xyz.xcye.api.mail.sendmail.entity.StorageSendMailInfo;
+import xyz.xcye.api.mail.sendmail.enums.SendHtmlMailTypeNameEnum;
 
 import java.util.HashMap;
 import java.util.List;
@@ -27,7 +28,7 @@ public class StorageMailUtils {
      * 在存储他们的key值(key就是属性名)的时候，会在obj1的所有key后面添加上存放此对象的map集合的键，obj2也是一样的道理
      * @return
      */
-    public static String generateMailJson(StorageSendMailInfo mailInfo, List<Map<String,Object>> replacedObjList) {
+    public static String generateMailJson(StorageSendMailInfo mailInfo, List<Map<SendHtmlMailTypeNameEnum,Object>> replacedObjList) {
         // replacedMap添加到mailInfo中
         StorageSendMailInfo sendMailInfo = new StorageSendMailInfo(createReplacedMap(replacedObjList));
         BeanUtils.copyProperties(mailInfo, sendMailInfo);
@@ -40,7 +41,7 @@ public class StorageMailUtils {
      * @param replacedObjList
      * @return
      */
-    public static StorageSendMailInfo generateMailInfo(StorageSendMailInfo mailInfo, List<Map<String,Object>> replacedObjList) {
+    public static StorageSendMailInfo generateMailInfo(StorageSendMailInfo mailInfo, List<Map<SendHtmlMailTypeNameEnum,Object>> replacedObjList) {
         // replacedMap添加到mailInfo中
         StorageSendMailInfo sendMailInfo = new StorageSendMailInfo(createReplacedMap(replacedObjList));
         BeanUtils.copyProperties(mailInfo, sendMailInfo);
@@ -52,16 +53,16 @@ public class StorageMailUtils {
      * @param replacedObjList
      * @return
      */
-    private static Map<String,String> createReplacedMap(List<Map<String,Object>> replacedObjList) {
+    private static Map<String,String> createReplacedMap(List<Map<SendHtmlMailTypeNameEnum,Object>> replacedObjList) {
         Map<String,String> replacedMap = new HashMap<>();
 
         if (replacedObjList == null) {
             return replacedMap;
         }
-        for (Map<String, Object> objectMap : replacedObjList) {
+        for (Map<SendHtmlMailTypeNameEnum, Object> objectMap : replacedObjList) {
             // 因为replacedObjList集合中的map只会保存一个，所以不需要使用while进行迭代
-            for (Map.Entry<String, Object> next : objectMap.entrySet()) {
-                String key = next.getKey();
+            for (Map.Entry<SendHtmlMailTypeNameEnum, Object> next : objectMap.entrySet()) {
+                String key = next.getKey().getKeyName();
                 Object replacedObj = next.getValue();
 
                 String replacedJson = jsonToString(replacedObj);

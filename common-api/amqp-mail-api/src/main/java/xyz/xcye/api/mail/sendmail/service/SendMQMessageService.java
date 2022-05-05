@@ -1,6 +1,7 @@
 package xyz.xcye.api.mail.sendmail.service;
 
 import org.springframework.validation.BindException;
+import xyz.xcye.api.mail.sendmail.enums.SendHtmlMailTypeNameEnum;
 import xyz.xcye.comment.po.Comment;
 import xyz.xcye.api.mail.sendmail.entity.StorageSendMailInfo;
 import xyz.xcye.core.exception.AuroraException;
@@ -24,7 +25,7 @@ public interface SendMQMessageService {
      * @param sendMailInfo
      */
     void sendCommonMail(StorageSendMailInfo sendMailInfo, String exchangeName, String exchangeType,
-                        String routingKey, List<Map<String,Object>> replacedObjList) throws AuroraException, BindException;
+                        String routingKey, List<Map<SendHtmlMailTypeNameEnum,Object>> replacedObjList) throws AuroraException, BindException;
 
     /**
      * 发送简单文本邮件，其中如果sendMailInfo对象中，没有对receiverEmail赋值，那么会通过userUid向数据库中查询

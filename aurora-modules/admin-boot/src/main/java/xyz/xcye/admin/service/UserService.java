@@ -2,7 +2,6 @@ package xyz.xcye.admin.service;
 
 import org.springframework.validation.BindException;
 import xyz.xcye.admin.po.User;
-import xyz.xcye.admin.po.UserAccount;
 import xyz.xcye.admin.vo.UserVO;
 import xyz.xcye.core.exception.email.EmailException;
 import xyz.xcye.core.exception.user.UserException;
@@ -18,12 +17,11 @@ public interface UserService {
     /**
      * 插入用户数据
      * @param user 用户的信息
-     * @param userAccount 用户账户信息
      * @return
      * @throws BindException 对象属性错误
      * @throws UserException 插入，更新异常
      */
-    int insertUser(User user, UserAccount userAccount)
+    int insertUser(User user)
             throws UserException;
 
     /**
@@ -40,14 +38,14 @@ public interface UserService {
      * @return
      * @throws UserException
      */
-    int deleteByUid(long uid);
+    int realDeleteByUid(long uid);
+
+    int logicDeleteByUid(long uid);
 
     /**
      * 根据userDO中的信息查询所有满足的数据，没有模糊查询
      * @param condition 查询条件，其中keyword为username，status为verifAccount
      * @return
-     * @throws InstantiationException
-     * @throws IllegalAccessException
      */
     PageData<UserVO> queryAllByCondition(Condition<Long> condition);
 
@@ -55,12 +53,11 @@ public interface UserService {
      * 根据uid查询用户数据
      * @param uid
      * @return
-     * @throws InstantiationException
-     * @throws IllegalAccessException
      */
     UserVO queryByUid(long uid);
 
     User queryByUsernameContainPassword(String username);
+
     User queryByUidContainPassword(long uid);
 
     /**
