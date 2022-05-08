@@ -16,11 +16,12 @@ import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 import xyz.xcye.admin.constant.RedisStorageConstant;
 import xyz.xcye.admin.dto.RolePermissionDTO;
-import xyz.xcye.data.entity.Condition;
-import xyz.xcye.oauth.api.service.RolePermissionFeignService;
 
 import java.net.URI;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * 鉴权管理器
@@ -32,9 +33,6 @@ import java.util.*;
 
 @Component
 public class AuroraReactiveAuthorizationManager implements ReactiveAuthorizationManager<AuthorizationContext> {
-
-    @Autowired
-    private RolePermissionFeignService rolePermissionFeignService;
 
     private final AntPathMatcher antPathMatcher = new AntPathMatcher();
 
@@ -60,12 +58,13 @@ public class AuroraReactiveAuthorizationManager implements ReactiveAuthorization
         try {
             allRolePermissionSet = (Set<Map<String, RolePermissionDTO>>) redisTemplate.opsForValue().get(RedisStorageConstant.STORAGE_ROLE_PERMISSION_INFO);
         } catch (Exception e) {
-            // 使用feign远程加载角色权限关系
-            allRolePermissionSet = loadRolePermissionFromRemote();
+            // 如果redis中没有角色权限关系信息，直接返回鉴权失败 为了保护系统
+            return Mono.just(new AuthorizationDecision(false));
         }
 
         if (allRolePermissionSet == null) {
-            allRolePermissionSet = loadRolePermissionFromRemote();
+            // 如果redis中没有角色权限关系信息，直接返回鉴权失败 为了保护系统
+            return Mono.just(new AuthorizationDecision(false));
         }
 
         // 获取所有的角色
@@ -78,6 +77,7 @@ public class AuroraReactiveAuthorizationManager implements ReactiveAuthorization
                 }
             });
         });
+
         return contextAuthentication
                 // 是否认证成功
                 .filter(Authentication::isAuthenticated)
@@ -95,21 +95,5 @@ public class AuroraReactiveAuthorizationManager implements ReactiveAuthorization
                 .map(AuthorizationDecision::new)
                 .defaultIfEmpty(new AuthorizationDecision(false));
 
-    }
-
-    /**
-     * 使用feign远程加载角色权限关系
-     * @return
-     */
-    private Set<Map<String, RolePermissionDTO>> loadRolePermissionFromRemote() {
-        Set<Map<String, RolePermissionDTO>> allRolePermissionSet = null;
-        try {
-            allRolePermissionSet = (Set<Map<String, RolePermissionDTO>>) rolePermissionFeignService.loadAllRolePermission(new Condition<>()).getData();
-        } catch (Exception e) {
-            e.printStackTrace();
-            // 返回空
-            return new HashSet<>();
-        }
-        return allRolePermissionSet;
     }
 }

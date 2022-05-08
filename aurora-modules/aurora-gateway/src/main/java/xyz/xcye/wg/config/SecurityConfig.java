@@ -20,7 +20,6 @@ import org.springframework.web.cors.reactive.CorsWebFilter;
 import org.springframework.web.cors.reactive.UrlBasedCorsConfigurationSource;
 import xyz.xcye.wg.handler.AuroraAccessDeniedHandler;
 import xyz.xcye.wg.handler.AuroraAuthenticationEntryPoint;
-import xyz.xcye.wg.handler.AuroraAuthenticationFailureHandler;
 
 
 /**
@@ -43,10 +42,6 @@ public class SecurityConfig {
     @Autowired
     private ReactiveAuthenticationManager tokenAuthenticationManager;
 
-    /** 自定义认证失败处理类 **/
-    @Autowired
-    private AuroraAuthenticationFailureHandler auroraAuthenticationFailureHandler;
-
     /** 自定义未登录访问需要认证的资源时的处理类 **/
     @Autowired
     private AuroraAuthenticationEntryPoint auroraAuthenticationEntryPoint;
@@ -66,7 +61,7 @@ public class SecurityConfig {
                 .csrf().disable()
                 .authorizeExchange()
                 //白名单直接放行
-                .pathMatchers("/admin/user").permitAll()
+                .pathMatchers("/test").permitAll()
                 //其他的请求必须鉴权，使用鉴权管理器
                 .anyExchange().access(accessManager)
                 //鉴权的异常处理，权限不足，token失效

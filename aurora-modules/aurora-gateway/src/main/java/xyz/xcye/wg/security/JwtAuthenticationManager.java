@@ -11,6 +11,7 @@ import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.server.resource.BearerTokenAuthenticationToken;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
+import xyz.xcye.core.util.LogUtils;
 
 /**
  * JWT认证管理器，主要的作用就是对携带过来的token进行校验，比如过期时间，加密方式等
@@ -32,7 +33,12 @@ public class JwtAuthenticationManager implements ReactiveAuthenticationManager {
                 .cast(BearerTokenAuthenticationToken.class)
                 .map(BearerTokenAuthenticationToken::getToken)
                 .flatMap((accessToken -> {
-                    OAuth2AccessToken oAuth2AccessToken = this.tokenStore.readAccessToken(accessToken);
+                    OAuth2AccessToken oAuth2AccessToken = null;
+                    try {
+                        oAuth2AccessToken = this.tokenStore.readAccessToken(accessToken);
+                    } catch (Exception e) {
+                        LogUtils.logExceptionInfo(e);
+                    }
                     //根据access_token从数据库获取不到OAuth2AccessToken
                     if (oAuth2AccessToken == null) {
                         return Mono.error(new InvalidTokenException("无效的token！"));

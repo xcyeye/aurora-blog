@@ -70,6 +70,6 @@ public class JwtTokenUserDetailsService implements UserDetailsService {
                 .password(user.getPassword())
                 .userUid(user.getUid())
                 .accountNonLocked(!Optional.ofNullable(user.getAccountLock()).orElse(false))
-                .grantedAuthorities(AuthorityUtils.createAuthorityList(String.valueOf(roleSet))).build();
+                .grantedAuthorities(AuthorityUtils.createAuthorityList(String.join(",", roleSet).split(","))).build();
     }
 }

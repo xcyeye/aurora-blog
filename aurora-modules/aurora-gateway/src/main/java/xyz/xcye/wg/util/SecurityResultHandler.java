@@ -45,7 +45,7 @@ public class SecurityResultHandler {
      * @param statusCode 自定义响应码
      * @return Mono
      */
-    public static Mono<Void> failure(ServerWebExchange exchange, Exception exception,Integer statusCode) {
+    public static Mono<Void> failure(ServerWebExchange exchange, String message,Integer statusCode) {
         ServerHttpRequest request = exchange.getRequest();
 
         //uri就是访问出错的路径
@@ -53,9 +53,6 @@ public class SecurityResultHandler {
 
         //设置响应头信息
         setContentType(exchange);
-
-        //获取失败消息
-        String message = exception.getMessage();
 
         //封装数据
         R failureResult = R.failure(statusCode, message);

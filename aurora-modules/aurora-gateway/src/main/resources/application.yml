@@ -11,8 +11,12 @@ spring:
         server-addr: 127.0.0.1:8848
         service: aurora-gateway
 
+
 management:
   endpoints:
     web:
       exposure:
         include: "*"
+feign:
+  oauth2:
+    load-balanced: true

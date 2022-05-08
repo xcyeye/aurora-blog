@@ -19,6 +19,8 @@ import xyz.xcye.wg.util.SecurityResultHandler;
 public class AuroraAccessDeniedHandler implements ServerAccessDeniedHandler {
     @Override
     public Mono<Void> handle(ServerWebExchange exchange, AccessDeniedException denied) {
-        return SecurityResultHandler.failure(exchange,denied, ResponseStatusCodeEnum.PERMISSION_DENIED.getCode());
+        return SecurityResultHandler.failure(exchange,
+                ResponseStatusCodeEnum.PERMISSION_DENIED.getMessage(),
+                ResponseStatusCodeEnum.PERMISSION_DENIED.getCode());
     }
 }
