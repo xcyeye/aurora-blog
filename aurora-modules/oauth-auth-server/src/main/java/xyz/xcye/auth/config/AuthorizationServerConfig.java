@@ -36,22 +36,27 @@ import javax.sql.DataSource;
 public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
 
     @Autowired
+    private DataSource dataSource;
+    @Autowired
     private SecurityProperties securityProperties;
 
     /**
-     * 令牌存储策略
+     * 令牌存储策略 这里使用jwt进行存储
      */
     @Autowired
     private TokenStore tokenStore;
 
     /**
-     * 客户端存储策略，这里使用内存方式，后续可以存储在数据库
+     * 客户端存储策略，这里使用jdbc进行存储，一定要在数据库中建立一个表oauth_client_details，字段可以参照
+     * org/springframework/security/oauth2/provider/client/JdbcClientDetailsService.java
+     * 也就是我们使用授权码，密码等模式申请令牌的时候，client_id等值都是存储在数据库中的
      */
     @Autowired
     private ClientDetailsService clientDetailsService;
 
     /**
      * Security的认证管理器，密码模式需要用到
+     * 可以自定义，和自定义登录验证一样的
      */
     @Autowired
     private AuthenticationManager authenticationManager;
@@ -59,22 +64,21 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     @Autowired
     private JwtAccessTokenConverter jwtAccessTokenConverter;
 
+    /**
+     * password模式时，如果用户名，密码，client_id出错处理类
+     */
     @Autowired
     private OAuthServerAuthenticationEntryPoint authenticationEntryPoint;
 
     /**
-     * 客户端的信息存储在数据库中
-     */
-    @Autowired
-    private DataSource dataSource;
-
-    /**
-     * 授权码模式的service，使用授权码模式authorization_code必须注入
+     * 授权码模式的service，使用授权码模式authorization_code必须注入，
+     * 这里如果授权码是保存在数据库中的，也就是用户使用授权码模式，当用户第一次拿到
+     * 生成的授权码后，会自动将此授权码放入数据库中，用户使用该授权码去申请令牌之后
+     * 会自动从数据库中，删除该授权码，所以此授权码就失效了
      */
     @Bean
     public AuthorizationCodeServices authorizationCodeServices() {
         return new JdbcAuthorizationCodeServices(dataSource);
-        //return new InMemoryAuthorizationCodeServices();
     }
 
     /**
@@ -87,9 +91,9 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
         services.setClientDetailsService(clientDetailsService);
         //支持令牌的刷新
         services.setSupportRefreshToken(true);
-        //令牌服务
+        //令牌存储服务
         services.setTokenStore(tokenStore);
-        //access_token的过期时间
+        //access_token的过期时间，后期可以通过nacos的配置中心进行控制
         services.setAccessTokenValiditySeconds(securityProperties.getAccessTokenValiditySeconds());
         //refresh_token的过期时间
         services.setRefreshTokenValiditySeconds(securityProperties.getRefreshTokenValiditySeconds());
@@ -104,7 +108,8 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     @Override
     public void configure(AuthorizationServerSecurityConfigurer security) {
         //自定义ClientCredentialsTokenEndpointFilter，用于处理客户端id，密码错误的异常
-        OAuthServerClientCredentialsTokenEndpointFilter endpointFilter = new OAuthServerClientCredentialsTokenEndpointFilter(security,authenticationEntryPoint);
+        OAuthServerClientCredentialsTokenEndpointFilter endpointFilter =
+                new OAuthServerClientCredentialsTokenEndpointFilter(security,authenticationEntryPoint);
         endpointFilter.afterPropertiesSet();
         security.addTokenEndpointAuthenticationFilter(endpointFilter);
 
@@ -159,7 +164,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
                 .authenticationManager(authenticationManager)
                 //令牌管理服务，无论哪种模式都需要
                 .tokenServices(tokenServices())
-                //只允许POST提交访问令牌，uri：/oauth/token
+                //只允许POST提交访问令牌，uri：/oauth/token，可以添加多个
                 .allowedTokenEndpointRequestMethods(HttpMethod.POST);
     }
 }

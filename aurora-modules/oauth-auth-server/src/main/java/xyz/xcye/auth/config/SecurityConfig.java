@@ -25,7 +25,7 @@ import xyz.xcye.auth.service.JwtTokenUserDetailsService;
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     /**
-     * 使用自定义的验证逻辑，从数据库中查询用户信息
+     * 使用自定义的验证逻辑，从数据库中查询用户信息，有就是根据用户名，查看此用户是否存在，存在的话，存储用户的信息
      */
     @Autowired
     private JwtTokenUserDetailsService jwtTokenUserDetailsService;

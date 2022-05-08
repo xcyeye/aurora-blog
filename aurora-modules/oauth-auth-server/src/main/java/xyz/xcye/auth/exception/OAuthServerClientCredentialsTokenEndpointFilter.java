@@ -46,7 +46,6 @@ public class OAuthServerClientCredentialsTokenEndpointFilter extends ClientCrede
      */
     @Override
     public void afterPropertiesSet() {
-        //TODO 定制认证失败处理器，开发中可以自己修改
         setAuthenticationFailureHandler((request, response, exception) -> {
             // 秘钥错误
             if (exception instanceof BadCredentialsException) {

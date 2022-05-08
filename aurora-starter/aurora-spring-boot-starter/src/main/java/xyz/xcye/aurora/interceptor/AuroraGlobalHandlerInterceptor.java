@@ -19,6 +19,9 @@ public class AuroraGlobalHandlerInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 
+        String header = request.getHeader("OAuthConstant.TOKEN_NAME");
+       System.out.println(header);
+
         /*
         * 从请求头中xid，如果此xid不为null，则绑定到RootContext中
         * */
