@@ -14,9 +14,9 @@ import xyz.xcye.message.dao.MessageLogDao;
 import xyz.xcye.message.po.MessageLog;
 import xyz.xcye.message.service.MessageLogService;
 import xyz.xcye.message.vo.MessageLogVO;
-import xyz.xcye.mybatis.entity.Condition;
-import xyz.xcye.mybatis.entity.PageData;
-import xyz.xcye.mybatis.util.PageUtils;
+import xyz.xcye.data.entity.Condition;
+import xyz.xcye.data.entity.PageData;
+import xyz.xcye.data.util.PageUtils;
 
 import javax.annotation.Resource;
 import java.util.Date;

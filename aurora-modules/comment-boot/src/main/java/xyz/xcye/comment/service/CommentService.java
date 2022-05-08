@@ -3,7 +3,7 @@ package xyz.xcye.comment.service;
 import xyz.xcye.comment.dto.CommentDTO;
 import xyz.xcye.comment.po.Comment;
 import xyz.xcye.comment.vo.CommentVO;
-import xyz.xcye.mybatis.entity.Condition;
+import xyz.xcye.data.entity.Condition;
 
 import java.util.List;
 

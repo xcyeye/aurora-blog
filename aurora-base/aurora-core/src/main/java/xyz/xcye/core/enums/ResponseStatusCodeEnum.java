@@ -77,7 +77,13 @@ public enum ResponseStatusCodeEnum {
     PERMISSION_USER_FAIL_DELETE(44900,"删除用户失败"),
     PERMISSION_RESOURCE_NOT_RIGHT(44900,"资源路径不正确"),
     PERMISSION_ROLE_NOT_EXISTS(44900,"角色不存在"),
+    PERMISSION_ROLE_HAD_EXISTS(44900,"角色已存在"),
     PERMISSION_ROLE_HAD_DISABLED(44900,"角色被禁用"),
+
+    //----------------------未知错误相关的响应码
+    OAUTH_CLIENT_SECRET_MISTAKE(444444, "client_id或者secret错误"),
+    OAUTH_NOT_SUPPORT_AUTH_TYPE(444444, "不支持的认证方式"),
+
 
 
     //----------------------未知错误相关的响应码

@@ -1,8 +1,8 @@
 package xyz.xcye.message.service;
 
 import org.springframework.validation.BindException;
-import xyz.xcye.mybatis.entity.Condition;
-import xyz.xcye.mybatis.entity.PageData;
+import xyz.xcye.data.entity.Condition;
+import xyz.xcye.data.entity.PageData;
 import xyz.xcye.message.po.MessageLog;
 import xyz.xcye.message.vo.MessageLogVO;
 

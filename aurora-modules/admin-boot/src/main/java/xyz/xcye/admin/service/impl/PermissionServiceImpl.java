@@ -11,9 +11,9 @@ import xyz.xcye.core.enums.ResponseStatusCodeEnum;
 import xyz.xcye.core.exception.permission.PermissionException;
 import xyz.xcye.core.util.BeanUtils;
 import xyz.xcye.core.util.DateUtils;
-import xyz.xcye.mybatis.entity.Condition;
-import xyz.xcye.mybatis.entity.PageData;
-import xyz.xcye.mybatis.util.PageUtils;
+import xyz.xcye.data.entity.Condition;
+import xyz.xcye.data.entity.PageData;
+import xyz.xcye.data.util.PageUtils;
 
 import java.util.Objects;
 import java.util.regex.Pattern;
@@ -69,6 +69,6 @@ public class PermissionServiceImpl implements PermissionService {
 
     @Override
     public Permission selectByUid(long uid) {
-        return BeanUtils.getSingleObjFromList(permissionMapper.queryAllPermission(Condition.instant(uid, Long.class, true)), Permission.class);
+        return BeanUtils.getSingleObjFromList(permissionMapper.queryAllPermission(Condition.instant(uid, true, null, null)), Permission.class);
     }
 }

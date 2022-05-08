@@ -15,8 +15,8 @@ import xyz.xcye.core.exception.email.EmailException;
 import xyz.xcye.core.exception.user.UserException;
 import xyz.xcye.core.valid.Insert;
 import xyz.xcye.core.valid.Update;
-import xyz.xcye.mybatis.entity.Condition;
-import xyz.xcye.mybatis.entity.PageData;
+import xyz.xcye.data.entity.Condition;
+import xyz.xcye.data.entity.PageData;
 
 import javax.validation.groups.Default;
 
@@ -66,6 +66,20 @@ public class UserController {
     @ApiOperation(value = "通过uid查询用户信息")
     public UserVO queryUserByUid(@PathVariable("uid") long uid) {
         return userService.queryByUid(uid);
+    }
+
+    @GetMapping("/{username}")
+    @SelectOperation
+    @ApiOperation(value = "通过username查询用户信息")
+    public UserVO queryUserByUsername(@PathVariable("username") String username) {
+        return userService.queryByUsername(username);
+    }
+
+    @GetMapping("/pwd/{username}")
+    @SelectOperation
+    @ApiOperation(value = "通过username查询用户信息")
+    public User queryUserByUsernameContainPassword(@PathVariable("username") String username) {
+        return userService.queryByUsernameContainPassword(username);
     }
 
     @GetMapping("")

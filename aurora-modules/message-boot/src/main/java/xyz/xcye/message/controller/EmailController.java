@@ -15,8 +15,8 @@ import xyz.xcye.core.valid.Update;
 import xyz.xcye.message.po.Email;
 import xyz.xcye.message.service.EmailService;
 import xyz.xcye.message.vo.EmailVO;
-import xyz.xcye.mybatis.entity.Condition;
-import xyz.xcye.mybatis.entity.PageData;
+import xyz.xcye.data.entity.Condition;
+import xyz.xcye.data.entity.PageData;
 
 import javax.validation.groups.Default;
 

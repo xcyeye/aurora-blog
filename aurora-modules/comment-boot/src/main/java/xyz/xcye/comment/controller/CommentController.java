@@ -15,7 +15,7 @@ import xyz.xcye.core.util.NetWorkUtils;
 import xyz.xcye.core.valid.Insert;
 import xyz.xcye.core.valid.Update;
 import xyz.xcye.feign.config.service.MessageLogFeignService;
-import xyz.xcye.mybatis.entity.Condition;
+import xyz.xcye.data.entity.Condition;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.groups.Default;

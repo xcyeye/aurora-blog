@@ -38,6 +38,7 @@
         <spring-cloud.version>2021.0.1</spring-cloud.version>
         <spring-alibaba-cloud.version>2021.0.1.0</spring-alibaba-cloud.version>
         <oauth2.version>2.2.4.RELEASE</oauth2.version>
+        <oauth2-resource.version>5.2.2.RELEASE</oauth2-resource.version>
         <hutool.version>5.7.22</hutool.version>
         <spring-cloud-gateway.version>3.1.1</spring-cloud-gateway.version>
         <druid.version>1.2.8</druid.version>
@@ -79,6 +80,18 @@
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-starter-oauth2</artifactId>
                 <version>${oauth2.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.security</groupId>
+                <artifactId>spring-security-oauth2-resource-server</artifactId>
+                <version>${oauth2-resource.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.security</groupId>
+                <artifactId>spring-security-oauth2-core</artifactId>
+                <version>${oauth2-resource.version}</version>
             </dependency>
 
             <dependency>
@@ -210,6 +223,12 @@
                 <version>${blog.version}</version>
             </dependency>
 
+            <dependency>
+                <groupId>xyz.xcye.starter</groupId>
+                <artifactId>aurora-oauth2-starter</artifactId>
+                <version>${blog.version}</version>
+            </dependency>
+
 
             <!--自己的common-->
             <dependency>
@@ -242,6 +261,18 @@
                 <version>${blog.version}</version>
             </dependency>
 
+            <dependency>
+                <groupId>xyz.xcye.base</groupId>
+                <artifactId>auth-common</artifactId>
+                <version>${blog.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>xyz.xcye.base</groupId>
+                <artifactId>data-common</artifactId>
+                <version>${blog.version}</version>
+            </dependency>
+
             <!--自定义api-->
             <dependency>
                 <groupId>xyz.xcye.api</groupId>
@@ -258,6 +289,12 @@
             <dependency>
                 <groupId>xyz.xcye.api</groupId>
                 <artifactId>admin-api</artifactId>
+                <version>${blog.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>xyz.xcye.api</groupId>
+                <artifactId>oauth-api</artifactId>
                 <version>${blog.version}</version>
             </dependency>
         </dependencies>

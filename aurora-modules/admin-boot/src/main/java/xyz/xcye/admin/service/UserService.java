@@ -5,8 +5,8 @@ import xyz.xcye.admin.po.User;
 import xyz.xcye.admin.vo.UserVO;
 import xyz.xcye.core.exception.email.EmailException;
 import xyz.xcye.core.exception.user.UserException;
-import xyz.xcye.mybatis.entity.Condition;
-import xyz.xcye.mybatis.entity.PageData;
+import xyz.xcye.data.entity.Condition;
+import xyz.xcye.data.entity.PageData;
 
 /**
  * 操作用户的service层
@@ -21,8 +21,7 @@ public interface UserService {
      * @throws BindException 对象属性错误
      * @throws UserException 插入，更新异常
      */
-    int insertUser(User user)
-            throws UserException;
+    int insertUser(User user) throws UserException;
 
     /**
      * 更新用户信息
@@ -31,6 +30,10 @@ public interface UserService {
      * @throws BindException
      */
     int updateUser(User user) throws UserException;
+
+    int updatePassword(String username, String originPwd, String newPwd, String secretKey);
+
+    int forgotPassword(String username);
 
     /**
      * 根据uid删除用户，同时会删除au_user_account中相关的记录

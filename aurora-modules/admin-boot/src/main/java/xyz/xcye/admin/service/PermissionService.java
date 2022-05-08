@@ -1,8 +1,8 @@
 package xyz.xcye.admin.service;
 
 import xyz.xcye.admin.po.Permission;
-import xyz.xcye.mybatis.entity.Condition;
-import xyz.xcye.mybatis.entity.PageData;
+import xyz.xcye.data.entity.Condition;
+import xyz.xcye.data.entity.PageData;
 
 /**
  * @author qsyyke

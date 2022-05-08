@@ -2,7 +2,7 @@ package xyz.xcye.message.dao;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import xyz.xcye.mybatis.entity.Condition;
+import xyz.xcye.data.entity.Condition;
 import xyz.xcye.message.po.MailTemplate;
 
 import java.util.List;

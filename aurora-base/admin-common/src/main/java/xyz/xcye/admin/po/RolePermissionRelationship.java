@@ -1,7 +1,9 @@
 package xyz.xcye.admin.po;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import xyz.xcye.core.valid.Delete;
 import xyz.xcye.core.valid.Insert;
 import xyz.xcye.core.valid.Update;
@@ -14,6 +16,8 @@ import java.io.Serializable;
  * @TableName au_role_permission
  */
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Builder
 public class RolePermissionRelationship implements Serializable {
     /**

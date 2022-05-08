@@ -1,7 +1,7 @@
 package xyz.xcye.admin.service.redis;
 
 
-import xyz.xcye.core.back.common.dto.EmailVerifyAccountDTO;
+import xyz.xcye.admin.dto.EmailVerifyAccountDTO;
 import xyz.xcye.core.exception.user.UserException;
 
 /**

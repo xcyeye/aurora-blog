@@ -1,9 +1,12 @@
 package xyz.xcye.admin.po;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import xyz.xcye.core.constant.FieldLengthConstant;
 import xyz.xcye.core.valid.Delete;
+import xyz.xcye.core.valid.Insert;
 import xyz.xcye.core.valid.Update;
 import xyz.xcye.core.valid.validator.ValidateString;
 
@@ -14,9 +17,13 @@ import java.io.Serializable;
  * 角色信息
  * @TableName au_role
  */
+
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Builder
 public class Role implements Serializable {
+
     /**
      * 唯一uid，自增
      */
@@ -26,7 +33,7 @@ public class Role implements Serializable {
     /**
      * 角色的名称，不用添加ROLE_
      */
-    @ValidateString(value = "角色的名称", max = FieldLengthConstant.USER_ROLE)
+    @ValidateString(value = "角色的名称", max = FieldLengthConstant.USER_ROLE, groups = {Insert.class})
     private String name;
 
     /**

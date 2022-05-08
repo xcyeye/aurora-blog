@@ -1,8 +1,12 @@
 package xyz.xcye.admin.po;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import xyz.xcye.core.constant.FieldLengthConstant;
 import xyz.xcye.core.valid.Delete;
+import xyz.xcye.core.valid.Insert;
 import xyz.xcye.core.valid.Update;
 import xyz.xcye.core.valid.validator.ValidateString;
 
@@ -13,6 +17,10 @@ import java.io.Serializable;
  * 路径权限
  * @TableName au_permission
  */
+
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Data
 public class Permission implements Serializable {
     /**
@@ -24,12 +32,13 @@ public class Permission implements Serializable {
     /**
      * 此路径的名称
      */
+    @ValidateString(value = "资源的名称", max = FieldLengthConstant.URL, groups = {Insert.class})
     private String name;
 
     /**
      * 权限的地址，可以是组件的名称，必须遵守Method:path的约定
      */
-    @ValidateString(value = "路径的名称", max = FieldLengthConstant.METHOD_AND_PATH)
+    @ValidateString(value = "路径的名称", max = FieldLengthConstant.METHOD_AND_PATH, groups = {Insert.class})
     private String path;
 
     /**

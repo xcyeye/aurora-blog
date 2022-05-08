@@ -10,9 +10,9 @@ import xyz.xcye.core.util.lambda.AssertUtils;
 import xyz.xcye.core.exception.role.RoleException;
 import xyz.xcye.core.util.BeanUtils;
 import xyz.xcye.core.util.DateUtils;
-import xyz.xcye.mybatis.entity.Condition;
-import xyz.xcye.mybatis.entity.PageData;
-import xyz.xcye.mybatis.util.PageUtils;
+import xyz.xcye.data.entity.Condition;
+import xyz.xcye.data.entity.PageData;
+import xyz.xcye.data.util.PageUtils;
 
 /**
  * @author qsyyke
@@ -60,6 +60,6 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public Role selectByUid(long uid) {
-        return BeanUtils.getSingleObjFromList(roleMapper.selectAllRole(Condition.instant(uid, Long.class, true)), Role.class);
+        return BeanUtils.getSingleObjFromList(roleMapper.selectAllRole(Condition.instant(uid, true)), Role.class);
     }
 }

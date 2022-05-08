@@ -13,8 +13,8 @@ import xyz.xcye.core.valid.Update;
 import xyz.xcye.message.po.MessageLog;
 import xyz.xcye.message.service.MessageLogService;
 import xyz.xcye.message.vo.MessageLogVO;
-import xyz.xcye.mybatis.entity.Condition;
-import xyz.xcye.mybatis.entity.PageData;
+import xyz.xcye.data.entity.Condition;
+import xyz.xcye.data.entity.PageData;
 
 import javax.validation.groups.Default;
 

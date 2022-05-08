@@ -16,8 +16,8 @@ import xyz.xcye.file.dto.FileEntityDTO;
 import xyz.xcye.file.po.File;
 import xyz.xcye.file.service.FileService;
 import xyz.xcye.file.vo.FileVO;
-import xyz.xcye.mybatis.entity.Condition;
-import xyz.xcye.mybatis.entity.PageData;
+import xyz.xcye.data.entity.Condition;
+import xyz.xcye.data.entity.PageData;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;

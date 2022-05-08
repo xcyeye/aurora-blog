@@ -24,5 +24,6 @@
         <module>aurora-swagger-starter</module>
         <module>aurora-spring-boot-starter</module>
         <module>aurora-security-starter</module>
+        <module>aurora-oauth2-starter</module>
     </modules>
 </project>

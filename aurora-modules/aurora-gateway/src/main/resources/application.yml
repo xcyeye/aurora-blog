@@ -1,64 +1,18 @@
 server:
   port: 7777
 spring:
-  redis:
-    database: 1
-    host: localhost
-    password: ''
-    port: 6379
-    jedis:
-      pool:
-        max-active: 15
-        max-idle: 10
-        min-idle: 0
-        max-wait: -1ms
   main:
-    allow-circular-references: true
+    allow-bean-definition-overriding: true
   application:
     name: aurora-gateway
-  datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3306/aurora_blog?characterEncoding=utf8&connectTimeout=1000&socketTimeout=3000&autoReconnect=true&useUnicode=true&useSSL=false&serverTimezone=UTC
-    username: root
-    password: Cqy19981202
   cloud:
     nacos:
       discovery:
         server-addr: 127.0.0.1:8848
         service: aurora-gateway
-    gateway:
-      discovery:
-        locator:
-          enabled: true #开启从注册中心动态创建路由的功能，利用微服务名进行路由
-      routes:
-        - id: payment_routh #payment_route    #路由的ID，没有固定规则但要求唯一，建议配合服务名
-          uri: lb://aurora-admin       #匹配后提供服务的路由地址
-#          uri: http://localhost:8888      #匹配后提供服务的路由地址
-          predicates:
-            - Path=/admin/**
-          filters:
-            - AddRequestHeader=authentication_token, eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiIxNTA4MzgzNzMwMzUxNTEzNjAwIiwic3ViIjoiaHR0cHM6Ly9hdXJvcmEueGN5ZS54eXoiLCJpc3MiOiJxc3l5a2UiLCJpYXQiOjE2NDg0NjE2ODAsImV4cCI6MTY0ODU0ODA4MCwidXNlcm5hbWUiOiJxc3l5a2UiLCJyb2xlIjoiUk9MRV9zZGYiLCJwZXJtaXNzaW9uIjoic2FmZGRnLGRmZ2hsa2pnaCxzZGZnIn0.l_BTJ_yGJwq9Gx3feyXtdx749aNvwQNnZisrdTmxVRI
-#            - Header=X-Request-Id, \d+
-#            - Token=aurora,chuchen,aslkdfjh
-#          filters:
-#            - Aurora=qsyyke,sdfk,https
 
 management:
   endpoints:
     web:
       exposure:
         include: "*"
-
-mybatis:
-  mapper-locations: classpath:mapper/**
-  configuration:
-    map-underscore-to-camel-case: true
-
-
-aurora:
-  remember-me-day: 7
-  secretKey: aurora.xcye.xyz
-  userAcount:
-    # 因为下面两个未在数据库中添加字段，所以避免写死，在此处进行设置，任意一个为false都会导致登录失败
-    enable: true
-    credentialsNonExpired: true

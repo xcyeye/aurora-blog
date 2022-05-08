@@ -50,8 +50,6 @@ public class BeanUtils {
 
         // 返回第一个
         S s = objList.get(0);
-        T t = null;
-        t = BeanUtils.copyProperties(s, target);
-        return t;
+        return BeanUtils.copyProperties(s, target);
     }
 }

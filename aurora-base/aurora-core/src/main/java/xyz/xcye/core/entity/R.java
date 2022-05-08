@@ -66,7 +66,10 @@ public class R {
         if (data == null) {
             data = new HashMap<>();
         }
-        return R.builder().code(code).message(message).data(data).success(success).build();
+        return R.builder()
+                .code(code).message(message)
+                .data(data).success(success)
+                .build();
     }
 
     /**

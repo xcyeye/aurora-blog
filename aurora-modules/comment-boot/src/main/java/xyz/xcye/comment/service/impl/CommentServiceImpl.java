@@ -21,7 +21,7 @@ import xyz.xcye.comment.vo.CommentVO;
 import xyz.xcye.core.constant.amqp.RabbitMQNameConstant;
 import xyz.xcye.core.util.DateUtils;
 import xyz.xcye.core.util.id.GenerateInfoUtils;
-import xyz.xcye.mybatis.entity.Condition;
+import xyz.xcye.data.entity.Condition;
 
 import java.util.*;
 

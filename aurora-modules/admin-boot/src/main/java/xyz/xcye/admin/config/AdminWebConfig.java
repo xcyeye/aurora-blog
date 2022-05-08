@@ -22,7 +22,7 @@ public class AdminWebConfig implements WebMvcConfigurer {
 
     /**
      * 增加自定义拦截器
-     * @param registry
+     * @param
      */
     //@Override
     //public void addInterceptors (InterceptorRegistry registry) {

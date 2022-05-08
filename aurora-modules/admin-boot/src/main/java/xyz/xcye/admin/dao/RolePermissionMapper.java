@@ -3,7 +3,7 @@ package xyz.xcye.admin.dao;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import xyz.xcye.admin.po.RolePermissionRelationship;
-import xyz.xcye.mybatis.entity.Condition;
+import xyz.xcye.data.entity.Condition;
 
 import java.util.List;
 
@@ -11,7 +11,7 @@ import java.util.List;
 * @author aurora
 * @description 针对表【au_role_permission】的数据库操作Mapper
 * @createDate 2022-05-04 16:17:47
-* @Entity xyz.xcye.admin.po.RolePermissionRelationship
+* @Entity xyz.xcye.admin.model.RolePermissionRelationship
 */
 
 @Mapper

@@ -19,5 +19,7 @@
         <module>comment-common</module>
         <module>aurora-core</module>
         <module>message-common</module>
+        <module>auth-common</module>
+        <module>data-common</module>
     </modules>
 </project>

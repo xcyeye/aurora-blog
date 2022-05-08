@@ -5,7 +5,7 @@ import org.springframework.data.redis.connection.RedisServerCommands;
 import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.util.CollectionUtils;
-import xyz.xcye.mybatis.util.SpringUtil;
+import xyz.xcye.data.util.SpringUtil;
 
 import java.util.Set;
 import java.util.concurrent.locks.ReadWriteLock;

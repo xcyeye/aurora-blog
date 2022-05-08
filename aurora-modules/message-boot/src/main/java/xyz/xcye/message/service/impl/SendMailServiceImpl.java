@@ -29,7 +29,7 @@ import xyz.xcye.message.util.MailTemplateUtils;
 import xyz.xcye.message.util.ParseEmailTemplate;
 import xyz.xcye.message.vo.EmailVO;
 import xyz.xcye.message.vo.MailTemplateVO;
-import xyz.xcye.mybatis.entity.Condition;
+import xyz.xcye.data.entity.Condition;
 
 import javax.mail.MessagingException;
 import java.io.IOException;

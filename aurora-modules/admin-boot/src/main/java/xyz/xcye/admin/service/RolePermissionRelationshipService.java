@@ -1,7 +1,7 @@
 package xyz.xcye.admin.service;
 
 import xyz.xcye.admin.po.RolePermissionRelationship;
-import xyz.xcye.mybatis.entity.Condition;
+import xyz.xcye.data.entity.Condition;
 
 import java.util.List;
 

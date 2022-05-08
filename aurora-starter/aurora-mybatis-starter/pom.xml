@@ -36,5 +36,10 @@
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>xyz.xcye.base</groupId>
+            <artifactId>data-common</artifactId>
+        </dependency>
     </dependencies>
 </project>

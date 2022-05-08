@@ -22,7 +22,7 @@
             <if test="condition.uid != null">
                 and user_uid=#{condition.uid}
             </if>
-            <if test="condition.keyword != null">
+            <if test="condition.otherUid != null">
                 and role_uid=#{condition.otherUid}
             </if>
         </where>

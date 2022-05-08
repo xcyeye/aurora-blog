@@ -11,8 +11,8 @@
   import xyz.xcye.core.annotaion.controller.SelectOperation;
   import xyz.xcye.core.valid.Insert;
   import xyz.xcye.core.valid.Update;
-  import xyz.xcye.mybatis.entity.Condition;
-  import xyz.xcye.mybatis.entity.PageData;
+  import xyz.xcye.data.entity.Condition;
+  import xyz.xcye.data.entity.PageData;
 
   import javax.validation.groups.Default;
 
@@ -29,14 +29,14 @@ public class PermissionController {
     private PermissionService permissionService;
 
     @ModifyOperation
-    @ApiOperation(value = "插入角色")
+    @ApiOperation(value = "插入路径权限")
     @PostMapping("")
     public int insertPermission(@Validated({Insert.class, Default.class}) Permission permission) {
         return permissionService.insertPermission(permission);
     }
 
     @ModifyOperation
-    @ApiOperation(value = "修改角色信息")
+    @ApiOperation(value = "修改路径权限信息")
     @PutMapping("")
     public int updatePermission(@Validated({Update.class, Default.class}) Permission permission) {
         return permissionService.updatePermission(permission);

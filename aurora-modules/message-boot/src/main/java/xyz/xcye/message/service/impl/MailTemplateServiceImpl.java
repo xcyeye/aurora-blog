@@ -9,9 +9,9 @@ import xyz.xcye.message.dao.MailTemplateDao;
 import xyz.xcye.message.po.MailTemplate;
 import xyz.xcye.message.service.MailTemplateService;
 import xyz.xcye.message.vo.MailTemplateVO;
-import xyz.xcye.mybatis.entity.Condition;
-import xyz.xcye.mybatis.entity.PageData;
-import xyz.xcye.mybatis.util.PageUtils;
+import xyz.xcye.data.entity.Condition;
+import xyz.xcye.data.entity.PageData;
+import xyz.xcye.data.util.PageUtils;
 
 /**
  * @author qsyyke
@@ -49,13 +49,13 @@ public class MailTemplateServiceImpl implements MailTemplateService {
 
     @Override
     public MailTemplateVO queryMailTemplateByUid(long uid) {
-        Condition<Long> condition = Condition.instant(uid, Long.class, true);
+        Condition<Long> condition = Condition.instant(uid, true);
         return BeanUtils.getSingleObjFromList(mailTemplateDao.queryAllMailTemplate(condition), MailTemplateVO.class);
     }
 
     @Override
     public MailTemplateVO queryMailTemplateByUserUid(long userUid) {
-        Condition<Long> condition = Condition.instant(userUid, Long.class, false);
+        Condition<Long> condition = Condition.instant(userUid, false);
         return BeanUtils.getSingleObjFromList(mailTemplateDao.queryAllMailTemplate(condition), MailTemplateVO.class);
     }
 

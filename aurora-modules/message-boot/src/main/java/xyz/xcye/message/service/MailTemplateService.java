@@ -1,7 +1,7 @@
 package xyz.xcye.message.service;
 
-import xyz.xcye.mybatis.entity.Condition;
-import xyz.xcye.mybatis.entity.PageData;
+import xyz.xcye.data.entity.Condition;
+import xyz.xcye.data.entity.PageData;
 import xyz.xcye.message.po.MailTemplate;
 import xyz.xcye.message.vo.MailTemplateVO;
 

@@ -21,15 +21,42 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
+
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-security</artifactId>
+            <groupId>xyz.xcye.starter</groupId>
+            <artifactId>aurora-oauth2-starter</artifactId>
         </dependency>
 
         <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-oauth2</artifactId>
+            <groupId>xyz.xcye.starter</groupId>
+            <artifactId>aurora-nacos-starter</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>xyz.xcye.starter</groupId>
+            <artifactId>aurora-redis-starter</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>xyz.xcye.starter</groupId>
+            <artifactId>aurora-datasource-starter</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>xyz.xcye.starter</groupId>
+            <artifactId>aurora-mybatis-starter</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>xyz.xcye.api</groupId>
+            <artifactId>oauth-api</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>xyz.xcye.base</groupId>
+            <artifactId>auth-common</artifactId>
+        </dependency>
+
     </dependencies>
 
 </project>

@@ -21,9 +21,9 @@ import xyz.xcye.message.dao.EmailDao;
 import xyz.xcye.message.po.Email;
 import xyz.xcye.message.service.EmailService;
 import xyz.xcye.message.vo.EmailVO;
-import xyz.xcye.mybatis.entity.Condition;
-import xyz.xcye.mybatis.entity.PageData;
-import xyz.xcye.mybatis.util.PageUtils;
+import xyz.xcye.data.entity.Condition;
+import xyz.xcye.data.entity.PageData;
+import xyz.xcye.data.util.PageUtils;
 
 import java.util.Date;
 import java.util.Objects;

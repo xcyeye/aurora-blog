@@ -7,12 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
-import xyz.xcye.admin.constant.RedisConstant;
+import xyz.xcye.admin.constant.RedisStorageConstant;
+import xyz.xcye.admin.dto.EmailVerifyAccountDTO;
 import xyz.xcye.admin.po.User;
 import xyz.xcye.admin.service.UserService;
 import xyz.xcye.admin.service.redis.UserRedisService;
 import xyz.xcye.api.mail.sendmail.util.AccountInfoUtils;
-import xyz.xcye.core.back.common.dto.EmailVerifyAccountDTO;
 import xyz.xcye.core.exception.user.UserException;
 
 import java.time.Duration;
@@ -35,10 +35,10 @@ public class UserRedisServiceImpl implements UserRedisService {
 
     @Override
     public void storageUserVerifyAccountInfo(EmailVerifyAccountDTO verifyAccount, long expirationTime) {
-        redisTemplate.opsForValue().set(RedisConstant.STORAGE_VERIFY_ACCOUNT_PREFIX + verifyAccount.getUserUid(),verifyAccount,
+        redisTemplate.opsForValue().set(RedisStorageConstant.STORAGE_VERIFY_ACCOUNT_PREFIX + verifyAccount.getUserUid(),verifyAccount,
                 Duration.ofSeconds(expirationTime));
         log.info("存储用户验证信息到redis，键:{}，值:{}，过期时间:{}",
-                RedisConstant.STORAGE_VERIFY_ACCOUNT_PREFIX + verifyAccount.getUserUid(),verifyAccount,expirationTime);
+                RedisStorageConstant.STORAGE_VERIFY_ACCOUNT_PREFIX + verifyAccount.getUserUid(),verifyAccount,expirationTime);
     }
 
     @Override
@@ -56,11 +56,11 @@ public class UserRedisServiceImpl implements UserRedisService {
             return false;
         }
 
-        if (user.getVerifyEmail()) {
+        if (user.getVerifyEmail() != null && user.getVerifyEmail()) {
             return true;
         }
 
-        EmailVerifyAccountDTO storageVerifyAccountInfo = (EmailVerifyAccountDTO) redisTemplate.opsForValue().get(RedisConstant.STORAGE_VERIFY_ACCOUNT_PREFIX + user.getUid());
+        EmailVerifyAccountDTO storageVerifyAccountInfo = (EmailVerifyAccountDTO) redisTemplate.opsForValue().get(RedisStorageConstant.STORAGE_VERIFY_ACCOUNT_PREFIX + user.getUid());
         if (storageVerifyAccountInfo != null) {
             User updateUser = User.builder().verifyEmail(true).uid(storageVerifyAccountInfo.getUserUid()).build();
             int updateUserNum = userService.updateUser(updateUser);
@@ -71,7 +71,7 @@ public class UserRedisServiceImpl implements UserRedisService {
             }
 
             // 从redis中清除
-            redisTemplate.delete(RedisConstant.STORAGE_VERIFY_ACCOUNT_PREFIX + user.getUid());
+            redisTemplate.delete(RedisStorageConstant.STORAGE_VERIFY_ACCOUNT_PREFIX + user.getUid());
             return true;
         }
 

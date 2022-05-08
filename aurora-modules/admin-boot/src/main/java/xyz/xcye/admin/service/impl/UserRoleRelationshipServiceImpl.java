@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import xyz.xcye.admin.dao.UserRoleMapper;
 import xyz.xcye.admin.po.UserRoleRelationship;
 import xyz.xcye.admin.service.UserRoleRelationshipService;
-import xyz.xcye.mybatis.entity.Condition;
+import xyz.xcye.data.entity.Condition;
 
 import java.util.List;
 import java.util.Objects;

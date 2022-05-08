@@ -95,9 +95,9 @@
                 and uid=#{condition.uid}
             </if>
             <if test="condition.keyword != null">
-                and username=#{condition.keyword},
+                and username=#{condition.keyword}
             </if>
-            <if test="condition.delete ! =null">
+            <if test="condition.delete !=null">
                 and is_delete=#{condition.delete}
             </if>
             <if test="condition.status != null">

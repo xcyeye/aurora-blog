@@ -49,6 +49,10 @@ public class AuroraResponseResultHandler implements ResponseBodyAdvice<Object> {
         boolean hasModifyOperationAnnotation = method.isAnnotationPresent(ModifyOperation.class);
         boolean hasResponseRealResultAnnotation = method.isAnnotationPresent(ResponseRealResult.class);
 
+        if (responseBody instanceof R) {
+            return fieldFilter(responseBody, method);
+        }
+
         /**
          * 获取方法或者异常的返回值类型
          * 这里如果没有发生异常是通过注解进行判断，如果存在异常，因为做了全局处理，返回值是ExceptionResultEntity

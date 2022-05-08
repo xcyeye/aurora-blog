@@ -12,9 +12,9 @@ import xyz.xcye.message.dao.EmailLogDao;
 import xyz.xcye.message.po.EmailLog;
 import xyz.xcye.message.service.EmailLogService;
 import xyz.xcye.message.vo.EmailLogVO;
-import xyz.xcye.mybatis.entity.Condition;
-import xyz.xcye.mybatis.entity.PageData;
-import xyz.xcye.mybatis.util.PageUtils;
+import xyz.xcye.data.entity.Condition;
+import xyz.xcye.data.entity.PageData;
+import xyz.xcye.data.util.PageUtils;
 
 import javax.validation.groups.Default;
 import java.util.Date;
