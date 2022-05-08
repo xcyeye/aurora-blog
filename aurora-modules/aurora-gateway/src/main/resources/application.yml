@@ -10,6 +10,15 @@ spring:
       discovery:
         server-addr: 127.0.0.1:8848
         service: aurora-gateway
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      routes:
+        - id: aurora-admin1
+          uri: lb://aurora-admin
+          predicates:
+            - Path=/admin/**
 
 
 management:
@@ -17,6 +26,3 @@ management:
     web:
       exposure:
         include: "*"
-feign:
-  oauth2:
-    load-balanced: true

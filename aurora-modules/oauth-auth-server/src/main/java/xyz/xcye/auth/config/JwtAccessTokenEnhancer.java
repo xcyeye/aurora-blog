@@ -28,6 +28,11 @@ public class JwtAccessTokenEnhancer extends JwtAccessTokenConverter {
         LinkedHashMap<String, Object> extendInformation = new LinkedHashMap<>();
         // 添加userUid
         extendInformation.put("userUid", user.getUserUid());
+        extendInformation.put("avatar", user.getAvatar());
+        extendInformation.put("gender", user.getGender());
+        extendInformation.put("nickname", user.getNickname());
+        extendInformation.put("username", user.getUsername());
+        extendInformation.put("verifyEmail", user.getVerifyEmail());
         // 将extendInformation添加到额外的信息中
         ((DefaultOAuth2AccessToken) accessToken).setAdditionalInformation(extendInformation);
         return super.enhance(accessToken, authentication);

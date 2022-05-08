@@ -67,6 +67,10 @@ public class JwtTokenUserDetailsService implements UserDetailsService {
 
         return SecurityUserDetails.builder()
                 .username(username)
+                .nickname(user.getNickname())
+                .avatar(user.getAvatar())
+                .gender(user.getGender())
+                .verifyEmail(user.getVerifyEmail())
                 .password(user.getPassword())
                 .userUid(user.getUid())
                 .accountNonLocked(!Optional.ofNullable(user.getAccountLock()).orElse(false))

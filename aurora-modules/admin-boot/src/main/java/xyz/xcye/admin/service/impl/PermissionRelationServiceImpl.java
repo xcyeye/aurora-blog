@@ -291,7 +291,7 @@ public class PermissionRelationServiceImpl implements PermissionRelationService 
             Role role = roleService.selectByUid(userRoleRelationship.getRoleUid());
             // 查询此角色对应的路径权限
             List<RolePermissionRelationship> rolePermissionRelationshipList = rolePermissionRelationshipService
-                    .selectAllRolePermissionRelationship(Condition.instant(userRoleRelationship.getRoleUid(), false));
+                    .selectAllRolePermissionRelationship(Condition.instant(userRoleRelationship.getRoleUid(), true));
             rolePermissionRelationshipList.forEach(rolePermissionRelationship -> {
                 // 遍历此rolePermissionRelationshipList，取出path
                 // 查询此permissionUid对应的信息

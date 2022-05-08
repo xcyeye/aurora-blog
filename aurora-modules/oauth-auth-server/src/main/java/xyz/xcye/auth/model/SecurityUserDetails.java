@@ -27,6 +27,26 @@ public class SecurityUserDetails implements UserDetails {
     private Long userUid;
 
     /**
+     * 是否验证了邮箱
+     */
+    private Boolean verifyEmail;
+
+    /**
+     * 用户昵称
+     */
+    private String nickname;
+
+    /**
+     * 用户性别
+     */
+    private Integer gender;
+
+    /**
+     * 用户头像
+     */
+    private String avatar;
+
+    /**
      * 用户名
      */
     private String username;
