@@ -110,6 +110,6 @@ public class JwtUtils {
 
         //token失效时间
         Date expiration = claims.getExpiration();
-        return !expiration.after(new Date());
+        return expiration.after(new Date());
     }
 }

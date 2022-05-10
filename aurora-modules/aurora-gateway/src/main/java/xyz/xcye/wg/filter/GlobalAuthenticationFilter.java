@@ -65,6 +65,7 @@ public class GlobalAuthenticationFilter implements GlobalFilter {
                 .split(",");
         //1、白名单放行，比如授权服务、静态资源.....
         if (checkUrls(Arrays.asList(whiteUrlArray),requestUrl)){
+            exchange.getRequest().mutate().header(OauthJwtConstant.REQUEST_WHITE_URL_FLAG_NAME, "true");
             return chain.filter(exchange);
         }
 
@@ -108,6 +109,7 @@ public class GlobalAuthenticationFilter implements GlobalFilter {
                     .header(OauthJwtConstant.REQUEST_TOKEN_NAME, base64).build();
             exchange.getRequest().mutate().header(OauthJwtConstant.REQUEST_JWT_TOKEN_NAME, token);
             ServerWebExchange build = exchange.mutate().request(tokenRequest).build();
+            exchange.getRequest().mutate().header(OauthJwtConstant.REQUEST_WHITE_URL_FLAG_NAME, "false");
             return chain.filter(build);
         } catch (InvalidTokenException e) {
             //解析token异常，直接返回token无效

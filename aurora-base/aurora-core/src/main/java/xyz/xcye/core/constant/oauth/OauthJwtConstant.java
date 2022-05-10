@@ -21,4 +21,6 @@ public class OauthJwtConstant {
     public static final String REQUEST_TOKEN_NAME = "authentication_user";
     /** 把一个已经验证的用户向下层服务传递时，存放在请求头中的jwt名字 **/
     public static final String REQUEST_JWT_TOKEN_NAME = "authentication_jwt";
+    /** 网关处向下层服务传递时，判断当前请求地址是否为白名单，并将此标识设置到请求头上，类型为true或者false **/
+    public static final String REQUEST_WHITE_URL_FLAG_NAME = "white_url_flag";
 }
