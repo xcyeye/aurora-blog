@@ -7,8 +7,9 @@ import xyz.xcye.admin.po.WhiteUrl;
 import xyz.xcye.admin.service.WhiteUrlService;
 import xyz.xcye.core.util.DateUtils;
 import xyz.xcye.data.entity.Condition;
+import xyz.xcye.data.entity.PageData;
+import xyz.xcye.data.util.PageUtils;
 
-import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -43,8 +44,8 @@ public class WhiteUrlServiceImpl implements WhiteUrlService {
     }
 
     @Override
-    public List<WhiteUrl> selectByCondition(Condition<Integer> condition) {
-        return whiteUrlMapper.selectByCondition(condition);
+    public PageData<WhiteUrl> selectByCondition(Condition<Integer> condition) {
+        return PageUtils.pageList(condition, t -> whiteUrlMapper.selectByCondition(condition));
     }
 
     @Override

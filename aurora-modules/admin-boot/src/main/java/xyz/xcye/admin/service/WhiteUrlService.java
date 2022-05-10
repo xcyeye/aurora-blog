@@ -3,8 +3,7 @@ package xyz.xcye.admin.service;
 import org.apache.ibatis.annotations.Param;
 import xyz.xcye.admin.po.WhiteUrl;
 import xyz.xcye.data.entity.Condition;
-
-import java.util.List;
+import xyz.xcye.data.entity.PageData;
 
 /**
  * @author qsyyke
@@ -23,7 +22,7 @@ public interface WhiteUrlService {
      * @param condition
      * @return
      */
-    List<WhiteUrl> selectByCondition(@Param("condition") Condition<Integer> condition);
+    PageData<WhiteUrl> selectByCondition(@Param("condition") Condition<Integer> condition);
 
     int updateByPrimaryKeySelective(WhiteUrl record);
 }

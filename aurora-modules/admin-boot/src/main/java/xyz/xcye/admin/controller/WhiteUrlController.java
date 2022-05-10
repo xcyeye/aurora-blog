@@ -8,12 +8,14 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import xyz.xcye.admin.po.WhiteUrl;
 import xyz.xcye.admin.service.WhiteUrlService;
+import xyz.xcye.core.annotaion.controller.ModifyOperation;
+import xyz.xcye.core.annotaion.controller.SelectOperation;
 import xyz.xcye.core.valid.Insert;
 import xyz.xcye.core.valid.Update;
 import xyz.xcye.data.entity.Condition;
+import xyz.xcye.data.entity.PageData;
 
 import javax.validation.groups.Default;
-import java.util.List;
 
 /**
  * @author qsyyke
@@ -29,12 +31,14 @@ public class WhiteUrlController {
     private WhiteUrlService whiteUrlService;
 
     @DeleteMapping("/{uid}")
+    @ModifyOperation
     @ApiOperation("根据uid删除白名单")
     public int deleteByUid(@PathVariable("uid") Long uid) {
         return whiteUrlService.deleteByUid(uid);
     }
 
     @ApiOperation("插入白名单记录")
+    @ModifyOperation
     @PostMapping
     public int insert(@Validated({Insert.class, Default.class}) WhiteUrl record) {
         return whiteUrlService.insert(record);
@@ -47,12 +51,14 @@ public class WhiteUrlController {
      */
     @ApiOperation("根据查询条件获取所有的白名单数据")
     @GetMapping
-    public List<WhiteUrl> selectByCondition(@Param("condition") Condition<Integer> condition) {
+    @SelectOperation
+    public PageData<WhiteUrl> selectByCondition(@Param("condition") Condition<Integer> condition) {
         return whiteUrlService.selectByCondition(condition);
     }
 
     @PutMapping
     @ApiOperation("修改白名单数据")
+    @ModifyOperation
     public int updateByPrimaryKeySelective(@Validated({Update.class}) WhiteUrl record) {
         return whiteUrlService.updateByPrimaryKeySelective(record);
     }
