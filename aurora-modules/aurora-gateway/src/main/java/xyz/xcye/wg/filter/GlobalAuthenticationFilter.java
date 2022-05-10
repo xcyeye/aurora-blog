@@ -23,9 +23,7 @@ import xyz.xcye.core.enums.ResponseStatusCodeEnum;
 import xyz.xcye.core.util.ConvertObjectUtils;
 import xyz.xcye.wg.util.SecurityResultHandler;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -58,7 +56,7 @@ public class GlobalAuthenticationFilter implements GlobalFilter {
         // 获取redis中的所有白名单
         List<WhiteUrl> whiteUrlList = (List<WhiteUrl>) redisTemplate.opsForValue().get(RedisStorageConstant.STORAGE_WHITE_URL_INFO);
 
-        assert whiteUrlList != null;
+        whiteUrlList = Optional.ofNullable(whiteUrlList).orElse(new ArrayList<>());
         String[] whiteUrlArray = whiteUrlList.stream()
                 .map(WhiteUrl::getUrl)
                 .collect(Collectors.joining(","))

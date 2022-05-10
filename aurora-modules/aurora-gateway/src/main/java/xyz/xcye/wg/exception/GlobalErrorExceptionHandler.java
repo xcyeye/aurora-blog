@@ -21,6 +21,7 @@ import xyz.xcye.wg.util.SecurityResultHandler;
 @RequiredArgsConstructor
 public class GlobalErrorExceptionHandler implements ErrorWebExceptionHandler {
     public Mono<Void> handle(ServerWebExchange exchange, Throwable ex) {
+        ex.printStackTrace();
         ServerHttpResponse response = exchange.getResponse();
         if (response.isCommitted()) {
             return Mono.error(ex);
