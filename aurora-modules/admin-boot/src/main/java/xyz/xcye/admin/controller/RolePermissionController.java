@@ -5,6 +5,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import xyz.xcye.admin.dto.RolePermissionDTO;
+import xyz.xcye.admin.po.Role;
 import xyz.xcye.admin.service.PermissionRelationService;
 import xyz.xcye.core.annotaion.controller.ModifyOperation;
 import xyz.xcye.core.annotaion.controller.SelectOperation;
@@ -29,7 +30,7 @@ public class RolePermissionController {
     private PermissionRelationService permissionRelationService;
 
     @SelectOperation
-    @ApiOperation(value = "根据用户uid，加载对应的角色-权限信息，map集合形式为[ROLE_admin,GET:http://aurora.xcye.xyz]")
+    @ApiOperation(value = "根据用户uid，加载对应的角色-权限信息，只会给出该用户所拥有的角色和au_permission中的记录存在关系的记录")
     @GetMapping("/userUid/{userUid}")
     public List<RolePermissionDTO> loadPermissionByUserUid(@PathVariable("userUid") long userUid) {
         return permissionRelationService.loadPermissionByUserUid(userUid);
@@ -40,6 +41,13 @@ public class RolePermissionController {
     @ApiOperation("加载角色权限关系信息")
     public List<RolePermissionDTO> loadAllRolePermission(Condition<Long> condition) {
         return permissionRelationService.loadAllRolePermission(condition);
+    }
+
+    @SelectOperation
+    @GetMapping("/userRole/{username}")
+    @ApiOperation("加载该用户所拥有的全部角色")
+    public List<Role> loadAllRoleByUsername(@PathVariable("username") String username) {
+        return permissionRelationService.loadAllRoleByUsername(username);
     }
 
     @SelectOperation

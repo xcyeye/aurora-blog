@@ -5,6 +5,7 @@ import org.springframework.boot.SpringApplicationRunListener;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.core.annotation.Order;
 import xyz.xcye.admin.manager.task.LoadRolePermissionInfo;
+import xyz.xcye.admin.manager.task.LoadWhiteUrlInfo;
 
 import java.time.Duration;
 
@@ -30,5 +31,7 @@ public class AuroraSpringApplicationRunListener implements SpringApplicationRunL
         SpringApplicationRunListener.super.ready(context,timeTaken);
         LoadRolePermissionInfo loadRolePermissionInfo = context.getBean(LoadRolePermissionInfo.class);
         loadRolePermissionInfo.storagePermissionInfoToRedis();
+        // 将mysql中的白名单数据加载到redis中
+        context.getBean(LoadWhiteUrlInfo.class).storageWhiteUrlInfoToRedis();
     }
 }

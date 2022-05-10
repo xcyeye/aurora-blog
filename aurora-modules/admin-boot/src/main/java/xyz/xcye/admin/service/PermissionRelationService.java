@@ -1,6 +1,7 @@
 package xyz.xcye.admin.service;
 
 import xyz.xcye.admin.dto.RolePermissionDTO;
+import xyz.xcye.admin.po.Role;
 import xyz.xcye.data.entity.Condition;
 
 import java.util.List;
@@ -18,6 +19,11 @@ public interface PermissionRelationService {
      * @return
      */
     List<RolePermissionDTO> loadPermissionByUserUid(long userUid);
+
+    /**
+     * 查询用户所拥有的角色
+     */
+    List<Role> loadAllRoleByUsername(String username);
 
     /**
      * 根据用户名，加载对应的角色-权限信息，map集合形式为[ROLE_admin,GET:http://aurora.xcye.xyz]

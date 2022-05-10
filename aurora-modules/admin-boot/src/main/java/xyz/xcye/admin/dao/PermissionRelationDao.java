@@ -3,6 +3,7 @@ package xyz.xcye.admin.dao;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import xyz.xcye.admin.dto.RolePermissionDTO;
+import xyz.xcye.admin.po.Role;
 import xyz.xcye.data.entity.Condition;
 
 import java.util.List;
@@ -28,6 +29,8 @@ public interface PermissionRelationDao {
      * @return
      */
     List<RolePermissionDTO> loadPermissionByRoleName(@Param("roleName") String roleName);
+
+    List<Role> loadAllRoleByUserUid(@Param("uid") long uid);
 
     /**
      * 加载所有的角色-权限关系信息

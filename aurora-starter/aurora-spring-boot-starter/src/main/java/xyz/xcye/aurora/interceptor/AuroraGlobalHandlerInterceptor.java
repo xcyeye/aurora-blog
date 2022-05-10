@@ -1,11 +1,15 @@
 package xyz.xcye.aurora.interceptor;
 
 import cn.hutool.core.codec.Base64;
+import com.alibaba.fastjson.JSON;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 import xyz.xcye.core.constant.oauth.OauthJwtConstant;
+import xyz.xcye.core.dto.JwtUserInfo;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -18,14 +22,19 @@ import javax.servlet.http.HttpServletResponse;
 @Component
 @Slf4j
 public class AuroraGlobalHandlerInterceptor implements HandlerInterceptor {
+
+    @Autowired
+    private ApplicationContext context;
+
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+        String jwtUserInfoBase64 = request.getHeader(OauthJwtConstant.REQUEST_TOKEN_NAME);
+        String jwtUserInfoStr = Base64.decodeStr(jwtUserInfoBase64);
 
-        String header = request.getHeader(OauthJwtConstant.REQUEST_TOKEN_NAME);
-        String header1 = request.getHeader(OauthJwtConstant.REQUEST_JWT_TOKEN_NAME);
-        System.out.println(header);
-
-        byte[] decode = Base64.decode(header);
+        // 将jwtUserInfoStr解析成一个jwtUserInfo对象
+        JwtUserInfo jwtUserInfo = JSON.parseObject(jwtUserInfoStr, JwtUserInfo.class);
+        String token = request.getHeader(OauthJwtConstant.REQUEST_JWT_TOKEN_NAME);
+        
 
         /*
         * 从请求头中xid，如果此xid不为null，则绑定到RootContext中

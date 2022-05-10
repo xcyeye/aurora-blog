@@ -54,7 +54,7 @@ public class JwtTokenUserDetailsService implements UserDetailsService {
         // 用户存在，获取用户的角色信息
         List<JSONObject> rolePermissionDTOList = null;
         try {
-            R r = rolePermissionFeignService.loadPermissionByUsername(username);
+            R r = rolePermissionFeignService.loadAllRoleByUsername(username);
             rolePermissionDTOList = JSONUtils.parseObjFromResult(ConvertObjectUtils.jsonToString(r), "data", List.class);
         } catch (Exception e) {
             throw new UsernameNotFoundException("获取" + username + "用户的权限信息失败");
@@ -62,7 +62,7 @@ public class JwtTokenUserDetailsService implements UserDetailsService {
 
         // 将该用户所拥有的角色放入集合中
         String[] roleArray = rolePermissionDTOList.stream()
-                .map(jsonObj -> (String) jsonObj.get("roleName"))
+                .map(jsonObj -> (String) jsonObj.get("name"))
                 .distinct()
                 .collect(Collectors.joining(","))
                 .split(",");

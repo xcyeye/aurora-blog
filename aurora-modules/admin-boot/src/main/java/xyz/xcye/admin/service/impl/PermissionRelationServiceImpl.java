@@ -44,11 +44,21 @@ public class PermissionRelationServiceImpl implements PermissionRelationService 
     @Autowired
     private UserService userService;
     @Autowired
-    private PermissionRelationDao PermissionRelationDao;
+    private PermissionRelationDao permissionRelationDao;
 
     @Override
     public List<RolePermissionDTO> loadPermissionByUserUid(long userUid) {
-        return packageCollectResult(PermissionRelationDao.loadPermissionByUserUid(userUid));
+        return packageCollectResult(permissionRelationDao.loadPermissionByUserUid(userUid));
+    }
+
+    @Override
+    public List<Role> loadAllRoleByUsername(String username) {
+        UserVO userVO = userService.queryByUsername(username);
+        AssertUtils.stateThrow(username != null,
+                () -> new UserException(ResponseStatusCodeEnum.PERMISSION_USER_NOT_EXIST));
+        return permissionRelationDao.loadAllRoleByUserUid(userVO.getUid()).stream()
+                .peek(role -> role.setName(rolePrefix + role.getName()))
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -57,22 +67,22 @@ public class PermissionRelationServiceImpl implements PermissionRelationService 
         if (userVO == null) {
             return new ArrayList<>();
         }
-        return packageCollectResult(PermissionRelationDao.loadPermissionByUserUid(userVO.getUid()));
+        return packageCollectResult(permissionRelationDao.loadPermissionByUserUid(userVO.getUid()));
     }
 
     @Override
     public List<RolePermissionDTO> loadPermissionByRoleName(String roleName) {
-        return packageCollectResult(PermissionRelationDao.loadPermissionByRoleName(roleName));
+        return packageCollectResult(permissionRelationDao.loadPermissionByRoleName(roleName));
     }
 
     @Override
     public List<RolePermissionDTO> loadAllRolePermission(Condition<Long> condition) {
-        return packageCollectResult(PermissionRelationDao.loadAllRolePermission(condition));
+        return packageCollectResult(permissionRelationDao.loadAllRolePermission(condition));
     }
 
     @Override
     public List<RolePermissionDTO> queryRoleByPermissionPath(String permissionPath) {
-        return packageCollectResult(PermissionRelationDao.queryRoleByPermissionPath(permissionPath));
+        return packageCollectResult(permissionRelationDao.queryRoleByPermissionPath(permissionPath));
     }
 
     @Transactional

@@ -19,7 +19,7 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
  */
 
 
-public class RolePermissionCache implements Cache {
+public class RolePermissionMybatisCache implements Cache {
     // 读写锁
     private final ReadWriteLock readWriteLock = new ReentrantReadWriteLock(true);
 
@@ -30,7 +30,7 @@ public class RolePermissionCache implements Cache {
 
     private String id;
 
-    public RolePermissionCache(final String id) {
+    public RolePermissionMybatisCache(final String id) {
         if (id == null) {
             throw new IllegalArgumentException("Cache instances require an ID");
         }

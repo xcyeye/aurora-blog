@@ -15,6 +15,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
+import xyz.xcye.admin.constant.RedisStorageConstant;
+import xyz.xcye.admin.po.WhiteUrl;
 import xyz.xcye.core.constant.oauth.OauthJwtConstant;
 import xyz.xcye.core.dto.JwtUserInfo;
 import xyz.xcye.core.enums.ResponseStatusCodeEnum;
@@ -24,6 +26,7 @@ import xyz.xcye.wg.util.SecurityResultHandler;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * 全局过滤器，对token的拦截，解析token放入header中，便于下游微服务获取用户信息
@@ -52,8 +55,16 @@ public class GlobalAuthenticationFilter implements GlobalFilter {
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         String requestUrl = exchange.getRequest().getPath().value();
 
+        // 获取redis中的所有白名单
+        List<WhiteUrl> whiteUrlList = (List<WhiteUrl>) redisTemplate.opsForValue().get(RedisStorageConstant.STORAGE_WHITE_URL_INFO);
+
+        assert whiteUrlList != null;
+        String[] whiteUrlArray = whiteUrlList.stream()
+                .map(WhiteUrl::getUrl)
+                .collect(Collectors.joining(","))
+                .split(",");
         //1、白名单放行，比如授权服务、静态资源.....
-        if (checkUrls(Arrays.asList("/","/admin/user"),requestUrl)){
+        if (checkUrls(Arrays.asList(whiteUrlArray),requestUrl)){
             return chain.filter(exchange);
         }
 

@@ -19,9 +19,8 @@ import xyz.xcye.admin.dto.RolePermissionDTO;
 import xyz.xcye.core.constant.oauth.OauthJwtConstant;
 
 import java.net.URI;
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 /**
@@ -55,28 +54,25 @@ public class AuroraReactiveAuthorizationManager implements ReactiveAuthorization
         String restFulPath = method + ":" + uri.getPath();
 
         // 获取redis中的所有角色权限关系
-        Set<Map<String, RolePermissionDTO>> allRolePermissionSet = null;
+        List<RolePermissionDTO> allRolePermissionList = null;
         try {
-            allRolePermissionSet = (Set<Map<String, RolePermissionDTO>>) redisTemplate.opsForValue().get(RedisStorageConstant.STORAGE_ROLE_PERMISSION_INFO);
+            allRolePermissionList = (List<RolePermissionDTO>) redisTemplate.opsForValue().get(RedisStorageConstant.STORAGE_ROLE_PERMISSION_INFO);
         } catch (Exception e) {
             // 如果redis中没有角色权限关系信息，直接返回鉴权失败 为了保护系统
             return Mono.just(new AuthorizationDecision(false));
         }
 
-        if (allRolePermissionSet == null) {
+        if (allRolePermissionList == null) {
             // 如果redis中没有角色权限关系信息，直接返回鉴权失败 为了保护系统
             return Mono.just(new AuthorizationDecision(false));
         }
 
-        // 获取所有的角色
-        List<String> roleList = new ArrayList<>();
-        allRolePermissionSet.forEach(rolePermissionMap -> {
-            // 将能够和restFulPath匹配的角色放入角色集合中
-            rolePermissionMap.forEach((roleName, rolePermissionDTO) -> {
-                if (antPathMatcher.match(rolePermissionDTO.getPath() ,restFulPath)) {
-                    roleList.add(roleName);
-                }
-            });
+        // 获取访问该路径，所需要的权限
+        Set<String> roleList = new HashSet<>();
+        allRolePermissionList.forEach(rolePermissionDTO -> {
+            if (antPathMatcher.match(rolePermissionDTO.getPath(), restFulPath)) {
+                roleList.add(rolePermissionDTO.getRoleName());
+            }
         });
 
         return contextAuthentication

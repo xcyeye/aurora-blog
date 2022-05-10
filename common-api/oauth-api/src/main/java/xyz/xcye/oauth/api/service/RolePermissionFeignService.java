@@ -26,6 +26,14 @@ public interface RolePermissionFeignService {
     //Set<Map<String,String>> loadPermissionByUsername(@PathVariable("username") String username);
 
     /**
+     * 根据用户名，加载该用于用户所拥有的所有角色
+     * @param username
+     * @return
+     */
+    @GetMapping("/admin/permissionRelation/userRole/{username}")
+    R loadAllRoleByUsername(@PathVariable("username") String username);
+
+    /**
      * 加载所有的角色和权限的关系
      * @param condition
      * @return

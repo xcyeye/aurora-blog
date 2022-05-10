@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xyz.xcye.admin.dao.WhiteUrlMapper">
+
+    <cache type="xyz.xcye.admin.cache.WhiteUrlMybatisCache"/>
+
+    <resultMap id="BaseResultMap" type="xyz.xcye.admin.po.WhiteUrl">
+            <id property="uid" column="uid" jdbcType="INTEGER"/>
+            <result property="url" column="url" jdbcType="VARCHAR"/>
+            <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+            <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        uid,url,create_time,
+        update_time
+    </sql>
+
+    <select id="selectByCondition" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from au_white_url
+        <where>
+            <if test="condition.startTime != null and condition.endTime != null">
+                and create_time between #{condition.startTime} and #{condition.endTime}
+            </if>
+            <if test="condition.uid != null">
+                and uid=#{condition.uid}
+            </if>
+            <if test="condition.keyword != null">
+                and url=#{condition.keyword}
+            </if>
+        </where>
+    </select>
+
+    <delete id="deleteByUid" parameterType="java.lang.Long">
+        delete from au_white_url
+        where  uid = #{uid,jdbcType=INTEGER} 
+    </delete>
+    <insert id="insert" keyColumn="uid" keyProperty="uid" parameterType="xyz.xcye.admin.po.WhiteUrl" useGeneratedKeys="true">
+        insert into au_white_url
+        ( uid,url,create_time
+        ,update_time)
+        values (#{uid,jdbcType=INTEGER},#{url,jdbcType=VARCHAR},#{createTime,jdbcType=TIMESTAMP}
+        ,#{updateTime,jdbcType=TIMESTAMP})
+    </insert>
+    <insert id="insertSelective" keyColumn="uid" keyProperty="uid" parameterType="xyz.xcye.admin.po.WhiteUrl" useGeneratedKeys="true">
+        insert into au_white_url
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="uid != null">uid,</if>
+                <if test="url != null">url,</if>
+                <if test="createTime != null">create_time,</if>
+                <if test="updateTime != null">update_time,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="uid != null">#{uid,jdbcType=INTEGER},</if>
+                <if test="url != null">#{url,jdbcType=VARCHAR},</if>
+                <if test="createTime != null">#{createTime,jdbcType=TIMESTAMP},</if>
+                <if test="updateTime != null">#{updateTime,jdbcType=TIMESTAMP},</if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="xyz.xcye.admin.po.WhiteUrl">
+        update au_white_url
+        <set>
+                <if test="url != null">
+                    url = #{url,jdbcType=VARCHAR},
+                </if>
+                <if test="createTime != null">
+                    create_time = #{createTime,jdbcType=TIMESTAMP},
+                </if>
+                <if test="updateTime != null">
+                    update_time = #{updateTime,jdbcType=TIMESTAMP},
+                </if>
+        </set>
+        where   uid = #{uid,jdbcType=INTEGER} 
+    </update>
+</mapper>
