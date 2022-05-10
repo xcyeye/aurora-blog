@@ -30,11 +30,19 @@ public class LoadRolePermissionInfo {
     @Autowired
     private RedisTemplate<String, Object> redisTemplate;
 
+    public void storagePermissionInfoToRedis(RedisTemplate<String, Object> template) {
+        storageData(template);
+    }
+
     public void storagePermissionInfoToRedis() {
+        storageData(this.redisTemplate);
+    }
+
+    private void storageData(RedisTemplate<String, Object> template) {
         // 获取所有的角色权限关系
         List<RolePermissionDTO> rolePermissionDTOList = permissionRelationService.loadAllRolePermission(new Condition<>());
         // 存入redis中Duration.ofSeconds(DateUtils.getRandomSecond(60, 60 * 24 * 3) * 60)
-        redisTemplate.opsForValue().set(RedisStorageConstant.STORAGE_ROLE_PERMISSION_INFO, rolePermissionDTOList,
+        template.opsForValue().set(RedisStorageConstant.STORAGE_ROLE_PERMISSION_INFO, rolePermissionDTOList,
                 Duration.ofSeconds(DateUtils.getRandomSecond(60, 60 * 24 * 3) * 60));
     }
 }

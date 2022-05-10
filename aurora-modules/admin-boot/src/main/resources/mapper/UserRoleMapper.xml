@@ -4,6 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="xyz.xcye.admin.dao.UserRoleMapper">
 
+    <cache type="xyz.xcye.admin.cache.RolePermissionCache"/>
     <resultMap id="BaseResultMap" type="xyz.xcye.admin.po.UserRoleRelationship">
             <id property="uid" column="uid" jdbcType="BIGINT"/>
             <result property="roleUid" column="role_uid" jdbcType="BIGINT"/>

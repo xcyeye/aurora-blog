@@ -5,6 +5,7 @@ import org.springframework.data.redis.connection.RedisServerCommands;
 import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.util.CollectionUtils;
+import xyz.xcye.admin.manager.task.LoadRolePermissionInfo;
 import xyz.xcye.data.util.SpringUtil;
 
 import java.util.Set;
@@ -24,6 +25,8 @@ public class RolePermissionCache implements Cache {
 
     //这里使用了redis缓存，使用springboot自动注入
     private RedisTemplate<String, Object> redisTemplate;
+
+    private LoadRolePermissionInfo loadRolePermissionInfo;
 
     private String id;
 
@@ -47,6 +50,9 @@ public class RolePermissionCache implements Cache {
         }
         if (value != null) {
             redisTemplate.opsForValue().set(key.toString(), value);
+
+            // 更新redis中的角色和权限的关系
+            SpringUtil.getBean(LoadRolePermissionInfo.class).storagePermissionInfoToRedis(this.redisTemplate);
         }
     }
 
@@ -74,6 +80,8 @@ public class RolePermissionCache implements Cache {
         }
         if (key != null) {
             redisTemplate.delete(key.toString());
+            // 更新redis中的角色和权限的关系
+            SpringUtil.getBean(LoadRolePermissionInfo.class).storagePermissionInfoToRedis(this.redisTemplate);
         }
         return null;
     }
@@ -86,6 +94,8 @@ public class RolePermissionCache implements Cache {
         Set<String> keys = redisTemplate.keys("*:" + this.id + "*");
         if (!CollectionUtils.isEmpty(keys)) {
             redisTemplate.delete(keys);
+            // 更新redis中的角色和权限的关系
+            SpringUtil.getBean(LoadRolePermissionInfo.class).storagePermissionInfoToRedis(this.redisTemplate);
         }
     }
 
