@@ -1,0 +1,47 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="xyz.xcye.admin.dao.PermissionRelationDao">
+
+    <sql id="Base_Column_List">
+        SELECT
+            au_role.`name` roleName, au_role.`status` roleStatus, au_permission.`name` permissionName,
+            au_user_role.user_uid userUid, au_permission.path path
+        from
+            au_role,au_permission, au_role_permission,au_user_role
+        WHERE
+            au_role.uid=au_role_permission.role_uid
+        and
+            au_role_permission.permission_uid=au_permission.uid
+        and
+            au_user_role.role_uid=au_role.uid
+    </sql>
+
+    <select id="loadPermissionByUserUid" resultType="xyz.xcye.admin.dto.RolePermissionDTO">
+        <include refid="Base_Column_List"/>
+        and au_user_role.user_uid=#{userUid}
+    </select>
+
+    <select id="loadPermissionByRoleName" resultType="xyz.xcye.admin.dto.RolePermissionDTO">
+        <include refid="Base_Column_List"/>
+        and au_role.name=#{roleName}
+    </select>
+
+    <select id="loadAllRolePermission" resultType="xyz.xcye.admin.dto.RolePermissionDTO">
+        <include refid="Base_Column_List"/>
+        <if test="condition.uid != null">
+            and au_role_permission.role_uid=#{condition.uid}
+        </if>
+        <if test="condition.otherUid != null">
+            and au_role_permission.permission_uid=#{condition.otherUid}
+        </if>
+    </select>
+
+    <select id="queryRoleByPermissionPath" resultType="xyz.xcye.admin.dto.RolePermissionDTO">
+        <include refid="Base_Column_List"/>
+        and au_permission.path=#{permissionPath}
+    </select>
+
+
+</mapper>

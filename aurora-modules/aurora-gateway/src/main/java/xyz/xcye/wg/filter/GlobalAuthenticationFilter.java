@@ -2,12 +2,11 @@ package xyz.xcye.wg.filter;
 
 import cn.hutool.core.codec.Base64;
 import com.alibaba.cloud.commons.lang.StringUtils;
-import com.alibaba.fastjson.JSONObject;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
-import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.security.oauth2.common.exceptions.InvalidTokenException;
@@ -16,7 +15,10 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
+import xyz.xcye.core.constant.oauth.OauthJwtConstant;
+import xyz.xcye.core.dto.JwtUserInfo;
 import xyz.xcye.core.enums.ResponseStatusCodeEnum;
+import xyz.xcye.core.util.ConvertObjectUtils;
 import xyz.xcye.wg.util.SecurityResultHandler;
 
 import java.util.Arrays;
@@ -34,6 +36,9 @@ import java.util.Map;
 @Component
 @Slf4j
 public class GlobalAuthenticationFilter implements GlobalFilter {
+
+    private final String authorizationName = "Authorization";
+
     /**
      * JWT令牌的服务
      */
@@ -41,14 +46,11 @@ public class GlobalAuthenticationFilter implements GlobalFilter {
     private TokenStore tokenStore;
 
     @Autowired
-    private StringRedisTemplate stringRedisTemplate;
+    private RedisTemplate<String, Object> redisTemplate;
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         String requestUrl = exchange.getRequest().getPath().value();
-
-        //灰度发布拦截
-        //interceptGray(exchange);
 
         //1、白名单放行，比如授权服务、静态资源.....
         if (checkUrls(Arrays.asList("/","/admin/user"),requestUrl)){
@@ -68,42 +70,32 @@ public class GlobalAuthenticationFilter implements GlobalFilter {
             oAuth2AccessToken = tokenStore.readAccessToken(token);
             Map<String, Object> additionalInformation = oAuth2AccessToken.getAdditionalInformation();
             //令牌的唯一ID
-            String jti=additionalInformation.get("jti").toString();
-            /** 查看黑名单中是否存在这个jti，如果存在则这个令牌不能用 ****/
-            /*Boolean hasKey = stringRedisTemplate.hasKey("OAuthConstant.JTI_KEY_PREFIX" + jti);
-            if (Objects.requireNonNull(hasKey))
-                return invalidTokenMono(exchange);*/
-            //取出用户身份信息
-            String user_name = additionalInformation.get("user_name").toString();
+            String jti = additionalInformation.get("jti").toString();
+            // 查看黑名单中是否存在这个jti，如果存在则这个令牌不能用
+            Boolean hasKey = redisTemplate.hasKey(jti);
+            if (hasKey != null && hasKey) {
+                return invalidTokenMono(exchange);
+            }
+
             //获取用户权限
             List<String> authorities = (List<String>) additionalInformation.get("authorities");
-            //从additionalInformation取出userId
-            /*String userId = additionalInformation.get(OAuthConstant.USER_ID).toString();
-            Integer gender = (Integer) additionalInformation.get(OAuthConstant.GENDER);
-            String nickName = additionalInformation.get(OAuthConstant.NICK_NAME).toString();
-            String avatar = additionalInformation.get(OAuthConstant.AVATAR).toString();
-            String mobile = additionalInformation.get(OAuthConstant.MOBILE).toString();
-            String email = additionalInformation.get(OAuthConstant.EMAIL).toString();*/
 
-            JSONObject jsonObject=new JSONObject();
-            jsonObject.put("OAuthConstant.PRINCIPAL_NAME", user_name);
-            /*jsonObject.put(OAuthConstant.PRINCIPAL_NAME, user_name);
-            jsonObject.put(OAuthConstant.AUTHORITIES_NAME,authorities);
-            //过期时间，单位秒
-            jsonObject.put(OAuthConstant.EXPR,oAuth2AccessToken.getExpiresIn());
-            jsonObject.put(OAuthConstant.JTI,jti);
-            //封装到JSON数据中
-            jsonObject.put(OAuthConstant.USER_ID, userId);
-            jsonObject.put(OAuthConstant.GENDER, gender);
-            jsonObject.put(OAuthConstant.NICK_NAME, nickName);
-            jsonObject.put(OAuthConstant.AVATAR, avatar);
-            jsonObject.put(OAuthConstant.MOBILE, mobile);
-            jsonObject.put(OAuthConstant.EMAIL, email);*/
+            // 构建一个在下层服务中，传递的用户对象
+            JwtUserInfo jwtUserInfo = JwtUserInfo.builder()
+                    .nickname((String) additionalInformation.get(OauthJwtConstant.NICKNAME))
+                    .username((String) additionalInformation.get(OauthJwtConstant.USERNAME))
+                    .userUid((Long) additionalInformation.get(OauthJwtConstant.USER_UID))
+                    .roleList(authorities)
+                    .verifyEmail((Boolean) additionalInformation.get(OauthJwtConstant.VERIFY_EMAIL))
+                    .build();
 
             //将解析后的token加密放入请求头中，方便下游微服务解析获取用户信息
-            String base64 = Base64.encode(jsonObject.toJSONString());
+            String base64 = Base64.encode(ConvertObjectUtils.jsonToString(jwtUserInfo));
+
             //放入请求头中
-            ServerHttpRequest tokenRequest = exchange.getRequest().mutate().header("OAuthConstant.TOKEN_NAME", base64).build();
+            ServerHttpRequest tokenRequest = exchange.getRequest().mutate()
+                    .header(OauthJwtConstant.REQUEST_TOKEN_NAME, base64).build();
+            exchange.getRequest().mutate().header(OauthJwtConstant.REQUEST_JWT_TOKEN_NAME, token);
             ServerWebExchange build = exchange.mutate().request(tokenRequest).build();
             return chain.filter(build);
         } catch (InvalidTokenException e) {
@@ -111,24 +103,6 @@ public class GlobalAuthenticationFilter implements GlobalFilter {
             return invalidTokenMono(exchange);
         }
     }
-
-    /**
-     * 灰度发布的拦截标记
-     */
-    /*private void interceptGray(ServerWebExchange exchange){
-        *//**
-         * TODO 此处通过请求头进行灰度标记
-         * 特定的场景：比如根据登录的用户某种信息进行灰度标记，只需要对用户校验，然后加上灰度标记
-         *//*
-        //解析请求头，查看是否存在灰度发布的请求头信息，如果存在则将其放置在ThreadLocal中
-        HttpHeaders headers = exchange.getRequest().getHeaders();
-        if (headers.containsKey(GrayConstant.GRAY_HEADER)){
-            String gray = headers.getFirst(GrayConstant.GRAY_HEADER);
-            if (StrUtil.equals(gray,GrayConstant.GRAY_VALUE)){
-                RibbonRequestContextHolder.put(GrayConstant.GRAY_HEADER, GrayConstant.GRAY_VALUE);
-            }
-        }
-    }*/
 
     /**
      * 对url进行校验匹配
@@ -146,7 +120,7 @@ public class GlobalAuthenticationFilter implements GlobalFilter {
      * 从请求头中获取Token
      */
     private String getToken(ServerWebExchange exchange) {
-        String tokenStr = exchange.getRequest().getHeaders().getFirst("Authorization");
+        String tokenStr = exchange.getRequest().getHeaders().getFirst(authorizationName);
         if (StringUtils.isBlank(tokenStr)) {
             return null;
         }
@@ -161,7 +135,6 @@ public class GlobalAuthenticationFilter implements GlobalFilter {
      * 无效的token
      */
     private Mono<Void> invalidTokenMono(ServerWebExchange exchange) {
-
         return SecurityResultHandler.failure(exchange,
                 ResponseStatusCodeEnum.PERMISSION_TOKEN_EXPIRATION.getMessage(),
                 ResponseStatusCodeEnum.PERMISSION_TOKEN_EXPIRATION.getCode());

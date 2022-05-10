@@ -32,9 +32,9 @@ public class LoadRolePermissionInfo {
 
     public void storagePermissionInfoToRedis() {
         // 获取所有的角色权限关系
-        Set<Map<String, RolePermissionDTO>> allRolePermissionSet = permissionRelationService.loadAllRolePermission(new Condition<>());
+        List<RolePermissionDTO> rolePermissionDTOList = permissionRelationService.loadAllRolePermission(new Condition<>());
         // 存入redis中Duration.ofSeconds(DateUtils.getRandomSecond(60, 60 * 24 * 3) * 60)
-        redisTemplate.opsForValue().set(RedisStorageConstant.STORAGE_ROLE_PERMISSION_INFO, allRolePermissionSet,
+        redisTemplate.opsForValue().set(RedisStorageConstant.STORAGE_ROLE_PERMISSION_INFO, rolePermissionDTOList,
                 Duration.ofSeconds(DateUtils.getRandomSecond(60, 60 * 24 * 3) * 60));
     }
 }

@@ -5,17 +5,14 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import xyz.xcye.admin.dto.RolePermissionDTO;
-import xyz.xcye.admin.po.Role;
 import xyz.xcye.admin.service.PermissionRelationService;
-import xyz.xcye.admin.vo.UserVO;
 import xyz.xcye.core.annotaion.controller.ModifyOperation;
 import xyz.xcye.core.annotaion.controller.SelectOperation;
 import xyz.xcye.core.entity.R;
 import xyz.xcye.core.enums.ResponseStatusCodeEnum;
 import xyz.xcye.data.entity.Condition;
 
-import java.util.Map;
-import java.util.Set;
+import java.util.List;
 
 /**
  * 角色权限信息控制器
@@ -34,46 +31,37 @@ public class RolePermissionController {
     @SelectOperation
     @ApiOperation(value = "根据用户uid，加载对应的角色-权限信息，map集合形式为[ROLE_admin,GET:http://aurora.xcye.xyz]")
     @GetMapping("/userUid/{userUid}")
-    public Set<Map<String,String>> loadPermissionByUserUid(@PathVariable("userUid") long userUid) {
+    public List<RolePermissionDTO> loadPermissionByUserUid(@PathVariable("userUid") long userUid) {
         return permissionRelationService.loadPermissionByUserUid(userUid);
     }
 
     @SelectOperation
     @GetMapping("/rolePermission")
     @ApiOperation("加载角色权限关系信息")
-    public Set<Map<String, RolePermissionDTO>> loadAllRolePermission(Condition<Long> condition) {
+    public List<RolePermissionDTO> loadAllRolePermission(Condition<Long> condition) {
         return permissionRelationService.loadAllRolePermission(condition);
     }
 
     @SelectOperation
     @ApiOperation(value = "根据用户uid，加载对应的角色-权限信息，map集合形式为[ROLE_admin,GET:http://aurora.xcye.xyz]")
     @GetMapping("/username/{username}")
-    public Set<Map<String,String>> loadPermissionByUsername(@PathVariable("username") String username) {
+    public List<RolePermissionDTO> loadPermissionByUsername(@PathVariable("username") String username) {
         return permissionRelationService.loadPermissionByUsername(username);
     }
 
     @SelectOperation
-    @GetMapping("/roleName")
+    @GetMapping("/roleName/{roleName}")
     @ApiOperation(value = "根据角色名称，加载对应的角色-权限信息，map集合形式为[ROLE_admin,GET:http://aurora.xcye.xyz]")
-    public Set<Map<String,String>> loadPermissionByRoleName(@RequestParam("roleName") String roleName) {
+    public List<RolePermissionDTO> loadPermissionByRoleName(@PathVariable("roleName") String roleName) {
         return permissionRelationService.loadPermissionByRoleName(roleName);
     }
 
     @SelectOperation
     @GetMapping("/role")
-    @ApiOperation(value = "根据permissionPath，查询哪些角色可以访问")
-    public Set<Role> queryRoleByPermissionPath(@RequestParam("permissionPath") String permissionPath) {
+    @ApiOperation(value = "根据permissionPath，查询哪些角色和角色可以可以访问")
+    public List<RolePermissionDTO> queryRoleByPermissionPath(@RequestParam("permissionPath") String permissionPath) {
         return permissionRelationService.queryRoleByPermissionPath(permissionPath);
     }
-
-
-    @SelectOperation
-    @ApiOperation("根据此permissionPath，查询哪些用户可以访问")
-    @GetMapping("/user")
-    public Set<UserVO> queryUserByPermissionPath(@RequestParam("permissionPath") String permissionPath) {
-        return permissionRelationService.queryUserByPermissionPath(permissionPath);
-    }
-
 
     @ModifyOperation
     @ApiOperation(value = "批量为多个用户增加角色")

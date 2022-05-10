@@ -1,4 +1,4 @@
-package xyz.xcye.wg.handler;
+package xyz.xcye.wg.exception.handler;
 
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.web.server.authorization.ServerAccessDeniedHandler;

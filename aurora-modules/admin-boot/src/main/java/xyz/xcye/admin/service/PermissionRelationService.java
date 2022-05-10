@@ -1,12 +1,9 @@
 package xyz.xcye.admin.service;
 
 import xyz.xcye.admin.dto.RolePermissionDTO;
-import xyz.xcye.admin.po.Role;
-import xyz.xcye.admin.vo.UserVO;
 import xyz.xcye.data.entity.Condition;
 
-import java.util.Map;
-import java.util.Set;
+import java.util.List;
 
 /**
  * 权限关系service层
@@ -20,41 +17,34 @@ public interface PermissionRelationService {
      * @param userUid
      * @return
      */
-    Set<Map<String,String>> loadPermissionByUserUid(long userUid);
+    List<RolePermissionDTO> loadPermissionByUserUid(long userUid);
 
     /**
      * 根据用户名，加载对应的角色-权限信息，map集合形式为[ROLE_admin,GET:http://aurora.xcye.xyz]
      * @param username
      * @return
      */
-    Set<Map<String,String>> loadPermissionByUsername(String username);
+    List<RolePermissionDTO> loadPermissionByUsername(String username);
 
     /**
      * 根据角色名称，加载对应的角色-权限信息，map集合形式为[ROLE_admin,GET:http://aurora.xcye.xyz]
      * @param roleName
      * @return
      */
-    Set<Map<String,String>> loadPermissionByRoleName(String roleName);
+    List<RolePermissionDTO> loadPermissionByRoleName(String roleName);
 
     /**
      * 加载所有的角色-权限关系信息
      * @return
      */
-    Set<Map<String, RolePermissionDTO>> loadAllRolePermission(Condition<Long> condition);
+    List<RolePermissionDTO> loadAllRolePermission(Condition<Long> condition);
 
     /**
      * 根据permissionPath，查询哪些角色可以访问
      * @param permissionPath
      * @return
      */
-    Set<Role> queryRoleByPermissionPath(String permissionPath);
-
-    /**
-     * 根据此permissionPath，查询哪些用户可以访问
-     * @param permissionPath
-     * @return
-     */
-    Set<UserVO> queryUserByPermissionPath(String permissionPath);
+    List<RolePermissionDTO> queryRoleByPermissionPath(String permissionPath);
 
     int insertUserRoleBatch(long[] userUidArr, long roleUid);
     int deleteUserRoleBatch(long userUid, long[] roleUidArr);

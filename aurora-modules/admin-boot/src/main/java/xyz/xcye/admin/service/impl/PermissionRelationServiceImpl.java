@@ -3,22 +3,25 @@ package xyz.xcye.admin.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.StringUtils;
+import org.springframework.util.Assert;
+import xyz.xcye.admin.dao.PermissionRelationDao;
 import xyz.xcye.admin.dto.RolePermissionDTO;
-import xyz.xcye.admin.po.Permission;
 import xyz.xcye.admin.po.Role;
 import xyz.xcye.admin.po.RolePermissionRelationship;
 import xyz.xcye.admin.po.UserRoleRelationship;
 import xyz.xcye.admin.service.*;
 import xyz.xcye.admin.vo.UserVO;
-import xyz.xcye.core.exception.permission.PermissionException;
-import xyz.xcye.core.util.lambda.AssertUtils;
 import xyz.xcye.core.enums.ResponseStatusCodeEnum;
+import xyz.xcye.core.exception.permission.PermissionException;
 import xyz.xcye.core.exception.role.RoleException;
 import xyz.xcye.core.exception.user.UserException;
+import xyz.xcye.core.util.lambda.AssertUtils;
 import xyz.xcye.data.entity.Condition;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author qsyyke
@@ -40,101 +43,36 @@ public class PermissionRelationServiceImpl implements PermissionRelationService 
     private PermissionService permissionService;
     @Autowired
     private UserService userService;
+    @Autowired
+    private PermissionRelationDao PermissionRelationDao;
 
     @Override
-    public Set<Map<String, String>> loadPermissionByUserUid(long userUid) {
-        return packagePermission(userUid, true);
+    public List<RolePermissionDTO> loadPermissionByUserUid(long userUid) {
+        return packageCollectResult(PermissionRelationDao.loadPermissionByUserUid(userUid));
     }
 
     @Override
-    public Set<Map<String, String>> loadPermissionByUsername(String username) {
+    public List<RolePermissionDTO> loadPermissionByUsername(String username) {
         UserVO userVO = userService.queryByUsername(username);
         if (userVO == null) {
-            return new HashSet<>();
+            return new ArrayList<>();
         }
-
-        return loadPermissionByUserUid(userVO.getUid());
+        return packageCollectResult(PermissionRelationDao.loadPermissionByUserUid(userVO.getUid()));
     }
 
     @Override
-    public Set<Map<String, String>> loadPermissionByRoleName(String roleName) {
-        AssertUtils.stateThrow(StringUtils.hasLength(roleName), () -> new RoleException("角色名称不能为null或者空"));
-        Set<Map<String,String>> permissionSet = new HashSet<>();
-        // 1.通过角色名字，查询所对应的权限uid
-        List<Role> roleList = roleService.selectAllRole(Condition.instant(roleName)).getResult();
-
-        // 2. 如果没有特殊情况，一个角色名字，只会对应一个uid，所以上面查询出来记录最多只有一条，但是为了
-        roleList.forEach(role -> {
-            Long uid = role.getUid();
-            // 通过此uid查询对应的权限信息
-            permissionSet.addAll(packagePermission(uid, false));
-        });
-        return permissionSet;
+    public List<RolePermissionDTO> loadPermissionByRoleName(String roleName) {
+        return packageCollectResult(PermissionRelationDao.loadPermissionByRoleName(roleName));
     }
 
     @Override
-    public Set<Map<String, RolePermissionDTO>> loadAllRolePermission(Condition<Long> condition) {
-
-        Set<Map<String, RolePermissionDTO>> rolePermissionSet = new HashSet<>();
-
-        List<RolePermissionRelationship> rolePermissionRelationshipList = rolePermissionRelationshipService
-                .selectAllRolePermissionRelationship(condition);
-
-        // 将roleUid和permissionUid转换成文字
-        List<Role> roleList = roleService.selectAllRole(new Condition<>()).getResult();
-        List<Permission> permissionList = permissionService.selectAllPermission(new Condition<>()).getResult();
-
-        // 保存临时的角色和权限的map集合
-        Map<Long, Role> roleMap = new HashMap<>();
-        Map<Long, Permission> permissionMap = new HashMap<>();
-
-        // 将每一个role中的Uid作为键， role对象作为值，保存在map中
-        roleList.forEach(role -> roleMap.put(role.getUid(), role));
-        permissionList.forEach(permission -> permissionMap.put(permission.getUid(), permission));
-
-        rolePermissionRelationshipList.forEach(rolePermissionRelationship -> {
-            // 从roleMap和permissionMap去除roleUid和permissionUid所对应的对象
-            Role role = roleMap.get(rolePermissionRelationship.getRoleUid());
-            Permission permission = permissionMap.get(rolePermissionRelationship.getPermissionUid());
-
-            // 将所需要的信息，放入集合中
-            RolePermissionDTO rolePermissionDTO = RolePermissionDTO.builder()
-                    .roleName(rolePrefix + role.getName()).roleStatus(role.getStatus())
-                    .permissionName(permission.getName()).path(permission.getPath())
-                    .build();
-
-            // 将角色名称作为键，rolePermissionDTO作为值放入map中
-            Map<String, RolePermissionDTO> rolePermissionDTOMap = new HashMap<>();
-            rolePermissionDTOMap.put(rolePrefix + role.getName(), rolePermissionDTO);
-            rolePermissionSet.add(rolePermissionDTOMap);
-        });
-
-        return rolePermissionSet;
+    public List<RolePermissionDTO> loadAllRolePermission(Condition<Long> condition) {
+        return packageCollectResult(PermissionRelationDao.loadAllRolePermission(condition));
     }
 
     @Override
-    public Set<Role> queryRoleByPermissionPath(String permissionPath) {
-        AssertUtils.stateThrow(StringUtils.hasLength(permissionPath), () -> new RoleException("权限路径不能为null或者空"));
-        return packageRole(permissionPath);
-    }
-
-    @Override
-    public Set<UserVO> queryUserByPermissionPath(String permissionPath) {
-        Set<UserVO> userVOSet = new HashSet<>();
-        AssertUtils.stateThrow(StringUtils.hasLength(permissionPath), () -> new RoleException("权限路径不能为null或者空"));
-        // 查询此permissionPath对应的uid
-        Set<Role> roleSet = packageRole(permissionPath);
-        // 获取role，然后查询用户信息
-        roleSet.stream().forEach(role -> {
-            List<UserRoleRelationship> userRoleRelationshipList = userRoleRelationshipService
-                    .selectAllUserRoleRelationship(Condition.instant(role.getUid(), false));
-            // 遍历查询用户
-            userRoleRelationshipList.forEach(userRoleRelationship -> {
-                UserVO userVO = userService.queryByUid(userRoleRelationship.getUserUid());
-                userVOSet.add(userVO);
-            });
-        });
-        return userVOSet;
+    public List<RolePermissionDTO> queryRoleByPermissionPath(String permissionPath) {
+        return packageCollectResult(PermissionRelationDao.queryRoleByPermissionPath(permissionPath));
     }
 
     @Transactional
@@ -211,10 +149,11 @@ public class PermissionRelationServiceImpl implements PermissionRelationService 
     @Override
     public int insertRolePermissionBatch(long[] roleUidArr, long permissionUid) {
         final int[] successNum = {0};
+
         // 判断此permissionUid是否可用
         AssertUtils.stateThrow(permissionService.selectByUid(permissionUid) != null,
                 () -> new UserException(ResponseStatusCodeEnum.PERMISSION_RESOURCE_NOT_RIGHT));
-
+        Assert.notNull(roleUidArr, "传入的角色uid不能为null");
         // 遍历可用的roleUid
         Arrays.stream(roleUidArr)
                 .filter(roleUid -> roleService.selectByUid(roleUid) != null)
@@ -278,54 +217,14 @@ public class PermissionRelationServiceImpl implements PermissionRelationService 
         return successNum[0];
     }
 
-    private Set<Map<String,String>> packagePermission(Long uid, boolean isUserUid) {
-        Set<Map<String,String>> permissionSet = new HashSet<>();
-
-        // 通过userUid查询此用户所拥有的所有角色信息
-        List<UserRoleRelationship> userRoleRelationshipList = userRoleRelationshipService
-                .selectAllUserRoleRelationship(Condition.instant(uid, isUserUid));
-
-        // 遍历，在根据角色uid查询所拥有的权限
-        userRoleRelationshipList.forEach(userRoleRelationship -> {
-            // 查询此roleUid对应的角色信息
-            Role role = roleService.selectByUid(userRoleRelationship.getRoleUid());
-            // 查询此角色对应的路径权限
-            List<RolePermissionRelationship> rolePermissionRelationshipList = rolePermissionRelationshipService
-                    .selectAllRolePermissionRelationship(Condition.instant(userRoleRelationship.getRoleUid(), true));
-            rolePermissionRelationshipList.forEach(rolePermissionRelationship -> {
-                // 遍历此rolePermissionRelationshipList，取出path
-                // 查询此permissionUid对应的信息
-                Permission permission = permissionService.selectByUid(rolePermissionRelationship.getPermissionUid());
-                // 进行角色和路径权限的组装
-                Map<String,String> map = new HashMap<>();
-                map.put(rolePrefix + role.getName(), permission.getPath());
-                permissionSet.add(map);
-            });
-        });
-
-        return permissionSet;
-    }
-
-    private Set<Role> packageRole(String permissionPath) {
-        Set<Role> roleSet = new HashSet<>();
-        // 1. 获取此permissionPath对应的uid
-        List<Permission> permissionList = permissionService.selectAllPermission(Condition.instant(permissionPath)).getResult();
-
-        // 2. 遍历，取出每一个元素，然后查询对应的role
-        permissionList.forEach(permission -> {
-            Long permissionUid = permission.getUid();
-            // 查询role
-            List<RolePermissionRelationship> rolePermissionRelationshipList = rolePermissionRelationshipService
-                    .selectAllRolePermissionRelationship(Condition.instant(permissionUid, false));
-
-            // 遍历rolePermissionRelationshipList，查询对应的role
-            rolePermissionRelationshipList.forEach(rolePermissionRelationship -> {
-                Role role = roleService.selectByUid(rolePermissionRelationship.getRoleUid());
-                // 添加到set中
-                roleSet.add(role);
-            });
-        });
-
-        return roleSet;
+    /**
+     * 因为存放在数据库中的角色名没有加上前缀ROLE_，所以统一在这里，对返回结果的角色名，加上前缀
+     * @param rolePermissionDTOList
+     * @return
+     */
+    private List<RolePermissionDTO> packageCollectResult(List<RolePermissionDTO> rolePermissionDTOList) {
+        return rolePermissionDTOList.stream()
+                .peek(rolePermissionDTO -> rolePermissionDTO.setRoleName(rolePrefix + rolePermissionDTO.getRoleName()))
+                .collect(Collectors.toList());
     }
 }

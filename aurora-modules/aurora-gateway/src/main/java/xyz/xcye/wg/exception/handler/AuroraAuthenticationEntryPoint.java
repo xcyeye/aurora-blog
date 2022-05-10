@@ -1,4 +1,4 @@
-package xyz.xcye.wg.handler;
+package xyz.xcye.wg.exception.handler;
 
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.server.ServerAuthenticationEntryPoint;

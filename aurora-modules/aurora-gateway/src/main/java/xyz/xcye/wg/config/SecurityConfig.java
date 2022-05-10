@@ -18,8 +18,8 @@ import org.springframework.security.web.server.authorization.AuthorizationContex
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.reactive.CorsWebFilter;
 import org.springframework.web.cors.reactive.UrlBasedCorsConfigurationSource;
-import xyz.xcye.wg.handler.AuroraAccessDeniedHandler;
-import xyz.xcye.wg.handler.AuroraAuthenticationEntryPoint;
+import xyz.xcye.wg.exception.handler.AuroraAccessDeniedHandler;
+import xyz.xcye.wg.exception.handler.AuroraAuthenticationEntryPoint;
 
 
 /**

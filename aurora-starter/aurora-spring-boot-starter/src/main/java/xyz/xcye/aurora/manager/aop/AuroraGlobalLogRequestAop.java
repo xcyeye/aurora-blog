@@ -50,6 +50,9 @@ public class AuroraGlobalLogRequestAop {
         Object[] args = point.getArgs();
         StringBuilder builder = new StringBuilder();
         for (Object arg : args) {
+            if (arg == null) {
+                continue;
+            }
             String simpleName = arg.getClass().getSimpleName();
             builder.append(simpleName);
             builder.append(",");

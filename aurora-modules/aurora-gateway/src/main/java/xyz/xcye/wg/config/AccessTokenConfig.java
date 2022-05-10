@@ -9,6 +9,7 @@ import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 import xyz.xcye.auth.enums.TokenConstant;
+import xyz.xcye.core.constant.oauth.OauthJwtConstant;
 import xyz.xcye.wg.model.SecurityUserDetails;
 
 import java.util.LinkedHashMap;
@@ -22,7 +23,7 @@ import java.util.LinkedHashMap;
 public class AccessTokenConfig {
 
     /**
-     * 令牌的存储策略
+     * 令牌的存储策略，因为认证中心的令牌存储方式为jwt，这里也需要一样
      */
     @Bean
     public TokenStore tokenStore() {
@@ -33,7 +34,6 @@ public class AccessTokenConfig {
     /**
      * JwtAccessTokenConverter
      * TokenEnhancer的子类，在JWT编码的令牌值和OAuth身份验证信息之间进行转换。
-     * TODO：后期可以使用非对称加密
      */
     @Bean
     public JwtAccessTokenConverter jwtAccessTokenConverter(){
@@ -53,15 +53,17 @@ public class AccessTokenConfig {
          */
         @Override
         public OAuth2AccessToken enhance(OAuth2AccessToken accessToken, OAuth2Authentication authentication) {
-            //获取userDetailService中查询到用户信息
-            SecurityUserDetails user=(SecurityUserDetails)authentication.getUserAuthentication().getPrincipal();
-            //将额外的信息放入到LinkedHashMap中
-            LinkedHashMap<String,Object> extendInformation=new LinkedHashMap<>();
-            //设置用户的userId
-            extendInformation.put("userUid",user.getUserUid());
-            extendInformation.put("username",user.getUsername());
+            // 获取查询到的用户信息
+            SecurityUserDetails user = (SecurityUserDetails) authentication.getUserAuthentication().getPrincipal();
+            // 将额外的信息放入hashmap中
+            LinkedHashMap<String, Object> extendInformation = new LinkedHashMap<>();
+            // 添加userUid
+            extendInformation.put(OauthJwtConstant.USER_UID, user.getUserUid());
+            extendInformation.put(OauthJwtConstant.NICKNAME, user.getNickname());
+            extendInformation.put(OauthJwtConstant.USERNAME, user.getUsername());
+            extendInformation.put(OauthJwtConstant.VERIFY_EMAIL, user.getVerifyEmail());
 
-            //添加到additionalInformation
+            // 将extendInformation添加到额外的信息中
             ((DefaultOAuth2AccessToken) accessToken).setAdditionalInformation(extendInformation);
             return super.enhance(accessToken, authentication);
         }

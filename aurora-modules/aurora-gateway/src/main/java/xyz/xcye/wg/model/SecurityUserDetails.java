@@ -115,17 +115,4 @@ public class SecurityUserDetails implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
-
-
-
-    /**
-     * 设置用户所拥有的权限信息
-     * @param permissionInfo 权限和角色集合
-     */
-    /*public void setGrantedAuthorities(List<String> permissionInfo) {
-        grantedAuthorities = new ArrayList<>();
-        permissionInfo.forEach(permission -> {
-            grantedAuthorities.add((GrantedAuthority) () -> permission);
-        });
-    }*/
 }

@@ -16,6 +16,7 @@ import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 import xyz.xcye.admin.constant.RedisStorageConstant;
 import xyz.xcye.admin.dto.RolePermissionDTO;
+import xyz.xcye.core.constant.oauth.OauthJwtConstant;
 
 import java.net.URI;
 import java.util.ArrayList;
@@ -86,8 +87,8 @@ public class AuroraReactiveAuthorizationManager implements ReactiveAuthorization
                 .map(GrantedAuthority::getAuthority)
                 //如果权限包含则判断为true
                 .any(authority->{
-                    //超级管理员直接放行
-                    if ("ROLE_ROOT".equals(authority))
+                    // 超级管理员直接放行
+                    if (OauthJwtConstant.SUPER_ADMINISTRATOR_ROLE_NAME.equals(authority))
                         return true;
                     //其他必须要判断角色是否存在交集
                     return CollectionUtil.isNotEmpty(roleList) && roleList.contains(authority);

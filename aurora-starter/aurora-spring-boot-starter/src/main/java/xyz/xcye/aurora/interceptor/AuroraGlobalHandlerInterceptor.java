@@ -1,9 +1,11 @@
 package xyz.xcye.aurora.interceptor;
 
+import cn.hutool.core.codec.Base64;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
+import xyz.xcye.core.constant.oauth.OauthJwtConstant;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -19,8 +21,11 @@ public class AuroraGlobalHandlerInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 
-        String header = request.getHeader("OAuthConstant.TOKEN_NAME");
-       System.out.println(header);
+        String header = request.getHeader(OauthJwtConstant.REQUEST_TOKEN_NAME);
+        String header1 = request.getHeader(OauthJwtConstant.REQUEST_JWT_TOKEN_NAME);
+        System.out.println(header);
+
+        byte[] decode = Base64.decode(header);
 
         /*
         * 从请求头中xid，如果此xid不为null，则绑定到RootContext中

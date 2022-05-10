@@ -6,6 +6,7 @@ import org.springframework.util.Assert;
 import xyz.xcye.admin.dao.RoleMapper;
 import xyz.xcye.admin.po.Role;
 import xyz.xcye.admin.service.RoleService;
+import xyz.xcye.core.enums.ResponseStatusCodeEnum;
 import xyz.xcye.core.util.lambda.AssertUtils;
 import xyz.xcye.core.exception.role.RoleException;
 import xyz.xcye.core.util.BeanUtils;
@@ -29,6 +30,9 @@ public class RoleServiceImpl implements RoleService {
     public int insertRole(Role role) {
         Assert.notNull(role, "角色信息不能为null");
         AssertUtils.ifNullThrow(role.getName(), () -> new RoleException("角色名字不能为null"));
+        // 查看此角色是否存在
+        AssertUtils.stateThrow(selectAllRole(Condition.instant(role.getName())).getResult().isEmpty(),
+                () -> new RoleException(ResponseStatusCodeEnum.PERMISSION_ROLE_HAD_EXISTS));
         role.setCreateTime(DateUtils.format());
         role.setStatus(false);
         return roleMapper.insertRole(role);
