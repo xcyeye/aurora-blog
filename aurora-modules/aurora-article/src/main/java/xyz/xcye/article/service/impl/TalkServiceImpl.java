@@ -83,6 +83,7 @@ public class TalkServiceImpl implements TalkService {
     public int updateByPrimaryKeySelective(Talk record) {
         Assert.notNull(record, "说说信息不能为null");
         record.setUpdatedTime(DateUtils.format());
+        record.setUserUid(null);
         return talkMapper.updateByPrimaryKeySelective(record);
     }
 }

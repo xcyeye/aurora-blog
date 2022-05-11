@@ -75,10 +75,7 @@ public class ArticleServiceImpl implements ArticleService {
         record.setCreateTime(null);
         record.setDelete(false);
 
-        JwtUserInfo jwtUserInfo = userUtils.getCurrentUser();
-        AssertUtils.stateThrow(jwtUserInfo != null,
-                () -> new UserException(ResponseStatusCodeEnum.PERMISSION_USER_NOT_LOGIN));
-        record.setUserUid(jwtUserInfo.getUserUid());
+        setUserUid(record);
         // 查询可用的类别和分类
         setEffectiveTagAndCategory(record);
         return articleMapper.insertSelective(record);
@@ -100,6 +97,7 @@ public class ArticleServiceImpl implements ArticleService {
         Assert.notNull(record, "文章数据不能为null");
         record.setUpdateTime(DateUtils.format());
         setEffectiveTagAndCategory(record);
+        record.setUserUid(null);
         return articleMapper.updateByPrimaryKeySelective(record);
     }
 
@@ -121,5 +119,12 @@ public class ArticleServiceImpl implements ArticleService {
 
         article.setCategoryUids(effectiveCategoryUids);
         article.setTagUids(effectiveTagUids);
+    }
+
+    private void setUserUid(Article article) {
+        JwtUserInfo jwtUserInfo = userUtils.getCurrentUser();
+        AssertUtils.stateThrow(jwtUserInfo != null,
+                () -> new UserException(ResponseStatusCodeEnum.PERMISSION_USER_NOT_LOGIN));
+        article.setUserUid(jwtUserInfo.getUserUid());
     }
 }

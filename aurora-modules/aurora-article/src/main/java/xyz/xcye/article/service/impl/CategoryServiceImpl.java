@@ -77,6 +77,7 @@ public class CategoryServiceImpl implements CategoryService {
     public int updateByPrimaryKeySelective(Category record) {
         Assert.notNull(record, "类别不能为null");
         record.setUpdateTime(DateUtils.format());
+        record.setUserUid(null);
         return categoryMapper.updateByPrimaryKeySelective(record);
     }
 }

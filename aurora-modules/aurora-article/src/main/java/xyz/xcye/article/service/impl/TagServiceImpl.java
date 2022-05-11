@@ -75,6 +75,7 @@ public class TagServiceImpl implements TagService {
     public int updateByPrimaryKeySelective(Tag record) {
         Assert.notNull(record, "标签信息不能为null");
         record.setUpdatedTime(DateUtils.format());
+        record.setUserUid(null);
         return tagMapper.updateByPrimaryKeySelective(record);
     }
 }
