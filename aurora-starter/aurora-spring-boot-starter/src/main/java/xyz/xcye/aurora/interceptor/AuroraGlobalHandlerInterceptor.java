@@ -39,6 +39,12 @@ public class AuroraGlobalHandlerInterceptor implements HandlerInterceptor {
             return true;
         }
 
+        // 判断当前请求是否是从认证中心发出的
+        String oauthQueryPwdHeader = request.getHeader(OauthJwtConstant.REQUEST_OAUTH_SERVER_QUERY_PASSWORD);
+        if ("true".equals(oauthQueryPwdHeader)) {
+            return true;
+        }
+
         String jwtUserInfoBase64 = request.getHeader(OauthJwtConstant.REQUEST_TOKEN_NAME);
         String jwtUserInfoStr = Base64.decodeStr(jwtUserInfoBase64);
 
@@ -52,14 +58,6 @@ public class AuroraGlobalHandlerInterceptor implements HandlerInterceptor {
         if (jwtToken == null || jwtUserInfo == null) {
             return setResponseJsonText(response, ResponseStatusCodeEnum.PERMISSION_USER_NOT_LOGIN);
         }
-
-        /*
-        * 从请求头中xid，如果此xid不为null，则绑定到RootContext中
-        * */
-        /*String globalXid = request.getHeader(SeataConstant.GLOBAL_XID_REQUEST_HEADER_NAME);
-        if (StringUtils.hasLength(globalXid)) {
-            RootContext.bind(globalXid);
-        }*/
 
         // 判断此token是否失效
         boolean expiration = false;

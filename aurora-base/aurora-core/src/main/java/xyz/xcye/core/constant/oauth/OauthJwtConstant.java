@@ -23,4 +23,6 @@ public class OauthJwtConstant {
     public static final String REQUEST_JWT_TOKEN_NAME = "authentication_jwt";
     /** 网关处向下层服务传递时，判断当前请求地址是否为白名单，并将此标识设置到请求头上，类型为true或者false **/
     public static final String REQUEST_WHITE_URL_FLAG_NAME = "white_url_flag";
+    /** 如果一个查询密码的请求是从认证中心发出的，那么会在请求头中添加一个标识，字符串的boolean值 **/
+    public static final String REQUEST_OAUTH_SERVER_QUERY_PASSWORD = "oauth_query_pwd";
 }

@@ -4,6 +4,7 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.cloud.openfeign.SpringQueryMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import xyz.xcye.core.entity.R;
 import xyz.xcye.data.entity.Condition;
 
@@ -24,6 +25,6 @@ public interface UserFeignService {
     @GetMapping("/admin/user/{username}")
     R queryUserByUsername(@PathVariable("username") String username);
 
-    @GetMapping("/admin/user/pwd/{username}")
+    @PostMapping("/admin/user/pwd/{username}")
     R queryUserByUsernameContainPassword(@PathVariable("username") String username);
 }

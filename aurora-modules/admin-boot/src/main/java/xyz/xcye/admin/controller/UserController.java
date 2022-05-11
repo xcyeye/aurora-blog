@@ -75,7 +75,7 @@ public class UserController {
         return userService.queryByUsername(username);
     }
 
-    @GetMapping("/pwd/{username}")
+    @PostMapping("/pwd/{username}")
     @SelectOperation
     @ApiOperation(value = "通过username查询用户信息")
     public User queryUserByUsernameContainPassword(@PathVariable("username") String username) {
