@@ -3,27 +3,29 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>aurora-theme</artifactId>
-        <groupId>xyz.xcye</groupId>
+        <artifactId>common-api</artifactId>
+        <groupId>xyz.xcye.api</groupId>
         <version>1.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>xyz.xcye.api</groupId>
-    <artifactId>common-api</artifactId>
-    <packaging>pom</packaging>
-    <version>1.0-SNAPSHOT</version>
-    <modules>
-        <module>amqp-mail-api</module>
-        <module>mail-api</module>
-        <module>admin-api</module>
-        <module>oauth-api</module>
-        <module>article-api</module>
-    </modules>
+    <artifactId>article-api</artifactId>
 
     <properties>
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
     </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>xyz.xcye.starter</groupId>
+            <artifactId>aurora-feign-starter</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>xyz.xcye.base</groupId>
+            <artifactId>aurora-core</artifactId>
+        </dependency>
+    </dependencies>
 
 </project>

@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xyz.xcye.article.dao.TalkMapper">
+  <resultMap id="BaseResultMap" type="xyz.xcye.article.po.Talk">
+    <!--@mbg.generated-->
+    <!--@Table au_talk-->
+    <id column="uid" jdbcType="BIGINT" property="uid" />
+    <result column="user_uid" jdbcType="BIGINT" property="userUid" />
+    <result column="is_show_comment" jdbcType="TINYINT" property="showComment" />
+    <result column="comment_uids" jdbcType="VARCHAR" property="commentUids" />
+    <result column="updated_time" jdbcType="TIMESTAMP" property="updatedTime" />
+    <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="is_show" jdbcType="TINYINT" property="show" />
+    <result column="like_number" jdbcType="INTEGER" property="likeNumber" />
+    <result column="picture_uids" jdbcType="VARCHAR" property="pictureUids" />
+    <result column="is_delete" jdbcType="TINYINT" property="delete" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="xyz.xcye.article.po.Talk">
+    <!--@mbg.generated-->
+    <!--@Table au_talk-->
+    <result column="content" jdbcType="LONGVARCHAR" property="content" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    `uid`, user_uid, is_show_comment, comment_uids, updated_time, created_time, title, 
+    is_show, like_number, picture_uids, is_delete
+  </sql>
+  <sql id="Blob_Column_List">
+    <!--@mbg.generated-->
+    content
+  </sql>
+  <select id="selectByCondition" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
+    <!--@mbg.generated-->
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from au_talk
+    <where>
+      <if test="condition.startTime != null and condition.endTime != null">
+        and create_time between #{condition.startTime} and #{condition.endTime}
+      </if>
+      <if test="condition.uid != null">
+        and uid=#{condition.uid}
+      </if>
+      <if test="condition.otherUid != null">
+        and user_uid=#{condition.otherUid}
+      </if>
+      <if test="condition.keyword != null">
+        and content like concat('%',#{condition.keyword},'%')
+      </if>
+      <if test="condition.status != null">
+        and is_show_comment=#{condition.status,jdbcType=BOOLEAN}
+      </if>
+      <if test="condition.delete != null">
+        and is_delete=#{condition.delete}
+      </if>
+      <if test="condition.show != null">
+        is_show=#{condition.show}
+      </if>
+    </where>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    <!--@mbg.generated-->
+    delete from au_talk
+    where `uid` = #{uid,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="xyz.xcye.article.po.Talk">
+    <!--@mbg.generated-->
+    insert into au_talk (`uid`, user_uid, is_show_comment, 
+      comment_uids, updated_time, created_time, 
+      title, is_show, like_number, 
+      picture_uids, is_delete, content
+      )
+    values (#{uid,jdbcType=BIGINT}, #{userUid,jdbcType=BIGINT}, #{showComment,jdbcType=TINYINT}, 
+      #{commentUids,jdbcType=VARCHAR}, #{updatedTime,jdbcType=TIMESTAMP}, #{createdTime,jdbcType=TIMESTAMP}, 
+      #{title,jdbcType=VARCHAR}, #{show,jdbcType=TINYINT}, #{likeNumber,jdbcType=INTEGER}, 
+      #{pictureUids,jdbcType=VARCHAR}, #{delete,jdbcType=TINYINT}, #{content,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="xyz.xcye.article.po.Talk">
+    <!--@mbg.generated-->
+    insert into au_talk
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="uid != null">
+        `uid`,
+      </if>
+      <if test="userUid != null">
+        user_uid,
+      </if>
+      <if test="showComment != null">
+        is_show_comment,
+      </if>
+      <if test="commentUids != null and commentUids != ''">
+        comment_uids,
+      </if>
+      <if test="updatedTime != null">
+        updated_time,
+      </if>
+      <if test="createdTime != null">
+        created_time,
+      </if>
+      <if test="title != null and title != ''">
+        title,
+      </if>
+      <if test="show != null">
+        is_show,
+      </if>
+      <if test="likeNumber != null">
+        like_number,
+      </if>
+      <if test="pictureUids != null and pictureUids != ''">
+        picture_uids,
+      </if>
+      <if test="delete != null">
+        is_delete,
+      </if>
+      <if test="content != null and content != ''">
+        content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="uid != null">
+        #{uid,jdbcType=BIGINT},
+      </if>
+      <if test="userUid != null">
+        #{userUid,jdbcType=BIGINT},
+      </if>
+      <if test="showComment != null">
+        #{showComment,jdbcType=TINYINT},
+      </if>
+      <if test="commentUids != null and commentUids != ''">
+        #{commentUids,jdbcType=VARCHAR},
+      </if>
+      <if test="updatedTime != null">
+        #{updatedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdTime != null">
+        #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="title != null and title != ''">
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="show != null">
+        #{show,jdbcType=TINYINT},
+      </if>
+      <if test="likeNumber != null">
+        #{likeNumber,jdbcType=INTEGER},
+      </if>
+      <if test="pictureUids != null and pictureUids != ''">
+        #{pictureUids,jdbcType=VARCHAR},
+      </if>
+      <if test="delete != null">
+        #{delete,jdbcType=TINYINT},
+      </if>
+      <if test="content != null and content != ''">
+        #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="xyz.xcye.article.po.Talk">
+    <!--@mbg.generated-->
+    update au_talk
+    <set>
+      <if test="userUid != null">
+        user_uid = #{userUid,jdbcType=BIGINT},
+      </if>
+      <if test="showComment != null">
+        is_show_comment = #{showComment,jdbcType=TINYINT},
+      </if>
+      <if test="commentUids != null and commentUids != ''">
+        comment_uids = #{commentUids,jdbcType=VARCHAR},
+      </if>
+      <if test="updatedTime != null">
+        updated_time = #{updatedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdTime != null">
+        created_time = #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="title != null and title != ''">
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="show != null">
+        is_show = #{show,jdbcType=TINYINT},
+      </if>
+      <if test="likeNumber != null">
+        like_number = #{likeNumber,jdbcType=INTEGER},
+      </if>
+      <if test="pictureUids != null and pictureUids != ''">
+        picture_uids = #{pictureUids,jdbcType=VARCHAR},
+      </if>
+      <if test="delete != null">
+        is_delete = #{delete,jdbcType=TINYINT},
+      </if>
+      <if test="content != null and content != ''">
+        content = #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where `uid` = #{uid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="xyz.xcye.article.po.Talk">
+    <!--@mbg.generated-->
+    update au_talk
+    set user_uid = #{userUid,jdbcType=BIGINT},
+      is_show_comment = #{showComment,jdbcType=TINYINT},
+      comment_uids = #{commentUids,jdbcType=VARCHAR},
+      updated_time = #{updatedTime,jdbcType=TIMESTAMP},
+      created_time = #{createdTime,jdbcType=TIMESTAMP},
+      title = #{title,jdbcType=VARCHAR},
+      is_show = #{show,jdbcType=TINYINT},
+      like_number = #{likeNumber,jdbcType=INTEGER},
+      picture_uids = #{pictureUids,jdbcType=VARCHAR},
+      is_delete = #{delete,jdbcType=TINYINT},
+      content = #{content,jdbcType=LONGVARCHAR}
+    where `uid` = #{uid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="xyz.xcye.article.po.Talk">
+    <!--@mbg.generated-->
+    update au_talk
+    set user_uid = #{userUid,jdbcType=BIGINT},
+      is_show_comment = #{showComment,jdbcType=TINYINT},
+      comment_uids = #{commentUids,jdbcType=VARCHAR},
+      updated_time = #{updatedTime,jdbcType=TIMESTAMP},
+      created_time = #{createdTime,jdbcType=TIMESTAMP},
+      title = #{title,jdbcType=VARCHAR},
+      is_show = #{show,jdbcType=TINYINT},
+      like_number = #{likeNumber,jdbcType=INTEGER},
+      picture_uids = #{pictureUids,jdbcType=VARCHAR},
+      is_delete = #{delete,jdbcType=TINYINT}
+    where `uid` = #{uid,jdbcType=BIGINT}
+  </update>
+</mapper>

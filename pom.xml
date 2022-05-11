@@ -273,6 +273,12 @@
                 <version>${blog.version}</version>
             </dependency>
 
+            <dependency>
+                <groupId>xyz.xcye.base</groupId>
+                <artifactId>article-common</artifactId>
+                <version>${blog.version}</version>
+            </dependency>
+
             <!--自定义api-->
             <dependency>
                 <groupId>xyz.xcye.api</groupId>
@@ -295,6 +301,12 @@
             <dependency>
                 <groupId>xyz.xcye.api</groupId>
                 <artifactId>oauth-api</artifactId>
+                <version>${blog.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>xyz.xcye.api</groupId>
+                <artifactId>article-api</artifactId>
                 <version>${blog.version}</version>
             </dependency>
         </dependencies>

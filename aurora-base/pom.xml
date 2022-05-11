@@ -21,5 +21,6 @@
         <module>message-common</module>
         <module>auth-common</module>
         <module>data-common</module>
+        <module>article-common</module>
     </modules>
 </project>

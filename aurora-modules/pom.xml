@@ -25,6 +25,7 @@
         <module>comment-boot</module>
         <module>message-boot</module>
         <module>oauth-auth-server</module>
+        <module>aurora-article</module>
     </modules>
 
 </project>

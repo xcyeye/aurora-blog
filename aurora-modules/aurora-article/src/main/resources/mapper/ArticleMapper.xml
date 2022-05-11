@@ -1,0 +1,347 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xyz.xcye.article.dao.ArticleMapper">
+  <resultMap id="BaseResultMap" type="xyz.xcye.article.po.Article">
+    <!--@mbg.generated-->
+    <!--@Table au_article-->
+    <id column="uid" jdbcType="BIGINT" property="uid" />
+    <result column="is_show_comment" jdbcType="TINYINT" property="showComment" />
+    <result column="accessory_uids" jdbcType="VARCHAR" property="accessoryUids" />
+    <result column="category_uids" jdbcType="VARCHAR" property="categoryUids" />
+    <result column="tag_uids" jdbcType="VARCHAR" property="tagUids" />
+    <result column="is_publish" jdbcType="TINYINT" property="publish" />
+    <result column="user_uid" jdbcType="BIGINT" property="userUid" />
+    <result column="is_original_article" jdbcType="TINYINT" property="originalArticle" />
+    <result column="original_article_url" jdbcType="VARCHAR" property="originalArticleUrl" />
+    <result column="cover_picture_url" jdbcType="VARCHAR" property="coverPictureUrl" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="summary" jdbcType="VARCHAR" property="summary" />
+    <result column="is_timing" jdbcType="TINYINT" property="timing" />
+    <result column="timing_publish_time" jdbcType="TIMESTAMP" property="timingPublishTime" />
+    <result column="like_number" jdbcType="INTEGER" property="likeNumber" />
+    <result column="read_number" jdbcType="INTEGER" property="readNumber" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="is_delete" jdbcType="TINYINT" property="delete" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="xyz.xcye.article.po.Article">
+    <!--@mbg.generated-->
+    <!--@Table au_article-->
+    <result column="content" jdbcType="LONGVARCHAR" property="content" />
+    <result column="comment_uids" jdbcType="LONGVARCHAR" property="commentUids" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    `uid`, is_show_comment, accessory_uids, category_uids, tag_uids, is_publish, user_uid, 
+    is_original_article, original_article_url, cover_picture_url, title, summary, is_timing, 
+    timing_publish_time, like_number, read_number, update_time, create_time, is_delete
+  </sql>
+  <sql id="Blob_Column_List">
+    <!--@mbg.generated-->
+    content, comment_uids
+  </sql>
+  <select id="selectByCondition" resultMap="ResultMapWithBLOBs">
+    <!--@mbg.generated-->
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from au_article
+    <where>
+      <if test="condition.startTime != null and condition.endTime != null">
+        and create_time between #{condition.startTime} and #{condition.endTime}
+      </if>
+      <if test="condition.uid != null">
+        and uid=#{condition.uid}
+      </if>
+      <if test="condition.otherUid != null">
+        and user_uid=#{condition.otherUid}
+      </if>
+      <if test="condition.keyword != null">
+        and content=#{condition.keyword}
+      </if>
+      <if test="condition.delete != null">
+        and is_delete=#{condition.delete}
+      </if>
+      <if test="condition.status != null">
+        and is_publish=#{condition.status}
+      </if>
+      <if test="condition.show != null ">
+        and is_show_comment=#{condition.show}
+      </if>
+    </where>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    <!--@mbg.generated-->
+    delete from au_article
+    where `uid` = #{uid,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="xyz.xcye.article.po.Article">
+    <!--@mbg.generated-->
+    insert into au_article (`uid`, is_show_comment, accessory_uids, 
+      category_uids, tag_uids, is_publish, 
+      user_uid, is_original_article, original_article_url, 
+      cover_picture_url, title, summary, 
+      is_timing, timing_publish_time, like_number, 
+      read_number, update_time, create_time, 
+      is_delete, content, comment_uids
+      )
+    values (#{uid,jdbcType=BIGINT}, #{showComment,jdbcType=TINYINT}, #{accessoryUids,jdbcType=VARCHAR}, 
+      #{categoryUids,jdbcType=VARCHAR}, #{tagUids,jdbcType=VARCHAR}, #{publish,jdbcType=TINYINT}, 
+      #{userUid,jdbcType=BIGINT}, #{originalArticle,jdbcType=TINYINT}, #{originalArticleUrl,jdbcType=VARCHAR}, 
+      #{coverPictureUrl,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, #{summary,jdbcType=VARCHAR}, 
+      #{timing,jdbcType=TINYINT}, #{timingPublishTime,jdbcType=TIMESTAMP}, #{likeNumber,jdbcType=INTEGER}, 
+      #{readNumber,jdbcType=INTEGER}, #{updateTime,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{delete,jdbcType=TINYINT}, #{content,jdbcType=LONGVARCHAR}, #{commentUids,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="xyz.xcye.article.po.Article">
+    <!--@mbg.generated-->
+    insert into au_article
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="uid != null">
+        `uid`,
+      </if>
+      <if test="showComment != null">
+        is_show_comment,
+      </if>
+      <if test="accessoryUids != null and accessoryUids != ''">
+        accessory_uids,
+      </if>
+      <if test="categoryUids != null and categoryUids != ''">
+        category_uids,
+      </if>
+      <if test="tagUids != null and tagUids != ''">
+        tag_uids,
+      </if>
+      <if test="publish != null">
+        is_publish,
+      </if>
+      <if test="userUid != null">
+        user_uid,
+      </if>
+      <if test="originalArticle != null">
+        is_original_article,
+      </if>
+      <if test="originalArticleUrl != null and originalArticleUrl != ''">
+        original_article_url,
+      </if>
+      <if test="coverPictureUrl != null and coverPictureUrl != ''">
+        cover_picture_url,
+      </if>
+      <if test="title != null and title != ''">
+        title,
+      </if>
+      <if test="summary != null and summary != ''">
+        summary,
+      </if>
+      <if test="timing != null">
+        is_timing,
+      </if>
+      <if test="timingPublishTime != null">
+        timing_publish_time,
+      </if>
+      <if test="likeNumber != null">
+        like_number,
+      </if>
+      <if test="readNumber != null">
+        read_number,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="delete != null">
+        is_delete,
+      </if>
+      <if test="content != null and content != ''">
+        content,
+      </if>
+      <if test="commentUids != null and commentUids != ''">
+        comment_uids,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="uid != null">
+        #{uid,jdbcType=BIGINT},
+      </if>
+      <if test="showComment != null">
+        #{showComment,jdbcType=TINYINT},
+      </if>
+      <if test="accessoryUids != null and accessoryUids != ''">
+        #{accessoryUids,jdbcType=VARCHAR},
+      </if>
+      <if test="categoryUids != null and categoryUids != ''">
+        #{categoryUids,jdbcType=VARCHAR},
+      </if>
+      <if test="tagUids != null and tagUids != ''">
+        #{tagUids,jdbcType=VARCHAR},
+      </if>
+      <if test="publish != null">
+        #{publish,jdbcType=TINYINT},
+      </if>
+      <if test="userUid != null">
+        #{userUid,jdbcType=BIGINT},
+      </if>
+      <if test="originalArticle != null">
+        #{originalArticle,jdbcType=TINYINT},
+      </if>
+      <if test="originalArticleUrl != null and originalArticleUrl != ''">
+        #{originalArticleUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="coverPictureUrl != null and coverPictureUrl != ''">
+        #{coverPictureUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null and title != ''">
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="summary != null and summary != ''">
+        #{summary,jdbcType=VARCHAR},
+      </if>
+      <if test="timing != null">
+        #{timing,jdbcType=TINYINT},
+      </if>
+      <if test="timingPublishTime != null">
+        #{timingPublishTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="likeNumber != null">
+        #{likeNumber,jdbcType=INTEGER},
+      </if>
+      <if test="readNumber != null">
+        #{readNumber,jdbcType=INTEGER},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="delete != null">
+        #{delete,jdbcType=TINYINT},
+      </if>
+      <if test="content != null and content != ''">
+        #{content,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="commentUids != null and commentUids != ''">
+        #{commentUids,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="xyz.xcye.article.po.Article">
+    <!--@mbg.generated-->
+    update au_article
+    <set>
+      <if test="showComment != null">
+        is_show_comment = #{showComment,jdbcType=TINYINT},
+      </if>
+      <if test="accessoryUids != null and accessoryUids != ''">
+        accessory_uids = #{accessoryUids,jdbcType=VARCHAR},
+      </if>
+      <if test="categoryUids != null and categoryUids != ''">
+        category_uids = #{categoryUids,jdbcType=VARCHAR},
+      </if>
+      <if test="tagUids != null and tagUids != ''">
+        tag_uids = #{tagUids,jdbcType=VARCHAR},
+      </if>
+      <if test="publish != null">
+        is_publish = #{publish,jdbcType=TINYINT},
+      </if>
+      <if test="userUid != null">
+        user_uid = #{userUid,jdbcType=BIGINT},
+      </if>
+      <if test="originalArticle != null">
+        is_original_article = #{originalArticle,jdbcType=TINYINT},
+      </if>
+      <if test="originalArticleUrl != null and originalArticleUrl != ''">
+        original_article_url = #{originalArticleUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="coverPictureUrl != null and coverPictureUrl != ''">
+        cover_picture_url = #{coverPictureUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null and title != ''">
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="summary != null and summary != ''">
+        summary = #{summary,jdbcType=VARCHAR},
+      </if>
+      <if test="timing != null">
+        is_timing = #{timing,jdbcType=TINYINT},
+      </if>
+      <if test="timingPublishTime != null">
+        timing_publish_time = #{timingPublishTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="likeNumber != null">
+        like_number = #{likeNumber,jdbcType=INTEGER},
+      </if>
+      <if test="readNumber != null">
+        read_number = #{readNumber,jdbcType=INTEGER},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="delete != null">
+        is_delete = #{delete,jdbcType=TINYINT},
+      </if>
+      <if test="content != null and content != ''">
+        content = #{content,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="commentUids != null and commentUids != ''">
+        comment_uids = #{commentUids,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where `uid` = #{uid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="xyz.xcye.article.po.Article">
+    <!--@mbg.generated-->
+    update au_article
+    set is_show_comment = #{showComment,jdbcType=TINYINT},
+      accessory_uids = #{accessoryUids,jdbcType=VARCHAR},
+      category_uids = #{categoryUids,jdbcType=VARCHAR},
+      tag_uids = #{tagUids,jdbcType=VARCHAR},
+      is_publish = #{publish,jdbcType=TINYINT},
+      user_uid = #{userUid,jdbcType=BIGINT},
+      is_original_article = #{originalArticle,jdbcType=TINYINT},
+      original_article_url = #{originalArticleUrl,jdbcType=VARCHAR},
+      cover_picture_url = #{coverPictureUrl,jdbcType=VARCHAR},
+      title = #{title,jdbcType=VARCHAR},
+      summary = #{summary,jdbcType=VARCHAR},
+      is_timing = #{timing,jdbcType=TINYINT},
+      timing_publish_time = #{timingPublishTime,jdbcType=TIMESTAMP},
+      like_number = #{likeNumber,jdbcType=INTEGER},
+      read_number = #{readNumber,jdbcType=INTEGER},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      is_delete = #{delete,jdbcType=TINYINT},
+      content = #{content,jdbcType=LONGVARCHAR},
+      comment_uids = #{commentUids,jdbcType=LONGVARCHAR}
+    where `uid` = #{uid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="xyz.xcye.article.po.Article">
+    <!--@mbg.generated-->
+    update au_article
+    set is_show_comment = #{showComment,jdbcType=TINYINT},
+      accessory_uids = #{accessoryUids,jdbcType=VARCHAR},
+      category_uids = #{categoryUids,jdbcType=VARCHAR},
+      tag_uids = #{tagUids,jdbcType=VARCHAR},
+      is_publish = #{publish,jdbcType=TINYINT},
+      user_uid = #{userUid,jdbcType=BIGINT},
+      is_original_article = #{originalArticle,jdbcType=TINYINT},
+      original_article_url = #{originalArticleUrl,jdbcType=VARCHAR},
+      cover_picture_url = #{coverPictureUrl,jdbcType=VARCHAR},
+      title = #{title,jdbcType=VARCHAR},
+      summary = #{summary,jdbcType=VARCHAR},
+      is_timing = #{timing,jdbcType=TINYINT},
+      timing_publish_time = #{timingPublishTime,jdbcType=TIMESTAMP},
+      like_number = #{likeNumber,jdbcType=INTEGER},
+      read_number = #{readNumber,jdbcType=INTEGER},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      is_delete = #{delete,jdbcType=TINYINT}
+    where `uid` = #{uid,jdbcType=BIGINT}
+  </update>
+</mapper>
