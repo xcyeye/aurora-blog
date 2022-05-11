@@ -6,6 +6,7 @@ import org.springframework.util.Assert;
 import xyz.xcye.article.dao.BulletinMapper;
 import xyz.xcye.article.po.Bulletin;
 import xyz.xcye.article.service.BulletinService;
+import xyz.xcye.article.util.TimeUtils;
 import xyz.xcye.article.vo.BulletinVO;
 import xyz.xcye.aurora.properties.AuroraProperties;
 import xyz.xcye.aurora.util.UserUtils;
@@ -60,7 +61,7 @@ public class BulletinServiceImpl implements BulletinService {
         record.setDelete(false);
         record.setUid(GenerateInfoUtils.generateUid(auroraProperties.getSnowFlakeWorkerId(),
                 auroraProperties.getSnowFlakeDatacenterId()));
-
+        setTimingPublishTime(record);
         JwtUserInfo jwtUserInfo = userUtils.getCurrentUser();
         AssertUtils.stateThrow(jwtUserInfo != null,
                 () -> new UserException(ResponseStatusCodeEnum.PERMISSION_USER_NOT_LOGIN));
@@ -85,6 +86,25 @@ public class BulletinServiceImpl implements BulletinService {
         Assert.notNull(record, "公告信息不能为null");
         record.setUpdateTime(DateUtils.format());
         record.setUserUid(null);
+        setTimingPublishTime(record);
         return bulletinMapper.updateByPrimaryKeySelective(record);
     }
+
+    /**
+     * 判断公告对象中的定时发布时间是否规范，如果不规范，则设置为null
+     * @param bulletin
+     */
+    private void setTimingPublishTime(Bulletin bulletin) {
+        if (!bulletin.getTiming()) {
+            bulletin.setTimingPublishTime(null);
+            return;
+        }
+        if (!TimeUtils.isTimingPublishTime(bulletin.getTimingPublishTime())) {
+            bulletin.setTiming(false);
+            bulletin.setTimingPublishTime(null);
+            return;
+        }
+        bulletin.setTimingPublishTime(DateUtils.parse(bulletin.getTimingPublishTime()));
+    }
+
 }

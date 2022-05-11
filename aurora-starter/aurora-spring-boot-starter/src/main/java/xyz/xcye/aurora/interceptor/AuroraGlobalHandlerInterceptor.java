@@ -2,7 +2,6 @@ package xyz.xcye.aurora.interceptor;
 
 import cn.hutool.core.codec.Base64;
 import com.alibaba.fastjson.JSON;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -29,7 +28,6 @@ import java.util.Optional;
 
 
 @Component
-@Slf4j
 public class AuroraGlobalHandlerInterceptor implements HandlerInterceptor {
 
     @Override

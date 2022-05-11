@@ -50,7 +50,7 @@ spring:
     pathmatch:
       matching-strategy: ant_path_matcher
   application:
-    name: aurora-admin
+    name: aurora-article
   rabbitmq:
     host: localhost
     port: 5672

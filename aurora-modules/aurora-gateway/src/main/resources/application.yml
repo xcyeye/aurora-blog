@@ -23,6 +23,10 @@ spring:
           uri: lb://aurora-comment
           predicates:
             - Path=/comment/**
+        - id: aurora-article
+          uri: lb://aurora-article
+          predicates:
+            - Path=/blog/**
 management:
   endpoints:
     web:

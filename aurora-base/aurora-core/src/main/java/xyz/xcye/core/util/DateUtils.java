@@ -182,6 +182,15 @@ public class DateUtils {
         return min + new Random().nextInt(max - min);
     }
 
+    public static long getTime(CharSequence dateStr) {
+        return DateUtil.parse(dateStr).getTime();
+    }
+
+    /**
+     * 将字符串解析成时间
+     * @param dateStr
+     * @return
+     */
     public static String parse(CharSequence dateStr) {
         // 先进行yyyy-MM-dd HH:mm:ss解析
         DateTime parse = null;
