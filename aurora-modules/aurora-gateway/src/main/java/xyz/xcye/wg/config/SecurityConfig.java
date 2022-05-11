@@ -4,6 +4,7 @@ package xyz.xcye.wg.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.authentication.ReactiveAuthenticationManager;
 import org.springframework.security.authorization.ReactiveAuthorizationManager;
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
@@ -18,8 +19,13 @@ import org.springframework.security.web.server.authorization.AuthorizationContex
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.reactive.CorsWebFilter;
 import org.springframework.web.cors.reactive.UrlBasedCorsConfigurationSource;
+import xyz.xcye.admin.constant.RedisStorageConstant;
+import xyz.xcye.admin.po.WhiteUrl;
 import xyz.xcye.wg.exception.handler.AuroraAccessDeniedHandler;
 import xyz.xcye.wg.exception.handler.AuroraAuthenticationEntryPoint;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 
 /**
@@ -29,6 +35,9 @@ import xyz.xcye.wg.exception.handler.AuroraAuthenticationEntryPoint;
 @EnableWebFluxSecurity
 @Configuration
 public class SecurityConfig {
+
+    @Autowired
+    private RedisTemplate<String,Object> redisTemplate;
 
     /**
      * JWT的鉴权管理器
@@ -56,12 +65,18 @@ public class SecurityConfig {
         AuthenticationWebFilter authenticationWebFilter = new AuthenticationWebFilter(tokenAuthenticationManager);
         authenticationWebFilter.setServerAuthenticationConverter(new ServerBearerTokenAuthenticationConverter());
 
+        // 获取redis中的白名单
+        List<WhiteUrl> whiteUrlList = (List<WhiteUrl>) redisTemplate.opsForValue().get(RedisStorageConstant.STORAGE_WHITE_URL_INFO);
+        String[] whiteUrlArray = whiteUrlList.stream()
+                .map(WhiteUrl::getUrl)
+                .collect(Collectors.joining(","))
+                .split(",");
         http
                 .httpBasic().disable()
                 .csrf().disable()
                 .authorizeExchange()
                 //白名单直接放行
-                .pathMatchers("/test").permitAll()
+                .pathMatchers(whiteUrlArray).permitAll()
                 //其他的请求必须鉴权，使用鉴权管理器
                 .anyExchange().access(accessManager)
                 //鉴权的异常处理，权限不足，token失效

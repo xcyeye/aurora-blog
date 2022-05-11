@@ -23,8 +23,11 @@ import xyz.xcye.core.enums.ResponseStatusCodeEnum;
 import xyz.xcye.core.util.ConvertObjectUtils;
 import xyz.xcye.wg.util.SecurityResultHandler;
 
-import java.util.*;
-import java.util.stream.Collectors;
+import java.net.URI;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 /**
  * 全局过滤器，对token的拦截，解析token放入header中，便于下游微服务获取用户信息
@@ -40,6 +43,8 @@ public class GlobalAuthenticationFilter implements GlobalFilter {
 
     private final String authorizationName = "Authorization";
 
+    private final AntPathMatcher antPathMatcher = new AntPathMatcher();
+
     /**
      * JWT令牌的服务
      */
@@ -51,18 +56,21 @@ public class GlobalAuthenticationFilter implements GlobalFilter {
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
-        String requestUrl = exchange.getRequest().getPath().value();
+        // 获取请求方法
+        String method = exchange.getRequest().getMethodValue();
+        // 获取请求的uri
+        URI uri = exchange.getRequest().getURI();
 
-        // 获取redis中的所有白名单
-        List<WhiteUrl> whiteUrlList = (List<WhiteUrl>) redisTemplate.opsForValue().get(RedisStorageConstant.STORAGE_WHITE_URL_INFO);
+        // 将当前的请求方法和uri组装成一个restFul风格的地址
+        String restFulPath = method + ":" + uri.getPath();
 
-        whiteUrlList = Optional.ofNullable(whiteUrlList).orElse(new ArrayList<>());
-        String[] whiteUrlArray = whiteUrlList.stream()
-                .map(WhiteUrl::getUrl)
-                .collect(Collectors.joining(","))
-                .split(",");
-        //1、白名单放行，比如授权服务、静态资源.....
-        if (checkUrls(Arrays.asList(whiteUrlArray),requestUrl)){
+        List<String> list = exchange.getRequest().getHeaders().get(OauthJwtConstant.REQUEST_WHITE_URL_FLAG_NAME);
+        // 如果在check()方法中，已经监测到该链接是白名单，则直接放行
+        if (list != null && "true".equals(list.get(0))) {
+            return chain.filter(exchange);
+        }
+
+        if (isWhiteUrl(restFulPath)) {
             exchange.getRequest().mutate().header(OauthJwtConstant.REQUEST_WHITE_URL_FLAG_NAME, "true");
             return chain.filter(exchange);
         }
@@ -116,13 +124,20 @@ public class GlobalAuthenticationFilter implements GlobalFilter {
     }
 
     /**
-     * 对url进行校验匹配
+     * 判断该路径是否是白名单
+     * @param restFulPath
+     * @return
      */
-    private boolean checkUrls(List<String> urls,String path){
-        AntPathMatcher pathMatcher = new AntPathMatcher();
-        for (String url : urls) {
-            if (pathMatcher.match(url,path))
+    private boolean isWhiteUrl(String restFulPath) {
+        // 获取redis中的所有白名单
+        List<WhiteUrl> whiteUrlList = (List<WhiteUrl>) redisTemplate.opsForValue().get(RedisStorageConstant.STORAGE_WHITE_URL_INFO);
+
+        whiteUrlList = Optional.ofNullable(whiteUrlList).orElse(new ArrayList<>());
+        // 判断当前访问的restful风格的请求地址是否是一个白名单
+        for (WhiteUrl whiteUrl : whiteUrlList) {
+            if (antPathMatcher.match(whiteUrl.getUrl(), restFulPath)) {
                 return true;
+            }
         }
         return false;
     }

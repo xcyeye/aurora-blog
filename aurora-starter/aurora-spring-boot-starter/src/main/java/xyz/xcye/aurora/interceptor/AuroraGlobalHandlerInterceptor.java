@@ -32,7 +32,7 @@ public class AuroraGlobalHandlerInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        
+
         // 获取请求头中的白名单标识
         String whiteUrlFlag = Optional.ofNullable(request.getHeader(OauthJwtConstant.REQUEST_WHITE_URL_FLAG_NAME)).orElse("false");
         if ("true".equals(whiteUrlFlag)) {

@@ -16,12 +16,11 @@ import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 import xyz.xcye.admin.constant.RedisStorageConstant;
 import xyz.xcye.admin.dto.RolePermissionDTO;
+import xyz.xcye.admin.po.WhiteUrl;
 import xyz.xcye.core.constant.oauth.OauthJwtConstant;
 
 import java.net.URI;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * 鉴权管理器
@@ -52,6 +51,12 @@ public class AuroraReactiveAuthorizationManager implements ReactiveAuthorization
 
         // 将当前的请求方法和uri组装成一个restFul风格的地址
         String restFulPath = method + ":" + uri.getPath();
+
+        // 白名单监测
+        if (isWhiteUrl(restFulPath)) {
+            exchange.getRequest().mutate().header(OauthJwtConstant.REQUEST_WHITE_URL_FLAG_NAME, "true");
+            return Mono.just(new AuthorizationDecision(true));
+        }
 
         // 获取redis中的所有角色权限关系
         List<RolePermissionDTO> allRolePermissionList = null;
@@ -84,13 +89,28 @@ public class AuroraReactiveAuthorizationManager implements ReactiveAuthorization
                 //如果权限包含则判断为true
                 .any(authority->{
                     // 超级管理员直接放行
-                    if (OauthJwtConstant.SUPER_ADMINISTRATOR_ROLE_NAME.equals(authority))
+                    if (OauthJwtConstant.SUPER_ADMINISTRATOR_ROLE_NAME.equals(authority)) {
                         return true;
+                    }
                     //其他必须要判断角色是否存在交集
                     return CollectionUtil.isNotEmpty(roleList) && roleList.contains(authority);
                 })
                 .map(AuthorizationDecision::new)
                 .defaultIfEmpty(new AuthorizationDecision(false));
 
+    }
+
+    private boolean isWhiteUrl(String restFulPath) {
+        // 获取redis中的所有白名单
+        List<WhiteUrl> whiteUrlList = (List<WhiteUrl>) redisTemplate.opsForValue().get(RedisStorageConstant.STORAGE_WHITE_URL_INFO);
+
+        whiteUrlList = Optional.ofNullable(whiteUrlList).orElse(new ArrayList<>());
+        // 判断当前访问的restful风格的请求地址是否是一个白名单
+        for (WhiteUrl whiteUrl : whiteUrlList) {
+            if (antPathMatcher.match(whiteUrl.getUrl(), restFulPath)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

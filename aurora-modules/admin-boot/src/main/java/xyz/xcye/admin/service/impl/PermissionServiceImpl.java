@@ -6,6 +6,7 @@ import org.springframework.util.StringUtils;
 import xyz.xcye.admin.dao.PermissionMapper;
 import xyz.xcye.admin.po.Permission;
 import xyz.xcye.admin.service.PermissionService;
+import xyz.xcye.core.enums.RegexEnum;
 import xyz.xcye.core.util.lambda.AssertUtils;
 import xyz.xcye.core.enums.ResponseStatusCodeEnum;
 import xyz.xcye.core.exception.permission.PermissionException;
@@ -39,7 +40,6 @@ public class PermissionServiceImpl implements PermissionService {
         Objects.requireNonNull(permission,"方法路径信息不能为null");
         permission.setCreateTime(DateUtils.format());
         // 判断path是否符合规范，必须是GET:Path这种形式 不支持中文路径
-
         AssertUtils.stateThrow(matchesResourcePath(permission.getPath()), () -> new PermissionException(ResponseStatusCodeEnum.PERMISSION_RESOURCE_NOT_RIGHT));
         return permissionMapper.insertPermission(permission);
     }
@@ -64,7 +64,7 @@ public class PermissionServiceImpl implements PermissionService {
     }
 
     private boolean matchesResourcePath(String resourcePath) {
-        return Pattern.matches("^(GET|DELETE|POST|PUT):[a-zA-Z/-_.]+",resourcePath);
+        return Pattern.matches(RegexEnum.REST_FUL_PATH.getRegex(),resourcePath);
     }
 
     @Override
