@@ -1,4 +1,4 @@
-package xyz.xcye.article.po;
+package xyz.xcye.article.vo;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -14,60 +14,54 @@ import xyz.xcye.core.valid.Update;
 import xyz.xcye.core.valid.validator.ValidateString;
 
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Null;
 import java.io.Serializable;
 
-@ApiModel(value="au_tag")
+@ApiModel(value="au_category")
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Tag implements Serializable {
+public class CategoryVO implements Serializable {
     /**
     * 唯一uid
     */
     @ApiModelProperty(value="唯一uid")
-    @NotNull(groups = {Delete.class, Update.class})
     private Long uid;
 
     /**
-    * 此标签的标题
+    * 此类别的标题
     */
-    @ApiModelProperty(value="此标签的标题")
-    @ValidateString(value = "标签的标题", max = FieldLengthConstant.TITLE, groups = Insert.class)
+    @ApiModelProperty(value="此类别的标题")
     private String title;
 
     /**
-    * 此标签的简介
+    * 此类别的简介
     */
-    @ApiModelProperty(value="此标签的简介")
-    @Length(max = FieldLengthConstant.SUMMARY)
+    @ApiModelProperty(value="此类别的简介")
     private String summary;
 
     /**
     * 创建时间
     */
     @ApiModelProperty(value="创建时间")
-    private String createdTime;
+    private String createTime;
 
     /**
     * 最后修改时间
     */
     @ApiModelProperty(value="最后修改时间")
-    private String updatedTime;
+    private String updateTime;
 
     /**
-    * 此类别的封面图uid
+    * 此类别的封面图地址
     */
-    @ApiModelProperty(value="此类别的封面图uid")
-    @Length(max = FieldLengthConstant.URL)
+    @ApiModelProperty(value="此类别的封面图地址")
     private String coverUrl;
 
     /**
-    * 1: 删除，0：未删除
+    * 1: 删除 ，0：未删除
     */
-    @ApiModelProperty(value="1: 删除，0：未删除")
-    @Null(groups = Insert.class)
+    @ApiModelProperty(value="1: 删除 ，0：未删除")
     private Boolean delete;
 
     /**

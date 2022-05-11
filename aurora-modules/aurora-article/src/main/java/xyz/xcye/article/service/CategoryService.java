@@ -1,14 +1,17 @@
-package xyz.xcye.article.dao;
+package xyz.xcye.article.service;
 
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
 import xyz.xcye.article.po.Category;
+import xyz.xcye.article.vo.CategoryVO;
 import xyz.xcye.data.entity.Condition;
+import xyz.xcye.data.entity.PageData;
 
-import java.util.List;
+/**
+ * @author qsyyke
+ * @date Created in 2022/5/11 19:21
+ */
 
-@Mapper
-public interface CategoryMapper {
+public interface CategoryService {
+
     /**
      * delete by primary key
      * @param uid primaryKey
@@ -17,11 +20,11 @@ public interface CategoryMapper {
     int deleteByPrimaryKey(Long uid);
 
     /**
-     * insert record to table
-     * @param record the record
-     * @return insert count
+     * 通过uid物理删除
+     * @param uid
+     * @return
      */
-    int insert(Category record);
+    int physicsDeleteByUid(Long uid);
 
     /**
      * insert record to table selective
@@ -35,7 +38,9 @@ public interface CategoryMapper {
      * @param condition 查询条件，其中keyword->title(模糊查询)
      * @return object by primary key
      */
-    List<Category> selectByCondition(@Param("condition") Condition<Long> condition);
+    PageData<CategoryVO> selectByCondition(Condition<Long> condition);
+
+    CategoryVO selectByUid(Long uid);
 
     /**
      * update record selective
@@ -43,11 +48,4 @@ public interface CategoryMapper {
      * @return update count
      */
     int updateByPrimaryKeySelective(Category record);
-
-    /**
-     * update record
-     * @param record the updated record
-     * @return update count
-     */
-    int updateByPrimaryKey(Category record);
 }

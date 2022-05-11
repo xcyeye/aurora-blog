@@ -29,6 +29,11 @@
 
         <dependency>
             <groupId>xyz.xcye.starter</groupId>
+            <artifactId>aurora-swagger-starter</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>xyz.xcye.starter</groupId>
             <artifactId>aurora-datasource-starter</artifactId>
         </dependency>
 

@@ -1,4 +1,4 @@
-package xyz.xcye.article.po;
+package xyz.xcye.article.vo;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -8,13 +8,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
 import xyz.xcye.core.constant.FieldLengthConstant;
-import xyz.xcye.core.valid.Delete;
 import xyz.xcye.core.valid.Insert;
-import xyz.xcye.core.valid.Update;
 import xyz.xcye.core.valid.validator.ValidateString;
 
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Null;
 import java.io.Serializable;
 
 @ApiModel(value="au_article")
@@ -22,12 +18,11 @@ import java.io.Serializable;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Article implements Serializable {
+public class ArticleVO implements Serializable {
     /**
     * 唯一uid
     */
     @ApiModelProperty(value="唯一uid")
-    @NotNull(groups = {Update.class, Delete.class})
     private Long uid;
 
     /**
@@ -76,28 +71,24 @@ public class Article implements Serializable {
     * 如果是原创，则原创链接
     */
     @ApiModelProperty(value="如果是原创，则原创链接")
-    @Length(max = FieldLengthConstant.URL)
     private String originalArticleUrl;
 
     /**
     * 文章封面对应的图片uid
     */
     @ApiModelProperty(value="文章封面对应的图片uid")
-    @Length(max = FieldLengthConstant.URL)
     private String coverPictureUrl;
 
     /**
     * 文章标题
     */
     @ApiModelProperty(value="文章标题")
-    @ValidateString(value = "文章标题", max = FieldLengthConstant.TITLE, groups = {Insert.class})
     private String title;
 
     /**
     * 文章简介
     */
     @Length(max = FieldLengthConstant.SUMMARY)
-    @ApiModelProperty(value="文章简介")
     private String summary;
 
     /**
@@ -146,7 +137,6 @@ public class Article implements Serializable {
     * 文章内容
     */
     @ApiModelProperty(value="文章内容")
-    @ValidateString(value = "文章内容", max = FieldLengthConstant.CONTENT, groups = Insert.class)
     private String content;
 
     /**

@@ -1,4 +1,4 @@
-package xyz.xcye.article.po;
+package xyz.xcye.article.vo;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -21,19 +21,17 @@ import java.io.Serializable;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Bulletin implements Serializable {
+public class BulletinVO implements Serializable {
     /**
     * 唯一uid
     */
     @ApiModelProperty(value="唯一uid")
-    @NotNull(groups = {Delete.class, Update.class})
     private Long uid;
 
     /**
     * 公告的标题
     */
     @ApiModelProperty(value="公告的标题")
-    @Length(max = FieldLengthConstant.TITLE)
     private String title;
 
     /**
@@ -82,7 +80,6 @@ public class Bulletin implements Serializable {
     * 公告内容
     */
     @ApiModelProperty(value="公告内容")
-    @ValidateString(value = "公告内容", max = FieldLengthConstant.CONTENT, groups = Insert.class)
     private String content;
 
     private static final long serialVersionUID = 1L;

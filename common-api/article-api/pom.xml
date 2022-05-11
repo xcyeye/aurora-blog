@@ -26,6 +26,11 @@
             <groupId>xyz.xcye.base</groupId>
             <artifactId>aurora-core</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>xyz.xcye.base</groupId>
+            <artifactId>admin-common</artifactId>
+        </dependency>
     </dependencies>
 
 </project>

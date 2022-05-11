@@ -35,7 +35,7 @@ public interface TalkMapper {
      * @param condition 查询条件 其中keyword->content(模糊查询),status->is_show_comment,show->is_show
      * @return object by primary key
      */
-    List<Talk> selectByCondition(@Param("condition") Condition condition);
+    List<Talk> selectByCondition(@Param("condition") Condition<Long> condition);
 
     /**
      * update record selective

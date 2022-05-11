@@ -35,7 +35,7 @@ public interface ArticleMapper {
      * @param condition 查询条件，其中keyword-> content,status->is_publish,show->is_show_comment,delete->is_delete
      * @return object by primary key
      */
-    List<Article> selectByCondition(@Param("condition") Condition condition);
+    List<Article> selectByCondition(@Param("condition") Condition<Long> condition);
 
     /**
      * update record selective

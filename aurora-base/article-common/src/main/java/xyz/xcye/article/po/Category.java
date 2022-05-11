@@ -14,8 +14,8 @@ import xyz.xcye.core.valid.Update;
 import xyz.xcye.core.valid.validator.ValidateString;
 
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Null;
 import java.io.Serializable;
-import java.time.LocalDateTime;
 
 @ApiModel(value="au_category")
 @Data
@@ -48,12 +48,14 @@ public class Category implements Serializable {
     * 创建时间
     */
     @ApiModelProperty(value="创建时间")
+    @Null(groups = Insert.class)
     private String createTime;
 
     /**
     * 最后修改时间
     */
     @ApiModelProperty(value="最后修改时间")
+    @Null(groups = Insert.class)
     private String updateTime;
 
     /**
@@ -73,7 +75,6 @@ public class Category implements Serializable {
     * 用户的userUid
     */
     @ApiModelProperty(value="用户的userUid")
-    @NotNull(groups = Insert.class)
     private Long userUid;
 
     private static final long serialVersionUID = 1L;

@@ -1,7 +1,8 @@
-package xyz.xcye.article;
+package xyz.xcye;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 
 /**
  * @author qsyyke
@@ -9,6 +10,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  */
 
 
+@EnableFeignClients
 @SpringBootApplication
 public class AuroraArticleRun {
     public static void main(String[] args) {

@@ -1,4 +1,4 @@
-package xyz.xcye.article.po;
+package xyz.xcye.article.vo;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -14,7 +14,6 @@ import xyz.xcye.core.valid.Update;
 import xyz.xcye.core.valid.validator.ValidateString;
 
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Null;
 import java.io.Serializable;
 
 @ApiModel(value="au_tag")
@@ -22,26 +21,23 @@ import java.io.Serializable;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Tag implements Serializable {
+public class TagVO implements Serializable {
     /**
     * 唯一uid
     */
     @ApiModelProperty(value="唯一uid")
-    @NotNull(groups = {Delete.class, Update.class})
     private Long uid;
 
     /**
     * 此标签的标题
     */
     @ApiModelProperty(value="此标签的标题")
-    @ValidateString(value = "标签的标题", max = FieldLengthConstant.TITLE, groups = Insert.class)
     private String title;
 
     /**
     * 此标签的简介
     */
     @ApiModelProperty(value="此标签的简介")
-    @Length(max = FieldLengthConstant.SUMMARY)
     private String summary;
 
     /**
@@ -60,14 +56,12 @@ public class Tag implements Serializable {
     * 此类别的封面图uid
     */
     @ApiModelProperty(value="此类别的封面图uid")
-    @Length(max = FieldLengthConstant.URL)
     private String coverUrl;
 
     /**
     * 1: 删除，0：未删除
     */
     @ApiModelProperty(value="1: 删除，0：未删除")
-    @Null(groups = Insert.class)
     private Boolean delete;
 
     /**

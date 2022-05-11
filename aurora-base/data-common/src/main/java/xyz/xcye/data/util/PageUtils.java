@@ -36,4 +36,15 @@ public class PageUtils {
         pageData.setPages(page.getPages());
         return pageData;
     }
+
+    public static <T,I> PageData<T> pageList(Condition<I> condition, Consumer<Condition<I>> consumer, Class<T> zClass) {
+        Page<T> page = PageHelper.startPage(condition.getPageNum(), condition.getPageSize(), condition.getOrderBy()).doSelectPage(() -> {
+            consumer.accept(condition);
+        });
+        PageData<T> pageData = new PageData<>();
+        pageData.setResult(page.getResult());
+        pageData.setTotal(page.getTotal());
+        pageData.setPages(page.getPages());
+        return pageData;
+    }
 }
