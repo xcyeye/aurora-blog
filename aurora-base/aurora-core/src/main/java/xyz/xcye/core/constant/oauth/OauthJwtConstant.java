@@ -25,4 +25,6 @@ public class OauthJwtConstant {
     public static final String REQUEST_WHITE_URL_FLAG_NAME = "white_url_flag";
     /** 如果一个查询密码的请求是从认证中心发出的，那么会在请求头中添加一个标识，字符串的boolean值 **/
     public static final String REQUEST_OAUTH_SERVER_QUERY_PASSWORD = "oauth_query_pwd";
+    /** 在网关层已认证的用户信息，用于将用户信息存储在RequestContextHolder **/
+    public static final String REQUEST_STORAGE_JWT_USER_INFO_NAME = "authentication_jwt_user_info";
 }

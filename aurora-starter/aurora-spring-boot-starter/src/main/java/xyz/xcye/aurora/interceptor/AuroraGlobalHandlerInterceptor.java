@@ -4,6 +4,8 @@ import cn.hutool.core.codec.Base64;
 import com.alibaba.fastjson.JSON;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
+import org.springframework.web.context.request.RequestAttributes;
+import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 import xyz.xcye.auth.enums.TokenConstant;
@@ -59,19 +61,11 @@ public class AuroraGlobalHandlerInterceptor implements HandlerInterceptor {
             return setResponseJsonText(response, ResponseStatusCodeEnum.PERMISSION_USER_NOT_LOGIN);
         }
 
-        // 判断此token是否失效
-        boolean expiration = false;
-        try {
-            expiration = JwtUtils.isExpiration(jwtToken, TokenConstant.SIGN_KEY.getBytes(StandardCharsets.UTF_8));
-        } catch (RuntimeException e) {
-            return setResponseJsonText(response, ResponseStatusCodeEnum.PERMISSION_TOKEN_EXPIRATION);
-        }
+        // 将用户已认证的数据，放入RequestContextHolder中，方便使用
+        RequestAttributes requestAttributes = RequestContextHolder.currentRequestAttributes();
+        requestAttributes.setAttribute(OauthJwtConstant.REQUEST_STORAGE_JWT_USER_INFO_NAME, jwtUserInfo, 1);
 
-        if (!expiration) {
-            //token过期
-            return setResponseJsonText(response,ResponseStatusCodeEnum.PERMISSION_TOKEN_EXPIRATION);
-        }
-        return true;
+        return tokenExpiration(jwtToken, response);
     }
 
     @Override
@@ -94,5 +88,21 @@ public class AuroraGlobalHandlerInterceptor implements HandlerInterceptor {
         writer.write(jsonToString);
         writer.flush();
         return false;
+    }
+
+    private boolean tokenExpiration(String jwtToken, HttpServletResponse response) throws IOException {
+        // 判断此token是否失效
+        boolean expiration = false;
+        try {
+            expiration = JwtUtils.isExpiration(jwtToken, TokenConstant.SIGN_KEY.getBytes(StandardCharsets.UTF_8));
+        } catch (RuntimeException e) {
+            return setResponseJsonText(response, ResponseStatusCodeEnum.PERMISSION_TOKEN_EXPIRATION);
+        }
+
+        if (!expiration) {
+            //token过期
+            return setResponseJsonText(response,ResponseStatusCodeEnum.PERMISSION_TOKEN_EXPIRATION);
+        }
+        return true;
     }
 }

@@ -13,7 +13,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Component
-public class Oauth2RequestInterceptor implements RequestInterceptor {
+public class GlobalOauth2RequestInterceptor implements RequestInterceptor {
 
     private final AntPathMatcher antPathMatcher = new AntPathMatcher();
 
