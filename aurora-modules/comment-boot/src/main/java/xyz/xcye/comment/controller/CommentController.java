@@ -8,9 +8,11 @@ import org.springframework.web.bind.annotation.*;
 import xyz.xcye.comment.dto.CommentDTO;
 import xyz.xcye.comment.po.Comment;
 import xyz.xcye.comment.service.CommentService;
+import xyz.xcye.comment.service.UserFeignService;
 import xyz.xcye.comment.vo.CommentVO;
 import xyz.xcye.core.annotaion.controller.ModifyOperation;
 import xyz.xcye.core.annotaion.controller.SelectOperation;
+import xyz.xcye.core.entity.R;
 import xyz.xcye.core.util.NetWorkUtils;
 import xyz.xcye.core.valid.Insert;
 import xyz.xcye.core.valid.Update;
@@ -79,10 +81,16 @@ public class CommentController {
         return commentService.queryAllComments(condition);
     }
 
+    @Autowired
+    private UserFeignService userFeignService;
+
     @ApiOperation(value = "根据uid查询评论")
     @SelectOperation
     @GetMapping("/{uid}")
     public CommentDTO queryCommentByUid(@PathVariable("uid") long uid) {
-        return commentService.queryByUid(uid);
+        //return commentService.queryByUid(uid);
+        R r = userFeignService.queryRoleByUid(1);
+        System.out.println(r);
+        return null;
     }
 }
