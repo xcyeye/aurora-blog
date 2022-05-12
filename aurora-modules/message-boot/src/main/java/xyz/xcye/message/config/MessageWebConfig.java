@@ -1,26 +1,16 @@
 package xyz.xcye.message.config;
 
-import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.config.BeanPostProcessor;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.util.ReflectionUtils;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import org.springframework.web.servlet.mvc.method.RequestMappingInfoHandlerMapping;
-import springfox.documentation.spring.web.plugins.WebFluxRequestHandlerProvider;
-import springfox.documentation.spring.web.plugins.WebMvcRequestHandlerProvider;
-import xyz.xcye.message.interceptor.MessageGlobalHandlerInterceptor;
-
-import java.lang.reflect.Field;
-import java.util.List;
+import xyz.xcye.aurora.interceptor.AuroraGlobalHandlerInterceptor;
 
 @Configuration
 public class MessageWebConfig implements WebMvcConfigurer {
 
     @Autowired
-    private MessageGlobalHandlerInterceptor globalHandlerInterceptor;
+    private AuroraGlobalHandlerInterceptor globalHandlerInterceptor;
 
     /**
      * 增加自定义拦截器

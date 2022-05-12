@@ -20,6 +20,7 @@
         <module>oauth-api</module>
         <module>article-api</module>
         <module>comment-api</module>
+        <module>amqp-api</module>
     </modules>
 
     <properties>

@@ -13,15 +13,21 @@ import xyz.xcye.api.mail.sendmail.entity.StorageSendMailInfo;
 import xyz.xcye.api.mail.sendmail.enums.SendHtmlMailTypeNameEnum;
 import xyz.xcye.api.mail.sendmail.service.SendMQMessageService;
 import xyz.xcye.aurora.properties.AuroraProperties;
+import xyz.xcye.aurora.util.UserUtils;
 import xyz.xcye.comment.dao.CommentMapper;
 import xyz.xcye.comment.dto.CommentDTO;
+import xyz.xcye.comment.enums.CommentPageTypeEnum;
+import xyz.xcye.comment.manager.amqp.send.SendCommentToExchange;
 import xyz.xcye.comment.po.Comment;
 import xyz.xcye.comment.service.CommentService;
 import xyz.xcye.comment.vo.CommentVO;
 import xyz.xcye.core.constant.amqp.AmqpExchangeNameConstant;
 import xyz.xcye.core.constant.amqp.AmqpQueueNameConstant;
+import xyz.xcye.core.enums.ResponseStatusCodeEnum;
+import xyz.xcye.core.exception.comment.CommentException;
 import xyz.xcye.core.util.DateUtils;
 import xyz.xcye.core.util.id.GenerateInfoUtils;
+import xyz.xcye.core.util.lambda.AssertUtils;
 import xyz.xcye.data.entity.Condition;
 
 import java.util.*;
@@ -41,28 +47,30 @@ public class CommentServiceImpl implements CommentService {
     private CommentMapper commentMapper;
 
     @Autowired
+    private UserUtils userUtils;
+
+    @Autowired
     private SendMQMessageService sendMQMessageService;
+    @Autowired
+    private SendCommentToExchange sendCommentToExchange;
 
     @GlobalTransactional(rollbackFor = Exception.class)
     @Override
-    public int insertComment(Comment comment)
-            throws Throwable {
+    public int insertComment(Comment comment) throws Throwable {
         Assert.notNull(comment,"评论不能为null");
-        // 初始化值
-        comment.setUid(GenerateInfoUtils.generateUid(auroraProperties.getSnowFlakeWorkerId(),auroraProperties.getSnowFlakeDatacenterId()));
-        comment.setCreateTime(DateUtils.format(new Date()));
-        comment.setShowComment(true);
-        // 设置email的发送状态，这里目前只能保证消息是否成功投递到rabbitmq交换机中，不能保证email是否发送成功
-        comment.setEmailNotice(false);
-        comment.setDelete(false);
-
+        AssertUtils.stateThrow(comment.getPageUid() != null, () -> new CommentException("文章uid不能为null"));
+        setDefaultProperty(comment);
+        setPageType(comment, false);
         // 判断该条评论是回复评论还是单独的一条评论
         // 如果此条评论的replyCommentUid在数据库中不存在，则标记为新建的单独评论
-        Comment queriedRepliedCommentDO = getCommentDOByUid(comment.getReplyCommentUid());
+        Comment queriedRepliedCommentDO = getCommentByUid(comment.getReplyCommentUid());
         boolean isReplyCommentFlag = queriedRepliedCommentDO != null;
 
         //向数据库中插入此条评论
         int insertCommentNum = commentMapper.insertComment(comment);
+
+        // 发送此评论到交换机，说说或者是文章修改CommentUidS的值
+        sendCommentToExchange.sendCommentToMQ(comment);
 
         // 使用rabbitmq发送邮件通知对方 因为使用rabbitmq发送消息到交换机的过程是同步的，并且我们已经开启了seata的全局事务功能
         // 所以如果在发送mq消息的过程中，出现异常，能够回滚，从而能够保证插入评论后，能够保证评论和mq发送到交换机的消息同时成功或者失败
@@ -94,19 +102,24 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public int deleteComment(Long uid) {
+        Assert.notNull(uid, "uid不能为null");
         return commentMapper.deleteComment(uid);
     }
 
     @Override
     public int updateComment(Comment comment) {
+        Assert.notNull(comment, "评论信息不能为null");
+        setPageType(comment, true);
         // 设置最后修改时间
         comment.setUpdateTime(DateUtils.format());
+        comment.setUserUid(userUtils.getCurrentUserUid());
         return commentMapper.updateComment(comment);
     }
 
     @Override
     public int updateDeleteStatus(Comment comment) {
         Assert.notNull(comment, () -> "更新评论删除状态，不能为null");
+        comment.setUserUid(userUtils.getCurrentUserUid());
         comment.setUpdateTime(DateUtils.format());
         comment.setDelete(Optional.ofNullable(comment.getDelete()).orElse(false));
         return commentMapper.updateDeleteStatus(comment);
@@ -120,7 +133,7 @@ public class CommentServiceImpl implements CommentService {
         // 获取arrayUid所涉及的所有评论
         List<CommentDTO> allCommentDTOList = new ArrayList<>();
         for (Long uid : effectiveCommentUidList) {
-            Comment comment = getCommentDOByUid(uid);
+            Comment comment = getCommentByUid(uid);
             //没有发布或者已经删除的，也不展示
             if (comment == null || !comment.getShowComment()) {
                 continue;
@@ -139,8 +152,8 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public List<CommentDTO> queryAllComments(Condition<Long> condition) {
+        Assert.notNull(condition, "查询条件不能为null");
         PageHelper.startPage(condition.getPageNum(),condition.getPageSize(),condition.getOrderBy());
-
         List<Comment> commentDOList = commentMapper.queryAllComment(condition);
         List<CommentDTO> queriedCommentDTOList = new ArrayList<>();
         for (Comment queriedCommentDO : commentDOList) {
@@ -165,6 +178,40 @@ public class CommentServiceImpl implements CommentService {
                 commentMapper.queryAllComment(condition),CommentDTO.class);
     }
 
+    private void setDefaultProperty(Comment comment) {
+        // 初始化值
+        comment.setUid(GenerateInfoUtils.generateUid(auroraProperties.getSnowFlakeWorkerId(),auroraProperties.getSnowFlakeDatacenterId()));
+        comment.setCreateTime(DateUtils.format(new Date()));
+        comment.setShowComment(true);
+        // 设置email的发送状态，这里目前只能保证消息是否成功投递到rabbitmq交换机中，不能保证email是否发送成功
+        comment.setEmailNotice(false);
+        comment.setDelete(false);
+    }
+
+    /**
+     * 设置此评论是在哪种类型的页面上发布的，有文章，说说
+     * @param comment
+     */
+    private void setPageType(Comment comment, boolean isUpdate) {
+        if (isUpdate) {
+            if (comment.getPageType() == null) {
+                return;
+            }
+        }
+
+        AssertUtils.stateThrow(comment.getPageType() != null,
+                () -> new CommentException(ResponseStatusCodeEnum.PARAM_COMMENT_NOT_SUPPORT_PAGE_TYPE));
+
+        CommentPageTypeEnum commentPageTypeEnum = null;
+        try {
+            commentPageTypeEnum = CommentPageTypeEnum.valueOf(comment.getPageType());
+        } catch (IllegalArgumentException e) {
+            // 不支持的文章类型
+            throw new CommentException(ResponseStatusCodeEnum.PARAM_COMMENT_NOT_SUPPORT_PAGE_TYPE);
+        }
+        comment.setPageType(commentPageTypeEnum.toString());
+    }
+
     /**
      * 判断此commentDO中的ReplyCommentUid是不是回复某条评论
      * <p>如果此ReplyCommentUid在数据库中不存在，也标识单独新建的一条评论</p>
@@ -185,7 +232,7 @@ public class CommentServiceImpl implements CommentService {
      * @param commentUid
      * @return
      */
-    private Comment getCommentDOByUid(Long commentUid) {
+    private Comment getCommentByUid(Long commentUid) {
         //此评论就是单独新建的一条评论
         if (commentUid == null || commentUid == 0) {
             return null;
@@ -203,7 +250,7 @@ public class CommentServiceImpl implements CommentService {
      * @return
      */
     private boolean isExistsComment(Long uid) {
-        return getCommentDOByUid(uid) != null;
+        return getCommentByUid(uid) != null;
     }
 
     /**
@@ -236,7 +283,7 @@ public class CommentServiceImpl implements CommentService {
         //存在子评论，循环获取
         for (Long uid : uidList) {
             // 当前的uid对应评论数据
-            Comment comment = getCommentDOByUid(uid);
+            Comment comment = getCommentByUid(uid);
             if (comment == null) {
                 continue;
             }

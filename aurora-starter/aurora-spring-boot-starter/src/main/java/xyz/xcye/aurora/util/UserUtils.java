@@ -5,6 +5,9 @@ import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 import xyz.xcye.core.constant.oauth.OauthJwtConstant;
 import xyz.xcye.core.dto.JwtUserInfo;
+import xyz.xcye.core.enums.ResponseStatusCodeEnum;
+import xyz.xcye.core.exception.user.UserException;
+import xyz.xcye.core.util.lambda.AssertUtils;
 
 /**
  * 这个类是通用的和用户相关的工具类
@@ -26,5 +29,12 @@ public class UserUtils {
             jwtUserInfo = (JwtUserInfo) requestAttributes.getAttribute(OauthJwtConstant.REQUEST_STORAGE_JWT_USER_INFO_NAME, 1);
         }
         return jwtUserInfo;
+    }
+
+    public Long getCurrentUserUid() {
+        JwtUserInfo currentUser = getCurrentUser();
+        AssertUtils.stateThrow(currentUser != null,
+                () -> new UserException(ResponseStatusCodeEnum.PERMISSION_USER_NOT_LOGIN));
+        return currentUser.getUserUid();
     }
 }

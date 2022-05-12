@@ -24,9 +24,9 @@ public class BindingOperateComment {
      */
     @Bean
     public Binding receiveArticleCommentBinding() {
-        return BindingBuilder.bind(new Queue(AmqpQueueNameConstant.ARTICLE_COMMENT_QUEUE))
+        return BindingBuilder.bind(new Queue(AmqpQueueNameConstant.PAGE_COMMENT_QUEUE))
                 .to(new TopicExchange(AmqpExchangeNameConstant.AURORA_SEND_COMMENT_EXCHANGE))
-                .with(AmqpQueueNameConstant.ARTICLE_COMMENT_ROUTING_KEY);
+                .with(AmqpQueueNameConstant.PAGE_COMMENT_ROUTING_KEY);
     }
 
     /**
@@ -35,30 +35,8 @@ public class BindingOperateComment {
      */
     @Bean
     public Binding receiveArticleCommentDeadLetterBinding() {
-        return BindingBuilder.bind(new Queue(AmqpQueueNameConstant.ARTICLE_COMMENT_DEAD_LETTER_QUEUE))
+        return BindingBuilder.bind(new Queue(AmqpQueueNameConstant.PAGE_COMMENT_DEAD_LETTER_QUEUE))
                 .to(new TopicExchange(AmqpExchangeNameConstant.AURORA_SEND_COMMENT_DEAD_LETTER_EXCHANGE))
-                .with(AmqpQueueNameConstant.ARTICLE_COMMENT_DEAD_LETTER_ROUTING_KEY);
-    }
-
-    /**
-     * 将发送评论的交换机和收到说说队列绑定起来
-     * @return
-     */
-    @Bean
-    public Binding receiveTalkCommentBinding() {
-        return BindingBuilder.bind(new Queue(AmqpQueueNameConstant.TALK_COMMENT_QUEUE))
-                .to(new TopicExchange(AmqpExchangeNameConstant.AURORA_SEND_COMMENT_EXCHANGE))
-                .with(AmqpQueueNameConstant.TALK_COMMENT_ROUTING_KEY);
-    }
-
-    /**
-     * 将发送评论的死信交换机和收到说说的死信队列绑定起来
-     * @return
-     */
-    @Bean
-    public Binding receiveTalkCommentDeadLetterBinding() {
-        return BindingBuilder.bind(new Queue(AmqpQueueNameConstant.TALK_COMMENT_DEAD_LETTER_QUEUE))
-                .to(new TopicExchange(AmqpExchangeNameConstant.AURORA_SEND_COMMENT_DEAD_LETTER_EXCHANGE))
-                .with(AmqpQueueNameConstant.TALK_COMMENT_DEAD_LETTER_ROUTING_KEY);
+                .with(AmqpQueueNameConstant.PAGE_COMMENT_DEAD_LETTER_ROUTING_KEY);
     }
 }

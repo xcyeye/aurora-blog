@@ -18,6 +18,7 @@ public enum ResponseStatusCodeEnum {
     PARAM_IS_INVALID(32000,"参数无效"),
     PARAM_IS_BLANK(33000,"参数为空"),
     PARAM_NOT_COMPLETE(34000,"参数缺失"),
+    PARAM_COMMENT_NOT_SUPPORT_PAGE_TYPE(34567, "不支持的评论页面"),
 
 
     //----------------------异常相关的响应码
@@ -98,12 +99,12 @@ public enum ResponseStatusCodeEnum {
     /**
      * 响应码
      */
-    private Integer code;
+    private final Integer code;
 
     /**
      * 响应码描述
      */
-    private String message;
+    private final String message;
 
     ResponseStatusCodeEnum(Integer code, String message) {
         this.code = code;

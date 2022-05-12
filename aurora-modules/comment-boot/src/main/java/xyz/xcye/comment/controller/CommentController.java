@@ -46,8 +46,7 @@ public class CommentController {
     @ModifyOperation
     @PostMapping("")
     public int insertComment(@Validated({Default.class, Insert.class}) Comment comment,
-                                      HttpServletRequest request)
-            throws Throwable {
+                             HttpServletRequest request) throws Throwable {
         comment.setCommentIp(NetWorkUtils.getIpAddr(request));
         comment.setOperationSystemInfo(NetWorkUtils.getOperationInfo(request));
         return commentService.insertComment(comment);

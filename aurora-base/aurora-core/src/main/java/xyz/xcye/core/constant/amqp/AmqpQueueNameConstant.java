@@ -41,16 +41,8 @@ public class AmqpQueueNameConstant {
     
 
     /** 发送文章评论 **/
-    public static final String ARTICLE_COMMENT_QUEUE = "aurora.article.comment.queue";
-    public static final String ARTICLE_COMMENT_ROUTING_KEY = "aurora.article.routingKey";
-    public static final String ARTICLE_COMMENT_DEAD_LETTER_QUEUE = "aurora.article.comment.dead.letter.queue";
-    public static final String ARTICLE_COMMENT_DEAD_LETTER_ROUTING_KEY = "aurora.article.comment.dead.letter.routingKey";
-
-
-    /** 发送说说评论 **/
-    public static final String TALK_COMMENT_QUEUE = "aurora.talk.comment.queue";
-    public static final String TALK_COMMENT_ROUTING_KEY = "aurora.talk.routingKey";
-    public static final String TALK_COMMENT_DEAD_LETTER_QUEUE = "aurora.talk.comment.dead.letter";
-    public static final String TALK_COMMENT_DEAD_LETTER_ROUTING_KEY = "aurora.talk.comment.dead.letter.routingKey";
-    
+    public static final String PAGE_COMMENT_QUEUE = "aurora.PAGE.comment.queue";
+    public static final String PAGE_COMMENT_ROUTING_KEY = "aurora.PAGE.routingKey";
+    public static final String PAGE_COMMENT_DEAD_LETTER_QUEUE = "aurora.PAGE.comment.dead.letter.queue";
+    public static final String PAGE_COMMENT_DEAD_LETTER_ROUTING_KEY = "aurora.PAGE.comment.dead.letter.routingKey";
 }

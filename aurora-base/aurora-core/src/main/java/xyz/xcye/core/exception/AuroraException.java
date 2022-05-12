@@ -1,6 +1,5 @@
 package xyz.xcye.core.exception;
 
-import lombok.Data;
 import xyz.xcye.core.enums.ResponseStatusCodeEnum;
 
 /**
@@ -8,8 +7,7 @@ import xyz.xcye.core.enums.ResponseStatusCodeEnum;
  * @author qsyyke
  */
 
-@Data
-public class AuroraException extends RuntimeException {
+public abstract class AuroraException extends RuntimeException {
     /** 响应码 **/
     public Integer statusCode;
 

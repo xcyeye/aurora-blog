@@ -20,38 +20,17 @@ public class RegisterCommentQueue {
      */
     @Bean
     public Queue receiveArticleCommentQueue() {
-        return QueueBuilder.durable(AmqpQueueNameConstant.ARTICLE_COMMENT_QUEUE)
+        return QueueBuilder.durable(AmqpQueueNameConstant.PAGE_COMMENT_QUEUE)
                 .deadLetterExchange(AmqpExchangeNameConstant.AURORA_SEND_COMMENT_DEAD_LETTER_EXCHANGE)
-                .deadLetterRoutingKey(AmqpQueueNameConstant.ARTICLE_COMMENT_DEAD_LETTER_ROUTING_KEY).build();
+                .deadLetterRoutingKey(AmqpQueueNameConstant.PAGE_COMMENT_DEAD_LETTER_ROUTING_KEY).build();
     }
-
-    /**
-     * 收到说说评论的普通队列
-     * @return
-     */
-    @Bean
-    public Queue receiveTalkCommentQueue() {
-        return QueueBuilder.durable(AmqpQueueNameConstant.TALK_COMMENT_QUEUE)
-                .deadLetterExchange(AmqpExchangeNameConstant.AURORA_SEND_COMMENT_DEAD_LETTER_EXCHANGE)
-                .deadLetterRoutingKey(AmqpQueueNameConstant.TALK_COMMENT_DEAD_LETTER_ROUTING_KEY).build();
-    }
-
 
     /**
      * 收到文章评论的死信队列
      * @return
      */
     @Bean
-    public Queue receiveArticleCommentDeadLetterQueue() {
-        return new Queue(AmqpQueueNameConstant.ARTICLE_COMMENT_DEAD_LETTER_QUEUE, true);
-    }
-
-    /**
-     * 收到说说评论的死信队列
-     * @return
-     */
-    @Bean
     public Queue receiveTalkCommentDeadLetterQueue() {
-        return new Queue(AmqpQueueNameConstant.TALK_COMMENT_DEAD_LETTER_QUEUE, true);
+        return new Queue(AmqpQueueNameConstant.PAGE_COMMENT_DEAD_LETTER_QUEUE, true);
     }
 }

@@ -20,7 +20,7 @@ public interface SendMailService {
      * @throws MessagingException 发送失败
      */
     int sendHtmlMail(StorageSendMailInfo storageSendMailInfo)
-            throws MessagingException, IOException, ReflectiveOperationException, EmailException;
+            throws MessagingException, IOException, EmailException;
 
     /**
      * 发送简单的邮件

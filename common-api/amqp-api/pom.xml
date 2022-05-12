@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>amqp-mail-api</artifactId>
+    <artifactId>amqp-api</artifactId>
 
     <properties>
         <maven.compiler.source>11</maven.compiler.source>
@@ -19,27 +19,13 @@
     <dependencies>
         <dependency>
             <groupId>xyz.xcye.starter</groupId>
-            <artifactId>aurora-amqp.starter</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>xyz.xcye.starter</groupId>
             <artifactId>aurora-feign-starter</artifactId>
         </dependency>
 
         <dependency>
-            <groupId>xyz.xcye.api</groupId>
-            <artifactId>amqp-api</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>xyz.xcye.base</groupId>
-            <artifactId>message-common</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>xyz.xcye.base</groupId>
-            <artifactId>comment-common</artifactId>
+            <groupId>xyz.xcye.starter</groupId>
+            <artifactId>aurora-amqp.starter</artifactId>
         </dependency>
     </dependencies>
+
 </project>

@@ -309,6 +309,12 @@
                 <artifactId>article-api</artifactId>
                 <version>${blog.version}</version>
             </dependency>
+
+            <dependency>
+                <groupId>xyz.xcye.api</groupId>
+                <artifactId>amqp-api</artifactId>
+                <version>${blog.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 

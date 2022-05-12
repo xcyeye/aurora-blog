@@ -33,7 +33,7 @@ public class Comment implements Serializable {
     /**
      * 此评论对应注册用户中的哪个用户
      */
-    @NotNull(groups = {Insert.class})
+    @NotNull(groups = Insert.class)
     private Long userUid;
 
     /**
@@ -131,4 +131,16 @@ public class Comment implements Serializable {
      * 此评论所对应的所有子评论集合，使用,分割开的
      */
     private String nextCommentUidArray;
+
+    /**
+     * 此评论是在哪种类型的页面上发布的，可以是说说，文章等
+     */
+    @ValidateString(value = "页面类型", groups = Insert.class)
+    private String pageType;
+
+    /**
+     * 如果此评论是在说说发布的，那么此pageUid就表示说说的uid
+     */
+    @NotNull(groups = {Insert.class})
+    private Long pageUid;
 }

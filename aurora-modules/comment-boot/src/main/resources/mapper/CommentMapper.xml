@@ -22,6 +22,7 @@
             <result property="content" column="content" jdbcType="VARCHAR"/>
             <result property="userUid" column="user_uid" jdbcType="BIGINT"/>
             <result property="delete" column="is_delete" jdbcType="TINYINT"/>
+            <result property="pageType" column="page_type" jdbcType="VARCHAR"/>
     </resultMap>
 
     <sql id="Base_Column_List">
@@ -29,8 +30,8 @@
         site,email,create_time,
         update_time,comment_ip,operation_system_info,
         is_show_comment,reply_comment_uid,is_email_notice,
-        path,next_comment_uid_array,content,
-        user_uid,is_delete
+        `path`,next_comment_uid_array,content,
+        user_uid,is_delete,page_type
     </sql>
 
     <select id="queryAllComment" parameterType="java.lang.Long" resultMap="BaseResultMap">
@@ -68,13 +69,13 @@
         ,update_time,comment_ip,operation_system_info
         ,is_show_comment,reply_comment_uid,is_email_notice
         ,path,next_comment_uid_array,content
-        ,user_uid,is_delete)
+        ,user_uid,is_delete, page_type)
         values (#{uid,jdbcType=BIGINT},#{username,jdbcType=VARCHAR},#{avatar,jdbcType=VARCHAR}
         ,#{site,jdbcType=VARCHAR},#{email,jdbcType=VARCHAR},#{createTime,jdbcType=TIMESTAMP}
         ,#{updateTime,jdbcType=TIMESTAMP},#{commentIp,jdbcType=VARCHAR},#{operationSystemInfo,jdbcType=VARCHAR}
         ,#{showComment,jdbcType=TINYINT},#{replyCommentUid,jdbcType=BIGINT},#{emailNotice,jdbcType=TINYINT}
         ,#{path,jdbcType=VARCHAR},#{nextCommentUidArray,jdbcType=VARCHAR},#{content,jdbcType=VARCHAR}
-        ,#{userUid,jdbcType=BIGINT},#{delete,jdbcType=TINYINT})
+        ,#{userUid,jdbcType=BIGINT},#{delete,jdbcType=TINYINT},#{pageType, jdbcType=VARCHAR})
     </insert>
 
     <update id="updateComment" parameterType="xyz.xcye.comment.po.Comment">
@@ -122,6 +123,9 @@
                 <if test="userUid != null">
                     user_uid = #{userUid,jdbcType=BIGINT},
                 </if>
+                <if test="pageType != null and pageType != ''">
+                    page_type=#{pageType,jdbcType=VARCHAR}
+                </if>
         </set>
         where   uid = #{uid,jdbcType=BIGINT} 
     </update>
@@ -130,6 +134,6 @@
         update au_comment
         set 
             is_delete=#{comment.delete}
-        where   uid = #{uid,jdbcType=BIGINT} 
+        where   uid = #{comment.uid,jdbcType=BIGINT}
     </update>
 </mapper>

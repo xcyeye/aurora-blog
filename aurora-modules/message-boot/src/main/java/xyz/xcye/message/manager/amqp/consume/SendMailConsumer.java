@@ -55,8 +55,7 @@ public class SendMailConsumer {
      * @param message
      */
     @RabbitListener(queues = AmqpQueueNameConstant.SEND_HTML_MAIL_QUEUE_NAME, ackMode = "MANUAL")
-    public void sendHtmlMailConsumer(String msgJson, Channel channel, Message message)
-            throws Exception {
+    public void sendHtmlMailConsumer(String msgJson, Channel channel, Message message) throws Exception {
         // 待替换的key和value的map
         StorageSendMailInfo storageSendMailInfo = parseMessage.getStorageSendMailInfoFromMsg(msgJson,channel,message);
         if (!isLegitimateHtmlData(storageSendMailInfo)) {
@@ -75,7 +74,7 @@ public class SendMailConsumer {
         channel.basicAck(message.getMessageProperties().getDeliveryTag(),false);
         try {
             sendMailService.sendHtmlMail(storageSendMailInfo);
-        } catch (MessagingException | ReflectiveOperationException | IOException | EmailException e) {
+        } catch (MessagingException | IOException | EmailException e) {
             // 如果发送html的过程中，发生异常，那么修改mq的消息记录
             updateMessageLogInfo(storageSendMailInfo.getCorrelationDataId(),true,true,
                     Optional.ofNullable(e.getMessage()).orElse("发送html邮件过程中，发生了异常"));
