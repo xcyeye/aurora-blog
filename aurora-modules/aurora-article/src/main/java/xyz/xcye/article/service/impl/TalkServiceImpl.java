@@ -2,6 +2,7 @@ package xyz.xcye.article.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 import xyz.xcye.article.dao.TalkMapper;
 import xyz.xcye.article.po.Talk;
@@ -54,6 +55,7 @@ public class TalkServiceImpl implements TalkService {
         return talkMapper.deleteByPrimaryKey(uid);
     }
 
+    @Transactional
     @Override
     public int insertSelective(Talk record) {
         Assert.notNull(record, "说说信息不能为null");
@@ -79,6 +81,7 @@ public class TalkServiceImpl implements TalkService {
         return BeanUtils.getSingleObjFromList(talkMapper.selectByCondition(Condition.instant(uid, true)), TalkVO.class);
     }
 
+    @Transactional
     @Override
     public int updateByPrimaryKeySelective(Talk record) {
         Assert.notNull(record, "说说信息不能为null");

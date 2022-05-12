@@ -9,11 +9,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.BindException;
 import xyz.xcye.aurora.properties.AuroraProperties;
-import xyz.xcye.core.constant.amqp.RabbitMQNameConstant;
-import xyz.xcye.message.po.Email;
-import xyz.xcye.message.po.MessageLog;
+import xyz.xcye.core.constant.amqp.AmqpExchangeNameConstant;
+import xyz.xcye.core.constant.amqp.AmqpQueueNameConstant;
 import xyz.xcye.core.util.ConvertObjectUtils;
 import xyz.xcye.core.util.id.GenerateInfoUtils;
+import xyz.xcye.message.po.Email;
+import xyz.xcye.message.po.MessageLog;
 
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
@@ -60,15 +61,15 @@ public class OperateUserSendService {
         log.error("sendBindingEmail挂起全局事务{}", RootContext.getXID());
         RootContext.unbind();
         // 存储验证信息
-        rabbitTemplate.send(RabbitMQNameConstant.AURORA_SEND_OPERATE_USER_EXCHANGE,
-                RabbitMQNameConstant.OPERATE_USER_BINDING_EMAIL_ROUTING_KEY,
+        rabbitTemplate.send(AmqpExchangeNameConstant.AURORA_SEND_OPERATE_USER_EXCHANGE,
+                AmqpQueueNameConstant.OPERATE_USER_BINDING_EMAIL_ROUTING_KEY,
                 new Message(jsonToString.getBytes(StandardCharsets.UTF_8)),correlationData);
     }
 
     private void insertMessageLog(String jsonToString, long uid) throws BindException {
         /*//向au_message_log表中插入生产信息
-        MessageLog messageLogDO = setMessageLogDO(jsonToString, uid, RabbitMQNameConstant.AURORA_SEND_MAIL_EXCHANGE, "",
-                RabbitMQNameConstant.MAIL_VERIFY_ACCOUNT_NOTICE_ROUTING_KEY, false, 0, "topic",
+        MessageLog messageLogDO = setMessageLogDO(jsonToString, uid, AmqpQueueNameConstant.AURORA_SEND_MAIL_EXCHANGE, "",
+                AmqpQueueNameConstant.MAIL_VERIFY_ACCOUNT_NOTICE_ROUTING_KEY, false, 0, "topic",
                 false, "");
 
         // 验证messageLogDO对象属性是否合法

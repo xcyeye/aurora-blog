@@ -1,14 +1,11 @@
 package xyz.xcye.core.constant.amqp;
 
-import lombok.Getter;
-
 /**
  * 这是和rabbitmq相关的枚举
  * @author qsyyke
  */
 
-@Getter
-public class RabbitMQNameConstant {
+public class AmqpQueueNameConstant {
 
     /** 发送html邮件的队列及routingKey **/
     public static final String SEND_HTML_MAIL_QUEUE_NAME = "send.html.mail.queue";
@@ -41,23 +38,19 @@ public class RabbitMQNameConstant {
     public static final String DEAD_LETTER_OPERATE_USER_BINDING_EMAIL_QUEUE = "aurora.operate.user.binding.email.dead.letter.queue";
     /** 绑定邮箱的死信队列路由key **/
     public static final String DEAD_LETTER_OPERATE_USER_BINDING_EMAIL_ROUTING_KEY = "aurora.operate.user.binding.email.dead.letter.routing";
+    
+
+    /** 发送文章评论 **/
+    public static final String ARTICLE_COMMENT_QUEUE = "aurora.article.comment.queue";
+    public static final String ARTICLE_COMMENT_ROUTING_KEY = "aurora.article.routingKey";
+    public static final String ARTICLE_COMMENT_DEAD_LETTER_QUEUE = "aurora.article.comment.dead.letter.queue";
+    public static final String ARTICLE_COMMENT_DEAD_LETTER_ROUTING_KEY = "aurora.article.comment.dead.letter.routingKey";
 
 
-    // =============> 发送邮件的交换机
-    /** 发送邮件的普通交换机名称 **/
-    public static final String AURORA_SEND_MAIL_EXCHANGE = "aurora.send.email.common.exchange";
-    /** 发送邮件的死信交换机名称 **/
-    public static final String AURORA_SEND_MAIL_DEAD_LETTER_EXCHANGE = "aurora.send.email.dead.letter.exchange";
-
-
-    // =============> 发送错误消息的交换机
-    /** 如果生产者生产的消息不合法，那么都会被该交换机接收 **/
-    public static final String MISTAKE_MESSAGE_EXCHANGE = "aurora.send.mistake.exchange";
-
-
-    // =============> 发送操作用户的交换机
-    /** 发送操作邮件的交换机 **/
-    public static final String AURORA_SEND_OPERATE_USER_EXCHANGE = "aurora.send.operate.user.exchange";
-    /** 发送操作邮件的死信交换机 **/
-    public static final String AURORA_SEND_OPERATE_USER_DEAD_LETTER_EXCHANGE = "aurora.send.operate.user.dead.letter.exchange";
+    /** 发送说说评论 **/
+    public static final String TALK_COMMENT_QUEUE = "aurora.talk.comment.queue";
+    public static final String TALK_COMMENT_ROUTING_KEY = "aurora.talk.routingKey";
+    public static final String TALK_COMMENT_DEAD_LETTER_QUEUE = "aurora.talk.comment.dead.letter";
+    public static final String TALK_COMMENT_DEAD_LETTER_ROUTING_KEY = "aurora.talk.comment.dead.letter.routingKey";
+    
 }

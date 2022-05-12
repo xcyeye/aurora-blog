@@ -28,7 +28,7 @@ public class RabbitMQBindEmailConsumer {
     @Value("${aurora.admin.verify.account.email-prefix-path}")
     private String emailVerifyAccountPrefixPath;
 
-    @RabbitListener(queues = RabbitMQNameConstant.OPERATE_USER_BINDING_EMAIL_QUEUE,ackMode = "MANUAL")
+    @RabbitListener(queues = AmqpQueueNameConstant.OPERATE_USER_BINDING_EMAIL_QUEUE,ackMode = "MANUAL")
     public void bindingEmailConsumer(String msgJson, Channel channel, Message message) throws MessagingException, BindException, IOException, UserException {
         log.info("绑定邮箱mq消费者执行，接收到的消息:{}",msgJson);
         // 获取唯一id

@@ -4,7 +4,8 @@ import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.core.QueueBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
-import xyz.xcye.core.constant.amqp.RabbitMQNameConstant;
+import xyz.xcye.core.constant.amqp.AmqpExchangeNameConstant;
+import xyz.xcye.core.constant.amqp.AmqpQueueNameConstant;
 
 /**
  * 注册操作邮件的队列，只注册一个就行了
@@ -19,9 +20,9 @@ public class RegisterOperateMailQueue {
      */
     @Bean
     public Queue mailSendHtmlQueue() {
-        return QueueBuilder.durable(RabbitMQNameConstant.SEND_HTML_MAIL_QUEUE_NAME)
-                .deadLetterExchange(RabbitMQNameConstant.AURORA_SEND_MAIL_DEAD_LETTER_EXCHANGE)
-                .deadLetterRoutingKey(RabbitMQNameConstant.SEND_HTML_MAIL_DEAD_LETTER_ROUTING_KEY).build();
+        return QueueBuilder.durable(AmqpQueueNameConstant.SEND_HTML_MAIL_QUEUE_NAME)
+                .deadLetterExchange(AmqpExchangeNameConstant.AURORA_SEND_MAIL_DEAD_LETTER_EXCHANGE)
+                .deadLetterRoutingKey(AmqpQueueNameConstant.SEND_HTML_MAIL_DEAD_LETTER_ROUTING_KEY).build();
     }
 
     /**
@@ -30,9 +31,9 @@ public class RegisterOperateMailQueue {
      */
     @Bean
     public Queue mailSendSimpleTextQueue() {
-        return QueueBuilder.durable(RabbitMQNameConstant.SEND_SIMPLE_TEXT_MAIL_QUEUE_NAME)
-                .deadLetterExchange(RabbitMQNameConstant.AURORA_SEND_MAIL_DEAD_LETTER_EXCHANGE)
-                .deadLetterRoutingKey(RabbitMQNameConstant.SEND_SIMPLE_TEXT_MAIL_DEAD_LETTER_ROUTING_KEY).build();
+        return QueueBuilder.durable(AmqpQueueNameConstant.SEND_SIMPLE_TEXT_MAIL_QUEUE_NAME)
+                .deadLetterExchange(AmqpExchangeNameConstant.AURORA_SEND_MAIL_DEAD_LETTER_EXCHANGE)
+                .deadLetterRoutingKey(AmqpQueueNameConstant.SEND_SIMPLE_TEXT_MAIL_DEAD_LETTER_ROUTING_KEY).build();
     }
 
 
@@ -42,7 +43,7 @@ public class RegisterOperateMailQueue {
      */
     @Bean
     public Queue sendHtmlMailDeadLetterQueue() {
-        return new Queue(RabbitMQNameConstant.SEND_HTML_MAIL_DEAD_LETTER_QUEUE_NAME, true);
+        return new Queue(AmqpQueueNameConstant.SEND_HTML_MAIL_DEAD_LETTER_QUEUE_NAME, true);
     }
 
     /**
@@ -51,6 +52,6 @@ public class RegisterOperateMailQueue {
      */
     @Bean
     public Queue sendSimpleTextMailDeadLetterQueue() {
-        return new Queue(RabbitMQNameConstant.SEND_SIMPLE_TEXT_MAIL_DEAD_LETTER_QUEUE_NAME, true);
+        return new Queue(AmqpQueueNameConstant.SEND_SIMPLE_TEXT_MAIL_DEAD_LETTER_QUEUE_NAME, true);
     }
 }

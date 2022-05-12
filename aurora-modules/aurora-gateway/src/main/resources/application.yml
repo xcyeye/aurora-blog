@@ -27,6 +27,10 @@ spring:
           uri: lb://aurora-article
           predicates:
             - Path=/blog/**
+        - id: aurora-message
+          uri: lb://aurora-message
+          predicates:
+            - Path=/message/**
 management:
   endpoints:
     web:

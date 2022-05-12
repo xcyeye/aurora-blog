@@ -3,7 +3,7 @@ package xyz.xcye.admin.manager.mq.register.queue;
 import org.springframework.amqp.core.Queue;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
-import xyz.xcye.core.constant.amqp.RabbitMQNameConstant;
+import xyz.xcye.core.constant.amqp.AmqpQueueNameConstant;
 
 /**
  * 注册操作其他的队列
@@ -18,7 +18,7 @@ public class RegisterOtherTypeQueue {
      */
     @Bean
     public Queue mistakeMessageQueue() {
-        return new Queue(RabbitMQNameConstant.MISTAKE_MESSAGE_QUEUE,true,true,false);
+        return new Queue(AmqpQueueNameConstant.MISTAKE_MESSAGE_QUEUE,true,true,false);
     }
 
 

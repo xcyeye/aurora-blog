@@ -4,7 +4,8 @@ import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.core.QueueBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
-import xyz.xcye.core.constant.amqp.RabbitMQNameConstant;
+import xyz.xcye.core.constant.amqp.AmqpExchangeNameConstant;
+import xyz.xcye.core.constant.amqp.AmqpQueueNameConstant;
 
 /**
  * 注册操作用户的队列
@@ -19,9 +20,9 @@ public class RegisterOperateUserQueue {
      */
     @Bean
     public Queue bindingEmailQueue() {
-        return QueueBuilder.durable(RabbitMQNameConstant.OPERATE_USER_BINDING_EMAIL_QUEUE)
-                .deadLetterExchange(RabbitMQNameConstant.AURORA_SEND_OPERATE_USER_DEAD_LETTER_EXCHANGE)
-                .deadLetterRoutingKey(RabbitMQNameConstant.DEAD_LETTER_OPERATE_USER_BINDING_EMAIL_ROUTING_KEY).build();
+        return QueueBuilder.durable(AmqpQueueNameConstant.OPERATE_USER_BINDING_EMAIL_QUEUE)
+                .deadLetterExchange(AmqpExchangeNameConstant.AURORA_SEND_OPERATE_USER_DEAD_LETTER_EXCHANGE)
+                .deadLetterRoutingKey(AmqpQueueNameConstant.DEAD_LETTER_OPERATE_USER_BINDING_EMAIL_ROUTING_KEY).build();
     }
 
     /**
@@ -30,6 +31,6 @@ public class RegisterOperateUserQueue {
      */
     @Bean
     public Queue bindingEmailDeadLetterQueue() {
-        return new Queue(RabbitMQNameConstant.DEAD_LETTER_OPERATE_USER_BINDING_EMAIL_QUEUE, true);
+        return new Queue(AmqpQueueNameConstant.DEAD_LETTER_OPERATE_USER_BINDING_EMAIL_QUEUE, true);
     }
 }

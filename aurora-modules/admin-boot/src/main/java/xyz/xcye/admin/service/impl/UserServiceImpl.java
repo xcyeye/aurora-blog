@@ -21,7 +21,8 @@ import xyz.xcye.api.mail.sendmail.enums.SendHtmlMailTypeNameEnum;
 import xyz.xcye.api.mail.sendmail.service.SendMQMessageService;
 import xyz.xcye.api.mail.sendmail.util.AccountInfoUtils;
 import xyz.xcye.aurora.properties.AuroraProperties;
-import xyz.xcye.core.constant.amqp.RabbitMQNameConstant;
+import xyz.xcye.core.constant.amqp.AmqpExchangeNameConstant;
+import xyz.xcye.core.constant.amqp.AmqpQueueNameConstant;
 import xyz.xcye.core.entity.R;
 import xyz.xcye.core.enums.ResponseStatusCodeEnum;
 import xyz.xcye.core.exception.email.EmailException;
@@ -32,10 +33,10 @@ import xyz.xcye.core.util.DateUtils;
 import xyz.xcye.core.util.JSONUtils;
 import xyz.xcye.core.util.id.GenerateInfoUtils;
 import xyz.xcye.core.util.lambda.AssertUtils;
-import xyz.xcye.message.vo.EmailVO;
 import xyz.xcye.data.entity.Condition;
 import xyz.xcye.data.entity.PageData;
 import xyz.xcye.data.util.PageUtils;
+import xyz.xcye.message.vo.EmailVO;
 
 import java.util.*;
 
@@ -240,7 +241,7 @@ public class UserServiceImpl implements UserService {
 
         // 运行到这里，直接调用redis进行存储
         userRedisService.storageUserVerifyAccountInfo(verifyAccountInfo, auroraAccountProperties.getMailVerifyAccountExpirationTime());
-        sendMQMessageService.sendCommonMail(mailInfo, RabbitMQNameConstant.AURORA_SEND_MAIL_EXCHANGE,
-                "topic", RabbitMQNameConstant.SEND_HTML_MAIL_ROUTING_KEY, list);
+        sendMQMessageService.sendCommonMail(mailInfo, AmqpExchangeNameConstant.AURORA_SEND_MAIL_EXCHANGE,
+                "topic", AmqpQueueNameConstant.SEND_HTML_MAIL_ROUTING_KEY, list);
     }
 }

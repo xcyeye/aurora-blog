@@ -12,11 +12,12 @@ import org.springframework.util.StringUtils;
 import org.springframework.validation.BindException;
 import xyz.xcye.amqp.config.service.MistakeMessageSendService;
 import xyz.xcye.api.mail.sendmail.entity.StorageSendMailInfo;
+import xyz.xcye.api.mail.sendmail.enums.SendHtmlMailTypeNameEnum;
 import xyz.xcye.api.mail.sendmail.util.StorageMailUtils;
 import xyz.xcye.comment.po.Comment;
-import xyz.xcye.core.constant.amqp.RabbitMQNameConstant;
+import xyz.xcye.core.constant.amqp.AmqpExchangeNameConstant;
+import xyz.xcye.core.constant.amqp.AmqpQueueNameConstant;
 import xyz.xcye.core.exception.email.EmailException;
-import xyz.xcye.api.mail.sendmail.enums.SendHtmlMailTypeNameEnum;
 import xyz.xcye.core.util.BeanUtils;
 import xyz.xcye.core.util.ConvertObjectUtils;
 import xyz.xcye.message.po.MessageLog;
@@ -53,20 +54,20 @@ public class SendMailConsumer {
      * @param channel
      * @param message
      */
-    @RabbitListener(queues = RabbitMQNameConstant.SEND_HTML_MAIL_QUEUE_NAME, ackMode = "MANUAL")
+    @RabbitListener(queues = AmqpQueueNameConstant.SEND_HTML_MAIL_QUEUE_NAME, ackMode = "MANUAL")
     public void sendHtmlMailConsumer(String msgJson, Channel channel, Message message)
             throws Exception {
         // 待替换的key和value的map
         StorageSendMailInfo storageSendMailInfo = parseMessage.getStorageSendMailInfoFromMsg(msgJson,channel,message);
         if (!isLegitimateHtmlData(storageSendMailInfo)) {
             mistakeMessageSendService.sendMistakeMessageToExchange(msgJson,channel,message,
-                    RabbitMQNameConstant.MISTAKE_MESSAGE_EXCHANGE, RabbitMQNameConstant.MISTAKE_MESSAGE_ROUTING_KEY);
+                    AmqpExchangeNameConstant.MISTAKE_MESSAGE_EXCHANGE, AmqpQueueNameConstant.MISTAKE_MESSAGE_ROUTING_KEY);
             return;
         }
 
         if (storageSendMailInfo.getUserUid() == null) {
             mistakeMessageSendService.sendMistakeMessageToExchange(msgJson,channel,message,
-                    RabbitMQNameConstant.MISTAKE_MESSAGE_EXCHANGE, RabbitMQNameConstant.MISTAKE_MESSAGE_ROUTING_KEY);
+                    AmqpExchangeNameConstant.MISTAKE_MESSAGE_EXCHANGE, AmqpQueueNameConstant.MISTAKE_MESSAGE_ROUTING_KEY);
             updateMessageLogInfo(storageSendMailInfo.getCorrelationDataId(),true,false,"邮件发送中，没有传入userUid");
         }
 
@@ -91,7 +92,7 @@ public class SendMailConsumer {
      * @param channel
      * @param message
      */
-    @RabbitListener(queues = RabbitMQNameConstant.SEND_HTML_MAIL_DEAD_LETTER_QUEUE_NAME, ackMode = "MANUAL")
+    @RabbitListener(queues = AmqpQueueNameConstant.SEND_HTML_MAIL_DEAD_LETTER_QUEUE_NAME, ackMode = "MANUAL")
     public void sendHtmlMailDeadLetterConsumer(String msgJson, Channel channel, Message message)
             throws Exception {
         sendHtmlMailConsumer(msgJson,channel,message);
@@ -103,13 +104,13 @@ public class SendMailConsumer {
      * @param channel
      * @param message
      */
-    @RabbitListener(queues = RabbitMQNameConstant.SEND_SIMPLE_TEXT_MAIL_QUEUE_NAME, ackMode = "MANUAL")
+    @RabbitListener(queues = AmqpQueueNameConstant.SEND_SIMPLE_TEXT_MAIL_QUEUE_NAME, ackMode = "MANUAL")
     public void sendSimpleTextMailConsumer(String msgJson, Channel channel, Message message) throws IOException, ReflectiveOperationException, BindException, MessagingException {
         // 从mq发送的消息中，解析出邮件发送的相关数据
         StorageSendMailInfo storageSendMailInfo = parseMessage.getStorageSendMailInfoFromMsg(msgJson,channel,message);
         if(!isLegitimateSimpleTextData(storageSendMailInfo)) {
             mistakeMessageSendService.sendMistakeMessageToExchange(msgJson,channel,message,
-                    RabbitMQNameConstant.MISTAKE_MESSAGE_EXCHANGE, RabbitMQNameConstant.MISTAKE_MESSAGE_ROUTING_KEY);
+                    AmqpExchangeNameConstant.MISTAKE_MESSAGE_EXCHANGE, AmqpQueueNameConstant.MISTAKE_MESSAGE_ROUTING_KEY);
             return;
         }
 
@@ -132,7 +133,7 @@ public class SendMailConsumer {
      * @param channel
      * @param message
      */
-    @RabbitListener(queues = RabbitMQNameConstant.SEND_SIMPLE_TEXT_MAIL_DEAD_LETTER_QUEUE_NAME, ackMode = "MANUAL")
+    @RabbitListener(queues = AmqpQueueNameConstant.SEND_SIMPLE_TEXT_MAIL_DEAD_LETTER_QUEUE_NAME, ackMode = "MANUAL")
     public void sendSimpleTextMailDeadLetterConsumer(String msgJson, Channel channel, Message message)
             throws ReflectiveOperationException, MessagingException, BindException, IOException {
         sendSimpleTextMailConsumer(msgJson,channel,message);

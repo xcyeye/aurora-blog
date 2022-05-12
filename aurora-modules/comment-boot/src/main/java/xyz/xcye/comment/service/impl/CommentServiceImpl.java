@@ -18,7 +18,8 @@ import xyz.xcye.comment.dto.CommentDTO;
 import xyz.xcye.comment.po.Comment;
 import xyz.xcye.comment.service.CommentService;
 import xyz.xcye.comment.vo.CommentVO;
-import xyz.xcye.core.constant.amqp.RabbitMQNameConstant;
+import xyz.xcye.core.constant.amqp.AmqpExchangeNameConstant;
+import xyz.xcye.core.constant.amqp.AmqpQueueNameConstant;
 import xyz.xcye.core.util.DateUtils;
 import xyz.xcye.core.util.id.GenerateInfoUtils;
 import xyz.xcye.data.entity.Condition;
@@ -68,15 +69,15 @@ public class CommentServiceImpl implements CommentService {
         // 因为发布确认是异步的，如果能进入到发布确认代码中，那么前面插入评论和消息一定都成功保存到数据库中了
         if (isReplyCommentFlag) {
             sendMQMessageService.sendReplyMail(comment, queriedRepliedCommentDO,
-                    RabbitMQNameConstant.AURORA_SEND_MAIL_EXCHANGE,
-                    "topic", RabbitMQNameConstant.SEND_HTML_MAIL_ROUTING_KEY);
+                    AmqpExchangeNameConstant.AURORA_SEND_MAIL_EXCHANGE,
+                    "topic", AmqpQueueNameConstant.SEND_HTML_MAIL_ROUTING_KEY);
         }else {
             //不是回复评论 设置ReplyCommentUid标识
             comment.setReplyCommentUid(0L);
             //交换机发送消息 如果此commentDO.getUserUid()用户在au_email中不存在记录的话，会使用默认的模板进行邮件通知
             StorageSendMailInfo mailInfo = createReceiveCommentMailInfo(comment);
-            sendMQMessageService.sendCommonMail(mailInfo, RabbitMQNameConstant.AURORA_SEND_MAIL_EXCHANGE,
-                    "topic", RabbitMQNameConstant.SEND_HTML_MAIL_ROUTING_KEY, createReceiveList(comment));
+            sendMQMessageService.sendCommonMail(mailInfo, AmqpExchangeNameConstant.AURORA_SEND_MAIL_EXCHANGE,
+                    "topic", AmqpQueueNameConstant.SEND_HTML_MAIL_ROUTING_KEY, createReceiveList(comment));
         }
 
         //如果运行到这里，不能确保邮件发送成功，但还是修改一下邮件发送状态

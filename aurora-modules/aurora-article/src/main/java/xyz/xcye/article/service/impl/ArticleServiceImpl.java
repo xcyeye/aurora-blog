@@ -96,6 +96,7 @@ public class ArticleServiceImpl implements ArticleService {
         return BeanUtils.getSingleObjFromList(articleMapper.selectByCondition(Condition.instant(uid, true)), ArticleVO.class);
     }
 
+    @Transactional
     @Override
     public int updateByPrimaryKeySelective(Article record) {
         Assert.notNull(record, "文章数据不能为null");

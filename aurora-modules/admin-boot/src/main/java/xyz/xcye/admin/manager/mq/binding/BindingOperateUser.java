@@ -6,7 +6,8 @@ import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.core.TopicExchange;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
-import xyz.xcye.core.constant.amqp.RabbitMQNameConstant;
+import xyz.xcye.core.constant.amqp.AmqpExchangeNameConstant;
+import xyz.xcye.core.constant.amqp.AmqpQueueNameConstant;
 
 /**
  * 将操作用户的交换机和队列绑定起来
@@ -22,9 +23,9 @@ public class BindingOperateUser {
      */
     @Bean
     public Binding bindingEmailBinding() {
-        return BindingBuilder.bind(new Queue(RabbitMQNameConstant.OPERATE_USER_BINDING_EMAIL_QUEUE))
-                .to(new TopicExchange(RabbitMQNameConstant.AURORA_SEND_OPERATE_USER_EXCHANGE))
-                .with(RabbitMQNameConstant.OPERATE_USER_BINDING_EMAIL_ROUTING_KEY);
+        return BindingBuilder.bind(new Queue(AmqpQueueNameConstant.OPERATE_USER_BINDING_EMAIL_QUEUE))
+                .to(new TopicExchange(AmqpExchangeNameConstant.AURORA_SEND_OPERATE_USER_EXCHANGE))
+                .with(AmqpQueueNameConstant.OPERATE_USER_BINDING_EMAIL_ROUTING_KEY);
     }
 
     /**
@@ -33,8 +34,8 @@ public class BindingOperateUser {
      */
     @Bean
     public Binding bindingEmailDeadLetterBinding() {
-        return BindingBuilder.bind(new Queue(RabbitMQNameConstant.DEAD_LETTER_OPERATE_USER_BINDING_EMAIL_QUEUE))
-                .to(new TopicExchange(RabbitMQNameConstant.AURORA_SEND_OPERATE_USER_DEAD_LETTER_EXCHANGE))
-                .with(RabbitMQNameConstant.DEAD_LETTER_OPERATE_USER_BINDING_EMAIL_ROUTING_KEY);
+        return BindingBuilder.bind(new Queue(AmqpQueueNameConstant.DEAD_LETTER_OPERATE_USER_BINDING_EMAIL_QUEUE))
+                .to(new TopicExchange(AmqpExchangeNameConstant.AURORA_SEND_OPERATE_USER_DEAD_LETTER_EXCHANGE))
+                .with(AmqpQueueNameConstant.DEAD_LETTER_OPERATE_USER_BINDING_EMAIL_ROUTING_KEY);
     }
 }

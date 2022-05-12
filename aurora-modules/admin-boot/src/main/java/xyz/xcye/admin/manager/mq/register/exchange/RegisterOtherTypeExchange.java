@@ -3,7 +3,7 @@ package xyz.xcye.admin.manager.mq.register.exchange;
 import org.springframework.amqp.core.DirectExchange;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
-import xyz.xcye.core.constant.amqp.RabbitMQNameConstant;
+import xyz.xcye.core.constant.amqp.AmqpExchangeNameConstant;
 
 /**
  * @author qsyyke
@@ -17,6 +17,6 @@ public class RegisterOtherTypeExchange {
      */
     @Bean
     public DirectExchange mistakeMessageExchange() {
-        return new DirectExchange(RabbitMQNameConstant.MISTAKE_MESSAGE_EXCHANGE,true,false);
+        return new DirectExchange(AmqpExchangeNameConstant.MISTAKE_MESSAGE_EXCHANGE,true,false);
     }
 }

@@ -4,7 +4,7 @@ import org.springframework.amqp.core.Exchange;
 import org.springframework.amqp.core.TopicExchange;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
-import xyz.xcye.core.constant.amqp.RabbitMQNameConstant;
+import xyz.xcye.core.constant.amqp.AmqpExchangeNameConstant;
 
 /**
  * 发送邮件的交换机只注册两种，发送邮件的交换机和发送邮件的死信交换机
@@ -19,7 +19,7 @@ public class RegisterSendMailExchange {
      */
     @Bean
     public Exchange commonSendSimpleTextMailExchange() {
-        return new TopicExchange(RabbitMQNameConstant.AURORA_SEND_MAIL_EXCHANGE,
+        return new TopicExchange(AmqpExchangeNameConstant.AURORA_SEND_MAIL_EXCHANGE,
                 true,true);
     }
 
@@ -29,7 +29,7 @@ public class RegisterSendMailExchange {
      */
     @Bean
     public Exchange mailReceiveCommentNoticeExchange() {
-        return new TopicExchange(RabbitMQNameConstant.AURORA_SEND_MAIL_DEAD_LETTER_EXCHANGE,
+        return new TopicExchange(AmqpExchangeNameConstant.AURORA_SEND_MAIL_DEAD_LETTER_EXCHANGE,
                 true, false);
     }
 }

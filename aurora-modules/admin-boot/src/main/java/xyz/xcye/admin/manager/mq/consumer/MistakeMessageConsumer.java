@@ -5,7 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;
-import xyz.xcye.core.constant.amqp.RabbitMQNameConstant;
+import xyz.xcye.core.constant.amqp.AmqpQueueNameConstant;
 
 import java.io.IOException;
 
@@ -23,7 +23,7 @@ public class MistakeMessageConsumer {
      * @param msgJson
      * @param channel
      */
-    @RabbitListener(queues = RabbitMQNameConstant.MISTAKE_MESSAGE_QUEUE,ackMode = "AUTO")
+    @RabbitListener(queues = AmqpQueueNameConstant.MISTAKE_MESSAGE_QUEUE,ackMode = "AUTO")
     public void mistakeMessageConsumer(String msgJson, Channel channel, Message message) throws IOException {
         log.error("无法消费的消息: {}",msgJson);
         channel.basicAck(message.getMessageProperties().getDeliveryTag(),false);

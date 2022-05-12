@@ -6,7 +6,8 @@ import org.springframework.amqp.core.DirectExchange;
 import org.springframework.amqp.core.Queue;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
-import xyz.xcye.core.constant.amqp.RabbitMQNameConstant;
+import xyz.xcye.core.constant.amqp.AmqpExchangeNameConstant;
+import xyz.xcye.core.constant.amqp.AmqpQueueNameConstant;
 
 /**
  * 将没有做区别的队列和相应的交换机绑定起来
@@ -21,8 +22,8 @@ public class BindingOtherType {
      */
     @Bean
     public Binding mistakeMessageBinding() {
-        return BindingBuilder.bind(new Queue(RabbitMQNameConstant.MISTAKE_MESSAGE_QUEUE))
-                .to(new DirectExchange(RabbitMQNameConstant.MISTAKE_MESSAGE_EXCHANGE))
-                .with(RabbitMQNameConstant.MISTAKE_MESSAGE_ROUTING_KEY);
+        return BindingBuilder.bind(new Queue(AmqpQueueNameConstant.MISTAKE_MESSAGE_QUEUE))
+                .to(new DirectExchange(AmqpExchangeNameConstant.MISTAKE_MESSAGE_EXCHANGE))
+                .with(AmqpQueueNameConstant.MISTAKE_MESSAGE_ROUTING_KEY);
     }
 }
