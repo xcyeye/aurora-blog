@@ -59,7 +59,7 @@ public class TalkServiceImpl implements TalkService {
         Assert.notNull(record, "说说信息不能为null");
         record.setUid(GenerateInfoUtils.generateUid(auroraProperties.getSnowFlakeWorkerId(),
                 auroraProperties.getSnowFlakeDatacenterId()));
-
+        record.setCommentUids(null);
         JwtUserInfo jwtUserInfo = userUtils.getCurrentUser();
         AssertUtils.stateThrow(jwtUserInfo != null,
                 () -> new UserException(ResponseStatusCodeEnum.PERMISSION_USER_NOT_LOGIN));

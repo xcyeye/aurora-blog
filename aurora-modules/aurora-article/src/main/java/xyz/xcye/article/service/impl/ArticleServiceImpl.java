@@ -77,7 +77,7 @@ public class ArticleServiceImpl implements ArticleService {
         // 创建时间是自动生成的
         record.setCreateTime(null);
         record.setDelete(false);
-
+        record.setCommentUids(null);
         setUserUid(record);
         // 查询可用的类别和分类
         setEffectiveTagAndCategory(record);
@@ -152,7 +152,7 @@ public class ArticleServiceImpl implements ArticleService {
      * @param article
      */
     private void setTimingPublishTime(Article article) {
-        if (!article.getTiming()) {
+        if (article.getTiming() == null || !article.getTiming()) {
             article.setTimingPublishTime(null);
             return;
         }

@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.Length;
 import xyz.xcye.core.constant.FieldLengthConstant;
 import xyz.xcye.core.valid.Delete;
 import xyz.xcye.core.valid.Insert;
@@ -62,7 +63,7 @@ public class Talk implements Serializable {
     * 此说说标题
     */
     @ApiModelProperty(value="此说说标题")
-    @ValidateString(value = "说说的标题", max = FieldLengthConstant.TITLE, groups = Insert.class)
+    @Length(max = FieldLengthConstant.TITLE)
     private String title;
 
     /**

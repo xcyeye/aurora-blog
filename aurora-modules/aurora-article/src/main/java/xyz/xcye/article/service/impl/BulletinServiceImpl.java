@@ -95,7 +95,7 @@ public class BulletinServiceImpl implements BulletinService {
      * @param bulletin
      */
     private void setTimingPublishTime(Bulletin bulletin) {
-        if (!bulletin.getTiming()) {
+        if (bulletin.getTiming() == null || !bulletin.getTiming()) {
             bulletin.setTimingPublishTime(null);
             return;
         }
