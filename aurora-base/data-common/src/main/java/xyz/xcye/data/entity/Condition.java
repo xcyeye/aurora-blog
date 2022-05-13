@@ -2,6 +2,7 @@ package xyz.xcye.data.entity;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -12,6 +13,7 @@ import java.util.Optional;
  * @author qsyyke
  */
 
+@ToString
 @Getter
 public class Condition<T> {
 

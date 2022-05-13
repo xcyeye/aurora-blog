@@ -12,7 +12,7 @@ import xyz.xcye.comment.service.CommentService;
 import xyz.xcye.comment.vo.CommentVO;
 import xyz.xcye.core.annotaion.controller.ModifyOperation;
 import xyz.xcye.core.annotaion.controller.SelectOperation;
-import xyz.xcye.core.util.id.GenerateInfoUtils;
+import xyz.xcye.core.util.NetWorkUtils;
 import xyz.xcye.core.valid.Insert;
 import xyz.xcye.core.valid.Update;
 import xyz.xcye.data.entity.Condition;
@@ -51,14 +51,9 @@ public class CommentController {
     @PostMapping("")
     public int insertComment(@Validated({Default.class, Insert.class}) Comment comment,
                              HttpServletRequest request) throws Throwable {
-        /*comment.setCommentIp(NetWorkUtils.getIpAddr(request));
+        comment.setCommentIp(NetWorkUtils.getIpAddr(request));
         comment.setOperationSystemInfo(NetWorkUtils.getOperationInfo(request));
-        return commentService.insertComment(comment);*/
-        comment.setUid(GenerateInfoUtils.generateUid(1,2));
-        sendCommentToExchange.sendCommentToMQ(comment);
-
-
-        return 1;
+        return commentService.insertComment(comment);
     }
 
     @ApiOperation(value = "删除单条评论")

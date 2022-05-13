@@ -1,5 +1,7 @@
 package xyz.xcye.feign.config.service;
 
+import org.springframework.amqp.core.Message;
+import org.springframework.amqp.core.MessageProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.cloud.openfeign.SpringQueryMap;
@@ -9,10 +11,17 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.context.request.RequestAttributes;
+import org.springframework.web.context.request.RequestContextHolder;
+import xyz.xcye.core.constant.oauth.OauthJwtConstant;
 import xyz.xcye.core.entity.R;
 import xyz.xcye.core.util.BeanUtils;
+import xyz.xcye.core.util.JSONUtils;
+import xyz.xcye.feign.config.request.AuroraRequestAttributes;
 import xyz.xcye.message.po.MessageLog;
 import xyz.xcye.message.vo.MessageLogVO;
+
+import java.util.HashMap;
 
 /**
  * @author qsyyke
@@ -45,11 +54,14 @@ public interface MessageLogFeignService {
          * @throws BindException
          */
         public void updateMessageLogInfo(String correlationDataId, boolean ackStatus,
-                                          boolean consumeStatus, String errorMessage) throws BindException {
+                                          boolean consumeStatus, String errorMessage, Message message) throws BindException {
             MessageLogVO messageLogVO = null;
+            setRequestAttributes(message);
             try {
-                messageLogVO = (MessageLogVO) messageLogFeignService.queryMessageLogByUid(Long.parseLong(correlationDataId)).getData();
-            } catch (NumberFormatException e) {
+                R r = messageLogFeignService.queryMessageLogByUid(Long.parseLong(correlationDataId));
+                messageLogVO = JSONUtils.parseObjFromResult(r, "data", MessageLogVO.class);
+            } catch (Exception e) {
+                e.printStackTrace();
                 return;
             }
 
@@ -61,6 +73,17 @@ public interface MessageLogFeignService {
             messageLogVO.setConsumeStatus(consumeStatus);
             messageLogVO.setErrorMessage(errorMessage);
             messageLogFeignService.updateMessageLog(BeanUtils.copyProperties(messageLogVO, MessageLog.class));
+        }
+
+        private void setRequestAttributes(Message message) {
+            if (RequestContextHolder.getRequestAttributes() != null) {
+                return;
+            }
+            MessageProperties messageProperties = message.getMessageProperties();
+            HashMap<String,String> map = messageProperties.getHeader(OauthJwtConstant.AMQP_REQUEST_REQUEST_JWT_USER_INFO_NAME);
+            RequestAttributes requestAttributes = new AuroraRequestAttributes();
+            map.forEach((key,value) -> requestAttributes.setAttribute(key, value,1));
+            RequestContextHolder.setRequestAttributes(requestAttributes);
         }
     }
 }

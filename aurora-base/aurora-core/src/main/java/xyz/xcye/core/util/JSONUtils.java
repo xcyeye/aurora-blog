@@ -27,4 +27,16 @@ public class JSONUtils {
         }
         return t;
     }
+
+    public static  <T> T parseObjFromResult(Object obj, String key, Class<T> target) {
+        String json = ConvertObjectUtils.jsonToString(obj);
+        JSONObject jsonObject = JSON.parseObject(json);
+        T t = null;
+        try {
+            t = JSON.parseObject(jsonObject.getString(key), target);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return t;
+    }
 }
