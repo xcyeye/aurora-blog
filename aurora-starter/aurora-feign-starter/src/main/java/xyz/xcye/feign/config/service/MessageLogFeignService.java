@@ -13,14 +13,17 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
+import xyz.xcye.auth.constant.RequestConstant;
 import xyz.xcye.core.entity.R;
 import xyz.xcye.core.util.BeanUtils;
 import xyz.xcye.core.util.JSONUtils;
+import xyz.xcye.core.util.LogUtils;
 import xyz.xcye.feign.config.request.AuroraRequestAttributes;
 import xyz.xcye.message.po.MessageLog;
 import xyz.xcye.message.vo.MessageLogVO;
 
 import java.util.HashMap;
+import java.util.Optional;
 
 /**
  * @author qsyyke
@@ -60,7 +63,7 @@ public interface MessageLogFeignService {
                 R r = messageLogFeignService.queryMessageLogByUid(Long.parseLong(correlationDataId));
                 messageLogVO = JSONUtils.parseObjFromResult(r, "data", MessageLogVO.class);
             } catch (Exception e) {
-                e.printStackTrace();
+                LogUtils.logExceptionInfo(e);
                 return;
             }
 
@@ -83,13 +86,13 @@ public interface MessageLogFeignService {
             MessageProperties messageProperties = message.getMessageProperties();
 
             // 获取白名单状态
-            Boolean whiteUrlStatus = messageProperties.getHeader(OauthJwtConstant.AMQP_MESSAGE_PROPERTIES_WHITE_URL_FLAG);
+            String whiteUrlStatus = messageProperties.getHeader(RequestConstant.AMQP_MESSAGE_PROPERTIES_WHITE_URL_STATUS);
 
             // 如果从浏览器中发出的不是白名单，则一定会在message中，设置一个请求头的值为请求对象中请求头的信息
-            HashMap<String,String> map = messageProperties.getHeader(OauthJwtConstant.AMQP_REQUEST_REQUEST_JWT_USER_INFO_NAME);
+            HashMap<String,String> map = messageProperties.getHeader(RequestConstant.AMQP_REQUEST_REQUEST_JWT_USER_INFO_NAME);
             RequestAttributes requestAttributes = new AuroraRequestAttributes();
-            map.forEach((key,value) -> requestAttributes.setAttribute(key, value,1));
-            requestAttributes.setAttribute(OauthJwtConstant.CONTEXT_AMQP_MESSAGE_PROPERTIES_WHITE_URL_FLAG, whiteUrlStatus, 1);
+            Optional.ofNullable(map).ifPresent(t -> t.forEach((key,value) -> requestAttributes.setAttribute(key, value,1)));
+            requestAttributes.setAttribute(RequestConstant.CONTEXT_WHITE_URL_STATUS, whiteUrlStatus, 1);
             RequestContextHolder.setRequestAttributes(requestAttributes);
         }
     }

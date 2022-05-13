@@ -10,13 +10,15 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 import xyz.xcye.aurora.util.AuroraRequestUtils;
+import xyz.xcye.auth.constant.RequestConstant;
 import xyz.xcye.auth.enums.TokenConstant;
-import xyz.xcye.auth.constant.OauthJwtConstant;
 import xyz.xcye.core.dto.JwtUserInfo;
 import xyz.xcye.core.entity.R;
 import xyz.xcye.core.enums.ResponseStatusCodeEnum;
+import xyz.xcye.core.exception.user.UserException;
 import xyz.xcye.core.util.ConvertObjectUtils;
 import xyz.xcye.core.util.jwt.JwtUtils;
+import xyz.xcye.core.util.lambda.AssertUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -38,25 +40,30 @@ public class AuroraGlobalHandlerInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        RequestAttributes currentRequestAttributes = RequestContextHolder.currentRequestAttributes();
-
         // 获取请求头中的白名单标识
-        String whiteUrlFlag = Optional.ofNullable(request.getHeader(OauthJwtConstant.REQUEST_WHITE_URL_FLAG_NAME)).orElse("false");
-        if ("true".equals(whiteUrlFlag)) {
+        String whiteUrlStatus = Optional.ofNullable(request.getHeader(RequestConstant.REQUEST_WHITE_URL_STATUS)).orElse("false");
+
+        // 把当前请求地址的白名单判定状态放入RequestContextHolder中，方便取用
+        RequestAttributes currentRequestAttributes = RequestContextHolder.currentRequestAttributes();
+        currentRequestAttributes.setAttribute(RequestConstant.CONTEXT_WHITE_URL_STATUS, whiteUrlStatus, 1);
+        if ("true".equals(whiteUrlStatus)) {
             return true;
         }
 
         // 判断当前请求是否是从认证中心发出的
-        String oauthQueryPwdHeader = request.getHeader(OauthJwtConstant.REQUEST_OAUTH_SERVER_QUERY_PASSWORD);
+        String oauthQueryPwdHeader = request.getHeader(RequestConstant.REQUEST_OAUTH_SERVER_QUERY_PASSWORD);
         if ("true".equals(oauthQueryPwdHeader)) {
             return true;
         }
 
-        String jwtUserInfoBase64 = request.getHeader(OauthJwtConstant.REQUEST_TOKEN_NAME);
+        String jwtUserInfoBase64 = request.getHeader(RequestConstant.REQUEST_TOKEN_NAME);
         String jwtUserInfoStr = Base64.decodeStr(jwtUserInfoBase64);
 
         // 将jwtUserInfoStr解析成一个jwtUserInfo对象
         JwtUserInfo jwtUserInfo = JSON.parseObject(jwtUserInfoStr, JwtUserInfo.class);
+
+        AssertUtils.stateThrow(jwtUserInfo != null,
+                () -> new UserException(ResponseStatusCodeEnum.PERMISSION_USER_NOT_LOGIN));
         jwtUserInfo.setRequestHeadMap(auroraRequestUtils.getRequestHeadsFromHolder());
 
         // 获取请求头的token，在网关的全局过滤器中，被加入
@@ -68,8 +75,7 @@ public class AuroraGlobalHandlerInterceptor implements HandlerInterceptor {
         }
 
         // 将用户已认证的数据，放入RequestContextHolder中，方便使用
-        RequestAttributes requestAttributes = RequestContextHolder.currentRequestAttributes();
-        requestAttributes.setAttribute(OauthJwtConstant.REQUEST_STORAGE_JWT_USER_INFO_NAME, jwtUserInfo, 1);
+        currentRequestAttributes.setAttribute(RequestConstant.REQUEST_STORAGE_JWT_USER_INFO_NAME, jwtUserInfo, 1);
         return tokenExpiration(jwtToken, response);
     }
 

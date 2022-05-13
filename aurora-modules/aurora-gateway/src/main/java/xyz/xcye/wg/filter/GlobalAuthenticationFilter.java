@@ -14,19 +14,16 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
-import xyz.xcye.admin.constant.RedisStorageConstant;
-import xyz.xcye.admin.po.WhiteUrl;
 import xyz.xcye.auth.constant.OauthJwtConstant;
+import xyz.xcye.auth.constant.RequestConstant;
 import xyz.xcye.core.dto.JwtUserInfo;
 import xyz.xcye.core.enums.ResponseStatusCodeEnum;
 import xyz.xcye.core.util.ConvertObjectUtils;
 import xyz.xcye.wg.util.SecurityResultHandler;
 
 import java.net.URI;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 /**
  * 全局过滤器，对token的拦截，解析token放入header中，便于下游微服务获取用户信息
@@ -63,14 +60,9 @@ public class GlobalAuthenticationFilter implements GlobalFilter {
         // 将当前的请求方法和uri组装成一个restFul风格的地址
         String restFulPath = method + ":" + uri.getPath();
 
-        List<String> list = exchange.getRequest().getHeaders().get(OauthJwtConstant.REQUEST_WHITE_URL_FLAG_NAME);
+        List<String> list = exchange.getRequest().getHeaders().get(RequestConstant.REQUEST_WHITE_URL_STATUS);
         // 如果是白名单，则直接放行
         if (list != null && "true".equals(list.get(0))) {
-            return chain.filter(exchange);
-        }
-
-        if (isWhiteUrl(restFulPath)) {
-            exchange.getRequest().mutate().header(OauthJwtConstant.REQUEST_WHITE_URL_FLAG_NAME, "true");
             return chain.filter(exchange);
         }
 
@@ -87,16 +79,17 @@ public class GlobalAuthenticationFilter implements GlobalFilter {
             //解析token，使用tokenStore
             oAuth2AccessToken = tokenStore.readAccessToken(token);
             additionalInformation = oAuth2AccessToken.getAdditionalInformation();
-
-            //令牌的唯一ID
-            String jti = additionalInformation.get("jti").toString();
-            // 查看黑名单中是否存在这个jti，如果存在则这个令牌不能用
-            Boolean hasKey = redisTemplate.hasKey(jti);
-            if (hasKey != null && hasKey) {
-                return invalidTokenMono(exchange);
-            }
         } catch (Exception e) {
-            invalidTokenMono(exchange);
+            return invalidTokenMono(exchange);
+        }
+
+        //令牌的唯一ID
+        String jti = additionalInformation.get("jti").toString();
+
+        // 查看黑名单中是否存在这个jti，如果存在则这个令牌不能用
+        Boolean hasKey = redisTemplate.hasKey(jti);
+        if (hasKey != null && hasKey) {
+            return invalidTokenMono(exchange);
         }
 
         //获取用户权限
@@ -112,34 +105,15 @@ public class GlobalAuthenticationFilter implements GlobalFilter {
                 .jwtToken(token)
                 .build();
 
-        //将解析后的token加密放入请求头中，方便下游微服务解析获取用户信息
+        // 将解析后的token加密放入请求头中，方便下游微服务解析获取用户信息
         String base64 = Base64.encode(ConvertObjectUtils.jsonToString(jwtUserInfo));
 
-        //放入请求头中
+        // 放入请求头中
         ServerHttpRequest tokenRequest = exchange.getRequest().mutate()
-                .header(OauthJwtConstant.REQUEST_TOKEN_NAME, base64).build();
+                .header(RequestConstant.REQUEST_TOKEN_NAME, base64).build();
         ServerWebExchange build = exchange.mutate().request(tokenRequest).build();
-        exchange.getRequest().mutate().header(OauthJwtConstant.REQUEST_WHITE_URL_FLAG_NAME, "false");
+        exchange.getRequest().mutate().header(RequestConstant.REQUEST_WHITE_URL_FLAG_NAME, "false");
         return chain.filter(build);
-    }
-
-    /**
-     * 判断该路径是否是白名单
-     * @param restFulPath
-     * @return
-     */
-    private boolean isWhiteUrl(String restFulPath) {
-        // 获取redis中的所有白名单
-        List<WhiteUrl> whiteUrlList = (List<WhiteUrl>) redisTemplate.opsForValue().get(RedisStorageConstant.STORAGE_WHITE_URL_INFO);
-
-        whiteUrlList = Optional.ofNullable(whiteUrlList).orElse(new ArrayList<>());
-        // 判断当前访问的restful风格的请求地址是否是一个白名单
-        for (WhiteUrl whiteUrl : whiteUrlList) {
-            if (antPathMatcher.match(whiteUrl.getUrl(), restFulPath)) {
-                return true;
-            }
-        }
-        return false;
     }
 
     /**

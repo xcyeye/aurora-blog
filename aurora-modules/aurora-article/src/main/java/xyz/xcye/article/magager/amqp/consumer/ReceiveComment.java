@@ -56,7 +56,7 @@ public class ReceiveComment {
         ArticleVO articleVO = articleService.selectByUid(pageUid);
         if (articleVO != null) {
             updateArticleData(articleVO, comment);
-            ack(comment.getUid(), channel, message);
+            ack(channel, message);
             return;
         }
 
@@ -65,7 +65,7 @@ public class ReceiveComment {
         if (talkVO != null) {
             // 是文章的评论uid
             updateTalkData(talkVO, comment);
-            ack(comment.getUid(), channel, message);
+            ack(channel, message);
             return;
         }
 
@@ -109,7 +109,7 @@ public class ReceiveComment {
         talkService.updateByPrimaryKeySelective(BeanUtils.copyProperties(talkVO, Talk.class));
     }
 
-    private void ack(Long uid, Channel channel, Message message) throws IOException, BindException {
+    private void ack(Channel channel, Message message) throws IOException, BindException {
         channel.basicAck(message.getMessageProperties().getDeliveryTag(), false);
         updateMessageLog.updateMessageLogInfo(message.getMessageProperties().getCorrelationId(), true, true, null, message);
     }

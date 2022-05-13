@@ -4,7 +4,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
-import xyz.xcye.auth.constant.OauthJwtConstant;
+import xyz.xcye.auth.constant.RequestConstant;
+import xyz.xcye.core.util.LogUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Enumeration;
@@ -42,12 +43,13 @@ public class AuroraRequestUtils {
 
     public static boolean getWhiteUrlFlag() {
         RequestAttributes currentRequestAttributes = RequestContextHolder.currentRequestAttributes();
-        if (currentRequestAttributes instanceof ServletRequestAttributes) {
-            ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes) currentRequestAttributes;
-            String whiteUrlFlagStr = servletRequestAttributes.getRequest().getHeader(OauthJwtConstant.REQUEST_WHITE_URL_FLAG_NAME);
-            return "true".equals(whiteUrlFlagStr);
+        String whiteUrlStatus = null;
+        try {
+            whiteUrlStatus = (String) currentRequestAttributes.getAttribute(RequestConstant.CONTEXT_WHITE_URL_STATUS, 1);
+        } catch (Exception e) {
+            LogUtils.logExceptionInfo(e);
+            return false;
         }
-
-        return false;
+        return "true".equals(whiteUrlStatus);
     }
 }

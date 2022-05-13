@@ -4,7 +4,7 @@ import feign.RequestInterceptor;
 import feign.RequestTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.util.AntPathMatcher;
-import xyz.xcye.auth.constant.OauthJwtConstant;
+import xyz.xcye.auth.constant.RequestConstant;
 
 @Component
 public class Oauth2RequestInterceptor implements RequestInterceptor {
@@ -19,7 +19,7 @@ public class Oauth2RequestInterceptor implements RequestInterceptor {
         if (antPathMatcher.match("POST:/admin/user/pwd/*", restFulPath) ||
                 antPathMatcher.match("GET:/admin/permissionRelation/userRole/*", restFulPath)) {
             // 在请求头中设置一个当前的请求是一个从认证中心发出的查询密码请求
-            template.header(OauthJwtConstant.REQUEST_OAUTH_SERVER_QUERY_PASSWORD, "true");
+            template.header(RequestConstant.REQUEST_OAUTH_SERVER_QUERY_PASSWORD, "true");
         }
     }
 }

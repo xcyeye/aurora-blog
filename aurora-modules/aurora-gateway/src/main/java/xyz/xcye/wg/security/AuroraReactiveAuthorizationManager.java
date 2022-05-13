@@ -18,6 +18,7 @@ import xyz.xcye.admin.constant.RedisStorageConstant;
 import xyz.xcye.admin.dto.RolePermissionDTO;
 import xyz.xcye.admin.po.WhiteUrl;
 import xyz.xcye.auth.constant.OauthJwtConstant;
+import xyz.xcye.auth.constant.RequestConstant;
 
 import java.net.URI;
 import java.util.*;
@@ -54,7 +55,8 @@ public class AuroraReactiveAuthorizationManager implements ReactiveAuthorization
 
         // 白名单监测
         if (isWhiteUrl(restFulPath)) {
-            exchange.getRequest().mutate().header(OauthJwtConstant.REQUEST_WHITE_URL_FLAG_NAME, "true");
+            // 如果是白名单的话，将白名单的状态放入到当前RequestContextHolder中，不放入到请求头中，为了方便获取
+            exchange.getRequest().mutate().header(RequestConstant.REQUEST_WHITE_URL_STATUS, "true");
             return Mono.just(new AuthorizationDecision(true));
         }
 

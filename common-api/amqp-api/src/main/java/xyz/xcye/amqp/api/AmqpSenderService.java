@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindException;
 import xyz.xcye.aurora.util.AuroraRequestUtils;
 import xyz.xcye.aurora.util.UserUtils;
-import xyz.xcye.auth.constant.OauthJwtConstant;
+import xyz.xcye.auth.constant.RequestConstant;
 import xyz.xcye.core.dto.JwtUserInfo;
 import xyz.xcye.core.enums.ResponseStatusCodeEnum;
 import xyz.xcye.core.exception.user.UserException;
@@ -50,7 +50,7 @@ public class AmqpSenderService {
     private UserUtils userUtils;
 
     /**
-     * 发送mq消息 如果
+     * 发送mq消息 因为目前把消息发送到交换机中，都是同步的，也就是RequestContextHolder中一定存在数据
      * @param msgJson
      * @param exchangeName
      * @param routingKey
@@ -59,8 +59,7 @@ public class AmqpSenderService {
      */
     @Transactional
     public void sendMQMsg(String msgJson, String exchangeName, String routingKey, String exchangeType) throws BindException {
-
-        boolean whiteUrlFlag = AuroraRequestUtils.getWhiteUrlFlag();
+        boolean whiteUrlStatus = AuroraRequestUtils.getWhiteUrlFlag();
         // 生成一个唯一correlationDataId
         String correlationDataId = getCorrelationDataId();
         CorrelationData correlationData = new CorrelationData(correlationDataId);
@@ -68,7 +67,7 @@ public class AmqpSenderService {
         // 调用feign向数据库中插入mq消息
         insertMessageLogData(correlationDataId, msgJson, exchangeName, routingKey, exchangeType);
         JwtUserInfo currentUserInfo = userUtils.getCurrentUser();
-        if (!whiteUrlFlag && currentUserInfo == null) {
+        if (!whiteUrlStatus && currentUserInfo == null) {
             throw new UserException(ResponseStatusCodeEnum.PERMISSION_USER_NOT_LOGIN);
         }
 
@@ -76,11 +75,11 @@ public class AmqpSenderService {
         messageProperties.setCorrelationId(correlationDataId);
 
         // 如果是白名单，可以不用加入请求头信息，但是必须将白名单状态传递到消费者中
-        Optional.ofNullable(currentUserInfo).ifPresent(t -> messageProperties.setHeader(OauthJwtConstant.AMQP_REQUEST_REQUEST_JWT_USER_INFO_NAME,
+        Optional.ofNullable(currentUserInfo).ifPresent(t -> messageProperties.setHeader(RequestConstant.AMQP_REQUEST_REQUEST_JWT_USER_INFO_NAME,
                 currentUserInfo.getRequestHeadMap()));
 
         // 传递白名单状态
-        messageProperties.setHeader(OauthJwtConstant.AMQP_MESSAGE_PROPERTIES_WHITE_URL_FLAG, whiteUrlFlag);
+        messageProperties.setHeader(RequestConstant.AMQP_MESSAGE_PROPERTIES_WHITE_URL_STATUS, whiteUrlStatus + "");
         Message message = new Message(msgJson.getBytes(StandardCharsets.UTF_8), messageProperties);
         rabbitTemplate.send(exchangeName, routingKey, message, correlationData);
     }

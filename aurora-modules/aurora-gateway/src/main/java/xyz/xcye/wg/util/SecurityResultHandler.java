@@ -41,7 +41,6 @@ public class SecurityResultHandler {
     /**
      * 鉴权异常，登录异常，无权访问等异常处理方法
      * @param exchange ServerWebExchange
-     * @param exception 异常对象
      * @param statusCode 自定义响应码
      * @return Mono
      */

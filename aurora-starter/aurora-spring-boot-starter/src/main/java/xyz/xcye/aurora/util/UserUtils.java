@@ -3,11 +3,10 @@ package xyz.xcye.aurora.util;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
-import xyz.xcye.auth.constant.OauthJwtConstant;
+import xyz.xcye.auth.constant.RequestConstant;
 import xyz.xcye.core.dto.JwtUserInfo;
 import xyz.xcye.core.enums.ResponseStatusCodeEnum;
 import xyz.xcye.core.exception.user.UserException;
-import xyz.xcye.core.util.lambda.AssertUtils;
 
 /**
  * 这个类是通用的和用户相关的工具类
@@ -27,7 +26,7 @@ public class UserUtils {
 
         JwtUserInfo jwtUserInfo = null;
         if (requestAttributes != null) {
-            jwtUserInfo = (JwtUserInfo) requestAttributes.getAttribute(OauthJwtConstant.REQUEST_STORAGE_JWT_USER_INFO_NAME, 1);
+            jwtUserInfo = (JwtUserInfo) requestAttributes.getAttribute(RequestConstant.REQUEST_STORAGE_JWT_USER_INFO_NAME, 1);
         }
 
         return jwtUserInfo;
@@ -35,8 +34,14 @@ public class UserUtils {
 
     public Long getCurrentUserUid() {
         JwtUserInfo currentUser = getCurrentUser();
-        AssertUtils.stateThrow(currentUser != null,
-                () -> new UserException(ResponseStatusCodeEnum.PERMISSION_USER_NOT_LOGIN));
+        // 判断请求路径是否是白名单，如果是白名单，则不做任何处理
+        String whiteUrlStatus = (String) RequestContextHolder.currentRequestAttributes().getAttribute(RequestConstant.CONTEXT_WHITE_URL_STATUS, 1);
+        if (!"true".equals(whiteUrlStatus) && currentUser == null) {
+            throw new UserException(ResponseStatusCodeEnum.PERMISSION_USER_NOT_LOGIN);
+        }
+        if ("true".equals(whiteUrlStatus)) {
+            return null;
+        }
         return currentUser.getUserUid();
     }
 }

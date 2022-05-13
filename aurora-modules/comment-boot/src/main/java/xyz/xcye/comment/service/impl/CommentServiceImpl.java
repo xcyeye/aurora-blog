@@ -113,14 +113,14 @@ public class CommentServiceImpl implements CommentService {
         setPageType(comment, true);
         // 设置最后修改时间
         comment.setUpdateTime(DateUtils.format());
-        comment.setUserUid(userUtils.getCurrentUserUid());
+        Optional.ofNullable(userUtils.getCurrentUserUid()).ifPresent(comment::setUserUid);
         return commentMapper.updateComment(comment);
     }
 
     @Override
     public int updateDeleteStatus(Comment comment) {
         Assert.notNull(comment, () -> "更新评论删除状态，不能为null");
-        comment.setUserUid(userUtils.getCurrentUserUid());
+        Optional.ofNullable(userUtils.getCurrentUserUid()).ifPresent(comment::setUserUid);
         comment.setUpdateTime(DateUtils.format());
         comment.setDelete(Optional.ofNullable(comment.getDelete()).orElse(false));
         return commentMapper.updateDeleteStatus(comment);

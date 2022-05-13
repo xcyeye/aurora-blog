@@ -18,9 +18,12 @@ public class RequestConstant {
     public static final String REQUEST_OAUTH_SERVER_QUERY_PASSWORD = "oauth_query_pwd";
     /** 在网关层已认证的用户信息，用于将用户信息存储在RequestContextHolder **/
     public static final String REQUEST_STORAGE_JWT_USER_INFO_NAME = "authentication_jwt_user_info";
-
-    public static final String AMQP_MESSAGE_PROPERTIES_WHITE_URL_FLAG = "amqp_message_properties_white_url";
-    public static final String CONTEXT_AMQP_MESSAGE_PROPERTIES_WHITE_URL_FLAG = "context_amqp_message_properties_white_url";
+    /** 将白名单的状态放入消息中间件的message中 **/
+    public static final String AMQP_MESSAGE_PROPERTIES_WHITE_URL_STATUS = "amqp_message_properties_white_url";
+    /** 将白名单的状态存储在RequestContextHolder **/
+    public static final String CONTEXT_WHITE_URL_STATUS = "context_amqp_message_properties_white_url";
+    /** 将白名单的状态放入请求中，在网关的时候 **/
+    public static final String REQUEST_WHITE_URL_STATUS = "request_amqp_message_properties_white_url";
 
     public static final String AMQP_REQUEST_REQUEST_JWT_USER_INFO_NAME = "amqp_request_jwt_user_info";
 }
