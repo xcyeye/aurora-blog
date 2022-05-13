@@ -67,7 +67,7 @@ public class SendMailConsumer {
         if (storageSendMailInfo.getUserUid() == null) {
             mistakeMessageSendService.sendMistakeMessageToExchange(msgJson,channel,message,
                     AmqpExchangeNameConstant.MISTAKE_MESSAGE_EXCHANGE, AmqpQueueNameConstant.MISTAKE_MESSAGE_ROUTING_KEY);
-            updateMessageLogInfo(storageSendMailInfo.getCorrelationDataId(),true,false,"邮件发送中，没有传入userUid");
+            updateMessageLogInfo(getCorrelationDataId(message),true,false,"邮件发送中，没有传入userUid");
         }
 
         // 运行到此处，说明一切正常，将数据插入到数据库中 并且修改消息的消费状态
@@ -76,13 +76,13 @@ public class SendMailConsumer {
             sendMailService.sendHtmlMail(storageSendMailInfo);
         } catch (MessagingException | IOException | EmailException e) {
             // 如果发送html的过程中，发生异常，那么修改mq的消息记录
-            updateMessageLogInfo(storageSendMailInfo.getCorrelationDataId(),true,true,
+            updateMessageLogInfo(getCorrelationDataId(message),true,true,
                     Optional.ofNullable(e.getMessage()).orElse("发送html邮件过程中，发生了异常"));
             throw new Exception(e.getMessage());
         }
 
         isReplyComment(storageSendMailInfo);
-        updateMessageLogInfo(storageSendMailInfo.getCorrelationDataId(),true,true,null);
+        updateMessageLogInfo(getCorrelationDataId(message),true,true,null);
     }
 
     /**
@@ -123,7 +123,7 @@ public class SendMailConsumer {
         sendMailService.sendSimpleMail(storageSendMailInfo.getReceiverEmail(),
                 storageSendMailInfo.getSubject(), storageSendMailInfo.getSimpleText());
 
-        updateMessageLogInfo(storageSendMailInfo.getCorrelationDataId(),true,true,null);
+        updateMessageLogInfo(getCorrelationDataId(message),true,true,null);
     }
 
     /**
@@ -136,6 +136,10 @@ public class SendMailConsumer {
     public void sendSimpleTextMailDeadLetterConsumer(String msgJson, Channel channel, Message message)
             throws ReflectiveOperationException, MessagingException, BindException, IOException {
         sendSimpleTextMailConsumer(msgJson,channel,message);
+    }
+
+    private String getCorrelationDataId(Message message) {
+        return message.getMessageProperties().getCorrelationId();
     }
 
     /**
@@ -183,11 +187,7 @@ public class SendMailConsumer {
      * @return
      */
     private boolean isLegitimateHtmlData(StorageSendMailInfo storageSendMailInfo) {
-        if (storageSendMailInfo == null) {
-            return false;
-        }
-
-        return true;
+        return storageSendMailInfo != null;
     }
 
     /**
@@ -216,7 +216,7 @@ public class SendMailConsumer {
         receiveCommentMailInfo.setUserUid(comment.getUserUid());
         receiveCommentMailInfo.setSubject(comment.getContent());
         receiveCommentMailInfo.setSendType(SendHtmlMailTypeNameEnum.RECEIVE_COMMENT);
-        receiveCommentMailInfo.setCorrelationDataId(storageSendMailInfo.getCorrelationDataId());
+        //receiveCommentMailInfo.setCorrelationDataId(storageSendMailInfo.getCorrelationDataId());
 
         List<Map<SendHtmlMailTypeNameEnum,Object>> list = new ArrayList<>();
         Map<SendHtmlMailTypeNameEnum,Object> map = new HashMap<>();

@@ -25,7 +25,7 @@ public class SendCommentToExchange {
     @Transactional
     public void sendCommentToMQ(Comment comment) throws BindException {
         String json = ConvertObjectUtils.jsonToString(comment);
-        amqpSenderService.sendMQMsg(comment.getUid() + "", json, AmqpExchangeNameConstant.AURORA_SEND_COMMENT_EXCHANGE,
+        amqpSenderService.sendMQMsg(json, AmqpExchangeNameConstant.AURORA_SEND_COMMENT_EXCHANGE,
                 AmqpQueueNameConstant.PAGE_COMMENT_ROUTING_KEY, "topic");
     }
 }

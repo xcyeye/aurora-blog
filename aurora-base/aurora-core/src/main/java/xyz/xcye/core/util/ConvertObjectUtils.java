@@ -15,7 +15,7 @@ public class ConvertObjectUtils {
         try {
             json = JSON.toJSONString(data);
         } catch (Exception e) {
-            e.printStackTrace();
+            LogUtils.logExceptionInfo(e);
         }
 
         return json;

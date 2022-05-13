@@ -236,8 +236,8 @@ public class UserServiceImpl implements UserService {
         mailInfo.setSendType(SendHtmlMailTypeNameEnum.VERIFY_ACCOUNT);
         mailInfo.setSubject(userVO.getUsername() + " 请验证你的账户信息");
         mailInfo.setUserUid(userVO.getUid());
-        mailInfo.setCorrelationDataId(GenerateInfoUtils.generateUid(auroraProperties.getSnowFlakeWorkerId(),
-                auroraProperties.getSnowFlakeDatacenterId()) + "");
+        /*mailInfo.setCorrelationDataId(GenerateInfoUtils.generateUid(auroraProperties.getSnowFlakeWorkerId(),
+                auroraProperties.getSnowFlakeDatacenterId()) + "");*/
 
         // 运行到这里，直接调用redis进行存储
         userRedisService.storageUserVerifyAccountInfo(verifyAccountInfo, auroraAccountProperties.getMailVerifyAccountExpirationTime());

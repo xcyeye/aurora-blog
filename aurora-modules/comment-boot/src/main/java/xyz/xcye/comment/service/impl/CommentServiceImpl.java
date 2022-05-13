@@ -61,12 +61,13 @@ public class CommentServiceImpl implements CommentService {
         AssertUtils.stateThrow(comment.getPageUid() != null, () -> new CommentException("文章uid不能为null"));
         setDefaultProperty(comment);
         setPageType(comment, false);
+
         // 判断该条评论是回复评论还是单独的一条评论
         // 如果此条评论的replyCommentUid在数据库中不存在，则标记为新建的单独评论
         Comment queriedRepliedCommentDO = getCommentByUid(comment.getReplyCommentUid());
         boolean isReplyCommentFlag = queriedRepliedCommentDO != null;
 
-        //向数据库中插入此条评论
+        // 向数据库中插入此条评论
         int insertCommentNum = commentMapper.insertComment(comment);
 
         // 使用rabbitmq发送邮件通知对方 因为使用rabbitmq发送消息到交换机的过程是同步的，并且我们已经开启了seata的全局事务功能
@@ -339,8 +340,8 @@ public class CommentServiceImpl implements CommentService {
         StorageSendMailInfo mailInfo = new StorageSendMailInfo();
         mailInfo.setUserUid(comment.getUserUid());
         mailInfo.setSendType(SendHtmlMailTypeNameEnum.RECEIVE_COMMENT);
-        mailInfo.setCorrelationDataId(GenerateInfoUtils.generateUid(auroraProperties.getSnowFlakeWorkerId(),
-                auroraProperties.getSnowFlakeDatacenterId()) + "");
+        /*mailInfo.setCorrelationDataId(GenerateInfoUtils.generateUid(auroraProperties.getSnowFlakeWorkerId(),
+                auroraProperties.getSnowFlakeDatacenterId()) + "");*/
         mailInfo.setSubject(comment.getContent());
         return mailInfo;
     }

@@ -111,6 +111,6 @@ public class ReceiveComment {
 
     private void ack(Long uid, Channel channel, Message message) throws IOException, BindException {
         channel.basicAck(message.getMessageProperties().getDeliveryTag(), false);
-        updateMessageLog.updateMessageLogInfo(uid + "", true, true, null, message);
+        updateMessageLog.updateMessageLogInfo(message.getMessageProperties().getCorrelationId(), true, true, null, message);
     }
 }

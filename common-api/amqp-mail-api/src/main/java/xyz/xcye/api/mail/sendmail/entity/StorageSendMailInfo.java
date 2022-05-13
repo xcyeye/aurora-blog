@@ -56,8 +56,8 @@ public class StorageSendMailInfo {
     /**
      * mq发送消息的唯一id
      */
-    @Setter
-    private String correlationDataId;
+    /*@Setter
+    private String correlationDataId;*/
 
     /**
      * 如果发送的是简单文本，则需要对此属性赋值
@@ -76,7 +76,7 @@ public class StorageSendMailInfo {
         mailInfo.setSubject(subject);
         mailInfo.setReceiverEmail(receiverEmail);
         mailInfo.setSendType(sendType);
-        mailInfo.setCorrelationDataId(correlationDataId);
+        //mailInfo.setCorrelationDataId(correlationDataId);
 
         return null;
     }

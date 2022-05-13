@@ -62,7 +62,7 @@ public class SendMQMessageServiceImpl implements SendMQMessageService {
         repliedMap.put(SendHtmlMailTypeNameEnum.ADDITIONAL_DATA.getKeyName(), replyingCommentInfo);
         mailInfo.setAdditionalData(repliedMap);
         String msgJson = ConvertObjectUtils.jsonToString(mailInfo);
-        amqpSenderService.sendMQMsg(mailInfo.getCorrelationDataId(), msgJson, exchangeName, routingKey, exchangeType);
+        amqpSenderService.sendMQMsg(msgJson, exchangeName, routingKey, exchangeType);
     }
 
     @Override
@@ -74,7 +74,7 @@ public class SendMQMessageServiceImpl implements SendMQMessageService {
 
         // 将发送的回复评论数据组装成一个map集合
         String msgJson = StorageMailUtils.generateMailJson(sendMailInfo, replacedObjList);
-        amqpSenderService.sendMQMsg(sendMailInfo.getCorrelationDataId(), msgJson, exchangeName, routingKey, exchangeType);
+        amqpSenderService.sendMQMsg(msgJson, exchangeName, routingKey, exchangeType);
     }
 
     @Override
@@ -92,7 +92,7 @@ public class SendMQMessageServiceImpl implements SendMQMessageService {
 
         //将发送的回复评论数据组装成一个map集合
         String msgJson = StorageMailUtils.generateMailJson(sendMailInfo, null);
-        amqpSenderService.sendMQMsg(sendMailInfo.getCorrelationDataId(), msgJson, exchangeName, routingKey, exchangeType);
+        amqpSenderService.sendMQMsg(msgJson, exchangeName, routingKey, exchangeType);
     }
 
     /**

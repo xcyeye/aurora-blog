@@ -1,6 +1,5 @@
 package xyz.xcye.amqp.api;
 
-import cn.hutool.core.codec.Base64;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.core.MessageProperties;
 import org.springframework.amqp.rabbit.connection.CorrelationData;
@@ -14,7 +13,6 @@ import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 import xyz.xcye.core.constant.oauth.OauthJwtConstant;
 import xyz.xcye.core.dto.JwtUserInfo;
-import xyz.xcye.core.util.ConvertObjectUtils;
 import xyz.xcye.core.util.ValidationUtils;
 import xyz.xcye.core.util.id.GenerateInfoUtils;
 import xyz.xcye.core.valid.Insert;
@@ -55,8 +53,11 @@ public class AmqpSenderService {
      * @throws BindException
      */
     @Transactional
-    public void sendMQMsg(String correlationDataId, String msgJson, String exchangeName, String routingKey, String exchangeType) throws BindException {
+    public void sendMQMsg(String msgJson, String exchangeName, String routingKey, String exchangeType) throws BindException {
+        // 生成一个唯一correlationDataId
+        String correlationDataId = getCorrelationDataId();
         CorrelationData correlationData = new CorrelationData(correlationDataId);
+
         // 调用feign向数据库中插入mq消息
         insertMessageLogData(correlationDataId, msgJson, exchangeName, routingKey, exchangeType);
         JwtUserInfo currentUserInfo = getCurrentUser();
