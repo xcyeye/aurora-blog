@@ -66,7 +66,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
-                .loginProcessingUrl("/login")
+                .loginProcessingUrl("/auth/login")
                 .successHandler(new OauthServerAuthenticationSuccessHandler())
                 .failureHandler(new OauthServerAuthenticationFailureHandler())
                 .and()
