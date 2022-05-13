@@ -19,7 +19,6 @@ public class CommentRequestInterceptor implements RequestInterceptor {
 
     @Override
     public void apply(RequestTemplate template) {
-
         String xid = RootContext.getXID();
         if (StringUtils.hasLength(xid)) {
             template.header(SeataConstant.GLOBAL_XID_REQUEST_HEADER_NAME,xid);

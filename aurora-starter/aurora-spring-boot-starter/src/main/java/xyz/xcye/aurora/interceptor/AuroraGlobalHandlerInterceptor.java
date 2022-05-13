@@ -2,11 +2,14 @@ package xyz.xcye.aurora.interceptor;
 
 import cn.hutool.core.codec.Base64;
 import com.alibaba.fastjson.JSON;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
+import xyz.xcye.aurora.util.AuroraRequestUtils;
 import xyz.xcye.auth.enums.TokenConstant;
 import xyz.xcye.core.constant.oauth.OauthJwtConstant;
 import xyz.xcye.core.dto.JwtUserInfo;
@@ -30,6 +33,9 @@ import java.util.Optional;
 @Component
 public class AuroraGlobalHandlerInterceptor implements HandlerInterceptor {
 
+    @Autowired
+    private AuroraRequestUtils auroraRequestUtils;
+
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 
@@ -50,19 +56,19 @@ public class AuroraGlobalHandlerInterceptor implements HandlerInterceptor {
 
         // 将jwtUserInfoStr解析成一个jwtUserInfo对象
         JwtUserInfo jwtUserInfo = JSON.parseObject(jwtUserInfoStr, JwtUserInfo.class);
+        jwtUserInfo.setRequestHeadMap(auroraRequestUtils.getRequestHeadsFromHolder());
 
         // 获取请求头的token，在网关的全局过滤器中，被加入
-        String jwtToken = request.getHeader(OauthJwtConstant.REQUEST_JWT_TOKEN_NAME);
+        String jwtToken = jwtUserInfo.getJwtToken();
 
         // 判断请求头中的jwtToken和jwtUserInfo是否存在，如果不存在，返回false
-        if (jwtToken == null || jwtUserInfo == null) {
+        if (!StringUtils.hasLength(jwtToken)) {
             return setResponseJsonText(response, ResponseStatusCodeEnum.PERMISSION_USER_NOT_LOGIN);
         }
 
         // 将用户已认证的数据，放入RequestContextHolder中，方便使用
         RequestAttributes requestAttributes = RequestContextHolder.currentRequestAttributes();
         requestAttributes.setAttribute(OauthJwtConstant.REQUEST_STORAGE_JWT_USER_INFO_NAME, jwtUserInfo, 1);
-
         return tokenExpiration(jwtToken, response);
     }
 

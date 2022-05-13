@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author qsyyke
@@ -43,7 +44,9 @@ public class JwtUserInfo {
     private Boolean verifyEmail;
 
     /**
-     * 该用户是否具有修改数据的权利
+     * jwtToken
      */
-    private Boolean write;
+    private String jwtToken;
+
+    private Map<String,String> requestHeadMap;
 }

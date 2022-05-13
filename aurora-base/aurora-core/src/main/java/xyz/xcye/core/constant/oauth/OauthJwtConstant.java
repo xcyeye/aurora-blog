@@ -27,4 +27,6 @@ public class OauthJwtConstant {
     public static final String REQUEST_OAUTH_SERVER_QUERY_PASSWORD = "oauth_query_pwd";
     /** 在网关层已认证的用户信息，用于将用户信息存储在RequestContextHolder **/
     public static final String REQUEST_STORAGE_JWT_USER_INFO_NAME = "authentication_jwt_user_info";
+
+    public static final String AMQP_REQUEST_REQUEST_JWT_USER_INFO_NAME = "amqp_request_jwt_user_info";
 }

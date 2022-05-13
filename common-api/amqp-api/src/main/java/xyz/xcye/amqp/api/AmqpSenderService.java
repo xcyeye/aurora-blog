@@ -1,6 +1,8 @@
 package xyz.xcye.amqp.api;
 
+import cn.hutool.core.codec.Base64;
 import org.springframework.amqp.core.Message;
+import org.springframework.amqp.core.MessageProperties;
 import org.springframework.amqp.rabbit.connection.CorrelationData;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +10,11 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindException;
+import org.springframework.web.context.request.RequestAttributes;
+import org.springframework.web.context.request.RequestContextHolder;
+import xyz.xcye.core.constant.oauth.OauthJwtConstant;
+import xyz.xcye.core.dto.JwtUserInfo;
+import xyz.xcye.core.util.ConvertObjectUtils;
 import xyz.xcye.core.util.ValidationUtils;
 import xyz.xcye.core.util.id.GenerateInfoUtils;
 import xyz.xcye.core.valid.Insert;
@@ -52,7 +59,22 @@ public class AmqpSenderService {
         CorrelationData correlationData = new CorrelationData(correlationDataId);
         // 调用feign向数据库中插入mq消息
         insertMessageLogData(correlationDataId, msgJson, exchangeName, routingKey, exchangeType);
-        rabbitTemplate.send(exchangeName, routingKey, new Message(msgJson.getBytes(StandardCharsets.UTF_8)), correlationData);
+        JwtUserInfo currentUserInfo = getCurrentUser();
+        MessageProperties messageProperties = new MessageProperties();
+        messageProperties.setCorrelationId(correlationDataId);
+
+        messageProperties.setHeader(OauthJwtConstant.AMQP_REQUEST_REQUEST_JWT_USER_INFO_NAME, currentUserInfo.getRequestHeadMap());
+        Message message = new Message(msgJson.getBytes(StandardCharsets.UTF_8), messageProperties);
+        rabbitTemplate.send(exchangeName, routingKey, message, correlationData);
+    }
+
+    private JwtUserInfo getCurrentUser() {
+        RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
+        JwtUserInfo jwtUserInfo = null;
+        if (requestAttributes != null) {
+            jwtUserInfo = (JwtUserInfo) requestAttributes.getAttribute(OauthJwtConstant.REQUEST_STORAGE_JWT_USER_INFO_NAME, 1);
+        }
+        return jwtUserInfo;
     }
 
     /**

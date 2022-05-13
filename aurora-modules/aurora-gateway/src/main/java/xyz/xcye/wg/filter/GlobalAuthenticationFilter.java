@@ -9,7 +9,6 @@ import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
-import org.springframework.security.oauth2.common.exceptions.InvalidTokenException;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.stereotype.Component;
 import org.springframework.util.AntPathMatcher;
@@ -83,10 +82,12 @@ public class GlobalAuthenticationFilter implements GlobalFilter {
 
         //3 判断是否是有效的token
         OAuth2AccessToken oAuth2AccessToken;
+        Map<String, Object> additionalInformation = null;
         try {
             //解析token，使用tokenStore
             oAuth2AccessToken = tokenStore.readAccessToken(token);
-            Map<String, Object> additionalInformation = oAuth2AccessToken.getAdditionalInformation();
+            additionalInformation = oAuth2AccessToken.getAdditionalInformation();
+
             //令牌的唯一ID
             String jti = additionalInformation.get("jti").toString();
             // 查看黑名单中是否存在这个jti，如果存在则这个令牌不能用
@@ -94,33 +95,32 @@ public class GlobalAuthenticationFilter implements GlobalFilter {
             if (hasKey != null && hasKey) {
                 return invalidTokenMono(exchange);
             }
-
-            //获取用户权限
-            List<String> authorities = (List<String>) additionalInformation.get("authorities");
-
-            // 构建一个在下层服务中，传递的用户对象
-            JwtUserInfo jwtUserInfo = JwtUserInfo.builder()
-                    .nickname((String) additionalInformation.get(OauthJwtConstant.NICKNAME))
-                    .username((String) additionalInformation.get(OauthJwtConstant.USERNAME))
-                    .userUid((Long) additionalInformation.get(OauthJwtConstant.USER_UID))
-                    .roleList(authorities)
-                    .verifyEmail((Boolean) additionalInformation.get(OauthJwtConstant.VERIFY_EMAIL))
-                    .build();
-
-            //将解析后的token加密放入请求头中，方便下游微服务解析获取用户信息
-            String base64 = Base64.encode(ConvertObjectUtils.jsonToString(jwtUserInfo));
-
-            //放入请求头中
-            ServerHttpRequest tokenRequest = exchange.getRequest().mutate()
-                    .header(OauthJwtConstant.REQUEST_TOKEN_NAME, base64).build();
-            exchange.getRequest().mutate().header(OauthJwtConstant.REQUEST_JWT_TOKEN_NAME, token);
-            ServerWebExchange build = exchange.mutate().request(tokenRequest).build();
-            exchange.getRequest().mutate().header(OauthJwtConstant.REQUEST_WHITE_URL_FLAG_NAME, "false");
-            return chain.filter(build);
-        } catch (InvalidTokenException e) {
-            //解析token异常，直接返回token无效
-            return invalidTokenMono(exchange);
+        } catch (Exception e) {
+            invalidTokenMono(exchange);
         }
+
+        //获取用户权限
+        List<String> authorities = (List<String>) additionalInformation.get("authorities");
+
+        // 构建一个在下层服务中，传递的用户对象
+        JwtUserInfo jwtUserInfo = JwtUserInfo.builder()
+                .nickname((String) additionalInformation.get(OauthJwtConstant.NICKNAME))
+                .username((String) additionalInformation.get(OauthJwtConstant.USERNAME))
+                .userUid((Long) additionalInformation.get(OauthJwtConstant.USER_UID))
+                .roleList(authorities)
+                .verifyEmail((Boolean) additionalInformation.get(OauthJwtConstant.VERIFY_EMAIL))
+                .jwtToken(token)
+                .build();
+
+        //将解析后的token加密放入请求头中，方便下游微服务解析获取用户信息
+        String base64 = Base64.encode(ConvertObjectUtils.jsonToString(jwtUserInfo));
+
+        //放入请求头中
+        ServerHttpRequest tokenRequest = exchange.getRequest().mutate()
+                .header(OauthJwtConstant.REQUEST_TOKEN_NAME, base64).build();
+        ServerWebExchange build = exchange.mutate().request(tokenRequest).build();
+        exchange.getRequest().mutate().header(OauthJwtConstant.REQUEST_WHITE_URL_FLAG_NAME, "false");
+        return chain.filter(build);
     }
 
     /**

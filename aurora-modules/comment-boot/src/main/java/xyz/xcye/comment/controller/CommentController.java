@@ -6,12 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import xyz.xcye.comment.dto.CommentDTO;
+import xyz.xcye.comment.manager.amqp.send.SendCommentToExchange;
 import xyz.xcye.comment.po.Comment;
 import xyz.xcye.comment.service.CommentService;
 import xyz.xcye.comment.vo.CommentVO;
 import xyz.xcye.core.annotaion.controller.ModifyOperation;
 import xyz.xcye.core.annotaion.controller.SelectOperation;
-import xyz.xcye.core.util.NetWorkUtils;
+import xyz.xcye.core.util.id.GenerateInfoUtils;
 import xyz.xcye.core.valid.Insert;
 import xyz.xcye.core.valid.Update;
 import xyz.xcye.data.entity.Condition;
@@ -42,14 +43,22 @@ public class CommentController {
         return commentService.updateComment(comment);
     }
 
+    @Autowired
+    private SendCommentToExchange sendCommentToExchange;
+
     @ApiOperation(value = "插入新评论")
     @ModifyOperation
     @PostMapping("")
     public int insertComment(@Validated({Default.class, Insert.class}) Comment comment,
                              HttpServletRequest request) throws Throwable {
-        comment.setCommentIp(NetWorkUtils.getIpAddr(request));
+        /*comment.setCommentIp(NetWorkUtils.getIpAddr(request));
         comment.setOperationSystemInfo(NetWorkUtils.getOperationInfo(request));
-        return commentService.insertComment(comment);
+        return commentService.insertComment(comment);*/
+        comment.setUid(GenerateInfoUtils.generateUid(1,2));
+        sendCommentToExchange.sendCommentToMQ(comment);
+
+
+        return 1;
     }
 
     @ApiOperation(value = "删除单条评论")

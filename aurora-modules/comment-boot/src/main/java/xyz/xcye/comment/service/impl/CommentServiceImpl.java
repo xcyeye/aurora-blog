@@ -69,9 +69,6 @@ public class CommentServiceImpl implements CommentService {
         //向数据库中插入此条评论
         int insertCommentNum = commentMapper.insertComment(comment);
 
-        // 发送此评论到交换机，说说或者是文章修改CommentUidS的值
-        sendCommentToExchange.sendCommentToMQ(comment);
-
         // 使用rabbitmq发送邮件通知对方 因为使用rabbitmq发送消息到交换机的过程是同步的，并且我们已经开启了seata的全局事务功能
         // 所以如果在发送mq消息的过程中，出现异常，能够回滚，从而能够保证插入评论后，能够保证评论和mq发送到交换机的消息同时成功或者失败
         // 因为发布确认是异步的，如果能进入到发布确认代码中，那么前面插入评论和消息一定都成功保存到数据库中了
@@ -91,6 +88,9 @@ public class CommentServiceImpl implements CommentService {
         //如果运行到这里，不能确保邮件发送成功，但还是修改一下邮件发送状态
         comment.setEmailNotice(true);
         updateComment(comment);
+
+        // 发送此评论到交换机，说说或者是文章修改CommentUidS的值
+        sendCommentToExchange.sendCommentToMQ(comment);
 
         // 如果插入成功，并且是回复某条评论，则修改此被回复的评论的nextCommentUidArray值
         if (isReplyCommentFlag && insertCommentNum == 1) {

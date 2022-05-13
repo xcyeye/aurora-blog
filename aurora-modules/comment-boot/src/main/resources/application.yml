@@ -88,14 +88,14 @@ pagehelper:
   params: count=countSql
 
 
-#feign:
-#  client:
-#    config:
-#      aurora-message:
-#        connectTimeout: 100000
-#        readTimeout: 7000
-#  httpclient:
-#    enabled: true
+feign:
+  client:
+    config:
+      aurora-message:
+        connectTimeout: 100000
+        readTimeout: 7000
+  httpclient:
+    enabled: true
 
 aurora:
   snow-flake-datacenter-id: 5
