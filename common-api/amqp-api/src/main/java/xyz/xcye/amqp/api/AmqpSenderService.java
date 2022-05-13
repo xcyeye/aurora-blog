@@ -9,10 +9,12 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindException;
-import org.springframework.web.context.request.RequestAttributes;
-import org.springframework.web.context.request.RequestContextHolder;
-import xyz.xcye.core.constant.oauth.OauthJwtConstant;
+import xyz.xcye.aurora.util.AuroraRequestUtils;
+import xyz.xcye.aurora.util.UserUtils;
+import xyz.xcye.auth.constant.OauthJwtConstant;
 import xyz.xcye.core.dto.JwtUserInfo;
+import xyz.xcye.core.enums.ResponseStatusCodeEnum;
+import xyz.xcye.core.exception.user.UserException;
 import xyz.xcye.core.util.ValidationUtils;
 import xyz.xcye.core.util.id.GenerateInfoUtils;
 import xyz.xcye.core.valid.Insert;
@@ -22,6 +24,7 @@ import xyz.xcye.message.po.MessageLog;
 import javax.annotation.Resource;
 import javax.validation.groups.Default;
 import java.nio.charset.StandardCharsets;
+import java.util.Optional;
 
 /**
  * 这个是发送mq消息的类
@@ -43,9 +46,11 @@ public class AmqpSenderService {
 
     @Resource
     private MessageLogFeignService messageLogFeignService;
+    @Autowired
+    private UserUtils userUtils;
 
     /**
-     * 发送mq消息
+     * 发送mq消息 如果
      * @param msgJson
      * @param exchangeName
      * @param routingKey
@@ -54,28 +59,30 @@ public class AmqpSenderService {
      */
     @Transactional
     public void sendMQMsg(String msgJson, String exchangeName, String routingKey, String exchangeType) throws BindException {
+
+        boolean whiteUrlFlag = AuroraRequestUtils.getWhiteUrlFlag();
         // 生成一个唯一correlationDataId
         String correlationDataId = getCorrelationDataId();
         CorrelationData correlationData = new CorrelationData(correlationDataId);
 
         // 调用feign向数据库中插入mq消息
         insertMessageLogData(correlationDataId, msgJson, exchangeName, routingKey, exchangeType);
-        JwtUserInfo currentUserInfo = getCurrentUser();
+        JwtUserInfo currentUserInfo = userUtils.getCurrentUser();
+        if (!whiteUrlFlag && currentUserInfo == null) {
+            throw new UserException(ResponseStatusCodeEnum.PERMISSION_USER_NOT_LOGIN);
+        }
+
         MessageProperties messageProperties = new MessageProperties();
         messageProperties.setCorrelationId(correlationDataId);
 
-        messageProperties.setHeader(OauthJwtConstant.AMQP_REQUEST_REQUEST_JWT_USER_INFO_NAME, currentUserInfo.getRequestHeadMap());
+        // 如果是白名单，可以不用加入请求头信息，但是必须将白名单状态传递到消费者中
+        Optional.ofNullable(currentUserInfo).ifPresent(t -> messageProperties.setHeader(OauthJwtConstant.AMQP_REQUEST_REQUEST_JWT_USER_INFO_NAME,
+                currentUserInfo.getRequestHeadMap()));
+
+        // 传递白名单状态
+        messageProperties.setHeader(OauthJwtConstant.AMQP_MESSAGE_PROPERTIES_WHITE_URL_FLAG, whiteUrlFlag);
         Message message = new Message(msgJson.getBytes(StandardCharsets.UTF_8), messageProperties);
         rabbitTemplate.send(exchangeName, routingKey, message, correlationData);
-    }
-
-    private JwtUserInfo getCurrentUser() {
-        RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
-        JwtUserInfo jwtUserInfo = null;
-        if (requestAttributes != null) {
-            jwtUserInfo = (JwtUserInfo) requestAttributes.getAttribute(OauthJwtConstant.REQUEST_STORAGE_JWT_USER_INFO_NAME, 1);
-        }
-        return jwtUserInfo;
     }
 
     /**

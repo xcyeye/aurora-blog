@@ -17,7 +17,6 @@ import java.util.Map;
 
 @Component
 public class RequestUtils {
-
     public Map<String,String> getRequestHeadsFromHolder() {
 
         if (RequestContextHolder.getRequestAttributes() instanceof AuroraRequestAttributes) {

@@ -11,7 +11,7 @@ import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 import xyz.xcye.aurora.util.AuroraRequestUtils;
 import xyz.xcye.auth.enums.TokenConstant;
-import xyz.xcye.core.constant.oauth.OauthJwtConstant;
+import xyz.xcye.auth.constant.OauthJwtConstant;
 import xyz.xcye.core.dto.JwtUserInfo;
 import xyz.xcye.core.entity.R;
 import xyz.xcye.core.enums.ResponseStatusCodeEnum;
@@ -38,6 +38,7 @@ public class AuroraGlobalHandlerInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+        RequestAttributes currentRequestAttributes = RequestContextHolder.currentRequestAttributes();
 
         // 获取请求头中的白名单标识
         String whiteUrlFlag = Optional.ofNullable(request.getHeader(OauthJwtConstant.REQUEST_WHITE_URL_FLAG_NAME)).orElse("false");

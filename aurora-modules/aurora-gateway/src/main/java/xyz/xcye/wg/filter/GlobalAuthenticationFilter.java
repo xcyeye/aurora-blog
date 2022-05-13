@@ -16,7 +16,7 @@ import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 import xyz.xcye.admin.constant.RedisStorageConstant;
 import xyz.xcye.admin.po.WhiteUrl;
-import xyz.xcye.core.constant.oauth.OauthJwtConstant;
+import xyz.xcye.auth.constant.OauthJwtConstant;
 import xyz.xcye.core.dto.JwtUserInfo;
 import xyz.xcye.core.enums.ResponseStatusCodeEnum;
 import xyz.xcye.core.util.ConvertObjectUtils;
@@ -64,7 +64,7 @@ public class GlobalAuthenticationFilter implements GlobalFilter {
         String restFulPath = method + ":" + uri.getPath();
 
         List<String> list = exchange.getRequest().getHeaders().get(OauthJwtConstant.REQUEST_WHITE_URL_FLAG_NAME);
-        // 如果在check()方法中，已经监测到该链接是白名单，则直接放行
+        // 如果是白名单，则直接放行
         if (list != null && "true".equals(list.get(0))) {
             return chain.filter(exchange);
         }

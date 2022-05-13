@@ -26,6 +26,11 @@
             <groupId>xyz.xcye.starter</groupId>
             <artifactId>aurora-amqp.starter</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>xyz.xcye.starter</groupId>
+            <artifactId>aurora-spring-boot-starter</artifactId>
+        </dependency>
     </dependencies>
 
 </project>

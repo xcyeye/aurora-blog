@@ -17,7 +17,7 @@ import reactor.core.publisher.Mono;
 import xyz.xcye.admin.constant.RedisStorageConstant;
 import xyz.xcye.admin.dto.RolePermissionDTO;
 import xyz.xcye.admin.po.WhiteUrl;
-import xyz.xcye.core.constant.oauth.OauthJwtConstant;
+import xyz.xcye.auth.constant.OauthJwtConstant;
 
 import java.net.URI;
 import java.util.*;

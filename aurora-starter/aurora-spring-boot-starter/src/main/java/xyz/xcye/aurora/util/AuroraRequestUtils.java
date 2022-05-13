@@ -1,8 +1,10 @@
 package xyz.xcye.aurora.util;
 
 import org.springframework.stereotype.Component;
+import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+import xyz.xcye.auth.constant.OauthJwtConstant;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Enumeration;
@@ -36,5 +38,16 @@ public class AuroraRequestUtils {
         }
 
         return headMaps;
+    }
+
+    public static boolean getWhiteUrlFlag() {
+        RequestAttributes currentRequestAttributes = RequestContextHolder.currentRequestAttributes();
+        if (currentRequestAttributes instanceof ServletRequestAttributes) {
+            ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes) currentRequestAttributes;
+            String whiteUrlFlagStr = servletRequestAttributes.getRequest().getHeader(OauthJwtConstant.REQUEST_WHITE_URL_FLAG_NAME);
+            return "true".equals(whiteUrlFlagStr);
+        }
+
+        return false;
     }
 }

@@ -4,7 +4,7 @@ import feign.RequestInterceptor;
 import feign.RequestTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.util.AntPathMatcher;
-import xyz.xcye.core.constant.oauth.OauthJwtConstant;
+import xyz.xcye.auth.constant.OauthJwtConstant;
 
 @Component
 public class Oauth2RequestInterceptor implements RequestInterceptor {

@@ -3,7 +3,7 @@ package xyz.xcye.aurora.util;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
-import xyz.xcye.core.constant.oauth.OauthJwtConstant;
+import xyz.xcye.auth.constant.OauthJwtConstant;
 import xyz.xcye.core.dto.JwtUserInfo;
 import xyz.xcye.core.enums.ResponseStatusCodeEnum;
 import xyz.xcye.core.exception.user.UserException;
@@ -19,15 +19,17 @@ import xyz.xcye.core.util.lambda.AssertUtils;
 public class UserUtils {
 
     /**
-     * 从RequestContextHolder中获取当前已验证的用户
+     * 从RequestContextHolder中获取当前已验证的用户 因为发送
      * @return
      */
     public JwtUserInfo getCurrentUser() {
         RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
+
         JwtUserInfo jwtUserInfo = null;
         if (requestAttributes != null) {
             jwtUserInfo = (JwtUserInfo) requestAttributes.getAttribute(OauthJwtConstant.REQUEST_STORAGE_JWT_USER_INFO_NAME, 1);
         }
+
         return jwtUserInfo;
     }
 
