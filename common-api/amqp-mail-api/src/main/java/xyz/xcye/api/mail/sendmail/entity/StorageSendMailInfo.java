@@ -69,15 +69,13 @@ public class StorageSendMailInfo {
         this.replacedMap = replacedMap;
     }
 
-    public static StorageSendMailInfo newInstant(Map<String, String> replacedMap, Long userUid, String subject, String receiverEmail,
-                                                 SendHtmlMailTypeNameEnum sendType, String correlationDataId, Map<String, Object> additionalData) {
+    public static StorageSendMailInfo newInstant(Long userUid, String subject, String receiverEmail,
+                                                 SendHtmlMailTypeNameEnum sendType) {
         StorageSendMailInfo mailInfo = new StorageSendMailInfo();
         mailInfo.setUserUid(userUid);
         mailInfo.setSubject(subject);
         mailInfo.setReceiverEmail(receiverEmail);
         mailInfo.setSendType(sendType);
-        //mailInfo.setCorrelationDataId(correlationDataId);
-
-        return null;
+        return mailInfo;
     }
 }

@@ -21,8 +21,10 @@ import xyz.xcye.core.exception.email.EmailException;
 import xyz.xcye.core.util.BeanUtils;
 import xyz.xcye.core.util.ConvertObjectUtils;
 import xyz.xcye.message.po.MessageLog;
+import xyz.xcye.message.service.EmailService;
 import xyz.xcye.message.service.MessageLogService;
 import xyz.xcye.message.service.SendMailService;
+import xyz.xcye.message.vo.EmailVO;
 import xyz.xcye.message.vo.MessageLogVO;
 
 import javax.mail.MessagingException;
@@ -47,6 +49,8 @@ public class SendMailConsumer {
     private MistakeMessageSendService mistakeMessageSendService;
     @Autowired
     private ParseMessage parseMessage;
+    @Autowired
+    private EmailService emailService;
 
     /**
      * 消费发送html邮件的消费者
@@ -92,9 +96,8 @@ public class SendMailConsumer {
      * @param message
      */
     @RabbitListener(queues = AmqpQueueNameConstant.SEND_HTML_MAIL_DEAD_LETTER_QUEUE_NAME, ackMode = "MANUAL")
-    public void sendHtmlMailDeadLetterConsumer(String msgJson, Channel channel, Message message)
-            throws Exception {
-        sendHtmlMailConsumer(msgJson,channel,message);
+    public void sendHtmlMailDeadLetterConsumer(String msgJson, Channel channel, Message message) throws Exception {
+        sendHtmlMailConsumer(msgJson, channel, message);
     }
 
     /**
@@ -107,11 +110,7 @@ public class SendMailConsumer {
     public void sendSimpleTextMailConsumer(String msgJson, Channel channel, Message message) throws IOException, ReflectiveOperationException, BindException, MessagingException {
         // 从mq发送的消息中，解析出邮件发送的相关数据
         StorageSendMailInfo storageSendMailInfo = parseMessage.getStorageSendMailInfoFromMsg(msgJson,channel,message);
-        if(!isLegitimateSimpleTextData(storageSendMailInfo)) {
-            mistakeMessageSendService.sendMistakeMessageToExchange(msgJson,channel,message,
-                    AmqpExchangeNameConstant.MISTAKE_MESSAGE_EXCHANGE, AmqpQueueNameConstant.MISTAKE_MESSAGE_ROUTING_KEY);
-            return;
-        }
+        setSimpleTextReceiveEmail(storageSendMailInfo, msgJson, channel, message);
 
         // 判断是否有标题，没有也不影响
         if (!StringUtils.hasLength(storageSendMailInfo.getSubject())) {
@@ -165,6 +164,30 @@ public class SendMailConsumer {
     }
 
     /**
+     * 设置发送简单文本的接收者的邮箱，如果receiverEmail为null或者空，那么会通过userUid进行查询，优先使用receiverEmail
+     * @param mailInfo
+     */
+    private void setSimpleTextReceiveEmail(StorageSendMailInfo mailInfo, String msgJson, Channel channel, Message message) throws IOException {
+        if (StringUtils.hasLength(mailInfo.getReceiverEmail())) {
+            return;
+        }
+
+        // 通过userUid查询
+        if (mailInfo.getUserUid() == null) {
+            mistakeMessageSendService.sendMistakeMessageToExchange(msgJson,channel,message,
+                    AmqpExchangeNameConstant.MISTAKE_MESSAGE_EXCHANGE, AmqpQueueNameConstant.MISTAKE_MESSAGE_ROUTING_KEY);
+            return;
+        }
+        EmailVO emailVO = emailService.queryByUserUid(mailInfo.getUserUid());
+        if (emailVO == null) {
+            mistakeMessageSendService.sendMistakeMessageToExchange(msgJson,channel,message,
+                    AmqpExchangeNameConstant.MISTAKE_MESSAGE_EXCHANGE, AmqpQueueNameConstant.MISTAKE_MESSAGE_ROUTING_KEY);
+            return;
+        }
+        mailInfo.setReceiverEmail(emailVO.getEmail());
+    }
+
+    /**
      * 判断传入对象，是否是一个合法的发送简单文本邮件的对象
      * @param storageSendMailInfo
      * @return true是合法的，反之
@@ -174,11 +197,7 @@ public class SendMailConsumer {
         if (storageSendMailInfo == null || !StringUtils.hasLength(storageSendMailInfo.getSimpleText())) {
             return false;
         }
-
-        if (!StringUtils.hasLength(storageSendMailInfo.getReceiverEmail())) {
-            return false;
-        }
-        return true;
+        return StringUtils.hasLength(storageSendMailInfo.getReceiverEmail());
     }
 
     /**

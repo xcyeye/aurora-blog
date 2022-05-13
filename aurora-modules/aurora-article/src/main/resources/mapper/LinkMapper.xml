@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xyz.xcye.article.dao.LinkMapper">
+  <resultMap id="BaseResultMap" type="xyz.xcye.article.po.Link">
+    <!--@mbg.generated-->
+    <!--@Table au_link-->
+    <id column="uid" jdbcType="BIGINT" property="uid" />
+    <result column="user_uid" jdbcType="BIGINT" property="userUid" />
+    <result column="category_uid" jdbcType="BIGINT" property="categoryUid" />
+    <result column="link_logo" jdbcType="VARCHAR" property="linkLogo" />
+    <result column="link_url" jdbcType="VARCHAR" property="linkUrl" />
+    <result column="link_title" jdbcType="VARCHAR" property="linkTitle" />
+    <result column="link_description" jdbcType="VARCHAR" property="linkDescription" />
+    <result column="link_cover" jdbcType="VARCHAR" property="linkCover" />
+    <result column="is_publish" jdbcType="TINYINT" property="publish" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="qq_number" jdbcType="INTEGER" property="qqNumber" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    `uid`, user_uid, category_uid, link_logo, link_url, link_title, link_description, 
+    link_cover, is_publish, email, qq_number, create_time, update_time
+  </sql>
+  <select id="selectByCondition" parameterType="xyz.xcye.article.po.Link" resultMap="BaseResultMap">
+    <!--@mbg.generated-->
+    select 
+    <include refid="Base_Column_List" />
+    from au_link
+    <where>
+      <if test="condition.startTime != null and condition.endTime != null">
+        and create_time between #{condition.startTime} and #{condition.endTime}
+      </if>
+      <if test="condition.uid != null">
+        and uid=#{condition.uid}
+      </if>
+      <if test="condition.otherUid != null">
+        and user_uid=#{condition.otherUid}
+      </if>
+      <if test="condition.keyword != null">
+        and link_url=#{condition.keyword}
+      </if>
+      <if test="condition.status != null">
+        and is_publish=#{condition.status,jdbcType=BOOLEAN}
+      </if>
+    </where>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    <!--@mbg.generated-->
+    delete from au_link
+    where `uid` = #{uid,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="xyz.xcye.article.po.Link">
+    <!--@mbg.generated-->
+    insert into au_link (`uid`, user_uid, category_uid, 
+      link_logo, link_url, link_title, 
+      link_description, link_cover, is_publish, 
+      email, qq_number, create_time, 
+      update_time)
+    values (#{uid,jdbcType=BIGINT}, #{userUid,jdbcType=BIGINT}, #{categoryUid,jdbcType=BIGINT}, 
+      #{linkLogo,jdbcType=VARCHAR}, #{linkUrl,jdbcType=VARCHAR}, #{linkTitle,jdbcType=VARCHAR}, 
+      #{linkDescription,jdbcType=VARCHAR}, #{linkCover,jdbcType=VARCHAR}, #{publish,jdbcType=TINYINT}, 
+      #{email,jdbcType=VARCHAR}, #{qqNumber,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="xyz.xcye.article.po.Link">
+    <!--@mbg.generated-->
+    insert into au_link
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="uid != null">
+        `uid`,
+      </if>
+      <if test="userUid != null">
+        user_uid,
+      </if>
+      <if test="categoryUid != null">
+        category_uid,
+      </if>
+      <if test="linkLogo != null and linkLogo != ''">
+        link_logo,
+      </if>
+      <if test="linkUrl != null and linkUrl != ''">
+        link_url,
+      </if>
+      <if test="linkTitle != null and linkTitle != ''">
+        link_title,
+      </if>
+      <if test="linkDescription != null and linkDescription != ''">
+        link_description,
+      </if>
+      <if test="linkCover != null and linkCover != ''">
+        link_cover,
+      </if>
+      <if test="publish != null">
+        is_publish,
+      </if>
+      <if test="email != null and email != ''">
+        email,
+      </if>
+      <if test="qqNumber != null">
+        qq_number,
+      </if>
+      <if test="createTime != null and createTime != ''">
+        create_time,
+      </if>
+      <if test="updateTime != null and updateTime != ''">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="uid != null">
+        #{uid,jdbcType=BIGINT},
+      </if>
+      <if test="userUid != null">
+        #{userUid,jdbcType=BIGINT},
+      </if>
+      <if test="categoryUid != null">
+        #{categoryUid,jdbcType=BIGINT},
+      </if>
+      <if test="linkLogo != null and linkLogo != ''">
+        #{linkLogo,jdbcType=VARCHAR},
+      </if>
+      <if test="linkUrl != null and linkUrl != ''">
+        #{linkUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="linkTitle != null and linkTitle != ''">
+        #{linkTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="linkDescription != null and linkDescription != ''">
+        #{linkDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="linkCover != null and linkCover != ''">
+        #{linkCover,jdbcType=VARCHAR},
+      </if>
+      <if test="publish != null">
+        #{publish,jdbcType=TINYINT},
+      </if>
+      <if test="email != null and email != ''">
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="qqNumber != null">
+        #{qqNumber,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null and createTime != ''">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null and updateTime != ''">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="xyz.xcye.article.po.Link">
+    <!--@mbg.generated-->
+    update au_link
+    <set>
+      <if test="userUid != null">
+        user_uid = #{userUid,jdbcType=BIGINT},
+      </if>
+      <if test="categoryUid != null">
+        category_uid = #{categoryUid,jdbcType=BIGINT},
+      </if>
+      <if test="linkLogo != null and linkLogo != ''">
+        link_logo = #{linkLogo,jdbcType=VARCHAR},
+      </if>
+      <if test="linkUrl != null and linkUrl != ''">
+        link_url = #{linkUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="linkTitle != null and linkTitle != ''">
+        link_title = #{linkTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="linkDescription != null and linkDescription != ''">
+        link_description = #{linkDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="linkCover != null and linkCover != ''">
+        link_cover = #{linkCover,jdbcType=VARCHAR},
+      </if>
+      <if test="publish != null">
+        is_publish = #{publish,jdbcType=TINYINT},
+      </if>
+      <if test="email != null and email != ''">
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="qqNumber != null">
+        qq_number = #{qqNumber,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null and createTime != ''">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null and updateTime != ''">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where `uid` = #{uid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="xyz.xcye.article.po.Link">
+    <!--@mbg.generated-->
+    update au_link
+    set user_uid = #{userUid,jdbcType=BIGINT},
+      category_uid = #{categoryUid,jdbcType=BIGINT},
+      link_logo = #{linkLogo,jdbcType=VARCHAR},
+      link_url = #{linkUrl,jdbcType=VARCHAR},
+      link_title = #{linkTitle,jdbcType=VARCHAR},
+      link_description = #{linkDescription,jdbcType=VARCHAR},
+      link_cover = #{linkCover,jdbcType=VARCHAR},
+      is_publish = #{publish,jdbcType=TINYINT},
+      email = #{email,jdbcType=VARCHAR},
+      qq_number = #{qqNumber,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+    where `uid` = #{uid,jdbcType=BIGINT}
+  </update>
+</mapper>

@@ -29,6 +29,11 @@ public class JwtUserInfo {
     private String nickname;
 
     /**
+     * 邮箱号
+     */
+    private String email;
+
+    /**
      * 用户的uid
      */
     private Long userUid;

@@ -16,13 +16,13 @@ import xyz.xcye.data.entity.Condition;
 @FeignClient(value = "aurora-admin", name = "aurora-admin", contextId = "authUserFeignServer")
 public interface UserFeignService {
 
-    @GetMapping("/admin/user/{uid}")
+    @GetMapping("/admin/user/userUid/{uid}")
     R queryUserByUid(@PathVariable("uid") long uid);
 
     @GetMapping("/admin/user")
     R insertUser(@SpringQueryMap Condition<Long> condition);
 
-    @GetMapping("/admin/user/{username}")
+    @GetMapping("/admin/user/username/{username}")
     R queryUserByUsername(@PathVariable("username") String username);
 
     @PostMapping("/admin/user/pwd/{username}")

@@ -336,16 +336,24 @@ public class CommentServiceImpl implements CommentService {
         }
     }
 
+    /**
+     * 创建一个发送邮件的对象
+     * @param comment
+     * @return
+     */
     private StorageSendMailInfo createReceiveCommentMailInfo(Comment comment) {
         StorageSendMailInfo mailInfo = new StorageSendMailInfo();
         mailInfo.setUserUid(comment.getUserUid());
         mailInfo.setSendType(SendHtmlMailTypeNameEnum.RECEIVE_COMMENT);
-        /*mailInfo.setCorrelationDataId(GenerateInfoUtils.generateUid(auroraProperties.getSnowFlakeWorkerId(),
-                auroraProperties.getSnowFlakeDatacenterId()) + "");*/
         mailInfo.setSubject(comment.getContent());
         return mailInfo;
     }
 
+    /**
+     *
+     * @param comment
+     * @return
+     */
     private List<Map<SendHtmlMailTypeNameEnum,Object>> createReceiveList(Comment comment) {
         List<Map<SendHtmlMailTypeNameEnum,Object>> list = new ArrayList<>();
         Map<SendHtmlMailTypeNameEnum,Object> map = new HashMap<>();

@@ -3,6 +3,7 @@ package xyz.xcye.comment.po;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
 import xyz.xcye.core.constant.FieldLengthConstant;
+import xyz.xcye.core.constant.RegexConstant;
 import xyz.xcye.core.valid.Delete;
 import xyz.xcye.core.valid.Insert;
 import xyz.xcye.core.valid.LogicDelete;
@@ -68,7 +69,7 @@ public class Comment implements Serializable {
      * <p>length < 32</p>
      */
     @Length(max = FieldLengthConstant.EMAIL_NUMBER)
-    @Pattern(regexp = "^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\\.[a-zA-Z0-9_-]+)+$")
+    @Pattern(regexp = RegexConstant.EMAIL)
     @NotNull
     @NotEmpty
     private String email;

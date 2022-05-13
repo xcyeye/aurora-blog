@@ -61,14 +61,14 @@ public class UserController {
         return userService.realDeleteByUid(uid);
     }
 
-    @GetMapping("/{uid}")
+    @GetMapping("/userUid/{uid}")
     @SelectOperation
     @ApiOperation(value = "通过uid查询用户信息")
     public UserVO queryUserByUid(@PathVariable("uid") long uid) {
         return userService.queryByUid(uid);
     }
 
-    @GetMapping("/{username}")
+    @GetMapping("/username/{username}")
     @SelectOperation
     @ApiOperation(value = "通过username查询用户信息")
     public UserVO queryUserByUsername(@PathVariable("username") String username) {

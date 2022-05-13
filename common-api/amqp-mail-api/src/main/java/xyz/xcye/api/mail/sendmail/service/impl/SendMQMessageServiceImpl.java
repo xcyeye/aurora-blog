@@ -90,7 +90,7 @@ public class SendMQMessageServiceImpl implements SendMQMessageService {
             throw new EmailException(ResponseStatusCodeEnum.EXCEPTION_EMAIL_EXISTS);
         }
 
-        //将发送的回复评论数据组装成一个map集合
+        // 将发送的回复评论数据组装成一个map集合
         String msgJson = StorageMailUtils.generateMailJson(sendMailInfo, null);
         amqpSenderService.sendMQMsg(msgJson, exchangeName, routingKey, exchangeType);
     }

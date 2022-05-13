@@ -13,7 +13,8 @@ public enum SendHtmlMailTypeNameEnum {
     RECEIVE_COMMENT("receiveComment"),
     REPLY_COMMENT("replyComment"),
     VERIFY_ACCOUNT("verifyAccount"),
-    COMMON_NOTICE("commonNotice"),
+    COMMON_NOTICE("friendLinkNotice"),
+    FRIEND_LINK_NOTICE("commonNotice"),
     ADDITIONAL_DATA("additional");
 
     /**
