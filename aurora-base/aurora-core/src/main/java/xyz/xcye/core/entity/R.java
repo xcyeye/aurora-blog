@@ -55,6 +55,10 @@ public class R {
         return success(code,message,new HashMap<>(),success);
     }
 
+    public static R success(ResponseStatusCodeEnum statusCodeEnum, Object data) {
+        return success(statusCodeEnum.getCode(),statusCodeEnum.getMessage(), data, true);
+    }
+
     /**
      * 成功，携带需要返回的数据
      * @param code 响应状态码

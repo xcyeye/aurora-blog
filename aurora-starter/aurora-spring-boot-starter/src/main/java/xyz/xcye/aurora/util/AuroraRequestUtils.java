@@ -52,4 +52,13 @@ public class AuroraRequestUtils {
         }
         return "true".equals(whiteUrlStatus);
     }
+
+    /**
+     * 获取当前的请求对象，如果不存在，则返回null
+     * @return
+     */
+    public static HttpServletRequest getCurrentRequest() {
+        ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
+        return requestAttributes.getRequest();
+    }
 }

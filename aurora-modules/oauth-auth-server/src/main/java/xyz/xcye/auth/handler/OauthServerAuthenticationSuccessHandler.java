@@ -2,6 +2,7 @@ package xyz.xcye.auth.handler;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.stereotype.Component;
 import xyz.xcye.auth.util.OauthServerUtils;
 
 import javax.servlet.ServletException;
@@ -14,7 +15,7 @@ import java.io.IOException;
  * @date Created in 2022/5/8 08:34
  */
 
-
+@Component
 public class OauthServerAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
 
     @Override

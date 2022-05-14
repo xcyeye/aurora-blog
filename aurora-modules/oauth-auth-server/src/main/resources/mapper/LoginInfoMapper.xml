@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xyz.xcye.auth.dao.LoginInfoMapper">
+  <resultMap id="BaseResultMap" type="xyz.xcye.auth.po.LoginInfo">
+    <!--@mbg.generated-->
+    <!--@Table au_login_info-->
+    <id column="uid" jdbcType="BIGINT" property="uid" />
+    <result column="username" jdbcType="VARCHAR" property="username" />
+    <result column="login_location" jdbcType="VARCHAR" property="loginLocation" />
+    <result column="login_ip" jdbcType="VARCHAR" property="loginIp" />
+    <result column="operation_system_info" jdbcType="VARCHAR" property="operationSystemInfo" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="message" jdbcType="VARCHAR" property="message"/>
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    `uid`, username, login_location, login_ip, operation_system_info, create_time, update_time, 
+    `status`,message
+  </sql>
+  <select id="selectByCondition" resultMap="BaseResultMap">
+    <!--@mbg.generated-->
+    select 
+    <include refid="Base_Column_List" />
+    from au_login_info
+    <where>
+      <if test="condition.startTime != null and condition.endTime != null">
+        and create_time between #{condition.startTime} and #{condition.endTime}
+      </if>
+      <if test="condition.uid != null">
+        and uid=#{condition.uid}
+      </if>
+      <if test="condition.otherUid != null">
+        and user_uid=#{condition.otherUid}
+      </if>
+      <if test="condition.keyword != null">
+        and username=#{condition.keyword}
+      </if>
+      <if test="condition.status != null">
+        and status=#{condition.status,jdbcType=BOOLEAN}
+      </if>
+    </where>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    <!--@mbg.generated-->
+    delete from au_login_info
+    where `uid` = #{uid,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" keyColumn="uid" keyProperty="uid" parameterType="xyz.xcye.auth.po.LoginInfo" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into au_login_info (username, login_location, login_ip, 
+      operation_system_info, create_time, update_time, 
+      `status`)
+    values (#{username,jdbcType=VARCHAR}, #{loginLocation,jdbcType=VARCHAR}, #{loginIp,jdbcType=VARCHAR}, 
+      #{operationSystemInfo,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{status,jdbcType=TINYINT},#{message, jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" keyColumn="uid" keyProperty="uid" parameterType="xyz.xcye.auth.po.LoginInfo" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into au_login_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="username != null and username != ''">
+        username,
+      </if>
+      <if test="loginLocation != null and loginLocation != ''">
+        login_location,
+      </if>
+      <if test="loginIp != null and loginIp != ''">
+        login_ip,
+      </if>
+      <if test="operationSystemInfo != null and operationSystemInfo != ''">
+        operation_system_info,
+      </if>
+      <if test="createTime != null and createTime != ''">
+        create_time,
+      </if>
+      <if test="updateTime != null and updateTime != ''">
+        update_time,
+      </if>
+      <if test="status != null">
+        `status`,
+      </if>
+      <if test="message != null and message != ''">
+        message,
+      </if>
+      <if test="uid != null">
+        uid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="username != null and username != ''">
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="loginLocation != null and loginLocation != ''">
+        #{loginLocation,jdbcType=VARCHAR},
+      </if>
+      <if test="loginIp != null and loginIp != ''">
+        #{loginIp,jdbcType=VARCHAR},
+      </if>
+      <if test="operationSystemInfo != null and operationSystemInfo != ''">
+        #{operationSystemInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null and createTime != ''">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null and updateTime != ''">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="message != null and message != ''">
+        #{message,jdbcType=VARCHAR},
+      </if>
+      <if test="uid != null">
+        #{uid,jdbcType=BIGINT}
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="xyz.xcye.auth.po.LoginInfo">
+    <!--@mbg.generated-->
+    update au_login_info
+    <set>
+      <if test="username != null and username != ''">
+        username = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="loginLocation != null and loginLocation != ''">
+        login_location = #{loginLocation,jdbcType=VARCHAR},
+      </if>
+      <if test="loginIp != null and loginIp != ''">
+        login_ip = #{loginIp,jdbcType=VARCHAR},
+      </if>
+      <if test="operationSystemInfo != null and operationSystemInfo != ''">
+        operation_system_info = #{operationSystemInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null and createTime != ''">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null and updateTime != ''">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null">
+        `status` = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="message != null and message != ''">
+        message=#{message,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where `uid` = #{uid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="xyz.xcye.auth.po.LoginInfo">
+    <!--@mbg.generated-->
+    update au_login_info
+    set username = #{username,jdbcType=VARCHAR},
+      login_location = #{loginLocation,jdbcType=VARCHAR},
+      login_ip = #{loginIp,jdbcType=VARCHAR},
+      operation_system_info = #{operationSystemInfo,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      `status` = #{status,jdbcType=TINYINT},message=#{message,jdbcType=VARCHAR}
+    where `uid` = #{uid,jdbcType=BIGINT}
+  </update>
+</mapper>

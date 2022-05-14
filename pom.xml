@@ -53,6 +53,7 @@
         <kryo.version>4.0.2</kryo.version>
         <kryo-serializers.version>0.44</kryo-serializers.version>
         <blog.version>1.0-SNAPSHOT</blog.version>
+        <swagger-annotations.version>1.5.20</swagger-annotations.version>
     </properties>
 
     <!--统一依赖管理-->
@@ -101,6 +102,13 @@
             </dependency>
 
             <!--工具类-->
+            <dependency>
+                <groupId>io.swagger</groupId>
+                <artifactId>swagger-annotations</artifactId>
+                <version>${swagger-annotations.version}</version>
+                <scope>compile</scope>
+            </dependency>
+
             <dependency>
                 <groupId>org.projectlombok</groupId>
                 <artifactId>lombok</artifactId>

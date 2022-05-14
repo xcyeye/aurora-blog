@@ -6,7 +6,8 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -30,6 +31,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private JwtTokenUserDetailsService jwtTokenUserDetailsService;
 
+    @Autowired
+    private OauthServerAuthenticationSuccessHandler oauthServerAuthenticationSuccessHandler;
+    @Autowired
+    private OauthServerAuthenticationFailureHandler oauthServerAuthenticationFailureHandler;
+
     /**
      * 数据库中，存储密码使用的加密算法，需要使用这个进行密码的验证
      * @return
@@ -44,10 +50,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
      * @param auth
      * @throws Exception
      */
-    @Override
+    /*@Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(jwtTokenUserDetailsService).passwordEncoder(passwordEncoder());
-    }
+    }*/
 
     /**
      * 此AuthenticationManager对象在oauth中会使用到
@@ -60,16 +66,28 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return super.authenticationManagerBean();
     }
 
+    @Bean
+    public AuthenticationProvider authenticationProvider() {
+        DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
+        provider.setHideUserNotFoundExceptions(false);
+        provider.setUserDetailsService(jwtTokenUserDetailsService);
+        return provider;
+    }
+
+
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .anyRequest().authenticated()
+                .anyRequest()
+                .authenticated()
                 .and()
                 .formLogin()
                 .loginProcessingUrl("/auth/login")
-                .successHandler(new OauthServerAuthenticationSuccessHandler())
-                .failureHandler(new OauthServerAuthenticationFailureHandler())
+                .successHandler(oauthServerAuthenticationSuccessHandler)
+                .failureHandler(oauthServerAuthenticationFailureHandler)
                 .and()
+                //.authenticationProvider(authenticationProvider())
                 .csrf()
                 .disable();
     }

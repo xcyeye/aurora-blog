@@ -57,6 +57,16 @@
             <artifactId>auth-common</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>xyz.xcye.starter</groupId>
+            <artifactId>aurora-spring-boot-starter</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>xyz.xcye.starter</groupId>
+            <artifactId>aurora-swagger-starter</artifactId>
+        </dependency>
+
     </dependencies>
 
 </project>

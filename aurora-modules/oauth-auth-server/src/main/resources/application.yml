@@ -60,3 +60,5 @@ aurora:
   oauth:
     access-token-validity-seconds: 259200
     refresh-token-validity-seconds: 259200
+  snow-flake-datacenter-id: 1
+  snow-flake-worker-id: 2

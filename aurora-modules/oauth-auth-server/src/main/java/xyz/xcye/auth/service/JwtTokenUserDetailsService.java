@@ -51,6 +51,10 @@ public class JwtTokenUserDetailsService implements UserDetailsService {
             throw new UsernameNotFoundException(username + "不存在");
         }
 
+        if (user != null && user.getUid() == null) {
+            throw new UsernameNotFoundException(username + "不存在");
+        }
+
         // 用户存在，获取用户的角色信息
         List<JSONObject> rolePermissionDTOList = null;
         try {

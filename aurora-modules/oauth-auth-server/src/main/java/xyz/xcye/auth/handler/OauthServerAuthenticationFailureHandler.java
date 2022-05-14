@@ -2,6 +2,7 @@ package xyz.xcye.auth.handler;
 
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.springframework.stereotype.Component;
 import xyz.xcye.auth.util.OauthServerUtils;
 import xyz.xcye.core.enums.ResponseStatusCodeEnum;
 
@@ -15,7 +16,7 @@ import java.io.IOException;
  * @date Created in 2022/5/8 08:40
  */
 
-
+@Component
 public class OauthServerAuthenticationFailureHandler implements AuthenticationFailureHandler {
 
     @Override
