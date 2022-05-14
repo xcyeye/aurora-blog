@@ -28,4 +28,5 @@ public class RequestConstant {
     public static final String AMQP_REQUEST_REQUEST_JWT_USER_INFO_NAME = "amqp_request_jwt_user_info";
     /** 在认证服务器中，在请求头中存储生成的uid的名字 **/
     public static final String AUTH_SERVER_STORAGE_LOGIN_UID_NAME= "auth_storage_login_uid";
+    public static final String AUTH_SERVER_STORAGE_LOGIN_USERNAME_NAME= "auth_storage_login_username";
 }

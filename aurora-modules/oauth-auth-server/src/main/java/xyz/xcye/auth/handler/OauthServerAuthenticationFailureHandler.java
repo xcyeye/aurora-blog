@@ -21,7 +21,7 @@ public class OauthServerAuthenticationFailureHandler implements AuthenticationFa
 
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
-        OauthServerUtils.failure(request, response, ResponseStatusCodeEnum.PERMISSION_USER_MISTAKE.getMessage(),
+        OauthServerUtils.failure(request, response, exception.getMessage(),
                 ResponseStatusCodeEnum.PERMISSION_USER_MISTAKE.getCode());
     }
 }

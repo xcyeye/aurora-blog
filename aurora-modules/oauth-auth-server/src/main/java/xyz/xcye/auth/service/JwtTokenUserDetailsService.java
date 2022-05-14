@@ -13,6 +13,7 @@ import xyz.xcye.auth.model.SecurityUserDetails;
 import xyz.xcye.core.entity.R;
 import xyz.xcye.core.util.ConvertObjectUtils;
 import xyz.xcye.core.util.JSONUtils;
+import xyz.xcye.core.util.LogUtils;
 import xyz.xcye.oauth.api.service.RolePermissionFeignService;
 import xyz.xcye.oauth.api.service.UserFeignService;
 
@@ -45,9 +46,11 @@ public class JwtTokenUserDetailsService implements UserDetailsService {
         User user = null;
         // 根据用户名远程查询用户信息
         try {
-            String json = ConvertObjectUtils.jsonToString(userFeignService.queryUserByUsernameContainPassword(username));
+            R r = userFeignService.queryUserByUsernameContainPassword(username);
+            String json = ConvertObjectUtils.jsonToString(r);
             user = JSONUtils.parseObjFromResult(json, "data", User.class);
         } catch (Exception e) {
+            LogUtils.logExceptionInfo(e);
             throw new UsernameNotFoundException(username + "不存在");
         }
 

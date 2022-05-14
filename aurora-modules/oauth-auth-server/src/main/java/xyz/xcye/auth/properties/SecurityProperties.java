@@ -23,5 +23,18 @@ public class SecurityProperties {
      */
      private Integer refreshTokenValiditySeconds = 259200;
 
+     /**
+      * 如果删除redis中的信息，删除失败，最大重试次数
+      */
+     private Integer redisDeleteRetry;
 
+     /**
+      * 最大的登录失败次数，如果超过这个次数，那么该用户在指定时间内，不能继续登录
+      */
+     private Integer maxLoginFailure;
+
+     /**
+      * 如果用户登录失败次数达到最大，那么多长时间内，该用户可以继续登录，单位是分钟
+      */
+     private Integer reLoginMinute;
 }

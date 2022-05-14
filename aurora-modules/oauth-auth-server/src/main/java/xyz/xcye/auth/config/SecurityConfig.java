@@ -22,6 +22,7 @@ import xyz.xcye.auth.service.JwtTokenUserDetailsService;
  * @date Created in 2022/5/4 09:51
  */
 
+
 @EnableConfigurationProperties({SecurityProperties.class})
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {

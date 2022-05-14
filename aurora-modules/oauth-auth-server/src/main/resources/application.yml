@@ -60,5 +60,8 @@ aurora:
   oauth:
     access-token-validity-seconds: 259200
     refresh-token-validity-seconds: 259200
+    redis-delete-retry: 4
+    max-login-failure: 4
+    re-login-minute: 5
   snow-flake-datacenter-id: 1
   snow-flake-worker-id: 2
