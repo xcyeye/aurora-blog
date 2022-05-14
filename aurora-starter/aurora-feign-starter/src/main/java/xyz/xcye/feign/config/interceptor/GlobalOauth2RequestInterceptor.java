@@ -12,7 +12,6 @@ import xyz.xcye.feign.config.request.AuroraRequestAttributes;
 import xyz.xcye.feign.config.util.RequestUtils;
 
 import java.util.Map;
-import java.util.Optional;
 
 @Component
 public class GlobalOauth2RequestInterceptor implements RequestInterceptor {
@@ -32,6 +31,7 @@ public class GlobalOauth2RequestInterceptor implements RequestInterceptor {
             template.header(RequestConstant.REQUEST_WHITE_URL_STATUS, whiteUrlStatus);
         }
         Map<String, String> requestHeads = requestUtils.getRequestHeadsFromHolder();
-        Optional.ofNullable(requestHeads).ifPresent(t -> requestHeads.forEach(template::header));
+        //Optional.ofNullable(requestHeads).ifPresent(t -> requestHeads.forEach(template::header));
+        System.out.println();
     }
 }

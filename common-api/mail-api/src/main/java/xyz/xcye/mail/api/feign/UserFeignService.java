@@ -19,7 +19,7 @@ import xyz.xcye.message.po.Email;
 @FeignClient(value = "aurora-admin")
 public interface UserFeignService {
 
-    @GetMapping("/admin/user/{uid}")
+    @GetMapping("/admin/user/userUid/{uid}")
     R queryUserByUid(@PathVariable("uid") long uid);
 
     @PutMapping("/admin/user")

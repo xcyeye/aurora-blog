@@ -9,9 +9,11 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import xyz.xcye.core.annotaion.controller.ModifyOperation;
 import xyz.xcye.core.annotaion.controller.SelectOperation;
+import xyz.xcye.core.entity.R;
 import xyz.xcye.core.exception.AuroraException;
 import xyz.xcye.core.valid.Insert;
 import xyz.xcye.core.valid.Update;
+import xyz.xcye.mail.api.feign.UserFeignService;
 import xyz.xcye.message.po.Email;
 import xyz.xcye.message.service.EmailService;
 import xyz.xcye.message.vo.EmailVO;
@@ -33,12 +35,20 @@ public class EmailController {
     @Autowired
     private EmailService emailService;
 
+    @Autowired
+    UserFeignService userFeignService;
+
     @ApiOperation(value = "向数据库中插入新的邮箱记录，比如主机，授权码等")
     @ModifyOperation
     @PostMapping("")
     public int insertEmail(@Validated({Insert.class,Default.class}) Email email)
             throws BindException, AuroraException {
-        return emailService.insertEmail(email);
+
+        R r = userFeignService.queryUserByUid(8734564576L);
+        System.out.println(r);
+
+        return 1;
+        //return emailService.insertEmail(email);
     }
 
     @ApiOperation(value = "根据唯一uid删除某条邮箱",notes = "uid为long型")
