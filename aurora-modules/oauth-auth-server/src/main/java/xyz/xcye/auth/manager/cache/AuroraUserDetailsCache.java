@@ -36,12 +36,16 @@ public class AuroraUserDetailsCache implements UserCache {
         String json = (String) redisTemplate.opsForValue().get(AuthRedisConstant.USER_DETAILS_CACHE_PREFIX + username);
         SecurityUserDetails securityUserDetails = JSON.parseObject(json, SecurityUserDetails.class);
         ArrayList<JSONObject> grantedAuthorities = JSONUtils.parseObjFromResult(json, "grantedAuthorities", ArrayList.class);
-        String[] authorities = grantedAuthorities.stream()
+        String[] authorities = null;
+        if (grantedAuthorities != null) {
+            authorities = grantedAuthorities.stream()
                 .map(obj -> (String) obj.get("authority"))
                 .collect(Collectors.joining(","))
                 .split(",");
+        }
+        String[] finalAuthorities = authorities;
         Optional.ofNullable(securityUserDetails)
-                .ifPresent(t -> t.setGrantedAuthorities(AuthorityUtils.createAuthorityList(authorities)));
+                .ifPresent(t -> t.setGrantedAuthorities(AuthorityUtils.createAuthorityList(finalAuthorities)));
         return securityUserDetails;
     }
 

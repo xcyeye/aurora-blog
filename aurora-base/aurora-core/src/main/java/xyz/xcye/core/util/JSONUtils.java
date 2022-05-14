@@ -18,6 +18,9 @@ public class JSONUtils {
      * @return
      */
     public static  <T> T parseObjFromResult(String json, String key, Class<T> target) {
+        if (json == null) {
+            return null;
+        }
         JSONObject jsonObject = JSON.parseObject(json);
         T t = null;
         try {
