@@ -3,6 +3,7 @@ package xyz.xcye.aurora.manager.advice;
 import com.alibaba.fastjson.JSON;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
@@ -11,17 +12,20 @@ import org.springframework.http.server.ServerHttpResponse;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 import xyz.xcye.aurora.manager.json.FieldFilterSerializer;
+import xyz.xcye.aurora.util.UserUtils;
 import xyz.xcye.core.annotaion.FieldFilter;
 import xyz.xcye.core.annotaion.controller.ModifyOperation;
 import xyz.xcye.core.annotaion.controller.ResponseRealResult;
 import xyz.xcye.core.annotaion.controller.SelectOperation;
+import xyz.xcye.core.dto.JwtUserInfo;
 import xyz.xcye.core.entity.ExceptionResultEntity;
 import xyz.xcye.core.entity.R;
 import xyz.xcye.core.enums.ResponseStatusCodeEnum;
+import xyz.xcye.core.util.LogUtils;
 
 import java.lang.reflect.Method;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * 对所有响应的数据进行包装处理
@@ -31,6 +35,9 @@ import java.util.Map;
 @Slf4j
 @ControllerAdvice
 public class AuroraResponseResultHandler implements ResponseBodyAdvice<Object> {
+
+    @Autowired
+    private UserUtils userUtils;
 
     @Override
     public boolean supports(MethodParameter returnType, Class<? extends HttpMessageConverter<?>> converterType) {
@@ -108,13 +115,18 @@ public class AuroraResponseResultHandler implements ResponseBodyAdvice<Object> {
     private Object fieldFilter(Object responseBody, Method method) {
         // 判断是否有FieldFilter注解(判断当前登录用户是否具有查看密码的权限，动态过滤某个字段)
         boolean hasFieldFilterAnnotation = method.isAnnotationPresent(FieldFilter.class);
-
         if (hasFieldFilterAnnotation) {
             FieldFilter fieldFilterAnnotation = method.getAnnotation(FieldFilter.class);
             // 需要排除的字段集合
             String[] excludeFields = fieldFilterAnnotation.excludeFields();
             // 序列化的class
             Class<?> serializerClass = fieldFilterAnnotation.value();
+            String[] ignoreRoleArray = fieldFilterAnnotation.ignoreRole();
+
+            // 判断当前认证用户的角色和roleList是否有相交，如果有，则不进行过滤，直接返回，反之
+            if (isNeedIgnoreField(ignoreRoleArray)) {
+                return responseBody;
+            }
 
             // 过滤字段
             FieldFilterSerializer filterSerializer = new FieldFilterSerializer();
@@ -123,7 +135,7 @@ public class AuroraResponseResultHandler implements ResponseBodyAdvice<Object> {
                 String json = filterSerializer.toJSONString(responseBody);
                 responseBody = JSON.parse(json);
             } catch (JsonProcessingException e) {
-                log.warn("对象转json出错了:{},出错原因:{}",responseBody,e.getMessage());
+                LogUtils.logExceptionInfo(e);
             }
         }
 
@@ -132,5 +144,32 @@ public class AuroraResponseResultHandler implements ResponseBodyAdvice<Object> {
         }else {
             return responseBody;
         }
+    }
+
+    /**
+     * 判断当前的用户是否具有查看完整字段的权利 true具有，false会对需要过滤的字段进行处理
+     * @param ignoreRoleArray
+     * @return
+     */
+    private boolean isNeedIgnoreField(String[] ignoreRoleArray) {
+        List<String> stringList = Arrays.stream(ignoreRoleArray)
+                .collect(Collectors.toList());
+        // 获取当前认证用户的角色集合
+        List<String> roleList = getRoleList();
+        List<String> roleCollect = roleList.stream()
+                .filter(stringList::contains)
+                .collect(Collectors.toList());
+        return !roleCollect.isEmpty();
+    }
+
+    private List<String> getRoleList() {
+        JwtUserInfo jwtUserInfo = userUtils.getCurrentUser();
+        List<String> roleList = null;
+        if (jwtUserInfo == null || jwtUserInfo.getRoleList() == null) {
+            roleList = new ArrayList<>();
+        }else {
+            roleList = jwtUserInfo.getRoleList();
+        }
+        return roleList;
     }
 }

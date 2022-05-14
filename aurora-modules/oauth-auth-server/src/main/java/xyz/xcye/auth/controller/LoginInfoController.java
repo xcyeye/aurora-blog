@@ -4,8 +4,10 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import xyz.xcye.auth.constant.OauthJwtConstant;
 import xyz.xcye.auth.service.LoginInfoService;
 import xyz.xcye.auth.vo.LoginInfoVO;
+import xyz.xcye.core.annotaion.FieldFilter;
 import xyz.xcye.core.annotaion.controller.ModifyOperation;
 import xyz.xcye.core.annotaion.controller.SelectOperation;
 import xyz.xcye.data.entity.Condition;
@@ -38,6 +40,8 @@ public class LoginInfoController {
         return loginInfoService.deleteByUidBatch(uids);
     }
 
+    @FieldFilter(value = LoginInfoVO.class, excludeFields = {"","",""},
+            ignoreRole = {OauthJwtConstant.SUPER_ADMINISTRATOR_ROLE_NAME})
     @SelectOperation
     @ApiOperation("根据条件查询")
     @GetMapping
@@ -45,6 +49,7 @@ public class LoginInfoController {
         return loginInfoService.selectByCondition(condition);
     }
 
+    @FieldFilter(value = LoginInfoVO.class, excludeFields = {"loginIp","loginLocation","username"})
     @SelectOperation
     @ApiOperation("根据用户名查询")
     @GetMapping("/{username}")

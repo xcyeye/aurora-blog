@@ -3,6 +3,7 @@ package xyz.xcye.data.util;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import xyz.xcye.core.util.BeanUtils;
 import xyz.xcye.data.entity.Condition;
 import xyz.xcye.data.entity.PageData;
 
@@ -26,25 +27,25 @@ public class PageUtils {
         return pageData;
     }
 
-    public static <T,I> PageData<T> pageList(Condition<I> condition, Consumer<Condition<I>> consumer) {
-        Page<T> page = PageHelper.startPage(condition.getPageNum(), condition.getPageSize(), condition.getOrderBy()).doSelectPage(() -> {
-            consumer.accept(condition);
-        });
+    @SafeVarargs
+    public static <T,I> PageData<T> pageList(Condition<I> condition, Consumer<Condition<I>> consumer, Class<T> ... zClass) {
+        Page<T> page = getPageInfo(condition, consumer::accept);
         PageData<T> pageData = new PageData<>();
         pageData.setResult(page.getResult());
         pageData.setTotal(page.getTotal());
         pageData.setPages(page.getPages());
+
+        if (zClass.length > 0) {
+            // 只需要第一个
+            List<T> list = BeanUtils.copyList(page.getResult(), zClass[0]);
+            pageData.setResult(list);
+        }
         return pageData;
     }
 
-    public static <T,I> PageData<T> pageList(Condition<I> condition, Consumer<Condition<I>> consumer, Class<T> zClass) {
-        Page<T> page = PageHelper.startPage(condition.getPageNum(), condition.getPageSize(), condition.getOrderBy()).doSelectPage(() -> {
+    private static <T,I> Page<T> getPageInfo(Condition<I> condition, Consumer<Condition<I>> consumer) {
+        return PageHelper.startPage(condition.getPageNum(), condition.getPageSize(), condition.getOrderBy()).doSelectPage(() -> {
             consumer.accept(condition);
         });
-        PageData<T> pageData = new PageData<>();
-        pageData.setResult(page.getResult());
-        pageData.setTotal(page.getTotal());
-        pageData.setPages(page.getPages());
-        return pageData;
     }
 }

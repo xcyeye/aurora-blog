@@ -14,6 +14,7 @@ import xyz.xcye.data.entity.PageData;
 import xyz.xcye.data.util.PageUtils;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -58,7 +59,12 @@ public class LoginInfoServiceImpl implements LoginInfoService {
 
     @Override
     public LoginInfoVO selectByUsername(String username) {
-        return BeanUtils.getSingleObjFromList(loginInfoMapper.selectByCondition(Condition.instant(username)), LoginInfoVO.class);
+        // 返回该用户最近登录的日志信息
+        Condition<Long> condition = Condition.instant(username);
+        condition.setOrderBy("create_time");
+        List<LoginInfoVO> loginInfoVOList = PageUtils.pageList(condition,
+                t -> loginInfoMapper.selectByCondition(condition), LoginInfoVO.class).getResult();
+        return BeanUtils.getSingleObjFromList(loginInfoVOList, LoginInfoVO.class);
     }
 
     @Override

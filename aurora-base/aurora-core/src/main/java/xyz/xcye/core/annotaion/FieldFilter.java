@@ -18,7 +18,12 @@ public @interface FieldFilter {
     Class<?> value();
 
     /**
-     * 需要排除的字段
+     * 需要过滤的字段
      */
     String[] excludeFields();
+
+    /**
+     * 哪些角色忽略，也就是如果我们设置过滤某个字段，但是对于某个角色，是不过滤的，比如超级管理员就可以看到所有信息
+     */
+    String[] ignoreRole() default "";
 }
