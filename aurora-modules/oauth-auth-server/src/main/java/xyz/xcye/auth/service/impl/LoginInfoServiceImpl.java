@@ -14,6 +14,7 @@ import xyz.xcye.data.entity.PageData;
 import xyz.xcye.data.util.PageUtils;
 
 import java.util.Arrays;
+import java.util.Optional;
 
 /**
  * @author qsyyke
@@ -45,7 +46,7 @@ public class LoginInfoServiceImpl implements LoginInfoService {
     @Override
     public int insertSelective(LoginInfo record) {
         Assert.notNull(record, "登录信息不能为null");
-        record.setStatus(false);
+        record.setStatus(Optional.ofNullable(record.getStatus()).orElse(false));
         return loginInfoMapper.insertSelective(record);
     }
 

@@ -5,6 +5,7 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
@@ -13,6 +14,7 @@ import xyz.xcye.aurora.properties.AuroraProperties;
 import xyz.xcye.aurora.util.AuroraRequestUtils;
 import xyz.xcye.auth.constant.AuthRedisConstant;
 import xyz.xcye.auth.constant.RequestConstant;
+import xyz.xcye.auth.model.SecurityUserDetails;
 import xyz.xcye.auth.po.LoginInfo;
 import xyz.xcye.auth.properties.SecurityProperties;
 import xyz.xcye.auth.service.LoginInfoService;
@@ -23,7 +25,9 @@ import xyz.xcye.core.util.id.GenerateInfoUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import java.time.Duration;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.regex.Pattern;
 
 /**
@@ -80,11 +84,9 @@ public class LoginInfoAop {
         // 组装对象
         LoginInfo loginInfo = LoginInfo.builder().
                 username(username)
-                .loginIp(NetWorkUtils.getIpAddr(request))
-                .operationSystemInfo(NetWorkUtils.getOperationInfo(request))
-                .loginLocation("保山")
                 .uid(uid)
                 .build();
+        setDefaultProperties(loginInfo);
 
         // 查看用户上次
         int insertNum = loginInfoService.insertSelective(loginInfo);
@@ -115,15 +117,27 @@ public class LoginInfoAop {
         }
 
         // 处理登录失败结果
-        handlerLoginResult(errorMessage, false);
-        storageLoginSituationToRedis(false);
+        handlerLoginResult(errorMessage, false, null);
+        storageLoginSituationToRedis(false, null);
     }
 
     @Before("execution(public * xyz.xcye.auth.handler.OauthServerAuthenticationSuccessHandler.onAuthenticationSuccess(..))")
     public void loginSuccess(JoinPoint point) {
+        Object[] args = point.getArgs();
+        // 获取用户名
+        AtomicReference<String> usernameAtomicReference = new AtomicReference<>("");
+        Arrays.stream(args).forEach(arg -> {
+            if (arg instanceof UsernamePasswordAuthenticationToken) {
+                UsernamePasswordAuthenticationToken authenticationToken = (UsernamePasswordAuthenticationToken) arg;
+                SecurityUserDetails securityUserDetails = (SecurityUserDetails) authenticationToken.getPrincipal();
+                usernameAtomicReference.set(securityUserDetails.getUsername());
+            }
+        });
+        String username = usernameAtomicReference.get();
+
         // 登录失败，获取失败信息，更新
-        handlerLoginResult("登录成功", true);
-        storageLoginSituationToRedis(true);
+        handlerLoginResult("登录成功", true, username);
+        storageLoginSituationToRedis(true, username);
     }
 
     /**
@@ -157,17 +171,18 @@ public class LoginInfoAop {
     }
 
     /**
-     * 把该用户名的登录成功/失败情况存入redis中
+     * 把该用户名的登录成功/失败情况存入redis中,如果缓存中存在userDetails对象，那么不会进入loadUserByUsername，也就是请求头中没有
+     * 用户名等信息，可能会导致，用户第一次登录失败，第二次登录成功，因为存在缓存，所以就不会删除第一次登录失败的信息
      * @param loginStatus
      */
-    private void storageLoginSituationToRedis(boolean loginStatus) {
+    private void storageLoginSituationToRedis(boolean loginStatus, String cacheUsername) {
         // 获取用户名
         String username = getUsernameFromRequest();
 
         // 如果用户登录成功，如果redis中存在在登录成功之前的失败记录，则删除，如果登录失败，则调整用户的登录失败次数加1
         if (loginStatus) {
             // 删除redis中的登录情况
-            Boolean delete = redisTemplate.delete(AuthRedisConstant.USER_LOGIN_FAILURE_NUMBER_PREFIX + username);
+            Boolean delete = redisTemplate.delete(AuthRedisConstant.USER_LOGIN_FAILURE_NUMBER_PREFIX + cacheUsername);
             if (Boolean.FALSE.equals(delete)) {
                 int i = 0;
                 while (i < securityProperties.getRedisDeleteRetry()) {
@@ -189,11 +204,12 @@ public class LoginInfoAop {
     }
 
     /**
-     * 处理登录的结果，也就是把该用户的登录成功，失败情况存入mysql中
+     * 处理登录的结果，也就是把该用户的登录成功，失败情况存入mysql中,因为会存在缓存，如果缓存中存在该用户名对应的user信息，则不会进入
+     * loadUserByUsername()方法中进行处理，所以请求头中，会没有username信息
      * @param message
      * @param status
      */
-    private void handlerLoginResult(String message, boolean status) {
+    private void handlerLoginResult(String message, boolean status, String cacheUsername) {
         // 获取唯一uid
         Long uid = getUidFromRequest();
         String username = getUsernameFromRequest();
@@ -204,6 +220,13 @@ public class LoginInfoAop {
             return;
         }
 
+        if (StringUtils.hasLength(cacheUsername)) {
+            // 如果存在cacheUsername，也就是缓存中，存在该数据，则生成uid
+            uid = GenerateInfoUtils.generateUid(auroraProperties.getSnowFlakeWorkerId(), auroraProperties.getSnowFlakeDatacenterId());
+            username = cacheUsername;
+            message = "从缓存加载数据，登录成功";
+        }
+
         // 修改登录信息
         LoginInfo loginInfo = LoginInfo.builder()
                 .uid(uid)
@@ -212,6 +235,13 @@ public class LoginInfoAop {
                 .build();
         if (StringUtils.hasLength(message)) {
             loginInfo.setMessage(message);
+        }
+
+        // 如果是从缓存中加载的，那么是插入操作
+        if (StringUtils.hasLength(cacheUsername)) {
+            setDefaultProperties(loginInfo);
+            loginInfo.setUpdateTime(null);
+            loginInfoService.insertSelective(loginInfo);
         }
         loginInfoService.updateByPrimaryKeySelective(loginInfo);
     }
@@ -237,5 +267,12 @@ public class LoginInfoAop {
         HttpServletRequest request = AuroraRequestUtils.getCurrentRequest();
         // 获取唯一uid
         return (Long) request.getAttribute(RequestConstant.AUTH_SERVER_STORAGE_LOGIN_UID_NAME);
+    }
+
+    private void setDefaultProperties(LoginInfo loginInfo) {
+        HttpServletRequest request = AuroraRequestUtils.getCurrentRequest();
+        loginInfo.setLoginIp(NetWorkUtils.getIpAddr(request));
+        loginInfo.setLoginLocation("保山");
+        loginInfo.setOperationSystemInfo(NetWorkUtils.getOperationInfo(request));
     }
 }
