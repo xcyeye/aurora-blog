@@ -14,6 +14,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import xyz.xcye.auth.handler.OauthServerAuthenticationFailureHandler;
 import xyz.xcye.auth.handler.OauthServerAuthenticationSuccessHandler;
+import xyz.xcye.auth.manager.cache.AuroraUserDetailsCache;
 import xyz.xcye.auth.properties.SecurityProperties;
 import xyz.xcye.auth.service.JwtTokenUserDetailsService;
 
@@ -36,6 +37,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private OauthServerAuthenticationSuccessHandler oauthServerAuthenticationSuccessHandler;
     @Autowired
     private OauthServerAuthenticationFailureHandler oauthServerAuthenticationFailureHandler;
+    @Autowired
+    private AuroraUserDetailsCache auroraUserDetailsCache;
 
     /**
      * 数据库中，存储密码使用的加密算法，需要使用这个进行密码的验证
@@ -73,10 +76,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         provider.setHideUserNotFoundExceptions(false);
         provider.setUserDetailsService(jwtTokenUserDetailsService);
         provider.setPasswordEncoder(passwordEncoder());
+        provider.setUserCache(auroraUserDetailsCache);
         return provider;
     }
-
-
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {

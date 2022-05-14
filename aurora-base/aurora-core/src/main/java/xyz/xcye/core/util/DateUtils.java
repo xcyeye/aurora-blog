@@ -173,12 +173,12 @@ public class DateUtils {
     }
 
     /**
-     * 返回随机区间内的随机秒数
+     * 返回随机区间内的随机分钟
      * @param min 最小
      * @param max 最大
      * @return 返回在min和max之间的随机秒数
      */
-    public static long getRandomSecond(int min,int max) {
+    public static long getRandomMinute(int min, int max) {
         return min + new Random().nextInt(max - min);
     }
 
