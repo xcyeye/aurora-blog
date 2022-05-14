@@ -31,7 +31,10 @@ public class GlobalOauth2RequestInterceptor implements RequestInterceptor {
             template.header(RequestConstant.REQUEST_WHITE_URL_STATUS, whiteUrlStatus);
         }
         Map<String, String> requestHeads = requestUtils.getRequestHeadsFromHolder();
-        //Optional.ofNullable(requestHeads).ifPresent(t -> requestHeads.forEach(template::header));
-        System.out.println();
+        requestHeads.forEach((key,value) -> {
+            if (!"host".equals(key)) {
+                template.header(key, value);
+            }
+        });
     }
 }

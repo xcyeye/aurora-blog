@@ -1,8 +1,11 @@
 package xyz.xcye.auth.manager.aop;
 
+import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Before;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
@@ -13,12 +16,16 @@ import xyz.xcye.auth.constant.RequestConstant;
 import xyz.xcye.auth.po.LoginInfo;
 import xyz.xcye.auth.properties.SecurityProperties;
 import xyz.xcye.auth.service.LoginInfoService;
+import xyz.xcye.core.enums.RegexEnum;
 import xyz.xcye.core.util.DateUtils;
+import xyz.xcye.core.util.NetWorkUtils;
+import xyz.xcye.core.util.id.GenerateInfoUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import java.time.Duration;
 import java.util.Date;
 import java.util.Optional;
+import java.util.regex.Pattern;
 
 /**
  * @author qsyyke
@@ -44,7 +51,7 @@ public class LoginInfoAop {
      * @return
      * @throws Throwable
      */
-    /*@Before("execution(public * xyz.xcye.auth.service.JwtTokenUserDetailsService.loadUserByUsername(..))")
+    @Before("execution(public * xyz.xcye.auth.service.JwtTokenUserDetailsService.loadUserByUsername(..))")
     public void logProcessRequestTime(JoinPoint point) {
 
         // 开始记录 获取当前请求对象
@@ -115,7 +122,7 @@ public class LoginInfoAop {
         // 登录失败，获取失败信息，更新
         handlerLoginResult("登录成功", true);
         storageLoginSituationToRedis(true);
-    }*/
+    }
 
     /**
      * 判断该用户的登录失败次数是否达到最大值，如果达到最大致，则锁住该用户的信息

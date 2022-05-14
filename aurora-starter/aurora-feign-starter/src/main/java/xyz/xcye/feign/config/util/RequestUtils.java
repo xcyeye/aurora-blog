@@ -60,18 +60,22 @@ public class RequestUtils {
 
         // 获取需要的请求头信息
         HttpServletRequest request = requestAttributes.getRequest();
-        // 获取请求头中的白名单状态
-        String whiteUrlStatus = (String) request.getAttribute(RequestConstant.REQUEST_WHITE_URL_STATUS);
-
-        // 获取存储用户认证信息
-        String jwtUserInfoBase64 = (String) request.getAttribute(RequestConstant.REQUEST_TOKEN_NAME);
         Map<String,String> headMaps = new HashMap<>();
-        /*if (StringUtils.hasLength(whiteUrlStatus)) {
-            headMaps.put()
-        }*/
+        Enumeration<String> requestHeaderNames = request.getHeaderNames();
+        while (requestHeaderNames.hasMoreElements()) {
+            String headName = requestHeaderNames.nextElement();
+            String headerValue = request.getHeader(headName);
 
-        return null;
-
+            // 获取存储用户认证信息
+            if (RequestConstant.REQUEST_TOKEN_NAME.equals(headName)) {
+                headMaps.put(headName, headerValue);
+            }
+            // 获取请求头中的白名单状态
+            if (RequestConstant.REQUEST_WHITE_URL_STATUS.equals(headName)) {
+                headMaps.put(headName, headerValue);
+            }
+        }
+        return headMaps;
     }
 
     private Map<String, String> getAllFromAuroraRequestAttributes() {

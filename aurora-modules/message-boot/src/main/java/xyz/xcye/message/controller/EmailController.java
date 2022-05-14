@@ -43,12 +43,7 @@ public class EmailController {
     @PostMapping("")
     public int insertEmail(@Validated({Insert.class,Default.class}) Email email)
             throws BindException, AuroraException {
-
-        R r = userFeignService.queryUserByUid(8734564576L);
-        System.out.println(r);
-
-        return 1;
-        //return emailService.insertEmail(email);
+        return emailService.insertEmail(email);
     }
 
     @ApiOperation(value = "根据唯一uid删除某条邮箱",notes = "uid为long型")
