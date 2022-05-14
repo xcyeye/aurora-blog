@@ -64,6 +64,7 @@ public class JwtTokenUserDetailsService implements UserDetailsService {
             R r = rolePermissionFeignService.loadAllRoleByUsername(username);
             rolePermissionDTOList = JSONUtils.parseObjFromResult(ConvertObjectUtils.jsonToString(r), "data", List.class);
         } catch (Exception e) {
+            LogUtils.logExceptionInfo(e);
             throw new UsernameNotFoundException("获取" + username + "用户的权限信息失败");
         }
 

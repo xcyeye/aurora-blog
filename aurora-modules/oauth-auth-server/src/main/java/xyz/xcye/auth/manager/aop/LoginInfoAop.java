@@ -24,7 +24,6 @@ import xyz.xcye.core.util.id.GenerateInfoUtils;
 import javax.servlet.http.HttpServletRequest;
 import java.time.Duration;
 import java.util.Date;
-import java.util.Optional;
 import java.util.regex.Pattern;
 
 /**
@@ -65,12 +64,7 @@ public class LoginInfoAop {
         }
 
         // 判断用户名是否规范
-        boolean matches = Pattern.matches(RegexEnum.USERNAME_REGEX.getRegex(), username);
-        if (!matches) {
-            throw new UsernameNotFoundException("用户名不正确");
-        }
-
-        isReachesMaxFailureNum(username);
+        legalUsernname(username);
 
         // 生成唯一uid
         long uid = GenerateInfoUtils.generateUid(auroraProperties.getSnowFlakeWorkerId(),
@@ -79,6 +73,9 @@ public class LoginInfoAop {
         // 将此唯一uid和用户名保存在请求头中
         request.setAttribute(RequestConstant.AUTH_SERVER_STORAGE_LOGIN_UID_NAME, uid);
         request.setAttribute(RequestConstant.AUTH_SERVER_STORAGE_LOGIN_USERNAME_NAME, username);
+
+        // 判断该用户是否达到最大登录失败次数
+        isReachesMaxFailureNum(username);
 
         // 组装对象
         LoginInfo loginInfo = LoginInfo.builder().
@@ -112,7 +109,12 @@ public class LoginInfoAop {
             }
         }
 
-        // 修改
+        // request中没有用户名，不做任何处理
+        if (getUsernameFromRequest() == null) {
+            return;
+        }
+
+        // 处理登录失败结果
         handlerLoginResult(errorMessage, false);
         storageLoginSituationToRedis(false);
     }
@@ -137,16 +139,18 @@ public class LoginInfoAop {
             return;
         }
 
-        if (loginFailureNum > securityProperties.getMaxLoginFailure()) {
-            // 设置该用户的失败次数的ttl
-            redisTemplate.expire(AuthRedisConstant.USER_LOGIN_FAILURE_NUMBER_PREFIX + username,
-                    Duration.ofMillis(securityProperties.getReLoginMinute()));
+        if (loginFailureNum >= securityProperties.getMaxLoginFailure()) {
+            // 登录失败次数达到最大值，AuthRedisConstant.USER_LOGIN_FAILURE_NUMBER_PREFIX时间段为不允许登录
+            Long expire = redisTemplate.getExpire(AuthRedisConstant.USER_LOGIN_FAILURE_NUMBER_PREFIX + username);
+            if (expire == null || -1 == expire) {
+                expire = Long.parseLong((securityProperties.getReLoginMinute() * 60) + "");
+                // 设置该用户的失败次数的ttl
+                redisTemplate.expire(AuthRedisConstant.USER_LOGIN_FAILURE_NUMBER_PREFIX + username, Duration.ofSeconds(expire));
+            }
 
             // 计算剩余重新登录时间
-            Long expire = redisTemplate.getExpire(AuthRedisConstant.USER_LOGIN_FAILURE_NUMBER_PREFIX + username);
-            expire = Optional.ofNullable(expire).orElse(Long.parseLong(securityProperties.getReLoginMinute() + ""));
-            int minute = DateUtils.getMinute(new Date(expire));
-            throw  new UsernameNotFoundException("登录失败次数达到最大值，请" + minute + "分钟后重试");
+            String reLoginTime = DateUtils.format(new Date(System.currentTimeMillis() + (expire * 1000)));
+            throw new UsernameNotFoundException("登录失败次数达到最大值,下次登录时间 " + reLoginTime);
         }
 
         // 没有达到最大值，不做处理
@@ -157,10 +161,8 @@ public class LoginInfoAop {
      * @param loginStatus
      */
     private void storageLoginSituationToRedis(boolean loginStatus) {
-        HttpServletRequest request = AuroraRequestUtils.getCurrentRequest();
-
         // 获取用户名
-        String username = (String) request.getAttribute(RequestConstant.AUTH_SERVER_STORAGE_LOGIN_USERNAME_NAME);
+        String username = getUsernameFromRequest();
 
         // 如果用户登录成功，如果redis中存在在登录成功之前的失败记录，则删除，如果登录失败，则调整用户的登录失败次数加1
         if (loginStatus) {
@@ -179,16 +181,11 @@ public class LoginInfoAop {
             return;
         }
 
-        // 登录失败，向redis中插入此用户的登录失败次数
+        // 登录失败，向redis中插入此用户的登录失败次数 没有超过最大值才添加
         Integer loginFailureNum = (Integer) redisTemplate.opsForValue().get(AuthRedisConstant.USER_LOGIN_FAILURE_NUMBER_PREFIX + username);
-        if (loginFailureNum == null) {
-            loginFailureNum = 1;
-        }else {
-            // 判断该用户失败次数是否达到最大值
-            loginFailureNum++;
+        if (loginFailureNum == null || loginFailureNum < securityProperties.getMaxLoginFailure()) {
+            redisTemplate.opsForValue().increment(AuthRedisConstant.USER_LOGIN_FAILURE_NUMBER_PREFIX + username);
         }
-        // 存储
-        redisTemplate.opsForValue().set(AuthRedisConstant.USER_LOGIN_FAILURE_NUMBER_PREFIX + username, loginFailureNum);
     }
 
     /**
@@ -197,9 +194,15 @@ public class LoginInfoAop {
      * @param status
      */
     private void handlerLoginResult(String message, boolean status) {
-        HttpServletRequest request = AuroraRequestUtils.getCurrentRequest();
         // 获取唯一uid
-        Long uid = (Long) request.getAttribute(RequestConstant.AUTH_SERVER_STORAGE_LOGIN_UID_NAME);
+        Long uid = getUidFromRequest();
+        String username = getUsernameFromRequest();
+
+        // 只有用户的登录失败次数没有达到最大值的时候才修改用户登录记录
+        Integer loginFailureNum = (Integer) redisTemplate.opsForValue().get(AuthRedisConstant.USER_LOGIN_FAILURE_NUMBER_PREFIX + username);
+        if (loginFailureNum != null && loginFailureNum >= securityProperties.getMaxLoginFailure()) {
+            return;
+        }
 
         // 修改登录信息
         LoginInfo loginInfo = LoginInfo.builder()
@@ -211,5 +214,28 @@ public class LoginInfoAop {
             loginInfo.setMessage(message);
         }
         loginInfoService.updateByPrimaryKeySelective(loginInfo);
+    }
+
+    /**
+     * 判断用户名是否合法
+     * @param username
+     */
+    private void legalUsernname(String username) {
+        // 判断用户名是否规范
+        boolean matches = Pattern.matches(RegexEnum.USERNAME_REGEX.getRegex(), username);
+        if (!matches) {
+            throw new UsernameNotFoundException("用户名不正确");
+        }
+    }
+
+    private String getUsernameFromRequest() {
+        HttpServletRequest request = AuroraRequestUtils.getCurrentRequest();
+        return (String) request.getAttribute(RequestConstant.AUTH_SERVER_STORAGE_LOGIN_USERNAME_NAME);
+    }
+
+    private Long getUidFromRequest() {
+        HttpServletRequest request = AuroraRequestUtils.getCurrentRequest();
+        // 获取唯一uid
+        return (Long) request.getAttribute(RequestConstant.AUTH_SERVER_STORAGE_LOGIN_UID_NAME);
     }
 }
