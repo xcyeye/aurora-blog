@@ -90,12 +90,12 @@ public class AuthServerRememberMeServices implements RememberMeServices {
 
     /**
      * 对失效时间和用户名进行一个编码
-     * @param tokenExpiryTime
+     * @param cookieExpiryTime
      * @param username
      * @return
      */
-    protected String encodeCookie(long tokenExpiryTime, String username) {
-        String data = username + ":" + tokenExpiryTime + ":" + auroraAuthProperties.getSecretKey();
+    protected String encodeCookie(long cookieExpiryTime, String username) {
+        String data = username + ":" + cookieExpiryTime + ":" + OauthJwtConstant.STORAGE_COOKIE_SECRET_KEY;
         return Base64.encode(data);
     }
 

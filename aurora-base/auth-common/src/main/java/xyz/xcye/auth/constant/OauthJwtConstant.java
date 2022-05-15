@@ -22,4 +22,7 @@ public class OauthJwtConstant {
 
     /** 请求中，在cookie里存储用户登录状态的键名 **/
     public static final String COOKIE_STORAGE_LOGIN_SUCCESS_STATUS = "login_status";
+
+    /** cookie中存储cookie的秘钥 **/
+    public static final String STORAGE_COOKIE_SECRET_KEY = "aurora.cookie.secrey";
 }

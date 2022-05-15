@@ -6,11 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.http.HttpCookie;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.stereotype.Component;
 import org.springframework.util.AntPathMatcher;
+import org.springframework.util.MultiValueMap;
 import org.springframework.util.StringUtils;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
@@ -24,6 +26,7 @@ import xyz.xcye.wg.util.SecurityResultHandler;
 import java.net.URI;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * 全局过滤器，对token的拦截，解析token放入header中，便于下游微服务获取用户信息
@@ -62,6 +65,11 @@ public class GlobalAuthenticationFilter implements GlobalFilter {
 
         // 如果是登录处理的地址，并且请求头中存在token，并且该token没有失效，那么就退出
         String loginProcessUrl = "POST:" + OauthJwtConstant.LOGIN_PROCESS_URL;
+
+        if (loginProcessUrl.equals(restFulPath) && loginStatus(exchange)) {
+            return invalidTokenMono(exchange, ResponseStatusCodeEnum.PERMISSION_USER_HAD_LOGIN);
+        }
+
         if (loginProcessUrl.equals(restFulPath) && rememberMe(exchange)) {
             return invalidTokenMono(exchange, ResponseStatusCodeEnum.PERMISSION_USER_HAD_LOGIN);
         }
@@ -149,6 +157,37 @@ public class GlobalAuthenticationFilter implements GlobalFilter {
         // 判断token是否失效
         OAuth2AccessToken oAuth2AccessToken = effectiveToken(token);
         return oAuth2AccessToken != null;
+    }
+
+    private boolean loginStatus(ServerWebExchange exchange) {
+        // 获取cookie
+        MultiValueMap<String, HttpCookie> cookies = exchange.getRequest().getCookies();
+        AtomicReference<String> cookieValueAtomicReference = new AtomicReference<>("");
+        cookies.forEach((cookieName, cookieValues) -> {
+            if (OauthJwtConstant.COOKIE_STORAGE_LOGIN_SUCCESS_STATUS.equals(cookieName)) {
+                cookieValueAtomicReference.set(cookieValues.size() > 0 ? cookieValues.get(0).getValue() : null);
+            }
+        });
+        String cookieValue = cookieValueAtomicReference.get();
+        if (!StringUtils.hasLength(cookieValue)) {
+            // 没有cookie或者为空，没有登录
+            return false;
+        }
+
+        // 获取过期时间 用户名:cookie到期时间:秘钥组成
+        String decodeStr = Base64.decodeStr(cookieValue);
+        String[] cookieArr = decodeStr.split(":");
+        String username = cookieArr[0];
+        long cookieExpiryTime = Long.parseLong(cookieArr[1]);
+        String cookieSecreyKey = cookieArr[2];
+
+        // 判断秘钥是否正确
+        if (!OauthJwtConstant.STORAGE_COOKIE_SECRET_KEY.equals(cookieSecreyKey)) {
+            return false;
+        }
+
+        // 判断cookie是否过期
+        return System.currentTimeMillis() < cookieExpiryTime;
     }
 
     /**
