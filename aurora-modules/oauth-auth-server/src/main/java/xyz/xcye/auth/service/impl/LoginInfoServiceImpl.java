@@ -3,12 +3,15 @@ package xyz.xcye.auth.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
+import org.springframework.util.StringUtils;
+import xyz.xcye.aurora.util.AuroraRequestUtils;
 import xyz.xcye.auth.dao.LoginInfoMapper;
 import xyz.xcye.auth.po.LoginInfo;
 import xyz.xcye.auth.service.LoginInfoService;
 import xyz.xcye.auth.vo.LoginInfoVO;
 import xyz.xcye.core.util.BeanUtils;
 import xyz.xcye.core.util.DateUtils;
+import xyz.xcye.core.util.NetWorkUtils;
 import xyz.xcye.data.entity.Condition;
 import xyz.xcye.data.entity.PageData;
 import xyz.xcye.data.util.PageUtils;
@@ -71,6 +74,11 @@ public class LoginInfoServiceImpl implements LoginInfoService {
     public int updateByPrimaryKeySelective(LoginInfo record) {
         Assert.notNull(record, "登录信息不能为null");
         record.setUpdateTime(DateUtils.format());
+        // 如果ip为null的话，则从请求中获取
+        if (!StringUtils.hasLength(record.getLoginIp())) {
+            String ip = NetWorkUtils.getIpAddr(AuroraRequestUtils.getCurrentRequest());
+            record.setLoginIp(ip);
+        }
         return loginInfoMapper.updateByPrimaryKeySelective(record);
     }
 }

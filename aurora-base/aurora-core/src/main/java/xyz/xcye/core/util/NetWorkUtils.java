@@ -21,7 +21,6 @@ public class NetWorkUtils {
     private static final String SEPARATOR = ",";
 
     public static String getIpAddr(HttpServletRequest request) {
-        System.out.println(request);
         String ipAddress;
         try {
             ipAddress = request.getHeader("x-forwarded-for");

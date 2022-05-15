@@ -11,6 +11,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 import xyz.xcye.aurora.properties.AuroraProperties;
 import xyz.xcye.aurora.util.AuroraRequestUtils;
@@ -298,7 +299,14 @@ public class LoginInfoAop {
 
         URI finalUri = uri;
         new Thread(() -> {
-            LinkedHashMap<String, Object> returnObj = restTemplate.getForObject(finalUri, LinkedHashMap.class);
+            LinkedHashMap<String, Object> returnObj = null;
+            try {
+                returnObj = restTemplate.getForObject(finalUri, LinkedHashMap.class);
+            } catch (RestClientException e) {
+                LogUtils.logExceptionInfo(e);
+                // 如果出现异常，可能是api的调用次数超额，则不做修改，直接返回
+                return;
+            }
 
             // 获取状态码
             Objects.requireNonNull(returnObj);
