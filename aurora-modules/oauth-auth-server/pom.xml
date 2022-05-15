@@ -60,6 +60,29 @@
         <dependency>
             <groupId>xyz.xcye.starter</groupId>
             <artifactId>aurora-spring-boot-starter</artifactId>
+
+            <exclusions>
+                <!--<exclusion>
+                    <groupId>javax.xml.bind</groupId>
+                    <artifactId>jaxb-api</artifactId>
+                </exclusion>
+
+                <exclusion>
+                    <groupId>com.sun.xml.bind</groupId>
+                    <artifactId>jaxb-impl</artifactId>
+                </exclusion>
+
+                <exclusion>
+                    <groupId>com.sun.xml.bind</groupId>
+                    <artifactId>jaxb-core</artifactId>
+                </exclusion>-->
+
+                <!--<exclusion>
+                    <groupId>javax.activation</groupId>
+                    <artifactId>activation</artifactId>
+                    <version>1.1.1</version>
+                </exclusion>-->
+            </exclusions>
         </dependency>
 
         <dependency>

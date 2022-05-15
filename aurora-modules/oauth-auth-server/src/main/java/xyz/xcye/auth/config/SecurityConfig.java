@@ -32,7 +32,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
      */
     @Autowired
     private JwtTokenUserDetailsService jwtTokenUserDetailsService;
-
     @Autowired
     private OauthServerAuthenticationSuccessHandler oauthServerAuthenticationSuccessHandler;
     @Autowired
@@ -84,7 +83,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .anyRequest()
-                .authenticated()
+                .permitAll()
                 .and()
                 .formLogin()
                 .loginProcessingUrl("/auth/login")

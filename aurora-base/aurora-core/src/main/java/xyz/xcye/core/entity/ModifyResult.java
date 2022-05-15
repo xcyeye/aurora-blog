@@ -1,6 +1,6 @@
 package xyz.xcye.core.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+//import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 
 /**
@@ -9,7 +9,7 @@ import lombok.*;
  * @author qsyyke
  */
 
-@JsonIgnoreProperties(value = {"code","message","success"})
+//@JsonIgnoreProperties(value = {"code","message","success"})
 @Data
 @Builder
 public class ModifyResult {

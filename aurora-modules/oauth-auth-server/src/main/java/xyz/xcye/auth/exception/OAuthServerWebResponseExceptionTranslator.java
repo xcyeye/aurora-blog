@@ -2,6 +2,7 @@ package xyz.xcye.auth.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.oauth2.common.exceptions.InvalidGrantException;
 import org.springframework.security.oauth2.common.exceptions.UnsupportedGrantTypeException;
 import org.springframework.security.oauth2.provider.error.WebResponseExceptionTranslator;
@@ -35,6 +36,8 @@ public class OAuthServerWebResponseExceptionTranslator implements WebResponseExc
             //用户名或密码异常
         }else if(e instanceof InvalidGrantException){
             return getCodeEnum(ResponseStatusCodeEnum.PERMISSION_USER_MISTAKE);
+        }else if (e instanceof UsernameNotFoundException) {
+            return getCodeEnum(ResponseStatusCodeEnum.PERMISSION_USER_NOT_EXIST);
         }
         return getCodeEnum(ResponseStatusCodeEnum.UNKNOWN);
     }

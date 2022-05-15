@@ -83,7 +83,7 @@ public class GlobalAuthenticationFilter implements GlobalFilter {
             return invalidTokenMono(exchange);
         }
 
-        //令牌的唯一ID
+        // 令牌的唯一ID
         String jti = additionalInformation.get("jti").toString();
 
         // 查看黑名单中是否存在这个jti，如果存在则这个令牌不能用

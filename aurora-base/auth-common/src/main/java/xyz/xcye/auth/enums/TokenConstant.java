@@ -1,8 +1,5 @@
 package xyz.xcye.auth.enums;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * 这是和token相关的常量
  * @author qsyyke
@@ -28,5 +25,5 @@ public class TokenConstant {
     public static final Integer REDIS_STORAGE_VERIFY_PATH_LIST_MIN_TIME = 3600 * 24;
 
     /** 秘钥 **/
-    public static final String SIGN_KEY = "aurora";
+    public static final String SIGN_KEY = "auroraaadkfhasdfuywasdfkjahdsfuewkrnbsdjtywq8745ghsdfsgdfhsdfgerbjhsdtfquewrw9erygtwertfysatf";
 }
