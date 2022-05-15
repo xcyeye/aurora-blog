@@ -1,7 +1,6 @@
 package xyz.xcye.wg.filter;
 
 import cn.hutool.core.codec.Base64;
-import com.alibaba.cloud.commons.lang.StringUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
@@ -12,6 +11,7 @@ import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.stereotype.Component;
 import org.springframework.util.AntPathMatcher;
+import org.springframework.util.StringUtils;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 import xyz.xcye.auth.constant.OauthJwtConstant;
@@ -60,6 +60,12 @@ public class GlobalAuthenticationFilter implements GlobalFilter {
         // 将当前的请求方法和uri组装成一个restFul风格的地址
         String restFulPath = method + ":" + uri.getPath();
 
+        // 如果是登录处理的地址，并且请求头中存在token，并且该token没有失效，那么就退出
+        String loginProcessUrl = "POST:" + OauthJwtConstant.LOGIN_PROCESS_URL;
+        if (loginProcessUrl.equals(restFulPath) && rememberMe(exchange)) {
+            return invalidTokenMono(exchange, ResponseStatusCodeEnum.PERMISSION_USER_HAD_LOGIN);
+        }
+
         List<String> list = exchange.getRequest().getHeaders().get(RequestConstant.REQUEST_WHITE_URL_STATUS);
         // 如果是白名单，则直接放行
         if (list != null && "true".equals(list.get(0))) {
@@ -68,20 +74,16 @@ public class GlobalAuthenticationFilter implements GlobalFilter {
 
         //2、 检查token是否存在
         String token = getToken(exchange);
-        if (StringUtils.isBlank(token)) {
-            return invalidTokenMono(exchange);
+        if (!StringUtils.hasLength(token)) {
+            return invalidTokenMono(exchange, ResponseStatusCodeEnum.PERMISSION_TOKEN_EXPIRATION);
         }
 
         //3 判断是否是有效的token
-        OAuth2AccessToken oAuth2AccessToken;
-        Map<String, Object> additionalInformation = null;
-        try {
-            //解析token，使用tokenStore
-            oAuth2AccessToken = tokenStore.readAccessToken(token);
-            additionalInformation = oAuth2AccessToken.getAdditionalInformation();
-        } catch (Exception e) {
-            return invalidTokenMono(exchange);
+        OAuth2AccessToken oAuth2AccessToken = effectiveToken(token);
+        if (oAuth2AccessToken == null) {
+            return invalidTokenMono(exchange, ResponseStatusCodeEnum.PERMISSION_TOKEN_EXPIRATION);
         }
+        Map<String, Object> additionalInformation = oAuth2AccessToken.getAdditionalInformation();
 
         // 令牌的唯一ID
         String jti = additionalInformation.get("jti").toString();
@@ -89,7 +91,7 @@ public class GlobalAuthenticationFilter implements GlobalFilter {
         // 查看黑名单中是否存在这个jti，如果存在则这个令牌不能用
         Boolean hasKey = redisTemplate.hasKey(jti);
         if (hasKey != null && hasKey) {
-            return invalidTokenMono(exchange);
+            return invalidTokenMono(exchange, ResponseStatusCodeEnum.PERMISSION_TOKEN_EXPIRATION);
         }
 
         //获取用户权限
@@ -121,11 +123,11 @@ public class GlobalAuthenticationFilter implements GlobalFilter {
      */
     private String getToken(ServerWebExchange exchange) {
         String tokenStr = exchange.getRequest().getHeaders().getFirst(authorizationName);
-        if (StringUtils.isBlank(tokenStr)) {
+        if (!StringUtils.hasLength(tokenStr)) {
             return null;
         }
         String token = tokenStr.split(" ")[1];
-        if (StringUtils.isBlank(token)) {
+        if (!StringUtils.hasLength(token)) {
             return null;
         }
         return token;
@@ -134,10 +136,35 @@ public class GlobalAuthenticationFilter implements GlobalFilter {
     /**
      * 无效的token
      */
-    private Mono<Void> invalidTokenMono(ServerWebExchange exchange) {
-        return SecurityResultHandler.failure(exchange,
-                ResponseStatusCodeEnum.PERMISSION_TOKEN_EXPIRATION.getMessage(),
-                ResponseStatusCodeEnum.PERMISSION_TOKEN_EXPIRATION.getCode());
+    private Mono<Void> invalidTokenMono(ServerWebExchange exchange, ResponseStatusCodeEnum statusCodeEnum) {
+        return SecurityResultHandler.failure(exchange, statusCodeEnum.getMessage(), statusCodeEnum.getCode());
+    }
+
+    private boolean rememberMe(ServerWebExchange exchange) {
+        String token = getToken(exchange);
+        if (!StringUtils.hasLength(token)) {
+            return false;
+        }
+
+        // 判断token是否失效
+        OAuth2AccessToken oAuth2AccessToken = effectiveToken(token);
+        return oAuth2AccessToken != null;
+    }
+
+    /**
+     * 判断token是否有效，true有效，反之
+     * @param token
+     * @return
+     */
+    private OAuth2AccessToken effectiveToken(String token) {
+        OAuth2AccessToken oAuth2AccessToken;
+        //解析token，使用tokenStore
+        try {
+            oAuth2AccessToken = tokenStore.readAccessToken(token);
+        } catch (Exception e) {
+            return null;
+        }
+        return oAuth2AccessToken;
     }
 
 }

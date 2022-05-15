@@ -42,4 +42,9 @@ public class SecurityProperties {
       * 腾讯地图api地址，包含key部分，用于定位
       */
      private String txMapApi;
+
+    /**
+     * 腾讯地图api地址，包含key部分，用于定位
+     */
+    private Integer tokenValiditySeconds;
 }

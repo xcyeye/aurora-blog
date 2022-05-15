@@ -16,4 +16,10 @@ public class OauthJwtConstant {
 
     /** 超级管理员的角色名 **/
     public static final String SUPER_ADMINISTRATOR_ROLE_NAME = "ROLE_root";
+
+    /** 处理登录操作的url **/
+    public static final String LOGIN_PROCESS_URL = "/auth/login";
+
+    /** 请求中，在cookie里存储用户登录状态的键名 **/
+    public static final String COOKIE_STORAGE_LOGIN_SUCCESS_STATUS = "login_status";
 }
