@@ -44,8 +44,8 @@ module.exports = {
         * 这里是配置说说插件，使用https://aurora.xcye.xyz/plugin/coze/
         * */
         [
-            path.resolve(__dirname, "../../Aurora-plugin/vuepress-plugin-coze/lib/node/index.js"),
-            //"coze",
+            // path.resolve(__dirname, "../../Aurora-plugin/vuepress-plugin-coze/lib/node/index.js"),
+            "vuepress-plugin-coze",
             {
                 appId: '2A2Dyd2AffrnldhwftlEddVn-MdYXbMMI',
                 appKey: 'qHYTbb91iOPLelyC9lpbXxLH',
@@ -61,8 +61,8 @@ module.exports = {
         * 请配置一下excludes，否则在时间轴那里，会出现非文件页面链接
         * */
         [
-            //"archive",
-            path.resolve(__dirname, "../../Aurora-plugin/vuepress-plugin-archive/lib/node/index.js"),
+            "vuepress-plugin-archive",
+            // path.resolve(__dirname, "../../Aurora-plugin/vuepress-plugin-archive/lib/node/index.js"),
             {
                 excludes: ['/footer.html','/404.html','/about/','/mood/','/link/','/tag/','/photo/'],
                 noTitle: '暂时没有标题配置'
@@ -72,8 +72,8 @@ module.exports = {
         * 音乐插件，使用：https://aurora.xcye.xyz/plugin/player/
         * */
         [
-            path.resolve(__dirname, "../../Aurora-plugin/vuepress-plugin-player/lib/node/index.js"),
-            //"player",
+            // path.resolve(__dirname, "../../Aurora-plugin/vuepress-plugin-player/lib/node/index.js"),
+            "vuepress-plugin-player",
             {
                 // disableSpace: false,
                 //网易云单个歌单id
@@ -119,8 +119,8 @@ module.exports = {
         * 气泡插件，使用：https://aurora.xcye.xyz/plugin/bubble/
         * */
         [
-            //"bubble",
-            path.resolve(__dirname, "../../Aurora-plugin/vuepress-plugin-bubble/lib/node/index.js"),
+            "vuepress-plugin-bubble",
+            // path.resolve(__dirname, "../../Aurora-plugin/vuepress-plugin-bubble/lib/node/index.js"),
             {
                 //气泡数量 推荐0(不包括)到1之前的小数，
                 bubbleNumber: 0.14,
@@ -184,8 +184,8 @@ module.exports = {
         ]*/
     ],
     //这里使用本地主题
-    theme: path.resolve(__dirname, "../../Aurora-theme/lib/node/index.js"),
-    //theme: 'aurora',
+    // theme: path.resolve(__dirname, "../../Aurora-theme/lib/node/index.js"),
+    theme: 'aurora',
 
     //站点title
     title: "I do not follow,i lives is always all you want",
