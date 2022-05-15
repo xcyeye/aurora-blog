@@ -8,6 +8,7 @@ import org.springframework.security.oauth2.common.exceptions.UnsupportedGrantTyp
 import org.springframework.security.oauth2.provider.error.WebResponseExceptionTranslator;
 import xyz.xcye.core.entity.R;
 import xyz.xcye.core.enums.ResponseStatusCodeEnum;
+import xyz.xcye.core.exception.AuroraException;
 
 /**
  * 自定义异常翻译器，针对用户名、密码异常，授权类型不支持的异常进行处理
@@ -38,6 +39,10 @@ public class OAuthServerWebResponseExceptionTranslator implements WebResponseExc
             return getCodeEnum(ResponseStatusCodeEnum.PERMISSION_USER_MISTAKE);
         }else if (e instanceof UsernameNotFoundException) {
             return getCodeEnum(ResponseStatusCodeEnum.PERMISSION_USER_NOT_EXIST);
+        }
+        else if (e instanceof AuroraException) {
+            AuroraException auroraException = (AuroraException) e;
+            return R.failure(auroraException.statusCode, auroraException.getMessage());
         }
         return getCodeEnum(ResponseStatusCodeEnum.UNKNOWN);
     }
