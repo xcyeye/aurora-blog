@@ -1,5 +1,6 @@
 package xyz.xcye.auth.manager.aop;
 
+import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
@@ -10,6 +11,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
+import org.springframework.web.client.RestTemplate;
 import xyz.xcye.aurora.properties.AuroraProperties;
 import xyz.xcye.aurora.util.AuroraRequestUtils;
 import xyz.xcye.auth.constant.AuthRedisConstant;
@@ -20,13 +22,18 @@ import xyz.xcye.auth.properties.SecurityProperties;
 import xyz.xcye.auth.service.LoginInfoService;
 import xyz.xcye.core.enums.RegexEnum;
 import xyz.xcye.core.util.DateUtils;
+import xyz.xcye.core.util.LogUtils;
 import xyz.xcye.core.util.NetWorkUtils;
 import xyz.xcye.core.util.id.GenerateInfoUtils;
 
 import javax.servlet.http.HttpServletRequest;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.time.Duration;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.LinkedHashMap;
+import java.util.Objects;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.regex.Pattern;
 
@@ -35,6 +42,7 @@ import java.util.regex.Pattern;
  * @date Created in 2022/5/14 09:01
  */
 
+@Slf4j
 @Component
 @Aspect
 public class LoginInfoAop {
@@ -240,10 +248,12 @@ public class LoginInfoAop {
         // 如果是从缓存中加载的，那么是插入操作
         if (StringUtils.hasLength(cacheUsername)) {
             setDefaultProperties(loginInfo);
+            loginInfo.setUsername(username);
             loginInfo.setUpdateTime(null);
             loginInfoService.insertSelective(loginInfo);
         }
         loginInfoService.updateByPrimaryKeySelective(loginInfo);
+        setLoginLocation(uid);
     }
 
     /**
@@ -274,5 +284,54 @@ public class LoginInfoAop {
         loginInfo.setLoginIp(NetWorkUtils.getIpAddr(request));
         loginInfo.setLoginLocation("保山");
         loginInfo.setOperationSystemInfo(NetWorkUtils.getOperationInfo(request));
+    }
+
+    private void setLoginLocation(Long uid) {
+        RestTemplate restTemplate = new RestTemplate();
+        URI uri = null;
+        try {
+            uri = new URI(securityProperties.getTxMapApi());
+        } catch (URISyntaxException e) {
+            LogUtils.logExceptionInfo(e);
+            return;
+        }
+
+        URI finalUri = uri;
+        new Thread(() -> {
+            LinkedHashMap<String, Object> returnObj = restTemplate.getForObject(finalUri, LinkedHashMap.class);
+
+            // 获取状态码
+            Objects.requireNonNull(returnObj);
+            Integer status = (Integer) returnObj.get("status");
+            if (status != 0) {
+                return;
+            }
+
+            // 获取返回结果
+            LinkedHashMap<String, Object> result = (LinkedHashMap<String, Object>) returnObj.get("result");
+            // 获取ip
+            String ip = (String) result.get("ip");
+
+            // 获取省份信息
+            LinkedHashMap<String, Object> adInfo = (LinkedHashMap<String, Object>) result.get("ad_info");
+
+            // 获取省份
+            String province = (String) adInfo.get("province");
+            // 市
+            String city = (String) adInfo.get("city");
+            // 区
+            String district = (String) adInfo.get("district");
+
+            // 组装省份信息
+            String location = province + city + district;
+
+            // 更新
+            LoginInfo loginInfo = LoginInfo.builder()
+                    .uid(uid)
+                    .loginIp(ip)
+                    .loginLocation(location)
+                    .build();
+            loginInfoService.updateByPrimaryKeySelective(loginInfo);
+        }).start();
     }
 }

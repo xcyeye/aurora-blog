@@ -37,4 +37,9 @@ public class SecurityProperties {
       * 如果用户登录失败次数达到最大，那么多长时间内，该用户可以继续登录，单位是分钟
       */
      private Integer reLoginMinute;
+
+     /**
+      * 腾讯地图api地址，包含key部分，用于定位
+      */
+     private String txMapApi;
 }
