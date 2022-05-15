@@ -46,6 +46,7 @@ public class FieldFilterSerializer {
         //这里要注意时间属性上要加入 @JsonFormat 注解 否则无法正常解析
         mapper.registerModule(new JavaTimeModule());
         //将类转换成json字符串返回
+        String s = mapper.writeValueAsString(object);
         return mapper.writeValueAsString(object);
     }
 }

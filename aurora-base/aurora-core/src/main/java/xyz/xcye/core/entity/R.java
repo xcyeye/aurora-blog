@@ -3,6 +3,7 @@ package xyz.xcye.core.entity;
 import lombok.Builder;
 import lombok.Data;
 import xyz.xcye.core.enums.ResponseStatusCodeEnum;
+import xyz.xcye.core.enums.SensitiveStrategyEnum;
 
 import java.util.HashMap;
 
