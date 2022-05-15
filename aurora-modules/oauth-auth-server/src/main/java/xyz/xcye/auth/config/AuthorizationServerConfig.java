@@ -18,10 +18,10 @@ import org.springframework.security.oauth2.provider.token.AuthorizationServerTok
 import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
+import xyz.xcye.aurora.properties.AuroraProperties;
 import xyz.xcye.auth.exception.OAuthServerAuthenticationEntryPoint;
 import xyz.xcye.auth.exception.OAuthServerClientCredentialsTokenEndpointFilter;
 import xyz.xcye.auth.exception.OAuthServerWebResponseExceptionTranslator;
-import xyz.xcye.auth.properties.SecurityProperties;
 
 import javax.sql.DataSource;
 
@@ -38,7 +38,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     @Autowired
     private DataSource dataSource;
     @Autowired
-    private SecurityProperties securityProperties;
+    private AuroraProperties.AuroraAuthProperties auroraAuthProperties;
 
     /**
      * 令牌存储策略 这里使用jwt进行存储
@@ -94,9 +94,9 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
         //令牌存储服务
         services.setTokenStore(tokenStore);
         //access_token的过期时间，后期可以通过nacos的配置中心进行控制
-        services.setAccessTokenValiditySeconds(securityProperties.getAccessTokenValiditySeconds());
+        services.setAccessTokenValiditySeconds(auroraAuthProperties.getAccessTokenValiditySeconds());
         //refresh_token的过期时间
-        services.setRefreshTokenValiditySeconds(securityProperties.getRefreshTokenValiditySeconds());
+        services.setRefreshTokenValiditySeconds(auroraAuthProperties.getRefreshTokenValiditySeconds());
         //设置令牌增强，使用JwtAccessTokenConverter进行转换
         services.setTokenEnhancer(jwtAccessTokenConverter);
         return services;

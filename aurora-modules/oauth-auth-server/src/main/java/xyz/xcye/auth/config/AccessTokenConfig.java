@@ -6,7 +6,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
-import xyz.xcye.auth.enums.TokenConstant;
+import xyz.xcye.aurora.properties.AuroraProperties;
 import xyz.xcye.auth.service.JwtTokenUserDetailsService;
 
 /**
@@ -17,6 +17,8 @@ import xyz.xcye.auth.service.JwtTokenUserDetailsService;
 @Configuration
 public class AccessTokenConfig {
 
+    @Autowired
+    private AuroraProperties.AuroraAuthProperties auroraAuthProperties;
     @Autowired
     private JwtTokenUserDetailsService userDetailsService;
 
@@ -39,7 +41,7 @@ public class AccessTokenConfig {
     public JwtAccessTokenConverter jwtAccessTokenConverter() {
         JwtAccessTokenEnhancer jwtAccessTokenEnhancer = new JwtAccessTokenEnhancer();
         // 设置秘钥
-        jwtAccessTokenEnhancer.setSigningKey(TokenConstant.SIGN_KEY);
+        jwtAccessTokenEnhancer.setSigningKey(auroraAuthProperties.getSecretKey());
         return jwtAccessTokenEnhancer;
     }
 }

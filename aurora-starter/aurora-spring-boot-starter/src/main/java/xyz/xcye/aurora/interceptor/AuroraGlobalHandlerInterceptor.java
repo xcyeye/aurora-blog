@@ -18,7 +18,6 @@ import java.util.Optional;
  * @author qsyyke
  */
 
-
 @Component
 public class AuroraGlobalHandlerInterceptor implements HandlerInterceptor {
 

@@ -95,7 +95,65 @@ public class AuroraProperties {
          * 不会被消费
          */
         private Integer amqpMaxRetryConsume;
+    }
 
+    @ConfigurationProperties(prefix = AuroraAuthProperties.AURORA_AUTH_PREFIX)
+    @Data
+    public static class AuroraAuthProperties {
+        public static final String AURORA_AUTH_PREFIX = "aurora.oauth";
 
+        /**
+         * 秘钥
+         */
+        private String secretKey;
+
+        /**
+         * access_token过期时间，单位秒
+         */
+        private Integer accessTokenValiditySeconds = 259200;
+        /**
+         * refresh_token的过期时间
+         */
+        private Integer refreshTokenValiditySeconds = 259200;
+
+        /**
+         * 如果删除redis中的信息，删除失败，最大重试次数
+         */
+        private Integer redisDeleteRetry;
+
+        /**
+         * 最大的登录失败次数，如果超过这个次数，那么该用户在指定时间内，不能继续登录
+         */
+        private Integer maxLoginFailure;
+
+        /**
+         * 如果用户登录失败次数达到最大，那么多长时间内，该用户可以继续登录，单位是分钟
+         */
+        private Integer reLoginMinute;
+
+        /**
+         * 腾讯地图api地址，包含key部分，用于定位
+         */
+        private String txMapApi;
+
+        /**
+         * cookie失效时间
+         */
+        private Integer tokenValiditySeconds;
+
+        /**
+         * cookie的域名
+         */
+        private String cookieDomain;
+
+        /**
+         * cookie的失效时间，单位为秒
+         */
+        private Integer cookieMaxAge;
+
+        /**
+         * 请看https://www.cnblogs.com/forwill/p/6181984.html
+         */
+        private Boolean useSecureCookie;
     }
 }

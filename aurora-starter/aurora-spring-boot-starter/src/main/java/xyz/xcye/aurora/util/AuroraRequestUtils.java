@@ -2,13 +2,12 @@ package xyz.xcye.aurora.util;
 
 import cn.hutool.core.codec.Base64;
 import com.alibaba.fastjson.JSON;
-import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+import xyz.xcye.aurora.properties.AuroraProperties;
 import xyz.xcye.auth.constant.RequestConstant;
-import xyz.xcye.auth.enums.TokenConstant;
 import xyz.xcye.core.dto.JwtUserInfo;
 import xyz.xcye.core.entity.R;
 import xyz.xcye.core.enums.ResponseStatusCodeEnum;
@@ -32,7 +31,6 @@ import java.util.Map;
  * @date Created in 2022/5/13 09:38
  */
 
-@Component
 public class AuroraRequestUtils {
 
     public static Map<String,String> getRequestHeadsFromHolder() {
@@ -101,10 +99,13 @@ public class AuroraRequestUtils {
             throw new TokenException(ResponseStatusCodeEnum.PERMISSION_USER_NOT_LOGIN);
         }
         // 判断此token是否失效
-        return JwtUtils.isExpiration(jwtToken, TokenConstant.SIGN_KEY);
+        AuroraProperties.AuroraAuthProperties auroraAuthProperties =
+                AuroraSpringUtils.getBean(AuroraProperties.AuroraAuthProperties.class);
+        return JwtUtils.isExpiration(jwtToken, auroraAuthProperties.getSecretKey());
     }
 
-    public static boolean returnFailureAndResponseJsonText(HttpServletResponse response, ResponseStatusCodeEnum statusCodeEnum) throws IOException {
+    public static boolean returnFailureAndResponseJsonText(HttpServletResponse response,
+                                                           ResponseStatusCodeEnum statusCodeEnum) throws IOException {
         //token过期
         R failureResult = R.failure(statusCodeEnum.getCode(), statusCodeEnum.getMessage());
         String jsonToString = ConvertObjectUtils.jsonToString(failureResult);

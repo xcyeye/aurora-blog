@@ -23,7 +23,4 @@ public class TokenConstant {
 
     /** 需要验证的路径放在redis里面的最小存储时间 单位秒 **/
     public static final Integer REDIS_STORAGE_VERIFY_PATH_LIST_MIN_TIME = 3600 * 24;
-
-    /** 秘钥 **/
-    public static final String SIGN_KEY = "auroraaadkfhasdfuywasdfkjahdsfuewkrnbsdjtywq8745ghsdfsgdfhsdfgerbjhsdtfquewrw9erygtwertfysatf";
 }

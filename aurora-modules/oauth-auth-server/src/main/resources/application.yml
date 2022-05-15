@@ -64,5 +64,6 @@ aurora:
     max-login-failure: 4
     re-login-minute: 5
     tx-map-api: https://apis.map.qq.com/ws/location/v1/ip?key=PU6BZ-VVO6V-66QP2-UNRJQ-K2JCO-24BCX
+    secret-key: auroraaadkfhasdfuywasdfkjahdsfuewkrnbsdjtywq8745ghsdfsgdfhsdfgerbjhsdtfquewrw9erygtwertfysatf
   snow-flake-datacenter-id: 1
   snow-flake-worker-id: 2

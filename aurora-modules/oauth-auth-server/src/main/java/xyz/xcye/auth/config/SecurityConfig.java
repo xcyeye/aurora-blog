@@ -2,7 +2,6 @@ package xyz.xcye.auth.config;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -12,12 +11,13 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import xyz.xcye.aurora.properties.AuroraProperties;
 import xyz.xcye.auth.constant.OauthJwtConstant;
 import xyz.xcye.auth.handler.OauthServerAuthenticationFailureHandler;
 import xyz.xcye.auth.handler.OauthServerAuthenticationSuccessHandler;
 import xyz.xcye.auth.manager.cache.AuroraUserDetailsCache;
 import xyz.xcye.auth.manager.security.CustomAuthServerAccess;
-import xyz.xcye.auth.properties.SecurityProperties;
+import xyz.xcye.auth.service.AuthServerRememberMeServices;
 import xyz.xcye.auth.service.JwtTokenUserDetailsService;
 
 /**
@@ -25,8 +25,6 @@ import xyz.xcye.auth.service.JwtTokenUserDetailsService;
  * @date Created in 2022/5/4 09:51
  */
 
-
-@EnableConfigurationProperties({SecurityProperties.class})
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     /**
@@ -40,6 +38,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private OauthServerAuthenticationFailureHandler oauthServerAuthenticationFailureHandler;
     @Autowired
     private AuroraUserDetailsCache auroraUserDetailsCache;
+    @Autowired
+    private AuthServerRememberMeServices authServerRememberMeServices;
+    @Autowired
+    private AuroraProperties.AuroraAuthProperties auroraAuthProperties;
+
     private final CustomAuthServerAccess serverAccess = new CustomAuthServerAccess();
 
     /**
@@ -89,7 +92,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .access("@customAuthServerAccess.hasPermission(request)")
                 .and()
                 .rememberMe()
-                //.rememberMeServices(tokenBasedRememberMeServices)
+                .rememberMeServices(authServerRememberMeServices)
+                //.tokenValiditySeconds(auroraAuthProperties.getTokenValiditySeconds())
                 .and()
                 .formLogin()
                 .loginProcessingUrl(OauthJwtConstant.LOGIN_PROCESS_URL)

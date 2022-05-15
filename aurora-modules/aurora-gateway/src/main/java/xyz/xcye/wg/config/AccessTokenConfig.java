@@ -1,5 +1,6 @@
 package xyz.xcye.wg.config;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.oauth2.common.DefaultOAuth2AccessToken;
@@ -8,7 +9,6 @@ import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
-import xyz.xcye.auth.enums.TokenConstant;
 import xyz.xcye.auth.constant.OauthJwtConstant;
 import xyz.xcye.wg.model.SecurityUserDetails;
 
@@ -21,6 +21,9 @@ import java.util.LinkedHashMap;
 
 @Configuration
 public class AccessTokenConfig {
+
+    @Value("${aurora.oauth.secret-key:xxxxx}")
+    private String secretKey;
 
     /**
      * 令牌的存储策略，因为认证中心的令牌存储方式为jwt，这里也需要一样
@@ -39,7 +42,7 @@ public class AccessTokenConfig {
     public JwtAccessTokenConverter jwtAccessTokenConverter(){
         JwtAccessTokenConverter converter = new JwtAccessTokenEnhancer();
         // 设置秘钥
-        converter.setSigningKey(TokenConstant.SIGN_KEY);
+        converter.setSigningKey(secretKey);
         return converter;
     }
 

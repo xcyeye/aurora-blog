@@ -19,7 +19,6 @@ import xyz.xcye.auth.constant.AuthRedisConstant;
 import xyz.xcye.auth.constant.RequestConstant;
 import xyz.xcye.auth.model.SecurityUserDetails;
 import xyz.xcye.auth.po.LoginInfo;
-import xyz.xcye.auth.properties.SecurityProperties;
 import xyz.xcye.auth.service.LoginInfoService;
 import xyz.xcye.core.enums.RegexEnum;
 import xyz.xcye.core.util.DateUtils;
@@ -53,7 +52,7 @@ public class LoginInfoAop {
     @Autowired
     private AuroraProperties auroraProperties;
     @Autowired
-    private SecurityProperties securityProperties;
+    private AuroraProperties.AuroraAuthProperties auroraAuthProperties;
     @Autowired
     private RedisTemplate<String, Object> redisTemplate;
 
@@ -162,11 +161,11 @@ public class LoginInfoAop {
             return;
         }
 
-        if (loginFailureNum >= securityProperties.getMaxLoginFailure()) {
+        if (loginFailureNum >= auroraAuthProperties.getMaxLoginFailure()) {
             // 登录失败次数达到最大值，AuthRedisConstant.USER_LOGIN_FAILURE_NUMBER_PREFIX时间段为不允许登录
             Long expire = redisTemplate.getExpire(AuthRedisConstant.USER_LOGIN_FAILURE_NUMBER_PREFIX + username);
             if (expire == null || -1 == expire) {
-                expire = Long.parseLong((securityProperties.getReLoginMinute() * 60) + "");
+                expire = Long.parseLong((auroraAuthProperties.getReLoginMinute() * 60) + "");
                 // 设置该用户的失败次数的ttl
                 redisTemplate.expire(AuthRedisConstant.USER_LOGIN_FAILURE_NUMBER_PREFIX + username, Duration.ofSeconds(expire));
             }
@@ -194,7 +193,7 @@ public class LoginInfoAop {
             Boolean delete = redisTemplate.delete(AuthRedisConstant.USER_LOGIN_FAILURE_NUMBER_PREFIX + cacheUsername);
             if (Boolean.FALSE.equals(delete)) {
                 int i = 0;
-                while (i < securityProperties.getRedisDeleteRetry()) {
+                while (i < auroraAuthProperties.getRedisDeleteRetry()) {
                     Boolean retryDelete = redisTemplate.delete(AuthRedisConstant.USER_LOGIN_FAILURE_NUMBER_PREFIX + username);
                     if (Boolean.TRUE.equals(retryDelete)) {
                         break;
@@ -206,8 +205,9 @@ public class LoginInfoAop {
         }
 
         // 登录失败，向redis中插入此用户的登录失败次数 没有超过最大值才添加
-        Integer loginFailureNum = (Integer) redisTemplate.opsForValue().get(AuthRedisConstant.USER_LOGIN_FAILURE_NUMBER_PREFIX + username);
-        if (loginFailureNum == null || loginFailureNum < securityProperties.getMaxLoginFailure()) {
+        Integer loginFailureNum = (Integer) redisTemplate.opsForValue()
+                .get(AuthRedisConstant.USER_LOGIN_FAILURE_NUMBER_PREFIX + username);
+        if (loginFailureNum == null || loginFailureNum < auroraAuthProperties.getMaxLoginFailure()) {
             redisTemplate.opsForValue().increment(AuthRedisConstant.USER_LOGIN_FAILURE_NUMBER_PREFIX + username);
         }
     }
@@ -224,14 +224,16 @@ public class LoginInfoAop {
         String username = getUsernameFromRequest();
 
         // 只有用户的登录失败次数没有达到最大值的时候才修改用户登录记录
-        Integer loginFailureNum = (Integer) redisTemplate.opsForValue().get(AuthRedisConstant.USER_LOGIN_FAILURE_NUMBER_PREFIX + username);
-        if (loginFailureNum != null && loginFailureNum >= securityProperties.getMaxLoginFailure()) {
+        Integer loginFailureNum = (Integer) redisTemplate.opsForValue()
+                .get(AuthRedisConstant.USER_LOGIN_FAILURE_NUMBER_PREFIX + username);
+        if (loginFailureNum != null && loginFailureNum >= auroraAuthProperties.getMaxLoginFailure()) {
             return;
         }
 
         if (StringUtils.hasLength(cacheUsername)) {
             // 如果存在cacheUsername，也就是缓存中，存在该数据，则生成uid
-            uid = GenerateInfoUtils.generateUid(auroraProperties.getSnowFlakeWorkerId(), auroraProperties.getSnowFlakeDatacenterId());
+            uid = GenerateInfoUtils.generateUid(auroraProperties.getSnowFlakeWorkerId(),
+                    auroraProperties.getSnowFlakeDatacenterId());
             username = cacheUsername;
             message = "从缓存加载数据，登录成功";
         }
@@ -291,7 +293,7 @@ public class LoginInfoAop {
         RestTemplate restTemplate = new RestTemplate();
         URI uri = null;
         try {
-            uri = new URI(securityProperties.getTxMapApi());
+            uri = new URI(auroraAuthProperties.getTxMapApi());
         } catch (URISyntaxException e) {
             LogUtils.logExceptionInfo(e);
             return;
