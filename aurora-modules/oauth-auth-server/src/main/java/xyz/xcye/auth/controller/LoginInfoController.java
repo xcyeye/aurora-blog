@@ -19,7 +19,7 @@ import xyz.xcye.data.entity.PageData;
  */
 
 @Api(tags = "登录日志")
-@RequestMapping("/auth/loginInfo")
+@RequestMapping("/login/loginInfo")
 @RestController
 public class LoginInfoController {
 

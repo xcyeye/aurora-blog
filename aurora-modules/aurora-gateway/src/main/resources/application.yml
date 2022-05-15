@@ -31,10 +31,14 @@ spring:
           uri: lb://aurora-message
           predicates:
             - Path=/message/**
-        - id: aurora-auth
+        - id: aurora-auth-server
           uri: lb://aurora-auth-server
           predicates:
             - Path=/auth/**
+        - id: aurora-auth-login
+          uri: lb://aurora-auth-server
+          predicates:
+            - Path=/login/**
 management:
   endpoints:
     web:

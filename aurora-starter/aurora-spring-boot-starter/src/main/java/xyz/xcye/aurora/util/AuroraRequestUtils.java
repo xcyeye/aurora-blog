@@ -95,7 +95,7 @@ public class AuroraRequestUtils {
      * @return true过期，false没有过期
      * @throws IOException 没有传入token，抛出用户未登录
      */
-    public static boolean tokenExpiration(String jwtToken) throws IOException {
+    public static boolean tokenExpiration(String jwtToken) {
         // 判断请求头中的jwtToken和jwtUserInfo是否存在，如果不存在，返回false
         if (!StringUtils.hasLength(jwtToken)) {
             throw new TokenException(ResponseStatusCodeEnum.PERMISSION_USER_NOT_LOGIN);

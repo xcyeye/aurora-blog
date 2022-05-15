@@ -15,6 +15,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import xyz.xcye.auth.handler.OauthServerAuthenticationFailureHandler;
 import xyz.xcye.auth.handler.OauthServerAuthenticationSuccessHandler;
 import xyz.xcye.auth.manager.cache.AuroraUserDetailsCache;
+import xyz.xcye.auth.manager.security.CustomAuthServerAccess;
 import xyz.xcye.auth.properties.SecurityProperties;
 import xyz.xcye.auth.service.JwtTokenUserDetailsService;
 
@@ -38,7 +39,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private OauthServerAuthenticationFailureHandler oauthServerAuthenticationFailureHandler;
     @Autowired
     private AuroraUserDetailsCache auroraUserDetailsCache;
-
+    private final CustomAuthServerAccess serverAccess = new CustomAuthServerAccess();
     /**
      * 数据库中，存储密码使用的加密算法，需要使用这个进行密码的验证
      * @return
@@ -83,7 +84,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .anyRequest()
-                .permitAll()
+                .access("@customAuthServerAccess.hasPermission(request)")
                 .and()
                 .formLogin()
                 .loginProcessingUrl("/auth/login")
@@ -95,3 +96,4 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .disable();
     }
 }
+
