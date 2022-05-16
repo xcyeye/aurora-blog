@@ -69,6 +69,7 @@ public enum ResponseStatusCodeEnum {
     PERMISSION_TOKEN_EXPIRATION(43200,"token过期或者无效"),
     PERMISSION_USER_NOT_LOGIN(44100,"未登录"),
     PERMISSION_USER_HAD_LOGIN(44100,"已登录，不能重复登录"),
+    PERMISSION_USER_HAD_LOGOUT(44100,"已注销，不能重复操作"),
     PERMISSION_USER_MISTAKE(44200,"账号不存在或者密码错误"),
     PERMISSION_USER_IS_DISABLE(44300,"账户已被禁用"),
     PERMISSION_USER_NOT_EXIST(44400,"用户不存在"),

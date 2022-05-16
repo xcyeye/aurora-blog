@@ -16,6 +16,7 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.util.StringUtils;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
+import xyz.xcye.auth.constant.AuthRedisConstant;
 import xyz.xcye.auth.constant.OauthJwtConstant;
 import xyz.xcye.auth.constant.RequestConstant;
 import xyz.xcye.core.dto.JwtUserInfo;
@@ -74,56 +75,18 @@ public class GlobalAuthenticationFilter implements GlobalFilter {
             return invalidTokenMono(exchange, ResponseStatusCodeEnum.PERMISSION_USER_HAD_LOGIN);
         }
 
-        List<String> list = exchange.getRequest().getHeaders().get(RequestConstant.REQUEST_WHITE_URL_STATUS);
-        // 如果是白名单，则直接放行
-        if (list != null && "true".equals(list.get(0))) {
+        // 检查白名单
+        if (checkWhiteUrlStatus(exchange, chain)) {
             return chain.filter(exchange);
         }
 
-        //2、 检查token是否存在
+        // 2、 检查token是否存在
         String token = getToken(exchange);
         if (!StringUtils.hasLength(token)) {
             return invalidTokenMono(exchange, ResponseStatusCodeEnum.PERMISSION_TOKEN_EXPIRATION);
         }
 
-        //3 判断是否是有效的token
-        OAuth2AccessToken oAuth2AccessToken = effectiveToken(token);
-        if (oAuth2AccessToken == null) {
-            return invalidTokenMono(exchange, ResponseStatusCodeEnum.PERMISSION_TOKEN_EXPIRATION);
-        }
-        Map<String, Object> additionalInformation = oAuth2AccessToken.getAdditionalInformation();
-
-        // 令牌的唯一ID
-        String jti = additionalInformation.get("jti").toString();
-
-        // 查看黑名单中是否存在这个jti，如果存在则这个令牌不能用
-        Boolean hasKey = redisTemplate.hasKey(jti);
-        if (hasKey != null && hasKey) {
-            return invalidTokenMono(exchange, ResponseStatusCodeEnum.PERMISSION_TOKEN_EXPIRATION);
-        }
-
-        //获取用户权限
-        List<String> authorities = (List<String>) additionalInformation.get("authorities");
-
-        // 构建一个在下层服务中，传递的用户对象
-        JwtUserInfo jwtUserInfo = JwtUserInfo.builder()
-                .nickname((String) additionalInformation.get(OauthJwtConstant.NICKNAME))
-                .username((String) additionalInformation.get(OauthJwtConstant.USERNAME))
-                .userUid((Long) additionalInformation.get(OauthJwtConstant.USER_UID))
-                .roleList(authorities)
-                .verifyEmail((Boolean) additionalInformation.get(OauthJwtConstant.VERIFY_EMAIL))
-                .jwtToken(token)
-                .build();
-
-        // 将解析后的token加密放入请求头中，方便下游微服务解析获取用户信息
-        String base64 = Base64.encode(ConvertObjectUtils.jsonToString(jwtUserInfo));
-
-        // 放入请求头中
-        ServerHttpRequest tokenRequest = exchange.getRequest().mutate()
-                .header(RequestConstant.REQUEST_TOKEN_NAME, base64).build();
-        ServerWebExchange build = exchange.mutate().request(tokenRequest).build();
-        exchange.getRequest().mutate().header(RequestConstant.REQUEST_WHITE_URL_FLAG_NAME, "false");
-        return chain.filter(build);
+        return storageUserJwtInfo(exchange, token, chain);
     }
 
     /**
@@ -204,6 +167,76 @@ public class GlobalAuthenticationFilter implements GlobalFilter {
             return null;
         }
         return oAuth2AccessToken;
+    }
+
+    /**
+     * 检查白名单状态，如果为true，则表示是白名单
+     * @param exchange 对象
+     * @return true是白名单
+     */
+    private boolean checkWhiteUrlStatus(ServerWebExchange exchange, GatewayFilterChain chain) {
+        List<String> list = exchange.getRequest().getHeaders().get(RequestConstant.REQUEST_WHITE_URL_STATUS);
+        // 如果是白名单，则直接放行
+        if (list != null && "true".equals(list.get(0))) {
+            String token = getToken(exchange);
+            // 如果token不为null，则存储用户信息
+            if (token != null) {
+                try {
+                    storageUserJwtInfo(exchange, token, chain);
+                    // 发生异常，不做处理
+                } catch (Exception e) {}
+            }
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * 存储用户信息
+     * @param exchange 对象
+     * @param token jwt
+     * @param chain 对象
+     * @return
+     */
+    private Mono<Void> storageUserJwtInfo(ServerWebExchange exchange, String token, GatewayFilterChain chain) {
+        OAuth2AccessToken oAuth2AccessToken = effectiveToken(token);
+        if (oAuth2AccessToken == null) {
+            return invalidTokenMono(exchange, ResponseStatusCodeEnum.PERMISSION_TOKEN_EXPIRATION);
+        }
+
+        Map<String, Object> additionalInformation = oAuth2AccessToken.getAdditionalInformation();
+
+        // 令牌的唯一ID
+        String jti = additionalInformation.get("jti").toString();
+
+        // 查看黑名单中是否存在这个jti，如果存在则这个令牌不能用
+        Boolean hasKey = redisTemplate.hasKey(AuthRedisConstant.STORAGE_JWT_BLACKLIST_PREFIX + jti);
+        if (hasKey != null && hasKey) {
+            return invalidTokenMono(exchange, ResponseStatusCodeEnum.PERMISSION_TOKEN_EXPIRATION);
+        }
+
+        // 获取用户权限
+        List<String> authorities = (List<String>) additionalInformation.get("authorities");
+
+        // 构建一个在下层服务中，传递的用户对象
+        JwtUserInfo jwtUserInfo = JwtUserInfo.builder()
+                .nickname((String) additionalInformation.get(OauthJwtConstant.NICKNAME))
+                .username((String) additionalInformation.get(OauthJwtConstant.USERNAME))
+                .userUid((Long) additionalInformation.get(OauthJwtConstant.USER_UID))
+                .roleList(authorities)
+                .verifyEmail((Boolean) additionalInformation.get(OauthJwtConstant.VERIFY_EMAIL))
+                .jwtToken(token)
+                .build();
+
+        // 将解析后的token加密放入请求头中，方便下游微服务解析获取用户信息
+        String base64 = Base64.encode(ConvertObjectUtils.jsonToString(jwtUserInfo));
+
+        // 放入请求头中
+        ServerHttpRequest tokenRequest = exchange.getRequest().mutate()
+                .header(RequestConstant.REQUEST_TOKEN_NAME, base64).build();
+        exchange.mutate().request(tokenRequest);
+        exchange.getRequest().mutate().header(RequestConstant.REQUEST_WHITE_URL_FLAG_NAME, "false");
+        return chain.filter(exchange);
     }
 
 }

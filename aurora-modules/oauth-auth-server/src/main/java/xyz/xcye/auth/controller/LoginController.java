@@ -7,10 +7,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import xyz.xcye.aurora.properties.AuroraProperties;
 import xyz.xcye.aurora.util.AuroraRequestUtils;
+import xyz.xcye.auth.constant.AuthRedisConstant;
 import xyz.xcye.auth.constant.OauthJwtConstant;
 import xyz.xcye.core.dto.JwtEntityDTO;
 import xyz.xcye.core.dto.JwtUserInfo;
+import xyz.xcye.core.entity.R;
 import xyz.xcye.core.enums.ResponseStatusCodeEnum;
+import xyz.xcye.core.exception.token.TokenException;
 import xyz.xcye.core.exception.user.UserException;
 import xyz.xcye.core.util.jwt.JwtUtils;
 
@@ -35,10 +38,11 @@ public class LoginController {
     private RedisTemplate<String, Object> redisTemplate;
 
     @PostMapping
-    public void logout(HttpServletRequest request, HttpServletResponse response) {
+    public R logout(HttpServletRequest request, HttpServletResponse response) {
         // 将当前用户的token放入redis中，也就是黑名单，持有这个jwt的用户，都不能登录
         storageJwtBlacklist(request);
-        //cancelCookie(request, response);
+        cancelCookie(request, response);
+        return R.success(ResponseStatusCodeEnum.SUCCESS.getCode(), "注销成功", true);
     }
 
     private void storageJwtBlacklist(HttpServletRequest request) {
@@ -53,13 +57,20 @@ public class LoginController {
         // 获取jwt
         String jwtToken = jwtUserInfo.getJwtToken();
 
-        // 获取失效时间
+        // 解析jwt
         JwtEntityDTO jwtEntityDTO = JwtUtils.parseJwtToken(jwtToken, auroraAuthProperties.getSecretKey());
-        System.out.println(jwtEntityDTO);
+
+        // 判断是否已经登录过
+        if (redisExistJti(jwtEntityDTO)) {
+            throw new TokenException(ResponseStatusCodeEnum.PERMISSION_USER_HAD_LOGOUT);
+        }
+
+        // 获取jwt的到期时间
+        long jwtExpiryTime = (jwtEntityDTO.getExpirationAt().getTime() - System.currentTimeMillis()) / 1000;
 
         // jwt如redis黑名单中 失效时间就是此token的失效时间
-        Duration duration = Duration.ofSeconds(jwtEntityDTO.getExpirationAt().getTime());
-        //redisTemplate.opsForValue().set(AuthRedisConstant.STORAGE_JWT_BLACKLIST_PREFIX + jwtEntityDTO.getJti(), jwtToken, duration);
+        Duration duration = Duration.ofSeconds(jwtExpiryTime);
+        redisTemplate.opsForValue().set(AuthRedisConstant.STORAGE_JWT_BLACKLIST_PREFIX + jwtEntityDTO.getJti(), jwtToken, duration);
     }
 
     /**
@@ -87,5 +98,14 @@ public class LoginController {
     private String getCookiePath(HttpServletRequest request) {
         String contextPath = request.getContextPath();
         return (contextPath.length() > 0) ? contextPath : "/";
+    }
+
+    /**
+     * 判断该jwt的jti是否存在于redis中，如果存在，返回true，否则返回false
+     * @param jwtEntity 对象
+     * @return true表示存在
+     */
+    private boolean redisExistJti(JwtEntityDTO jwtEntity) {
+        return Boolean.TRUE.equals(redisTemplate.hasKey(AuthRedisConstant.STORAGE_JWT_BLACKLIST_PREFIX + jwtEntity.getJti()));
     }
 }
