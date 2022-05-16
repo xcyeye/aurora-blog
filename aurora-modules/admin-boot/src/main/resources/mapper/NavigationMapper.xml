@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xyz.xcye.admin.dao.NavigationMapper">
+  <resultMap id="BaseResultMap" type="xyz.xcye.admin.po.Navigation">
+    <!--@mbg.generated-->
+    <!--@Table au_navigation-->
+    <id column="uid" jdbcType="BIGINT" property="uid" />
+    <result column="level" jdbcType="INTEGER" property="level" />
+    <result column="parent_nav_uid" jdbcType="BIGINT" property="parentNavUid" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="path" jdbcType="VARCHAR" property="path" />
+    <result column="is_external" jdbcType="TINYINT" property="external" />
+    <result column="icon_class_name" jdbcType="VARCHAR" property="iconClassName" />
+    <result column="sort" jdbcType="INTEGER" property="sort" />
+    <result column="user_uid" jdbcType="BIGINT" property="userUid" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="is_delete" jdbcType="TINYINT" property="delete" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="xyz.xcye.admin.po.Navigation">
+    <!--@mbg.generated-->
+    <!--@Table au_navigation-->
+    <result column="son_nav_uids" jdbcType="LONGVARCHAR" property="sonNavUids" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    `uid`, `level`, parent_nav_uid, title, `path`, is_external, icon_class_name, sort, 
+    user_uid, create_time, update_time, is_delete
+  </sql>
+  <sql id="Blob_Column_List">
+    <!--@mbg.generated-->
+    son_nav_uids
+  </sql>
+  <select id="selectByCondition" resultMap="ResultMapWithBLOBs">
+    <!--@mbg.generated-->
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from au_navigation
+    <where>
+      <if test="condition.startTime != null and condition.endTime != null">
+        and create_time between #{condition.startTime} and #{condition.endTime}
+      </if>
+      <if test="condition.uid != null">
+        and uid=#{condition.uid}
+      </if>
+      <if test="condition.otherUid != null">
+        and user_uid=#{condition.otherUid}
+      </if>
+      <if test="condition.keyword != null">
+        and title=#{condition.keyword}
+      </if>
+      <if test="condition.delete !=null">
+        and is_delete=#{condition.delete}
+      </if>
+      <if test="condition.show != null">
+        and is_show=#{condition.show,jdbcType=BOOLEAN}
+      </if>
+    </where>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    <!--@mbg.generated-->
+    delete from au_navigation
+    where `uid` = #{uid,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="xyz.xcye.admin.po.Navigation">
+    <!--@mbg.generated-->
+    insert into au_navigation (`uid`, `level`, parent_nav_uid, 
+      title, `path`, is_external, 
+      icon_class_name, sort, user_uid, 
+      create_time, update_time, is_delete, 
+      son_nav_uids)
+    values (#{uid,jdbcType=BIGINT}, #{level,jdbcType=INTEGER}, #{parentNavUid,jdbcType=BIGINT}, 
+      #{title,jdbcType=VARCHAR}, #{path,jdbcType=VARCHAR}, #{external,jdbcType=TINYINT}, 
+      #{iconClassName,jdbcType=VARCHAR}, #{sort,jdbcType=INTEGER}, #{userUid,jdbcType=BIGINT}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{delete,jdbcType=TINYINT}, 
+      #{sonNavUids,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="xyz.xcye.admin.po.Navigation">
+    <!--@mbg.generated-->
+    insert into au_navigation
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="uid != null">
+        `uid`,
+      </if>
+      <if test="level != null">
+        `level`,
+      </if>
+      <if test="parentNavUid != null">
+        parent_nav_uid,
+      </if>
+      <if test="title != null and title != ''">
+        title,
+      </if>
+      <if test="path != null and path != ''">
+        `path`,
+      </if>
+      <if test="external != null">
+        is_external,
+      </if>
+      <if test="iconClassName != null and iconClassName != ''">
+        icon_class_name,
+      </if>
+      <if test="sort != null">
+        sort,
+      </if>
+      <if test="userUid != null">
+        user_uid,
+      </if>
+      <if test="createTime != null and createTime != ''">
+        create_time,
+      </if>
+      <if test="updateTime != null and updateTime != ''">
+        update_time,
+      </if>
+      <if test="delete != null">
+        is_delete,
+      </if>
+      <if test="sonNavUids != null and sonNavUids != ''">
+        son_nav_uids,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="uid != null">
+        #{uid,jdbcType=BIGINT},
+      </if>
+      <if test="level != null">
+        #{level,jdbcType=INTEGER},
+      </if>
+      <if test="parentNavUid != null">
+        #{parentNavUid,jdbcType=BIGINT},
+      </if>
+      <if test="title != null and title != ''">
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="path != null and path != ''">
+        #{path,jdbcType=VARCHAR},
+      </if>
+      <if test="external != null">
+        #{external,jdbcType=TINYINT},
+      </if>
+      <if test="iconClassName != null and iconClassName != ''">
+        #{iconClassName,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null">
+        #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="userUid != null">
+        #{userUid,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null and createTime != ''">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null and updateTime != ''">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="delete != null">
+        #{delete,jdbcType=TINYINT},
+      </if>
+      <if test="sonNavUids != null and sonNavUids != ''">
+        #{sonNavUids,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="xyz.xcye.admin.po.Navigation">
+    <!--@mbg.generated-->
+    update au_navigation
+    <set>
+      <if test="level != null">
+        `level` = #{level,jdbcType=INTEGER},
+      </if>
+      <if test="parentNavUid != null">
+        parent_nav_uid = #{parentNavUid,jdbcType=BIGINT},
+      </if>
+      <if test="title != null and title != ''">
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="path != null and path != ''">
+        `path` = #{path,jdbcType=VARCHAR},
+      </if>
+      <if test="external != null">
+        is_external = #{external,jdbcType=TINYINT},
+      </if>
+      <if test="iconClassName != null and iconClassName != ''">
+        icon_class_name = #{iconClassName,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null">
+        sort = #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="userUid != null">
+        user_uid = #{userUid,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null and createTime != ''">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null and updateTime != ''">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="delete != null">
+        is_delete = #{delete,jdbcType=TINYINT},
+      </if>
+      <if test="sonNavUids != null and sonNavUids != ''">
+        son_nav_uids = #{sonNavUids,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where `uid` = #{uid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="xyz.xcye.admin.po.Navigation">
+    <!--@mbg.generated-->
+    update au_navigation
+    set `level` = #{level,jdbcType=INTEGER},
+      parent_nav_uid = #{parentNavUid,jdbcType=BIGINT},
+      title = #{title,jdbcType=VARCHAR},
+      `path` = #{path,jdbcType=VARCHAR},
+      is_external = #{external,jdbcType=TINYINT},
+      icon_class_name = #{iconClassName,jdbcType=VARCHAR},
+      sort = #{sort,jdbcType=INTEGER},
+      user_uid = #{userUid,jdbcType=BIGINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      is_delete = #{delete,jdbcType=TINYINT},
+      son_nav_uids = #{sonNavUids,jdbcType=LONGVARCHAR}
+    where `uid` = #{uid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="xyz.xcye.admin.po.Navigation">
+    <!--@mbg.generated-->
+    update au_navigation
+    set `level` = #{level,jdbcType=INTEGER},
+      parent_nav_uid = #{parentNavUid,jdbcType=BIGINT},
+      title = #{title,jdbcType=VARCHAR},
+      `path` = #{path,jdbcType=VARCHAR},
+      is_external = #{external,jdbcType=TINYINT},
+      icon_class_name = #{iconClassName,jdbcType=VARCHAR},
+      sort = #{sort,jdbcType=INTEGER},
+      user_uid = #{userUid,jdbcType=BIGINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      is_delete = #{delete,jdbcType=TINYINT}
+    where `uid` = #{uid,jdbcType=BIGINT}
+  </update>
+</mapper>

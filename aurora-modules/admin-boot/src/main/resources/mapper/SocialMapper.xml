@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xyz.xcye.admin.dao.SocialMapper">
+  <resultMap id="BaseResultMap" type="xyz.xcye.admin.po.Social">
+    <!--@mbg.generated-->
+    <!--@Table au_social-->
+    <id column="uid" jdbcType="BIGINT" property="uid" />
+    <result column="social_name" jdbcType="VARCHAR" property="socialName" />
+    <result column="social_icon" jdbcType="VARCHAR" property="socialIcon" />
+    <result column="social_url" jdbcType="VARCHAR" property="socialUrl" />
+    <result column="is_show" jdbcType="TINYINT" property="show" />
+    <result column="user_uid" jdbcType="BIGINT" property="userUid" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="is_delete" jdbcType="TINYINT" property="delete" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    `uid`, social_name, social_icon, social_url, is_show, user_uid, create_time, update_time, 
+    is_delete
+  </sql>
+  <select id="selectByCondition" resultMap="BaseResultMap">
+    <!--@mbg.generated-->
+    select 
+    <include refid="Base_Column_List" />
+    from au_social
+    <where>
+      <if test="condition.startTime != null and condition.endTime != null">
+        and create_time between #{condition.startTime} and #{condition.endTime}
+      </if>
+      <if test="condition.uid != null">
+        and uid=#{condition.uid}
+      </if>
+      <if test="condition.otherUid != null">
+        and user_uid=#{condition.otherUid}
+      </if>
+      <if test="condition.keyword != null">
+        and social_name=#{condition.keyword}
+      </if>
+      <if test="condition.delete !=null">
+        and is_delete=#{condition.delete}
+      </if>
+      <if test="condition.show != null">
+        and is_show=#{condition.show,jdbcType=BOOLEAN}
+      </if>
+    </where>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    <!--@mbg.generated-->
+    delete from au_social
+    where `uid` = #{uid,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" keyColumn="uid" keyProperty="uid" parameterType="xyz.xcye.admin.po.Social" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into au_social (social_name, social_icon, social_url, 
+      is_show, user_uid, create_time, 
+      update_time, is_delete)
+    values (#{socialName,jdbcType=VARCHAR}, #{socialIcon,jdbcType=VARCHAR}, #{socialUrl,jdbcType=VARCHAR}, 
+      #{show,jdbcType=TINYINT}, #{userUid,jdbcType=BIGINT}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{delete,jdbcType=TINYINT})
+  </insert>
+  <insert id="insertSelective" keyColumn="uid" keyProperty="uid" parameterType="xyz.xcye.admin.po.Social" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into au_social
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="socialName != null and socialName != ''">
+        social_name,
+      </if>
+      <if test="socialIcon != null and socialIcon != ''">
+        social_icon,
+      </if>
+      <if test="socialUrl != null and socialUrl != ''">
+        social_url,
+      </if>
+      <if test="show != null">
+        is_show,
+      </if>
+      <if test="userUid != null">
+        user_uid,
+      </if>
+      <if test="createTime != null and createTime != ''">
+        create_time,
+      </if>
+      <if test="updateTime != null and updateTime != ''">
+        update_time,
+      </if>
+      <if test="delete != null">
+        is_delete,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="socialName != null and socialName != ''">
+        #{socialName,jdbcType=VARCHAR},
+      </if>
+      <if test="socialIcon != null and socialIcon != ''">
+        #{socialIcon,jdbcType=VARCHAR},
+      </if>
+      <if test="socialUrl != null and socialUrl != ''">
+        #{socialUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="show != null">
+        #{show,jdbcType=TINYINT},
+      </if>
+      <if test="userUid != null">
+        #{userUid,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null and createTime != ''">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null and updateTime != ''">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="delete != null">
+        #{delete,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="xyz.xcye.admin.po.Social">
+    <!--@mbg.generated-->
+    update au_social
+    <set>
+      <if test="socialName != null and socialName != ''">
+        social_name = #{socialName,jdbcType=VARCHAR},
+      </if>
+      <if test="socialIcon != null and socialIcon != ''">
+        social_icon = #{socialIcon,jdbcType=VARCHAR},
+      </if>
+      <if test="socialUrl != null and socialUrl != ''">
+        social_url = #{socialUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="show != null">
+        is_show = #{show,jdbcType=TINYINT},
+      </if>
+      <if test="userUid != null">
+        user_uid = #{userUid,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null and createTime != ''">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null and updateTime != ''">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="delete != null">
+        is_delete = #{delete,jdbcType=TINYINT},
+      </if>
+    </set>
+    where `uid` = #{uid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="xyz.xcye.admin.po.Social">
+    <!--@mbg.generated-->
+    update au_social
+    set social_name = #{socialName,jdbcType=VARCHAR},
+      social_icon = #{socialIcon,jdbcType=VARCHAR},
+      social_url = #{socialUrl,jdbcType=VARCHAR},
+      is_show = #{show,jdbcType=TINYINT},
+      user_uid = #{userUid,jdbcType=BIGINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      is_delete = #{delete,jdbcType=TINYINT}
+    where `uid` = #{uid,jdbcType=BIGINT}
+  </update>
+</mapper>

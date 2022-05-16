@@ -17,8 +17,6 @@ import xyz.xcye.aurora.exception.AuroraGlobalExceptionHandler;
 @SpringBootApplication
 public class AuthServerMain {
     public static void main(String[] args) {
-        ConfigurableApplicationContext run = SpringApplication.run(AuthServerMain.class, args);
-        System.out.println(run.getBean(AuroraGlobalExceptionHandler.class));
-        System.out.println("sdfsdf");
+        SpringApplication.run(AuthServerMain.class, args);
     }
 }
