@@ -26,6 +26,7 @@ import xyz.xcye.data.entity.PageData;
 import xyz.xcye.data.util.PageUtils;
 
 import java.util.Arrays;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
@@ -95,9 +96,18 @@ public class NavigationServiceImpl implements NavigationService {
 
     @Override
     public NavigationDTO selectAllNavigationByUserUid(long userUid) {
+
         return null;
     }
 
+    /**
+     * 1. 如果是从一个父导航中，移除一个子导航，那么此被移出的子导航将成为一个一级导航
+     * 2. 如果是修改该导航的父导航，如果该父导航不属于该子导航，那么不会成功，如果是属于该用户的，那么该导航连带着该导航下属的所有
+     * 子导航都将成为该父导航的子导航
+     * @param record
+     * @return
+     */
+    @Transactional
     @Override
     public int updateByPrimaryKeySelective(Navigation record) {
         Assert.notNull(record, "导航信息不能为null");
@@ -110,6 +120,17 @@ public class NavigationServiceImpl implements NavigationService {
         record.setUpdateTime(DateUtils.format());
         setEffectiveNavigationUid(record, true);
         setEffectiveNavigationUid(record, false);
+
+        // 查询该导航的原始导航数据
+        NavigationVO navigationVO = selectNavigationByUid(record.getUid());
+        // 判断是否是修改父导航
+        boolean updateParentNavigation = isUpdateParentNavigation(navigationVO, record);
+        if (updateParentNavigation) {
+            // 是修改父导航
+            addSonNavigationUids(record.getParentNavUid(), record.getUid());
+        }
+
+        // 如果是移出
         return navigationMapper.updateByPrimaryKeySelective(record);
     }
 
@@ -133,6 +154,7 @@ public class NavigationServiceImpl implements NavigationService {
         }
 
         if (!StringUtils.hasLength(navigation.getSonNavUids())) {
+            navigation.setSonNavUids(null);
             return;
         }
         try {
@@ -223,5 +245,21 @@ public class NavigationServiceImpl implements NavigationService {
                 .sonNavUids(sonNavigationStrAtomicReference.get())
                 .build();
         updateByPrimaryKeySelective(navigation);
+    }
+
+    private boolean isUpdateParentNavigation(NavigationVO queriedNav, Navigation updateNav) {
+        if (queriedNav == null && updateNav.getParentNavUid() != null) {
+            return true;
+        }
+
+        if (queriedNav == null) {
+            return false;
+        }
+
+        if (updateNav.getParentNavUid() == null) {
+            return false;
+        }
+
+        return !Objects.equals(queriedNav.getParentNavUid(), updateNav.getParentNavUid());
     }
 }

@@ -89,7 +89,19 @@ aurora:
     nickname: aurora-new
   oauth:
     secret-key: auroraaadkfhasdfuywasdfkjahdsfuewkrnbsdjtywq8745ghsdfsgdfhsdfgerbjhsdtfquewrw9erygtwertfysatf
-
+  swagger:
+    base-package: xyz.xcye.admin.controller
+    author:
+      name: qsyyke
+      email: 2291308094@qq.com
+      url: https://aurora.xcye.xyz
+    api-info:
+      title: 博客管理后台接口
+      description: 这是博客管理后台接口
+      version: 1.0
+      terms-of-service-url: http://ip:${server.port}/${spring.application.name}}
+      license: li
+      license-url: https://www.xcye.xyz
 # 分页插件
 pagehelper:
   helperDialect: mysql

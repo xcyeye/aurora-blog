@@ -57,6 +57,9 @@
       <if test="condition.show != null">
         and is_show=#{condition.show,jdbcType=BOOLEAN}
       </if>
+      <if test="condition.otherField != null">
+        and level=#{condition.otherField}
+      </if>
     </where>
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">

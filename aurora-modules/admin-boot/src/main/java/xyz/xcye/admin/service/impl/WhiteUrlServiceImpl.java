@@ -44,7 +44,8 @@ public class WhiteUrlServiceImpl implements WhiteUrlService {
                 () -> new RuntimeException("该白名单已存在"));
 
         // 判断path是否符合规范，必须是GET:Path这种形式 不支持中文路径
-        AssertUtils.stateThrow(matchesResourcePath(record.getUrl()), () -> new PermissionException(ResponseStatusCodeEnum.PERMISSION_RESOURCE_NOT_RIGHT));
+        AssertUtils.stateThrow(matchesResourcePath(record.getUrl()),
+                () -> new PermissionException(ResponseStatusCodeEnum.PERMISSION_RESOURCE_NOT_RIGHT));
         return whiteUrlMapper.insertSelective(record);
     }
 

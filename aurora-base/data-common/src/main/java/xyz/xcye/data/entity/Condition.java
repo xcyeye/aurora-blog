@@ -83,6 +83,11 @@ public class Condition<T> {
      */
     private String orderBy;
 
+    /**
+     * 其他的字段
+     */
+    private Object otherField;
+
     public Condition() {
         this.init();
     }

@@ -37,8 +37,11 @@ public class LoadWhiteUrlInfo {
     }
 
     private void storageData(RedisTemplate<String, Object> template) {
+        Condition<Integer> condition = new Condition<>();
+        condition.setPageNum(0);
+        condition.setPageSize(100000000);
         // 获取所有的角色权限关系
-        List<WhiteUrl> whiteUrlList = whiteUrlService.selectByCondition(new Condition<>()).getResult();
+        List<WhiteUrl> whiteUrlList = whiteUrlService.selectByCondition(condition).getResult();
         // 存入redis中Duration.ofSeconds(DateUtils.getRandomMinute(60, 60 * 24 * 3) * 60)
         template.opsForValue().set(RedisStorageConstant.STORAGE_WHITE_URL_INFO, whiteUrlList,
                 Duration.ofSeconds(DateUtils.getRandomMinute(60, 60 * 24 * 3) * 60));
