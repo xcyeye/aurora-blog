@@ -45,6 +45,7 @@ public class Navigation implements Serializable {
     * 导航的标题
     */
     @ApiModelProperty(value="导航的标题")
+    @Length(max = FieldLengthConstant.NAVIGATION_TITLE)
     @ValidateString(value = "导航的标题", max = FieldLengthConstant.NAVIGATION_TITLE, groups = {Insert.class})
     private String title;
 
@@ -52,6 +53,7 @@ public class Navigation implements Serializable {
     * 导航的对应地址
     */
     @ApiModelProperty(value="导航的对应地址")
+    @Length(max = FieldLengthConstant.URL)
     @ValidateString(value = "导航的链接", max = FieldLengthConstant.URL, groups = Insert.class)
     private String path;
 
@@ -98,6 +100,12 @@ public class Navigation implements Serializable {
     */
     @ApiModelProperty(value="1: 删除 0：不删除")
     private Boolean delete;
+
+    /**
+     * 1：显示 0：不显示
+     */
+    @ApiModelProperty(value = "1: 显示 0：不显示")
+    private Boolean show;
 
     /**
     * 该导航的子导航uid集合

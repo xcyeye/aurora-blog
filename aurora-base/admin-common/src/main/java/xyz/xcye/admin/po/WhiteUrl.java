@@ -1,6 +1,7 @@
 package xyz.xcye.admin.po;
 
 import lombok.Data;
+import org.hibernate.validator.constraints.Length;
 import xyz.xcye.core.constant.FieldLengthConstant;
 import xyz.xcye.core.valid.Insert;
 import xyz.xcye.core.valid.Update;
@@ -24,6 +25,7 @@ public class WhiteUrl implements Serializable {
     /**
      * 白名单地址
      */
+    @Length(max = FieldLengthConstant.URL)
     @ValidateString(value = "白名单地址", max = FieldLengthConstant.URL, groups = {Insert.class})
     private String url;
 

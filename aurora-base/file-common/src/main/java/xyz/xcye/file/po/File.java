@@ -64,7 +64,8 @@ public class File implements Serializable {
      * 此文件的简介 可以为null
      * <p>length < 500</p>
      */
-    @ValidateString(value = "文件，文件简介",max = FieldLengthConstant.SUMMARY)
+    @Length(max = FieldLengthConstant.SUMMARY)
+    @ValidateString(value = "文件，文件简介", max = FieldLengthConstant.SUMMARY)
     private String summary;
 
     /**

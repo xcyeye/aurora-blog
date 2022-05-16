@@ -36,9 +36,6 @@ import java.util.stream.Collectors;
 @ControllerAdvice
 public class AuroraResponseResultHandler implements ResponseBodyAdvice<Object> {
 
-    @Autowired
-    private UserUtils userUtils;
-
     @Override
     public boolean supports(MethodParameter returnType, Class<? extends HttpMessageConverter<?>> converterType) {
         return true;
@@ -163,7 +160,7 @@ public class AuroraResponseResultHandler implements ResponseBodyAdvice<Object> {
     }
 
     private List<String> getRoleList() {
-        JwtUserInfo jwtUserInfo = userUtils.getCurrentUser();
+        JwtUserInfo jwtUserInfo = UserUtils.getCurrentUser();
         List<String> roleList = null;
         if (jwtUserInfo == null || jwtUserInfo.getRoleList() == null) {
             roleList = new ArrayList<>();

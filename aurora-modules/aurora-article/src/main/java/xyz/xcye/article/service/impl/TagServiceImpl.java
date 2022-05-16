@@ -29,9 +29,6 @@ public class TagServiceImpl implements TagService {
     @Autowired
     private TagMapper tagMapper;
 
-    @Autowired
-    private UserUtils userUtils;
-
     @Override
     public int deleteByPrimaryKey(Long uid) {
         Assert.notNull(uid, "uid不能为null");
@@ -52,7 +49,7 @@ public class TagServiceImpl implements TagService {
     @Override
     public int insertSelective(Tag record) {
         Assert.notNull(record, "标签信息不能为null");
-        JwtUserInfo jwtUserInfo = userUtils.getCurrentUser();
+        JwtUserInfo jwtUserInfo = UserUtils.getCurrentUser();
         AssertUtils.stateThrow(jwtUserInfo != null,
                 () -> new UserException(ResponseStatusCodeEnum.PERMISSION_USER_NOT_LOGIN));
         record.setUserUid(jwtUserInfo.getUserUid());

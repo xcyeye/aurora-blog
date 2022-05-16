@@ -35,9 +35,6 @@ public class TalkServiceImpl implements TalkService {
     @Autowired
     private AuroraProperties auroraProperties;
 
-    @Autowired
-    private UserUtils userUtils;
-
     @Override
     public int deleteByPrimaryKey(Long uid) {
         Assert.notNull(uid, "uid不能为null");
@@ -62,7 +59,7 @@ public class TalkServiceImpl implements TalkService {
         record.setUid(GenerateInfoUtils.generateUid(auroraProperties.getSnowFlakeWorkerId(),
                 auroraProperties.getSnowFlakeDatacenterId()));
         record.setCommentUids(null);
-        JwtUserInfo jwtUserInfo = userUtils.getCurrentUser();
+        JwtUserInfo jwtUserInfo = UserUtils.getCurrentUser();
         AssertUtils.stateThrow(jwtUserInfo != null,
                 () -> new UserException(ResponseStatusCodeEnum.PERMISSION_USER_NOT_LOGIN));
         record.setUserUid(jwtUserInfo.getUserUid());

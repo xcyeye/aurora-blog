@@ -2,19 +2,19 @@ package xyz.xcye.admin.po;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import java.io.Serializable;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.experimental.Delegate;
 import org.hibernate.validator.constraints.Length;
 import xyz.xcye.core.constant.FieldLengthConstant;
 import xyz.xcye.core.valid.Delete;
 import xyz.xcye.core.valid.Insert;
 import xyz.xcye.core.valid.Update;
+import xyz.xcye.core.valid.validator.ValidateString;
 
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 
 @ApiModel(value="au_site")
 @Data
@@ -40,6 +40,7 @@ public class Site implements Serializable {
     */
     @ApiModelProperty(value="站点的标题 浏览器顶部部分")
     @Length(max = FieldLengthConstant.TITLE)
+    @ValidateString(value = "站点的标题，浏览器顶部", max = FieldLengthConstant.TITLE, groups = Insert.class)
     private String title;
 
     /**
@@ -47,6 +48,7 @@ public class Site implements Serializable {
     */
     @ApiModelProperty(value="站点的前台logo文字")
     @Length(max = FieldLengthConstant.TITLE)
+    @ValidateString(value = "站点的前台logo文字", max = FieldLengthConstant.TITLE, groups = Insert.class)
     private String logoTitle;
 
     /**
@@ -54,6 +56,7 @@ public class Site implements Serializable {
     */
     @ApiModelProperty(value="站点的logo地址")
     @Length(max = FieldLengthConstant.URL)
+    @ValidateString(value = "站点的logo地址", max = FieldLengthConstant.URL, groups = Insert.class)
     private String siteLogo;
 
     /**
@@ -67,7 +70,6 @@ public class Site implements Serializable {
     * 此站点信息属于哪个用户
     */
     @ApiModelProperty(value="此站点信息属于哪个用户")
-    @NotNull(groups = Insert.class)
     private Long userUid;
 
     /**

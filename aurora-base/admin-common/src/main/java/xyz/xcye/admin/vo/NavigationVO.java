@@ -88,6 +88,12 @@ public class NavigationVO implements Serializable {
     private Boolean delete;
 
     /**
+     * 1：显示 0：不显示
+     */
+    @ApiModelProperty(value = "1: 显示 0：不显示")
+    private Boolean show;
+
+    /**
     * 该导航的子导航uid集合
     */
     @ApiModelProperty(value="该导航的子导航uid集合")

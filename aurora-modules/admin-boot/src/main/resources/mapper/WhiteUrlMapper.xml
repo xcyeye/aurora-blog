@@ -51,13 +51,11 @@
         <trim prefix="(" suffix=")" suffixOverrides=",">
                 <if test="uid != null">uid,</if>
                 <if test="url != null">url,</if>
-                <if test="createTime != null">create_time,</if>
                 <if test="updateTime != null">update_time,</if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
                 <if test="uid != null">#{uid,jdbcType=INTEGER},</if>
                 <if test="url != null">#{url,jdbcType=VARCHAR},</if>
-                <if test="createTime != null">#{createTime,jdbcType=TIMESTAMP},</if>
                 <if test="updateTime != null">#{updateTime,jdbcType=TIMESTAMP},</if>
         </trim>
     </insert>
@@ -66,9 +64,6 @@
         <set>
                 <if test="url != null">
                     url = #{url,jdbcType=VARCHAR},
-                </if>
-                <if test="createTime != null">
-                    create_time = #{createTime,jdbcType=TIMESTAMP},
                 </if>
                 <if test="updateTime != null">
                     update_time = #{updateTime,jdbcType=TIMESTAMP},

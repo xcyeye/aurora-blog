@@ -50,8 +50,6 @@ public class LinkServiceImpl implements LinkService {
     @Autowired
     private CategoryService categoryService;
     @Autowired
-    private UserUtils userUtils;
-    @Autowired
     private ArticleUserFeignService userFeignService;
     @Autowired
     private SendMQMessageService sendMQMessageService;
@@ -115,7 +113,7 @@ public class LinkServiceImpl implements LinkService {
         Assert.notNull(record, "友情链接信息不能为null");
         setEffectiveCategory(record, true);
         record.setUpdateTime(DateUtils.format());
-        Optional.ofNullable(userUtils.getCurrentUserUid()).ifPresent(record::setUserUid);
+        Optional.ofNullable(UserUtils.getCurrentUserUid()).ifPresent(record::setUserUid);
         int updateNum = linkMapper.updateByPrimaryKeySelective(record);
 
         // 如果修改成功，查询完整的友情链接信息，用于发送

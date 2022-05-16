@@ -34,6 +34,7 @@ public class Tag implements Serializable {
     * 此标签的标题
     */
     @ApiModelProperty(value="此标签的标题")
+    @Length(max = FieldLengthConstant.TITLE)
     @ValidateString(value = "标签的标题", max = FieldLengthConstant.TITLE, groups = Insert.class)
     private String title;
 

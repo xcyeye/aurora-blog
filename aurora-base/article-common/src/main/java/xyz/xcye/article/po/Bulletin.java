@@ -82,6 +82,7 @@ public class Bulletin implements Serializable {
     * 公告内容
     */
     @ApiModelProperty(value="公告内容")
+    @Length(max = FieldLengthConstant.CONTENT)
     @ValidateString(value = "公告内容", max = FieldLengthConstant.CONTENT, groups = Insert.class)
     private String content;
 

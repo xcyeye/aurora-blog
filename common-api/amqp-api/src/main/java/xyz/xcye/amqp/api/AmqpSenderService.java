@@ -46,8 +46,6 @@ public class AmqpSenderService {
 
     @Resource
     private MessageLogFeignService messageLogFeignService;
-    @Autowired
-    private UserUtils userUtils;
 
     /**
      * 发送mq消息 因为目前把消息发送到交换机中，都是同步的，也就是RequestContextHolder中一定存在数据
@@ -66,7 +64,7 @@ public class AmqpSenderService {
 
         // 调用feign向数据库中插入mq消息
         insertMessageLogData(correlationDataId, msgJson, exchangeName, routingKey, exchangeType);
-        JwtUserInfo currentUserInfo = userUtils.getCurrentUser();
+        JwtUserInfo currentUserInfo = UserUtils.getCurrentUser();
         if (!whiteUrlStatus && currentUserInfo == null) {
             throw new UserException(ResponseStatusCodeEnum.PERMISSION_USER_NOT_LOGIN);
         }

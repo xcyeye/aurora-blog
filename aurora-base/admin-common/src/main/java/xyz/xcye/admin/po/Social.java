@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.Length;
 import xyz.xcye.core.constant.FieldLengthConstant;
 import xyz.xcye.core.valid.Delete;
 import xyz.xcye.core.valid.Insert;
@@ -32,6 +33,7 @@ public class Social implements Serializable {
     * 社交名称
     */
     @ApiModelProperty(value="社交名称")
+    @Length(max = FieldLengthConstant.SOCIAL_NAME)
     @ValidateString(value = "社交名称", max = FieldLengthConstant.SOCIAL_NAME, groups = Insert.class)
     private String socialName;
 
@@ -39,6 +41,7 @@ public class Social implements Serializable {
     * 此社交图标的地址
     */
     @ApiModelProperty(value="此社交图标的地址")
+    @Length(max = FieldLengthConstant.URL)
     @ValidateString(value = "社交图标地址", max = FieldLengthConstant.URL, groups = Insert.class)
     private String socialIcon;
 
@@ -46,6 +49,7 @@ public class Social implements Serializable {
     * 此社交的链接
     */
     @ApiModelProperty(value="此社交的链接")
+    @Length(max = FieldLengthConstant.URL)
     @ValidateString(value = "社交链接地址", max = FieldLengthConstant.URL, groups = Insert.class)
     private String socialUrl;
 
@@ -59,7 +63,6 @@ public class Social implements Serializable {
     * 此社交属于哪个用户
     */
     @ApiModelProperty(value="此社交属于哪个用户")
-    @NotNull(groups = Insert.class)
     private Long userUid;
 
     /**

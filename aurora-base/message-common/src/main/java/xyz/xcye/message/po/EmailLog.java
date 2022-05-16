@@ -34,13 +34,15 @@ public class EmailLog {
      * 邮件发送的标题 不能为null
      * <p>length < 50</p>
      */
-    @ValidateString(value = "邮件日志-发送的标题",max = FieldLengthConstant.EMAIL_TEMPLATE,groups = {Insert.class})
+    @Length(max = FieldLengthConstant.EMAIL_TEMPLATE)
+    @ValidateString(value = "邮件日志-发送的标题", max = FieldLengthConstant.EMAIL_TEMPLATE, groups = {Insert.class})
     private String subject;
 
     /**
      * 邮件发送的内容 不能为null 长度随意
      */
-    @ValidateString(value = "邮件日志-发送的内容",max = FieldLengthConstant.CONTENT,groups = {Insert.class})
+    @Length(max = FieldLengthConstant.CONTENT)
+    @ValidateString(value = "邮件日志-发送的内容", max = FieldLengthConstant.CONTENT, groups = {Insert.class})
     private String content;
 
     /**

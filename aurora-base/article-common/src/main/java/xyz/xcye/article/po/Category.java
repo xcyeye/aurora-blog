@@ -34,6 +34,7 @@ public class Category implements Serializable {
     * 此类别的标题
     */
     @ApiModelProperty(value="此类别的标题")
+    @Length(max = FieldLengthConstant.TITLE)
     @ValidateString(value = "类别的标题", max = FieldLengthConstant.TITLE, groups = Insert.class)
     private String title;
 

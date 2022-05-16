@@ -14,14 +14,13 @@
         insert into au_user (
          uid,user_summary,nickname,gender,login_uid,
          site_uid,avatar,password,username,profession,is_verify_email,email_uid,
-         create_time,update_time,is_delete,is_account_lock
+         update_time,is_delete,is_account_lock
          )
 
          values (
                  #{user.uid},#{user.userSummary},#{user.nickname},#{user.gender},#{user.loginUid},
-                 #{user.siteUid},#{user.avatar},#{user.password},#{user.username},
-                 #{user.profession}, #{user.verifyEmail},#{user.emailUid},
-                 #{user.createTime},#{user.updateTime},#{user.delete},#{user.accountLock}
+                 #{user.siteUid},#{user.avatar},#{user.password},#{user.username}, #{user.profession},
+                 #{user.verifyEmail},#{user.emailUid}, #{user.updateTime},#{user.delete},#{user.accountLock}
                 )
     </insert>
 

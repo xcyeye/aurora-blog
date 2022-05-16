@@ -30,9 +30,6 @@ public class CategoryServiceImpl implements CategoryService {
     @Autowired
     private CategoryMapper categoryMapper;
 
-    @Autowired
-    private UserUtils userUtils;
-
     @Override
     public int deleteByPrimaryKey(Long uid) {
         Assert.notNull(uid, "uid不能为null");
@@ -54,7 +51,7 @@ public class CategoryServiceImpl implements CategoryService {
     public int insertSelective(Category record) {
         Assert.notNull(record, "类别不能为null");
         record.setDelete(false);
-        JwtUserInfo jwtUserInfo = userUtils.getCurrentUser();
+        JwtUserInfo jwtUserInfo = UserUtils.getCurrentUser();
         AssertUtils.stateThrow(jwtUserInfo != null,
                 () -> new UserException(ResponseStatusCodeEnum.PERMISSION_USER_NOT_LOGIN));
         record.setUserUid(jwtUserInfo.getUserUid());

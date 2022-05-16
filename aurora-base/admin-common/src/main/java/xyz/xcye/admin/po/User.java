@@ -81,12 +81,14 @@ public class User implements Serializable {
      * 密码，使用md5加密
      */
     @ValidateString(value = "用户-密码",max = FieldLengthConstant.PASSWORD, groups = Insert.class)
+    @Length(max = FieldLengthConstant.PASSWORD)
     private String password;
 
     /**
      * 用户名（和用户昵称不同，用户名唯一，昵称只要符合要求都行）
      */
     @ValidateString(value = "用户-用户名",max = FieldLengthConstant.USERNAME, groups = Insert.class)
+    @Length(max = FieldLengthConstant.USERNAME)
     private String username;
 
     /**

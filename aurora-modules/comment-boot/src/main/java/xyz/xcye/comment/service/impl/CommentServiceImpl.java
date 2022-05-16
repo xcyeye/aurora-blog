@@ -42,12 +42,8 @@ public class CommentServiceImpl implements CommentService {
 
     @Autowired
     private AuroraProperties auroraProperties;
-
     @Autowired
     private CommentMapper commentMapper;
-
-    @Autowired
-    private UserUtils userUtils;
 
     @Autowired
     private SendMQMessageService sendMQMessageService;
@@ -113,14 +109,14 @@ public class CommentServiceImpl implements CommentService {
         setPageType(comment, true);
         // 设置最后修改时间
         comment.setUpdateTime(DateUtils.format());
-        Optional.ofNullable(userUtils.getCurrentUserUid()).ifPresent(comment::setUserUid);
+        Optional.ofNullable(UserUtils.getCurrentUserUid()).ifPresent(comment::setUserUid);
         return commentMapper.updateComment(comment);
     }
 
     @Override
     public int updateDeleteStatus(Comment comment) {
         Assert.notNull(comment, () -> "更新评论删除状态，不能为null");
-        Optional.ofNullable(userUtils.getCurrentUserUid()).ifPresent(comment::setUserUid);
+        Optional.ofNullable(UserUtils.getCurrentUserUid()).ifPresent(comment::setUserUid);
         comment.setUpdateTime(DateUtils.format());
         comment.setDelete(Optional.ofNullable(comment.getDelete()).orElse(false));
         return commentMapper.updateDeleteStatus(comment);

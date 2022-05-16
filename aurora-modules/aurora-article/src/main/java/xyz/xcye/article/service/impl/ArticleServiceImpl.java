@@ -39,8 +39,6 @@ public class ArticleServiceImpl implements ArticleService {
     @Autowired
     private AuroraProperties auroraProperties;
     @Autowired
-    private UserUtils userUtils;
-    @Autowired
     private ArticleMapper articleMapper;
     @Autowired
     private TagService tagService;
@@ -142,7 +140,7 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     private void setUserUid(Article article) {
-        JwtUserInfo jwtUserInfo = userUtils.getCurrentUser();
+        JwtUserInfo jwtUserInfo = UserUtils.getCurrentUser();
         AssertUtils.stateThrow(jwtUserInfo != null,
                 () -> new UserException(ResponseStatusCodeEnum.PERMISSION_USER_NOT_LOGIN));
         article.setUserUid(jwtUserInfo.getUserUid());

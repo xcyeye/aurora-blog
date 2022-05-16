@@ -50,6 +50,7 @@ public class Link implements Serializable {
      * logo地址
      */
     @ApiModelProperty(value="logo地址")
+    @Length(max = FieldLengthConstant.URL)
     @ValidateString(value = "logo地址", max = FieldLengthConstant.URL, groups = {Insert.class})
     private String linkLogo;
 
@@ -57,6 +58,7 @@ public class Link implements Serializable {
      * 链接地址
      */
     @ApiModelProperty(value="链接地址")
+    @Length(max = FieldLengthConstant.URL)
     @ValidateString(value = "地址", max = FieldLengthConstant.URL, groups = {Insert.class})
     private String linkUrl;
 
@@ -64,6 +66,7 @@ public class Link implements Serializable {
      * 对方的名称
      */
     @ApiModelProperty(value="对方的名称")
+    @Length(max = FieldLengthConstant.LINK_TITLE)
     @ValidateString(value = "名称", max = FieldLengthConstant.LINK_TITLE, groups = {Insert.class})
     private String linkTitle;
 
@@ -90,6 +93,7 @@ public class Link implements Serializable {
     * 此友情链接对应的站长邮箱
     */
     @ApiModelProperty(value="此友情链接对应的站长邮箱")
+    @Length(max = FieldLengthConstant.EMAIL_NUMBER)
     @ValidateString(value = "邮箱号", max = FieldLengthConstant.EMAIL_NUMBER, groups = Insert.class)
     @Pattern(regexp = RegexConstant.EMAIL)
     private String email;

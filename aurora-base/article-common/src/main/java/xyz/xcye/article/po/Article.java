@@ -14,7 +14,6 @@ import xyz.xcye.core.valid.Update;
 import xyz.xcye.core.valid.validator.ValidateString;
 
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Null;
 import java.io.Serializable;
 
 @ApiModel(value="au_article")
@@ -90,6 +89,7 @@ public class Article implements Serializable {
     * 文章标题
     */
     @ApiModelProperty(value="文章标题")
+    @Length(max = FieldLengthConstant.TITLE)
     @ValidateString(value = "文章标题", max = FieldLengthConstant.TITLE, groups = {Insert.class})
     private String title;
 
@@ -147,6 +147,7 @@ public class Article implements Serializable {
     */
     @ApiModelProperty(value="文章内容")
     @ValidateString(value = "文章内容", max = FieldLengthConstant.CONTENT, groups = Insert.class)
+    @Length(max = FieldLengthConstant.CONTENT)
     private String content;
 
     /**

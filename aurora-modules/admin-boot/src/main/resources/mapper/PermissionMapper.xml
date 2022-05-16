@@ -41,9 +41,9 @@
     <insert id="insertPermission" keyColumn="uid" keyProperty="uid" parameterType="xyz.xcye.admin.po.Permission" useGeneratedKeys="true">
         insert into au_permission
         ( uid,name,path
-        ,create_time,update_time)
+        ,update_time)
         values (#{uid,jdbcType=BIGINT},#{name,jdbcType=VARCHAR},#{path,jdbcType=VARCHAR}
-        ,#{createTime,jdbcType=TIMESTAMP},#{updateTime,jdbcType=TIMESTAMP})
+        ,#{updateTime,jdbcType=TIMESTAMP})
     </insert>
 
     <update id="updatePermission" parameterType="xyz.xcye.admin.po.Permission">

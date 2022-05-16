@@ -94,6 +94,7 @@ public class Talk implements Serializable {
     * 此说说的内容
     */
     @ApiModelProperty(value="此说说的内容")
+    @Length(max = FieldLengthConstant.CONTENT)
     @ValidateString(value = "此说说的内容", max = FieldLengthConstant.CONTENT, groups = Insert.class)
     private String content;
 

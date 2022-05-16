@@ -47,7 +47,8 @@ public class Comment implements Serializable {
      * 评论这的用户名 不能为null
      * <p>length < 15</p>
      */
-    @ValidateString(value = "评论-用户名",max = FieldLengthConstant.USERNAME,groups = {Insert.class})
+    @Length(max = FieldLengthConstant.USERNAME)
+    @ValidateString(value = "评论-用户名", max = FieldLengthConstant.USERNAME, groups = {Insert.class})
     private String username;
 
     /**
@@ -61,7 +62,8 @@ public class Comment implements Serializable {
      * 站点地址 不能为null
      * <p>length < 255</p>
      */
-    @ValidateString(value = "评论-网站",max = FieldLengthConstant.URL,groups = {Insert.class})
+    @Length(max = FieldLengthConstant.URL)
+    @ValidateString(value = "评论-网站", max = FieldLengthConstant.URL ,groups = {Insert.class})
     private String site;
 
     /**
@@ -119,13 +121,15 @@ public class Comment implements Serializable {
     /**
      * 评论内容
      */
-    @ValidateString(value = "评论的内容",max = FieldLengthConstant.CONTENT,groups = {Insert.class})
+    @Length(max = FieldLengthConstant.CONTENT)
+    @ValidateString(value = "评论的内容", max = FieldLengthConstant.CONTENT, groups = {Insert.class})
     private String content;
 
     /**
      * 此评论在哪个页面上的评论
      */
-    @ValidateString(value = "评论 评论的地址",max = FieldLengthConstant.URL,groups = {Insert.class})
+    @Length(max = FieldLengthConstant.URL)
+    @ValidateString(value = "评论 评论的地址", max = FieldLengthConstant.URL, groups = {Insert.class})
     private String path;
 
     /**

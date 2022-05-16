@@ -52,9 +52,6 @@
       <if test="condition.delete !=null">
         and is_delete=#{condition.delete}
       </if>
-      <if test="condition.show != null">
-        and is_show=#{condition.show,jdbcType=BOOLEAN}
-      </if>
     </where>
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
@@ -98,12 +95,6 @@
       <if test="userUid != null">
         user_uid,
       </if>
-      <if test="createTime != null and createTime != ''">
-        create_time,
-      </if>
-      <if test="updateTime != null and updateTime != ''">
-        update_time,
-      </if>
       <if test="delete != null">
         is_delete,
       </if>
@@ -132,12 +123,6 @@
       </if>
       <if test="userUid != null">
         #{userUid,jdbcType=BIGINT},
-      </if>
-      <if test="createTime != null and createTime != ''">
-        #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updateTime != null and updateTime != ''">
-        #{updateTime,jdbcType=TIMESTAMP},
       </if>
       <if test="delete != null">
         #{delete,jdbcType=TINYINT},
@@ -168,9 +153,6 @@
       </if>
       <if test="userUid != null">
         user_uid = #{userUid,jdbcType=BIGINT},
-      </if>
-      <if test="createTime != null and createTime != ''">
-        create_time = #{createTime,jdbcType=TIMESTAMP},
       </if>
       <if test="updateTime != null and updateTime != ''">
         update_time = #{updateTime,jdbcType=TIMESTAMP},
