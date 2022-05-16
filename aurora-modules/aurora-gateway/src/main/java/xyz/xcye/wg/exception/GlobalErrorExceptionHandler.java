@@ -3,12 +3,14 @@ package xyz.xcye.wg.exception;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.web.reactive.error.ErrorWebExceptionHandler;
+import org.springframework.cloud.gateway.support.NotFoundException;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 import xyz.xcye.core.enums.ResponseStatusCodeEnum;
+import xyz.xcye.core.util.LogUtils;
 import xyz.xcye.wg.util.SecurityResultHandler;
 
 /**
@@ -20,15 +22,21 @@ import xyz.xcye.wg.util.SecurityResultHandler;
 @Component
 @RequiredArgsConstructor
 public class GlobalErrorExceptionHandler implements ErrorWebExceptionHandler {
+
     public Mono<Void> handle(ServerWebExchange exchange, Throwable ex) {
-        ex.printStackTrace();
         ServerHttpResponse response = exchange.getResponse();
         if (response.isCommitted()) {
             return Mono.error(ex);
         }
-
-        return SecurityResultHandler.failure(exchange,
-                ex.getMessage(),
-                ResponseStatusCodeEnum.PERMISSION_DENIED.getCode());
+        ResponseStatusCodeEnum responseStatusCodeEnum = null;
+        LogUtils.logExceptionInfo((Exception) ex);
+        if (ex instanceof NotFoundException) {
+            // NotFoundException是服务实例未启动
+            responseStatusCodeEnum = ResponseStatusCodeEnum.SERVICE_INSTANCE_NOT_FOUND;
+        }else {
+            responseStatusCodeEnum = ResponseStatusCodeEnum.UNKNOWN;
+        }
+        return SecurityResultHandler.failure(exchange, responseStatusCodeEnum);
     }
+
 }

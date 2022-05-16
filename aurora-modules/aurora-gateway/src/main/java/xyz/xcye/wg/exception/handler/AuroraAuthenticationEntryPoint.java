@@ -18,8 +18,6 @@ public class AuroraAuthenticationEntryPoint implements ServerAuthenticationEntry
 
     @Override
     public Mono<Void> commence(ServerWebExchange exchange, AuthenticationException ex) {
-        return SecurityResultHandler.failure(exchange,
-                ResponseStatusCodeEnum.PERMISSION_USER_NOT_LOGIN.getMessage(),
-                ResponseStatusCodeEnum.PERMISSION_USER_NOT_LOGIN.getCode());
+        return SecurityResultHandler.failure(exchange, ResponseStatusCodeEnum.PERMISSION_USER_NOT_LOGIN);
     }
 }

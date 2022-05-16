@@ -41,10 +41,10 @@ public class SecurityResultHandler {
     /**
      * 鉴权异常，登录异常，无权访问等异常处理方法
      * @param exchange ServerWebExchange
-     * @param statusCode 自定义响应码
+     * @param statusCodeEnum 自定义响应码
      * @return Mono
      */
-    public static Mono<Void> failure(ServerWebExchange exchange, String message,Integer statusCode) {
+    public static Mono<Void> failure(ServerWebExchange exchange, ResponseStatusCodeEnum statusCodeEnum) {
         ServerHttpRequest request = exchange.getRequest();
 
         //uri就是访问出错的路径
@@ -54,7 +54,7 @@ public class SecurityResultHandler {
         setContentType(exchange);
 
         //封装数据
-        R failureResult = R.failure(statusCode, message);
+        R failureResult = R.failure(statusCodeEnum.getCode(), statusCodeEnum.getMessage());
 
         Map<String,Object> errorMap = new HashMap<>();
         errorMap.put("errorUrl",uri);

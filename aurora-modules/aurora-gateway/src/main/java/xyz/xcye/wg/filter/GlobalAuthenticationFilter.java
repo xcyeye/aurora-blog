@@ -145,7 +145,7 @@ public class GlobalAuthenticationFilter implements GlobalFilter {
      * 无效的token
      */
     private Mono<Void> invalidTokenMono(ServerWebExchange exchange, ResponseStatusCodeEnum statusCodeEnum) {
-        return SecurityResultHandler.failure(exchange, statusCodeEnum.getMessage(), statusCodeEnum.getCode());
+        return SecurityResultHandler.failure(exchange, statusCodeEnum);
     }
 
     private boolean rememberMe(ServerWebExchange exchange) {

@@ -22,6 +22,7 @@ import java.io.IOException;
 public class CustomAuthServerAccess {
 
     public boolean hasPermission(HttpServletRequest request) throws IOException {
+
         String whiteUrlStatus = request.getHeader(RequestConstant.REQUEST_WHITE_URL_STATUS);
         // 如果当前的路径是白名单，则直接放行
         if ("true".equals(whiteUrlStatus)) {
