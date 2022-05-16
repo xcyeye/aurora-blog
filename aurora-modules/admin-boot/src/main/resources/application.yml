@@ -87,6 +87,8 @@ aurora:
     role: ROLE_user
     permission: user
     nickname: aurora-new
+  oauth:
+    secret-key: auroraaadkfhasdfuywasdfkjahdsfuewkrnbsdjtywq8745ghsdfsgdfhsdfgerbjhsdtfquewrw9erygtwertfysatf
 
 # 分页插件
 pagehelper:

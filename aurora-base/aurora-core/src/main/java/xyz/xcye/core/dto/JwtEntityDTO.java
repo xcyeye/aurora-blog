@@ -1,6 +1,7 @@
 package xyz.xcye.core.dto;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -14,6 +15,7 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
+@Builder
 public class JwtEntityDTO {
     /**
      * id
@@ -40,28 +42,12 @@ public class JwtEntityDTO {
      */
     private Date expirationAt;
 
+    private String jti;
+
     /**
      * 用户名
      */
     private String username;
-
-    /**
-     * 用户角色
-     */
-    private String role;
-
-    /**
-     * 用户权限
-     */
-    private String[] permissions;
-
-    public JwtEntityDTO(String id, String subject, String issuer, Date issuedAt, Date expirationAt) {
-        this.id = id;
-        this.subject = subject;
-        this.issuer = issuer;
-        this.issuedAt = issuedAt;
-        this.expirationAt = expirationAt;
-    }
 
     /**
      * 是否过期 true表示过期，false反之

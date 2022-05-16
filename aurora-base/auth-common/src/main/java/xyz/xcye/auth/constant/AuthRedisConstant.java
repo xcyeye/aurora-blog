@@ -13,4 +13,7 @@ public class AuthRedisConstant {
 
     /** 存在在redis中的UserDetails缓存的键名前缀 **/
     public static final String USER_DETAILS_CACHE_PREFIX = "UserDetailsCache:";
+
+    /** redis中存储jwt黑名单的前缀 **/
+    public static final String STORAGE_JWT_BLACKLIST_PREFIX = "jwt_blackList:";
 }

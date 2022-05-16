@@ -1,6 +1,5 @@
 package xyz.xcye.core.util.lambda;
 
-import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
 
 import java.util.function.Consumer;
@@ -36,11 +35,5 @@ public class AssertUtils {
         if (StringUtils.hasLength(value)) {
             consumer.accept(value);
         }
-    }
-
-    public static void main(String[] args) {
-        hasLength("", t -> {
-            System.out.println(t);
-        });
     }
 }

@@ -12,6 +12,7 @@ import xyz.xcye.core.util.id.GenerateInfoUtils;
 import java.nio.charset.StandardCharsets;
 import java.security.Key;
 import java.util.Date;
+import java.util.Objects;
 
 /**
  * 这是与jwt相关的工具类
@@ -69,8 +70,13 @@ public class JwtUtils {
             throw new TokenException(e.getMessage());
         }
 
-        JwtEntityDTO jwtEntity = new JwtEntityDTO(claims.getId(),claims.getSubject(),
-                claims.getIssuer(),claims.getIssuedAt(),claims.getExpiration());
+        JwtEntityDTO jwtEntity = JwtEntityDTO.builder()
+                .id(claims.getId()).subject(claims.getSubject())
+                .issuer(claims.getIssuer())
+                .issuedAt(claims.getIssuedAt())
+                .expirationAt(claims.getExpiration())
+                .jti((String) claims.get("jti"))
+                .build();
         //解析用户名
         jwtEntity.setUsername(claims.get("username",String.class));
         return jwtEntity;
@@ -102,6 +108,7 @@ public class JwtUtils {
     }
 
     private static Key getSecretKey(String secretKey) {
+        Objects.requireNonNull(secretKey);
         // 判断secretKey的长度是否足够
         byte[] bytes = secretKey.getBytes(StandardCharsets.UTF_8);
         if (bytes.length * 8 <= 256) {

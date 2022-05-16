@@ -134,21 +134,4 @@ public class AuthServerRememberMeServices implements RememberMeServices {
     private boolean isInstanceOfUserDetails(Authentication authentication) {
         return authentication.getPrincipal() instanceof UserDetails;
     }
-
-    /**
-     * 取消cookie的设置
-     * @param request
-     * @param response
-     */
-    protected void cancelCookie(HttpServletRequest request, HttpServletResponse response) {
-        Cookie cookie = new Cookie(OauthJwtConstant.COOKIE_STORAGE_LOGIN_SUCCESS_STATUS, null);
-        cookie.setMaxAge(0);
-        cookie.setPath(getCookiePath(request));
-        if (auroraAuthProperties.getCookieDomain() != null) {
-            cookie.setDomain(auroraAuthProperties.getCookieDomain());
-        }
-        cookie.setSecure((auroraAuthProperties.getUseSecureCookie() != null) ?
-                auroraAuthProperties.getUseSecureCookie() : request.isSecure());
-        response.addCookie(cookie);
-    }
 }

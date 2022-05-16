@@ -75,6 +75,15 @@ public class AuroraRequestUtils {
         return requestAttributes.getRequest();
     }
 
+    /**
+     * 获取当前的请求对象，如果不存在，则返回null
+     * @return
+     */
+    public static HttpServletResponse getCurrentResponse() {
+        ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
+        return requestAttributes.getResponse();
+    }
+
     public static JwtUserInfo getJwtUserInfo(HttpServletRequest request) {
         String jwtUserInfoBase64 = request.getHeader(RequestConstant.REQUEST_TOKEN_NAME);
         String jwtUserInfoStr = Base64.decodeStr(jwtUserInfoBase64);

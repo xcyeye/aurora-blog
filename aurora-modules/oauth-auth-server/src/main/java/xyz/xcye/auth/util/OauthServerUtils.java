@@ -30,13 +30,13 @@ public class OauthServerUtils {
         writeJson(response, r);
     }
 
-    private static void setHeader(HttpServletResponse response) {
+    public static void setHeader(HttpServletResponse response) {
         //设置响应头
         MediaType applicationJson = new MediaType(MediaType.APPLICATION_JSON, StandardCharsets.UTF_8);
         response.setContentType(applicationJson.toString());
     }
 
-    private static void writeJson(HttpServletResponse response, R r) throws IOException {
+    public static void writeJson(HttpServletResponse response, R r) throws IOException {
         String json = ConvertObjectUtils.jsonToString(r);
         PrintWriter writer = response.getWriter();
         writer.write(json);

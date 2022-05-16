@@ -3,7 +3,9 @@ package xyz.xcye;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.openfeign.EnableFeignClients;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
+import xyz.xcye.aurora.exception.AuroraGlobalExceptionHandler;
 
 /**
  * @author qsyyke
@@ -15,6 +17,8 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
 @SpringBootApplication
 public class AuthServerMain {
     public static void main(String[] args) {
-        SpringApplication.run(AuthServerMain.class, args);
+        ConfigurableApplicationContext run = SpringApplication.run(AuthServerMain.class, args);
+        System.out.println(run.getBean(AuroraGlobalExceptionHandler.class));
+        System.out.println("sdfsdf");
     }
 }

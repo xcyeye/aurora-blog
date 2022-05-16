@@ -12,6 +12,7 @@ import xyz.xcye.core.enums.ResponseStatusCodeEnum;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -23,19 +24,19 @@ public class AuroraGlobalHandlerInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        // 获取请求头中的白名单标识
-        String whiteUrlStatus = Optional.ofNullable(request.getHeader(RequestConstant.REQUEST_WHITE_URL_STATUS)).orElse("false");
+        // 判断是否是白名单
+        boolean whiteUrl = checkWhiteUrl(request);
 
-        // 把当前请求地址的白名单判定状态放入RequestContextHolder中，方便取用
-        RequestAttributes currentRequestAttributes = RequestContextHolder.currentRequestAttributes();
-        currentRequestAttributes.setAttribute(RequestConstant.CONTEXT_WHITE_URL_STATUS, whiteUrlStatus, 1);
-        if ("true".equals(whiteUrlStatus)) {
-            return true;
-        }
+        // 判断是否是从认证中心发送的请求，认证中心需要查询密码，不需要拦截
+        boolean sendFromAuthServer = sendFromAuthServer(request);
 
-        // 判断当前请求是否是从认证中心发出的
-        String oauthQueryPwdHeader = request.getHeader(RequestConstant.REQUEST_OAUTH_SERVER_QUERY_PASSWORD);
-        if ("true".equals(oauthQueryPwdHeader)) {
+        // 如果是白名单或者是从认证中心发出的查询密码的请求，直接放行，如果请求头中存在token的话，那么会将用户认证信息添加到RequestContextHoler
+        if (whiteUrl || sendFromAuthServer) {
+            JwtUserInfo jwtUserInfo = null;
+            try {
+                jwtUserInfo = AuroraRequestUtils.getJwtUserInfo(request);
+            } catch (Exception ignored) {}
+            Optional.ofNullable(jwtUserInfo).ifPresent(this::storageAuthenticatedUserToAttributes);
             return true;
         }
 
@@ -51,8 +52,8 @@ public class AuroraGlobalHandlerInterceptor implements HandlerInterceptor {
             return AuroraRequestUtils.returnFailureAndResponseJsonText(response, ResponseStatusCodeEnum.PERMISSION_TOKEN_EXPIRATION);
         }
 
-        // 运行到这里，说明token没有失效，将用户已认证的数据，放入RequestContextHolder中，方便使用
-        currentRequestAttributes.setAttribute(RequestConstant.REQUEST_STORAGE_JWT_USER_INFO_NAME, jwtUserInfo, 1);
+        // 存储用户认证信息到RequestContextHolder
+        storageAuthenticatedUserToAttributes(jwtUserInfo);
         return true;
     }
 
@@ -64,5 +65,43 @@ public class AuroraGlobalHandlerInterceptor implements HandlerInterceptor {
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
         HandlerInterceptor.super.afterCompletion(request, response, handler, ex);
+    }
+
+    /**
+     * 检查当前restFul风格的请求地址，是否是白名单
+     * @param request 请求对象
+     * @return true是白名单
+     */
+    private boolean checkWhiteUrl(HttpServletRequest request) {
+        // 获取请求头中的白名单标识
+        String whiteUrlStatus = Optional.ofNullable(request.getHeader(RequestConstant.REQUEST_WHITE_URL_STATUS)).orElse("false");
+
+        // 把当前请求地址的白名单判定状态放入RequestContextHolder中，方便取用
+        RequestAttributes currentRequestAttributes = RequestContextHolder.currentRequestAttributes();
+        currentRequestAttributes.setAttribute(RequestConstant.CONTEXT_WHITE_URL_STATUS, whiteUrlStatus, 1);
+        return "true".equals(whiteUrlStatus);
+    }
+
+    /**
+     * 判断该请求是否是从认证中心发出的，在认证中心，验证用户信息，需要发送请求查询密码，发送的是否，会向
+     * 请求头中，添加一个标识，并不是所有从认证中心发出的请求都有这个请求头
+     * @param request 请求
+     * @return true是从认证中心发出的
+     */
+    private boolean sendFromAuthServer(HttpServletRequest request) {
+        // 判断当前请求是否是从认证中心发出的
+        String oauthQueryPwdHeader = request.getHeader(RequestConstant.REQUEST_OAUTH_SERVER_QUERY_PASSWORD);
+        return "true".equals(oauthQueryPwdHeader);
+    }
+
+    /**
+     * 将用户已认证的信息存储到RequestContextHolder
+     * @param jwtUserInfo 已认证用户信息，包括jwt等
+     */
+    private void storageAuthenticatedUserToAttributes(JwtUserInfo jwtUserInfo) {
+        RequestAttributes currentRequestAttributes = RequestContextHolder.currentRequestAttributes();
+        Objects.requireNonNull(currentRequestAttributes);
+        // 运行到这里，说明token没有失效，将用户已认证的数据，放入RequestContextHolder中，方便使用
+        currentRequestAttributes.setAttribute(RequestConstant.REQUEST_STORAGE_JWT_USER_INFO_NAME, jwtUserInfo, 1);
     }
 }
