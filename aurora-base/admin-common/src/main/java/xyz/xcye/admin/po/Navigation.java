@@ -80,7 +80,6 @@ public class Navigation implements Serializable {
     * 该导航属于哪个用户
     */
     @ApiModelProperty(value="该导航属于哪个用户")
-    @NotNull(groups = Insert.class)
     private Long userUid;
 
     /**
