@@ -63,7 +63,7 @@ public class LoginInfoAop {
      * @throws Throwable
      */
     @Before("execution(public * xyz.xcye.auth.service.JwtTokenUserDetailsService.loadUserByUsername(..))")
-    public void logProcessRequestTime(JoinPoint point) {
+    public void loadUserByUsername(JoinPoint point) {
 
         // 开始记录 获取当前请求对象
         HttpServletRequest request = AuroraRequestUtils.getCurrentRequest();
