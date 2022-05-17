@@ -2,6 +2,7 @@ package xyz.xcye.auth.service;
 
 import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -65,7 +66,7 @@ public class JwtTokenUserDetailsService implements UserDetailsService {
             rolePermissionDTOList = JSONUtils.parseObjFromResult(ConvertObjectUtils.jsonToString(r), "data", List.class);
         } catch (Exception e) {
             LogUtils.logExceptionInfo(e);
-            throw new UsernameNotFoundException("获取" + username + "用户的权限信息失败");
+            throw new AuthenticationServiceException("获取" + username + "用户的权限信息失败");
         }
 
         // 将该用户所拥有的角色放入集合中

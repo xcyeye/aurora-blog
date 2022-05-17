@@ -92,6 +92,7 @@ public enum ResponseStatusCodeEnum {
 
     //----------------------未知错误相关的响应码
     UNKNOWN(50000,"未知错误"),
+    SYSTEM_ERROR(50000,"系统错误"),
 
     //----------------------网关处的响应码
     SERVICE_INSTANCE_NOT_FOUND(53000, "服务未启动"),

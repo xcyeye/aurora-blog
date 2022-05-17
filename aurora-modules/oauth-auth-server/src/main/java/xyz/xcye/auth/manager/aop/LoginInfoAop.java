@@ -21,6 +21,7 @@ import xyz.xcye.auth.model.SecurityUserDetails;
 import xyz.xcye.auth.po.LoginInfo;
 import xyz.xcye.auth.service.LoginInfoService;
 import xyz.xcye.core.enums.RegexEnum;
+import xyz.xcye.core.exception.login.LoginException;
 import xyz.xcye.core.util.DateUtils;
 import xyz.xcye.core.util.LogUtils;
 import xyz.xcye.core.util.NetWorkUtils;
@@ -129,6 +130,15 @@ public class LoginInfoAop {
         storageLoginSituationToRedis(false, null);
     }
 
+    /**
+     * 认证失败时处理
+     */
+    public void authFailure(Exception exception) {
+        // 处理登录失败结果
+        handlerLoginResult(exception.getMessage(), false, null);
+        storageLoginSituationToRedis(false, null);
+    }
+
     @Before("execution(public * xyz.xcye.auth.handler.OauthServerAuthenticationSuccessHandler.onAuthenticationSuccess(..))")
     public void loginSuccess(JoinPoint point) {
         Object[] args = point.getArgs();
@@ -172,7 +182,7 @@ public class LoginInfoAop {
 
             // 计算剩余重新登录时间
             String reLoginTime = DateUtils.format(new Date(System.currentTimeMillis() + (expire * 1000)));
-            throw new UsernameNotFoundException("登录失败次数达到最大值,下次登录时间 " + reLoginTime);
+            throw new LoginException("登录失败次数达到最大值,下次登录时间 " + reLoginTime);
         }
 
         // 没有达到最大值，不做处理
