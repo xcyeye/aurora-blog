@@ -13,8 +13,6 @@ import xyz.xcye.aurora.util.AuroraRequestUtils;
 import xyz.xcye.aurora.util.UserUtils;
 import xyz.xcye.auth.constant.RequestConstant;
 import xyz.xcye.core.dto.JwtUserInfo;
-import xyz.xcye.core.enums.ResponseStatusCodeEnum;
-import xyz.xcye.core.exception.user.UserException;
 import xyz.xcye.core.util.ValidationUtils;
 import xyz.xcye.core.util.id.GenerateInfoUtils;
 import xyz.xcye.core.valid.Insert;
@@ -65,9 +63,9 @@ public class AmqpSenderService {
         // 调用feign向数据库中插入mq消息
         insertMessageLogData(correlationDataId, msgJson, exchangeName, routingKey, exchangeType);
         JwtUserInfo currentUserInfo = UserUtils.getCurrentUser();
-        if (!whiteUrlStatus && currentUserInfo == null) {
+        /*if (!whiteUrlStatus && currentUserInfo == null) {
             throw new UserException(ResponseStatusCodeEnum.PERMISSION_USER_NOT_LOGIN);
-        }
+        }*/
 
         MessageProperties messageProperties = new MessageProperties();
         messageProperties.setCorrelationId(correlationDataId);

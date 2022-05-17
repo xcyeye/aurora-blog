@@ -15,6 +15,7 @@ public enum SendHtmlMailTypeNameEnum {
     VERIFY_ACCOUNT("verifyAccount"),
     COMMON_NOTICE("friendLinkNotice"),
     FRIEND_LINK_NOTICE("commonNotice"),
+    CUSTOM_HTML("customHtml"),
     ADDITIONAL_DATA("additional");
 
     /**

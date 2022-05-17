@@ -2,6 +2,31 @@ server:
   port: 8888
   compression:
     enabled: false
+#seata:
+#  enabled: true
+#  application-id: applicationName
+#  tx-service-group: aurora-blog-tx-group
+#  enable-auto-data-source-proxy: true
+#  config:
+#    type: nacos
+#    nacos:
+#      serverAddr: 127.0.0.1:8848
+#      group: SEATA_GROUP
+#      username: "nacos"
+#      password: "nacos"
+#  registry:
+#    type: nacos
+#    nacos:
+#      application: seata-server
+#      server-addr: 127.0.0.1:8848
+#      group: SEATA_GROUP
+#      #      namespace:
+#      username: "nacos"
+#      password: "nacos"
+#  service:
+#    vgroup-mapping:
+#      aurora-blog-tx-group: default
+
 spring:
   main:
     allow-circular-references: true

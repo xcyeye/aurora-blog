@@ -38,4 +38,24 @@ public class BindingOperateUser {
                 .to(new TopicExchange(AmqpExchangeNameConstant.AURORA_SEND_OPERATE_USER_DEAD_LETTER_EXCHANGE))
                 .with(AmqpQueueNameConstant.DEAD_LETTER_OPERATE_USER_BINDING_EMAIL_ROUTING_KEY);
     }
+
+
+    @Bean
+    public Binding lockAccountBinding() {
+        return BindingBuilder.bind(new Queue(AmqpQueueNameConstant.OPERATE_USER_LOCK_ACCOUNT_QUEUE))
+                .to(new TopicExchange(AmqpExchangeNameConstant.AURORA_SEND_OPERATE_USER_EXCHANGE))
+                .with(AmqpQueueNameConstant.OPERATE_USER_LOCK_ACCOUNT_ROUTING_KEY);
+    }
+
+    /**
+     * 将验证账户通知队列和死信邮件发送交换机绑定起来
+     * @return
+     */
+    @Bean
+    public Binding lockAccountDeadLetterBinding() {
+        return BindingBuilder.bind(new Queue(AmqpQueueNameConstant.DEAD_LETTER_OPERATE_USER_LOCK_ACCOUNT_QUEUE))
+                .to(new TopicExchange(AmqpExchangeNameConstant.AURORA_SEND_OPERATE_USER_DEAD_LETTER_EXCHANGE))
+                .with(AmqpQueueNameConstant.DEAD_LETTER_OPERATE_USER_LOCK_ACCOUNT_ROUTING_KEY);
+    }
+
 }

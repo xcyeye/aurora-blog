@@ -78,10 +78,7 @@ public class AuroraProperties {
          */
         private String mailVerifyAccountPrefixPath;
 
-        /**
-         * 登录的时候，记住我天数，可以免登录
-         */
-        private Integer rememberMeDay;
+        private String enableAccountPrefixPath;
     }
 
     @ConfigurationProperties(prefix = AuroraAmqpProperties.AURORA_AMQP_PREFIX)

@@ -16,7 +16,6 @@ import xyz.xcye.article.service.TalkService;
 import xyz.xcye.article.vo.ArticleVO;
 import xyz.xcye.article.vo.TalkVO;
 import xyz.xcye.comment.po.Comment;
-import xyz.xcye.core.constant.amqp.AmqpExchangeNameConstant;
 import xyz.xcye.core.constant.amqp.AmqpQueueNameConstant;
 import xyz.xcye.core.util.BeanUtils;
 import xyz.xcye.feign.config.service.MessageLogFeignService;
@@ -70,8 +69,7 @@ public class ReceiveComment {
         }
 
         // 运行到这里，说名此评论并不是说说和文章的评论，因为暂时没有加入其他的评论页面，所以也当错误消息处理
-        mistakeMessageSendService.sendMistakeMessageToExchange(msgJson, channel, message,
-                AmqpExchangeNameConstant.MISTAKE_MESSAGE_EXCHANGE, AmqpQueueNameConstant.MISTAKE_MESSAGE_ROUTING_KEY);
+        mistakeMessageSendService.sendMistakeMessageToExchange(msgJson, channel, message);
         updateMessageLog.updateMessageLogInfo(comment.getUid() + "",
                 true, true, "此评论没有页面可以消费", message);
     }
@@ -81,8 +79,7 @@ public class ReceiveComment {
         try {
             comment = JSON.parseObject(json, Comment.class);
         } catch (Exception e) {
-            mistakeMessageSendService.sendMistakeMessageToExchange(json,channel,message,
-                    AmqpExchangeNameConstant.MISTAKE_MESSAGE_EXCHANGE, AmqpQueueNameConstant.MISTAKE_MESSAGE_ROUTING_KEY);
+            mistakeMessageSendService.sendMistakeMessageToExchange(json,channel,message);
             return null;
         }
         return comment;

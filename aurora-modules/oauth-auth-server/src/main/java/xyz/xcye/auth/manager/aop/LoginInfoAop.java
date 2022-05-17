@@ -1,5 +1,6 @@
 package xyz.xcye.auth.manager.aop;
 
+import io.seata.spring.annotation.GlobalTransactional;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
@@ -11,8 +12,10 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
+import org.springframework.validation.BindException;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
+import xyz.xcye.amqp.api.AmqpSenderService;
 import xyz.xcye.aurora.properties.AuroraProperties;
 import xyz.xcye.aurora.util.AuroraRequestUtils;
 import xyz.xcye.auth.constant.AuthRedisConstant;
@@ -20,21 +23,21 @@ import xyz.xcye.auth.constant.RequestConstant;
 import xyz.xcye.auth.model.SecurityUserDetails;
 import xyz.xcye.auth.po.LoginInfo;
 import xyz.xcye.auth.service.LoginInfoService;
+import xyz.xcye.core.constant.amqp.AmqpExchangeNameConstant;
+import xyz.xcye.core.constant.amqp.AmqpQueueNameConstant;
 import xyz.xcye.core.enums.RegexEnum;
 import xyz.xcye.core.exception.login.LoginException;
 import xyz.xcye.core.util.DateUtils;
 import xyz.xcye.core.util.LogUtils;
 import xyz.xcye.core.util.NetWorkUtils;
 import xyz.xcye.core.util.id.GenerateInfoUtils;
+import xyz.xcye.oauth.api.service.UserFeignService;
 
 import javax.servlet.http.HttpServletRequest;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.time.Duration;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.LinkedHashMap;
-import java.util.Objects;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.regex.Pattern;
 
@@ -56,6 +59,10 @@ public class LoginInfoAop {
     private AuroraProperties.AuroraAuthProperties auroraAuthProperties;
     @Autowired
     private RedisTemplate<String, Object> redisTemplate;
+    @Autowired
+    private UserFeignService userFeignService;
+    @Autowired
+    private AmqpSenderService amqpSenderService;
 
     /**
      * 记录用户的登录信息，将登录情况记录到数据库中
@@ -63,8 +70,9 @@ public class LoginInfoAop {
      * @return
      * @throws Throwable
      */
+    @GlobalTransactional
     @Before("execution(public * xyz.xcye.auth.service.JwtTokenUserDetailsService.loadUserByUsername(..))")
-    public void loadUserByUsername(JoinPoint point) {
+    public void loadUserByUsername(JoinPoint point) throws BindException {
 
         // 开始记录 获取当前请求对象
         HttpServletRequest request = AuroraRequestUtils.getCurrentRequest();
@@ -162,7 +170,7 @@ public class LoginInfoAop {
      * 判断该用户的登录失败次数是否达到最大值，如果达到最大致，则锁住该用户的信息
      * @param username
      */
-    private void isReachesMaxFailureNum(String username) {
+    private void isReachesMaxFailureNum(String username) throws BindException {
         Integer loginFailureNum = (Integer) redisTemplate.opsForValue()
                 .get(AuthRedisConstant.USER_LOGIN_FAILURE_NUMBER_PREFIX + username);
 
@@ -182,6 +190,7 @@ public class LoginInfoAop {
 
             // 计算剩余重新登录时间
             String reLoginTime = DateUtils.format(new Date(System.currentTimeMillis() + (expire * 1000)));
+            //lockAccount(username);
             throw new LoginException("登录失败次数达到最大值,下次登录时间 " + reLoginTime);
         }
 
@@ -353,5 +362,14 @@ public class LoginInfoAop {
                     .build();
             loginInfoService.updateByPrimaryKeySelective(loginInfo);
         }).start();
+    }
+
+    /**
+     * 锁住用户账户，如果登录失败次数达到最大值之后
+     */
+    private void lockAccount(String username) throws BindException {
+        // 根据此用户名，查询用户信息
+        amqpSenderService.sendMQMsg(username, AmqpExchangeNameConstant.AURORA_SEND_OPERATE_USER_EXCHANGE,
+                AmqpQueueNameConstant.OPERATE_USER_LOCK_ACCOUNT_ROUTING_KEY, "topic");
     }
 }

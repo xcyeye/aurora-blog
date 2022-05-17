@@ -1,8 +1,6 @@
 package xyz.xcye.api.mail.sendmail.entity;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import xyz.xcye.api.mail.sendmail.enums.SendHtmlMailTypeNameEnum;
 
 import javax.validation.constraints.NotNull;
@@ -15,6 +13,8 @@ import java.util.Map;
  */
 
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Getter
 public class StorageSendMailInfo {
     /**
@@ -34,6 +34,10 @@ public class StorageSendMailInfo {
     @Setter
     @NotNull
     private Long userUid;
+
+    @Setter
+    @NotNull
+    private String htmlContent;
 
     /**
      * 发送的标题

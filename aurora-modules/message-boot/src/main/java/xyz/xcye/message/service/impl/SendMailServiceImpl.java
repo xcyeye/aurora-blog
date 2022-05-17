@@ -83,6 +83,12 @@ public class SendMailServiceImpl implements SendMailService {
         // 如果数据库中都没有的话，那么抛出异常
         setReceiverEmail(storageSendMailInfo);
 
+        // 如果是发送自定义html的话
+        if (storageSendMailInfo.getSendType() == SendHtmlMailTypeNameEnum.CUSTOM_HTML) {
+            return sendEmail(storageSendMailInfo.getSubject(), storageSendMailInfo.getHtmlContent(),
+                    storageSendMailInfo.getReceiverEmail());
+        }
+
         if (mailTemplateVO == null || !StringUtils.hasLength(mailTemplateVO.getTemplate())) {
             mailTemplateVO = new MailTemplateVO();
             String templateContent = MailTemplateUtils.readContentFromTemplateFile(getDefaultTemplate(storageSendMailInfo.getSendType()).getTemplateName(),
@@ -91,7 +97,7 @@ public class SendMailServiceImpl implements SendMailService {
             mailTemplateVO.setSubject(getDefaultTemplate(storageSendMailInfo.getSendType()).getSubject());
         }
 
-        //判断传入的subject是否为null或者空
+        // 判断传入的subject是否为null或者空
         String subject = getRightSubject(storageSendMailInfo.getSubject(), mailTemplateVO.getSubject());
 
         //解析邮件发送内容

@@ -67,6 +67,16 @@
             <artifactId>aurora-swagger-starter</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>xyz.xcye.api</groupId>
+            <artifactId>amqp-api</artifactId>
+        </dependency>
+
+        <!--<dependency>
+            <groupId>xyz.xcye.starter</groupId>
+            <artifactId>aurora-seata-starter</artifactId>
+        </dependency>-->
+
     </dependencies>
 
 </project>

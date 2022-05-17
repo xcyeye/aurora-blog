@@ -38,7 +38,14 @@ public class AmqpQueueNameConstant {
     public static final String DEAD_LETTER_OPERATE_USER_BINDING_EMAIL_QUEUE = "aurora.operate.user.binding.email.dead.letter.queue";
     /** 绑定邮箱的死信队列路由key **/
     public static final String DEAD_LETTER_OPERATE_USER_BINDING_EMAIL_ROUTING_KEY = "aurora.operate.user.binding.email.dead.letter.routing";
-    
+
+    /** 锁住用户账户 **/
+    public static final String OPERATE_USER_LOCK_ACCOUNT_QUEUE = "aurora.operate.usre.lock.account.queue";
+    public static final String OPERATE_USER_LOCK_ACCOUNT_ROUTING_KEY = "aurora.operate.usre.lock.account.routing.key";
+
+    /** 锁住用户账户的死信队列 **/
+    public static final String DEAD_LETTER_OPERATE_USER_LOCK_ACCOUNT_QUEUE = "aurora.operate.usre.lock.account.dead.letter.queue";
+    public static final String DEAD_LETTER_OPERATE_USER_LOCK_ACCOUNT_ROUTING_KEY = "aurora.operate.usre.lock.account.dead.letter.routing.key";
 
     /** 发送文章评论 **/
     public static final String PAGE_COMMENT_QUEUE = "aurora.PAGE.comment.queue";

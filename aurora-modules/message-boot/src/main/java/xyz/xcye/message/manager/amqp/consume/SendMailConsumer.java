@@ -15,7 +15,6 @@ import xyz.xcye.api.mail.sendmail.entity.StorageSendMailInfo;
 import xyz.xcye.api.mail.sendmail.enums.SendHtmlMailTypeNameEnum;
 import xyz.xcye.api.mail.sendmail.util.StorageMailUtils;
 import xyz.xcye.comment.po.Comment;
-import xyz.xcye.core.constant.amqp.AmqpExchangeNameConstant;
 import xyz.xcye.core.constant.amqp.AmqpQueueNameConstant;
 import xyz.xcye.core.exception.email.EmailException;
 import xyz.xcye.core.util.BeanUtils;
@@ -63,14 +62,12 @@ public class SendMailConsumer {
         // 待替换的key和value的map
         StorageSendMailInfo storageSendMailInfo = parseMessage.getStorageSendMailInfoFromMsg(msgJson,channel,message);
         if (!isLegitimateHtmlData(storageSendMailInfo)) {
-            mistakeMessageSendService.sendMistakeMessageToExchange(msgJson,channel,message,
-                    AmqpExchangeNameConstant.MISTAKE_MESSAGE_EXCHANGE, AmqpQueueNameConstant.MISTAKE_MESSAGE_ROUTING_KEY);
+            mistakeMessageSendService.sendMistakeMessageToExchange(msgJson,channel,message);
             return;
         }
 
         if (storageSendMailInfo.getUserUid() == null) {
-            mistakeMessageSendService.sendMistakeMessageToExchange(msgJson,channel,message,
-                    AmqpExchangeNameConstant.MISTAKE_MESSAGE_EXCHANGE, AmqpQueueNameConstant.MISTAKE_MESSAGE_ROUTING_KEY);
+            mistakeMessageSendService.sendMistakeMessageToExchange(msgJson,channel,message);
             updateMessageLogInfo(getCorrelationDataId(message),true,false,"邮件发送中，没有传入userUid");
         }
 
@@ -174,14 +171,12 @@ public class SendMailConsumer {
 
         // 通过userUid查询
         if (mailInfo.getUserUid() == null) {
-            mistakeMessageSendService.sendMistakeMessageToExchange(msgJson,channel,message,
-                    AmqpExchangeNameConstant.MISTAKE_MESSAGE_EXCHANGE, AmqpQueueNameConstant.MISTAKE_MESSAGE_ROUTING_KEY);
+            mistakeMessageSendService.sendMistakeMessageToExchange(msgJson,channel,message);
             return;
         }
         EmailVO emailVO = emailService.queryByUserUid(mailInfo.getUserUid());
         if (emailVO == null) {
-            mistakeMessageSendService.sendMistakeMessageToExchange(msgJson,channel,message,
-                    AmqpExchangeNameConstant.MISTAKE_MESSAGE_EXCHANGE, AmqpQueueNameConstant.MISTAKE_MESSAGE_ROUTING_KEY);
+            mistakeMessageSendService.sendMistakeMessageToExchange(msgJson,channel,message);
             return;
         }
         mailInfo.setReceiverEmail(emailVO.getEmail());

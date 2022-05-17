@@ -68,13 +68,7 @@ public class SendMQMessageServiceImpl implements SendMQMessageService {
     @Override
     public void sendCommonMail(StorageSendMailInfo sendMailInfo, String exchangeName, String exchangeType,
                                String routingKey, List<Map<SendHtmlMailTypeNameEnum,Object>> replacedObjList) throws AuroraException, BindException {
-        if (isLegitimateReceiverEmail(sendMailInfo)) {
-            throw new EmailException(ResponseStatusCodeEnum.EXCEPTION_EMAIL_EXISTS);
-        }
-
-        // 将发送的回复评论数据组装成一个map集合
-        String msgJson = StorageMailUtils.generateMailJson(sendMailInfo, replacedObjList);
-        amqpSenderService.sendMQMsg(msgJson, exchangeName, routingKey, exchangeType);
+        sendMail(sendMailInfo, exchangeName, exchangeType, routingKey);
     }
 
     @Override
@@ -85,14 +79,7 @@ public class SendMQMessageServiceImpl implements SendMQMessageService {
             // 没有简单文本，不做处理
             return;
         }
-
-        if (isLegitimateReceiverEmail(sendMailInfo)) {
-            throw new EmailException(ResponseStatusCodeEnum.EXCEPTION_EMAIL_EXISTS);
-        }
-
-        // 将发送的回复评论数据组装成一个map集合
-        String msgJson = StorageMailUtils.generateMailJson(sendMailInfo, null);
-        amqpSenderService.sendMQMsg(msgJson, exchangeName, routingKey, exchangeType);
+        sendMail(sendMailInfo, exchangeName, exchangeType, routingKey);
     }
 
     /**
@@ -100,9 +87,9 @@ public class SendMQMessageServiceImpl implements SendMQMessageService {
      * @param mailInfo
      * @return
      */
-    private boolean isLegitimateReceiverEmail(StorageSendMailInfo mailInfo) {
+    private void isLegitimateReceiverEmail(StorageSendMailInfo mailInfo) {
         if (!StringUtils.hasLength(mailInfo.getReceiverEmail()) && mailInfo.getUserUid() == null) {
-            return true;
+            throw new EmailException(ResponseStatusCodeEnum.EXCEPTION_EMAIL_MISSING_RECEIVER);
         }
 
         if (StringUtils.hasLength(mailInfo.getReceiverEmail())) {
@@ -111,6 +98,14 @@ public class SendMQMessageServiceImpl implements SendMQMessageService {
                 mailInfo.setReceiverEmail(null);
             }
         }
-        return false;
+    }
+
+    private void sendMail(StorageSendMailInfo sendMailInfo, String exchangeName, String exchangeType,
+                          String routingKey) throws BindException {
+        isLegitimateReceiverEmail(sendMailInfo);
+
+        // 将发送的回复评论数据组装成一个map集合
+        String msgJson = StorageMailUtils.generateMailJson(sendMailInfo, null);
+        amqpSenderService.sendMQMsg(msgJson, exchangeName, routingKey, exchangeType);
     }
 }

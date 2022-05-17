@@ -82,6 +82,7 @@ aurora:
   account:
     mail-verify-account-expiration-time: 120000
     mail-verify-account-prefix-path: http://localhost:7777/admin/verifyAccount/bindEmail
+    enable-account-prefix-path: http://localhost:7777/admin/verifyAccount/enable
   default:
     avatar: https://picture.xcye.xyz/avatar.jpg
     role: ROLE_user

@@ -39,4 +39,16 @@ public class VerifyAccountController {
         }
         return "绑定失败";
     }
+
+    @ResponseRealResult
+    @GetMapping("/enable/{incomingSecretKey}")
+    public String enableAccount(@PathVariable("incomingSecretKey") String incomingSecretKey,
+                                     HttpServletRequest request, HttpServletResponse response) throws UserException, IOException {
+        boolean bindEmail = commonVerifyUrlService.bindEmail(incomingSecretKey);
+
+        if (bindEmail) {
+            return  "重新启用账户成功";
+        }
+        return "解除锁定失败";
+    }
 }
