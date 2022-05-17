@@ -155,5 +155,10 @@ public class AuroraProperties {
          * 请看https://www.cnblogs.com/forwill/p/6181984.html
          */
         private Boolean useSecureCookie;
+
+        /**
+         * 验证链接中的秘钥
+         */
+        private String verifySecretKey;
     }
 }

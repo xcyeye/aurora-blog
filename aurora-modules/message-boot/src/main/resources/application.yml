@@ -89,6 +89,8 @@ aurora:
   snow-flake-datacenter-id: 24
   amqp:
     amqp-max-retry-consume: 3
+  oauth:
+    secret-key: auroraaadkfhasdfuywasdfkjahdsfuewkrnbsdjtywq8745ghsdfsgdfhsdfgerbjhsdtfquewrw9erygtwertfysatf
 
 # 分页插件
 pagehelper:

@@ -14,12 +14,12 @@ import xyz.xcye.admin.dto.EmailVerifyAccountDTO;
 import xyz.xcye.admin.po.User;
 import xyz.xcye.admin.properties.AdminDefaultProperties;
 import xyz.xcye.admin.service.UserService;
-import xyz.xcye.admin.service.redis.UserRedisService;
 import xyz.xcye.admin.vo.UserVO;
 import xyz.xcye.api.mail.sendmail.entity.StorageSendMailInfo;
 import xyz.xcye.api.mail.sendmail.enums.SendHtmlMailTypeNameEnum;
 import xyz.xcye.api.mail.sendmail.service.SendMQMessageService;
 import xyz.xcye.api.mail.sendmail.util.AccountInfoUtils;
+import xyz.xcye.api.mail.sendmail.util.StorageEmailVerifyUrlUtil;
 import xyz.xcye.aurora.properties.AuroraProperties;
 import xyz.xcye.core.constant.amqp.AmqpExchangeNameConstant;
 import xyz.xcye.core.constant.amqp.AmqpQueueNameConstant;
@@ -48,6 +48,8 @@ import java.util.*;
 @Service
 public class UserServiceImpl implements UserService {
 
+    private final String bindEmailKey = "bindEmail";
+
     @Autowired
     private UserDao userDao;
     @Autowired
@@ -62,8 +64,6 @@ public class UserServiceImpl implements UserService {
     private AdminDefaultProperties adminDefaultProperties;
     @Autowired
     private SendMQMessageService sendMQMessageService;
-    @Autowired
-    private UserRedisService userRedisService;
 
     @Transactional(rollbackFor = Exception.class)
     @Override
@@ -158,10 +158,7 @@ public class UserServiceImpl implements UserService {
     @GlobalTransactional(rollbackFor = Exception.class)
     @Override
     public int bindingEmail(long emailUid) throws BindException, EmailException {
-        if (emailUid == 0) {
-            return 0;
-        }
-
+        AssertUtils.stateThrow(emailUid != 0, () -> new EmailException(ResponseStatusCodeEnum.PARAM_IS_INVALID));
         // 远程调用aurora-message服务，判断此email的uid是否存在
         R r = emailFeignService.queryByUid(emailUid);
         EmailVO queriedEmailInfo = JSONUtils.parseObjFromResult(ConvertObjectUtils.jsonToString(r), "data", EmailVO.class);
@@ -172,14 +169,15 @@ public class UserServiceImpl implements UserService {
                 .updateTime(DateUtils.format(new Date())).build();
         // 判断该用户是否绑定
         UserVO userVO = queryByUid(user.getUid());
-
-        Optional.ofNullable(userVO).orElseThrow(() -> new EmailException(ResponseStatusCodeEnum.PERMISSION_USER_NOT_EXIST));
+        AssertUtils.stateThrow(userVO != null, () -> new EmailException(ResponseStatusCodeEnum.PERMISSION_USER_NOT_EXIST));
+        // 判断该用户是否被删除
+        AssertUtils.stateThrow(!userVO.getDelete(), () -> new UserException(ResponseStatusCodeEnum.PERMISSION_USER_NOT_DELETE));
         if (userVO.getVerifyEmail() != null && userVO.getVerifyEmail()) {
             throw new EmailException(ResponseStatusCodeEnum.EXCEPTION_EMAIL_HAD_BINDING);
         }
 
         // 运行到这里，用户没有绑定邮箱，则直接修改，发送，尽管记录里面存在emailUid
-        int updateUserNum = userDao.updateUser(user);
+        int updateUserNum = updateUser(user);
         if (updateUserNum == 1) {
             sendVerifyEmail(userVO, queriedEmailInfo);
         }
@@ -219,11 +217,12 @@ public class UserServiceImpl implements UserService {
     }
 
     private void sendVerifyEmail(UserVO userVO, EmailVO emailVO) throws BindException {
+        String verifyAccountUrl = AccountInfoUtils.generateVerifyUrl(userVO.getUid(),
+                bindEmailKey, userVO.hashCode(), auroraAccountProperties.getMailVerifyAccountPrefixPath());
         EmailVerifyAccountDTO verifyAccountInfo = EmailVerifyAccountDTO.builder()
                 .userUid(userVO.getUid())
                 .expirationTime(auroraAccountProperties.getMailVerifyAccountExpirationTime())
-                .verifyAccountUrl(AccountInfoUtils.generateVerifyAccountPath(userVO.getUid(),
-                        auroraAccountProperties.getMailVerifyAccountPrefixPath(), userVO.getUsername()))
+                .verifyAccountUrl(verifyAccountUrl)
                 .receiverEmail(emailVO.getEmail()).subject(null).build();
 
         List<Map<SendHtmlMailTypeNameEnum, Object>> list = new ArrayList<>();
@@ -236,11 +235,13 @@ public class UserServiceImpl implements UserService {
         mailInfo.setSendType(SendHtmlMailTypeNameEnum.VERIFY_ACCOUNT);
         mailInfo.setSubject(userVO.getUsername() + " 请验证你的账户信息");
         mailInfo.setUserUid(userVO.getUid());
-        /*mailInfo.setCorrelationDataId(GenerateInfoUtils.generateUid(auroraProperties.getSnowFlakeWorkerId(),
-                auroraProperties.getSnowFlakeDatacenterId()) + "");*/
 
         // 运行到这里，直接调用redis进行存储
-        userRedisService.storageUserVerifyAccountInfo(verifyAccountInfo, auroraAccountProperties.getMailVerifyAccountExpirationTime());
+        boolean storageVerifyUrlToRedis = StorageEmailVerifyUrlUtil.storageVerifyUrlToRedis(bindEmailKey, userVO.hashCode(),
+                auroraAccountProperties.getMailVerifyAccountExpirationTime(), userVO.getUid());
+        if (!storageVerifyUrlToRedis) {
+            throw new UserException("绑定邮箱失败");
+        }
         sendMQMessageService.sendCommonMail(mailInfo, AmqpExchangeNameConstant.AURORA_SEND_MAIL_EXCHANGE,
                 "topic", AmqpQueueNameConstant.SEND_HTML_MAIL_ROUTING_KEY, list);
     }

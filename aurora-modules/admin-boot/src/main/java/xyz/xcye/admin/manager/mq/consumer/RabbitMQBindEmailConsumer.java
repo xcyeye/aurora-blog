@@ -70,7 +70,7 @@ public class RabbitMQBindEmailConsumer {
 
         *//*if (modifyResult.isSuccess()) {
             // 如果更新成功，则发送验证账户的邮件
-            String verifyAccountPath = AccountInfoUtils.generateVerifyAccountPath(modifyResult.getUid(), emailVerifyAccountPrefixPath);
+            String verifyAccountPath = AccountInfoUtils.generateVerifyUrl(modifyResult.getUid(), emailVerifyAccountPrefixPath);
             EmailVerifyAccountDTO verifyAccountDTO = EmailVerifyAccountDTO.builder().receiverEmail(emailDO.getEmail())
                     .verifyAccountUrl(verifyAccountPath)
                     .expirationTime((long) emailVerifyAccountExpirationTime)

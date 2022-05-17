@@ -8,6 +8,8 @@
         <result column="update_time" property="updateTime"/>
         <result column="create_time" property="createTime"/>
         <result column="is_delete" property="delete"/>
+        <result column="is_verify_email" property="verifyEmail"/>
+        <result column="is_account_lock" property="accountLock"/>
     </resultMap>
 
     <insert id="insertUser">

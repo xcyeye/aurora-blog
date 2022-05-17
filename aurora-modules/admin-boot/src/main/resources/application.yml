@@ -81,7 +81,7 @@ aurora:
   snow-flake-datacenter-id: 12
   account:
     mail-verify-account-expiration-time: 120000
-    mail-verify-account-prefix-path: http://localhost:8088/admin/verifyAccount/
+    mail-verify-account-prefix-path: http://localhost:7777/admin/verifyAccount/bindEmail
   default:
     avatar: https://picture.xcye.xyz/avatar.jpg
     role: ROLE_user

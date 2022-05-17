@@ -41,5 +41,10 @@
             <groupId>xyz.xcye.base</groupId>
             <artifactId>comment-common</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>xyz.xcye.starter</groupId>
+            <artifactId>aurora-redis-starter</artifactId>
+        </dependency>
     </dependencies>
 </project>

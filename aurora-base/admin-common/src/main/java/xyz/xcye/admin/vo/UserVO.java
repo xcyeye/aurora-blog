@@ -76,4 +76,9 @@ public class UserVO {
      * 更新时间
      */
     private String updateTime;
+
+    /**
+     * 是否被删除
+     */
+    private Boolean delete;
 }

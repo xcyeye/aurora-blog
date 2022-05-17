@@ -20,5 +20,5 @@ public interface UserDao {
      * @param condition 查询条件，其中keyword => username,otherUid => user_account_uid,delete => delete
      * @return
      */
-    List<User> queryAllByCondition(@Param("condition") Condition condition);
+    List<User> queryAllByCondition(@Param("condition") Condition<Long> condition);
 }
