@@ -90,6 +90,9 @@ public enum ResponseStatusCodeEnum {
     OAUTH_NOT_SUPPORT_AUTH_TYPE(444444, "不支持的认证方式"),
 
 
+    //----------------------sentinel相关的响应码
+    REQUEST_BUSY(23746, "请求太快了,请稍后在试┭┮﹏┭┮"),
+
 
     //----------------------未知错误相关的响应码
     UNKNOWN(50000,"未知错误"),

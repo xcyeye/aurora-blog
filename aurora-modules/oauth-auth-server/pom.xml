@@ -72,6 +72,11 @@
             <artifactId>amqp-api</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>xyz.xcye.starter</groupId>
+            <artifactId>aurora-sentinel-starter</artifactId>
+        </dependency>
+
         <!--<dependency>
             <groupId>xyz.xcye.starter</groupId>
             <artifactId>aurora-seata-starter</artifactId>

@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import xyz.xcye.core.entity.R;
 import xyz.xcye.data.entity.Condition;
+import xyz.xcye.oauth.api.service.handler.RolePermissionFeignHandler;
 
 /**
  * 角色权限信息控制器
@@ -12,7 +13,8 @@ import xyz.xcye.data.entity.Condition;
  * @date Created in 2022/5/4 22:43
  */
 
-@FeignClient(value = "aurora-admin",name = "aurora-admin", contextId = "authRolePermissionFeignService")
+@FeignClient(value = "aurora-admin",name = "aurora-admin",
+        contextId = "authRolePermissionFeignService", fallback = RolePermissionFeignHandler.class)
 public interface RolePermissionFeignService {
 
 

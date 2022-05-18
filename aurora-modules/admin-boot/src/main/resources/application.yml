@@ -51,6 +51,11 @@ spring:
       matching-strategy: ant_path_matcher
   application:
     name: aurora-admin
+  cloud:
+    sentinel:
+      transport:
+        port: 8719
+        dashboard: localhost:8080
   rabbitmq:
     host: localhost
     port: 5672

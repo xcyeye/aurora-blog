@@ -1,6 +1,5 @@
 package xyz.xcye.auth.manager.aop;
 
-import io.seata.spring.annotation.GlobalTransactional;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
@@ -37,7 +36,10 @@ import javax.servlet.http.HttpServletRequest;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.time.Duration;
-import java.util.*;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.LinkedHashMap;
+import java.util.Objects;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.regex.Pattern;
 
@@ -70,7 +72,6 @@ public class LoginInfoAop {
      * @return
      * @throws Throwable
      */
-    @GlobalTransactional
     @Before("execution(public * xyz.xcye.auth.service.JwtTokenUserDetailsService.loadUserByUsername(..))")
     public void loadUserByUsername(JoinPoint point) throws BindException {
 

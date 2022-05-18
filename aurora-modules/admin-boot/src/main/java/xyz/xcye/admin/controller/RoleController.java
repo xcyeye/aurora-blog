@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import xyz.xcye.admin.po.Role;
 import xyz.xcye.admin.service.RoleService;
 import xyz.xcye.core.annotaion.controller.ModifyOperation;
+import xyz.xcye.core.annotaion.controller.ResponseRealResult;
 import xyz.xcye.core.annotaion.controller.SelectOperation;
 import xyz.xcye.core.valid.Insert;
 import xyz.xcye.core.valid.Update;
@@ -49,11 +50,12 @@ public class RoleController {
         return roleService.deleteByUid(uid);
     }
 
-    @SelectOperation
+    @ResponseRealResult
     @ApiOperation(value = "根据uid查询角色")
     @GetMapping("/{uid}")
-    public Role queryRoleByUid(@PathVariable("uid") int uid) {
-        return roleService.selectByUid(uid);
+    public String queryRoleByUid(@PathVariable("uid") int uid) {
+        System.out.println(uid);
+        return "roleService.selectByUid(uid)" + uid;
     }
 
     @SelectOperation

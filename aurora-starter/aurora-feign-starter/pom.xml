@@ -46,6 +46,7 @@
             <groupId>xyz.xcye.base</groupId>
             <artifactId>message-common</artifactId>
         </dependency>
+
         <dependency>
             <groupId>xyz.xcye.base</groupId>
             <artifactId>auth-common</artifactId>

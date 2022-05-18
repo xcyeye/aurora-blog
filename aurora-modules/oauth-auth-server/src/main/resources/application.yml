@@ -41,6 +41,11 @@ spring:
         max-idle: 10
         min-idle: 0
         max-wait: -1ms
+  cloud:
+    sentinel:
+      transport:
+        port: 8719
+        dashboard: localhost:8080
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://127.0.0.1:3306/aurora_auth_server?characterEncoding=utf8&connectTimeout=1000&socketTimeout=3000&autoReconnect=true&useUnicode=true&useSSL=false&serverTimezone=UTC
@@ -77,6 +82,13 @@ logging:
     xyz.xcye.web.common.service.feign.MessageLogFeignService: DEBUG
 
 feign:
+  sentinel:
+    enabled: true
+  client:
+    config:
+      default:
+        connectTimeout: 5000
+        readTimeout: 5000
   circuitbreaker:
     enabled: true
     group:

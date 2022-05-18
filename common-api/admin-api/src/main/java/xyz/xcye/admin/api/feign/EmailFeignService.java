@@ -2,7 +2,6 @@ package xyz.xcye.admin.api.feign;
 
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.cloud.openfeign.SpringQueryMap;
-import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,8 +14,7 @@ import xyz.xcye.message.po.Email;
  * @date Created in 2022/4/30 15:12
  */
 
-@FeignClient(value = "aurora-message", contextId = "admin-aurora-email")
-@Component
+@FeignClient(value = "aurora-message", contextId = "admin-aurora-email", fallback = EmailFeignHandler.class)
 public interface EmailFeignService {
     
     @DeleteMapping("/message/email/{uid}")

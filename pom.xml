@@ -244,6 +244,12 @@
                 <version>${blog.version}</version>
             </dependency>
 
+            <dependency>
+                <groupId>xyz.xcye.starter</groupId>
+                <artifactId>aurora-sentinel-starter</artifactId>
+                <version>${blog.version}</version>
+            </dependency>
+
 
             <!--自己的common-->
             <dependency>

@@ -6,6 +6,17 @@ spring:
   application:
     name: aurora-gateway
   cloud:
+    sentinel:
+      filter:
+        enabled: false
+      scg:
+        fallback:
+          mode: response
+          response-status: 200
+          response-body: '{"code":404,"data":{},"message":"请求太快了,请稍后在试┭┮﹏┭┮","success":false}'
+      transport:
+        port: 8719
+        dashboard: localhost:8080
     nacos:
       discovery:
         server-addr: 127.0.0.1:8848

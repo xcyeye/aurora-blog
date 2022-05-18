@@ -16,7 +16,7 @@ import xyz.xcye.message.po.Email;
  * @author qsyyke
  */
 
-@FeignClient(value = "aurora-admin")
+@FeignClient(value = "aurora-admin", fallback = UserFeignHandler.class)
 public interface UserFeignService {
 
     @GetMapping("/admin/user/userUid/{uid}")

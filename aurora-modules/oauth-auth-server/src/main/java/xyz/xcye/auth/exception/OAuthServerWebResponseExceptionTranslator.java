@@ -33,7 +33,7 @@ public class OAuthServerWebResponseExceptionTranslator implements WebResponseExc
     public ResponseEntity<R> translate(Exception e){
         loginInfoAop = AuroraSpringUtils.getBean(LoginInfoAop.class);
         loginInfoAop.authFailure(e);
-        return new ResponseEntity<>(doTranslateHandler(e.getCause()), HttpStatus.UNAUTHORIZED);
+        return new ResponseEntity<>(doTranslateHandler(e.getCause() == null ? e : e.getCause()), HttpStatus.UNAUTHORIZED);
     }
 
     /**
