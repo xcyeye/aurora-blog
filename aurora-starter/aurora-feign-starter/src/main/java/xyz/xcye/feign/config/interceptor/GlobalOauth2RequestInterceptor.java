@@ -31,5 +31,8 @@ public class GlobalOauth2RequestInterceptor implements RequestInterceptor {
         }
 
         template.header(RequestConstant.REQUEST_OPEN_FEIGN_HEADER, "true");
+
+        byte[] body = template.body();
+        System.out.println();
     }
 }

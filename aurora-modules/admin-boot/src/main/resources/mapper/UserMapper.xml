@@ -1,109 +1,199 @@
-<!DOCTYPE mapper
-        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xyz.xcye.admin.dao.UserMapper">
+  <resultMap id="BaseResultMap" type="xyz.xcye.admin.po.User">
+    <!--@mbg.generated-->
+    <!--@Table au_user-->
+    <id column="uid" jdbcType="BIGINT" property="uid" />
+    <result column="user_summary" jdbcType="VARCHAR" property="userSummary" />
+    <result column="nickname" jdbcType="VARCHAR" property="nickname" />
+    <result column="gender" jdbcType="INTEGER" property="gender" />
+    <result column="login_uid" jdbcType="BIGINT" property="loginUid" />
+    <result column="site_uid" jdbcType="BIGINT" property="siteUid" />
+    <result column="avatar" jdbcType="VARCHAR" property="avatar" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="username" jdbcType="VARCHAR" property="username" />
+    <result column="profession" jdbcType="VARCHAR" property="profession" />
+    <result column="email_uid" jdbcType="BIGINT" property="emailUid" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="is_delete" jdbcType="TINYINT" property="delete" />
+    <result column="is_account_lock" jdbcType="TINYINT" property="accountLock" />
+    <result column="is_verify_email" jdbcType="TINYINT" property="verifyEmail" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    `uid`, user_summary, nickname, gender, login_uid, site_uid, avatar, `password`, username, 
+    profession, email_uid, create_time, update_time, is_delete, is_account_lock, is_verify_email
+  </sql>
+  <select id="selectByCondition" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    <!--@mbg.generated-->
+    select 
+    <include refid="Base_Column_List" />
+    from au_user
+    <where>
+      <if test="condition.startTime != null and condition.endTime != null">
+        and create_time between #{condition.startTime} and #{condition.endTime}
+      </if>
+      <if test="condition.uid != null">
+        and uid=#{condition.uid}
+      </if>
+      <if test="condition.keyword != null">
+        and username=#{condition.keyword}
+      </if>
+      <if test="condition.delete !=null">
+        and is_delete=#{condition.delete}
+      </if>
+      <if test="condition.status != null">
+        and is_account_lock=#{condition.status}
+      </if>
+    </where>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    <!--@mbg.generated-->
+    delete from au_user
+    where `uid` = #{uid,jdbcType=BIGINT}
+  </delete>
 
-<mapper namespace="xyz.xcye.admin.dao.UserDao">
-
-    <resultMap id="userResultMap" type="xyz.xcye.admin.po.User">
-        <result column="update_time" property="updateTime"/>
-        <result column="create_time" property="createTime"/>
-        <result column="is_delete" property="delete"/>
-        <result column="is_verify_email" property="verifyEmail"/>
-        <result column="is_account_lock" property="accountLock"/>
-    </resultMap>
-
-    <insert id="insertUser">
-        insert into au_user (
-         uid,user_summary,nickname,gender,login_uid,
-         site_uid,avatar,password,username,profession,is_verify_email,email_uid,
-         update_time,is_delete,is_account_lock
-         )
-
-         values (
-                 #{user.uid},#{user.userSummary},#{user.nickname},#{user.gender},#{user.loginUid},
-                 #{user.siteUid},#{user.avatar},#{user.password},#{user.username}, #{user.profession},
-                 #{user.verifyEmail},#{user.emailUid}, #{user.updateTime},#{user.delete},#{user.accountLock}
-                )
-    </insert>
-
-    <update id="updateUser">
-        update
-            au_user
-        <set>
-            <if test="user.userSummary != null">
-                user_summary=#{user.userSummary},
-            </if>
-            <if test="user.nickname != null">
-                nickname=#{user.nickname},
-            </if>
-            <if test="user.gender != null">
-                gender=#{user.gender},
-            </if>
-            <if test="user.avatar != null">
-                avatar=#{user.avatar},
-            </if>
-            <if test="user.username != null">
-                username=#{user.username},
-            </if>
-            <if test="user.password != null">
-                password=#{user.password},
-            </if>
-            <if test="user.profession != null">
-                profession=#{user.profession},
-            </if>
-            <if test="user.updateTime != null">
-                update_time=#{user.updateTime},
-            </if>
-            <if test="user.userAccountUid != null">
-                user_account_uid=#{user.userAccountUid}
-            </if>
-            <if test="user.emailUid != null">
-                email_uid=#{user.emailUid},
-            </if>
-            <if test="user.delete != null">
-                is_delete=#{user.delete}
-            </if>
-            <if test="user.accountLock != null">
-                is_account_lock=#{user.accountLock}
-            </if>
-            <if test="user.verifyEmail != null">
-                is_verify_email=#{user.verifyEmail}
-            </if>
-        </set>
-        where
-            uid=#{user.uid}
-    </update>
-
-    <delete id="deleteByUid">
-        delete from
-            au_user
-        where
-            uid=#{uid}
-    </delete>
-
-    <select id="queryAllByCondition" resultMap="userResultMap">
-        select
-            uid,user_summary,nickname,gender,login_uid,
-            site_uid,avatar,password,username,profession,
-            email_uid,user_account_uid,create_time,update_time,is_delete,is_account_lock, is_verify_email
-        from
-            au_user
-        <where>
-            <if test="condition.startTime != null and condition.endTime != null">
-                and create_time between #{condition.startTime} and #{condition.endTime}
-            </if>
-            <if test="condition.uid != null">
-                and uid=#{condition.uid}
-            </if>
-            <if test="condition.keyword != null">
-                and username=#{condition.keyword}
-            </if>
-            <if test="condition.delete !=null">
-                and is_delete=#{condition.delete}
-            </if>
-            <if test="condition.status != null">
-                and is_account_lock=#{condition.status}
-            </if>
-        </where>
-    </select>
+  <insert id="insertSelective" parameterType="xyz.xcye.admin.po.User">
+    <!--@mbg.generated-->
+    insert into au_user
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="uid != null">
+        `uid`,
+      </if>
+      <if test="userSummary != null and userSummary != ''">
+        user_summary,
+      </if>
+      <if test="nickname != null and nickname != ''">
+        nickname,
+      </if>
+      <if test="gender != null">
+        gender,
+      </if>
+      <if test="loginUid != null">
+        login_uid,
+      </if>
+      <if test="siteUid != null">
+        site_uid,
+      </if>
+      <if test="avatar != null and avatar != ''">
+        avatar,
+      </if>
+      <if test="password != null and password != ''">
+        `password`,
+      </if>
+      <if test="username != null and username != ''">
+        username,
+      </if>
+      <if test="profession != null and profession != ''">
+        profession,
+      </if>
+      <if test="emailUid != null">
+        email_uid,
+      </if>
+      <if test="delete != null">
+        is_delete,
+      </if>
+      <if test="accountLock != null">
+        is_account_lock,
+      </if>
+      <if test="verifyEmail != null">
+        is_verify_email,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="uid != null">
+        #{uid,jdbcType=BIGINT},
+      </if>
+      <if test="userSummary != null and userSummary != ''">
+        #{userSummary,jdbcType=VARCHAR},
+      </if>
+      <if test="nickname != null and nickname != ''">
+        #{nickname,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null">
+        #{gender,jdbcType=INTEGER},
+      </if>
+      <if test="loginUid != null">
+        #{loginUid,jdbcType=BIGINT},
+      </if>
+      <if test="siteUid != null">
+        #{siteUid,jdbcType=BIGINT},
+      </if>
+      <if test="avatar != null and avatar != ''">
+        #{avatar,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null and password != ''">
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null and username != ''">
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="profession != null and profession != ''">
+        #{profession,jdbcType=VARCHAR},
+      </if>
+      <if test="emailUid != null">
+        #{emailUid,jdbcType=BIGINT},
+      </if>
+      <if test="delete != null">
+        #{delete,jdbcType=TINYINT},
+      </if>
+      <if test="accountLock != null">
+        #{accountLock,jdbcType=TINYINT},
+      </if>
+      <if test="verifyEmail != null">
+        #{verifyEmail,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="xyz.xcye.admin.po.User">
+    <!--@mbg.generated-->
+    update au_user
+    <set>
+      <if test="userSummary != null and userSummary != ''">
+        user_summary = #{userSummary,jdbcType=VARCHAR},
+      </if>
+      <if test="nickname != null and nickname != ''">
+        nickname = #{nickname,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null">
+        gender = #{gender,jdbcType=INTEGER},
+      </if>
+      <if test="loginUid != null">
+        login_uid = #{loginUid,jdbcType=BIGINT},
+      </if>
+      <if test="siteUid != null">
+        site_uid = #{siteUid,jdbcType=BIGINT},
+      </if>
+      <if test="avatar != null and avatar != ''">
+        avatar = #{avatar,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null and password != ''">
+        `password` = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null and username != ''">
+        username = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="profession != null and profession != ''">
+        profession = #{profession,jdbcType=VARCHAR},
+      </if>
+      <if test="emailUid != null">
+        email_uid = #{emailUid,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null and updateTime != ''">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="delete != null">
+        is_delete = #{delete,jdbcType=TINYINT},
+      </if>
+      <if test="accountLock != null">
+        is_account_lock = #{accountLock,jdbcType=TINYINT},
+      </if>
+      <if test="verifyEmail != null">
+        is_verify_email = #{verifyEmail,jdbcType=TINYINT},
+      </if>
+    </set>
+    where `uid` = #{uid,jdbcType=BIGINT}
+  </update>
 </mapper>

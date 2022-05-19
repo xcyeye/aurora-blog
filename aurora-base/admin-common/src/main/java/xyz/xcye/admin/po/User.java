@@ -116,9 +116,4 @@ public class User implements Serializable {
      * 更新时间
      */
     private String updateTime;
-
-    /**
-     * 此用户对应的账户信息uid
-     */
-    private Long userAccountUid;
 }

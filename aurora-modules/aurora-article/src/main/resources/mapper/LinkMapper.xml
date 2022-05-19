@@ -14,7 +14,7 @@
     <result column="link_cover" jdbcType="VARCHAR" property="linkCover" />
     <result column="is_publish" jdbcType="TINYINT" property="publish" />
     <result column="email" jdbcType="VARCHAR" property="email" />
-    <result column="qq_number" jdbcType="INTEGER" property="qqNumber" />
+    <result column="qq_number" jdbcType="VARCHAR" property="qqNumber" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
   </resultMap>
@@ -121,7 +121,7 @@
         #{email,jdbcType=VARCHAR},
       </if>
       <if test="qqNumber != null">
-        #{qqNumber,jdbcType=INTEGER},
+        #{qqNumber,jdbcType=BIGINT},
       </if>
     </trim>
   </insert>
@@ -157,7 +157,7 @@
         email = #{email,jdbcType=VARCHAR},
       </if>
       <if test="qqNumber != null">
-        qq_number = #{qqNumber,jdbcType=INTEGER},
+        qq_number = #{qqNumber,jdbcType=VARCHAR},
       </if>
       <if test="updateTime != null and updateTime != ''">
         update_time = #{updateTime,jdbcType=TIMESTAMP},

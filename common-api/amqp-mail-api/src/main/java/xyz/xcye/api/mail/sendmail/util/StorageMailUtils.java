@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import org.springframework.beans.BeanUtils;
 import xyz.xcye.api.mail.sendmail.entity.StorageSendMailInfo;
 import xyz.xcye.api.mail.sendmail.enums.SendHtmlMailTypeNameEnum;
+import xyz.xcye.message.dto.CommonNoticeDTO;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -84,5 +85,12 @@ public class StorageMailUtils {
         map.put(mailTypeNameEnum, obj);
         list.add(map);
         return list;
+    }
+
+    public static List<Map<SendHtmlMailTypeNameEnum, Object>> generateCommonNotice(String sendMessage) {
+        CommonNoticeDTO commonNoticeDTO = CommonNoticeDTO.builder()
+                .sendMessage(sendMessage)
+                .build();
+        return generateReplacedMailObject(SendHtmlMailTypeNameEnum.COMMON_NOTICE, commonNoticeDTO);
     }
 }

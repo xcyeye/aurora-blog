@@ -1,139 +1,212 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper
-        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="xyz.xcye.comment.dao.CommentMapper">
+  <resultMap id="BaseResultMap" type="xyz.xcye.comment.po.Comment">
+    <!--@mbg.generated-->
+    <!--@Table au_comment-->
+    <id column="uid" jdbcType="BIGINT" property="uid" />
+    <result column="username" jdbcType="VARCHAR" property="username" />
+    <result column="avatar" jdbcType="VARCHAR" property="avatar" />
+    <result column="site" jdbcType="VARCHAR" property="site" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="comment_ip" jdbcType="VARCHAR" property="commentIp" />
+    <result column="operation_system_info" jdbcType="VARCHAR" property="operationSystemInfo" />
+    <result column="is_show_comment" jdbcType="TINYINT" property="showComment" />
+    <result column="reply_comment_uid" jdbcType="BIGINT" property="replyCommentUid" />
+    <result column="is_email_notice" jdbcType="TINYINT" property="emailNotice" />
+    <result column="path" jdbcType="VARCHAR" property="path" />
+    <result column="content" jdbcType="VARCHAR" property="content" />
+    <result column="user_uid" jdbcType="BIGINT" property="userUid" />
+    <result column="is_delete" jdbcType="TINYINT" property="delete" />
+    <result column="page_type" jdbcType="VARCHAR" property="pageType" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="xyz.xcye.comment.po.Comment">
+    <!--@mbg.generated-->
+    <!--@Table au_comment-->
+    <result column="next_comment_uid_array" jdbcType="LONGVARCHAR" property="nextCommentUidArray" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    `uid`, username, avatar, site, email, create_time, update_time, comment_ip, operation_system_info, 
+    is_show_comment, reply_comment_uid, is_email_notice, `path`, content, user_uid, is_delete, 
+    page_type
+  </sql>
+  <sql id="Blob_Column_List">
+    <!--@mbg.generated-->
+    next_comment_uid_array
+  </sql>
+  <select id="selectByCondition" resultMap="ResultMapWithBLOBs">
+    <!--@mbg.generated-->
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from au_comment
+    <where>
+      <if test="condition.startTime != null and condition.endTime != null">
+        and create_time between #{condition.startTime} and #{condition.endTime}
+      </if>
+      <if test="condition.uid != null">
+        and uid=#{condition.uid}
+      </if>
+      <if test="condition.keyword != null">
+        and content like concat('%', #{condition.keyword},'%')
+      </if>
+      <if test="condition.delete !=null">
+        and is_delete=#{condition.delete}
+      </if>
+      <if test="condition.status != null">
+        and is_show=#{condition.show}
+      </if>
+    </where>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    <!--@mbg.generated-->
+    delete from au_comment
+    where `uid` = #{uid,jdbcType=BIGINT}
+  </delete>
 
-    <resultMap id="BaseResultMap" type="xyz.xcye.comment.po.Comment">
-            <id property="uid" column="uid" jdbcType="BIGINT"/>
-            <result property="username" column="username" jdbcType="VARCHAR"/>
-            <result property="avatar" column="avatar" jdbcType="VARCHAR"/>
-            <result property="site" column="site" jdbcType="VARCHAR"/>
-            <result property="email" column="email" jdbcType="VARCHAR"/>
-            <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
-            <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
-            <result property="commentIp" column="comment_ip" jdbcType="VARCHAR"/>
-            <result property="operationSystemInfo" column="operation_system_info" jdbcType="VARCHAR"/>
-            <result property="showComment" column="is_show_comment" jdbcType="TINYINT"/>
-            <result property="replyCommentUid" column="reply_comment_uid" jdbcType="BIGINT"/>
-            <result property="emailNotice" column="is_email_notice" jdbcType="TINYINT"/>
-            <result property="path" column="path" jdbcType="VARCHAR"/>
-            <result property="nextCommentUidArray" column="next_comment_uid_array" jdbcType="VARCHAR"/>
-            <result property="content" column="content" jdbcType="VARCHAR"/>
-            <result property="userUid" column="user_uid" jdbcType="BIGINT"/>
-            <result property="delete" column="is_delete" jdbcType="TINYINT"/>
-            <result property="pageType" column="page_type" jdbcType="VARCHAR"/>
-    </resultMap>
-
-    <sql id="Base_Column_List">
-        uid,username,avatar,
-        site,email,create_time,
-        update_time,comment_ip,operation_system_info,
-        is_show_comment,reply_comment_uid,is_email_notice,
-        `path`,next_comment_uid_array,content,
-        user_uid,is_delete,page_type
-    </sql>
-
-    <select id="queryAllComment" parameterType="java.lang.Long" resultMap="BaseResultMap">
-        select
-        <include refid="Base_Column_List" />
-        from au_comment
-        <where>
-            <if test="condition.startTime != null and condition.endTime != null">
-                and create_time between #{condition.startTime} and #{condition.endTime}
-            </if>
-            <if test="condition.uid != null">
-                and uid=#{condition.uid}
-            </if>
-            <if test="condition.otherUid != null">
-                and user_uid=#{condition.otherUid}
-            </if>
-            <if test="condition.keyword != null">
-                and username like concat('%', #{condition.keyword  }, '%')
-            </if>
-            <if test="condition.status != null">
-                and is_delete=#{condition.delete}
-            </if>
-        </where>
-    </select>
-
-    <delete id="deleteComment" parameterType="java.lang.Long">
-        delete from au_comment
-        where  uid = #{uid,jdbcType=BIGINT} 
-    </delete>
-
-    <insert id="insertComment" keyColumn="uid" keyProperty="uid" parameterType="xyz.xcye.comment.po.Comment" useGeneratedKeys="true">
-        insert into au_comment
-        ( uid,username,avatar
-        ,site,email,create_time
-        ,update_time,comment_ip,operation_system_info
-        ,is_show_comment,reply_comment_uid,is_email_notice
-        ,path,next_comment_uid_array,content
-        ,user_uid,is_delete, page_type)
-        values (#{uid,jdbcType=BIGINT},#{username,jdbcType=VARCHAR},#{avatar,jdbcType=VARCHAR}
-        ,#{site,jdbcType=VARCHAR},#{email,jdbcType=VARCHAR},#{createTime,jdbcType=TIMESTAMP}
-        ,#{updateTime,jdbcType=TIMESTAMP},#{commentIp,jdbcType=VARCHAR},#{operationSystemInfo,jdbcType=VARCHAR}
-        ,#{showComment,jdbcType=TINYINT},#{replyCommentUid,jdbcType=BIGINT},#{emailNotice,jdbcType=TINYINT}
-        ,#{path,jdbcType=VARCHAR},#{nextCommentUidArray,jdbcType=VARCHAR},#{content,jdbcType=VARCHAR}
-        ,#{userUid,jdbcType=BIGINT},#{delete,jdbcType=TINYINT},#{pageType, jdbcType=VARCHAR})
-    </insert>
-
-    <update id="updateComment" parameterType="xyz.xcye.comment.po.Comment">
-        update au_comment
-        <set>
-                <if test="username != null">
-                    username = #{username,jdbcType=VARCHAR},
-                </if>
-                <if test="avatar != null">
-                    avatar = #{avatar,jdbcType=VARCHAR},
-                </if>
-                <if test="site != null">
-                    site = #{site,jdbcType=VARCHAR},
-                </if>
-                <if test="email != null">
-                    email = #{email,jdbcType=VARCHAR},
-                </if>
-                <if test="updateTime != null">
-                    update_time = #{updateTime,jdbcType=TIMESTAMP},
-                </if>
-                <if test="commentIp != null">
-                    comment_ip = #{commentIp,jdbcType=VARCHAR},
-                </if>
-                <if test="operationSystemInfo != null">
-                    operation_system_info = #{operationSystemInfo,jdbcType=VARCHAR},
-                </if>
-                <if test="showComment != null">
-                    is_show_comment = #{showComment,jdbcType=TINYINT},
-                </if>
-                <if test="replyCommentUid != null">
-                    reply_comment_uid = #{replyCommentUid,jdbcType=BIGINT},
-                </if>
-                <if test="emailNotice != null">
-                    is_email_notice = #{emailNotice,jdbcType=TINYINT},
-                </if>
-                <if test="path != null">
-                    `path` = #{path,jdbcType=VARCHAR},
-                </if>
-                <if test="nextCommentUidArray != null">
-                    next_comment_uid_array = #{nextCommentUidArray,jdbcType=VARCHAR},
-                </if>
-                <if test="content != null">
-                    content = #{content,jdbcType=VARCHAR},
-                </if>
-                <if test="userUid != null">
-                    user_uid = #{userUid,jdbcType=BIGINT},
-                </if>
-                <if test="pageType != null and pageType != ''">
-                    page_type=#{pageType,jdbcType=VARCHAR}
-                </if>
-        </set>
-        where   uid = #{uid,jdbcType=BIGINT} 
-    </update>
-
-    <update id="updateDeleteStatus" parameterType="xyz.xcye.comment.po.Comment">
-        update au_comment
-        set 
-            is_delete=#{comment.delete}
-        where   uid = #{comment.uid,jdbcType=BIGINT}
-    </update>
+  <insert id="insertSelective" parameterType="xyz.xcye.comment.po.Comment">
+    <!--@mbg.generated-->
+    insert into au_comment
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="uid != null">
+        `uid`,
+      </if>
+      <if test="username != null and username != ''">
+        username,
+      </if>
+      <if test="avatar != null and avatar != ''">
+        avatar,
+      </if>
+      <if test="site != null and site != ''">
+        site,
+      </if>
+      <if test="email != null and email != ''">
+        email,
+      </if>
+      <if test="commentIp != null and commentIp != ''">
+        comment_ip,
+      </if>
+      <if test="operationSystemInfo != null and operationSystemInfo != ''">
+        operation_system_info,
+      </if>
+      <if test="replyCommentUid != null">
+        reply_comment_uid,
+      </if>
+      <if test="path != null and path != ''">
+        `path`,
+      </if>
+      <if test="content != null and content != ''">
+        content,
+      </if>
+      <if test="userUid != null">
+        user_uid,
+      </if>
+      <if test="pageType != null and pageType != ''">
+        page_type,
+      </if>
+      <if test="nextCommentUidArray != null and nextCommentUidArray != ''">
+        next_comment_uid_array,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="uid != null">
+        #{uid,jdbcType=BIGINT},
+      </if>
+      <if test="username != null and username != ''">
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="avatar != null and avatar != ''">
+        #{avatar,jdbcType=VARCHAR},
+      </if>
+      <if test="site != null and site != ''">
+        #{site,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null and email != ''">
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="commentIp != null and commentIp != ''">
+        #{commentIp,jdbcType=VARCHAR},
+      </if>
+      <if test="operationSystemInfo != null and operationSystemInfo != ''">
+        #{operationSystemInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="replyCommentUid != null">
+        #{replyCommentUid,jdbcType=BIGINT},
+      </if>
+      <if test="path != null and path != ''">
+        #{path,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null and content != ''">
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="userUid != null">
+        #{userUid,jdbcType=BIGINT},
+      </if>
+      <if test="pageType != null and pageType != ''">
+        #{pageType,jdbcType=VARCHAR},
+      </if>
+      <if test="nextCommentUidArray != null and nextCommentUidArray != ''">
+        #{nextCommentUidArray,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="xyz.xcye.comment.po.Comment">
+    <!--@mbg.generated-->
+    update au_comment
+    <set>
+      <if test="username != null and username != ''">
+        username = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="avatar != null and avatar != ''">
+        avatar = #{avatar,jdbcType=VARCHAR},
+      </if>
+      <if test="site != null and site != ''">
+        site = #{site,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null and email != ''">
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null and updateTime != ''">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="commentIp != null and commentIp != ''">
+        comment_ip = #{commentIp,jdbcType=VARCHAR},
+      </if>
+      <if test="operationSystemInfo != null and operationSystemInfo != ''">
+        operation_system_info = #{operationSystemInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="showComment != null">
+        is_show_comment = #{showComment,jdbcType=TINYINT},
+      </if>
+      <if test="replyCommentUid != null">
+        reply_comment_uid = #{replyCommentUid,jdbcType=BIGINT},
+      </if>
+      <if test="emailNotice != null">
+        is_email_notice = #{emailNotice,jdbcType=TINYINT},
+      </if>
+      <if test="path != null and path != ''">
+        `path` = #{path,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null and content != ''">
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="userUid != null">
+        user_uid = #{userUid,jdbcType=BIGINT},
+      </if>
+      <if test="delete != null">
+        is_delete = #{delete,jdbcType=TINYINT},
+      </if>
+      <if test="pageType != null and pageType != ''">
+        page_type = #{pageType,jdbcType=VARCHAR},
+      </if>
+      <if test="nextCommentUidArray != null and nextCommentUidArray != ''">
+        next_comment_uid_array = #{nextCommentUidArray,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where `uid` = #{uid,jdbcType=BIGINT}
+  </update>
 </mapper>

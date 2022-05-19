@@ -93,7 +93,7 @@ public class Comment implements Serializable {
      * 评论者的ip 可以为null
      * <p>length < 12</p>
      */
-    @Length(max = FieldLengthConstant.IP,message = "评论-ip地址最大长度为{max}")
+    @Length(max = FieldLengthConstant.IP,message = "评论-ip地址最大长度为{max}", groups = Update.class)
     private String commentIp;
 
     /**
@@ -121,8 +121,8 @@ public class Comment implements Serializable {
     /**
      * 评论内容
      */
-    @Length(max = FieldLengthConstant.CONTENT)
-    @ValidateString(value = "评论的内容", max = FieldLengthConstant.CONTENT, groups = {Insert.class})
+    @Length(max = FieldLengthConstant.COMMENT_CONTENT)
+    @ValidateString(value = "评论的内容", max = FieldLengthConstant.COMMENT_CONTENT, groups = {Insert.class})
     private String content;
 
     /**

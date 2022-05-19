@@ -65,11 +65,7 @@ spring:
         - id: aurora-auth-server
           uri: lb://aurora-auth-server
           predicates:
-            - Path=/auth/**
-        - id: aurora-auth-login
-          uri: lb://aurora-auth-server
-          predicates:
-            - Path=/login/**
+            - Path=/auth/**,/login/**,/oauth/**
       default-filters:
         - DedupeResponseHeader=Vary Access-Control-Allow-Origin Access-Control-Allow-Credentials, RETAIN_FIRST
 management:

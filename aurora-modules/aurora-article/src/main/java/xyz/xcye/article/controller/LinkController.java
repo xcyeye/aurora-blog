@@ -45,6 +45,7 @@ public class LinkController {
     @ApiOperation("插入新友情链接")
     @PostMapping
     public int insertSelective(@Validated({Insert.class, Default.class}) Link record) throws BindException {
+        Long qqNumber = record.getQqNumber();
         return linkService.insertSelective(record);
     }
 

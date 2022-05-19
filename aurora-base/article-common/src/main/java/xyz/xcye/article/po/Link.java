@@ -101,7 +101,7 @@ public class Link implements Serializable {
     * 此友情链接对应的站长的qq号
     */
     @ApiModelProperty(value="此友情链接对应的站长的qq号")
-    private Integer qqNumber;
+    private Long qqNumber;
 
     /**
     * 创建时间

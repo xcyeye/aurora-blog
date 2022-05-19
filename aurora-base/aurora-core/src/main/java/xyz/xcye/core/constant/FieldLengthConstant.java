@@ -65,6 +65,7 @@ public class FieldLengthConstant {
     /** url地址 **/
     public static final int URL = 255;
 
+    public static final int COMMENT_CONTENT = 300;
 
     //-----------------------------------社交信息相关
     /** 社交名称 **/

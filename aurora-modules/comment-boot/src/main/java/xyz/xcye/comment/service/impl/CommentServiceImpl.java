@@ -64,7 +64,7 @@ public class CommentServiceImpl implements CommentService {
         boolean isReplyCommentFlag = queriedRepliedCommentDO != null;
 
         // 向数据库中插入此条评论
-        int insertCommentNum = commentMapper.insertComment(comment);
+        int insertCommentNum = commentMapper.insertSelective(comment);
 
         // 使用rabbitmq发送邮件通知对方 因为使用rabbitmq发送消息到交换机的过程是同步的，并且我们已经开启了seata的全局事务功能
         // 所以如果在发送mq消息的过程中，出现异常，能够回滚，从而能够保证插入评论后，能够保证评论和mq发送到交换机的消息同时成功或者失败
@@ -100,7 +100,7 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public int deleteComment(Long uid) {
         Assert.notNull(uid, "uid不能为null");
-        return commentMapper.deleteComment(uid);
+        return commentMapper.deleteByPrimaryKey(uid);
     }
 
     @Override
@@ -110,7 +110,7 @@ public class CommentServiceImpl implements CommentService {
         // 设置最后修改时间
         comment.setUpdateTime(DateUtils.format());
         Optional.ofNullable(UserUtils.getCurrentUserUid()).ifPresent(comment::setUserUid);
-        return commentMapper.updateComment(comment);
+        return commentMapper.updateByPrimaryKeySelective(comment);
     }
 
     @Override
@@ -119,7 +119,7 @@ public class CommentServiceImpl implements CommentService {
         Optional.ofNullable(UserUtils.getCurrentUserUid()).ifPresent(comment::setUserUid);
         comment.setUpdateTime(DateUtils.format());
         comment.setDelete(Optional.ofNullable(comment.getDelete()).orElse(false));
-        return commentMapper.updateDeleteStatus(comment);
+        return commentMapper.updateByPrimaryKeySelective(comment);
     }
 
     @Override
@@ -151,7 +151,7 @@ public class CommentServiceImpl implements CommentService {
     public List<CommentDTO> queryAllComments(Condition<Long> condition) {
         Assert.notNull(condition, "查询条件不能为null");
         PageHelper.startPage(condition.getPageNum(),condition.getPageSize(),condition.getOrderBy());
-        List<Comment> commentDOList = commentMapper.queryAllComment(condition);
+        List<Comment> commentDOList = commentMapper.selectByCondition(condition);
         List<CommentDTO> queriedCommentDTOList = new ArrayList<>();
         for (Comment queriedCommentDO : commentDOList) {
             CommentDTO queriedCommentDTO = new CommentDTO();
@@ -172,7 +172,7 @@ public class CommentServiceImpl implements CommentService {
         Condition<Long> condition = new Condition();
         condition.setUid(uid);
         return xyz.xcye.core.util.BeanUtils.getSingleObjFromList(
-                commentMapper.queryAllComment(condition),CommentDTO.class);
+                commentMapper.selectByCondition(condition),CommentDTO.class);
     }
 
     private void setDefaultProperty(Comment comment) {
@@ -237,7 +237,7 @@ public class CommentServiceImpl implements CommentService {
         //判断是否存在
         Condition<Long> condition = new Condition<>();
         condition.setUid(commentUid);
-        List<Comment> commentDOList = commentMapper.queryAllComment(condition);
+        List<Comment> commentDOList = commentMapper.selectByCondition(condition);
         return xyz.xcye.core.util.BeanUtils.getSingleObjFromList(commentDOList,Comment.class);
     }
 

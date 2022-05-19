@@ -35,7 +35,7 @@ public class MessageLogController {
     @ApiOperation(value = "插入新消费消息",notes = "插入新消费消息")
     @ModifyOperation
     @PostMapping("")
-    public int insertMessageLog(@Validated({Insert.class,Default.class}) MessageLog messageLog)
+    public int insertMessageLog(@Validated({Insert.class,Default.class}) @RequestBody MessageLog messageLog)
             throws BindException {
         return messageLogService.insertMessageLog(messageLog);
     }
@@ -43,7 +43,7 @@ public class MessageLogController {
     @ApiOperation(value = "更新消费消息")
     @ModifyOperation
     @PutMapping("")
-    public int updateMessageLog(@Validated(Update.class) MessageLog messageLog) throws BindException {
+    public int updateMessageLog(@Validated(Update.class) @RequestBody MessageLog messageLog) throws BindException {
         return messageLogService.updateMessageLog(messageLog);
     }
 

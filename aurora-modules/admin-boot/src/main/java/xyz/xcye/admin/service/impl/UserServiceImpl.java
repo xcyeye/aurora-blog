@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.BindException;
 import xyz.xcye.admin.api.feign.EmailFeignService;
-import xyz.xcye.admin.dao.UserDao;
+import xyz.xcye.admin.dao.UserMapper;
 import xyz.xcye.admin.dto.EmailVerifyAccountDTO;
 import xyz.xcye.admin.po.User;
 import xyz.xcye.admin.properties.AdminDefaultProperties;
@@ -51,7 +51,7 @@ public class UserServiceImpl implements UserService {
     private final String bindEmailKey = "bindEmail";
 
     @Autowired
-    private UserDao userDao;
+    private UserMapper userMapper;
     @Autowired
     private PasswordEncoder passwordEncoder;
     @Autowired
@@ -74,7 +74,7 @@ public class UserServiceImpl implements UserService {
                 () -> new UserException(ResponseStatusCodeEnum.PERMISSION_USER_EXIST));
         // 设置默认属性
         setUserProperties(user);
-       return userDao.insertUser(user);
+       return userMapper.insertSelective(user);
     }
 
     @Transactional
@@ -90,7 +90,7 @@ public class UserServiceImpl implements UserService {
             throw new UserException(ResponseStatusCodeEnum.PERMISSION_USER_EXIST);
         }
         user.setUpdateTime(DateUtils.format(new Date()));
-        return userDao.updateUser(user);
+        return userMapper.updateByPrimaryKeySelective(user);
     }
 
     /**
@@ -121,7 +121,7 @@ public class UserServiceImpl implements UserService {
     @Transactional
     @Override
     public int realDeleteByUid(long uid) {
-        return userDao.deleteByUid(uid);
+        return userMapper.deleteByPrimaryKey(uid);
     }
 
     @Override
@@ -132,27 +132,27 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public PageData<UserVO> queryAllByCondition(Condition<Long> condition) {
-        return PageUtils.pageList(condition, t -> BeanUtils.copyList(userDao.queryAllByCondition(condition), UserVO.class));
+        return PageUtils.pageList(condition, t -> BeanUtils.copyList(userMapper.selectByCondition(condition), UserVO.class));
     }
 
     @Override
     public UserVO queryByUid(long uid) {
-        return BeanUtils.getSingleObjFromList(userDao.queryAllByCondition(Condition.instant(uid, true)), UserVO.class);
+        return BeanUtils.getSingleObjFromList(userMapper.selectByCondition(Condition.instant(uid, true)), UserVO.class);
     }
 
     @Override
     public User queryByUsernameContainPassword(String username) {
-        return BeanUtils.getSingleObjFromList(userDao.queryAllByCondition(Condition.instant(username, null, null)), User.class);
+        return BeanUtils.getSingleObjFromList(userMapper.selectByCondition(Condition.instant(username, null, null)), User.class);
     }
 
     @Override
     public User queryByUidContainPassword(long uid) {
-        return BeanUtils.getSingleObjFromList(userDao.queryAllByCondition(Condition.instant(uid, true, null, null)), User.class);
+        return BeanUtils.getSingleObjFromList(userMapper.selectByCondition(Condition.instant(uid, true, null, null)), User.class);
     }
 
     @Override
     public UserVO queryByUsername(String username) {
-        return BeanUtils.getSingleObjFromList(userDao.queryAllByCondition(Condition.instant(username, null, null)), UserVO.class);
+        return BeanUtils.getSingleObjFromList(userMapper.selectByCondition(Condition.instant(username, null, null)), UserVO.class);
     }
 
     @GlobalTransactional(rollbackFor = Exception.class)
@@ -193,7 +193,7 @@ public class UserServiceImpl implements UserService {
      */
     private boolean existsUsername(String username) {
         Condition<Long> condition = Condition.instant(username, null, null);
-        return !userDao.queryAllByCondition(condition).isEmpty();
+        return !userMapper.selectByCondition(condition).isEmpty();
     }
 
     private void setUserProperties(User user) {

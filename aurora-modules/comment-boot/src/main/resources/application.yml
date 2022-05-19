@@ -100,3 +100,5 @@ feign:
 aurora:
   snow-flake-datacenter-id: 5
   snow-flake-worker-id: 23
+  oauth:
+    secret-key: auroraaadkfhasdfuywasdfkjahdsfuewkrnbsdjtywq8745ghsdfsgdfhsdfgerbjhsdtfquewrw9erygtwertfysatf

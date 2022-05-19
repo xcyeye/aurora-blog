@@ -60,7 +60,7 @@ public class MailTemplateUtils {
         StringBuilder builder = new StringBuilder();
         String s = "";
         while ((s = reader.readLine()) != null) {
-            builder.append(System.lineSeparator() + s);
+            builder.append(System.lineSeparator()).append(s);
         }
         reader.close();
         return builder.toString();

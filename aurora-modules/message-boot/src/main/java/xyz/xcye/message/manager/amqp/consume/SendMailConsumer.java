@@ -104,7 +104,7 @@ public class SendMailConsumer {
      * @param message
      */
     @RabbitListener(queues = AmqpQueueNameConstant.SEND_SIMPLE_TEXT_MAIL_QUEUE_NAME, ackMode = "MANUAL")
-    public void sendSimpleTextMailConsumer(String msgJson, Channel channel, Message message) throws IOException, ReflectiveOperationException, BindException, MessagingException {
+    public void sendSimpleTextMailConsumer(String msgJson, Channel channel, Message message) throws IOException, BindException, MessagingException {
         // 从mq发送的消息中，解析出邮件发送的相关数据
         StorageSendMailInfo storageSendMailInfo = parseMessage.getStorageSendMailInfoFromMsg(msgJson,channel,message);
         setSimpleTextReceiveEmail(storageSendMailInfo, msgJson, channel, message);
@@ -147,8 +147,7 @@ public class SendMailConsumer {
      * @throws BindException
      */
     private void updateMessageLogInfo(String correlationDataId, boolean ackStatus,
-                                      boolean consumeStatus, String errorMessage)
-            throws BindException, ReflectiveOperationException {
+                                      boolean consumeStatus, String errorMessage) throws BindException {
         MessageLogVO messageLogVO = messageLogService.queryByUid(Long.parseLong(correlationDataId));
 
         if (messageLogVO == null) {

@@ -62,10 +62,13 @@ public class LinkServiceImpl implements LinkService {
         // 如果删除成功，通知对方
         LinkVO linkVO = selectByUid(uid);
         int deleteNum = linkMapper.deleteByPrimaryKey(uid);
+        R r = userFeignService.queryUserByUid(linkVO.getUserUid());
+        UserVO userVO = JSONUtils.parseObjFromResult(r, "data", UserVO.class);
         if (deleteNum == 1) {
-            StorageSendMailInfo mailInfo = getMailInfo(linkVO.getEmail(), "你的友情链接被删除了", replyMessage,
-                    BeanUtils.copyProperties(linkVO, Link.class));
-            sendMail(mailInfo, getReplacedObject(linkVO));
+            String mailMessage = "<p>您在" + userVO.getUsername() + "用户处申请的友链被移除！┭┮﹏┭┮</p><p>原因:" + replyMessage + "</p>";
+            StorageSendMailInfo mailInfo = getMailInfo(linkVO.getEmail(), "友链被移除",
+                    mailMessage, BeanUtils.copyProperties(linkVO, Link.class), SendHtmlMailTypeNameEnum.COMMON_NOTICE);
+            sendMail(mailInfo, StorageMailUtils.generateCommonNotice(mailMessage));
         }
         return deleteNum;
     }
@@ -92,7 +95,8 @@ public class LinkServiceImpl implements LinkService {
         int insertNum = linkMapper.insertSelective(record);
         // 如果插入成功，则发送消息通知该用户
         if (insertNum == 1) {
-            StorageSendMailInfo mailInfo = getMailInfo(null, "你有新的友情链接待审核", "新友情链接信息: " + record, record);
+            StorageSendMailInfo mailInfo = getMailInfo(null, "你有新的友情链接待审核",
+                    "新友情链接信息: " + record, record, SendHtmlMailTypeNameEnum.FRIEND_LINK_NOTICE);
             try {
                 List<Map<SendHtmlMailTypeNameEnum, Object>> replacedMailObject =
                         StorageMailUtils.generateReplacedMailObject(SendHtmlMailTypeNameEnum.FRIEND_LINK_NOTICE, record);
@@ -128,17 +132,23 @@ public class LinkServiceImpl implements LinkService {
 
         // 如果修改成功，查询完整的友情链接信息，用于发送
         LinkVO linkVO = selectByUid(record.getUid());
+        R r = userFeignService.queryUserByUid(linkVO.getUserUid());
+        UserVO userVO = JSONUtils.parseObjFromResult(r, "data", UserVO.class);
         if (updateNum == 1 && !record.getPublish()) {
             // 没有审核通过，则把message发送给该站长
-            StorageSendMailInfo mailInfo = getMailInfo(linkVO.getEmail(), "你申请的友情链接未通过审核", "原因: " + replyMessage, record);
-            sendSimpleTextMail(mailInfo);
+            String mailMessage = "<p>您在" + userVO.getUsername() + "用户处申请的友链未通过审核！┭┮﹏┭┮</p><p>原因:" + replyMessage + "</p>";
+            StorageSendMailInfo mailInfo = getMailInfo(linkVO.getEmail(), "友链未通过",
+                    mailMessage, record, SendHtmlMailTypeNameEnum.COMMON_NOTICE);
+            sendMail(mailInfo, StorageMailUtils.generateCommonNotice(mailMessage));
             return updateNum;
         }
 
         // 通过审核，发送消息通知对方
         if (updateNum == 1 && record.getPublish()) {
-            StorageSendMailInfo mailInfo = getMailInfo(linkVO.getEmail(), "你申请的友情链接已通过审核", replyMessage, record);
-            sendSimpleTextMail(mailInfo);
+            String mailMessage = "<p>您在" + userVO.getUsername() + "用户处申请的友链已通过审核！O(∩_∩)O哈哈~</p><p>博主留言:" + replyMessage + "</p>";
+            StorageSendMailInfo mailInfo = getMailInfo(linkVO.getEmail(), "友链通过",
+                    mailMessage, record, SendHtmlMailTypeNameEnum.COMMON_NOTICE);
+            sendMail(mailInfo, StorageMailUtils.generateCommonNotice(mailMessage));
         }
         return updateNum;
     }
@@ -171,31 +181,19 @@ public class LinkServiceImpl implements LinkService {
         }
     }
 
-    private StorageSendMailInfo getMailInfo(String receiverEmail, String subject, String simpleText, Link link) {
+    private StorageSendMailInfo getMailInfo(String receiverEmail, String subject, String simpleText,
+                                            Link link, SendHtmlMailTypeNameEnum mailTypeNameEnum) {
         StorageSendMailInfo mailInfo = new StorageSendMailInfo();
         mailInfo.setReceiverEmail(receiverEmail);
         mailInfo.setSubject(subject);
         mailInfo.setSimpleText(simpleText);
         mailInfo.setUserUid(link.getUserUid());
-        mailInfo.setSendType(SendHtmlMailTypeNameEnum.FRIEND_LINK_NOTICE);
+        mailInfo.setSendType(mailTypeNameEnum);
         return mailInfo;
-    }
-
-    private List<Map<SendHtmlMailTypeNameEnum, Object>> getReplacedObject(LinkVO  link) {
-        List<Map<SendHtmlMailTypeNameEnum, Object>> list = new ArrayList<>();
-        Map<SendHtmlMailTypeNameEnum, Object> map = new HashMap<>();
-        map.put(SendHtmlMailTypeNameEnum.FRIEND_LINK_NOTICE, link);
-        list.add(map);
-        return list;
     }
 
     private void sendMail(StorageSendMailInfo mailInfo, List<Map<SendHtmlMailTypeNameEnum,Object>> replacedObjList) throws BindException {
         sendMQMessageService.sendCommonMail(mailInfo, AmqpExchangeNameConstant.AURORA_SEND_MAIL_EXCHANGE,
                 "topic", AmqpQueueNameConstant.SEND_HTML_MAIL_ROUTING_KEY, replacedObjList);
-    }
-
-    private void sendSimpleTextMail(StorageSendMailInfo mailInfo) throws BindException {
-        sendMQMessageService.sendSimpleTextMail(mailInfo, AmqpExchangeNameConstant.AURORA_SEND_MAIL_EXCHANGE,
-                "topic", AmqpQueueNameConstant.SEND_SIMPLE_TEXT_MAIL_ROUTING_KEY);
     }
 }

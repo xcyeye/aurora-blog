@@ -6,6 +6,7 @@ import org.springframework.boot.web.reactive.error.ErrorWebExceptionHandler;
 import org.springframework.cloud.gateway.support.NotFoundException;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.server.reactive.ServerHttpResponse;
+import org.springframework.security.oauth2.common.exceptions.InvalidTokenException;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
@@ -23,6 +24,9 @@ import xyz.xcye.wg.util.SecurityResultHandler;
 @RequiredArgsConstructor
 public class GlobalErrorExceptionHandler implements ErrorWebExceptionHandler {
 
+
+
+    @Override
     public Mono<Void> handle(ServerWebExchange exchange, Throwable ex) {
         ServerHttpResponse response = exchange.getResponse();
         if (response.isCommitted()) {
@@ -33,7 +37,9 @@ public class GlobalErrorExceptionHandler implements ErrorWebExceptionHandler {
         if (ex instanceof NotFoundException) {
             // NotFoundException是服务实例未启动
             responseStatusCodeEnum = ResponseStatusCodeEnum.SERVICE_INSTANCE_NOT_FOUND;
-        }else {
+        }else if (ex instanceof InvalidTokenException) {
+            responseStatusCodeEnum = ResponseStatusCodeEnum.PERMISSION_TOKEN_EXPIRATION;
+        } else {
             responseStatusCodeEnum = ResponseStatusCodeEnum.UNKNOWN;
         }
         return SecurityResultHandler.failure(exchange, responseStatusCodeEnum);
