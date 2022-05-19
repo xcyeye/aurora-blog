@@ -223,7 +223,7 @@ public class SendMailConsumer {
         }
 
         JSONObject jsonObject = JSON.parseObject(ConvertObjectUtils.jsonToString(additionalData));
-        Comment comment = JSON.parseObject(jsonObject.getString(SendHtmlMailTypeNameEnum.ADDITIONAL_DATA.getKeyName()), Comment.class);
+        Comment comment = JSON.parseObject(jsonObject.getString(SendHtmlMailTypeNameEnum.ADDITIONAL_DATA.name()), Comment.class);
 
         StorageSendMailInfo receiveCommentMailInfo = new StorageSendMailInfo();
         // 设置属性

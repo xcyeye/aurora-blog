@@ -68,12 +68,11 @@ public class ArticleServiceImpl implements ArticleService {
     // TODO 这里需要有一个定时任务
     @Override
     @Transactional
-    public int insert(Article record) {
+    public int insertArticle(Article record) {
         Assert.notNull(record, "插入的文章数据不能为null");
         record.setUid(GenerateInfoUtils.generateUid(auroraProperties.getSnowFlakeWorkerId(),
                 auroraProperties.getSnowFlakeDatacenterId()));
         // 创建时间是自动生成的
-        record.setCreateTime(null);
         record.setDelete(false);
         record.setCommentUids(null);
         setUserUid(record);

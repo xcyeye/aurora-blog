@@ -7,7 +7,9 @@ import org.springframework.util.Assert;
 import org.springframework.validation.BindException;
 import xyz.xcye.admin.vo.UserVO;
 import xyz.xcye.api.mail.sendmail.entity.StorageSendMailInfo;
+import xyz.xcye.api.mail.sendmail.enums.SendHtmlMailTypeNameEnum;
 import xyz.xcye.api.mail.sendmail.service.SendMQMessageService;
+import xyz.xcye.api.mail.sendmail.util.StorageMailUtils;
 import xyz.xcye.article.api.service.ArticleUserFeignService;
 import xyz.xcye.article.dao.LinkMapper;
 import xyz.xcye.article.po.Link;
@@ -26,14 +28,14 @@ import xyz.xcye.core.exception.user.UserException;
 import xyz.xcye.core.util.BeanUtils;
 import xyz.xcye.core.util.DateUtils;
 import xyz.xcye.core.util.JSONUtils;
+import xyz.xcye.core.util.LogUtils;
 import xyz.xcye.core.util.id.GenerateInfoUtils;
 import xyz.xcye.core.util.lambda.AssertUtils;
 import xyz.xcye.data.entity.Condition;
 import xyz.xcye.data.entity.PageData;
 import xyz.xcye.data.util.PageUtils;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * @author qsyyke
@@ -63,7 +65,7 @@ public class LinkServiceImpl implements LinkService {
         if (deleteNum == 1) {
             StorageSendMailInfo mailInfo = getMailInfo(linkVO.getEmail(), "你的友情链接被删除了", replyMessage,
                     BeanUtils.copyProperties(linkVO, Link.class));
-            sendMail(mailInfo);
+            sendMail(mailInfo, getReplacedObject(linkVO));
         }
         return deleteNum;
     }
@@ -91,7 +93,14 @@ public class LinkServiceImpl implements LinkService {
         // 如果插入成功，则发送消息通知该用户
         if (insertNum == 1) {
             StorageSendMailInfo mailInfo = getMailInfo(null, "你有新的友情链接待审核", "新友情链接信息: " + record, record);
-            sendMail(mailInfo);
+            try {
+                List<Map<SendHtmlMailTypeNameEnum, Object>> replacedMailObject =
+                        StorageMailUtils.generateReplacedMailObject(SendHtmlMailTypeNameEnum.FRIEND_LINK_NOTICE, record);
+                sendMail(mailInfo, replacedMailObject);
+            } catch (Exception e) {
+                // 如果消息入库失败，会抛出异常，不处理
+                LogUtils.logExceptionInfo(e);
+            }
         }
         return insertNum;
     }
@@ -108,6 +117,7 @@ public class LinkServiceImpl implements LinkService {
         return BeanUtils.getSingleObjFromList(linkMapper.selectByCondition(Condition.instant(uid, true)), LinkVO.class);
     }
 
+    @GlobalTransactional
     @Override
     public int updateByPrimaryKeySelective(Link record, String replyMessage) throws BindException {
         Assert.notNull(record, "友情链接信息不能为null");
@@ -121,14 +131,14 @@ public class LinkServiceImpl implements LinkService {
         if (updateNum == 1 && !record.getPublish()) {
             // 没有审核通过，则把message发送给该站长
             StorageSendMailInfo mailInfo = getMailInfo(linkVO.getEmail(), "你申请的友情链接未通过审核", "原因: " + replyMessage, record);
-            sendMail(mailInfo);
+            sendSimpleTextMail(mailInfo);
             return updateNum;
         }
 
         // 通过审核，发送消息通知对方
         if (updateNum == 1 && record.getPublish()) {
             StorageSendMailInfo mailInfo = getMailInfo(linkVO.getEmail(), "你申请的友情链接已通过审核", replyMessage, record);
-            sendMail(mailInfo);
+            sendSimpleTextMail(mailInfo);
         }
         return updateNum;
     }
@@ -167,10 +177,24 @@ public class LinkServiceImpl implements LinkService {
         mailInfo.setSubject(subject);
         mailInfo.setSimpleText(simpleText);
         mailInfo.setUserUid(link.getUserUid());
+        mailInfo.setSendType(SendHtmlMailTypeNameEnum.FRIEND_LINK_NOTICE);
         return mailInfo;
     }
 
-    private void sendMail(StorageSendMailInfo mailInfo) throws BindException {
+    private List<Map<SendHtmlMailTypeNameEnum, Object>> getReplacedObject(LinkVO  link) {
+        List<Map<SendHtmlMailTypeNameEnum, Object>> list = new ArrayList<>();
+        Map<SendHtmlMailTypeNameEnum, Object> map = new HashMap<>();
+        map.put(SendHtmlMailTypeNameEnum.FRIEND_LINK_NOTICE, link);
+        list.add(map);
+        return list;
+    }
+
+    private void sendMail(StorageSendMailInfo mailInfo, List<Map<SendHtmlMailTypeNameEnum,Object>> replacedObjList) throws BindException {
+        sendMQMessageService.sendCommonMail(mailInfo, AmqpExchangeNameConstant.AURORA_SEND_MAIL_EXCHANGE,
+                "topic", AmqpQueueNameConstant.SEND_HTML_MAIL_ROUTING_KEY, replacedObjList);
+    }
+
+    private void sendSimpleTextMail(StorageSendMailInfo mailInfo) throws BindException {
         sendMQMessageService.sendSimpleTextMail(mailInfo, AmqpExchangeNameConstant.AURORA_SEND_MAIL_EXCHANGE,
                 "topic", AmqpQueueNameConstant.SEND_SIMPLE_TEXT_MAIL_ROUTING_KEY);
     }

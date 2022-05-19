@@ -17,16 +17,9 @@ public interface LinkMapper {
     int deleteByPrimaryKey(Long uid);
 
     /**
-     * insert record to table
+     * insertArticle record to table selective
      * @param record the record
-     * @return insert count
-     */
-    int insert(Link record);
-
-    /**
-     * insert record to table selective
-     * @param record the record
-     * @return insert count
+     * @return insertArticle count
      */
     int insertSelective(Link record);
 
@@ -43,11 +36,4 @@ public interface LinkMapper {
      * @return update count
      */
     int updateByPrimaryKeySelective(Link record);
-
-    /**
-     * update record
-     * @param record the updated record
-     * @return update count
-     */
-    int updateByPrimaryKey(Link record);
 }

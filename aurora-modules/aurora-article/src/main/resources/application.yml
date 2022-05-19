@@ -28,6 +28,11 @@ seata:
       aurora-blog-tx-group: default
 
 spring:
+  cloud:
+    sentinel:
+      transport:
+        port: 8719
+        dashboard: localhost:8080
   main:
     allow-circular-references: true
   redis:
@@ -82,6 +87,8 @@ aurora:
   account:
     mail-verify-account-expiration-time: 120000
     mail-verify-account-prefix-path: http://localhost:8088/admin/verifyAccount/
+  oauth:
+    secret-key: auroraaadkfhasdfuywasdfkjahdsfuewkrnbsdjtywq8745ghsdfsgdfhsdfgerbjhsdtfquewrw9erygtwertfysatf
 
 # 分页插件
 pagehelper:
@@ -95,6 +102,13 @@ logging:
     xyz.xcye.web.common.service.feign.MessageLogFeignService: DEBUG
 
 feign:
+  sentinel:
+    enabled: true
+  client:
+    config:
+      default:
+        connectTimeout: 5000
+        readTimeout: 5000
   circuitbreaker:
     enabled: true
     group:

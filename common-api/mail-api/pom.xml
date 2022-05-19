@@ -31,5 +31,10 @@
             <groupId>xyz.xcye.starter</groupId>
             <artifactId>aurora-feign-starter</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>xyz.xcye.base</groupId>
+            <artifactId>data-common</artifactId>
+        </dependency>
     </dependencies>
 </project>

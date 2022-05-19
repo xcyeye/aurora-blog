@@ -29,4 +29,8 @@ public class RequestConstant {
     /** 在认证服务器中，在请求头中存储生成的uid的名字 **/
     public static final String AUTH_SERVER_STORAGE_LOGIN_UID_NAME= "auth_storage_login_uid";
     public static final String AUTH_SERVER_STORAGE_LOGIN_USERNAME_NAME= "auth_storage_login_username";
+
+
+    //
+    public static final String REQUEST_OPEN_FEIGN_HEADER = "request_feign_header";
 }

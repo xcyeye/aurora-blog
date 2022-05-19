@@ -28,9 +28,9 @@ public interface BulletinService {
     int physicsDeleteByUid(Long uid);
 
     /**
-     * insert record to table selective
+     * insertArticle record to table selective
      * @param record the record
-     * @return insert count
+     * @return insertArticle count
      */
     int insertSelective(Bulletin record);
 

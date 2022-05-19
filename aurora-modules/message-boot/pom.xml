@@ -77,5 +77,10 @@
             <groupId>xyz.xcye.base</groupId>
             <artifactId>message-common</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>xyz.xcye.base</groupId>
+            <artifactId>file-common</artifactId>
+        </dependency>
     </dependencies>
 </project>

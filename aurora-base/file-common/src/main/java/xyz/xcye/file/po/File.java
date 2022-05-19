@@ -1,11 +1,13 @@
 package xyz.xcye.file.po;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
 import xyz.xcye.core.constant.FieldLengthConstant;
 import xyz.xcye.core.valid.Delete;
+import xyz.xcye.core.valid.Insert;
 import xyz.xcye.core.valid.Update;
 import xyz.xcye.core.valid.validator.ValidateString;
 
@@ -19,6 +21,7 @@ import java.io.Serializable;
 
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 @Data
 public class File implements Serializable {
 
@@ -30,11 +33,13 @@ public class File implements Serializable {
     @NotNull(groups = {Delete.class, Update.class})
     private Long uid;
 
+    @NotNull(groups = {Insert.class})
+    private Long userUid;
+
     /**
      * 文件创建时间 不能为null
      * <p>mysql -> datetime</p>
      */
-    //@ValidateString(value = "文件-创建的时间",max = FieldLengthConstant.TIME_FORMAT)
     private String createTime;
 
     /**
@@ -46,7 +51,6 @@ public class File implements Serializable {
      * 此文件的名字，含后缀
      * <p>length < 120</p>
      */
-    //@ValidateString(value = "文件-名称",max = FieldLengthConstant.FILE_NAME)
     private String fileName;
 
     /**
@@ -65,7 +69,7 @@ public class File implements Serializable {
      * <p>length < 500</p>
      */
     @Length(max = FieldLengthConstant.SUMMARY)
-    @ValidateString(value = "文件，文件简介", max = FieldLengthConstant.SUMMARY)
+    @ValidateString(value = "文件，文件简介", max = FieldLengthConstant.SUMMARY, groups = Insert.class)
     private String summary;
 
     /**

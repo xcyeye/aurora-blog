@@ -66,19 +66,6 @@
     delete from au_talk
     where `uid` = #{uid,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="xyz.xcye.article.po.Talk">
-    <!--@mbg.generated-->
-    insert into au_talk (`uid`, user_uid, is_show_comment, 
-      comment_uids, updated_time, created_time, 
-      title, is_show, like_number, 
-      picture_uids, is_delete, content
-      )
-    values (#{uid,jdbcType=BIGINT}, #{userUid,jdbcType=BIGINT}, #{showComment,jdbcType=TINYINT}, 
-      #{commentUids,jdbcType=VARCHAR}, #{updatedTime,jdbcType=TIMESTAMP}, #{createdTime,jdbcType=TIMESTAMP}, 
-      #{title,jdbcType=VARCHAR}, #{show,jdbcType=TINYINT}, #{likeNumber,jdbcType=INTEGER}, 
-      #{pictureUids,jdbcType=VARCHAR}, #{delete,jdbcType=TINYINT}, #{content,jdbcType=LONGVARCHAR}
-      )
-  </insert>
   <insert id="insertSelective" parameterType="xyz.xcye.article.po.Talk">
     <!--@mbg.generated-->
     insert into au_talk
@@ -94,12 +81,6 @@
       </if>
       <if test="commentUids != null and commentUids != ''">
         comment_uids,
-      </if>
-      <if test="updatedTime != null">
-        updated_time,
-      </if>
-      <if test="createdTime != null">
-        created_time,
       </if>
       <if test="title != null and title != ''">
         title,
@@ -132,12 +113,6 @@
       </if>
       <if test="commentUids != null and commentUids != ''">
         #{commentUids,jdbcType=VARCHAR},
-      </if>
-      <if test="updatedTime != null">
-        #{updatedTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="createdTime != null">
-        #{createdTime,jdbcType=TIMESTAMP},
       </if>
       <if test="title != null and title != ''">
         #{title,jdbcType=VARCHAR},
@@ -175,9 +150,6 @@
       <if test="updatedTime != null">
         updated_time = #{updatedTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="createdTime != null">
-        created_time = #{createdTime,jdbcType=TIMESTAMP},
-      </if>
       <if test="title != null and title != ''">
         title = #{title,jdbcType=VARCHAR},
       </if>
@@ -197,37 +169,6 @@
         content = #{content,jdbcType=LONGVARCHAR},
       </if>
     </set>
-    where `uid` = #{uid,jdbcType=BIGINT}
-  </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="xyz.xcye.article.po.Talk">
-    <!--@mbg.generated-->
-    update au_talk
-    set user_uid = #{userUid,jdbcType=BIGINT},
-      is_show_comment = #{showComment,jdbcType=TINYINT},
-      comment_uids = #{commentUids,jdbcType=VARCHAR},
-      updated_time = #{updatedTime,jdbcType=TIMESTAMP},
-      created_time = #{createdTime,jdbcType=TIMESTAMP},
-      title = #{title,jdbcType=VARCHAR},
-      is_show = #{show,jdbcType=TINYINT},
-      like_number = #{likeNumber,jdbcType=INTEGER},
-      picture_uids = #{pictureUids,jdbcType=VARCHAR},
-      is_delete = #{delete,jdbcType=TINYINT},
-      content = #{content,jdbcType=LONGVARCHAR}
-    where `uid` = #{uid,jdbcType=BIGINT}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="xyz.xcye.article.po.Talk">
-    <!--@mbg.generated-->
-    update au_talk
-    set user_uid = #{userUid,jdbcType=BIGINT},
-      is_show_comment = #{showComment,jdbcType=TINYINT},
-      comment_uids = #{commentUids,jdbcType=VARCHAR},
-      updated_time = #{updatedTime,jdbcType=TIMESTAMP},
-      created_time = #{createdTime,jdbcType=TIMESTAMP},
-      title = #{title,jdbcType=VARCHAR},
-      is_show = #{show,jdbcType=TINYINT},
-      like_number = #{likeNumber,jdbcType=INTEGER},
-      picture_uids = #{pictureUids,jdbcType=VARCHAR},
-      is_delete = #{delete,jdbcType=TINYINT}
     where `uid` = #{uid,jdbcType=BIGINT}
   </update>
 </mapper>

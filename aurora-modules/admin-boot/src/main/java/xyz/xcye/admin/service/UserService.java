@@ -72,9 +72,9 @@ public interface UserService {
 
     /**
      * 绑定邮箱
-     * @param emailUid 邮件记录的uid
+     * @param email 邮箱号
      * @return
      * @throws BindException
      */
-    int bindingEmail(long emailUid) throws BindException, EmailException;
+    int bindingEmail(String email) throws BindException, EmailException;
 }

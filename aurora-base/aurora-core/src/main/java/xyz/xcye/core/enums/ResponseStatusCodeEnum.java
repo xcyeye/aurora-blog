@@ -101,6 +101,11 @@ public enum ResponseStatusCodeEnum {
     //----------------------网关处的响应码
     SERVICE_INSTANCE_NOT_FOUND(53000, "服务未启动"),
 
+
+    //----------------------openfeign处的响应码
+    REQUEST_REMOTE_MESSAGE_LOG_SERVICE_FAILURE(2346, "调用远程服务,执行消息入库失败┭┮﹏┭┮"),
+
+
     //----------------------和消息中间件相关的异常
 
     //----------------------数据相关的响应码

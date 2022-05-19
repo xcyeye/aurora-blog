@@ -83,7 +83,7 @@
       user_uid, is_original_article, original_article_url, 
       cover_picture_url, title, summary, 
       is_timing, timing_publish_time, like_number, 
-      read_number, update_time, create_time, 
+      read_number,
       is_delete, content, comment_uids
       )
     values (#{uid,jdbcType=BIGINT}, #{showComment,jdbcType=TINYINT}, #{accessoryUids,jdbcType=VARCHAR}, 
@@ -91,8 +91,7 @@
       #{userUid,jdbcType=BIGINT}, #{originalArticle,jdbcType=TINYINT}, #{originalArticleUrl,jdbcType=VARCHAR}, 
       #{coverPictureUrl,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, #{summary,jdbcType=VARCHAR}, 
       #{timing,jdbcType=TINYINT}, #{timingPublishTime,jdbcType=TIMESTAMP}, #{likeNumber,jdbcType=INTEGER}, 
-      #{readNumber,jdbcType=INTEGER}, #{updateTime,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP}, 
-      #{delete,jdbcType=TINYINT}, #{content,jdbcType=LONGVARCHAR}, #{commentUids,jdbcType=LONGVARCHAR}
+      #{readNumber,jdbcType=INTEGER}, #{delete,jdbcType=TINYINT}, #{content,jdbcType=LONGVARCHAR}, #{commentUids,jdbcType=LONGVARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="xyz.xcye.article.po.Article">
@@ -146,12 +145,6 @@
       </if>
       <if test="readNumber != null">
         read_number,
-      </if>
-      <if test="updateTime != null">
-        update_time,
-      </if>
-      <if test="createTime != null">
-        create_time,
       </if>
       <if test="delete != null">
         is_delete,
@@ -211,12 +204,6 @@
       </if>
       <if test="readNumber != null">
         #{readNumber,jdbcType=INTEGER},
-      </if>
-      <if test="updateTime != null">
-        #{updateTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="createTime != null">
-        #{createTime,jdbcType=TIMESTAMP},
       </if>
       <if test="delete != null">
         #{delete,jdbcType=TINYINT},
@@ -281,9 +268,6 @@
       <if test="updateTime != null">
         update_time = #{updateTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="createTime != null">
-        create_time = #{createTime,jdbcType=TIMESTAMP},
-      </if>
       <if test="delete != null">
         is_delete = #{delete,jdbcType=TINYINT},
       </if>
@@ -294,54 +278,6 @@
         comment_uids = #{commentUids,jdbcType=LONGVARCHAR},
       </if>
     </set>
-    where `uid` = #{uid,jdbcType=BIGINT}
-  </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="xyz.xcye.article.po.Article">
-    <!--@mbg.generated-->
-    update au_article
-    set is_show_comment = #{showComment,jdbcType=TINYINT},
-      accessory_uids = #{accessoryUids,jdbcType=VARCHAR},
-      category_uids = #{categoryUids,jdbcType=VARCHAR},
-      tag_uids = #{tagUids,jdbcType=VARCHAR},
-      is_publish = #{publish,jdbcType=TINYINT},
-      user_uid = #{userUid,jdbcType=BIGINT},
-      is_original_article = #{originalArticle,jdbcType=TINYINT},
-      original_article_url = #{originalArticleUrl,jdbcType=VARCHAR},
-      cover_picture_url = #{coverPictureUrl,jdbcType=VARCHAR},
-      title = #{title,jdbcType=VARCHAR},
-      summary = #{summary,jdbcType=VARCHAR},
-      is_timing = #{timing,jdbcType=TINYINT},
-      timing_publish_time = #{timingPublishTime,jdbcType=TIMESTAMP},
-      like_number = #{likeNumber,jdbcType=INTEGER},
-      read_number = #{readNumber,jdbcType=INTEGER},
-      update_time = #{updateTime,jdbcType=TIMESTAMP},
-      create_time = #{createTime,jdbcType=TIMESTAMP},
-      is_delete = #{delete,jdbcType=TINYINT},
-      content = #{content,jdbcType=LONGVARCHAR},
-      comment_uids = #{commentUids,jdbcType=LONGVARCHAR}
-    where `uid` = #{uid,jdbcType=BIGINT}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="xyz.xcye.article.po.Article">
-    <!--@mbg.generated-->
-    update au_article
-    set is_show_comment = #{showComment,jdbcType=TINYINT},
-      accessory_uids = #{accessoryUids,jdbcType=VARCHAR},
-      category_uids = #{categoryUids,jdbcType=VARCHAR},
-      tag_uids = #{tagUids,jdbcType=VARCHAR},
-      is_publish = #{publish,jdbcType=TINYINT},
-      user_uid = #{userUid,jdbcType=BIGINT},
-      is_original_article = #{originalArticle,jdbcType=TINYINT},
-      original_article_url = #{originalArticleUrl,jdbcType=VARCHAR},
-      cover_picture_url = #{coverPictureUrl,jdbcType=VARCHAR},
-      title = #{title,jdbcType=VARCHAR},
-      summary = #{summary,jdbcType=VARCHAR},
-      is_timing = #{timing,jdbcType=TINYINT},
-      timing_publish_time = #{timingPublishTime,jdbcType=TIMESTAMP},
-      like_number = #{likeNumber,jdbcType=INTEGER},
-      read_number = #{readNumber,jdbcType=INTEGER},
-      update_time = #{updateTime,jdbcType=TIMESTAMP},
-      create_time = #{createTime,jdbcType=TIMESTAMP},
-      is_delete = #{delete,jdbcType=TINYINT}
     where `uid` = #{uid,jdbcType=BIGINT}
   </update>
 </mapper>

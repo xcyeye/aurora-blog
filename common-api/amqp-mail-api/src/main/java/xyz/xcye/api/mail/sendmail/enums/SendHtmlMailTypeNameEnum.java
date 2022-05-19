@@ -10,20 +10,11 @@ import lombok.Getter;
 
 @Getter
 public enum SendHtmlMailTypeNameEnum {
-    RECEIVE_COMMENT("receiveComment"),
-    REPLY_COMMENT("replyComment"),
-    VERIFY_ACCOUNT("verifyAccount"),
-    COMMON_NOTICE("friendLinkNotice"),
-    FRIEND_LINK_NOTICE("commonNotice"),
-    CUSTOM_HTML("customHtml"),
-    ADDITIONAL_DATA("additional");
-
-    /**
-     * 在发送html邮件中，存放替换数据的map集合的键前缀，最终会形如receiveComment:Username
-     */
-    private String keyName;
-
-    SendHtmlMailTypeNameEnum(String keyName) {
-        this.keyName = keyName;
-    }
+    RECEIVE_COMMENT,
+    REPLY_COMMENT,
+    VERIFY_ACCOUNT,
+    COMMON_NOTICE,
+    FRIEND_LINK_NOTICE,
+    CUSTOM_HTML,
+    ADDITIONAL_DATA;
 }

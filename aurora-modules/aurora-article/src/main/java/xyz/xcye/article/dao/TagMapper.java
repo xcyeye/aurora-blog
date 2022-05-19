@@ -17,16 +17,9 @@ public interface TagMapper {
     int deleteByPrimaryKey(Long uid);
 
     /**
-     * insert record to table
+     * insertArticle record to table selective
      * @param record the record
-     * @return insert count
-     */
-    int insert(Tag record);
-
-    /**
-     * insert record to table selective
-     * @param record the record
-     * @return insert count
+     * @return insertArticle count
      */
     int insertSelective(Tag record);
 
@@ -43,11 +36,4 @@ public interface TagMapper {
      * @return update count
      */
     int updateByPrimaryKeySelective(Tag record);
-
-    /**
-     * update record
-     * @param record the updated record
-     * @return update count
-     */
-    int updateByPrimaryKey(Tag record);
 }

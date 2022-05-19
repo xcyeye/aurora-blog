@@ -5,6 +5,7 @@ import org.springframework.beans.BeanUtils;
 import xyz.xcye.api.mail.sendmail.entity.StorageSendMailInfo;
 import xyz.xcye.api.mail.sendmail.enums.SendHtmlMailTypeNameEnum;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -62,7 +63,7 @@ public class StorageMailUtils {
         for (Map<SendHtmlMailTypeNameEnum, Object> objectMap : replacedObjList) {
             // 因为replacedObjList集合中的map只会保存一个，所以不需要使用while进行迭代
             for (Map.Entry<SendHtmlMailTypeNameEnum, Object> next : objectMap.entrySet()) {
-                String key = next.getKey().getKeyName();
+                String key = next.getKey().name();
                 Object replacedObj = next.getValue();
 
                 String replacedJson = jsonToString(replacedObj);
@@ -75,5 +76,13 @@ public class StorageMailUtils {
             }
         }
         return replacedMap;
+    }
+
+    public static List<Map<SendHtmlMailTypeNameEnum, Object>> generateReplacedMailObject(SendHtmlMailTypeNameEnum mailTypeNameEnum, Object obj) {
+        List<Map<SendHtmlMailTypeNameEnum, Object>> list = new ArrayList<>();
+        Map<SendHtmlMailTypeNameEnum, Object> map = new HashMap<>();
+        map.put(mailTypeNameEnum, obj);
+        list.add(map);
+        return list;
     }
 }

@@ -13,6 +13,9 @@ import xyz.xcye.aurora.util.AuroraRequestUtils;
 import xyz.xcye.aurora.util.UserUtils;
 import xyz.xcye.auth.constant.RequestConstant;
 import xyz.xcye.core.dto.JwtUserInfo;
+import xyz.xcye.core.entity.R;
+import xyz.xcye.core.enums.ResponseStatusCodeEnum;
+import xyz.xcye.core.exception.feign.FeignException;
 import xyz.xcye.core.util.ValidationUtils;
 import xyz.xcye.core.util.id.GenerateInfoUtils;
 import xyz.xcye.core.valid.Insert;
@@ -103,7 +106,10 @@ public class AmqpSenderService {
                 routingKey, false, 0, exchangeType, false, "");
         // 验证messageLogDO对象属性是否合法
         ValidationUtils.valid(messageLog, Insert.class, Default.class);
-        messageLogFeignService.insertMessageLog(messageLog);
+        R r = messageLogFeignService.insertMessageLog(messageLog);
+        if (!r.getSuccess()) {
+            throw new FeignException(ResponseStatusCodeEnum.REQUEST_REMOTE_MESSAGE_LOG_SERVICE_FAILURE);
+        }
     }
 
     /**

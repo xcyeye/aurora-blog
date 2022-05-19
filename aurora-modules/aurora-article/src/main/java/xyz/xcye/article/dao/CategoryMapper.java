@@ -17,16 +17,9 @@ public interface CategoryMapper {
     int deleteByPrimaryKey(Long uid);
 
     /**
-     * insert record to table
+     * insertArticle record to table selective
      * @param record the record
-     * @return insert count
-     */
-    int insert(Category record);
-
-    /**
-     * insert record to table selective
-     * @param record the record
-     * @return insert count
+     * @return insertArticle count
      */
     int insertSelective(Category record);
 
@@ -43,11 +36,4 @@ public interface CategoryMapper {
      * @return update count
      */
     int updateByPrimaryKeySelective(Category record);
-
-    /**
-     * update record
-     * @param record the updated record
-     * @return update count
-     */
-    int updateByPrimaryKey(Category record);
 }

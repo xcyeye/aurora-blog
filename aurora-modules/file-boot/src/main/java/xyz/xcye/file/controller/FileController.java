@@ -11,6 +11,7 @@ import xyz.xcye.core.annotaion.controller.ModifyOperation;
 import xyz.xcye.core.annotaion.controller.ResponseRealResult;
 import xyz.xcye.core.annotaion.controller.SelectOperation;
 import xyz.xcye.core.exception.file.FileException;
+import xyz.xcye.core.valid.Insert;
 import xyz.xcye.core.valid.Update;
 import xyz.xcye.file.dto.FileEntityDTO;
 import xyz.xcye.file.po.File;
@@ -48,7 +49,7 @@ public class FileController {
     @SelectOperation
     @ApiOperation(value = "上传单个文件",notes = "可以上传任何类型，最大不能操作30M，返回上传之后的文件信息")
     @PostMapping("/single")
-    public FileVO singleUploadFile(@Validated File fileInfo,
+    public FileVO singleUploadFile(@Validated({Insert.class, Default.class}) File fileInfo,
                                    @RequestParam(value = "file") MultipartFile file,
                                    @RequestParam(required = false) int storageMode)
             throws IOException, FileException {

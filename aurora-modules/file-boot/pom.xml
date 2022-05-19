@@ -23,11 +23,6 @@
         </dependency>
 
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-aop</artifactId>
-        </dependency>
-
-        <dependency>
             <groupId>xyz.xcye.starter</groupId>
             <artifactId>aurora-datasource-starter</artifactId>
         </dependency>
@@ -35,6 +30,11 @@
         <dependency>
             <groupId>xyz.xcye.starter</groupId>
             <artifactId>aurora-mybatis-starter</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>xyz.xcye.starter</groupId>
+            <artifactId>aurora-sentinel-starter</artifactId>
         </dependency>
 
         <dependency>

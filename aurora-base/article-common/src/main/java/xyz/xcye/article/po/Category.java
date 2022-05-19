@@ -49,14 +49,12 @@ public class Category implements Serializable {
     * 创建时间
     */
     @ApiModelProperty(value="创建时间")
-    @Null(groups = Insert.class)
     private String createTime;
 
     /**
     * 最后修改时间
     */
     @ApiModelProperty(value="最后修改时间")
-    @Null(groups = Insert.class)
     private String updateTime;
 
     /**

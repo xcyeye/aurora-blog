@@ -15,6 +15,7 @@ import xyz.xcye.core.valid.Insert;
 import xyz.xcye.core.valid.Update;
 import xyz.xcye.data.entity.Condition;
 import xyz.xcye.data.entity.PageData;
+import xyz.xcye.feign.config.service.MessageLogFeignService;
 
 import javax.validation.groups.Default;
 
@@ -30,6 +31,8 @@ public class LinkController {
 
     @Autowired
     private LinkService linkService;
+    @Autowired
+    private MessageLogFeignService messageLogFeignService;
 
     @ApiOperation("根据uid删除对应的友情链接")
     @DeleteMapping

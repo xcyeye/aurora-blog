@@ -3,6 +3,7 @@ package xyz.xcye.file.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 import xyz.xcye.aurora.properties.AuroraProperties;
 import xyz.xcye.core.enums.ResponseStatusCodeEnum;
 import xyz.xcye.core.exception.file.FileException;
@@ -10,17 +11,17 @@ import xyz.xcye.core.util.BeanUtils;
 import xyz.xcye.core.util.DateUtils;
 import xyz.xcye.core.util.LogUtils;
 import xyz.xcye.core.util.id.GenerateInfoUtils;
+import xyz.xcye.data.entity.Condition;
+import xyz.xcye.data.entity.PageData;
 import xyz.xcye.data.util.PageUtils;
 import xyz.xcye.file.constant.FileStorageModeConstant;
-import xyz.xcye.file.dao.FileDao;
+import xyz.xcye.file.dao.FileMapper;
 import xyz.xcye.file.dto.FileEntityDTO;
 import xyz.xcye.file.interfaces.FileStorageService;
 import xyz.xcye.file.interfaces.impl.LocalFileStorageServiceImpl;
 import xyz.xcye.file.po.File;
 import xyz.xcye.file.service.FileService;
 import xyz.xcye.file.vo.FileVO;
-import xyz.xcye.data.entity.Condition;
-import xyz.xcye.data.entity.PageData;
 
 import java.io.IOException;
 import java.util.Date;
@@ -36,16 +37,16 @@ import java.util.Optional;
 public class FileServiceImpl implements FileService {
 
     @Autowired
-    private FileDao fileDao;
+    private FileMapper fileMapper;
     @Autowired
     private LocalFileStorageServiceImpl localStorageService;
     @Autowired
     private AuroraProperties auroraProperties;
 
     @Override
-    public FileVO insertFile(FileEntityDTO fileEntity, File file, int storageMode)
-            throws FileException {
-
+    public FileVO insertFile(FileEntityDTO fileEntity, File file, int storageMode) throws FileException {
+        Assert.notNull(fileEntity, "文件对象不能为null");
+        Assert.notNull(file, "文件信息不能为null");
         if (fileEntity.getName() == null || fileEntity.getInputStream() == null) {
             throw new FileException(ResponseStatusCodeEnum.EXCEPTION_FILE_FAIL_UPLOAD.getMessage() + "原因: 文件名为null或者获取文件流失败",
                     ResponseStatusCodeEnum.EXCEPTION_FILE_FAIL_UPLOAD.getCode());
@@ -58,25 +59,24 @@ public class FileServiceImpl implements FileService {
         FileStorageService fileStorageService = getNeedFileStorageService(storageMode);
         FileEntityDTO uploadFileEntity = fileStorageService.upload(fileEntity.getInputStream(), fileEntity);
 
-        //对file对象进行赋值
-        file = new File(uid, DateUtils.format(new Date()),
-                false,uploadFileEntity.getName(),uploadFileEntity.getSize(),
-                null,file.getSummary(),
-                uploadFileEntity.getRemoteUrl(),storageMode,uploadFileEntity.getStoragePath());
-
-        fileDao.insertFile(file);
-        return queryByUid(file.getUid());
+        File newFile = File.builder()
+                .uid(uid).delete(false).fileName(uploadFileEntity.getName())
+                .size(uploadFileEntity.getSize()).summary(file.getSummary())
+                .path(uploadFileEntity.getRemoteUrl()).storageMode(storageMode)
+                .storagePath(uploadFileEntity.getStoragePath())
+                .build();
+        fileMapper.insertSelective(newFile);
+        return queryByUid(newFile.getUid());
     }
 
     @Override
     public int updateFile(File file) {
         file.setSummary(Optional.ofNullable(file.getSummary()).orElse(" "));
-        return fileDao.updateFile(file);
+        return fileMapper.updateByPrimaryKeySelective(file);
     }
 
     @Override
-    public int deleteFile(long uid)
-            throws IOException, FileException {
+    public int deleteFile(long uid) throws IOException, FileException {
         // 查询出此uid对应的文件的存储位置
         File deleteFileInfo = getFileDOByUid(uid);
 
@@ -114,14 +114,12 @@ public class FileServiceImpl implements FileService {
 
     @Override
     public PageData<FileVO> queryAllFile(Condition<Long> condition) {
-        return PageUtils.pageList(condition, t -> BeanUtils.copyList(fileDao.queryAll(condition), FileVO.class));
+        return PageUtils.pageList(condition, t -> BeanUtils.copyList(fileMapper.selectByCondition(condition), FileVO.class));
     }
 
     @Override
     public FileVO queryByUid(long uid) {
-        Condition<Long> conditionDTO = new Condition<>();
-        conditionDTO.setUid(uid);
-        return BeanUtils.getSingleObjFromList(fileDao.queryAll(conditionDTO), FileVO.class);
+        return BeanUtils.getSingleObjFromList(fileMapper.selectByCondition(Condition.instant(uid, true)), FileVO.class);
     }
 
     private FileStorageService getNeedFileStorageService(int storageMode) {

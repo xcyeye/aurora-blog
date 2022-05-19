@@ -24,6 +24,12 @@ public class AuroraGlobalHandlerInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+        // TODO 下面这个是暂时解决feign调用，没有RequestContextHolder的问题
+        String requestFeignHeader = request.getHeader(RequestConstant.REQUEST_OPEN_FEIGN_HEADER);
+        if ("true".equals(requestFeignHeader)) {
+            return true;
+        }
+
         // 判断是否是白名单
         boolean whiteUrl = checkWhiteUrl(request);
 
@@ -73,6 +79,7 @@ public class AuroraGlobalHandlerInterceptor implements HandlerInterceptor {
      * @return true是白名单
      */
     private boolean checkWhiteUrl(HttpServletRequest request) {
+
         // 获取请求头中的白名单标识
         String whiteUrlStatus = Optional.ofNullable(request.getHeader(RequestConstant.REQUEST_WHITE_URL_STATUS)).orElse("false");
 

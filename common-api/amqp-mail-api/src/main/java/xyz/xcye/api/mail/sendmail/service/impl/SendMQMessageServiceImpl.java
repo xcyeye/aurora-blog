@@ -59,7 +59,7 @@ public class SendMQMessageServiceImpl implements SendMQMessageService {
 
         // 组装一个存放被回复评论对象的数据
         Map<String,Object> repliedMap = new HashMap<>();
-        repliedMap.put(SendHtmlMailTypeNameEnum.ADDITIONAL_DATA.getKeyName(), replyingCommentInfo);
+        repliedMap.put(SendHtmlMailTypeNameEnum.ADDITIONAL_DATA.name(), replyingCommentInfo);
         mailInfo.setAdditionalData(repliedMap);
         String msgJson = ConvertObjectUtils.jsonToString(mailInfo);
         amqpSenderService.sendMQMsg(msgJson, exchangeName, routingKey, exchangeType);
@@ -68,7 +68,7 @@ public class SendMQMessageServiceImpl implements SendMQMessageService {
     @Override
     public void sendCommonMail(StorageSendMailInfo sendMailInfo, String exchangeName, String exchangeType,
                                String routingKey, List<Map<SendHtmlMailTypeNameEnum,Object>> replacedObjList) throws AuroraException, BindException {
-        sendMail(sendMailInfo, exchangeName, exchangeType, routingKey);
+        sendMail(sendMailInfo, exchangeName, exchangeType, routingKey, replacedObjList);
     }
 
     @Override
@@ -77,9 +77,9 @@ public class SendMQMessageServiceImpl implements SendMQMessageService {
         // 发送简单文本
         if (!StringUtils.hasLength(sendMailInfo.getSimpleText())) {
             // 没有简单文本，不做处理
-            return;
+            throw new EmailException("待发送的邮件没有内容");
         }
-        sendMail(sendMailInfo, exchangeName, exchangeType, routingKey);
+        sendMail(sendMailInfo, exchangeName, exchangeType, routingKey, null);
     }
 
     /**
@@ -101,11 +101,11 @@ public class SendMQMessageServiceImpl implements SendMQMessageService {
     }
 
     private void sendMail(StorageSendMailInfo sendMailInfo, String exchangeName, String exchangeType,
-                          String routingKey) throws BindException {
+                          String routingKey, List<Map<SendHtmlMailTypeNameEnum,Object>> replacedObjList) throws BindException {
         isLegitimateReceiverEmail(sendMailInfo);
 
         // 将发送的回复评论数据组装成一个map集合
-        String msgJson = StorageMailUtils.generateMailJson(sendMailInfo, null);
+        String msgJson = StorageMailUtils.generateMailJson(sendMailInfo, replacedObjList);
         amqpSenderService.sendMQMsg(msgJson, exchangeName, routingKey, exchangeType);
     }
 }

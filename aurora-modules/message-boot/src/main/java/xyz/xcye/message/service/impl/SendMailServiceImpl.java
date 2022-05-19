@@ -15,26 +15,25 @@ import xyz.xcye.core.constant.FieldLengthConstant;
 import xyz.xcye.core.enums.RegexEnum;
 import xyz.xcye.core.enums.ResponseStatusCodeEnum;
 import xyz.xcye.core.exception.email.EmailException;
+import xyz.xcye.core.exception.user.UserException;
 import xyz.xcye.core.util.ConvertObjectUtils;
 import xyz.xcye.core.util.DateUtils;
 import xyz.xcye.core.util.LogUtils;
+import xyz.xcye.core.util.lambda.AssertUtils;
+import xyz.xcye.mail.api.feign.FileFeignService;
 import xyz.xcye.message.enums.MailTemplateEnum;
 import xyz.xcye.message.mail.SendMailRealize;
 import xyz.xcye.message.po.EmailLog;
 import xyz.xcye.message.service.EmailLogService;
 import xyz.xcye.message.service.EmailService;
-import xyz.xcye.message.service.MailTemplateService;
 import xyz.xcye.message.service.SendMailService;
 import xyz.xcye.message.util.MailTemplateUtils;
 import xyz.xcye.message.util.ParseEmailTemplate;
 import xyz.xcye.message.vo.EmailVO;
-import xyz.xcye.message.vo.MailTemplateVO;
-import xyz.xcye.data.entity.Condition;
 
 import javax.mail.MessagingException;
 import java.io.IOException;
 import java.util.Date;
-import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
 
@@ -52,8 +51,7 @@ public class SendMailServiceImpl implements SendMailService {
     @Autowired
     private EmailLogService emailLogService;
 
-    @Autowired
-    private MailTemplateService mailTemplateService;
+    private final String mailSubject = "Aurora-你有新的邮件";
 
     /**
      * 配置文件中的发送者的邮箱号
@@ -63,21 +61,23 @@ public class SendMailServiceImpl implements SendMailService {
 
     @Autowired
     private EmailService emailService;
+    @Autowired
+    private FileFeignService fileFeignService;
 
     @Override
     public int sendHtmlMail(StorageSendMailInfo storageSendMailInfo)
             throws MessagingException, IOException, EmailException {
-        String keyName = storageSendMailInfo.getSendType().getKeyName();
 
-        // 1. 根据userUid和type从数据库中获取模板，如果没有的话，则使用默认的
-        Condition<Long> condition = new Condition();
-        condition.setOtherUid(storageSendMailInfo.getUserUid());
-        condition.setKeyword(keyName);
-        List<MailTemplateVO> result = mailTemplateService.queryAllMailTemplate(condition).getResult();
-        MailTemplateVO mailTemplateVO = null;
-        if (result.size() > 0) {
-            mailTemplateVO = result.get(0);
-        }
+        AssertUtils.stateThrow(storageSendMailInfo.getUserUid() != null,
+                () -> new UserException(ResponseStatusCodeEnum.PERMISSION_USER_NOT_EXIST));
+        String keyName = storageSendMailInfo.getSendType().name();
+
+        // 1. 根据userUid+SendHtmlMailTypeNameEnum到文件服务中，查找此模板在本地存储的位置
+        // 查询文件的时候，keyword就是filename
+        /*String templateFileName = storageSendMailInfo.getUserUid() + storageSendMailInfo.getSendType().name() + ".html";
+        Condition<Long> condition = Condition.instant(templateFileName);
+        R r = fileFeignService.queryAllFile(condition);
+        FileVO fileVO = JSONUtils.parseObjFromResult(r, "data", FileVO.class);*/
 
         // 如果storageSendMailInfo中的receiverEmail为null或者没有长度的话，那么便更具userUid从数据库中查找
         // 如果数据库中都没有的话，那么抛出异常
@@ -89,21 +89,24 @@ public class SendMailServiceImpl implements SendMailService {
                     storageSendMailInfo.getReceiverEmail());
         }
 
-        if (mailTemplateVO == null || !StringUtils.hasLength(mailTemplateVO.getTemplate())) {
-            mailTemplateVO = new MailTemplateVO();
-            String templateContent = MailTemplateUtils.readContentFromTemplateFile(getDefaultTemplate(storageSendMailInfo.getSendType()).getTemplateName(),
-                    getDefaultTemplate(storageSendMailInfo.getSendType()).getTemplateFolderPath());
-            mailTemplateVO.setTemplate(templateContent);
-            mailTemplateVO.setSubject(getDefaultTemplate(storageSendMailInfo.getSendType()).getSubject());
+        String templateContent = null;
+        try {
+            templateContent = MailTemplateUtils.readContentFromTemplateFile(storageSendMailInfo.getSendType().name(), "mailTemplate");
+        } catch (IOException e) {
+            // 如果发生异常，也就是没有模板，那么则直接发送对象的toString字符
+            templateContent = storageSendMailInfo.getReplacedMap().toString();
         }
 
+        /*templateContent = Optional.ofNullable(templateContent)
+                .orElse(MailTemplateUtils.readContentFromFile(fileVO.getStoragePath()));*/
+
         // 判断传入的subject是否为null或者空
-        String subject = getRightSubject(storageSendMailInfo.getSubject(), mailTemplateVO.getSubject());
+        String subject = getRightSubject(storageSendMailInfo.getSubject(), mailSubject);
 
         //解析邮件发送内容
         String sendContent = null;
         try {
-            sendContent = ParseEmailTemplate.parseHtmlMailTemplate(storageSendMailInfo.getReplacedMap(), mailTemplateVO.getTemplate());
+            sendContent = ParseEmailTemplate.parseHtmlMailTemplate(storageSendMailInfo.getReplacedMap(), templateContent);
         } catch (Exception e) {
             // 如果解析html失败，则直接发送json数据
             sendContent = ConvertObjectUtils.jsonToString(storageSendMailInfo.getReplacedMap());
@@ -233,6 +236,6 @@ public class SendMailServiceImpl implements SendMailService {
         }
 
         JSONObject jsonObject = JSON.parseObject(ConvertObjectUtils.jsonToString(additionalData));
-        return JSON.parseObject(jsonObject.getString(SendHtmlMailTypeNameEnum.ADDITIONAL_DATA.getKeyName()), Comment.class);
+        return JSON.parseObject(jsonObject.getString(SendHtmlMailTypeNameEnum.ADDITIONAL_DATA.name()), Comment.class);
     }
 }

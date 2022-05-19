@@ -10,6 +10,7 @@ import xyz.xcye.admin.po.User;
 import xyz.xcye.core.entity.ModifyResult;
 import xyz.xcye.core.entity.R;
 import xyz.xcye.core.exception.user.UserException;
+import xyz.xcye.mail.api.feign.handler.UserFeignHandler;
 import xyz.xcye.message.po.Email;
 
 /**

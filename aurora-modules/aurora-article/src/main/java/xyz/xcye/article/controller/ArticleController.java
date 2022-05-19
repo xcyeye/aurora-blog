@@ -34,7 +34,7 @@ public class ArticleController {
     @ModifyOperation
     @PostMapping
     public int insertArticle(@Validated({Insert.class, Default.class}) Article article) {
-        return articleService.insert(article);
+        return articleService.insertArticle(article);
     }
 
     @ModifyOperation

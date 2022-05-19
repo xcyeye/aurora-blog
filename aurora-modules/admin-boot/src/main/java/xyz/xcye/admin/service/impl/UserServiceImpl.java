@@ -157,10 +157,10 @@ public class UserServiceImpl implements UserService {
 
     @GlobalTransactional(rollbackFor = Exception.class)
     @Override
-    public int bindingEmail(long emailUid) throws BindException, EmailException {
-        AssertUtils.stateThrow(emailUid != 0, () -> new EmailException(ResponseStatusCodeEnum.PARAM_IS_INVALID));
+    public int bindingEmail(String email) throws BindException, EmailException {
+        AssertUtils.stateThrow(StringUtils.hasLength(email), () -> new EmailException(ResponseStatusCodeEnum.PARAM_IS_INVALID));
         // 远程调用aurora-message服务，判断此email的uid是否存在
-        R r = emailFeignService.queryByUid(emailUid);
+        R r = emailFeignService.queryByEmail(email);
         EmailVO queriedEmailInfo = JSONUtils.parseObjFromResult(ConvertObjectUtils.jsonToString(r), "data", EmailVO.class);
 
         AssertUtils.ifNullThrow(queriedEmailInfo,

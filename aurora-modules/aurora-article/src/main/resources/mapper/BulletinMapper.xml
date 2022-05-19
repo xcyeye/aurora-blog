@@ -64,17 +64,6 @@
     delete from au_bulletin
     where `uid` = #{uid,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="xyz.xcye.article.po.Bulletin">
-    <!--@mbg.generated-->
-    insert into au_bulletin (`uid`, title, create_time, 
-      update_time, user_uid, is_show, 
-      is_timing, timing_publish_time, is_delete, 
-      content)
-    values (#{uid,jdbcType=BIGINT}, #{title,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
-      #{updateTime,jdbcType=TIMESTAMP}, #{userUid,jdbcType=BIGINT}, #{show,jdbcType=TINYINT}, 
-      #{timing,jdbcType=TINYINT}, #{timingPublishTime,jdbcType=TIMESTAMP}, #{delete,jdbcType=TINYINT}, 
-      #{content,jdbcType=LONGVARCHAR})
-  </insert>
   <insert id="insertSelective" parameterType="xyz.xcye.article.po.Bulletin">
     <!--@mbg.generated-->
     insert into au_bulletin
@@ -84,12 +73,6 @@
       </if>
       <if test="title != null and title != ''">
         title,
-      </if>
-      <if test="createTime != null">
-        create_time,
-      </if>
-      <if test="updateTime != null">
-        update_time,
       </if>
       <if test="userUid != null">
         user_uid,
@@ -116,12 +99,6 @@
       </if>
       <if test="title != null and title != ''">
         #{title,jdbcType=VARCHAR},
-      </if>
-      <if test="createTime != null">
-        #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updateTime != null">
-        #{updateTime,jdbcType=TIMESTAMP},
       </if>
       <if test="userUid != null">
         #{userUid,jdbcType=BIGINT},
@@ -150,9 +127,6 @@
       <if test="title != null and title != ''">
         title = #{title,jdbcType=VARCHAR},
       </if>
-      <if test="createTime != null">
-        create_time = #{createTime,jdbcType=TIMESTAMP},
-      </if>
       <if test="updateTime != null">
         update_time = #{updateTime,jdbcType=TIMESTAMP},
       </if>
@@ -175,33 +149,6 @@
         content = #{content,jdbcType=LONGVARCHAR},
       </if>
     </set>
-    where `uid` = #{uid,jdbcType=BIGINT}
-  </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="xyz.xcye.article.po.Bulletin">
-    <!--@mbg.generated-->
-    update au_bulletin
-    set title = #{title,jdbcType=VARCHAR},
-      create_time = #{createTime,jdbcType=TIMESTAMP},
-      update_time = #{updateTime,jdbcType=TIMESTAMP},
-      user_uid = #{userUid,jdbcType=BIGINT},
-      is_show = #{show,jdbcType=TINYINT},
-      is_timing = #{timing,jdbcType=TINYINT},
-      timing_publish_time = #{timingPublishTime,jdbcType=TIMESTAMP},
-      is_delete = #{delete,jdbcType=TINYINT},
-      content = #{content,jdbcType=LONGVARCHAR}
-    where `uid` = #{uid,jdbcType=BIGINT}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="xyz.xcye.article.po.Bulletin">
-    <!--@mbg.generated-->
-    update au_bulletin
-    set title = #{title,jdbcType=VARCHAR},
-      create_time = #{createTime,jdbcType=TIMESTAMP},
-      update_time = #{updateTime,jdbcType=TIMESTAMP},
-      user_uid = #{userUid,jdbcType=BIGINT},
-      is_show = #{show,jdbcType=TINYINT},
-      is_timing = #{timing,jdbcType=TINYINT},
-      timing_publish_time = #{timingPublishTime,jdbcType=TIMESTAMP},
-      is_delete = #{delete,jdbcType=TINYINT}
     where `uid` = #{uid,jdbcType=BIGINT}
   </update>
 </mapper>

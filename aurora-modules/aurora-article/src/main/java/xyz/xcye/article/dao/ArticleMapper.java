@@ -17,16 +17,16 @@ public interface ArticleMapper {
     int deleteByPrimaryKey(Long uid);
 
     /**
-     * insert record to table
+     * insertArticle record to table
      * @param record the record
-     * @return insert count
+     * @return insertArticle count
      */
     int insert(Article record);
 
     /**
-     * insert record to table selective
+     * insertArticle record to table selective
      * @param record the record
-     * @return insert count
+     * @return insertArticle count
      */
     int insertSelective(Article record);
 
@@ -43,13 +43,4 @@ public interface ArticleMapper {
      * @return update count
      */
     int updateByPrimaryKeySelective(Article record);
-
-    int updateByPrimaryKeyWithBLOBs(Article record);
-
-    /**
-     * update record
-     * @param record the updated record
-     * @return update count
-     */
-    int updateByPrimaryKey(Article record);
 }

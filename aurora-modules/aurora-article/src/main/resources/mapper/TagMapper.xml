@@ -45,15 +45,6 @@
     delete from au_tag
     where `uid` = #{uid,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" keyColumn="uid" keyProperty="uid" parameterType="xyz.xcye.article.po.Tag" useGeneratedKeys="true">
-    <!--@mbg.generated-->
-    insert into au_tag (title, summary, created_time, 
-      updated_time, cover_Url, is_delete, 
-      user_uid)
-    values (#{title,jdbcType=VARCHAR}, #{summary,jdbcType=VARCHAR}, #{createdTime,jdbcType=TIMESTAMP}, 
-      #{updatedTime,jdbcType=TIMESTAMP}, #{coverUrl,jdbcType=VARCHAR}, #{delete,jdbcType=TINYINT}, 
-      #{userUid,jdbcType=BIGINT})
-  </insert>
   <insert id="insertSelective" keyColumn="uid" keyProperty="uid" parameterType="xyz.xcye.article.po.Tag" useGeneratedKeys="true">
     <!--@mbg.generated-->
     insert into au_tag
@@ -63,12 +54,6 @@
       </if>
       <if test="summary != null and summary != ''">
         summary,
-      </if>
-      <if test="createdTime != null and createdTime != ''">
-        created_time,
-      </if>
-      <if test="updatedTime != null and updatedTime != ''">
-        updated_time,
       </if>
       <if test="coverUrl != null and coverUrl != ''">
         cover_Url,
@@ -86,12 +71,6 @@
       </if>
       <if test="summary != null and summary != ''">
         #{summary,jdbcType=VARCHAR},
-      </if>
-      <if test="createdTime != null and createdTime != ''">
-        #{createdTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updatedTime != null and updatedTime != ''">
-        #{updatedTime,jdbcType=TIMESTAMP},
       </if>
       <if test="coverUrl != null and coverUrl != ''">
         #{coverUrl,jdbcType=VARCHAR},
@@ -114,9 +93,6 @@
       <if test="summary != null and summary != ''">
         summary = #{summary,jdbcType=VARCHAR},
       </if>
-      <if test="createdTime != null and createdTime != ''">
-        created_time = #{createdTime,jdbcType=TIMESTAMP},
-      </if>
       <if test="updatedTime != null and updatedTime != ''">
         updated_time = #{updatedTime,jdbcType=TIMESTAMP},
       </if>
@@ -130,18 +106,6 @@
         user_uid = #{userUid,jdbcType=BIGINT},
       </if>
     </set>
-    where `uid` = #{uid,jdbcType=BIGINT}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="xyz.xcye.article.po.Tag">
-    <!--@mbg.generated-->
-    update au_tag
-    set title = #{title,jdbcType=VARCHAR},
-      summary = #{summary,jdbcType=VARCHAR},
-      created_time = #{createdTime,jdbcType=TIMESTAMP},
-      updated_time = #{updatedTime,jdbcType=TIMESTAMP},
-      cover_Url = #{coverUrl,jdbcType=VARCHAR},
-      is_delete = #{delete,jdbcType=TINYINT},
-      user_uid = #{userUid,jdbcType=BIGINT}
     where `uid` = #{uid,jdbcType=BIGINT}
   </update>
 </mapper>

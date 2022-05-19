@@ -15,7 +15,6 @@ import xyz.xcye.core.valid.Update;
 import xyz.xcye.core.valid.validator.ValidateString;
 
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Null;
 import javax.validation.constraints.Pattern;
 import java.io.Serializable;
 
@@ -108,7 +107,6 @@ public class Link implements Serializable {
     * 创建时间
     */
     @ApiModelProperty(value="创建时间")
-    @Null
     private String createTime;
 
     /**

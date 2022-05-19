@@ -4,7 +4,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import xyz.xcye.auth.constant.RequestConstant;
-import xyz.xcye.feign.config.request.AuroraRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Enumeration;
@@ -19,10 +18,6 @@ import java.util.Map;
 @Component
 public class RequestUtils {
     public Map<String,String> getRequestHeadsFromHolder() {
-
-        if (RequestContextHolder.getRequestAttributes() instanceof AuroraRequestAttributes) {
-            return getAllFromAuroraRequestAttributes();
-        }
 
         ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         if (requestAttributes == null) {
@@ -49,10 +44,6 @@ public class RequestUtils {
      * @return
      */
     public Map<String, String> getAllNeedHeaders() {
-        if (RequestContextHolder.getRequestAttributes() instanceof AuroraRequestAttributes) {
-            return getAllFromAuroraRequestAttributes();
-        }
-
         ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         if (requestAttributes == null) {
             return null;
@@ -76,13 +67,5 @@ public class RequestUtils {
             }
         }
         return headMaps;
-    }
-
-    private Map<String, String> getAllFromAuroraRequestAttributes() {
-        AuroraRequestAttributes auroraRequestAttributes = (AuroraRequestAttributes) RequestContextHolder.getRequestAttributes();
-        Map<String, Object> allHeaderMap = auroraRequestAttributes.getAllHeaderMap();
-        Map<String,String> map = new HashMap<>();
-        allHeaderMap.forEach((key,value) -> map.put(key, value + ""));
-        return map;
     }
 }

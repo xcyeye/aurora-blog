@@ -45,15 +45,6 @@
     delete from au_category
     where `uid` = #{uid,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" keyColumn="uid" keyProperty="uid" parameterType="xyz.xcye.article.po.Category" useGeneratedKeys="true">
-    <!--@mbg.generated-->
-    insert into au_category (title, summary, create_time, 
-      update_time, cover_url, is_delete, 
-      user_uid)
-    values (#{title,jdbcType=VARCHAR}, #{summary,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
-      #{updateTime,jdbcType=TIMESTAMP}, #{coverUrl,jdbcType=VARCHAR}, #{delete,jdbcType=TINYINT}, 
-      #{userUid,jdbcType=BIGINT})
-  </insert>
   <insert id="insertSelective" keyColumn="uid" keyProperty="uid" parameterType="xyz.xcye.article.po.Category" useGeneratedKeys="true">
     <!--@mbg.generated-->
     insert into au_category
@@ -63,12 +54,6 @@
       </if>
       <if test="summary != null and summary != ''">
         summary,
-      </if>
-      <if test="createTime != null and createTime != ''">
-        create_time,
-      </if>
-      <if test="updateTime != null">
-        update_time,
       </if>
       <if test="coverUrl != null and coverUrl != ''">
         cover_url,
@@ -86,12 +71,6 @@
       </if>
       <if test="summary != null and summary != ''">
         #{summary,jdbcType=VARCHAR},
-      </if>
-      <if test="createTime != null and createTime != ''">
-        #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updateTime != null">
-        #{updateTime,jdbcType=TIMESTAMP},
       </if>
       <if test="coverUrl != null and coverUrl != ''">
         #{coverUrl,jdbcType=VARCHAR},
@@ -114,9 +93,6 @@
       <if test="summary != null and summary != ''">
         summary = #{summary,jdbcType=VARCHAR},
       </if>
-      <if test="createTime != null and createTime != ''">
-        create_time = #{createTime,jdbcType=TIMESTAMP},
-      </if>
       <if test="updateTime != null">
         update_time = #{updateTime,jdbcType=TIMESTAMP},
       </if>
@@ -130,18 +106,6 @@
         user_uid = #{userUid,jdbcType=BIGINT},
       </if>
     </set>
-    where `uid` = #{uid,jdbcType=BIGINT}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="xyz.xcye.article.po.Category">
-    <!--@mbg.generated-->
-    update au_category
-    set title = #{title,jdbcType=VARCHAR},
-      summary = #{summary,jdbcType=VARCHAR},
-      create_time = #{createTime,jdbcType=TIMESTAMP},
-      update_time = #{updateTime,jdbcType=TIMESTAMP},
-      cover_url = #{coverUrl,jdbcType=VARCHAR},
-      is_delete = #{delete,jdbcType=TINYINT},
-      user_uid = #{userUid,jdbcType=BIGINT}
     where `uid` = #{uid,jdbcType=BIGINT}
   </update>
 </mapper>

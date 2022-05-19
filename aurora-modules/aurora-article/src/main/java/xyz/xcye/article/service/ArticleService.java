@@ -27,11 +27,11 @@ public interface ArticleService {
     int physicsDeleteByUid(Long uid);
 
     /**
-     * insert record to table
+     * insertArticle record to table
      * @param record the record
-     * @return insert count
+     * @return insertArticle count
      */
-    int insert(Article record);
+    int insertArticle(Article record);
 
     /**
      * select by primary key

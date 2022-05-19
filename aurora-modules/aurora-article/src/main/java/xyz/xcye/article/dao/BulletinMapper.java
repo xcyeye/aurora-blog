@@ -17,16 +17,9 @@ public interface BulletinMapper {
     int deleteByPrimaryKey(Long uid);
 
     /**
-     * insert record to table
+     * insertArticle record to table selective
      * @param record the record
-     * @return insert count
-     */
-    int insert(Bulletin record);
-
-    /**
-     * insert record to table selective
-     * @param record the record
-     * @return insert count
+     * @return insertArticle count
      */
     int insertSelective(Bulletin record);
 
@@ -43,13 +36,4 @@ public interface BulletinMapper {
      * @return update count
      */
     int updateByPrimaryKeySelective(Bulletin record);
-
-    int updateByPrimaryKeyWithBLOBs(Bulletin record);
-
-    /**
-     * update record
-     * @param record the updated record
-     * @return update count
-     */
-    int updateByPrimaryKey(Bulletin record);
 }

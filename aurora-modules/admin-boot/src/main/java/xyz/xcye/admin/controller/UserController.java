@@ -35,8 +35,7 @@ public class UserController {
     @PostMapping("")
     @ModifyOperation
     @ApiOperation(value = "添加新用户")
-    public int insertUser(@Validated({Insert.class, Default.class}) User user)
-            throws UserException {
+    public int insertUser(@Validated({Insert.class, Default.class}) User user) throws UserException {
         return userService.insertUser(user);
     }
 
@@ -91,9 +90,8 @@ public class UserController {
 
     @ApiOperation("绑定邮箱")
     @ModifyOperation
-    @PutMapping("/bindingEmail/{emailUid}")
-    public int bindingEmail(@PathVariable("emailUid") long emailUid)
-            throws BindException, EmailException {
-        return userService.bindingEmail(emailUid);
+    @PutMapping("/bindingEmail/{email}")
+    public int bindingEmail(@PathVariable("email") String email) throws BindException, EmailException {
+        return userService.bindingEmail(email);
     }
 }
