@@ -3,7 +3,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="xyz.xcye.message.dao.EmailLogDao">
-    <cache type="xyz.xcye.mybatis.MybatisCacheAutoConfig"/>
+    <cache type="xyz.xcye.mybatis.MybatisLowFrequentCacheAutoConfig"/>
 
     <insert id="insertEmailLog" keyProperty="uid" keyColumn="uid" useGeneratedKeys="true">
         insert  into

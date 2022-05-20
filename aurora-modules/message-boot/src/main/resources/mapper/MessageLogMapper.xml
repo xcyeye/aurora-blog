@@ -4,7 +4,7 @@
 
 <mapper namespace="xyz.xcye.message.dao.MessageLogDao">
 
-    <cache type="xyz.xcye.mybatis.MybatisCacheAutoConfig"/>
+    <cache type="xyz.xcye.mybatis.MybatisFrequentCacheAutoConfig"/>
     <insert id="insertMessageLog">
         insert into
             au_message_log

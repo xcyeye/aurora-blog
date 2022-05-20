@@ -4,7 +4,7 @@
 
 <mapper namespace="xyz.xcye.message.dao.EmailDao">
 
-    <cache type="xyz.xcye.mybatis.MybatisCacheAutoConfig"/>
+    <cache type="xyz.xcye.mybatis.MybatisLowFrequentCacheAutoConfig"/>
     <insert id="insertEmail" keyColumn="uid">
         insert into
             au_email

@@ -4,6 +4,8 @@
 
 <mapper namespace="xyz.xcye.admin.dao.PermissionRelationDao">
 
+    <cache type="xyz.xcye.mybatis.MybatisLowFrequentCacheAutoConfig"/>
+
     <sql id="Base_Column_List">
         SELECT
             au_role.`name` roleName, au_role.`status` roleStatus, au_permission.`name` permissionName,
