@@ -51,7 +51,6 @@ public class ArticleServiceImpl implements ArticleService {
 
         // 构建一个Article对象
         Article article = Article.builder()
-                .updateTime(DateUtils.format())
                 .uid(uid)
                 .delete(true)
                 .build();
@@ -97,7 +96,6 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     public int updateByPrimaryKeySelective(Article record) {
         Assert.notNull(record, "文章数据不能为null");
-        record.setUpdateTime(DateUtils.format());
         setEffectiveTagAndCategory(record);
         record.setUserUid(null);
         setTimingPublishTime(record);

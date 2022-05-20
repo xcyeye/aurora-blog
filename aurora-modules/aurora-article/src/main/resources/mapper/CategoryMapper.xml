@@ -93,9 +93,6 @@
       <if test="summary != null and summary != ''">
         summary = #{summary,jdbcType=VARCHAR},
       </if>
-      <if test="updateTime != null">
-        update_time = #{updateTime,jdbcType=TIMESTAMP},
-      </if>
       <if test="coverUrl != null and coverUrl != ''">
         cover_url = #{coverUrl,jdbcType=VARCHAR},
       </if>

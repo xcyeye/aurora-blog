@@ -14,7 +14,6 @@ import xyz.xcye.core.dto.JwtUserInfo;
 import xyz.xcye.core.enums.ResponseStatusCodeEnum;
 import xyz.xcye.core.exception.user.UserException;
 import xyz.xcye.core.util.BeanUtils;
-import xyz.xcye.core.util.DateUtils;
 import xyz.xcye.core.util.id.GenerateInfoUtils;
 import xyz.xcye.core.util.lambda.AssertUtils;
 import xyz.xcye.data.entity.Condition;
@@ -41,7 +40,6 @@ public class TalkServiceImpl implements TalkService {
         Talk talk = Talk.builder()
                 .uid(uid)
                 .delete(true)
-                .updatedTime(DateUtils.format())
                 .build();
         return talkMapper.updateByPrimaryKeySelective(talk);
     }
@@ -82,7 +80,6 @@ public class TalkServiceImpl implements TalkService {
     @Override
     public int updateByPrimaryKeySelective(Talk record) {
         Assert.notNull(record, "说说信息不能为null");
-        record.setUpdatedTime(DateUtils.format());
         record.setUserUid(null);
         return talkMapper.updateByPrimaryKeySelective(record);
     }

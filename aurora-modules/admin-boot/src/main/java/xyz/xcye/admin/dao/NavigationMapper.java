@@ -17,13 +17,6 @@ public interface NavigationMapper {
     int deleteByPrimaryKey(Long uid);
 
     /**
-     * insert record to table
-     * @param record the record
-     * @return insert count
-     */
-    int insert(Navigation record);
-
-    /**
      * insert record to table selective
      * @param record the record
      * @return insert count
@@ -43,13 +36,4 @@ public interface NavigationMapper {
      * @return update count
      */
     int updateByPrimaryKeySelective(Navigation record);
-
-    int updateByPrimaryKeyWithBLOBs(Navigation record);
-
-    /**
-     * update record
-     * @param record the updated record
-     * @return update count
-     */
-    int updateByPrimaryKey(Navigation record);
 }

@@ -20,6 +20,7 @@ import xyz.xcye.core.dto.JwtUserInfo;
 import xyz.xcye.core.entity.ExceptionResultEntity;
 import xyz.xcye.core.entity.R;
 import xyz.xcye.core.enums.ResponseStatusCodeEnum;
+import xyz.xcye.core.util.ConvertObjectUtils;
 import xyz.xcye.core.util.LogUtils;
 
 import java.lang.reflect.Method;
@@ -97,6 +98,12 @@ public class AuroraResponseResultHandler implements ResponseBodyAdvice<Object> {
             return responseBody;
         }
 
+        R r = R.success(ResponseStatusCodeEnum.SUCCESS.getCode(), ResponseStatusCodeEnum.SUCCESS.getMessage(), responseBody, true);
+        if (responseBody instanceof String) {
+            responseBody = ConvertObjectUtils.jsonToString(r);
+        }else {
+            responseBody = r;
+        }
         return fieldFilter(responseBody,method);
     }
 

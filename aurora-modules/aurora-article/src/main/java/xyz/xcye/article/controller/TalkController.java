@@ -3,6 +3,7 @@ package xyz.xcye.article.controller;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import xyz.xcye.article.po.Talk;
@@ -25,6 +26,7 @@ import javax.validation.groups.Default;
 @Api("说说相关的控制类")
 @RequestMapping("/blog/talk")
 @RestController
+@RefreshScope
 public class TalkController {
 
     @Autowired

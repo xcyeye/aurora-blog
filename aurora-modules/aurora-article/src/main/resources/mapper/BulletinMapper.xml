@@ -127,9 +127,6 @@
       <if test="title != null and title != ''">
         title = #{title,jdbcType=VARCHAR},
       </if>
-      <if test="updateTime != null">
-        update_time = #{updateTime,jdbcType=TIMESTAMP},
-      </if>
       <if test="userUid != null">
         user_uid = #{userUid,jdbcType=BIGINT},
       </if>

@@ -8,11 +8,10 @@
     <insert id="insertEmail" keyColumn="uid">
         insert into
             au_email
-        (uid,email,port,user_uid,email_host,email_password,protocol,create_time,update_time)
+        (uid,email,port,user_uid,email_host,email_password,protocol)
         values (
         #{email.uid},#{email.email},#{email.port},#{email.userUid},#{email.emailHost},
-        #{email.emailPassword},#{email.protocol},#{email.createTime},#{email.updateTime}
-        )
+        #{email.emailPassword},#{email.protocol})
     </insert>
 
     <update id="updateEmail">
@@ -33,9 +32,6 @@
             </if>
             <if test="email.port != null">
                 port=#{email.port},
-            </if>
-            <if test="email.updateTime != null">
-                update_time=#{email.updateTime}
             </if>
         </set>
 

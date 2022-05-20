@@ -50,15 +50,7 @@
     delete from au_social
     where `uid` = #{uid,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" keyColumn="uid" keyProperty="uid" parameterType="xyz.xcye.admin.po.Social" useGeneratedKeys="true">
-    <!--@mbg.generated-->
-    insert into au_social (social_name, social_icon, social_url, 
-      is_show, user_uid, create_time, 
-      update_time, is_delete)
-    values (#{socialName,jdbcType=VARCHAR}, #{socialIcon,jdbcType=VARCHAR}, #{socialUrl,jdbcType=VARCHAR}, 
-      #{show,jdbcType=TINYINT}, #{userUid,jdbcType=BIGINT}, #{createTime,jdbcType=TIMESTAMP}, 
-      #{updateTime,jdbcType=TIMESTAMP}, #{delete,jdbcType=TINYINT})
-  </insert>
+
   <insert id="insertSelective" keyColumn="uid" keyProperty="uid" parameterType="xyz.xcye.admin.po.Social" useGeneratedKeys="true">
     <!--@mbg.generated-->
     insert into au_social
@@ -122,26 +114,10 @@
       <if test="userUid != null">
         user_uid = #{userUid,jdbcType=BIGINT},
       </if>
-      <if test="updateTime != null and updateTime != ''">
-        update_time = #{updateTime,jdbcType=TIMESTAMP},
-      </if>
       <if test="delete != null">
         is_delete = #{delete,jdbcType=TINYINT},
       </if>
     </set>
-    where `uid` = #{uid,jdbcType=BIGINT}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="xyz.xcye.admin.po.Social">
-    <!--@mbg.generated-->
-    update au_social
-    set social_name = #{socialName,jdbcType=VARCHAR},
-      social_icon = #{socialIcon,jdbcType=VARCHAR},
-      social_url = #{socialUrl,jdbcType=VARCHAR},
-      is_show = #{show,jdbcType=TINYINT},
-      user_uid = #{userUid,jdbcType=BIGINT},
-      create_time = #{createTime,jdbcType=TIMESTAMP},
-      update_time = #{updateTime,jdbcType=TIMESTAMP},
-      is_delete = #{delete,jdbcType=TINYINT}
     where `uid` = #{uid,jdbcType=BIGINT}
   </update>
 </mapper>

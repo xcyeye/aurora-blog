@@ -41,7 +41,6 @@ public class BulletinServiceImpl implements BulletinService {
         Bulletin bulletin = Bulletin.builder()
                 .delete(true)
                 .uid(uid)
-                .updateTime(DateUtils.format())
                 .build();
         return bulletinMapper.updateByPrimaryKeySelective(bulletin);
     }
@@ -81,7 +80,6 @@ public class BulletinServiceImpl implements BulletinService {
     @Override
     public int updateByPrimaryKeySelective(Bulletin record) {
         Assert.notNull(record, "公告信息不能为null");
-        record.setUpdateTime(DateUtils.format());
         record.setUserUid(null);
         setTimingPublishTime(record);
         return bulletinMapper.updateByPrimaryKeySelective(record);

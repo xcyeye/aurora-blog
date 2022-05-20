@@ -76,24 +76,6 @@
     delete from au_article
     where `uid` = #{uid,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="xyz.xcye.article.po.Article">
-    <!--@mbg.generated-->
-    insert into au_article (`uid`, is_show_comment, accessory_uids, 
-      category_uids, tag_uids, is_publish, 
-      user_uid, is_original_article, original_article_url, 
-      cover_picture_url, title, summary, 
-      is_timing, timing_publish_time, like_number, 
-      read_number,
-      is_delete, content, comment_uids
-      )
-    values (#{uid,jdbcType=BIGINT}, #{showComment,jdbcType=TINYINT}, #{accessoryUids,jdbcType=VARCHAR}, 
-      #{categoryUids,jdbcType=VARCHAR}, #{tagUids,jdbcType=VARCHAR}, #{publish,jdbcType=TINYINT}, 
-      #{userUid,jdbcType=BIGINT}, #{originalArticle,jdbcType=TINYINT}, #{originalArticleUrl,jdbcType=VARCHAR}, 
-      #{coverPictureUrl,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, #{summary,jdbcType=VARCHAR}, 
-      #{timing,jdbcType=TINYINT}, #{timingPublishTime,jdbcType=TIMESTAMP}, #{likeNumber,jdbcType=INTEGER}, 
-      #{readNumber,jdbcType=INTEGER}, #{delete,jdbcType=TINYINT}, #{content,jdbcType=LONGVARCHAR}, #{commentUids,jdbcType=LONGVARCHAR}
-      )
-  </insert>
   <insert id="insertSelective" parameterType="xyz.xcye.article.po.Article">
     <!--@mbg.generated-->
     insert into au_article
@@ -264,9 +246,6 @@
       </if>
       <if test="readNumber != null">
         read_number = #{readNumber,jdbcType=INTEGER},
-      </if>
-      <if test="updateTime != null">
-        update_time = #{updateTime,jdbcType=TIMESTAMP},
       </if>
       <if test="delete != null">
         is_delete = #{delete,jdbcType=TINYINT},

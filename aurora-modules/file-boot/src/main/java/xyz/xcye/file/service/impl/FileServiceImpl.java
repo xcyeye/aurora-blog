@@ -8,7 +8,6 @@ import xyz.xcye.aurora.properties.AuroraProperties;
 import xyz.xcye.core.enums.ResponseStatusCodeEnum;
 import xyz.xcye.core.exception.file.FileException;
 import xyz.xcye.core.util.BeanUtils;
-import xyz.xcye.core.util.DateUtils;
 import xyz.xcye.core.util.LogUtils;
 import xyz.xcye.core.util.id.GenerateInfoUtils;
 import xyz.xcye.data.entity.Condition;
@@ -24,7 +23,6 @@ import xyz.xcye.file.service.FileService;
 import xyz.xcye.file.vo.FileVO;
 
 import java.io.IOException;
-import java.util.Date;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -98,7 +96,6 @@ public class FileServiceImpl implements FileService {
         //这里使用deleteFileInfo对象的原因是：deleteFileInfo对象中存放的属性值比较完整，而file对象中，可能只存在一个uid
 
         //创建一个新对象File最为原始数据对象
-        deleteFileInfo.setDeleteTime(DateUtils.format(new Date()));
         int updateFileNum = 0;
         try {
             updateFileNum = updateFile(deleteFileInfo);

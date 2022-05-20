@@ -170,9 +170,6 @@
       <if test="email != null and email != ''">
         email = #{email,jdbcType=VARCHAR},
       </if>
-      <if test="updateTime != null and updateTime != ''">
-        update_time = #{updateTime,jdbcType=TIMESTAMP},
-      </if>
       <if test="commentIp != null and commentIp != ''">
         comment_ip = #{commentIp,jdbcType=VARCHAR},
       </if>

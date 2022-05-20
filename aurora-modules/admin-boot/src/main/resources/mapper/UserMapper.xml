@@ -181,9 +181,6 @@
       <if test="emailUid != null">
         email_uid = #{emailUid,jdbcType=BIGINT},
       </if>
-      <if test="updateTime != null and updateTime != ''">
-        update_time = #{updateTime,jdbcType=TIMESTAMP},
-      </if>
       <if test="delete != null">
         is_delete = #{delete,jdbcType=TINYINT},
       </if>

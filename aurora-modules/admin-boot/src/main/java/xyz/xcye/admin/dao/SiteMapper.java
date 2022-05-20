@@ -18,13 +18,6 @@ public interface SiteMapper {
     int deleteByPrimaryKey(Long uid);
 
     /**
-     * insert record to table
-     * @param record the record
-     * @return insert count
-     */
-    int insert(Site record);
-
-    /**
      * insert record to table selective
      * @param record the record
      * @return insert count
@@ -44,13 +37,4 @@ public interface SiteMapper {
      * @return update count
      */
     int updateByPrimaryKeySelective(Site record);
-
-    int updateByPrimaryKeyWithBLOBs(Site record);
-
-    /**
-     * update record
-     * @param record the updated record
-     * @return update count
-     */
-    int updateByPrimaryKey(Site record);
 }

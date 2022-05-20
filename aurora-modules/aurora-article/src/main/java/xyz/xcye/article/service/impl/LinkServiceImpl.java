@@ -26,7 +26,6 @@ import xyz.xcye.core.enums.ResponseStatusCodeEnum;
 import xyz.xcye.core.exception.link.LinkException;
 import xyz.xcye.core.exception.user.UserException;
 import xyz.xcye.core.util.BeanUtils;
-import xyz.xcye.core.util.DateUtils;
 import xyz.xcye.core.util.JSONUtils;
 import xyz.xcye.core.util.LogUtils;
 import xyz.xcye.core.util.id.GenerateInfoUtils;
@@ -35,7 +34,9 @@ import xyz.xcye.data.entity.Condition;
 import xyz.xcye.data.entity.PageData;
 import xyz.xcye.data.util.PageUtils;
 
-import java.util.*;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 /**
  * @author qsyyke
@@ -126,7 +127,6 @@ public class LinkServiceImpl implements LinkService {
     public int updateByPrimaryKeySelective(Link record, String replyMessage) throws BindException {
         Assert.notNull(record, "友情链接信息不能为null");
         setEffectiveCategory(record, true);
-        record.setUpdateTime(DateUtils.format());
         Optional.ofNullable(UserUtils.getCurrentUserUid()).ifPresent(record::setUserUid);
         int updateNum = linkMapper.updateByPrimaryKeySelective(record);
 

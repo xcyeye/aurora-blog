@@ -8,9 +8,9 @@
     <insert id="insertEmailLog" keyProperty="uid" keyColumn="uid" useGeneratedKeys="true">
         insert  into
             au_email_log
-        (sender,subject,content,receiver,create_time,is_send)
+        (sender,subject,content,receiver,is_send)
         values
-        (#{emailLog.sender},#{emailLog.subject},#{emailLog.content},#{emailLog.receiver},#{emailLog.createTime},#{emailLog.send})
+        (#{emailLog.sender},#{emailLog.subject},#{emailLog.content},#{emailLog.receiver},#{emailLog.send})
     </insert>
 
     <update id="updateEmailLog">
@@ -28,9 +28,6 @@
             </if>
             <if test="emailLog.receiver != null">
                 receiver=#{emailLog.receiver},
-            </if>
-            <if test="emailLog.updateTime != null">
-                update_time=#{emailLog.updateTime},
             </if>
             <if test="emailLog.send != null">
                 is_send=#{emailLog.send},

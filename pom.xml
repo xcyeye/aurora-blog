@@ -34,8 +34,8 @@
         <!--mybatis-spring-boot-starter-->
         <mybatis.version>2.2.2</mybatis.version>
         <lombok.version>1.18.20</lombok.version>
-
         <spring-cloud.version>2021.0.1</spring-cloud.version>
+        <spring-cloud-bootstrap.version>3.1.1</spring-cloud-bootstrap.version>
         <spring-alibaba-cloud.version>2021.0.1.0</spring-alibaba-cloud.version>
         <oauth2.version>2.2.4.RELEASE</oauth2.version>
         <oauth2-resource.version>5.2.2.RELEASE</oauth2-resource.version>
@@ -75,6 +75,12 @@
                 <version>${spring-alibaba-cloud.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-starter-bootstrap</artifactId>
+                <version>${spring-cloud-bootstrap.version}</version>
             </dependency>
 
             <dependency>

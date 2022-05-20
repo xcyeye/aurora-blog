@@ -272,7 +272,6 @@ public class LoginInfoAop {
         if (StringUtils.hasLength(cacheUsername)) {
             setDefaultProperties(loginInfo);
             loginInfo.setUsername(username);
-            loginInfo.setUpdateTime(null);
             loginInfoService.insertSelective(loginInfo);
         }
         loginInfoService.updateByPrimaryKeySelective(loginInfo);

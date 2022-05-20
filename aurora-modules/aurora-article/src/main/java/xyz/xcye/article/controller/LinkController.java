@@ -3,6 +3,7 @@ package xyz.xcye.article.controller;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.validation.BindException;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -15,7 +16,6 @@ import xyz.xcye.core.valid.Insert;
 import xyz.xcye.core.valid.Update;
 import xyz.xcye.data.entity.Condition;
 import xyz.xcye.data.entity.PageData;
-import xyz.xcye.feign.config.service.MessageLogFeignService;
 
 import javax.validation.groups.Default;
 
@@ -27,12 +27,11 @@ import javax.validation.groups.Default;
 @Api(tags = "友情链接相关的操作")
 @RestController
 @RequestMapping("/blog/link")
+@RefreshScope
 public class LinkController {
 
     @Autowired
     private LinkService linkService;
-    @Autowired
-    private MessageLogFeignService messageLogFeignService;
 
     @ApiOperation("根据uid删除对应的友情链接")
     @DeleteMapping
@@ -45,7 +44,6 @@ public class LinkController {
     @ApiOperation("插入新友情链接")
     @PostMapping
     public int insertSelective(@Validated({Insert.class, Default.class}) Link record) throws BindException {
-        Long qqNumber = record.getQqNumber();
         return linkService.insertSelective(record);
     }
 

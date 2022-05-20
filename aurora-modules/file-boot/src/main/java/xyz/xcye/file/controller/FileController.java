@@ -4,6 +4,7 @@ package xyz.xcye.file.controller;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -13,12 +14,12 @@ import xyz.xcye.core.annotaion.controller.SelectOperation;
 import xyz.xcye.core.exception.file.FileException;
 import xyz.xcye.core.valid.Insert;
 import xyz.xcye.core.valid.Update;
+import xyz.xcye.data.entity.Condition;
+import xyz.xcye.data.entity.PageData;
 import xyz.xcye.file.dto.FileEntityDTO;
 import xyz.xcye.file.po.File;
 import xyz.xcye.file.service.FileService;
 import xyz.xcye.file.vo.FileVO;
-import xyz.xcye.data.entity.Condition;
-import xyz.xcye.data.entity.PageData;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
@@ -34,6 +35,7 @@ import java.util.List;
 
 @Api(tags = "操作文件相关的工具类")
 @RequestMapping("/file")
+@RefreshScope
 @RestController
 public class FileController {
 

@@ -159,9 +159,6 @@
       <if test="qqNumber != null">
         qq_number = #{qqNumber,jdbcType=VARCHAR},
       </if>
-      <if test="updateTime != null and updateTime != ''">
-        update_time = #{updateTime,jdbcType=TIMESTAMP},
-      </if>
     </set>
     where `uid` = #{uid,jdbcType=BIGINT}
   </update>

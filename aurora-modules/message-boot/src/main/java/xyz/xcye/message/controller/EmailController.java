@@ -4,21 +4,21 @@ package xyz.xcye.message.controller;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.validation.BindException;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import xyz.xcye.core.annotaion.controller.ModifyOperation;
 import xyz.xcye.core.annotaion.controller.SelectOperation;
-import xyz.xcye.core.entity.R;
 import xyz.xcye.core.exception.AuroraException;
 import xyz.xcye.core.valid.Insert;
 import xyz.xcye.core.valid.Update;
+import xyz.xcye.data.entity.Condition;
+import xyz.xcye.data.entity.PageData;
 import xyz.xcye.mail.api.feign.UserFeignService;
 import xyz.xcye.message.po.Email;
 import xyz.xcye.message.service.EmailService;
 import xyz.xcye.message.vo.EmailVO;
-import xyz.xcye.data.entity.Condition;
-import xyz.xcye.data.entity.PageData;
 
 import javax.validation.groups.Default;
 
@@ -29,6 +29,7 @@ import javax.validation.groups.Default;
 
 @Api(tags = "邮箱相关的操作")
 @RestController
+@RefreshScope
 @RequestMapping("/message/email")
 public class EmailController {
 

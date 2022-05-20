@@ -5,19 +5,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindException;
 import xyz.xcye.core.util.BeanUtils;
-import xyz.xcye.core.util.DateUtils;
 import xyz.xcye.core.util.ValidationUtils;
 import xyz.xcye.core.valid.Update;
+import xyz.xcye.data.entity.Condition;
+import xyz.xcye.data.entity.PageData;
+import xyz.xcye.data.util.PageUtils;
 import xyz.xcye.message.dao.EmailLogDao;
 import xyz.xcye.message.po.EmailLog;
 import xyz.xcye.message.service.EmailLogService;
 import xyz.xcye.message.vo.EmailLogVO;
-import xyz.xcye.data.entity.Condition;
-import xyz.xcye.data.entity.PageData;
-import xyz.xcye.data.util.PageUtils;
 
 import javax.validation.groups.Default;
-import java.util.Date;
 
 /**
  * @author qsyyke
@@ -32,8 +30,6 @@ public class EmailLogServiceImpl implements EmailLogService {
     @Override
     public int insertEmailLog(EmailLog emailLog) {
         //因为au_email_log表中的uid是自增的，可以不用设置uid
-        //设置创建时间
-        emailLog.setCreateTime(DateUtils.format(new Date()));
         return emailLogDao.insertEmailLog(emailLog);
     }
 

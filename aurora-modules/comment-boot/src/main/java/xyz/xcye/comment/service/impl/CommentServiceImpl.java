@@ -25,7 +25,6 @@ import xyz.xcye.core.constant.amqp.AmqpExchangeNameConstant;
 import xyz.xcye.core.constant.amqp.AmqpQueueNameConstant;
 import xyz.xcye.core.enums.ResponseStatusCodeEnum;
 import xyz.xcye.core.exception.comment.CommentException;
-import xyz.xcye.core.util.DateUtils;
 import xyz.xcye.core.util.id.GenerateInfoUtils;
 import xyz.xcye.core.util.lambda.AssertUtils;
 import xyz.xcye.data.entity.Condition;
@@ -107,8 +106,6 @@ public class CommentServiceImpl implements CommentService {
     public int updateComment(Comment comment) {
         Assert.notNull(comment, "评论信息不能为null");
         setPageType(comment, true);
-        // 设置最后修改时间
-        comment.setUpdateTime(DateUtils.format());
         Optional.ofNullable(UserUtils.getCurrentUserUid()).ifPresent(comment::setUserUid);
         return commentMapper.updateByPrimaryKeySelective(comment);
     }
@@ -117,7 +114,6 @@ public class CommentServiceImpl implements CommentService {
     public int updateDeleteStatus(Comment comment) {
         Assert.notNull(comment, () -> "更新评论删除状态，不能为null");
         Optional.ofNullable(UserUtils.getCurrentUserUid()).ifPresent(comment::setUserUid);
-        comment.setUpdateTime(DateUtils.format());
         comment.setDelete(Optional.ofNullable(comment.getDelete()).orElse(false));
         return commentMapper.updateByPrimaryKeySelective(comment);
     }
@@ -178,7 +174,6 @@ public class CommentServiceImpl implements CommentService {
     private void setDefaultProperty(Comment comment) {
         // 初始化值
         comment.setUid(GenerateInfoUtils.generateUid(auroraProperties.getSnowFlakeWorkerId(),auroraProperties.getSnowFlakeDatacenterId()));
-        comment.setCreateTime(DateUtils.format(new Date()));
         comment.setShowComment(true);
         // 设置email的发送状态，这里目前只能保证消息是否成功投递到rabbitmq交换机中，不能保证email是否发送成功
         comment.setEmailNotice(false);

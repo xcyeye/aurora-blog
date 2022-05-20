@@ -3,10 +3,10 @@ package xyz.xcye.comment.controller;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import xyz.xcye.comment.dto.CommentDTO;
-import xyz.xcye.comment.manager.amqp.send.SendCommentToExchange;
 import xyz.xcye.comment.po.Comment;
 import xyz.xcye.comment.service.CommentService;
 import xyz.xcye.comment.vo.CommentVO;
@@ -16,7 +16,6 @@ import xyz.xcye.core.util.NetWorkUtils;
 import xyz.xcye.core.valid.Insert;
 import xyz.xcye.core.valid.Update;
 import xyz.xcye.data.entity.Condition;
-import xyz.xcye.feign.config.service.MessageLogFeignService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.groups.Default;
@@ -29,12 +28,10 @@ import java.util.List;
 @Api(tags = "评论相关操作接口")
 @RequestMapping("/comment")
 @RestController
+@RefreshScope
 public class CommentController {
     @Autowired
     private CommentService commentService;
-
-    @Autowired
-    private MessageLogFeignService messageLogFeignService;
 
     @ApiOperation(value = "更新评论")
     @ModifyOperation
@@ -42,9 +39,6 @@ public class CommentController {
     public int updateComment(@Validated({Update.class}) Comment comment) {
         return commentService.updateComment(comment);
     }
-
-    @Autowired
-    private SendCommentToExchange sendCommentToExchange;
 
     @ApiOperation(value = "插入新评论")
     @ModifyOperation

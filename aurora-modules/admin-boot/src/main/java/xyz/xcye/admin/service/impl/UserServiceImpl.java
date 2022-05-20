@@ -29,7 +29,6 @@ import xyz.xcye.core.exception.email.EmailException;
 import xyz.xcye.core.exception.user.UserException;
 import xyz.xcye.core.util.BeanUtils;
 import xyz.xcye.core.util.ConvertObjectUtils;
-import xyz.xcye.core.util.DateUtils;
 import xyz.xcye.core.util.JSONUtils;
 import xyz.xcye.core.util.id.GenerateInfoUtils;
 import xyz.xcye.core.util.lambda.AssertUtils;
@@ -89,7 +88,6 @@ public class UserServiceImpl implements UserService {
         if (StringUtils.hasLength(user.getUsername()) && existsUsername(user.getUsername())) {
             throw new UserException(ResponseStatusCodeEnum.PERMISSION_USER_EXIST);
         }
-        user.setUpdateTime(DateUtils.format(new Date()));
         return userMapper.updateByPrimaryKeySelective(user);
     }
 
@@ -165,8 +163,10 @@ public class UserServiceImpl implements UserService {
 
         AssertUtils.ifNullThrow(queriedEmailInfo,
                 () -> new EmailException(ResponseStatusCodeEnum.EXCEPTION_EMAIL_NOT_EXISTS));
-        User user = User.builder().emailUid(queriedEmailInfo.getUid()).uid(queriedEmailInfo.getUserUid())
-                .updateTime(DateUtils.format(new Date())).build();
+        User user = User.builder()
+                .emailUid(queriedEmailInfo.getUid())
+                .uid(queriedEmailInfo.getUserUid())
+                .build();
         // 判断该用户是否绑定
         UserVO userVO = queryByUid(user.getUid());
         AssertUtils.stateThrow(userVO != null, () -> new EmailException(ResponseStatusCodeEnum.PERMISSION_USER_NOT_EXIST));
@@ -200,7 +200,6 @@ public class UserServiceImpl implements UserService {
         user.setDelete(false);
         user.setVerifyEmail(false);
         user.setAccountLock(false);
-        user.setCreateTime(DateUtils.format(new Date()));
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setUid(GenerateInfoUtils.generateUid(auroraProperties.getSnowFlakeWorkerId(),auroraProperties.getSnowFlakeDatacenterId()));
 

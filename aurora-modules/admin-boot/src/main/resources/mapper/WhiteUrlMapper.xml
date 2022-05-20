@@ -65,9 +65,6 @@
                 <if test="url != null">
                     url = #{url,jdbcType=VARCHAR},
                 </if>
-                <if test="updateTime != null">
-                    update_time = #{updateTime,jdbcType=TIMESTAMP},
-                </if>
         </set>
         where   uid = #{uid,jdbcType=INTEGER} 
     </update>

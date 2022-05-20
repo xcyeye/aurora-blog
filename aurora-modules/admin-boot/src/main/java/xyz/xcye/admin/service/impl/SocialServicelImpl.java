@@ -13,7 +13,6 @@ import xyz.xcye.aurora.util.UserUtils;
 import xyz.xcye.core.enums.ResponseStatusCodeEnum;
 import xyz.xcye.core.exception.user.UserException;
 import xyz.xcye.core.util.BeanUtils;
-import xyz.xcye.core.util.DateUtils;
 import xyz.xcye.core.util.lambda.AssertUtils;
 import xyz.xcye.data.entity.Condition;
 import xyz.xcye.data.entity.PageData;
@@ -38,7 +37,6 @@ public class SocialServicelImpl implements SocialService {
     public int deleteByPrimaryKey(long uid) {
         Social social = Social.builder()
                 .uid(uid)
-                .updateTime(DateUtils.format())
                 .delete(true)
                 .build();
         return socialMapper.updateByPrimaryKeySelective(social);
@@ -78,7 +76,6 @@ public class SocialServicelImpl implements SocialService {
             AssertUtils.stateThrow(userVO != null,
                     () -> new UserException(ResponseStatusCodeEnum.PERMISSION_USER_NOT_EXIST));
         });
-        record.setUpdateTime(DateUtils.format());
         return socialMapper.updateByPrimaryKeySelective(record);
     }
 }

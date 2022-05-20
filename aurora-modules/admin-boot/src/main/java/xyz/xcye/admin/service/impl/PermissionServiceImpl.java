@@ -7,11 +7,10 @@ import xyz.xcye.admin.dao.PermissionMapper;
 import xyz.xcye.admin.po.Permission;
 import xyz.xcye.admin.service.PermissionService;
 import xyz.xcye.core.enums.RegexEnum;
-import xyz.xcye.core.util.lambda.AssertUtils;
 import xyz.xcye.core.enums.ResponseStatusCodeEnum;
 import xyz.xcye.core.exception.permission.PermissionException;
 import xyz.xcye.core.util.BeanUtils;
-import xyz.xcye.core.util.DateUtils;
+import xyz.xcye.core.util.lambda.AssertUtils;
 import xyz.xcye.data.entity.Condition;
 import xyz.xcye.data.entity.PageData;
 import xyz.xcye.data.util.PageUtils;
@@ -38,7 +37,6 @@ public class PermissionServiceImpl implements PermissionService {
     @Override
     public int insertPermission(Permission permission) {
         Objects.requireNonNull(permission,"方法路径信息不能为null");
-        permission.setCreateTime(DateUtils.format());
         // 判断path是否符合规范，必须是GET:Path这种形式 不支持中文路径
         AssertUtils.stateThrow(matchesResourcePath(permission.getPath()), () -> new PermissionException(ResponseStatusCodeEnum.PERMISSION_RESOURCE_NOT_RIGHT));
         return permissionMapper.insertPermission(permission);
@@ -47,7 +45,6 @@ public class PermissionServiceImpl implements PermissionService {
     @Override
     public int updatePermission(Permission permission) {
         Objects.requireNonNull(permission, "资源路径权限信息不能为null");
-        permission.setUpdateTime(DateUtils.format());
         if (StringUtils.hasLength(permission.getPath())) {
             AssertUtils.stateThrow(matchesResourcePath(permission.getPath()),
                     () -> new PermissionException(ResponseStatusCodeEnum.PERMISSION_RESOURCE_NOT_RIGHT));

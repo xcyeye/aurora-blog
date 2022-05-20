@@ -12,7 +12,6 @@ import xyz.xcye.core.dto.JwtUserInfo;
 import xyz.xcye.core.enums.ResponseStatusCodeEnum;
 import xyz.xcye.core.exception.user.UserException;
 import xyz.xcye.core.util.BeanUtils;
-import xyz.xcye.core.util.DateUtils;
 import xyz.xcye.core.util.lambda.AssertUtils;
 import xyz.xcye.data.entity.Condition;
 import xyz.xcye.data.entity.PageData;
@@ -36,7 +35,6 @@ public class CategoryServiceImpl implements CategoryService {
         Category category = Category.builder()
                 .uid(uid)
                 .delete(true)
-                .updateTime(DateUtils.format())
                 .build();
         return categoryMapper.updateByPrimaryKeySelective(category);
     }
@@ -73,7 +71,6 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public int updateByPrimaryKeySelective(Category record) {
         Assert.notNull(record, "类别不能为null");
-        record.setUpdateTime(DateUtils.format());
         record.setUserUid(null);
         return categoryMapper.updateByPrimaryKeySelective(record);
     }

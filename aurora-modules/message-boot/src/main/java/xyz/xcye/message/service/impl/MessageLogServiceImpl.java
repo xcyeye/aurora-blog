@@ -6,20 +6,18 @@ import org.springframework.util.Assert;
 import org.springframework.validation.BindException;
 import xyz.xcye.aurora.properties.AuroraProperties;
 import xyz.xcye.core.util.BeanUtils;
-import xyz.xcye.core.util.DateUtils;
 import xyz.xcye.core.util.ValidationUtils;
 import xyz.xcye.core.valid.Insert;
 import xyz.xcye.core.valid.Update;
+import xyz.xcye.data.entity.Condition;
+import xyz.xcye.data.entity.PageData;
+import xyz.xcye.data.util.PageUtils;
 import xyz.xcye.message.dao.MessageLogDao;
 import xyz.xcye.message.po.MessageLog;
 import xyz.xcye.message.service.MessageLogService;
 import xyz.xcye.message.vo.MessageLogVO;
-import xyz.xcye.data.entity.Condition;
-import xyz.xcye.data.entity.PageData;
-import xyz.xcye.data.util.PageUtils;
 
 import javax.annotation.Resource;
-import java.util.Date;
 
 /**
  * @author qsyyke
@@ -37,8 +35,6 @@ public class MessageLogServiceImpl implements MessageLogService {
     public int insertMessageLog(MessageLog messageLog) throws BindException {
         ValidationUtils.valid(messageLog, Insert.class);
         Assert.notNull(messageLog, "插入mq消息不能为null");
-        //设置创建时间
-        messageLog.setCreateTime(DateUtils.format(new Date()));
         return messageLogDao.insertMessageLog(messageLog);
     }
 
@@ -50,8 +46,6 @@ public class MessageLogServiceImpl implements MessageLogService {
     @Override
     public int updateMessageLog(MessageLog messageLog) throws BindException {
         ValidationUtils.valid(messageLog, Update.class);
-        //设置updateTime
-        messageLog.setUpdateTime(DateUtils.format(new Date()));
         //如果修改成功，返回最新的数据
         return messageLogDao.updateMessageLog(messageLog);
     }

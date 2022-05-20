@@ -131,9 +131,6 @@
       <if test="delete != null">
         is_delete = #{delete,jdbcType=TINYINT},
       </if>
-      <if test="deleteTime != null and deleteTime != ''">
-        delete_time = #{deleteTime,jdbcType=TIMESTAMP},
-      </if>
       <if test="userUid != null">
         user_uid=#{userUid,jdbcType=BIGINT},
       </if>

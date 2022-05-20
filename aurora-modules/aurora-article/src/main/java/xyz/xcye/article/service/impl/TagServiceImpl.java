@@ -12,7 +12,6 @@ import xyz.xcye.core.dto.JwtUserInfo;
 import xyz.xcye.core.enums.ResponseStatusCodeEnum;
 import xyz.xcye.core.exception.user.UserException;
 import xyz.xcye.core.util.BeanUtils;
-import xyz.xcye.core.util.DateUtils;
 import xyz.xcye.core.util.lambda.AssertUtils;
 import xyz.xcye.data.entity.Condition;
 import xyz.xcye.data.entity.PageData;
@@ -35,7 +34,6 @@ public class TagServiceImpl implements TagService {
         Tag tag = Tag.builder()
                 .uid(uid)
                 .delete(true)
-                .updatedTime(DateUtils.format())
                 .build();
         return tagMapper.updateByPrimaryKeySelective(tag);
     }
@@ -71,7 +69,6 @@ public class TagServiceImpl implements TagService {
     @Override
     public int updateByPrimaryKeySelective(Tag record) {
         Assert.notNull(record, "标签信息不能为null");
-        record.setUpdatedTime(DateUtils.format());
         record.setUserUid(null);
         return tagMapper.updateByPrimaryKeySelective(record);
     }

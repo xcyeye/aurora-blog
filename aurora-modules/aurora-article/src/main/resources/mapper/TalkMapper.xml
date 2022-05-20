@@ -147,9 +147,6 @@
       <if test="commentUids != null and commentUids != ''">
         comment_uids = #{commentUids,jdbcType=VARCHAR},
       </if>
-      <if test="updatedTime != null">
-        updated_time = #{updatedTime,jdbcType=TIMESTAMP},
-      </if>
       <if test="title != null and title != ''">
         title = #{title,jdbcType=VARCHAR},
       </if>

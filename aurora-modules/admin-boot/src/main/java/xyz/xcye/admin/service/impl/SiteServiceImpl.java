@@ -14,7 +14,6 @@ import xyz.xcye.aurora.util.UserUtils;
 import xyz.xcye.core.enums.ResponseStatusCodeEnum;
 import xyz.xcye.core.exception.user.UserException;
 import xyz.xcye.core.util.BeanUtils;
-import xyz.xcye.core.util.DateUtils;
 import xyz.xcye.core.util.id.GenerateInfoUtils;
 import xyz.xcye.core.util.lambda.AssertUtils;
 import xyz.xcye.data.entity.Condition;
@@ -42,7 +41,6 @@ public class SiteServiceImpl implements SiteService {
     public int deleteByPrimaryKey(long uid) {
         Site site = Site.builder()
                 .uid(uid)
-                .updateTime(DateUtils.format())
                 .delete(true)
                 .build();
         return siteMapper.updateByPrimaryKeySelective(site);
@@ -80,7 +78,6 @@ public class SiteServiceImpl implements SiteService {
     @Override
     public int updateByPrimaryKeySelective(Site record) {
         Assert.notNull(record, "站点信息不能为null");
-        record.setUpdateTime(DateUtils.format());
         // 如果userUid存在的话，判断此用户是否存在
         Optional.ofNullable(record.getUserUid()).ifPresent(userUid -> {
             UserVO userVO = userService.queryByUid(userUid);

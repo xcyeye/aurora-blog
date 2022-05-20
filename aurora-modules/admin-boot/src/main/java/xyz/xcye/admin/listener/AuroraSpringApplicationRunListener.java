@@ -4,8 +4,6 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.SpringApplicationRunListener;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.core.annotation.Order;
-import xyz.xcye.admin.manager.task.LoadRolePermissionInfo;
-import xyz.xcye.admin.manager.task.LoadWhiteUrlInfo;
 
 import java.time.Duration;
 
@@ -18,20 +16,18 @@ import java.time.Duration;
 @Order(3)
 public class AuroraSpringApplicationRunListener implements SpringApplicationRunListener {
 
-    private final SpringApplication application;
     private final String[] args;
 
     public AuroraSpringApplicationRunListener(SpringApplication sa, String[] args) {
-        this.application = sa;
         this.args = args;
     }
 
     @Override
     public void ready(ConfigurableApplicationContext context, Duration timeTaken) {
         SpringApplicationRunListener.super.ready(context,timeTaken);
-        LoadRolePermissionInfo loadRolePermissionInfo = context.getBean(LoadRolePermissionInfo.class);
+        /*LoadRolePermissionInfo loadRolePermissionInfo = context.getBean(LoadRolePermissionInfo.class);
         loadRolePermissionInfo.storagePermissionInfoToRedis();
         // 将mysql中的白名单数据加载到redis中
-        context.getBean(LoadWhiteUrlInfo.class).storageWhiteUrlInfoToRedis();
+        context.getBean(LoadWhiteUrlInfo.class).storageWhiteUrlInfoToRedis();*/
     }
 }

@@ -17,7 +17,6 @@ import xyz.xcye.core.enums.ResponseStatusCodeEnum;
 import xyz.xcye.core.exception.email.EmailException;
 import xyz.xcye.core.exception.user.UserException;
 import xyz.xcye.core.util.ConvertObjectUtils;
-import xyz.xcye.core.util.DateUtils;
 import xyz.xcye.core.util.LogUtils;
 import xyz.xcye.core.util.lambda.AssertUtils;
 import xyz.xcye.mail.api.feign.FileFeignService;
@@ -33,7 +32,6 @@ import xyz.xcye.message.vo.EmailVO;
 
 import javax.mail.MessagingException;
 import java.io.IOException;
-import java.util.Date;
 import java.util.Map;
 import java.util.regex.Pattern;
 
@@ -126,8 +124,10 @@ public class SendMailServiceImpl implements SendMailService {
             LogUtils.logExceptionInfo(e);
         }
 
-        EmailLog emailLog = new EmailLog(null, subject, content, to, senderEmail,sendFlag,
-                DateUtils.format(new Date()),"");
+        EmailLog emailLog = EmailLog.builder()
+                .subject(subject).content(content)
+                .receiver(to).sender(senderEmail)
+                .send(sendFlag).build();
         return emailLogService.insertEmailLog(emailLog);
     }
 
@@ -173,8 +173,10 @@ public class SendMailServiceImpl implements SendMailService {
         }
 
         //如果运行到这里，说说邮件发送成功 向数据库中插入数据
-        EmailLog emailLog = new EmailLog(null,subject,sendContent,receiverEmail,
-                senderEmail, sendFlag,DateUtils.format(new Date()),"");
+        EmailLog emailLog = EmailLog.builder()
+                .subject(subject).content(sendContent)
+                .receiver(receiverEmail).sender(senderEmail)
+                .send(sendFlag).build();
         return emailLogService.insertEmailLog(emailLog);
     }
 

@@ -8,7 +8,6 @@ import xyz.xcye.admin.service.WhiteUrlService;
 import xyz.xcye.core.enums.RegexEnum;
 import xyz.xcye.core.enums.ResponseStatusCodeEnum;
 import xyz.xcye.core.exception.permission.PermissionException;
-import xyz.xcye.core.util.DateUtils;
 import xyz.xcye.core.util.lambda.AssertUtils;
 import xyz.xcye.data.entity.Condition;
 import xyz.xcye.data.entity.PageData;
@@ -63,7 +62,6 @@ public class WhiteUrlServiceImpl implements WhiteUrlService {
 
     @Override
     public int updateByPrimaryKeySelective(WhiteUrl record) {
-        record.setUpdateTime(DateUtils.format());
         return whiteUrlMapper.updateByPrimaryKeySelective(record);
     }
 

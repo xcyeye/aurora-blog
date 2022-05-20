@@ -117,7 +117,6 @@ public class NavigationServiceImpl implements NavigationService {
             AssertUtils.stateThrow(userVO != null,
                     () -> new UserException(ResponseStatusCodeEnum.PERMISSION_USER_NOT_EXIST));
         });
-        record.setUpdateTime(DateUtils.format());
         setEffectiveNavigationUid(record, true);
         setEffectiveNavigationUid(record, false);
 

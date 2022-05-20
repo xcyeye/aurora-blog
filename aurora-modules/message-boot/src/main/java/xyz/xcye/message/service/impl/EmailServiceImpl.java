@@ -13,19 +13,17 @@ import xyz.xcye.core.exception.email.EmailException;
 import xyz.xcye.core.exception.user.UserException;
 import xyz.xcye.core.util.BeanUtils;
 import xyz.xcye.core.util.ConvertObjectUtils;
-import xyz.xcye.core.util.DateUtils;
 import xyz.xcye.core.util.JSONUtils;
 import xyz.xcye.core.util.id.GenerateInfoUtils;
+import xyz.xcye.data.entity.Condition;
+import xyz.xcye.data.entity.PageData;
+import xyz.xcye.data.util.PageUtils;
 import xyz.xcye.mail.api.feign.UserFeignService;
 import xyz.xcye.message.dao.EmailDao;
 import xyz.xcye.message.po.Email;
 import xyz.xcye.message.service.EmailService;
 import xyz.xcye.message.vo.EmailVO;
-import xyz.xcye.data.entity.Condition;
-import xyz.xcye.data.entity.PageData;
-import xyz.xcye.data.util.PageUtils;
 
-import java.util.Date;
 import java.util.Objects;
 
 /**
@@ -68,7 +66,6 @@ public class EmailServiceImpl implements EmailService {
         long uid = GenerateInfoUtils.generateUid(auroraProperties.getSnowFlakeWorkerId(), auroraProperties.getSnowFlakeDatacenterId());
         //其中user_uid应该在调用的此方法的时候，就已经赋值在email对象里面
         email.setUid(uid);
-        email.setCreateTime(DateUtils.format(new Date()));
         return emailDao.insertEmail(email);
     }
 
@@ -80,7 +77,6 @@ public class EmailServiceImpl implements EmailService {
     @Override
     public int updateEmail(Email email) {
         Objects.requireNonNull(email,"修改操作需要传入数据");
-        email.setUpdateTime(DateUtils.format(new Date()));
         return emailDao.updateEmail(email);
     }
 

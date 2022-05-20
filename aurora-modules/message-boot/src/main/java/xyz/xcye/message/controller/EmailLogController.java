@@ -3,6 +3,7 @@ package xyz.xcye.message.controller;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.validation.BindException;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -26,6 +27,7 @@ import javax.validation.groups.Default;
 @Api(tags = "邮件发送日志相关操作")
 @RequestMapping("/message/emailLog")
 @RestController
+@RefreshScope
 public class EmailLogController {
 
     @Autowired

@@ -1,78 +1,14 @@
 server:
   port: 7777
 spring:
+  profiles:
+    active: dev
   main:
     allow-bean-definition-overriding: true
-  application:
-    name: aurora-gateway
   cloud:
-    sentinel:
-      filter:
-        enabled: false
-      scg:
-        fallback:
-          mode: response
-          response-status: 200
-          response-body: '{"code":404,"data":{},"message":"请求太快了,请稍后在试┭┮﹏┭┮","success":false}'
-      transport:
-        port: 8719
-        dashboard: localhost:8080
-      datasource:
-        ds1:
-          nacos:
-            server-addr: localhost:8848
-            dataId: sentinel-aurora-gateway
-            groupId: DEFAULT_GROUP
-            data-type: json
-            rule-type: flow
+    bootstrap:
+      enable: true
     nacos:
       discovery:
         server-addr: 127.0.0.1:8848
         service: aurora-gateway
-    gateway:
-      # 设置跨域
-      globalcors:
-        cors-configurations:
-          '[/**]':
-            allowedOriginPatterns: '*'
-            allowedHeaders: '*'
-            allowedMethods: '*'
-            allowCredentials: true
-      discovery:
-        locator:
-          enabled: true
-      routes:
-        - id: aurora-admin1
-          uri: lb://aurora-admin
-          predicates:
-            - Path=/admin/**
-        - id: aurora-comment
-          uri: lb://aurora-comment
-          predicates:
-            - Path=/comment/**
-        - id: aurora-article
-          uri: lb://aurora-article
-          predicates:
-            - Path=/blog/**
-        - id: aurora-file
-          uri: lb://aurora-file
-          predicates:
-            - Path=/file/**
-        - id: aurora-message
-          uri: lb://aurora-message
-          predicates:
-            - Path=/message/**
-        - id: aurora-auth-server
-          uri: lb://aurora-auth-server
-          predicates:
-            - Path=/auth/**,/login/**,/oauth/**
-      default-filters:
-        - DedupeResponseHeader=Vary Access-Control-Allow-Origin Access-Control-Allow-Credentials, RETAIN_FIRST
-management:
-  endpoints:
-    web:
-      exposure:
-        include: "*"
-aurora:
-  oauth:
-    secret-key: auroraaadkfhasdfuywasdfkjahdsfuewkrnbsdjtywq8745ghsdfsgdfhsdfgerbjhsdtfquewrw9erygtwertfysatf

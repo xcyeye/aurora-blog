@@ -8,11 +8,10 @@
     <insert id="insertMessageLog">
         insert into
             au_message_log
-        (uid,message,exchange,queue,routing_key,try_count,consume_status,create_time,update_time,exchange_type,ack_status,error_message)
+        (uid,message,exchange,queue,routing_key,try_count,consume_status,exchange_type,ack_status,error_message)
         values (
                 #{messageDO.uid},#{messageDO.message},#{messageDO.exchange},#{messageDO.queue},#{messageDO.routingKey},
-                #{messageDO.tryCount},#{messageDO.consumeStatus},#{messageDO.createTime},#{messageDO.updateTime},
-                #{messageDO.exchangeType},#{messageDO.ackStatus},#{messageDO.errorMessage}
+                #{messageDO.tryCount},#{messageDO.consumeStatus}, #{messageDO.exchangeType},#{messageDO.ackStatus},#{messageDO.errorMessage}
         )
     </insert>
 
@@ -37,9 +36,6 @@
             </if>
             <if test="messageDO.consumeStatus != null">
                 consume_status=#{messageDO.consumeStatus},
-            </if>
-            <if test="messageDO.updateTime != null">
-                update_time=#{messageDO.updateTime},
             </if>
             <if test="messageDO.exchangeType != null">
                 exchange_type=#{messageDO.exchangeType},

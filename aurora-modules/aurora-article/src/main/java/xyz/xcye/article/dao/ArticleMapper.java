@@ -17,13 +17,6 @@ public interface ArticleMapper {
     int deleteByPrimaryKey(Long uid);
 
     /**
-     * insertArticle record to table
-     * @param record the record
-     * @return insertArticle count
-     */
-    int insert(Article record);
-
-    /**
      * insertArticle record to table selective
      * @param record the record
      * @return insertArticle count
