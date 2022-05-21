@@ -36,3 +36,6 @@ spring:
           - data-id: share-rabbitmq-dev.yaml
             group: THEME-GROUP
             refresh: true
+          - data-id: share-swagger-dev.yaml
+            group: THEME-GROUP
+            refresh: true

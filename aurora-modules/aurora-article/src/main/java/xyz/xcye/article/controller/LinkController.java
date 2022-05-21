@@ -1,7 +1,7 @@
 package xyz.xcye.article.controller;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.validation.BindException;
@@ -24,7 +24,7 @@ import javax.validation.groups.Default;
  * @date Created in 2022/5/13 20:37
  */
 
-@Api(tags = "友情链接相关的操作")
+@Tag(name = "友情链接相关的操作")
 @RestController
 @RequestMapping("/blog/link")
 @RefreshScope
@@ -33,7 +33,7 @@ public class LinkController {
     @Autowired
     private LinkService linkService;
 
-    @ApiOperation("根据uid删除对应的友情链接")
+    @Operation(summary = "根据uid删除对应的友情链接")
     @DeleteMapping
     @ModifyOperation
     public int deleteByPrimaryKey(Long uid, @RequestParam("msg") String replyMessage) throws BindException {
@@ -41,20 +41,20 @@ public class LinkController {
     }
 
     @ModifyOperation
-    @ApiOperation("插入新友情链接")
+    @Operation(summary = "插入新友情链接")
     @PostMapping
     public int insertSelective(@Validated({Insert.class, Default.class}) Link record) throws BindException {
         return linkService.insertSelective(record);
     }
 
     @GetMapping
-    @ApiOperation("根据条件查询")
+    @Operation(summary = "根据条件查询")
     @SelectOperation
     public PageData<LinkVO> selectByCondition(Condition<Long> condition) {
         return linkService.selectByCondition(condition);
     }
 
-    @ApiOperation("根据uid查询")
+    @Operation(summary = "根据uid查询")
     @SelectOperation
     @GetMapping("/{uid}")
     public LinkVO selectByUid(@PathVariable("uid") Long uid) {
@@ -63,7 +63,7 @@ public class LinkController {
 
     @PutMapping
     @ModifyOperation
-    @ApiOperation("修改友情链接信息")
+    @Operation(summary = "修改友情链接信息")
     public int updateByPrimaryKeySelective(@Validated({Update.class, Default.class}) Link record,@RequestParam("msg") String replyMessage) throws BindException {
         return linkService.updateByPrimaryKeySelective(record, replyMessage);
     }

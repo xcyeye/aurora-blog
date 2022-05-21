@@ -1,7 +1,7 @@
 package xyz.xcye.admin.controller;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -18,7 +18,7 @@ import javax.validation.groups.Default;
 
 @RestController
 @RequestMapping("/admin/site")
-@Api(tags = "用户站点信息api")
+@Tag(name = "用户站点信息api")
 public class SiteController {
 
     @Autowired
@@ -26,13 +26,13 @@ public class SiteController {
 
     @DeleteMapping("/{uid}")
     @ModifyOperation
-    @ApiOperation("逻辑删除此uid对应的站点信息")
+    @Operation(summary = "逻辑删除此uid对应的站点信息")
     public int deleteByPrimaryKey(@PathVariable("uid") long uid) {
         return siteService.deleteByPrimaryKey(uid);
     }
 
     @DeleteMapping("/physics/{uid}")
-    @ApiOperation("物理删除站点信息")
+    @Operation(summary = "物理删除站点信息")
     @ModifyOperation
     public int physicsDeleteSiteInfo(@PathVariable("uid") long uid) {
         return siteService.physicsDeleteSite(uid);
@@ -40,7 +40,7 @@ public class SiteController {
 
     @PostMapping
     @ModifyOperation
-    @ApiOperation("插入站点信息")
+    @Operation(summary = "插入站点信息")
     public int insertSelective(@Validated({Insert.class, Default.class}) Site record) {
         return siteService.insertSelective(record);
     }
@@ -52,7 +52,7 @@ public class SiteController {
      */
     @GetMapping
     @SelectOperation
-    @ApiOperation("根据条件查询站点信息")
+    @Operation(summary = "根据条件查询站点信息")
     public PageData<SiteVO> selectByCondition(Condition<Long> condition) {
         return siteService.selectByCondition(condition);
     }
@@ -64,14 +64,14 @@ public class SiteController {
      */
     @GetMapping("/{uid}")
     @SelectOperation
-    @ApiOperation("根据uid查询站点信息")
+    @Operation(summary = "根据uid查询站点信息")
     public SiteVO selectByUid(@PathVariable("uid") long uid) {
         return siteService.selectByUid(uid);
     }
 
     @PutMapping
     @ModifyOperation
-    @ApiOperation("根据uid修改站点信息")
+    @Operation(summary = "根据uid修改站点信息")
     public int updateByPrimaryKeySelective(Site record) {
         return siteService.updateByPrimaryKeySelective(record);
     }

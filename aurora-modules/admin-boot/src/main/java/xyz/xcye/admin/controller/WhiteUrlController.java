@@ -1,7 +1,7 @@
 package xyz.xcye.admin.controller;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -22,7 +22,7 @@ import javax.validation.groups.Default;
  * @date Created in 2022/5/10 21:17
  */
 
-@Api(tags = "和白名单相关的控制器")
+@Tag(name = "和白名单相关的控制器")
 @RestController
 @RequestMapping("/admin/whiteUrl")
 public class WhiteUrlController {
@@ -32,12 +32,12 @@ public class WhiteUrlController {
 
     @DeleteMapping("/{uid}")
     @ModifyOperation
-    @ApiOperation("根据uid删除白名单")
+    @Operation(summary = "根据uid删除白名单")
     public int deleteByUid(@PathVariable("uid") Long uid) {
         return whiteUrlService.deleteByUid(uid);
     }
 
-    @ApiOperation("插入白名单记录")
+    @Operation(summary = "插入白名单记录")
     @ModifyOperation
     @PostMapping
     public int insert(@Validated({Insert.class, Default.class}) WhiteUrl record) {
@@ -49,7 +49,7 @@ public class WhiteUrlController {
      * @param condition
      * @return
      */
-    @ApiOperation("根据查询条件获取所有的白名单数据")
+    @Operation(summary = "根据查询条件获取所有的白名单数据")
     @GetMapping
     @SelectOperation
     public PageData<WhiteUrl> selectByCondition(@Param("condition") Condition<Integer> condition) {
@@ -57,7 +57,7 @@ public class WhiteUrlController {
     }
 
     @PutMapping
-    @ApiOperation("修改白名单数据")
+    @Operation(summary = "修改白名单数据")
     @ModifyOperation
     public int updateByPrimaryKeySelective(@Validated({Update.class}) WhiteUrl record) {
         return whiteUrlService.updateByPrimaryKeySelective(record);

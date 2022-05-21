@@ -1,5 +1,6 @@
 package xyz.xcye.file.po;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -23,6 +24,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 @Builder
 @Data
+@Schema(title = "文件实体")
 public class File implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -30,10 +32,12 @@ public class File implements Serializable {
     /**
      * 唯一uid 不能为null 主键
      */
+    @Schema(title = "唯一uid")
     @NotNull(groups = {Delete.class, Update.class})
     private Long uid;
 
     @NotNull(groups = {Insert.class})
+    @Schema(title = "用户uid")
     private Long userUid;
 
     /**
@@ -45,6 +49,7 @@ public class File implements Serializable {
     /**
      * 此文件的删除状态 true：已删除 false：未删除
      */
+    @Schema(title = "是否删除", description = "1: 删除")
     private Boolean delete;
 
     /**

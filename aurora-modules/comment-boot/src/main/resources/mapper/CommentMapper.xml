@@ -61,7 +61,7 @@
         and is_delete=#{condition.delete}
       </if>
       <if test="condition.status != null">
-        and is_show=#{condition.show}
+        and is_show_comment=#{condition.show}
       </if>
     </where>
   </select>

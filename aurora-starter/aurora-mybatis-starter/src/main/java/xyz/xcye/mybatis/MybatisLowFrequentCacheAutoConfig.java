@@ -9,6 +9,7 @@ import xyz.xcye.core.util.DateUtils;
 import xyz.xcye.data.util.SpringUtil;
 
 import java.time.Duration;
+import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
@@ -108,10 +109,7 @@ public class MybatisLowFrequentCacheAutoConfig implements Cache {
     }
 
     private RedisTemplate<String, Object> getRedisTemplate(RedisTemplate<String, Object> redisTemplate) {
-        if (redisTemplate == null) {
-            //由于启动期间注入失败，只能运行期间注入，这段代码可以删除
-            return (RedisTemplate<String, Object>) SpringUtil.getBean("redisTemplate");
-        }
-        return redisTemplate;
+        //由于启动期间注入失败，只能运行期间注入，这段代码可以删除
+        return Objects.requireNonNullElseGet(redisTemplate, () -> (RedisTemplate<String, Object>) SpringUtil.getBean("redisTemplate"));
     }
 }

@@ -1,6 +1,6 @@
 package xyz.xcye.admin.controller;
 
-import io.swagger.annotations.Api;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,7 +20,7 @@ import java.io.IOException;
  * @author qsyyke
  */
 
-@Api(tags = "用户验证账户信息的相关操作")
+@Tag(name = "用户验证账户信息的相关操作")
 @RestController
 @RequestMapping("/admin/verifyAccount")
 public class VerifyAccountController {

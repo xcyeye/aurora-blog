@@ -1,7 +1,7 @@
 package xyz.xcye.admin.controller;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -23,35 +23,35 @@ import javax.validation.groups.Default;
 
 @RequestMapping("/admin/role")
 @RestController
-@Api(tags = "角色相关的操作")
+@Tag(name = "角色相关的操作")
 public class RoleController {
 
     @Autowired
     private RoleService roleService;
 
     @ModifyOperation
-    @ApiOperation(value = "插入角色")
+    @Operation(summary = "插入角色")
     @PostMapping("")
     public int insertRole(@Validated({Insert.class, Default.class}) Role role) {
         return roleService.insertRole(role);
     }
 
     @ModifyOperation
-    @ApiOperation(value = "修改角色信息")
+    @Operation(summary = "修改角色信息")
     @PutMapping("")
     public int updateRole(@Validated({Update.class, Default.class}) Role role) {
         return roleService.updateRole(role);
     }
 
     @ModifyOperation
-    @ApiOperation(value = "删除角色")
+    @Operation(summary = "删除角色")
     @DeleteMapping("/{uid}")
     public int deleteRole(@PathVariable("uid") int uid) {
         return roleService.deleteByUid(uid);
     }
 
     @ResponseRealResult
-    @ApiOperation(value = "根据uid查询角色")
+    @Operation(summary = "根据uid查询角色")
     @GetMapping("/{uid}")
     public String queryRoleByUid(@PathVariable("uid") int uid) {
         System.out.println(uid);
@@ -59,7 +59,7 @@ public class RoleController {
     }
 
     @SelectOperation
-    @ApiOperation(value = "查询满足要求的所有角色信息")
+    @Operation(summary = "查询满足要求的所有角色信息")
     @GetMapping("")
     public PageData<Role> queryRoleByUid(Condition<Long> condition) {
         return roleService.selectAllRole(condition);

@@ -1,2 +1,2 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-xyz.xcye.swagger.SpringFoxAutoConfig
+xyz.xcye.swagger.AuroraOpenApiAutoConfig

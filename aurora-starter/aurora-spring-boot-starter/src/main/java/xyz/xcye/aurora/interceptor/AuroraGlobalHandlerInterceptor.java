@@ -1,12 +1,14 @@
 package xyz.xcye.aurora.interceptor;
 
 import org.springframework.stereotype.Component;
+import org.springframework.util.AntPathMatcher;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 import xyz.xcye.aurora.util.AuroraRequestUtils;
 import xyz.xcye.auth.constant.RequestConstant;
+import xyz.xcye.core.constant.OpenApiConstant;
 import xyz.xcye.core.dto.JwtUserInfo;
 import xyz.xcye.core.enums.ResponseStatusCodeEnum;
 
@@ -26,6 +28,9 @@ public class AuroraGlobalHandlerInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         // TODO 下面这个是暂时解决feign调用，没有RequestContextHolder的问题
         String requestFeignHeader = request.getHeader(RequestConstant.REQUEST_OPEN_FEIGN_HEADER);
+
+        configSpringDoc(request);
+
         if ("true".equals(requestFeignHeader)) {
             return true;
         }
@@ -110,5 +115,19 @@ public class AuroraGlobalHandlerInterceptor implements HandlerInterceptor {
         Objects.requireNonNull(currentRequestAttributes);
         // 运行到这里，说明token没有失效，将用户已认证的数据，放入RequestContextHolder中，方便使用
         currentRequestAttributes.setAttribute(RequestConstant.REQUEST_STORAGE_JWT_USER_INFO_NAME, jwtUserInfo, 1);
+    }
+
+    /**
+     * 解决springdoc访问时，不能返回接口信息，也就是判断，如果是springdoc的访问，则在RequestContextHolder中添加一个信息
+     * 在AuroraResponseResultHandler中获取是否是springdoc的访问，如果是，则不对响应信息进行处理
+     * @param request
+     */
+    private void configSpringDoc(HttpServletRequest request) {
+        String requestURI = request.getRequestURI();
+        final AntPathMatcher antPathMatcher = new AntPathMatcher();
+        if (OpenApiConstant.SPRING_DOC_REQUEST_PATH.equals(requestURI)) {
+            RequestContextHolder.currentRequestAttributes()
+                    .setAttribute(OpenApiConstant.CONTEXT_REQUEST_HEADER_OF_SPRING_DOC, true, 1);
+        }
     }
 }

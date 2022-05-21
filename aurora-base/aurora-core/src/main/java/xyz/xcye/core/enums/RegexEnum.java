@@ -38,7 +38,7 @@ public enum RegexEnum {
      */
     INTEGER_REGEX("^[1-9]\\d*$"),
 
-    REST_FUL_PATH("^(GET|DELETE|POST|PUT):[a-zA-Z/_.-]+[*]*");
+    REST_FUL_PATH("^(GET|DELETE|POST|PUT):/[a-z0-9A-Z/_.-]+[*]*");
 
     /**
      * 正则表达式

@@ -1,7 +1,6 @@
 package xyz.xcye.article.po;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -17,7 +16,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
 import java.io.Serializable;
 
-@ApiModel(value="au_tag")
+@Schema(title="分类")
 @Data
 @Builder
 @AllArgsConstructor
@@ -26,14 +25,14 @@ public class Tag implements Serializable {
     /**
     * 唯一uid
     */
-    @ApiModelProperty(value="唯一uid")
+    @Schema(title = "唯一uid")
     @NotNull(groups = {Delete.class, Update.class})
     private Long uid;
 
     /**
     * 此标签的标题
     */
-    @ApiModelProperty(value="此标签的标题")
+    @Schema(title = "此标签的标题")
     @Length(max = FieldLengthConstant.TITLE)
     @ValidateString(value = "标签的标题", max = FieldLengthConstant.TITLE, groups = Insert.class)
     private String title;
@@ -41,40 +40,40 @@ public class Tag implements Serializable {
     /**
     * 此标签的简介
     */
-    @ApiModelProperty(value="此标签的简介")
+    @Schema(title = "此标签的简介")
     @Length(max = FieldLengthConstant.SUMMARY)
     private String summary;
 
     /**
     * 创建时间
     */
-    @ApiModelProperty(value="创建时间")
+    @Schema(title = "创建时间")
     private String createdTime;
 
     /**
     * 最后修改时间
     */
-    @ApiModelProperty(value="最后修改时间")
+    @Schema(title = "最后修改时间")
     private String updatedTime;
 
     /**
     * 此类别的封面图uid
     */
-    @ApiModelProperty(value="此类别的封面图uid")
+    @Schema(title = "此类别的封面图uid")
     @Length(max = FieldLengthConstant.URL)
     private String coverUrl;
 
     /**
     * 1: 删除，0：未删除
     */
-    @ApiModelProperty(value="1: 删除，0：未删除")
+    @Schema(title = "1: 删除，0：未删除")
     @Null(groups = Insert.class)
     private Boolean delete;
 
     /**
     * 用户的userUid
     */
-    @ApiModelProperty(value="用户的userUid")
+    @Schema(title = "用户的userUid")
     private Long userUid;
 
     private static final long serialVersionUID = 1L;

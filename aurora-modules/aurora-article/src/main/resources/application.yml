@@ -15,3 +15,13 @@ spring:
     pathmatch:
       matching-strategy: ant_path_matcher
 
+management:
+  endpoints:
+    web:
+      base-path: /rest/actuator
+      exposure:
+        include: '*'
+springdoc:
+  swagger-ui:
+    persist-authorization: true
+

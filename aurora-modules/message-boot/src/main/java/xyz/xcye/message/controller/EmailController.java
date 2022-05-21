@@ -1,8 +1,8 @@
 package xyz.xcye.message.controller;
 
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.validation.BindException;
@@ -27,7 +27,7 @@ import javax.validation.groups.Default;
  * @author qsyyke
  */
 
-@Api(tags = "邮箱相关的操作")
+@Tag(name = "邮箱相关的操作")
 @RestController
 @RefreshScope
 @RequestMapping("/message/email")
@@ -39,7 +39,7 @@ public class EmailController {
     @Autowired
     UserFeignService userFeignService;
 
-    @ApiOperation(value = "向数据库中插入新的邮箱记录，比如主机，授权码等")
+    @Operation(summary = "向数据库中插入新的邮箱记录，比如主机，授权码等")
     @ModifyOperation
     @PostMapping("")
     public int insertEmail(@Validated({Insert.class,Default.class}) Email email)
@@ -47,42 +47,42 @@ public class EmailController {
         return emailService.insertEmail(email);
     }
 
-    @ApiOperation(value = "根据唯一uid删除某条邮箱",notes = "uid为long型")
+    @Operation(summary = "根据唯一uid删除某条邮箱", description = "uid为long型")
     @ModifyOperation
     @DeleteMapping("/{uid}")
     public int deleteEmailByUid(@PathVariable(value = "uid") long uid) {
         return emailService.deleteEmailByUid(uid);
     }
 
-    @ApiOperation(value = "根据emailDO实体，更新邮箱记录",notes = "必须传入uid以及delete字段")
+    @Operation(summary = "根据emailDO实体，更新邮箱记录", description = "必须传入uid以及delete字段")
     @ModifyOperation
     @PutMapping("")
     public int updateEmailByUid(@Validated({Update.class, Default.class}) Email email) {
         return emailService.updateEmail(email);
     }
 
-    @ApiOperation(value = "根据EmailDO实体中的字段以及分页参数查询所有数据，返回一个集合",notes = "部分字段使用了模糊查询")
+    @Operation(summary = "根据EmailDO实体中的字段以及分页参数查询所有数据，返回一个集合",description = "部分字段使用了模糊查询")
     @SelectOperation
     @GetMapping("")
     public PageData<EmailVO> queryAll(Condition<Long> condition) {
         return emailService.queryAllEmail(condition);
     }
 
-    @ApiOperation(value = "根据uid查询")
+    @Operation(summary = "根据uid查询")
     @SelectOperation
     @GetMapping("/{uid}")
     public EmailVO queryByUid(@PathVariable("uid") long uid) {
         return emailService.queryByUid(uid);
     }
 
-    @ApiOperation(value = "根据userUid进行查询")
+    @Operation(summary = "根据userUid进行查询")
     @SelectOperation
     @GetMapping("/userUid/{userUid}")
     public EmailVO queryByUserUid(@PathVariable("userUid") long userUid) {
         return emailService.queryByUserUid(userUid);
     }
 
-    @ApiOperation(value = "根据邮箱号进行查询")
+    @Operation(summary = "根据邮箱号进行查询")
     @SelectOperation
     @GetMapping("/email/{email}")
     public EmailVO queryByEmail(@PathVariable("email") String email) {

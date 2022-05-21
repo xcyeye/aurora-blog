@@ -1,7 +1,7 @@
 package xyz.xcye.article.controller;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.validation.annotation.Validated;
@@ -23,7 +23,7 @@ import javax.validation.groups.Default;
  * @date Created in 2022/5/11 20:24
  */
 
-@Api(tags = "和博客数据相关的控制器")
+@Tag(name = "和博客数据相关的控制器")
 @RequestMapping("/blog/article")
 @RestController
 @RefreshScope
@@ -32,7 +32,7 @@ public class ArticleController {
     @Autowired
     private ArticleService articleService;
 
-    @ApiOperation("插入新文章")
+    @Operation(summary = "插入新文章")
     @ModifyOperation
     @PostMapping
     public int insertArticle(@Validated({Insert.class, Default.class}) Article article) {
@@ -40,20 +40,20 @@ public class ArticleController {
     }
 
     @ModifyOperation
-    @ApiOperation("逻辑删除文章")
+    @Operation(summary = "逻辑删除文章")
     @DeleteMapping("/{uid}")
     public int deleteArticleByUid(@PathVariable("uid") long uid) {
         return articleService.deleteByPrimaryKey(uid);
     }
 
-    @ApiOperation("物理删除文章")
+    @Operation(summary = "物理删除文章")
     @ModifyOperation
     @DeleteMapping("/physics/{uid}")
     public int physicsDeleteArticleByUid(@PathVariable("uid") long uid) {
         return articleService.physicsDeleteByUid(uid);
     }
 
-    @ApiOperation("修改文章数据")
+    @Operation(summary = "修改文章数据")
     @ModifyOperation
     @PutMapping
     public int updateArticle(@Validated({Update.class, Default.class}) Article article) {
@@ -61,13 +61,13 @@ public class ArticleController {
     }
 
     @SelectOperation
-    @ApiOperation("根据uid查询文章数据")
+    @Operation(summary = "根据uid查询文章数据")
     @GetMapping("/{uid}")
     public ArticleVO selectArticleByUid(@PathVariable("uid") long uid) {
         return articleService.selectByUid(uid);
     }
 
-    @ApiOperation("通过条件查询文章数据")
+    @Operation(summary = "通过条件查询文章数据")
     @GetMapping
     @SelectOperation
     public PageData<ArticleVO> selectArticleByCondition(Condition<Long> condition) {

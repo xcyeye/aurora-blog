@@ -26,7 +26,7 @@ public class JSONUtils {
         try {
             t = JSON.parseObject(jsonObject.getString(key), target);
         } catch (Exception e) {
-            throw e;
+            LogUtils.logExceptionInfo(e);
         }
         return t;
     }

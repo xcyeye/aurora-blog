@@ -9,6 +9,7 @@ import xyz.xcye.core.util.DateUtils;
 import xyz.xcye.data.util.SpringUtil;
 
 import java.time.Duration;
+import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
@@ -54,7 +55,7 @@ public class MybatisFrequentCacheAutoConfig implements Cache {
 
     @Override
     public void putObject(Object key, Object value) {
-        getRedisTemplate(redisTemplate);
+        redisTemplate = getRedisTemplate(redisTemplate);
         if (value != null) {
             redisTemplate.opsForValue().set(key.toString(), value, getExpiredMinute());
         }
@@ -62,7 +63,7 @@ public class MybatisFrequentCacheAutoConfig implements Cache {
 
     @Override
     public Object getObject(Object key) {
-        getRedisTemplate(redisTemplate);
+        redisTemplate = getRedisTemplate(redisTemplate);
         if (key != null) {
             return redisTemplate.opsForValue().get(key.toString());
         }
@@ -71,7 +72,7 @@ public class MybatisFrequentCacheAutoConfig implements Cache {
 
     @Override
     public Object removeObject(Object key) {
-        getRedisTemplate(redisTemplate);
+        redisTemplate = getRedisTemplate(redisTemplate);
         if (key != null) {
             redisTemplate.delete(key.toString());
         }
@@ -80,7 +81,7 @@ public class MybatisFrequentCacheAutoConfig implements Cache {
 
     @Override
     public void clear() {
-        getRedisTemplate(redisTemplate);
+        redisTemplate = getRedisTemplate(redisTemplate);
         Set<String> keys = redisTemplate.keys("*:" + this.id + "*");
         if (!CollectionUtils.isEmpty(keys)) {
             redisTemplate.delete(keys);
@@ -89,7 +90,7 @@ public class MybatisFrequentCacheAutoConfig implements Cache {
 
     @Override
     public int getSize() {
-        getRedisTemplate(redisTemplate);
+        redisTemplate = getRedisTemplate(redisTemplate);
         Long size = redisTemplate.execute((RedisCallback<Long>) RedisServerCommands::dbSize);
         if (size == null) {
             size = 0L;
@@ -106,10 +107,8 @@ public class MybatisFrequentCacheAutoConfig implements Cache {
         return Duration.ofSeconds(DateUtils.getRandomMinute(minExpiredMinute, maxExpiredMinute) * 60);
     }
 
-    private void getRedisTemplate(RedisTemplate<String, Object> redisTemplate) {
-        if (redisTemplate == null) {
-            //由于启动期间注入失败，只能运行期间注入，这段代码可以删除
-            redisTemplate = (RedisTemplate<String, Object>) SpringUtil.getBean("redisTemplate");
-        }
+    private RedisTemplate<String, Object> getRedisTemplate(RedisTemplate<String, Object> redisTemplate) {
+        //由于启动期间注入失败，只能运行期间注入，这段代码可以删除
+        return Objects.requireNonNullElseGet(redisTemplate, () -> (RedisTemplate<String, Object>) SpringUtil.getBean("redisTemplate"));
     }
 }

@@ -16,15 +16,11 @@ import org.springframework.security.oauth2.server.resource.web.server.ServerBear
 import org.springframework.security.web.server.SecurityWebFilterChain;
 import org.springframework.security.web.server.authentication.AuthenticationWebFilter;
 import org.springframework.security.web.server.authorization.AuthorizationContext;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.reactive.CorsWebFilter;
-import org.springframework.web.cors.reactive.UrlBasedCorsConfigurationSource;
-import xyz.xcye.admin.constant.RedisStorageConstant;
-import xyz.xcye.admin.po.WhiteUrl;
+import xyz.xcye.auth.constant.OauthJwtConstant;
 import xyz.xcye.wg.exception.handler.AuroraAccessDeniedHandler;
 import xyz.xcye.wg.exception.handler.AuroraAuthenticationEntryPoint;
 
-import java.util.List;
+import java.util.Arrays;
 import java.util.stream.Collectors;
 
 
@@ -65,18 +61,15 @@ public class SecurityConfig {
         AuthenticationWebFilter authenticationWebFilter = new AuthenticationWebFilter(tokenAuthenticationManager);
         authenticationWebFilter.setServerAuthenticationConverter(new ServerBearerTokenAuthenticationConverter());
 
-        // 获取redis中的白名单
-        List<WhiteUrl> whiteUrlList = (List<WhiteUrl>) redisTemplate.opsForValue().get(RedisStorageConstant.STORAGE_WHITE_URL_INFO);
-        String[] whiteUrlArray = whiteUrlList.stream()
-                .map(WhiteUrl::getUrl)
-                .collect(Collectors.joining(","))
-                .split(",");
+        // 对静态资源放行
+        String[] whiteUrlArr = getWhiteUrlArr();
+
         http
                 .httpBasic().disable()
                 .csrf().disable()
                 .authorizeExchange()
                 //白名单直接放行
-                .pathMatchers(whiteUrlArray).permitAll()
+                .pathMatchers(whiteUrlArr).permitAll()
                 //其他的请求必须鉴权，使用鉴权管理器
                 .anyExchange().access(accessManager)
                 //鉴权的异常处理，权限不足，token失效
@@ -87,13 +80,13 @@ public class SecurityConfig {
                 .accessDeniedHandler(auroraAccessDeniedHandler)
                 .and()
                 // 跨域过滤器
-                .addFilterAt(corsWebFilter(), SecurityWebFiltersOrder.CORS)
+                //.addFilterAt(corsWebFilter(), SecurityWebFiltersOrder.CORS)
                 //token的认证过滤器，用于校验token和认证
                 .addFilterAt(authenticationWebFilter, SecurityWebFiltersOrder.AUTHENTICATION);
         return http.build();
     }
 
-    @Bean
+    /*@Bean
     public CorsWebFilter corsWebFilter() {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
 
@@ -104,17 +97,25 @@ public class SecurityConfig {
         //允许哪种方法类型跨域 get post delete put
         corsConfiguration.addAllowedMethod("*");
         // 允许哪些请求源跨域
-        corsConfiguration.addAllowedOrigin("*");
+        //corsConfiguration.addAllowedOrigin("*");
         // 是否携带cookie跨域
         corsConfiguration.setAllowCredentials(true);
 
         //允许跨域的路径
         source.registerCorsConfiguration("/**", corsConfiguration);
         return new CorsWebFilter(source);
-    }
+    }*/
 
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
+    }
+
+    private String[] getWhiteUrlArr() {
+        // 获取所有静态资源
+        return Arrays.stream(OauthJwtConstant.PUBLIC_STATIC_RESOURCE)
+                .map(statusResource -> "*." + statusResource)
+                .collect(Collectors.joining(","))
+                .split(",");
     }
 }

@@ -1,8 +1,7 @@
 package xyz.xcye.file.controller;
 
-
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.validation.annotation.Validated;
@@ -33,7 +32,7 @@ import java.util.List;
  * @author qsyyke
  */
 
-@Api(tags = "操作文件相关的工具类")
+@Tag(name = "操作文件相关的工具类")
 @RequestMapping("/file")
 @RefreshScope
 @RestController
@@ -49,7 +48,7 @@ public class FileController {
      * @return
      */
     @SelectOperation
-    @ApiOperation(value = "上传单个文件",notes = "可以上传任何类型，最大不能操作30M，返回上传之后的文件信息")
+    @Operation(summary = "上传单个文件",description = "可以上传任何类型，最大不能操作30M，返回上传之后的文件信息")
     @PostMapping("/single")
     public FileVO singleUploadFile(@Validated({Insert.class, Default.class}) File fileInfo,
                                    @RequestParam(value = "file") MultipartFile file,
@@ -67,7 +66,7 @@ public class FileController {
      */
     @PostMapping("/multi")
     @SelectOperation
-    @ApiOperation(value = "上传多个文件，返回集合",notes = "不接收文件简介，默认本地存储")
+    @Operation(summary = "上传多个文件，返回集合",description = "不接收文件简介，默认本地存储")
     public List<FileVO> multiUploadFile(
             @RequestParam(value = "files") MultipartFile[] files,
             @RequestParam(required = false) int storageMode)
@@ -88,7 +87,7 @@ public class FileController {
      * @return
      */
     @ResponseRealResult
-    @ApiOperation(value = "在typora中自动上传图片",notes = "用于在typora中粘贴图片时，将图片上传到本地服务器或者某个对象存储中")
+    @Operation(summary = "在typora中自动上传图片", description = "用于在typora中粘贴图片时，将图片上传到本地服务器或者某个对象存储中")
     @PostMapping("/typora")
     public String typoraUploadFile(
             @RequestParam(value = "file") MultipartFile file,
@@ -107,14 +106,14 @@ public class FileController {
      * @return
      */
     @SelectOperation
-    @ApiOperation(value = "查询文件数据",notes = "其中keyword为文件的名字")
+    @Operation(summary = "查询文件数据", description = "其中keyword为文件的名字")
     @GetMapping
     public PageData<FileVO> queryAllFile(Condition<Long> condition) {
         return fileService.queryAllFile(condition);
     }
 
     @SelectOperation
-    @ApiOperation(value = "查询文件数据",notes = "其中keyword为文件的名字")
+    @Operation(summary = "查询文件数据", description = "其中keyword为文件的名字")
     @GetMapping("/{uid}")
     public FileVO queryFileByUid(@PathVariable("uid") long uid) throws ReflectiveOperationException {
         return fileService.queryByUid(uid);
@@ -126,7 +125,7 @@ public class FileController {
      * @return
      */
     @ModifyOperation
-    @ApiOperation(value = "修改文件属性",notes = "只能修改文件的简介，因为其余的字段，修改没有任何意义，名字这些都是和文件本身绑定")
+    @Operation(summary = "修改文件属性", description = "只能修改文件的简介，因为其余的字段，修改没有任何意义，名字这些都是和文件本身绑定")
     @PutMapping
     public int updateFile(@Validated({Update.class, Default.class}) File fileInfo) {
         return fileService.updateFile(fileInfo);
@@ -138,14 +137,14 @@ public class FileController {
      * @return 文件的修改情况
      */
     @ModifyOperation
-    @ApiOperation(value = "根据uid删除某个文件",notes = "从数据库中删除对应数据，删除与之关联的本地，对象存储中的文件，返回删除成功之后的文件对象")
+    @Operation(summary = "根据uid删除某个文件", description = "从数据库中删除对应数据，删除与之关联的本地，对象存储中的文件，返回删除成功之后的文件对象")
     @DeleteMapping("/{uid}")
     public int deleteFile(@PathVariable("uid") long uid)
             throws FileException, IOException {
         return fileService.deleteFile(uid);
     }
 
-    @ApiOperation(value = "根据uid下载文件")
+    @Operation(summary = "根据uid下载文件")
     @GetMapping("/download/{uid}")
     public void downloadFile(@PathVariable("uid") long uid, HttpServletResponse response)
             throws FileException, IOException, ReflectiveOperationException {

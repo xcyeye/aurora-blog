@@ -44,6 +44,8 @@
         <druid.version>1.2.8</druid.version>
         <springfox.version>3.0.0</springfox.version>
         <springfox-data-rest.version>3.0.0</springfox-data-rest.version>
+        <springdoc.version>1.6.8</springdoc.version>
+        <swagger-core.version>2.2.0</swagger-core.version>
         <fastjson.version>1.2.80</fastjson.version>
         <jedis.version>3.7.1</jedis.version>
         <pagehelper.version>1.4.0</pagehelper.version>
@@ -175,6 +177,24 @@
                 <groupId>io.springfox</groupId>
                 <artifactId>springfox-data-rest</artifactId>
                 <version>${springfox-data-rest.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springdoc</groupId>
+                <artifactId>springdoc-openapi-ui</artifactId>
+                <version>${springdoc.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.swagger.core.v3</groupId>
+                <artifactId>swagger-core</artifactId>
+                <version>${swagger-core.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springdoc</groupId>
+                <artifactId>springdoc-openapi-webmvc-core</artifactId>
+                <version>${springdoc.version}</version>
             </dependency>
 
             <dependency>

@@ -1,7 +1,7 @@
 package xyz.xcye.admin.controller;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -19,21 +19,21 @@ import javax.validation.groups.Default;
 
 @RestController
 @RequestMapping("/admin/social")
-@Api(tags = "用户社交信息api")
+@Tag(name = "用户社交信息api")
 public class SocialController {
 
     @Autowired
     private SocialService socialService;
 
     @ModifyOperation
-    @ApiOperation("逻辑删除此社交信息")
+    @Operation(summary = "逻辑删除此社交信息")
     @DeleteMapping("/{uid}")
     public int deleteByPrimaryKey(@PathVariable("uid") long uid) {
         return socialService.deleteByPrimaryKey(uid);
     }
 
     @DeleteMapping("/physics/{uid}")
-    @ApiOperation("物理删除此社交信息")
+    @Operation(summary = "物理删除此社交信息")
     @ModifyOperation
     public int physicsDeleteSocial(@PathVariable("uid") long uid) {
         return socialService.physicsDeleteSocial(uid);
@@ -41,13 +41,13 @@ public class SocialController {
 
 
     @PostMapping
-    @ApiOperation("插入新的社交信息")
+    @Operation(summary = "插入新的社交信息")
     @ModifyOperation
     public int insertSelective(@Validated({Insert.class, Default.class}) Social record) {
         return socialService.insertSelective(record);
     }
 
-    @ApiOperation("根据条件查询社交信息")
+    @Operation(summary = "根据条件查询社交信息")
     @SelectOperation
     @GetMapping
     public PageData<SocialVO> selectByCondition(Condition<Long> condition) {
@@ -56,14 +56,14 @@ public class SocialController {
 
     @GetMapping("/{uid}")
     @SelectOperation
-    @ApiOperation("根据uid查询社交信息")
+    @Operation(summary = "根据uid查询社交信息")
     public SocialVO selectByUid(@PathVariable("uid") long uid) {
         return socialService.selectByUid(uid);
     }
 
     @PutMapping
     @ModifyOperation
-    @ApiOperation("修改社交信息")
+    @Operation(summary = "修改社交信息")
     public int updateByPrimaryKeySelective(@Validated({Update.class, Default.class}) Social record) {
         return socialService.updateByPrimaryKeySelective(record);
     }

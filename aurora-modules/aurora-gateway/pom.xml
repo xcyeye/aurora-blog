@@ -18,6 +18,24 @@
         </dependency>
 
         <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-webflux-ui</artifactId>
+            <version>1.6.8</version>
+        </dependency>
+
+        <dependency>
+            <groupId>xyz.xcye.starter</groupId>
+            <artifactId>aurora-swagger-starter</artifactId>
+
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springdoc</groupId>
+                    <artifactId>springdoc-openapi-webmvc-core</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
             <groupId>xyz.xcye.starter</groupId>
             <artifactId>aurora-nacos-starter</artifactId>
         </dependency>

@@ -1,7 +1,7 @@
 package xyz.xcye.admin.controller;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -19,7 +19,7 @@ import xyz.xcye.data.entity.PageData;
 import javax.validation.groups.Default;
 
 @RestController
-@Api(tags = "操作前台导航的api")
+@Tag(name = "操作前台导航的api")
 @RequestMapping("/admin/navigation")
 public class NavigationController {
 
@@ -28,12 +28,12 @@ public class NavigationController {
 
     @ModifyOperation
     @DeleteMapping("/{uid}")
-    @ApiOperation("根据uid逻辑删除导航")
+    @Operation(summary = "根据uid逻辑删除导航")
     public int deleteByPrimaryKey(@PathVariable("uid") long uid) {
         return navigationService.deleteByPrimaryKey(uid);
     }
 
-    @ApiOperation("物理删除")
+    @Operation(summary = "物理删除")
     @DeleteMapping("/physics/{uid}")
     @ModifyOperation
     public int physicsDeleteNavigation(@PathVariable("uid") long uid) {
@@ -42,19 +42,19 @@ public class NavigationController {
 
     @PostMapping
     @ModifyOperation
-    @ApiOperation("插入新的导航信息")
+    @Operation(summary = "插入新的导航信息")
     public int insertSelective(@Validated({Insert.class, Default.class}) Navigation record) {
         return navigationService.insertSelective(record);
     }
 
     @GetMapping
     @SelectOperation
-    @ApiOperation("根据条件查询")
+    @Operation(summary = "根据条件查询")
     public PageData<NavigationVO> selectByCondition(Condition<Long> condition) {
         return navigationService.selectByCondition(condition);
     }
 
-    @ApiOperation("根据uid查询")
+    @Operation(summary = "根据uid查询")
     @GetMapping("/{uid}")
     @SelectOperation
     public NavigationVO selectNavigationByUid(@PathVariable("uid") long uid) {
@@ -67,7 +67,7 @@ public class NavigationController {
      * @return
      */
     @SelectOperation
-    @ApiOperation("查询该用户所有的前台导航信息")
+    @Operation(summary = "查询该用户所有的前台导航信息")
     @GetMapping("/userUid/{userUid}")
     public NavigationDTO selectAllNavigationByUserUid(@PathVariable("userUid") long userUid) {
         return navigationService.selectAllNavigationByUserUid(userUid);
@@ -75,7 +75,7 @@ public class NavigationController {
 
     @PutMapping
     @ModifyOperation
-    @ApiOperation("修改导航信息")
+    @Operation(summary = "修改导航信息")
     public int updateByPrimaryKeySelective(@Validated({Update.class, Default.class}) Navigation record) {
         return navigationService.updateByPrimaryKeySelective(record);
     }

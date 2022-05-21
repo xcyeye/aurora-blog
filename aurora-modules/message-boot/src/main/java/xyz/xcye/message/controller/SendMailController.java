@@ -1,7 +1,7 @@
 package xyz.xcye.message.controller;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,7 +18,7 @@ import javax.mail.MessagingException;
  * @author qsyyke
  */
 
-@Api(value = "发送邮件相关接口",tags = "发送邮件相关接口")
+@Tag(name = "发送邮件相关接口")
 @RequestMapping("/message/sendMail")
 @RestController
 @RefreshScope
@@ -32,7 +32,7 @@ public class SendMailController {
      * @return
      */
     @ModifyOperation
-    @ApiOperation(value = "发送普通文本")
+    @Operation(summary = "发送普通文本")
     @PostMapping("/simpleText")
     public int sendSimpleMail( @RequestParam(value = "receiverEmail") String receiverEmail,
                                         @RequestParam(value = "subject") String subject,
@@ -40,7 +40,7 @@ public class SendMailController {
         return sendMailService.sendSimpleMail(receiverEmail,subject,content);
     }
 
-    @ApiOperation(value = "发送自定义html")
+    @Operation(summary = "发送自定义html")
     @ModifyOperation
     @PostMapping("/customMail")
     public int sendCustomMail(@RequestParam("subject") String subject,

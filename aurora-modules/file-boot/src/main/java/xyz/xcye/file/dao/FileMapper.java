@@ -28,7 +28,7 @@ public interface FileMapper {
      * @param condition 查询条件，其中keyword为文件名(file_name)
      * @return object by primary key
      */
-    List<File> selectByCondition(@Param("condition") Condition condition);
+    List<File> selectByCondition(@Param("condition") Condition<Long> condition);
 
     /**
      * update record selective

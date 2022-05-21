@@ -1,7 +1,7 @@
 package xyz.xcye.comment.controller;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.validation.annotation.Validated;
@@ -25,7 +25,7 @@ import java.util.List;
  * @author qsyyke
  */
 
-@Api(tags = "评论相关操作接口")
+@Tag(name = "评论相关操作接口")
 @RequestMapping("/comment")
 @RestController
 @RefreshScope
@@ -33,14 +33,14 @@ public class CommentController {
     @Autowired
     private CommentService commentService;
 
-    @ApiOperation(value = "更新评论")
+    @Operation(summary = "更新评论")
     @ModifyOperation
     @PutMapping("")
     public int updateComment(@Validated({Update.class}) Comment comment) {
         return commentService.updateComment(comment);
     }
 
-    @ApiOperation(value = "插入新评论")
+    @Operation(summary = "插入新评论")
     @ModifyOperation
     @PostMapping("")
     public int insertComment(@Validated({Default.class, Insert.class}) Comment comment,
@@ -50,7 +50,7 @@ public class CommentController {
         return commentService.insertComment(comment);
     }
 
-    @ApiOperation(value = "删除单条评论")
+    @Operation(summary = "删除单条评论")
     @ModifyOperation
     @DeleteMapping("/{uid}")
     public int deleteComment(@PathVariable("uid") Long uid) {
@@ -62,21 +62,21 @@ public class CommentController {
      * @param commentUidArr
      * @return
      */
-    @ApiOperation(value = "查询所有满足要求的所有评论")
+    @Operation(summary = "查询所有满足要求的所有评论")
     @SelectOperation
     @GetMapping("/queryArticleComments")
     public CommentVO queryAllComment(@RequestParam(value = "uidArr") long[] commentUidArr) {
         return commentService.queryArticleComments(commentUidArr);
     }
 
-    @ApiOperation(value = "根据自定义条件查询所有评论")
+    @Operation(summary = "根据自定义条件查询所有评论")
     @SelectOperation
     @GetMapping
     public List<CommentDTO> queryAllCommentByCondition(Condition<Long> condition) {
         return commentService.queryAllComments(condition);
     }
 
-    @ApiOperation(value = "根据uid查询评论")
+    @Operation(summary = "根据uid查询评论")
     @SelectOperation
     @GetMapping("/{uid}")
     public CommentDTO queryCommentByUid(@PathVariable("uid") long uid) {

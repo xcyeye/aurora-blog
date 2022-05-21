@@ -9,6 +9,8 @@ import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.http.server.ServerHttpResponse;
 import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.context.request.RequestAttributes;
+import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 import xyz.xcye.aurora.manager.json.FieldFilterSerializer;
 import xyz.xcye.aurora.util.UserUtils;
@@ -16,6 +18,7 @@ import xyz.xcye.core.annotaion.FieldFilter;
 import xyz.xcye.core.annotaion.controller.ModifyOperation;
 import xyz.xcye.core.annotaion.controller.ResponseRealResult;
 import xyz.xcye.core.annotaion.controller.SelectOperation;
+import xyz.xcye.core.constant.OpenApiConstant;
 import xyz.xcye.core.dto.JwtUserInfo;
 import xyz.xcye.core.entity.ExceptionResultEntity;
 import xyz.xcye.core.entity.R;
@@ -38,11 +41,21 @@ public class AuroraResponseResultHandler implements ResponseBodyAdvice<Object> {
 
     @Override
     public boolean supports(MethodParameter returnType, Class<? extends HttpMessageConverter<?>> converterType) {
-        return true;
+        // 查看是否是springdoc的请求
+        return !isSpringDocRequest();
+        //return false;
     }
 
     @Override
     public Object beforeBodyWrite(Object responseBody, MethodParameter methodParameter, MediaType selectedContentType, Class<? extends HttpMessageConverter<?>> selectedConverterType, ServerHttpRequest request, ServerHttpResponse response) {
+
+
+        String path = request.getURI().getPath();
+        if ("/v3/api-docs/swagger-config".equals(path)) {
+            // 解决springdoc不能在ControllerAdvice上使用的问题
+            return responseBody;
+        }
+
         //response.getHeaders().setContentType(MediaType.APPLICATION_JSON);
         //执行的方法
         Method method = methodParameter.getMethod();
@@ -174,5 +187,16 @@ public class AuroraResponseResultHandler implements ResponseBodyAdvice<Object> {
             roleList = jwtUserInfo.getRoleList();
         }
         return roleList;
+    }
+
+    private boolean isSpringDocRequest() {
+        RequestAttributes attributes = null;
+        try {
+            attributes = RequestContextHolder.currentRequestAttributes();
+        } catch (IllegalStateException e) {
+            return false;
+        }
+        Boolean springDocRequest = (Boolean) attributes.getAttribute(OpenApiConstant.CONTEXT_REQUEST_HEADER_OF_SPRING_DOC, 1);
+        return springDocRequest != null ? springDocRequest : false;
     }
 }

@@ -25,4 +25,7 @@ public class OauthJwtConstant {
 
     /** cookie中存储cookie的秘钥 **/
     public static final String STORAGE_COOKIE_SECRET_KEY = "aurora.cookie.secrey";
+
+    /** 静态白名单资源 **/
+    public static final String[] PUBLIC_STATIC_RESOURCE = {"css","js","html", "png"};
 }

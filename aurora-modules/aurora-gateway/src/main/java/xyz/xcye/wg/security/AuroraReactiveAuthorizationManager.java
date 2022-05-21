@@ -22,6 +22,8 @@ import xyz.xcye.auth.constant.RequestConstant;
 
 import java.net.URI;
 import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * 鉴权管理器
@@ -106,13 +108,25 @@ public class AuroraReactiveAuthorizationManager implements ReactiveAuthorization
         // 获取redis中的所有白名单
         List<WhiteUrl> whiteUrlList = (List<WhiteUrl>) redisTemplate.opsForValue().get(RedisStorageConstant.STORAGE_WHITE_URL_INFO);
 
-        whiteUrlList = Optional.ofNullable(whiteUrlList).orElse(new ArrayList<>());
+        String[] whiteUrlArr = getStaticResourceWhiteUrlArr(whiteUrlList);
         // 判断当前访问的restful风格的请求地址是否是一个白名单
-        for (WhiteUrl whiteUrl : whiteUrlList) {
-            if (antPathMatcher.match(whiteUrl.getUrl(), restFulPath)) {
+        for (String whiteUrl : whiteUrlArr) {
+            if (antPathMatcher.match(whiteUrl, restFulPath)) {
                 return true;
             }
         }
         return false;
+    }
+
+    private String[] getStaticResourceWhiteUrlArr(List<WhiteUrl> whiteUrlList) {
+        whiteUrlList = Optional.ofNullable(whiteUrlList).orElse(List.of(new WhiteUrl()));
+
+        Stream<String> whiteUrlStream = whiteUrlList.stream().map(WhiteUrl::getUrl);
+        Stream<String> staticResourceStream = Arrays.stream(OauthJwtConstant.PUBLIC_STATIC_RESOURCE)
+                .map(statusResource -> "*." + statusResource);
+        // 获取所有静态资源
+        return Stream.concat(whiteUrlStream, staticResourceStream)
+                .collect(Collectors.joining(","))
+                .split(",");
     }
 }

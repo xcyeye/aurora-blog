@@ -1,6 +1,6 @@
 package xyz.xcye.admin.dto;
 
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 import xyz.xcye.admin.vo.NavigationVO;
 
@@ -17,13 +17,13 @@ import java.util.List;
 @NoArgsConstructor
 public class NavigationDTO {
 
-    @ApiModelProperty("用户uid")
+    @Schema(title = "用户uid")
     private Long userUid;
 
-    @ApiModelProperty("父导航数量")
+    @Schema(title = "父导航数量")
     private Integer ParentNavigationLength;
 
-    @ApiModelProperty("该用户的所有导航节点信息")
+    @Schema(title = "该用户的所有导航节点信息")
     private List<ParentNavigation> navigationList;
 
     @EqualsAndHashCode(callSuper = true)

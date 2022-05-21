@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.multipart.MaxUploadSizeExceededException;
 import xyz.xcye.core.entity.ExceptionResultEntity;
 import xyz.xcye.core.enums.ResponseStatusCodeEnum;
+import xyz.xcye.core.exception.AuroraException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -31,7 +32,6 @@ public class AuroraGlobalExceptionHandler {
     public ExceptionResultEntity bing(BindException e,
                                       HttpServletRequest request,
                                       HttpServletResponse response) {
-        logExceptionInfo(e);
         String requestURI = request.getRequestURI();
         //所有的字段验证错误信息
         List<Map<String,Object>> errorsList = new ArrayList<>();
@@ -55,7 +55,7 @@ public class AuroraGlobalExceptionHandler {
             errorsList.add(filedErrorMap);
         });
 
-        response.setStatus(500);
+        commonSetting(e, response);
 
         return new ExceptionResultEntity(
                 ResponseStatusCodeEnum.PARAM_IS_INVALID.getMessage(),
@@ -75,9 +75,7 @@ public class AuroraGlobalExceptionHandler {
             HttpServletResponse response) {
 
         String requestURI = request.getRequestURI();
-        // 设置响应码，否则出现异常，seata不会回滚
-        response.setStatus(500);
-        logExceptionInfo(exception);
+        commonSetting(exception, response);
         String parameterName = exception.getParameterName();
         String parameterType = exception.getParameterType();
         String message = ResponseStatusCodeEnum.PARAM_NOT_COMPLETE.getMessage() +
@@ -91,9 +89,7 @@ public class AuroraGlobalExceptionHandler {
                                                              HttpServletRequest request,
                                                              HttpServletResponse response) {
         String requestURI = request.getRequestURI();
-        // 设置响应码，否则出现异常，seata不会回滚
-        response.setStatus(500);
-        logExceptionInfo(exception);
+        commonSetting(exception, response);
         String msg = Optional.ofNullable(exception.getMessage()).orElse(ResponseStatusCodeEnum.EXCEPTION_NULL_POINTER.getMessage());
         return new ExceptionResultEntity(msg, requestURI, ResponseStatusCodeEnum.EXCEPTION_NULL_POINTER.getCode());
     }
@@ -103,11 +99,18 @@ public class AuroraGlobalExceptionHandler {
                                                                        HttpServletRequest request,
                                                                        HttpServletResponse response) {
         String requestURI = request.getRequestURI();
-        // 设置响应码，否则出现异常，seata不会回滚
-        logExceptionInfo(exception);
-        response.setStatus(500);
+        commonSetting(exception, response);
         return new ExceptionResultEntity(ResponseStatusCodeEnum.EXCEPTION_FILE_EXCEED_MAX_SIZE.getMessage(),
                 requestURI, ResponseStatusCodeEnum.EXCEPTION_FILE_EXCEED_MAX_SIZE.getCode());
+    }
+
+    @ExceptionHandler(AuroraException.class)
+    public ExceptionResultEntity auroraExceptionHandler(AuroraException e,
+                                                        HttpServletRequest request,
+                                                        HttpServletResponse response) {
+        String requestURI = request.getRequestURI();
+        commonSetting(e, response);
+        return new ExceptionResultEntity(e.getMessage(), requestURI, e.getStatusCode());
     }
 
     /**
@@ -121,14 +124,19 @@ public class AuroraGlobalExceptionHandler {
                                         HttpServletRequest request,
                                         HttpServletResponse response) {
         String requestURI = request.getRequestURI();
-        // 设置响应码，否则出现异常，seata不会回滚
-        response.setStatus(500);
-        logExceptionInfo(e);
-        return new ExceptionResultEntity(e.getMessage(),requestURI, ResponseStatusCodeEnum.UNKNOWN.getCode());
+        commonSetting(e, response);
+        return new ExceptionResultEntity(ResponseStatusCodeEnum.SYSTEM_ERROR.getMessage(), requestURI,
+                ResponseStatusCodeEnum.SYSTEM_ERROR.getCode());
     }
 
     private void logExceptionInfo(Exception e) {
         log.error("错误消息: {}",e.getMessage(),e);
+    }
+
+    private void commonSetting(Exception e, HttpServletResponse response) {
+        // 设置响应码，否则出现异常，seata不会回滚
+        response.setStatus(500);
+        logExceptionInfo(e);
     }
 }
 
