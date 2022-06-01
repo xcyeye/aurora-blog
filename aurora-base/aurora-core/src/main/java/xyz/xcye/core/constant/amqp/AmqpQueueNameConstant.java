@@ -40,8 +40,8 @@ public class AmqpQueueNameConstant {
     public static final String DEAD_LETTER_OPERATE_USER_BINDING_EMAIL_ROUTING_KEY = "aurora.operate.user.binding.email.dead.letter.routing";
 
     /** 锁住用户账户 **/
-    public static final String OPERATE_USER_LOCK_ACCOUNT_QUEUE = "aurora.operate.usre.lock.account.queue";
-    public static final String OPERATE_USER_LOCK_ACCOUNT_ROUTING_KEY = "aurora.operate.usre.lock.account.routing.key";
+    public static final String OPERATE_USER_LOCK_ACCOUNT_QUEUE = "aurora.operate.user.lock.account.queue";
+    public static final String OPERATE_USER_LOCK_ACCOUNT_ROUTING_KEY = "aurora.operate.user.lock.account.routing.key";
 
     /** 更新角色关系的缓存 **/
     public static final String UPDATE_ROLE_PERMISSION_CACHE_QUEUE = "aurora.update.role.permission.queue";

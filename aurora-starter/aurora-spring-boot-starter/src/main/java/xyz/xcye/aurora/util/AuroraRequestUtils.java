@@ -55,7 +55,13 @@ public class AuroraRequestUtils {
     }
 
     public static boolean getWhiteUrlFlag() {
-        RequestAttributes currentRequestAttributes = RequestContextHolder.currentRequestAttributes();
+        RequestAttributes currentRequestAttributes = null;
+        try {
+            currentRequestAttributes = RequestContextHolder.currentRequestAttributes();
+        } catch (IllegalStateException e) {
+            LogUtils.logExceptionInfo(e);
+            return false;
+        }
         String whiteUrlStatus = null;
         try {
             whiteUrlStatus = (String) currentRequestAttributes.getAttribute(RequestConstant.CONTEXT_WHITE_URL_STATUS, 1);

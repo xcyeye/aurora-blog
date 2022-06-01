@@ -5,12 +5,13 @@ import io.seata.spring.annotation.GlobalTransactional;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.BindException;
+import xyz.xcye.admin.manager.task.LoadRolePermissionInfo;
+import xyz.xcye.admin.manager.task.LoadWhiteUrlInfo;
 import xyz.xcye.admin.po.User;
-import xyz.xcye.admin.service.PermissionRelationService;
 import xyz.xcye.admin.service.UserService;
-import xyz.xcye.admin.service.WhiteUrlService;
 import xyz.xcye.admin.vo.UserVO;
 import xyz.xcye.amqp.config.service.MistakeMessageSendService;
 import xyz.xcye.api.mail.sendmail.entity.StorageSendMailInfo;
@@ -48,9 +49,11 @@ public class OperateUserConsumer {
     @Autowired
     private SendMQMessageService sendMQMessageService;
     @Autowired
-    private PermissionRelationService permissionRelationService;
+    private LoadRolePermissionInfo loadRolePermissionInfo;
     @Autowired
-    private WhiteUrlService whiteUrlService;
+    private LoadWhiteUrlInfo loadWhiteUrlInfo;
+    @Autowired
+    private RedisTemplate<String,Object> redisTemplate;
 
     @GlobalTransactional
     @RabbitListener(queues = AmqpQueueNameConstant.OPERATE_USER_LOCK_ACCOUNT_QUEUE, ackMode = "MANUAL")
@@ -92,22 +95,18 @@ public class OperateUserConsumer {
         // 消费失败
         channel.basicNack(message.getMessageProperties().getDeliveryTag(), false, true);
     }
-    //
-    //@RabbitListener(queues = AmqpQueueNameConstant.UPDATE_ROLE_PERMISSION_CACHE_QUEUE, ackMode = "MANUAL")
-    //public void updateRolePermissionCacheConsumer(String msgJson, Channel channel, Message message) throws Exception {
-    //    permissionRelationService.loadAllRolePermission(new Condition<Long>());
-    //    updateMessageLog.updateMessageLogInfo(message.getMessageProperties().getCorrelationId(),
-    //            true, true, "", message);
-    //    channel.basicAck(message.getMessageProperties().getDeliveryTag(), false);
-    //}
-    //
-    //@RabbitListener(queues = AmqpQueueNameConstant.UPDATE_WHITE_URL_CACHE_QUEUE, ackMode = "MANUAL")
-    //public void updateWhiteUrlCacheConsumer(String msgJson, Channel channel, Message message) throws Exception {
-    //    whiteUrlService.selectByCondition(new Condition<Integer>());
-    //    updateMessageLog.updateMessageLogInfo(message.getMessageProperties().getCorrelationId(),
-    //            true, true, "", message);
-    //    channel.basicAck(message.getMessageProperties().getDeliveryTag(), false);
-    //}
+
+    @RabbitListener(queues = AmqpQueueNameConstant.UPDATE_ROLE_PERMISSION_CACHE_QUEUE, ackMode = "MANUAL")
+    public void updateRolePermissionCacheConsumer(String msgJson, Channel channel, Message message) throws Exception {
+        loadRolePermissionInfo.storagePermissionInfoToRedis();
+        channel.basicAck(message.getMessageProperties().getDeliveryTag(), false);
+    }
+
+    @RabbitListener(queues = AmqpQueueNameConstant.UPDATE_WHITE_URL_CACHE_QUEUE, ackMode = "MANUAL")
+    public void updateWhiteUrlCacheConsumer(String msgJson, Channel channel, Message message) throws Exception {
+        loadWhiteUrlInfo.storageWhiteUrlInfoToRedis();
+        channel.basicAck(message.getMessageProperties().getDeliveryTag(), false);
+    }
 
     /**
      * 发送一封邮件到该用户所对应的邮箱中，用户点击发送的链接进行解除账户锁住状态

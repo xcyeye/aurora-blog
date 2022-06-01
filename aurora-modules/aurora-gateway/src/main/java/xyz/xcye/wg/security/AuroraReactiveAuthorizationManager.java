@@ -2,6 +2,8 @@ package xyz.xcye.wg.security;
 
 
 import cn.hutool.core.collection.CollectionUtil;
+import org.springframework.amqp.core.Message;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.server.reactive.ServerHttpRequest;
@@ -17,10 +19,14 @@ import reactor.core.publisher.Mono;
 import xyz.xcye.admin.constant.RedisStorageConstant;
 import xyz.xcye.admin.dto.RolePermissionDTO;
 import xyz.xcye.admin.po.WhiteUrl;
+import xyz.xcye.amqp.api.AmqpSenderService;
 import xyz.xcye.auth.constant.OauthJwtConstant;
 import xyz.xcye.auth.constant.RequestConstant;
+import xyz.xcye.core.constant.amqp.AmqpExchangeNameConstant;
+import xyz.xcye.core.constant.amqp.AmqpQueueNameConstant;
 
 import java.net.URI;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -40,6 +46,10 @@ public class AuroraReactiveAuthorizationManager implements ReactiveAuthorization
 
     @Autowired
     private RedisTemplate<String, Object> redisTemplate;
+    @Autowired
+    private AmqpSenderService amqpSenderService;
+    @Autowired
+    private RabbitTemplate rabbitTemplate;
 
     @Override
     public Mono<AuthorizationDecision> check(Mono<Authentication> contextAuthentication, AuthorizationContext authorizationContext) {
@@ -73,7 +83,8 @@ public class AuroraReactiveAuthorizationManager implements ReactiveAuthorization
 
         if (allRolePermissionList == null) {
             // 如果redis中没有角色权限关系信息，可能是缓存失效，则调用feign重新获取缓存信息，对于此次请求，直接返回鉴权失败 为了保护系统
-            //gatewayRolePermissionFeignService.loadAllRolePermission(new Condition<Long>());
+            rabbitTemplate.send(AmqpExchangeNameConstant.AURORA_SEND_OPERATE_USER_EXCHANGE,
+                    AmqpQueueNameConstant.UPDATE_ROLE_PERMISSION_CACHE_ROUTING_KEY, new Message("更新角色权限缓存".getBytes(StandardCharsets.UTF_8)));
             return Mono.just(new AuthorizationDecision(false));
         }
 
@@ -108,7 +119,11 @@ public class AuroraReactiveAuthorizationManager implements ReactiveAuthorization
     private boolean isWhiteUrl(String restFulPath) {
         // 获取redis中的所有白名单
         List<WhiteUrl> whiteUrlList = (List<WhiteUrl>) redisTemplate.opsForValue().get(RedisStorageConstant.STORAGE_WHITE_URL_INFO);
-
+        if (whiteUrlList == null || whiteUrlList.isEmpty()) {
+            // 发送消息更新缓存
+            rabbitTemplate.send(AmqpExchangeNameConstant.AURORA_SEND_OPERATE_USER_EXCHANGE,
+                    AmqpQueueNameConstant.UPDATE_WHITE_URL_CACHE_ROUTING_KEY, new Message("更新白名单".getBytes(StandardCharsets.UTF_8)));
+        }
         String[] whiteUrlArr = getStaticResourceWhiteUrlArr(whiteUrlList);
         // 判断当前访问的restful风格的请求地址是否是一个白名单
         for (String whiteUrl : whiteUrlArr) {
