@@ -112,6 +112,11 @@
             <artifactId>admin-common</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>xyz.xcye.api</groupId>
+            <artifactId>amqp-api</artifactId>
+        </dependency>
+
     </dependencies>
 
     <build>

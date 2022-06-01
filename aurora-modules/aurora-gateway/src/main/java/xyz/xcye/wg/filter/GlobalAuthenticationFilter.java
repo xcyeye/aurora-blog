@@ -223,7 +223,7 @@ public class GlobalAuthenticationFilter implements GlobalFilter {
         JwtUserInfo jwtUserInfo = JwtUserInfo.builder()
                 .nickname((String) additionalInformation.get(OauthJwtConstant.NICKNAME))
                 .username((String) additionalInformation.get(OauthJwtConstant.USERNAME))
-                .userUid((Long) additionalInformation.get(OauthJwtConstant.USER_UID))
+                .userUid(Long.parseLong((String) additionalInformation.get(OauthJwtConstant.USER_UID)))
                 .roleList(authorities)
                 .verifyEmail((Boolean) additionalInformation.get(OauthJwtConstant.VERIFY_EMAIL))
                 .jwtToken(token)

@@ -28,9 +28,10 @@ public class PageUtils {
     }
 
     @SafeVarargs
-    public static <T,I> PageData<T> pageList(Condition<I> condition, Consumer<Condition<I>> consumer, Class<T> ... zClass) {
-        Page<T> page = getPageInfo(condition, consumer::accept);
+    public static <T,I> PageData<T> pageList(Condition<I> condition, Consumer<Condition<I>> consumer, Class<T>... zClass) {
+        Page<T> page = getPageInfo(condition, consumer);
         PageData<T> pageData = new PageData<>();
+
         pageData.setResult(page.getResult());
         pageData.setTotal(page.getTotal());
         pageData.setPages(page.getPages());

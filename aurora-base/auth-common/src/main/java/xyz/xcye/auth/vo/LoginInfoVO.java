@@ -1,5 +1,7 @@
 package xyz.xcye.auth.vo;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -15,6 +17,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 public class LoginInfoVO implements Serializable {
     @Schema(title = "")
+    @JsonSerialize(using = ToStringSerializer.class)
     private Long uid;
 
     /**

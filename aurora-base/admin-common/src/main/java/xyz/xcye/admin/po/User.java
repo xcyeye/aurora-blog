@@ -5,7 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
-import org.hibernate.validator.constraints.Range;
+import xyz.xcye.admin.enums.GenderEnum;
 import xyz.xcye.core.constant.FieldLengthConstant;
 import xyz.xcye.core.valid.Delete;
 import xyz.xcye.core.valid.Insert;
@@ -63,8 +63,7 @@ public class User implements Serializable {
     /**
      * 用户性别
      */
-    @Range(min = 0,max = 1, message = "用户的性别只能在{min}和{max}之间取值")
-    private Integer gender;
+    private GenderEnum gender;
 
     /**
      * 该用户对应的网站设置的uid

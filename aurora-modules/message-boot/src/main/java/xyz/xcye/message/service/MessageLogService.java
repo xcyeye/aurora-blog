@@ -50,4 +50,11 @@ public interface MessageLogService {
      * @return
      */
     MessageLogVO queryByUid(long uid);
+
+    /**
+     * 重新投递此uid对应的消息
+     * @param uid
+     * @return
+     */
+    void resendMqMessage(long uid) throws BindException;
 }

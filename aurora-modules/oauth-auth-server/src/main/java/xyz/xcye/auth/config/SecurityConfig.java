@@ -97,6 +97,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .formLogin()
                 .loginProcessingUrl(OauthJwtConstant.LOGIN_PROCESS_URL)
+                .permitAll()
                 .successHandler(oauthServerAuthenticationSuccessHandler)
                 .failureHandler(oauthServerAuthenticationFailureHandler)
                 .and()

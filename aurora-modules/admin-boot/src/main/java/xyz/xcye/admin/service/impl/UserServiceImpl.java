@@ -3,6 +3,7 @@ package xyz.xcye.admin.service.impl;
 import io.seata.spring.annotation.GlobalTransactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -11,6 +12,7 @@ import org.springframework.validation.BindException;
 import xyz.xcye.admin.api.feign.EmailFeignService;
 import xyz.xcye.admin.dao.UserMapper;
 import xyz.xcye.admin.dto.EmailVerifyAccountDTO;
+import xyz.xcye.admin.enums.GenderEnum;
 import xyz.xcye.admin.po.User;
 import xyz.xcye.admin.properties.AdminDefaultProperties;
 import xyz.xcye.admin.service.UserService;
@@ -21,6 +23,7 @@ import xyz.xcye.api.mail.sendmail.service.SendMQMessageService;
 import xyz.xcye.api.mail.sendmail.util.AccountInfoUtils;
 import xyz.xcye.api.mail.sendmail.util.StorageEmailVerifyUrlUtil;
 import xyz.xcye.aurora.properties.AuroraProperties;
+import xyz.xcye.auth.constant.AuthRedisConstant;
 import xyz.xcye.core.constant.amqp.AmqpExchangeNameConstant;
 import xyz.xcye.core.constant.amqp.AmqpQueueNameConstant;
 import xyz.xcye.core.entity.R;
@@ -63,6 +66,8 @@ public class UserServiceImpl implements UserService {
     private AdminDefaultProperties adminDefaultProperties;
     @Autowired
     private SendMQMessageService sendMQMessageService;
+    @Autowired
+    private RedisTemplate<String, Object> redisTemplate;
 
     @Transactional(rollbackFor = Exception.class)
     @Override
@@ -80,15 +85,21 @@ public class UserServiceImpl implements UserService {
     @Override
     public int updateUser(User user) throws UserException {
         Objects.requireNonNull(user, "用户信息不能为null");
-        if (StringUtils.hasLength(user.getPassword())) {
-            // 密码应该单独修改
-            user.setPassword(null);
-        }
+        // 密码应该单独修改
+        Optional.ofNullable(user.getPassword()).ifPresent(t -> user.setPassword(null));
 
         if (StringUtils.hasLength(user.getUsername()) && existsUsername(user.getUsername())) {
-            throw new UserException(ResponseStatusCodeEnum.PERMISSION_USER_EXIST);
+            //throw new UserException(ResponseStatusCodeEnum.PERMISSION_USER_EXIST);
+            // 用户名存在，不修改用户名
+            user.setUsername(null);
         }
-        return userMapper.updateByPrimaryKeySelective(user);
+        // 保存原始的用户名，如果此userUid不存在，返回空字符
+        String username = getUsername(user.getUid());
+        int updateNum = userMapper.updateByPrimaryKeySelective(user);
+        if (updateNum == 1) {
+            removeUserDetailsFromRedis(username);
+        }
+        return updateNum;
     }
 
     /**
@@ -96,12 +107,25 @@ public class UserServiceImpl implements UserService {
      * @param username
      * @param originPwd
      * @param newPwd
-     * @param secretKey
      * @return
      */
     @Override
-    public int updatePassword(String username, String originPwd, String newPwd, String secretKey) {
-        return 0;
+    public int updatePassword(String username, String originPwd, String newPwd) {
+        AssertUtils.stateThrow(StringUtils.hasLength(username), () -> new UserException("用户名不能为空"));
+        // 查询此用户的原始密码
+        User user = queryByUsernameContainPassword(username);
+        AssertUtils.stateThrow(user != null, () -> new UserException(ResponseStatusCodeEnum.PERMISSION_USER_NOT_EXIST));
+        // 查看密码是否匹配
+        boolean matches = passwordEncoder.matches(user.getPassword(), originPwd);
+        AssertUtils.stateThrow(matches, () -> new UserException("密码错误"));
+
+        // 修改密码
+        user.setPassword(passwordEncoder.encode(newPwd));
+        int updateNum = userMapper.updateByPrimaryKeySelective(user);
+        if (updateNum == 1) {
+            removeUserDetailsFromRedis(user.getUsername());
+        }
+        return updateNum;
     }
 
     /**
@@ -130,7 +154,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public PageData<UserVO> queryAllByCondition(Condition<Long> condition) {
-        return PageUtils.pageList(condition, t -> BeanUtils.copyList(userMapper.selectByCondition(condition), UserVO.class));
+        return PageUtils.pageList(condition, t -> userMapper.selectByCondition(condition), UserVO.class);
     }
 
     @Override
@@ -163,13 +187,15 @@ public class UserServiceImpl implements UserService {
 
         AssertUtils.ifNullThrow(queriedEmailInfo,
                 () -> new EmailException(ResponseStatusCodeEnum.EXCEPTION_EMAIL_NOT_EXISTS));
+        AssertUtils.ifNullThrow(queriedEmailInfo.getEmail(),
+                () -> new EmailException(ResponseStatusCodeEnum.EXCEPTION_EMAIL_NOT_EXISTS));
         User user = User.builder()
                 .emailUid(queriedEmailInfo.getUid())
                 .uid(queriedEmailInfo.getUserUid())
                 .build();
         // 判断该用户是否绑定
         UserVO userVO = queryByUid(user.getUid());
-        AssertUtils.stateThrow(userVO != null, () -> new EmailException(ResponseStatusCodeEnum.PERMISSION_USER_NOT_EXIST));
+        AssertUtils.stateThrow(!userVO.getVerifyEmail(), () -> new EmailException(ResponseStatusCodeEnum.EXCEPTION_EMAIL_HAD_BINDING));
         // 判断该用户是否被删除
         AssertUtils.stateThrow(!userVO.getDelete(), () -> new UserException(ResponseStatusCodeEnum.PERMISSION_USER_NOT_DELETE));
         if (userVO.getVerifyEmail() != null && userVO.getVerifyEmail()) {
@@ -196,6 +222,11 @@ public class UserServiceImpl implements UserService {
         return !userMapper.selectByCondition(condition).isEmpty();
     }
 
+    private String getUsername(Long userUid) {
+        UserVO userVO = queryByUid(userUid);
+        return userVO == null ? "" : userVO.getUsername();
+    }
+
     private void setUserProperties(User user) {
         user.setDelete(false);
         user.setVerifyEmail(false);
@@ -212,7 +243,7 @@ public class UserServiceImpl implements UserService {
         }
 
         // 如果没有性别的话，那么默认是秘密(0)
-        user.setGender(Optional.ofNullable(user.getGender()).orElse(0));
+        user.setGender(Optional.ofNullable(user.getGender()).orElse(GenderEnum.SECRET));
     }
 
     private void sendVerifyEmail(UserVO userVO, EmailVO emailVO) throws BindException {
@@ -243,5 +274,10 @@ public class UserServiceImpl implements UserService {
         }
         sendMQMessageService.sendCommonMail(mailInfo, AmqpExchangeNameConstant.AURORA_SEND_MAIL_EXCHANGE,
                 "topic", AmqpQueueNameConstant.SEND_HTML_MAIL_ROUTING_KEY, list);
+    }
+
+    private void removeUserDetailsFromRedis(String username) {
+        // 用户名修改，删除redis中的userService缓存
+        redisTemplate.delete(AuthRedisConstant.USER_DETAILS_CACHE_PREFIX + username);
     }
 }

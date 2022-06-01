@@ -37,11 +37,10 @@ public class SpringDocConfig {
         definitions.stream()
                 .filter(routeDefinition -> routeDefinition.getId().matches("aurora.*"))
                 .forEach(routeDefinition -> {
-                    //String name = routeDefinition.getId().replaceAll("aurora-", "");
+                    String name = routeDefinition.getId().replaceAll("aurora-", "");
                     swaggerUiConfigParameters.addGroup(routeDefinition.getId());
-                    //GroupedOpenApi.builder().pathsToMatch("/" + name + "/**").group(routeDefinition.getId()).build();
+                    GroupedOpenApi.builder().pathsToMatch("/" + name + "/**").group(routeDefinition.getId()).build();
                 });
-
         return groups;
     }
 }

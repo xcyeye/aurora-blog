@@ -8,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.BindException;
 import xyz.xcye.admin.po.User;
+import xyz.xcye.admin.service.PermissionRelationService;
 import xyz.xcye.admin.service.UserService;
+import xyz.xcye.admin.service.WhiteUrlService;
 import xyz.xcye.admin.vo.UserVO;
 import xyz.xcye.amqp.config.service.MistakeMessageSendService;
 import xyz.xcye.api.mail.sendmail.entity.StorageSendMailInfo;
@@ -36,7 +38,7 @@ public class OperateUserConsumer {
     private final String enableAccountKey = "enableAccount";
 
     @Autowired
-    private MessageLogFeignService messageLogFeignService;
+    private MessageLogFeignService.UpdateMessageLog updateMessageLog;
     @Autowired
     private MistakeMessageSendService mistakeMessageSendService;
     @Autowired
@@ -45,6 +47,10 @@ public class OperateUserConsumer {
     private AuroraProperties.AuroraAccountProperties auroraAccountProperties;
     @Autowired
     private SendMQMessageService sendMQMessageService;
+    @Autowired
+    private PermissionRelationService permissionRelationService;
+    @Autowired
+    private WhiteUrlService whiteUrlService;
 
     @GlobalTransactional
     @RabbitListener(queues = AmqpQueueNameConstant.OPERATE_USER_LOCK_ACCOUNT_QUEUE, ackMode = "MANUAL")
@@ -86,6 +92,22 @@ public class OperateUserConsumer {
         // 消费失败
         channel.basicNack(message.getMessageProperties().getDeliveryTag(), false, true);
     }
+    //
+    //@RabbitListener(queues = AmqpQueueNameConstant.UPDATE_ROLE_PERMISSION_CACHE_QUEUE, ackMode = "MANUAL")
+    //public void updateRolePermissionCacheConsumer(String msgJson, Channel channel, Message message) throws Exception {
+    //    permissionRelationService.loadAllRolePermission(new Condition<Long>());
+    //    updateMessageLog.updateMessageLogInfo(message.getMessageProperties().getCorrelationId(),
+    //            true, true, "", message);
+    //    channel.basicAck(message.getMessageProperties().getDeliveryTag(), false);
+    //}
+    //
+    //@RabbitListener(queues = AmqpQueueNameConstant.UPDATE_WHITE_URL_CACHE_QUEUE, ackMode = "MANUAL")
+    //public void updateWhiteUrlCacheConsumer(String msgJson, Channel channel, Message message) throws Exception {
+    //    whiteUrlService.selectByCondition(new Condition<Integer>());
+    //    updateMessageLog.updateMessageLogInfo(message.getMessageProperties().getCorrelationId(),
+    //            true, true, "", message);
+    //    channel.basicAck(message.getMessageProperties().getDeliveryTag(), false);
+    //}
 
     /**
      * 发送一封邮件到该用户所对应的邮箱中，用户点击发送的链接进行解除账户锁住状态

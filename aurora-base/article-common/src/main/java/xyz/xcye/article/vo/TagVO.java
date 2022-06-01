@@ -1,5 +1,7 @@
 package xyz.xcye.article.vo;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -18,6 +20,7 @@ public class TagVO implements Serializable {
     * 唯一uid
     */
     @Schema(title = "唯一uid")
+    @JsonSerialize(using = ToStringSerializer.class)
     private Long uid;
 
     /**
@@ -60,6 +63,7 @@ public class TagVO implements Serializable {
     * 用户的userUid
     */
     @Schema(title = "用户的userUid")
+    @JsonSerialize(using = ToStringSerializer.class)
     private Long userUid;
 
     private static final long serialVersionUID = 1L;

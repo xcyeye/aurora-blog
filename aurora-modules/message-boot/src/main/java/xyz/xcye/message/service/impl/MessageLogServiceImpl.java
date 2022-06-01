@@ -1,12 +1,15 @@
 package xyz.xcye.message.service.impl;
 
 import com.github.pagehelper.PageHelper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import org.springframework.validation.BindException;
+import xyz.xcye.amqp.api.AmqpSenderService;
 import xyz.xcye.aurora.properties.AuroraProperties;
 import xyz.xcye.core.util.BeanUtils;
 import xyz.xcye.core.util.ValidationUtils;
+import xyz.xcye.core.util.lambda.AssertUtils;
 import xyz.xcye.core.valid.Insert;
 import xyz.xcye.core.valid.Update;
 import xyz.xcye.data.entity.Condition;
@@ -30,6 +33,8 @@ public class MessageLogServiceImpl implements MessageLogService {
     private MessageLogDao messageLogDao;
     @Resource
     private AuroraProperties auroraProperties;
+    @Autowired
+    private AmqpSenderService amqpSenderService;
 
     @Override
     public int insertMessageLog(MessageLog messageLog) throws BindException {
@@ -62,5 +67,15 @@ public class MessageLogServiceImpl implements MessageLogService {
         condition.setUid(uid);
         condition.setStatus(null);
         return BeanUtils.getSingleObjFromList(messageLogDao.queryAllMessageLog(condition),MessageLogVO.class);
+    }
+
+    @Override
+    public void resendMqMessage(long uid) throws BindException {
+        MessageLogVO messageLogVO = queryByUid(uid);
+        AssertUtils.stateThrow(messageLogVO != null, () -> new RuntimeException("没有此mq消息"));
+
+        // 重新发送
+        amqpSenderService.sendMQMsg(messageLogVO.getMessage(), messageLogVO.getExchange(),
+                messageLogVO.getRoutingKey(), messageLogVO.getExchangeType());
     }
 }

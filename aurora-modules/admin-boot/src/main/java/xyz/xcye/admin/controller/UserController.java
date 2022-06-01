@@ -46,6 +46,13 @@ public class UserController {
         return userService.updateUser(user);
     }
 
+    @Operation(summary = "更新密码")
+    @PutMapping("/pwd")
+    @ModifyOperation
+    public int updatePassword(String username, String originPwd, String newPwd) {
+        return userService.updatePassword(username, originPwd, newPwd);
+    }
+
     @DeleteMapping("/{uid}")
     @ModifyOperation
     @Operation(summary = "逻辑删除用户信息")

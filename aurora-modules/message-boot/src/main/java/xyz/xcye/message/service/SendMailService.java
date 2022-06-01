@@ -41,4 +41,11 @@ public interface SendMailService {
      * @throws MessagingException
      */
     int sendCustomMail(String receiverEmail,String subject,String content) throws MessagingException;
+
+    /**
+     * 重新发送自定义的邮件
+     * @param emailLogUid
+     * @return
+     */
+    int resendCustomMail(Long emailLogUid) throws MessagingException;
 }

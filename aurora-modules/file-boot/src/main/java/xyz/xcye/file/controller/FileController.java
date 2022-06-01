@@ -52,11 +52,11 @@ public class FileController {
     @PostMapping("/single")
     public FileVO singleUploadFile(@Validated({Insert.class, Default.class}) File fileInfo,
                                    @RequestParam(value = "file") MultipartFile file,
-                                   @RequestParam(required = false) int storageMode)
+                                   @RequestParam(required = false) int storageMode, long userUid)
             throws IOException, FileException {
 
         FileEntityDTO fileEntity = new FileEntityDTO(file.getOriginalFilename(),file.getInputStream());
-        return fileService.insertFile(fileEntity, fileInfo, storageMode);
+        return fileService.insertFile(fileEntity, fileInfo, storageMode, userUid);
     }
 
     /**
@@ -69,14 +69,14 @@ public class FileController {
     @Operation(summary = "上传多个文件，返回集合",description = "不接收文件简介，默认本地存储")
     public List<FileVO> multiUploadFile(
             @RequestParam(value = "files") MultipartFile[] files,
-            @RequestParam(required = false) int storageMode)
+            @RequestParam(required = false) int storageMode, long userUid)
             throws IOException, FileException {
 
         List<FileVO> fileList = new ArrayList<>();
         for (MultipartFile file : files) {
             FileEntityDTO fileEntity = new FileEntityDTO(file.getOriginalFilename(), file.getInputStream());
             File fileInfo = new File();
-            FileVO fileVO = fileService.insertFile(fileEntity, fileInfo, storageMode);
+            FileVO fileVO = fileService.insertFile(fileEntity, fileInfo, storageMode, userUid);
             fileList.add(fileVO);
         }
         return fileList;
@@ -97,7 +97,7 @@ public class FileController {
         FileEntityDTO fileEntity = new FileEntityDTO(file.getOriginalFilename(),file.getInputStream());
         File fileInfo = new File();
         fileInfo.setSummary("从typora上传的文件");
-        FileVO fileVO = fileService.insertFile(fileEntity, fileInfo, storageMode);
+        FileVO fileVO = fileService.insertFile(fileEntity, fileInfo, storageMode, 0);
         return fileVO.getPath();
     }
 
@@ -113,10 +113,24 @@ public class FileController {
     }
 
     @SelectOperation
+    @Operation(summary = "查询指定后缀的所有文件", description = "其中keyword为文件的后缀名，需要加上.,如.jpg")
+    @GetMapping("/formatFile")
+    public PageData<FileVO> selectSpecifyFormatFiles(Condition<Long> condition) {
+        return fileService.selectSpecifyFormatFiles(condition);
+    }
+
+    @SelectOperation
     @Operation(summary = "查询文件数据", description = "其中keyword为文件的名字")
     @GetMapping("/{uid}")
     public FileVO queryFileByUid(@PathVariable("uid") long uid) throws ReflectiveOperationException {
         return fileService.queryByUid(uid);
+    }
+
+    @SelectOperation
+    @Operation(summary = "查询该userUid所对应的所有文件的后缀信息")
+    @GetMapping("/format/{userUid}")
+    public List<String> queryAllFileFormat(@PathVariable("userUid") long userUid) {
+        return fileService.selectAllFileFormat(userUid);
     }
 
     /**
@@ -139,9 +153,15 @@ public class FileController {
     @ModifyOperation
     @Operation(summary = "根据uid删除某个文件", description = "从数据库中删除对应数据，删除与之关联的本地，对象存储中的文件，返回删除成功之后的文件对象")
     @DeleteMapping("/{uid}")
-    public int deleteFile(@PathVariable("uid") long uid)
-            throws FileException, IOException {
+    public int deleteFile(@PathVariable("uid") long uid) throws FileException, IOException {
         return fileService.deleteFile(uid);
+    }
+
+    @ModifyOperation
+    @Operation(summary = "根据uid删除某个文件的信息，从数据库中删除", description = "从数据库中删除对应数据，删除与之关联的本地，对象存储中的文件，返回删除成功之后的文件对象")
+    @DeleteMapping("/info/{uid}")
+    public int deleteFileInfo(@PathVariable("uid") long uid) {
+        return fileService.deleteFileInfo(uid);
     }
 
     @Operation(summary = "根据uid下载文件")

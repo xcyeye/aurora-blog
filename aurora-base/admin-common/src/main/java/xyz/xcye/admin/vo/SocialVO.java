@@ -1,5 +1,7 @@
 package xyz.xcye.admin.vo;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -18,6 +20,7 @@ public class SocialVO implements Serializable {
     * 唯一uid,自增
     */
     @Schema(title = "唯一uid,自增")
+    @JsonSerialize(using = ToStringSerializer.class)
     private Long uid;
 
     /**
@@ -48,6 +51,7 @@ public class SocialVO implements Serializable {
     * 此社交属于哪个用户
     */
     @Schema(title = "此社交属于哪个用户")
+    @JsonSerialize(using = ToStringSerializer.class)
     private Long userUid;
 
     /**

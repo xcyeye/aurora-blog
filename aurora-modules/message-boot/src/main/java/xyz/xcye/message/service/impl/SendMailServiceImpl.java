@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.MailException;
 import org.springframework.stereotype.Component;
+import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
 import xyz.xcye.api.mail.sendmail.entity.StorageSendMailInfo;
 import xyz.xcye.api.mail.sendmail.enums.SendHtmlMailTypeNameEnum;
@@ -28,6 +29,7 @@ import xyz.xcye.message.service.EmailService;
 import xyz.xcye.message.service.SendMailService;
 import xyz.xcye.message.util.MailTemplateUtils;
 import xyz.xcye.message.util.ParseEmailTemplate;
+import xyz.xcye.message.vo.EmailLogVO;
 import xyz.xcye.message.vo.EmailVO;
 
 import javax.mail.MessagingException;
@@ -134,6 +136,15 @@ public class SendMailServiceImpl implements SendMailService {
     @Override
     public int sendCustomMail(String receiverEmail, String subject, String content) throws MessagingException {
         return sendEmail(subject, content, receiverEmail);
+    }
+
+    @Override
+    public int resendCustomMail(Long emailLogUid) throws MessagingException {
+        Assert.notNull(emailLogUid, "uid不能为null");
+        // 查询此emailLogUid对应的邮件信息
+        EmailLogVO emailLogVO = emailLogService.queryByUid(emailLogUid);
+        AssertUtils.stateThrow(emailLogVO != null, () -> new EmailException("没有发送过此邮件"));
+        return sendCustomMail(emailLogVO.getReceiver(), emailLogVO.getSubject(), emailLogVO.getContent());
     }
 
     /**

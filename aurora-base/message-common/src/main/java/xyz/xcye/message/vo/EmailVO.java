@@ -1,5 +1,7 @@
 package xyz.xcye.message.vo;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import lombok.Data;
 
 /**
@@ -12,11 +14,13 @@ public class EmailVO {
     /**
      * 唯一uid，不能为null，主键
      */
+    @JsonSerialize(using = ToStringSerializer.class)
     private Long uid;
 
     /**
      * 此邮箱配置对应哪个用户 可以为null
      */
+    @JsonSerialize(using = ToStringSerializer.class)
     private Long userUid;
 
     /**

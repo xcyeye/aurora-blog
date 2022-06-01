@@ -30,6 +30,15 @@ public interface FileMapper {
      */
     List<File> selectByCondition(@Param("condition") Condition<Long> condition);
 
+    List<File> selectSpecifyFormatFiles(@Param("condition") Condition<Long> condition);
+
+    /**
+     * 查询此userUid对应的所有文件格式
+     * @param userUid
+     * @return
+     */
+    List<String> selectAllFileFormat(@Param("userUid") Long userUid);
+
     /**
      * update record selective
      * @param record the updated record

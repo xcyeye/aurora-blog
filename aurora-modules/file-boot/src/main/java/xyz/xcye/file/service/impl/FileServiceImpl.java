@@ -5,11 +5,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import xyz.xcye.aurora.properties.AuroraProperties;
+import xyz.xcye.aurora.util.UserUtils;
+import xyz.xcye.auth.constant.OauthJwtConstant;
+import xyz.xcye.core.dto.JwtUserInfo;
 import xyz.xcye.core.enums.ResponseStatusCodeEnum;
 import xyz.xcye.core.exception.file.FileException;
 import xyz.xcye.core.util.BeanUtils;
 import xyz.xcye.core.util.LogUtils;
 import xyz.xcye.core.util.id.GenerateInfoUtils;
+import xyz.xcye.core.util.lambda.AssertUtils;
 import xyz.xcye.data.entity.Condition;
 import xyz.xcye.data.entity.PageData;
 import xyz.xcye.data.util.PageUtils;
@@ -23,8 +27,10 @@ import xyz.xcye.file.service.FileService;
 import xyz.xcye.file.vo.FileVO;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * 此类中不会存在对对象的属性判断
@@ -42,9 +48,10 @@ public class FileServiceImpl implements FileService {
     private AuroraProperties auroraProperties;
 
     @Override
-    public FileVO insertFile(FileEntityDTO fileEntity, File file, int storageMode) throws FileException {
+    public FileVO insertFile(FileEntityDTO fileEntity, File file, int storageMode, long userUid) throws FileException {
         Assert.notNull(fileEntity, "文件对象不能为null");
         Assert.notNull(file, "文件信息不能为null");
+        AssertUtils.stateThrow(userUid != 0, () -> new FileException("必须要传入UserUid"));
         if (fileEntity.getName() == null || fileEntity.getInputStream() == null) {
             throw new FileException(ResponseStatusCodeEnum.EXCEPTION_FILE_FAIL_UPLOAD.getMessage() + "原因: 文件名为null或者获取文件流失败",
                     ResponseStatusCodeEnum.EXCEPTION_FILE_FAIL_UPLOAD.getCode());
@@ -62,6 +69,7 @@ public class FileServiceImpl implements FileService {
                 .size(uploadFileEntity.getSize()).summary(file.getSummary())
                 .path(uploadFileEntity.getRemoteUrl()).storageMode(storageMode)
                 .storagePath(uploadFileEntity.getStoragePath())
+                .userUid(userUid)
                 .build();
         fileMapper.insertSelective(newFile);
         return queryByUid(newFile.getUid());
@@ -110,6 +118,15 @@ public class FileServiceImpl implements FileService {
     }
 
     @Override
+    public int deleteFileInfo(long uid) {
+        // 先查看此uid对应的文件是否被删除，只有先删除文件，才可以删除文件记录
+        FileVO fileVO = queryByUid(uid);
+        AssertUtils.stateThrow(fileVO != null, () -> new FileException(ResponseStatusCodeEnum.EXCEPTION_FILE_NOT_FOUND));
+        AssertUtils.stateThrow(fileVO.getDelete(), () -> new FileException("请先删除 " + fileVO.getFileName() + " 文件才可以删除记录"));
+        return fileMapper.deleteByPrimaryKey(uid);
+    }
+
+    @Override
     public PageData<FileVO> queryAllFile(Condition<Long> condition) {
         return PageUtils.pageList(condition, t -> BeanUtils.copyList(fileMapper.selectByCondition(condition), FileVO.class));
     }
@@ -139,6 +156,42 @@ public class FileServiceImpl implements FileService {
 
         // 先获取原文件的数据流
         return fileStorageService.query(deleteFileInfo.getStoragePath());
+    }
+
+    @Override
+    public PageData<FileVO> selectSpecifyFormatFiles(Condition<Long> condition) {
+        Assert.notNull(condition, "查询条件不能为null");
+        return PageUtils.pageList(condition, t -> fileMapper.selectSpecifyFormatFiles(condition), FileVO.class);
+    }
+
+    @Override
+    public List<String> selectAllFileFormat(long userUid) {
+        // 如果是超级管理员，则查询所有的数据
+        JwtUserInfo jwtUserInfo = UserUtils.getCurrentUser();
+        if (isSuperRole(jwtUserInfo)) {
+            return queryFileFormat(null);
+        }
+
+        return queryFileFormat(userUid);
+    }
+
+    /**
+     * 判断当前请求用户是否是超级管理员
+     * @param jwtUserInfo
+     * @return
+     */
+    private boolean isSuperRole(JwtUserInfo jwtUserInfo) {
+        if (jwtUserInfo == null) {
+            return  false;
+        }
+        return jwtUserInfo.getRoleList().contains(OauthJwtConstant.SUPER_ADMINISTRATOR_ROLE_NAME);
+    }
+
+    private List<String> queryFileFormat(Long userUid) {
+        return fileMapper.selectAllFileFormat(userUid).stream()
+                .map(fileName -> fileName.split("\\.")[1])
+                .distinct()
+                .collect(Collectors.toList());
     }
 
     private File getFileDOByUid(long uid)

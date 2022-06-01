@@ -1,19 +1,13 @@
 package xyz.xcye.message.service.impl;
 
-import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindException;
-import xyz.xcye.admin.vo.UserVO;
 import xyz.xcye.aurora.properties.AuroraProperties;
-import xyz.xcye.core.entity.R;
 import xyz.xcye.core.enums.ResponseStatusCodeEnum;
 import xyz.xcye.core.exception.AuroraException;
 import xyz.xcye.core.exception.email.EmailException;
-import xyz.xcye.core.exception.user.UserException;
 import xyz.xcye.core.util.BeanUtils;
-import xyz.xcye.core.util.ConvertObjectUtils;
-import xyz.xcye.core.util.JSONUtils;
 import xyz.xcye.core.util.id.GenerateInfoUtils;
 import xyz.xcye.data.entity.Condition;
 import xyz.xcye.data.entity.PageData;
@@ -50,7 +44,7 @@ public class EmailServiceImpl implements EmailService {
             throw new EmailException(ResponseStatusCodeEnum.EXCEPTION_EMAIL_EXISTS);
         }
 
-        R userR = userFeignService.queryUserByUid(email.getUserUid());
+        /*R userR = userFeignService.queryUserByUid(email.getUserUid());
         UserVO userVO = JSONUtils.parseObjFromResult(ConvertObjectUtils.jsonToString(userR), "data", UserVO.class);
 
         if (userVO == null || userVO.getUid() == null) {
@@ -60,7 +54,7 @@ public class EmailServiceImpl implements EmailService {
         // 判断是否绑定 如果用户没有验证邮箱，也重新绑定
         if (userVO.getVerifyEmail()) {
             throw new EmailException(ResponseStatusCodeEnum.EXCEPTION_EMAIL_HAD_BINDING);
-        }
+        }*/
 
         //生成一个uid
         long uid = GenerateInfoUtils.generateUid(auroraProperties.getSnowFlakeWorkerId(), auroraProperties.getSnowFlakeDatacenterId());
@@ -82,8 +76,7 @@ public class EmailServiceImpl implements EmailService {
 
     @Override
     public PageData<EmailVO> queryAllEmail(Condition<Long> condition) {
-        PageHelper.startPage(condition.getPageNum(), condition.getPageSize(), condition.getOrderBy());
-        return PageUtils.pageList(condition, t -> BeanUtils.copyList(emailDao.queryAllEmail(condition), EmailVO.class));
+        return PageUtils.pageList(condition, t -> emailDao.queryAllEmail(condition), EmailVO.class);
     }
 
     @Override

@@ -1,5 +1,7 @@
 package xyz.xcye.comment.vo;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import lombok.Data;
 import xyz.xcye.comment.dto.CommentDTO;
 
@@ -14,6 +16,7 @@ import java.util.List;
 @Data
 public class CommentVO {
     /** 此评论对应的文章的uid，或者是友情链接等的uid **/
+    @JsonSerialize(using = ToStringSerializer.class)
     private Long articleUid;
 
     /** 此评论对应的页面的类型 **/

@@ -47,6 +47,34 @@
       </if>
     </where>
   </select>
+
+  <select id="selectSpecifyFormatFiles" resultMap="BaseResultMap">
+    <!--@mbg.generated-->
+    select
+    <include refid="Base_Column_List" />
+    from au_file
+    <where>
+      <if test="condition.startTime != null and condition.endTime != null">
+        and create_time between #{condition.startTime} and #{condition.endTime}
+      </if>
+      <if test="condition.uid != null">
+        and uid=#{condition.uid}
+      </if>
+      <if test="condition.otherUid != null">
+        and user_uid=#{condition.otherUid}
+      </if>
+      <if test="condition.otherField != null and condition.otherField != ''">
+        and file_name REGEXP #{condition.otherField,jdbcType=VARCHAR}
+      </if>
+      <if test="condition.keyword != null and condition.keyword != ''">
+        and file_name = #{condition.keyword,jdbcType=VARCHAR}
+      </if>
+      <if test="condition.delete !=null">
+        and is_delete=#{condition.delete}
+      </if>
+    </where>
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     <!--@mbg.generated-->
     delete from au_file
@@ -140,4 +168,16 @@
     </set>
     where `uid` = #{uid,jdbcType=BIGINT}
   </update>
+
+  <select id="selectAllFileFormat" resultType="java.lang.String">
+    <!--@mbg.generated-->
+    select
+    file_name
+    from au_file
+    <where>
+      <if test="userUid != null">
+        user_uid=#{userUid}
+      </if>
+    </where>
+  </select>
 </mapper>

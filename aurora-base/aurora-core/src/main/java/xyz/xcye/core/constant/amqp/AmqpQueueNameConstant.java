@@ -43,9 +43,25 @@ public class AmqpQueueNameConstant {
     public static final String OPERATE_USER_LOCK_ACCOUNT_QUEUE = "aurora.operate.usre.lock.account.queue";
     public static final String OPERATE_USER_LOCK_ACCOUNT_ROUTING_KEY = "aurora.operate.usre.lock.account.routing.key";
 
+    /** 更新角色关系的缓存 **/
+    public static final String UPDATE_ROLE_PERMISSION_CACHE_QUEUE = "aurora.update.role.permission.queue";
+    public static final String UPDATE_ROLE_PERMISSION_CACHE_ROUTING_KEY = "aurora.update.role.permission.routing.key";
+
+    /** 更新角色关系的缓存死信队列 **/
+    public static final String  DEAD_LETTER_UPDATE_ROLE_PERMISSION_CACHE_QUEUE = "aurora.update.role.permission.queue";
+    public static final String  DEAD_LETTER_UPDATE_ROLE_PERMISSION_CACHE_ROUTING_KEY = "aurora.update.role.permission.routing.key";
+
+    /** 更新白名单的缓存 **/
+    public static final String UPDATE_WHITE_URL_CACHE_QUEUE = "aurora.update.white.url.queue";
+    public static final String UPDATE_WHITE_URL_CACHE_ROUTING_KEY = "aurora.update.white.url.routing.key";
+
+    /** 更新白名单的缓存死信队列 **/
+    public static final String  DEAD_LETTER_UPDATE_WHITE_URL_CACHE_QUEUE = "aurora.update.white.url.queue";
+    public static final String  DEAD_LETTER_UPDATE_WHITE_URL_CACHE_ROUTING_KEY = "aurora.update.white.url.routing.key";
+
     /** 锁住用户账户的死信队列 **/
-    public static final String DEAD_LETTER_OPERATE_USER_LOCK_ACCOUNT_QUEUE = "aurora.operate.usre.lock.account.dead.letter.queue";
-    public static final String DEAD_LETTER_OPERATE_USER_LOCK_ACCOUNT_ROUTING_KEY = "aurora.operate.usre.lock.account.dead.letter.routing.key";
+    public static final String DEAD_LETTER_OPERATE_USER_LOCK_ACCOUNT_QUEUE = "aurora.operate.user.lock.account.dead.letter.queue";
+    public static final String DEAD_LETTER_OPERATE_USER_LOCK_ACCOUNT_ROUTING_KEY = "aurora.operate.user.lock.account.dead.letter.routing.key";
 
     /** 发送文章评论 **/
     public static final String PAGE_COMMENT_QUEUE = "aurora.PAGE.comment.queue";

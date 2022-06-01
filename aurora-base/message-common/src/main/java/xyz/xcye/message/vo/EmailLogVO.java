@@ -1,5 +1,7 @@
 package xyz.xcye.message.vo;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,6 +19,7 @@ public class EmailLogVO {
     /**
      * 唯一uid 自增 主键 不使用雪花算法
      */
+    @JsonSerialize(using = ToStringSerializer.class)
     private Long uid;
 
     /**

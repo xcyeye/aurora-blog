@@ -21,6 +21,7 @@
         <module>article-api</module>
         <module>comment-api</module>
         <module>amqp-api</module>
+        <module>gateway-api</module>
     </modules>
 
     <properties>

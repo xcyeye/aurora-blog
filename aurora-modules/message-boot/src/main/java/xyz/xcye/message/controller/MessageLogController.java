@@ -69,4 +69,11 @@ public class MessageLogController {
     public MessageLogVO queryMessageLogByUid(@PathVariable("uid") long uid) {
         return messageLogService.queryByUid(uid);
     }
+
+    @Operation(summary = "重新投递此messageLogUid对应的mq消息")
+    @SelectOperation
+    @PostMapping("/resend/{uid}")
+    public void resendRabbitMqMessage(@PathVariable("uid") long messageLogUid) throws BindException {
+        messageLogService.resendMqMessage(messageLogUid);
+    }
 }

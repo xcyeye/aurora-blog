@@ -72,7 +72,8 @@ public class AuroraReactiveAuthorizationManager implements ReactiveAuthorization
         }
 
         if (allRolePermissionList == null) {
-            // 如果redis中没有角色权限关系信息，直接返回鉴权失败 为了保护系统
+            // 如果redis中没有角色权限关系信息，可能是缓存失效，则调用feign重新获取缓存信息，对于此次请求，直接返回鉴权失败 为了保护系统
+            //gatewayRolePermissionFeignService.loadAllRolePermission(new Condition<Long>());
             return Mono.just(new AuthorizationDecision(false));
         }
 

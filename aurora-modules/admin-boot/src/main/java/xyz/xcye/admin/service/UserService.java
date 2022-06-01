@@ -31,7 +31,7 @@ public interface UserService {
      */
     int updateUser(User user) throws UserException;
 
-    int updatePassword(String username, String originPwd, String newPwd, String secretKey);
+    int updatePassword(String username, String originPwd, String newPwd);
 
     int forgotPassword(String username);
 

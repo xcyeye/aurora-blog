@@ -1,5 +1,7 @@
 package xyz.xcye.article.vo;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -18,12 +20,14 @@ public class TalkVO implements Serializable {
     * 唯一uid
     */
     @Schema(title = "唯一uid")
+    @JsonSerialize(using = ToStringSerializer.class)
     private Long uid;
 
     /**
     * 发布此说说的用户uid
     */
     @Schema(title = "发布此说说的用户uid")
+    @JsonSerialize(using = ToStringSerializer.class)
     private Long userUid;
 
     /**

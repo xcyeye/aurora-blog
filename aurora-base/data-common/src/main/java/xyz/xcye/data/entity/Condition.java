@@ -86,6 +86,8 @@ public class Condition<T> {
     /**
      * 其他的字段
      */
+    @Getter
+    @Setter
     private Object otherField;
 
     public Condition() {
@@ -206,5 +208,13 @@ public class Condition<T> {
             pageSize = NAX_PAGE_SIZE;
         }
         this.pageSize = Optional.ofNullable(pageSize).orElse(PAGE_SIZE);
+    }
+
+    public void setStartTime(String startTime) {
+        this.startTime = parse(startTime);
+    }
+
+    public void setEndTime(String endTime) {
+        this.endTime = parse(endTime);
     }
 }

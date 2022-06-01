@@ -4,10 +4,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import xyz.xcye.core.annotaion.controller.ModifyOperation;
 import xyz.xcye.message.service.SendMailService;
 
@@ -47,5 +44,12 @@ public class SendMailController {
                                        @RequestParam("content") String content,
                                        @RequestParam("receiverEmail") String receiverEmail) throws MessagingException {
         return sendMailService.sendCustomMail(receiverEmail,subject,content);
+    }
+
+    @Operation(summary = "重新发送自定义邮件")
+    @ModifyOperation
+    @PostMapping("/resend/{uid}")
+    public int resendCustomMail(@PathVariable("uid") Long emailLogUid) throws MessagingException {
+        return sendMailService.resendCustomMail(emailLogUid);
     }
 }

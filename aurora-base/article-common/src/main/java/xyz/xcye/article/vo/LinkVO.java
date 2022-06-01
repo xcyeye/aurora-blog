@@ -1,5 +1,7 @@
 package xyz.xcye.article.vo;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -19,18 +21,21 @@ public class LinkVO implements Serializable {
      * 唯一uid
      */
     @Schema(title = "唯一uid")
+    @JsonSerialize(using = ToStringSerializer.class)
     private Long uid;
 
     /**
      * 此条友情链接是哪个用户的
      */
     @Schema(title = "此条友情链接是哪个用户的")
+    @JsonSerialize(using = ToStringSerializer.class)
     private Long userUid;
 
     /**
      * 此条友情链接属于哪个分类
      */
     @Schema(title = "此条友情链接属于哪个分类")
+    @JsonSerialize(using = ToStringSerializer.class)
     private Long categoryUid;
 
     /**

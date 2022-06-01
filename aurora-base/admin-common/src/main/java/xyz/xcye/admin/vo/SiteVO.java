@@ -1,5 +1,7 @@
 package xyz.xcye.admin.vo;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -18,6 +20,7 @@ public class SiteVO implements Serializable {
     * 唯一uid
     */
     @Schema(title = "唯一uid")
+    @JsonSerialize(using = ToStringSerializer.class)
     private Long uid;
 
     /**
@@ -54,6 +57,7 @@ public class SiteVO implements Serializable {
     * 此站点信息属于哪个用户
     */
     @Schema(title = "此站点信息属于哪个用户")
+    @JsonSerialize(using = ToStringSerializer.class)
     private Long userUid;
 
     /**

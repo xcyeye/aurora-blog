@@ -1,5 +1,7 @@
 package xyz.xcye.file.vo;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
 import xyz.xcye.core.constant.FieldLengthConstant;
@@ -19,7 +21,11 @@ public class FileVO implements Serializable {
     /**
      * 唯一uid 不能为null 主键
      */
+    @JsonSerialize(using = ToStringSerializer.class)
     private Long uid;
+
+    @JsonSerialize(using = ToStringSerializer.class)
+    private Long userUid;
 
     /**
      * 此文件是否删除

@@ -10,7 +10,7 @@
     <id column="uid" jdbcType="BIGINT" property="uid" />
     <result column="user_summary" jdbcType="VARCHAR" property="userSummary" />
     <result column="nickname" jdbcType="VARCHAR" property="nickname" />
-    <result column="gender" jdbcType="INTEGER" property="gender" />
+    <result column="gender" jdbcType="VARCHAR" property="gender" />
     <result column="login_uid" jdbcType="BIGINT" property="loginUid" />
     <result column="site_uid" jdbcType="BIGINT" property="siteUid" />
     <result column="avatar" jdbcType="VARCHAR" property="avatar" />
@@ -116,7 +116,7 @@
         #{nickname,jdbcType=VARCHAR},
       </if>
       <if test="gender != null">
-        #{gender,jdbcType=INTEGER},
+        #{gender,jdbcType=VARCHAR},
       </if>
       <if test="loginUid != null">
         #{loginUid,jdbcType=BIGINT},
@@ -161,7 +161,7 @@
         nickname = #{nickname,jdbcType=VARCHAR},
       </if>
       <if test="gender != null">
-        gender = #{gender,jdbcType=INTEGER},
+        gender = #{gender,jdbcType=VARCHAR},
       </if>
       <if test="loginUid != null">
         login_uid = #{loginUid,jdbcType=BIGINT},

@@ -1,6 +1,9 @@
 package xyz.xcye.admin.vo;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import lombok.Data;
+import xyz.xcye.admin.enums.GenderEnum;
 
 
 //@JsonInclude(JsonInclude.Include.NON_NULL)
@@ -10,6 +13,7 @@ public class UserVO {
     /**
      * 用户唯一id
      */
+    @JsonSerialize(using = ToStringSerializer.class)
     private Long uid;
 
     /**
@@ -35,11 +39,12 @@ public class UserVO {
     /**
      * 用户性别
      */
-    private String gender;
+    private GenderEnum gender;
 
     /**
      * 该用户对应的网站设置的uid
      */
+    @JsonSerialize(using = ToStringSerializer.class)
     private Long siteUid;
 
     /**
@@ -65,6 +70,7 @@ public class UserVO {
     /**
      * 该用户对应的邮箱设置uid
      */
+    @JsonSerialize(using = ToStringSerializer.class)
     private Long emailUid;
 
     /**

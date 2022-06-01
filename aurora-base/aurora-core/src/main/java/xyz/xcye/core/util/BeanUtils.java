@@ -11,7 +11,7 @@ import java.util.List;
 
 @Slf4j
 public class BeanUtils {
-    public static <T,S> List<T> copyList(List<S> sourceList,Class<T> target) {
+    public static <T,S> List<T> copyList(List<S> sourceList, Class<T> target) {
         if (sourceList.isEmpty() || target == null) {
             return new ArrayList<>();
         }

@@ -1,13 +1,14 @@
 package xyz.xcye.file.service;
 
 import xyz.xcye.core.exception.file.FileException;
+import xyz.xcye.data.entity.Condition;
+import xyz.xcye.data.entity.PageData;
 import xyz.xcye.file.dto.FileEntityDTO;
 import xyz.xcye.file.po.File;
 import xyz.xcye.file.vo.FileVO;
-import xyz.xcye.data.entity.Condition;
-import xyz.xcye.data.entity.PageData;
 
 import java.io.IOException;
+import java.util.List;
 
 /**
  * 文件service层
@@ -23,7 +24,7 @@ public interface FileService {
      * @param storageMode 文件存储模式，值只能在xyz.xcye.common.enums.FileStorageModeEnum中取
      * @return 返回文件的上传情况
      */
-    FileVO insertFile(FileEntityDTO fileEntity, File file, int storageMode) throws FileException;
+    FileVO insertFile(FileEntityDTO fileEntity, File file, int storageMode, long userUid) throws FileException;
 
     /**
      * 根据传入uid，修改指定文件的数据库信息（不能修改文件本身的信息，比如文件名，存储路径，path，因为没有意义）
@@ -40,6 +41,13 @@ public interface FileService {
     int deleteFile(long uid) throws IOException, FileException;
 
     /**
+     * 删除文件的信息
+     * @param uid
+     * @return
+     */
+    int deleteFileInfo(long uid);
+
+    /**
      * 向数据库中查询文件
      * @param condition 查询添加，其中keyword为(file_name)
      * @return FileEntity对象
@@ -54,4 +62,18 @@ public interface FileService {
      * @return
      */
     FileEntityDTO downloadFile(long uid) throws FileException, IOException, ReflectiveOperationException;
+
+    /**
+     * 查询指定后缀的文件
+     * @param condition
+     * @return
+     */
+    PageData<FileVO> selectSpecifyFormatFiles(Condition<Long> condition);
+
+    /**
+     * 查询此userUid所对应的所有文件格式
+     * @param userUid
+     * @return
+     */
+    List<String> selectAllFileFormat(long userUid);
 }

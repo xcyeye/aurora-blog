@@ -362,6 +362,12 @@
                 <artifactId>amqp-api</artifactId>
                 <version>${blog.version}</version>
             </dependency>
+
+            <dependency>
+                <groupId>xyz.xcye.api</groupId>
+                <artifactId>gateway-api</artifactId>
+                <version>${blog.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 

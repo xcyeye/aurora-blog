@@ -81,19 +81,6 @@ public class AuroraProperties {
         private String enableAccountPrefixPath;
     }
 
-    @ConfigurationProperties(prefix = AuroraAmqpProperties.AURORA_AMQP_PREFIX)
-    @Data
-    public static class AuroraAmqpProperties {
-
-        public static final String AURORA_AMQP_PREFIX = "aurora.amqp";
-
-        /**
-         * 如果使用rabbitmq发送的消息没有被消息，那么会重新消费，此处配置最大重新消费次数，如果超过这个次数，还没有被消费，那么就
-         * 不会被消费
-         */
-        private Integer amqpMaxRetryConsume;
-    }
-
     @ConfigurationProperties(prefix = AuroraAuthProperties.AURORA_AUTH_PREFIX)
     @Data
     public static class AuroraAuthProperties {

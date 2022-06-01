@@ -35,7 +35,7 @@ public class LoginInfoController {
 
     @ModifyOperation
     @Operation(summary = "根据uid，批量删除")
-    @DeleteMapping
+    @PostMapping
     public int deleteByUidBatch(Long[] uids) {
         return loginInfoService.deleteByUidBatch(uids);
     }
