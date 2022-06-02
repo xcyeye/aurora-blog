@@ -75,4 +75,6 @@ public class CommentDTO {
     private List<CommentDTO> sonCommentList;
 
     private String nextCommentUidArray;
+
+    private String commentIp;
 }

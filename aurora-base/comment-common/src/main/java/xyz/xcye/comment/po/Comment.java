@@ -1,6 +1,9 @@
 package xyz.xcye.comment.po;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
 import xyz.xcye.core.constant.FieldLengthConstant;
 import xyz.xcye.core.constant.RegexConstant;
@@ -21,6 +24,9 @@ import java.io.Serializable;
  */
 
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Comment implements Serializable {
 
     private static final long serialVersionUID = 1L;

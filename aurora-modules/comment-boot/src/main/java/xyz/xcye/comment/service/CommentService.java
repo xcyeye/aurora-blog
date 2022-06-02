@@ -1,11 +1,12 @@
 package xyz.xcye.comment.service;
 
+import org.springframework.validation.BindException;
 import xyz.xcye.comment.dto.CommentDTO;
 import xyz.xcye.comment.po.Comment;
 import xyz.xcye.comment.vo.CommentVO;
+import xyz.xcye.comment.vo.ShowCommentVO;
 import xyz.xcye.data.entity.Condition;
-
-import java.util.List;
+import xyz.xcye.data.entity.PageData;
 
 /**
  * 评论的service层
@@ -40,14 +41,21 @@ public interface CommentService {
      * @param arrayCommentUid
      * @return
      */
-    CommentVO queryArticleComments(long[] arrayCommentUid);
+    ShowCommentVO queryArticleComments(long[] arrayCommentUid);
 
     /**
      * 根据传入的arrayCommentUid评论uid数据，获取对应的所有评论节点数据
      * @param condition
      * @return
      */
-    List<CommentDTO> queryAllComments(Condition<Long> condition);
+    PageData<CommentVO> queryAllComments(Condition<Long> condition);
 
     CommentDTO queryByUid(long uid);
+
+    /**
+     * 重新发送邮件通知
+     * @param uid
+     * @return
+     */
+    int resendEmailNotice(long uid) throws BindException;
 }

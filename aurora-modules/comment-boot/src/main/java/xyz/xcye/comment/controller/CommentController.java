@@ -4,22 +4,24 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
+import org.springframework.validation.BindException;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import xyz.xcye.comment.dto.CommentDTO;
 import xyz.xcye.comment.po.Comment;
 import xyz.xcye.comment.service.CommentService;
 import xyz.xcye.comment.vo.CommentVO;
+import xyz.xcye.comment.vo.ShowCommentVO;
 import xyz.xcye.core.annotaion.controller.ModifyOperation;
 import xyz.xcye.core.annotaion.controller.SelectOperation;
 import xyz.xcye.core.util.NetWorkUtils;
 import xyz.xcye.core.valid.Insert;
 import xyz.xcye.core.valid.Update;
 import xyz.xcye.data.entity.Condition;
+import xyz.xcye.data.entity.PageData;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.groups.Default;
-import java.util.List;
 
 /**
  * @author qsyyke
@@ -65,14 +67,14 @@ public class CommentController {
     @Operation(summary = "查询所有满足要求的所有评论")
     @SelectOperation
     @GetMapping("/queryArticleComments")
-    public CommentVO queryAllComment(@RequestParam(value = "uidArr") long[] commentUidArr) {
+    public ShowCommentVO queryAllComment(@RequestParam(value = "uidArr") long[] commentUidArr) {
         return commentService.queryArticleComments(commentUidArr);
     }
 
     @Operation(summary = "根据自定义条件查询所有评论")
     @SelectOperation
     @GetMapping
-    public List<CommentDTO> queryAllCommentByCondition(Condition<Long> condition) {
+    public PageData<CommentVO> queryAllCommentByCondition(Condition<Long> condition) {
         return commentService.queryAllComments(condition);
     }
 
@@ -81,5 +83,12 @@ public class CommentController {
     @GetMapping("/{uid}")
     public CommentDTO queryCommentByUid(@PathVariable("uid") long uid) {
         return commentService.queryByUid(uid);
+    }
+
+    @Operation(summary = "重新发送评论的邮件通知")
+    @ModifyOperation
+    @PostMapping("/resendEmail/{uid}")
+    public int resendEmailNotice(@PathVariable("uid") long uid) throws BindException {
+        return commentService.resendEmailNotice(uid);
     }
 }
