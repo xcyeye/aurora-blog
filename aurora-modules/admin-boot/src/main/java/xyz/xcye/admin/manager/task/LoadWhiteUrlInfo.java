@@ -36,6 +36,10 @@ public class LoadWhiteUrlInfo {
         storageData(this.redisTemplate);
     }
 
+    /**
+     * 将白名单数据放入redis中，随机生成一个ttl
+     * @param template
+     */
     private void storageData(RedisTemplate<String, Object> template) {
         Condition<Integer> condition = new Condition<>();
         condition.setPageNum(0);

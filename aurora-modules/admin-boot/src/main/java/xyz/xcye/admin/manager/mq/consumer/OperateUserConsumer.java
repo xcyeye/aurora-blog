@@ -28,6 +28,7 @@ import xyz.xcye.core.util.lambda.AssertUtils;
 import xyz.xcye.feign.config.service.MessageLogFeignService;
 
 /**
+ * 这是一个消费操作用户信息的mq消费者，比如绑定用户信息，向redis中，添加角色权限信息等缓存
  * @author qsyyke
  * @date Created in 2022/5/17 16:30
  */
@@ -55,6 +56,13 @@ public class OperateUserConsumer {
     @Autowired
     private RedisTemplate<String,Object> redisTemplate;
 
+    /**
+     * 当用户在认证服务中，登录次数达到最大值之后，认证服务会向mq中发送消息，禁用该用户
+     * @param msgJson
+     * @param channel
+     * @param message
+     * @throws Exception
+     */
     @GlobalTransactional
     @RabbitListener(queues = AmqpQueueNameConstant.OPERATE_USER_LOCK_ACCOUNT_QUEUE, ackMode = "MANUAL")
     public void lockAccountConsumer(String msgJson, Channel channel, Message message) throws Exception {
@@ -96,12 +104,26 @@ public class OperateUserConsumer {
         channel.basicNack(message.getMessageProperties().getDeliveryTag(), false, true);
     }
 
+    /**
+     * 更新角色权限信息的消费者，如果redis中的角色权限信息过期，会向mq中发送消息，从新将角色权限信息添加到redis中
+     * @param msgJson 发送的消息，可以发送任意字符，不会使用到该消息
+     * @param channel
+     * @param message
+     * @throws Exception
+     */
     @RabbitListener(queues = AmqpQueueNameConstant.UPDATE_ROLE_PERMISSION_CACHE_QUEUE, ackMode = "MANUAL")
     public void updateRolePermissionCacheConsumer(String msgJson, Channel channel, Message message) throws Exception {
         loadRolePermissionInfo.storagePermissionInfoToRedis();
         channel.basicAck(message.getMessageProperties().getDeliveryTag(), false);
     }
 
+    /**
+     * mq发送消息，更新redis中的白名单缓存
+     * @param msgJson 任意消息，不使用
+     * @param channel
+     * @param message
+     * @throws Exception
+     */
     @RabbitListener(queues = AmqpQueueNameConstant.UPDATE_WHITE_URL_CACHE_QUEUE, ackMode = "MANUAL")
     public void updateWhiteUrlCacheConsumer(String msgJson, Channel channel, Message message) throws Exception {
         loadWhiteUrlInfo.storageWhiteUrlInfoToRedis();

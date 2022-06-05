@@ -74,4 +74,8 @@ public class LogUtils {
     public static void logExceptionInfo(Exception e) {
         log.error("错误消息: {}",e.getMessage(),e);
     }
+
+    public static void logMistakeMessage(String mistakeMsg) {
+        log.error("无法消费的消息: {}",mistakeMsg);
+    }
 }
