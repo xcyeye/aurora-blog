@@ -71,7 +71,7 @@ public class UserServiceImpl implements UserService {
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public int insertUser(User user)
+    public int insertUserSelective(User user)
             throws UserException {
         // 判断用户名是否存在
         AssertUtils.stateThrow(!existsUsername(user.getUsername()),
@@ -83,7 +83,7 @@ public class UserServiceImpl implements UserService {
 
     @Transactional
     @Override
-    public int updateUser(User user) throws UserException {
+    public int updateUserSelective(User user) throws UserException {
         Objects.requireNonNull(user, "用户信息不能为null");
         // 密码应该单独修改
         Optional.ofNullable(user.getPassword()).ifPresent(t -> user.setPassword(null));
@@ -149,7 +149,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public int logicDeleteByUid(long uid) {
         User user = User.builder().delete(true).uid(uid).build();
-        return updateUser(user);
+        return updateUserSelective(user);
     }
 
     @Override
@@ -158,7 +158,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserVO queryByUid(long uid) {
+    public UserVO queryUserByUid(long uid) {
         return BeanUtils.getSingleObjFromList(userMapper.selectByCondition(Condition.instant(uid, true)), UserVO.class);
     }
 
@@ -173,7 +173,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserVO queryByUsername(String username) {
+    public UserVO queryUserByUsername(String username) {
         return BeanUtils.getSingleObjFromList(userMapper.selectByCondition(Condition.instant(username, null, null)), UserVO.class);
     }
 
@@ -194,7 +194,7 @@ public class UserServiceImpl implements UserService {
                 .uid(queriedEmailInfo.getUserUid())
                 .build();
         // 判断该用户是否绑定
-        UserVO userVO = queryByUid(user.getUid());
+        UserVO userVO = queryUserByUid(user.getUid());
         AssertUtils.stateThrow(!userVO.getVerifyEmail(), () -> new EmailException(ResponseStatusCodeEnum.EXCEPTION_EMAIL_HAD_BINDING));
         // 判断该用户是否被删除
         AssertUtils.stateThrow(!userVO.getDelete(), () -> new UserException(ResponseStatusCodeEnum.PERMISSION_USER_NOT_DELETE));
@@ -203,7 +203,7 @@ public class UserServiceImpl implements UserService {
         }
 
         // 运行到这里，用户没有绑定邮箱，则直接修改，发送，尽管记录里面存在emailUid
-        int updateUserNum = updateUser(user);
+        int updateUserNum = updateUserSelective(user);
         if (updateUserNum == 1) {
             sendVerifyEmail(userVO, queriedEmailInfo);
         }
@@ -223,7 +223,7 @@ public class UserServiceImpl implements UserService {
     }
 
     private String getUsername(Long userUid) {
-        UserVO userVO = queryByUid(userUid);
+        UserVO userVO = queryUserByUid(userUid);
         return userVO == null ? "" : userVO.getUsername();
     }
 

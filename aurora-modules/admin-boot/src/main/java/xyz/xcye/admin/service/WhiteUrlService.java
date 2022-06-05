@@ -11,18 +11,32 @@ import xyz.xcye.data.entity.PageData;
  */
 
 public interface WhiteUrlService {
-    int deleteByUid(Long uid);
 
-    int insert(WhiteUrl record);
+    /**
+     * 根据uid删除白名单
+     * @param uid
+     * @return
+     */
+    int deleteWhiteUrlByUid(Long uid);
 
-    int insertSelective(WhiteUrl record);
+    /**
+     * 插入白名单数据，有选择的
+     * @param record
+     * @return
+     */
+    int insertWhiteUrlSelective(WhiteUrl record);
 
     /**
      * 条件查询，其中keyword为url
      * @param condition
      * @return
      */
-    PageData<WhiteUrl> selectByCondition(@Param("condition") Condition<Integer> condition);
+    PageData<WhiteUrl> selectWhiteUrlByCondition(@Param("condition") Condition<Integer> condition);
 
-    int updateByPrimaryKeySelective(WhiteUrl record);
+    /**
+     * 修改白名单数据，有选择的
+     * @param record
+     * @return
+     */
+    int updateWhiteUrlSelective(WhiteUrl record);
 }

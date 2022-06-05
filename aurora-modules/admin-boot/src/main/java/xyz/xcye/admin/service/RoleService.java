@@ -11,6 +11,12 @@ import xyz.xcye.data.entity.PageData;
 
 
 public interface RoleService {
+
+    /**
+     * 插入角色信息
+     * @param role
+     * @return
+     */
     int insertRole(Role role);
 
     /**
@@ -20,11 +26,31 @@ public interface RoleService {
      */
     int updateRoleStatus(long uid, boolean status);
 
+    /**
+     * 修改角色信息
+     * @param role
+     * @return
+     */
     int updateRole(Role role);
 
+    /**
+     * 根据uid删除角色信息
+     * @param uid
+     * @return
+     */
     int deleteByUid(long uid);
 
+    /**
+     * 根据自定义条件，查询满足要求的角色信息，只包含角色，不包含权限信息
+     * @param condition
+     * @return
+     */
     PageData<Role> selectAllRole(Condition<Long> condition);
 
+    /**
+     * 根据uid查询
+     * @param uid
+     * @return
+     */
     Role selectByUid(long uid);
 }

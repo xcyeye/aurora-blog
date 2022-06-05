@@ -80,7 +80,7 @@ public class SiteServiceImpl implements SiteService {
         Assert.notNull(record, "站点信息不能为null");
         // 如果userUid存在的话，判断此用户是否存在
         Optional.ofNullable(record.getUserUid()).ifPresent(userUid -> {
-            UserVO userVO = userService.queryByUid(userUid);
+            UserVO userVO = userService.queryUserByUid(userUid);
             AssertUtils.stateThrow(userVO != null,
                     () -> new UserException(ResponseStatusCodeEnum.PERMISSION_USER_NOT_EXIST));
         });

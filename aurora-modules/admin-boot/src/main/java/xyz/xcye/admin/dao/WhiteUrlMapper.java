@@ -17,14 +17,35 @@ import java.util.List;
 @Mapper
 public interface WhiteUrlMapper {
 
-    int deleteByUid(Long uid);
+    /**
+     * 根据uid删除白名单数据
+     * @param uid
+     * @return
+     */
+    int deleteWhiteUrlByUid(Long uid);
+
 
     int insert(WhiteUrl record);
 
-    int insertSelective(WhiteUrl record);
+    /**
+     * 插入白名单数据
+     * @param record
+     * @return
+     */
+    int insertWhiteUrlSelective(WhiteUrl record);
 
+    /**
+     * 根据自定义条件查询满足要求的白名单数据
+     * @param condition
+     * @return
+     */
     List<WhiteUrl> selectByCondition(@Param("condition") Condition<Integer> condition);
 
-    int updateByPrimaryKeySelective(WhiteUrl record);
+    /**
+     * 更新白名单数据
+     * @param record
+     * @return
+     */
+    int updateWhiteUrlSelective(WhiteUrl record);
 
 }

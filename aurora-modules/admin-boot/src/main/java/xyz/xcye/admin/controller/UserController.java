@@ -36,14 +36,14 @@ public class UserController {
     @ModifyOperation
     @Operation(summary = "添加新用户")
     public int insertUser(@Validated({Insert.class, Default.class}) User user) throws UserException {
-        return userService.insertUser(user);
+        return userService.insertUserSelective(user);
     }
 
     @PutMapping("")
     @ModifyOperation
     @Operation(summary = "修改用户信息")
     public int updateUser(@Validated({Update.class, Default.class})User user) throws UserException {
-        return userService.updateUser(user);
+        return userService.updateUserSelective(user);
     }
 
     @Operation(summary = "更新密码")
@@ -71,14 +71,14 @@ public class UserController {
     @SelectOperation
     @Operation(summary = "通过uid查询用户信息")
     public UserVO queryUserByUid(@PathVariable("uid") long uid) {
-        return userService.queryByUid(uid);
+        return userService.queryUserByUid(uid);
     }
 
     @GetMapping("/username/{username}")
     @SelectOperation
     @Operation(summary = "通过username查询用户信息")
     public UserVO queryUserByUsername(@PathVariable("username") String username) {
-        return userService.queryByUsername(username);
+        return userService.queryUserByUsername(username);
     }
 
     @PostMapping("/pwd/{username}")

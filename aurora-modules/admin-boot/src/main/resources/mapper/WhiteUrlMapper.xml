@@ -35,7 +35,7 @@
         </where>
     </select>
 
-    <delete id="deleteByUid" parameterType="java.lang.Long">
+    <delete id="deleteWhiteUrlByUid" parameterType="java.lang.Long">
         delete from au_white_url
         where  uid = #{uid,jdbcType=INTEGER} 
     </delete>
@@ -46,7 +46,7 @@
         values (#{uid,jdbcType=INTEGER},#{url,jdbcType=VARCHAR},#{createTime,jdbcType=TIMESTAMP}
         ,#{updateTime,jdbcType=TIMESTAMP})
     </insert>
-    <insert id="insertSelective" keyColumn="uid" keyProperty="uid" parameterType="xyz.xcye.admin.po.WhiteUrl" useGeneratedKeys="true">
+    <insert id="insertWhiteUrlSelective" keyColumn="uid" keyProperty="uid" parameterType="xyz.xcye.admin.po.WhiteUrl" useGeneratedKeys="true">
         insert into au_white_url
         <trim prefix="(" suffix=")" suffixOverrides=",">
                 <if test="uid != null">uid,</if>
@@ -59,7 +59,7 @@
                 <if test="updateTime != null">#{updateTime,jdbcType=TIMESTAMP},</if>
         </trim>
     </insert>
-    <update id="updateByPrimaryKeySelective" parameterType="xyz.xcye.admin.po.WhiteUrl">
+    <update id="updateWhiteUrlSelective" parameterType="xyz.xcye.admin.po.WhiteUrl">
         update au_white_url
         <set>
                 <if test="url != null">

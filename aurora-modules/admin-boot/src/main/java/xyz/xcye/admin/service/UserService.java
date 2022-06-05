@@ -21,7 +21,7 @@ public interface UserService {
      * @throws BindException 对象属性错误
      * @throws UserException 插入，更新异常
      */
-    int insertUser(User user) throws UserException;
+    int insertUserSelective(User user) throws UserException;
 
     /**
      * 更新用户信息
@@ -29,7 +29,7 @@ public interface UserService {
      * @return
      * @throws BindException
      */
-    int updateUser(User user) throws UserException;
+    int updateUserSelective(User user) throws UserException;
 
     int updatePassword(String username, String originPwd, String newPwd);
 
@@ -57,10 +57,20 @@ public interface UserService {
      * @param uid
      * @return
      */
-    UserVO queryByUid(long uid);
+    UserVO queryUserByUid(long uid);
 
+    /**
+     * 根据用户名查询用户信息，返回的数据包含密码，只在auth服务使用
+     * @param username
+     * @return
+     */
     User queryByUsernameContainPassword(String username);
 
+    /**
+     * 根据uid查询用户信息，包含密码
+     * @param uid
+     * @return
+     */
     User queryByUidContainPassword(long uid);
 
     /**
@@ -68,7 +78,7 @@ public interface UserService {
      * @param username
      * @return
      */
-    UserVO queryByUsername(String username);
+    UserVO queryUserByUsername(String username);
 
     /**
      * 绑定邮箱

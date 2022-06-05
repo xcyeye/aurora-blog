@@ -53,7 +53,7 @@ public class PermissionRelationServiceImpl implements PermissionRelationService 
 
     @Override
     public List<Role> loadAllRoleByUsername(String username) {
-        UserVO userVO = userService.queryByUsername(username);
+        UserVO userVO = userService.queryUserByUsername(username);
         AssertUtils.stateThrow(username != null,
                 () -> new UserException(ResponseStatusCodeEnum.PERMISSION_USER_NOT_EXIST));
         return permissionRelationDao.loadAllRoleByUserUid(userVO.getUid()).stream()
@@ -63,7 +63,7 @@ public class PermissionRelationServiceImpl implements PermissionRelationService 
 
     @Override
     public List<RolePermissionDTO> loadPermissionByUsername(String username) {
-        UserVO userVO = userService.queryByUsername(username);
+        UserVO userVO = userService.queryUserByUsername(username);
         if (userVO == null) {
             return new ArrayList<>();
         }
@@ -98,7 +98,7 @@ public class PermissionRelationServiceImpl implements PermissionRelationService 
         AssertUtils.stateThrow(!role.getStatus(), () -> new RoleException(ResponseStatusCodeEnum.PERMISSION_ROLE_HAD_DISABLED));
 
         Arrays.stream(userUidArr)
-                .filter(userUid -> userService.queryByUid(userUid) != null)
+                .filter(userUid -> userService.queryUserByUid(userUid) != null)
                 .filter(userUid -> userRoleRelationshipService.selectAllUserRoleRelationship(Condition.instant(userUid, roleUid)).isEmpty())
                 .forEach(userUid -> {
                     UserRoleRelationship userRoleRelationship = UserRoleRelationship.builder()
@@ -113,7 +113,7 @@ public class PermissionRelationServiceImpl implements PermissionRelationService 
     public int deleteUserRoleBatch(long userUid, long[] roleUidArr) {
         final int[] successNum = {0};
         // 判断用户是否存在
-        AssertUtils.stateThrow(userService.queryByUid(userUid) != null,
+        AssertUtils.stateThrow(userService.queryUserByUid(userUid) != null,
                 () -> new UserException(ResponseStatusCodeEnum.PERMISSION_USER_NOT_EXIST));
 
         // 组装查询条件
@@ -135,7 +135,7 @@ public class PermissionRelationServiceImpl implements PermissionRelationService 
     public int updateUserRole(long userUid, long originRoleUid, long newRoleUid) {
         final int[] successNum = {0};
         // 判断用户是否存在
-        AssertUtils.stateThrow(userService.queryByUid(userUid) != null,
+        AssertUtils.stateThrow(userService.queryUserByUid(userUid) != null,
                 () -> new UserException(ResponseStatusCodeEnum.PERMISSION_USER_NOT_EXIST));
         // 更新用户角色关系
         Condition<Long> condition = new Condition<>();

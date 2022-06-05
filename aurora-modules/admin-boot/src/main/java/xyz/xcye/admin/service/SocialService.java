@@ -7,29 +7,44 @@ import xyz.xcye.data.entity.PageData;
 
 public interface SocialService {
     /**
-     * delete by primary key
-     * @param uid primaryKey
-     * @return deleteCount
+     * 通过主键删除社交信息
+     * @param uid
+     * @return
      */
     int deleteByPrimaryKey(long uid);
 
+    /**
+     * 物理删除社交信息
+     * @param uid
+     * @return
+     */
     int physicsDeleteSocial(long uid);
 
     /**
-     * insert record to table selective
-     * @param record the record
-     * @return insert count
+     * 有选择的插入社交信息
+     * @param record
+     * @return
      */
     int insertSelective(Social record);
 
     /**
-     * select by primary key
+     * 根据自定义条件查询社交信息
      * @param condition 查询参数，keyword->social_name(不是模糊查询)
      * @return object by primary key
      */
     PageData<SocialVO> selectByCondition(Condition<Long> condition);
 
+    /**
+     * 根据uid查询社交信息
+     * @param uid
+     * @return
+     */
     SocialVO selectByUid(long uid);
 
+    /**
+     * 有选择的修改社交信息
+     * @param record
+     * @return
+     */
     int updateByPrimaryKeySelective(Social record);
 }

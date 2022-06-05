@@ -13,7 +13,7 @@ import xyz.xcye.admin.properties.AdminDefaultProperties;
 import xyz.xcye.aurora.interceptor.AuroraGlobalHandlerInterceptor;
 
 /**
- * 配置swagger
+ * web配置
  */
 
 @EnableConfigurationProperties({AdminDefaultProperties.class})
@@ -36,6 +36,10 @@ public class AdminWebConfig implements WebMvcConfigurer {
 
     }
 
+    /**
+     * 对密码进行非对称加密
+     * @return
+     */
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();

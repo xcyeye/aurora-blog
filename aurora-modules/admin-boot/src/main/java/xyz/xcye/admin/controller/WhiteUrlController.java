@@ -34,14 +34,14 @@ public class WhiteUrlController {
     @ModifyOperation
     @Operation(summary = "根据uid删除白名单")
     public int deleteByUid(@PathVariable("uid") Long uid) {
-        return whiteUrlService.deleteByUid(uid);
+        return whiteUrlService.deleteWhiteUrlByUid(uid);
     }
 
     @Operation(summary = "插入白名单记录")
     @ModifyOperation
     @PostMapping
     public int insert(@Validated({Insert.class, Default.class}) WhiteUrl record) {
-        return whiteUrlService.insert(record);
+        return whiteUrlService.insertWhiteUrlSelective(record);
     }
 
     /**
@@ -53,13 +53,13 @@ public class WhiteUrlController {
     @GetMapping
     @SelectOperation
     public PageData<WhiteUrl> selectByCondition(@Param("condition") Condition<Integer> condition) {
-        return whiteUrlService.selectByCondition(condition);
+        return whiteUrlService.selectWhiteUrlByCondition(condition);
     }
 
     @PutMapping
     @Operation(summary = "修改白名单数据")
     @ModifyOperation
     public int updateByPrimaryKeySelective(@Validated({Update.class}) WhiteUrl record) {
-        return whiteUrlService.updateByPrimaryKeySelective(record);
+        return whiteUrlService.updateWhiteUrlSelective(record);
     }
 }

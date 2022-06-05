@@ -7,6 +7,7 @@ import java.lang.annotation.Target;
 
 /**
  * 使用该注解标记的类和方法，将会在aop中记录日志信息
+ * 没有使用
  * @author qsyyke
  */
 

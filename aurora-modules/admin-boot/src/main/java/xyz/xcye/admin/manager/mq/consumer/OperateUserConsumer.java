@@ -65,7 +65,7 @@ public class OperateUserConsumer {
         }
 
         // 根据用户名查询用户信息
-        UserVO userVO = userService.queryByUsername(msgJson);
+        UserVO userVO = userService.queryUserByUsername(msgJson);
         if (userVO == null || !userVO.getVerifyEmail()) {
             // 不做处理
             channel.basicAck(message.getMessageProperties().getDeliveryTag(), false);
@@ -83,7 +83,7 @@ public class OperateUserConsumer {
                 .uid(userVO.getUid())
                 .accountLock(true)
                 .build();
-        int updateUserNum = userService.updateUser(user);
+        int updateUserNum = userService.updateUserSelective(user);
         if (updateUserNum == 1) {
             boolean sendStatus = sendEnableAccountEmail(userVO);
             AssertUtils.stateThrow(sendStatus,

@@ -17,9 +17,9 @@ public interface SocialMapper {
     int deleteByPrimaryKey(long uid);
 
     /**
-     * insert record to table selective
+     * insertWhiteUrl record to table selective
      * @param record the record
-     * @return insert count
+     * @return insertWhiteUrl count
      */
     int insertSelective(Social record);
 

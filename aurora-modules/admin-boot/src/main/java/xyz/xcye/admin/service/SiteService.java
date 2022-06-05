@@ -7,11 +7,25 @@ import xyz.xcye.data.entity.PageData;
 
 public interface SiteService {
 
+    /**
+     * 逻辑删除
+     * @param uid
+     * @return
+     */
     int deleteByPrimaryKey(long uid);
 
+    /**
+     * 物理删除站点信息
+     * @param uid
+     * @return
+     */
     int physicsDeleteSite(long uid);
 
-
+    /**
+     * 有选择的插入站点信息
+     * @param record
+     * @return
+     */
     int insertSelective(Site record);
 
     /**
@@ -28,5 +42,10 @@ public interface SiteService {
      */
     SiteVO selectByUid(long uid);
 
+    /**
+     * 有选择的修改站点信息
+     * @param record
+     * @return
+     */
     int updateByPrimaryKeySelective(Site record);
 }

@@ -11,6 +11,12 @@ import java.util.List;
  */
 
 public interface RolePermissionRelationshipService {
+
+    /**
+     *
+     * @param uid
+     * @return
+     */
     int deleteByUid(Long uid);
 
     int insertRolePermissionRelationship(RolePermissionRelationship relationship);

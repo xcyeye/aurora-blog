@@ -1,7 +1,7 @@
 package xyz.xcye.admin.constant;
 
 /**
- * 和redis相关的常量
+ * 和redis相关的常量 暂时没用到
  * @author qsyyke
  */
 

@@ -29,40 +29,33 @@ public class WhiteUrlServiceImpl implements WhiteUrlService {
     private WhiteUrlMapper whiteUrlMapper;
 
     @Override
-    public int deleteByUid(Long uid) {
-        return whiteUrlMapper.deleteByUid(uid);
+    public int deleteWhiteUrlByUid(Long uid) {
+        return whiteUrlMapper.deleteWhiteUrlByUid(uid);
     }
 
     @Override
-    public int insert(WhiteUrl record) {
+    public int insertWhiteUrlSelective(WhiteUrl record) {
         Objects.requireNonNull(record, "白名单记录不能为null");
         Optional.ofNullable(record.getUrl()).orElseThrow(() -> new NullPointerException("白名单地址不能为null"));
 
         // 判断该白名单是否存在于数据库中
-        AssertUtils.stateThrow(selectByCondition(Condition.instant(record.getUrl())).getResult().isEmpty(),
+        AssertUtils.stateThrow(selectWhiteUrlByCondition(Condition.instant(record.getUrl())).getResult().isEmpty(),
                 () -> new RuntimeException("该白名单已存在"));
 
         // 判断path是否符合规范，必须是GET:Path这种形式 不支持中文路径
         AssertUtils.stateThrow(matchesResourcePath(record.getUrl()),
                 () -> new PermissionException(ResponseStatusCodeEnum.PERMISSION_RESOURCE_NOT_RIGHT));
-        return whiteUrlMapper.insertSelective(record);
+        return whiteUrlMapper.insertWhiteUrlSelective(record);
     }
 
     @Override
-    public int insertSelective(WhiteUrl record) {
-        Objects.requireNonNull(record, "白名单记录不能为null");
-        Optional.ofNullable(record.getUrl()).orElseThrow(() -> new NullPointerException("白名单地址不能为null"));
-        return whiteUrlMapper.insertSelective(record);
-    }
-
-    @Override
-    public PageData<WhiteUrl> selectByCondition(Condition<Integer> condition) {
+    public PageData<WhiteUrl> selectWhiteUrlByCondition(Condition<Integer> condition) {
         return PageUtils.pageList(condition, t -> whiteUrlMapper.selectByCondition(condition));
     }
 
     @Override
-    public int updateByPrimaryKeySelective(WhiteUrl record) {
-        return whiteUrlMapper.updateByPrimaryKeySelective(record);
+    public int updateWhiteUrlSelective(WhiteUrl record) {
+        return whiteUrlMapper.updateWhiteUrlSelective(record);
     }
 
     private boolean matchesResourcePath(String resourcePath) {
