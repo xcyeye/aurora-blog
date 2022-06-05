@@ -21,5 +21,13 @@ public interface LinkService {
 
     LinkVO selectByUid(Long uid);
 
-    int updateByPrimaryKeySelective(Link record, String replyMessage) throws BindException;
+    int updateByPrimaryKeySelective(Link record);
+
+    /**
+     * 修改友情链接的发布状态
+     * @param uid
+     * @param publish
+     * @return
+     */
+    int updateLinkPublishStatus(long uid, boolean publish, String replyMessage) throws BindException;
 }

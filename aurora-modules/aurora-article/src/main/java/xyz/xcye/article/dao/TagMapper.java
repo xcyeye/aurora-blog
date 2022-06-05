@@ -30,6 +30,8 @@ public interface TagMapper {
      */
     List<Tag> selectByCondition(@Param("condition") Condition<Long> condition);
 
+    Tag selectByTitle(@Param("title") String title);
+
     /**
      * update record selective
      * @param record the updated record

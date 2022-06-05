@@ -108,4 +108,11 @@
     </set>
     where `uid` = #{uid,jdbcType=BIGINT}
   </update>
+
+  <select id="selectByTitle" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from au_category
+    where title=#{title,jdbcType=VARCHAR}
+  </select>
 </mapper>

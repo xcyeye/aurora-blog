@@ -4,6 +4,7 @@ import io.seata.spring.annotation.GlobalTransactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
+import org.springframework.util.StringUtils;
 import org.springframework.validation.BindException;
 import xyz.xcye.admin.vo.UserVO;
 import xyz.xcye.api.mail.sendmail.entity.StorageSendMailInfo;
@@ -12,6 +13,7 @@ import xyz.xcye.api.mail.sendmail.service.SendMQMessageService;
 import xyz.xcye.api.mail.sendmail.util.StorageMailUtils;
 import xyz.xcye.article.api.service.ArticleUserFeignService;
 import xyz.xcye.article.dao.LinkMapper;
+import xyz.xcye.article.po.Category;
 import xyz.xcye.article.po.Link;
 import xyz.xcye.article.service.CategoryService;
 import xyz.xcye.article.service.LinkService;
@@ -85,13 +87,15 @@ public class LinkServiceImpl implements LinkService {
         AssertUtils.stateThrow(userVO != null,
                 () -> new UserException(ResponseStatusCodeEnum.PERMISSION_USER_NOT_EXIST));
 
-        setEffectiveCategory(record, false);
+        setCategory(record);
         record.setUid(GenerateInfoUtils.generateUid(auroraProperties.getSnowFlakeWorkerId(), auroraProperties.getSnowFlakeDatacenterId()));
 
         // 查看是否存在相似的链接
         List<LinkVO> result = selectByCondition(Condition.instant(record.getLinkUrl())).getResult();
         AssertUtils.stateThrow(result.isEmpty(), () -> new LinkException("已存在相同友情链接，不能重复提交"));
 
+        // 审核应该通过用户进行控制
+        record.setPublish(false);
         // 插入
         int insertNum = linkMapper.insertSelective(record);
         // 如果插入成功，则发送消息通知该用户
@@ -124,61 +128,63 @@ public class LinkServiceImpl implements LinkService {
 
     @GlobalTransactional
     @Override
-    public int updateByPrimaryKeySelective(Link record, String replyMessage) throws BindException {
+    public int updateByPrimaryKeySelective(Link record) {
         Assert.notNull(record, "友情链接信息不能为null");
-        setEffectiveCategory(record, true);
+        setCategory(record);
         Optional.ofNullable(UserUtils.getCurrentUserUid()).ifPresent(record::setUserUid);
-        int updateNum = linkMapper.updateByPrimaryKeySelective(record);
+        return linkMapper.updateByPrimaryKeySelective(record);
+    }
 
-        // 如果修改成功，查询完整的友情链接信息，用于发送
-        LinkVO linkVO = selectByUid(record.getUid());
+    @Override
+    public int updateLinkPublishStatus(long uid, boolean publish, String msg) throws BindException {
+        LinkVO linkVO = selectByUid(uid);
+        AssertUtils.stateThrow(linkVO != null, () -> new LinkException("没有该条记录"));
+        AssertUtils.stateThrow(linkVO.getPublish() != publish, () -> new LinkException("该条友情链接的发布状态并未改变"));
+        Link link = Link.builder().uid(uid).publish(publish).build();
+        // 修改
+        int updateNum = updateByPrimaryKeySelective(link);
+        // 如果修改成功，发送消息通知对方
+        linkVO.setPublish(publish);
         R r = userFeignService.queryUserByUid(linkVO.getUserUid());
         UserVO userVO = JSONUtils.parseObjFromResult(r, "data", UserVO.class);
-        if (updateNum == 1 && !record.getPublish()) {
+        if (updateNum == 1 && !publish) {
             // 没有审核通过，则把message发送给该站长
-            String mailMessage = "<p>您在" + userVO.getUsername() + "用户处申请的友链未通过审核！┭┮﹏┭┮</p><p>原因:" + replyMessage + "</p>";
+            String mailMessage = "<p>您在" + userVO.getUsername() + "用户处申请的友链未通过审核！┭┮﹏┭┮</p><p>原因:" + msg + "</p>";
             StorageSendMailInfo mailInfo = getMailInfo(linkVO.getEmail(), "友链未通过",
-                    mailMessage, record, SendHtmlMailTypeNameEnum.COMMON_NOTICE);
+                    mailMessage, BeanUtils.copyProperties(linkVO, Link.class), SendHtmlMailTypeNameEnum.COMMON_NOTICE);
             sendMail(mailInfo, StorageMailUtils.generateCommonNotice(mailMessage));
             return updateNum;
         }
 
         // 通过审核，发送消息通知对方
-        if (updateNum == 1 && record.getPublish()) {
-            String mailMessage = "<p>您在" + userVO.getUsername() + "用户处申请的友链已通过审核！O(∩_∩)O哈哈~</p><p>博主留言:" + replyMessage + "</p>";
+        if (updateNum == 1 && publish) {
+            String mailMessage = "<p>您在" + userVO.getUsername() + "用户处申请的友链已通过审核！O(∩_∩)O哈哈~</p><p>博主留言:" + msg + "</p>";
             StorageSendMailInfo mailInfo = getMailInfo(linkVO.getEmail(), "友链通过",
-                    mailMessage, record, SendHtmlMailTypeNameEnum.COMMON_NOTICE);
+                    mailMessage, BeanUtils.copyProperties(linkVO, Link.class), SendHtmlMailTypeNameEnum.COMMON_NOTICE);
             sendMail(mailInfo, StorageMailUtils.generateCommonNotice(mailMessage));
         }
         return updateNum;
     }
 
     /**
-     * 查看传入的类别是否有效
+     * 设置类别，如果不存在，则插入
      * @param link
      */
-    private void setEffectiveCategory(Link link, boolean isUpdate) {
-        Long categoryUid = link.getCategoryUid();
-        if (!isUpdate) {
-            // 插入，必须要有类别
-            AssertUtils.stateThrow(categoryUid != null,
-                    () -> new LinkException(ResponseStatusCodeEnum.PARAM_NOT_COMPLETE.getMessage() + categoryUid));
-        }
-
-        CategoryVO categoryVO = null;
-        if (categoryUid != null) {
-            categoryVO = categoryService.selectByUid(categoryUid);
-        }
-        // 查看此categoryUid是否有效
-        if (!isUpdate) {
-            // 插入，必须要有类别
-            AssertUtils.stateThrow(categoryVO != null,
-                    () -> new LinkException(ResponseStatusCodeEnum.PARAM_NOT_COMPLETE.getMessage() + categoryUid));
-        }
-
+    private void setCategory(Link link) {
+        String categoryName = link.getCategoryName();
+        AssertUtils.stateThrow(StringUtils.hasLength(categoryName),
+                () -> new LinkException(ResponseStatusCodeEnum.PARAM_NOT_COMPLETE.getMessage()));
+        CategoryVO categoryVO = categoryService.selectByTitle(categoryName);
         if (categoryVO == null) {
-            link.setCategoryUid(null);
+            // 插入
+            Category category = Category.builder().title(categoryName).build();
+            int insertNum = categoryService.insertSelective(category);
+            // 插入失败，则不设置类别
+            if (insertNum != 1) {
+                link.setCategoryName(null);
+            }
         }
+
     }
 
     private StorageSendMailInfo getMailInfo(String receiverEmail, String subject, String simpleText,

@@ -38,16 +38,16 @@ public class ArticleVO implements Serializable {
     private String accessoryUids;
 
     /**
-    * 文章类别uid集合
-    */
+     * 文章类别uid集合
+     */
     @Schema(title = "文章类别uid集合")
-    private String categoryUids;
+    private String categoryNames;
 
     /**
-    * 文章标签uid集合
-    */
+     * 文章标签uid集合
+     */
     @Schema(title = "文章标签uid集合")
-    private String tagUids;
+    private String tagNames;
 
     /**
     * 文章是否发布，1：发布，0：不发布

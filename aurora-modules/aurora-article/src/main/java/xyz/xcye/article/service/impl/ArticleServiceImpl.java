@@ -7,6 +7,8 @@ import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
 import xyz.xcye.article.dao.ArticleMapper;
 import xyz.xcye.article.po.Article;
+import xyz.xcye.article.po.Category;
+import xyz.xcye.article.po.Tag;
 import xyz.xcye.article.service.ArticleService;
 import xyz.xcye.article.service.CategoryService;
 import xyz.xcye.article.service.TagService;
@@ -76,7 +78,8 @@ public class ArticleServiceImpl implements ArticleService {
         record.setCommentUids(null);
         setUserUid(record);
         // 查询可用的类别和分类
-        setEffectiveTagAndCategory(record);
+        setCategory(record);
+        setTag(record);
         setTimingPublishTime(record);
         return articleMapper.insertSelective(record);
     }
@@ -96,44 +99,53 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     public int updateByPrimaryKeySelective(Article record) {
         Assert.notNull(record, "文章数据不能为null");
-        setEffectiveTagAndCategory(record);
+        setCategory(record);
+        setTag(record);
         record.setUserUid(null);
         setTimingPublishTime(record);
         return articleMapper.updateByPrimaryKeySelective(record);
     }
 
-    private void setEffectiveTagAndCategory(Article article) {
-        String effectiveCategoryUids = null;
-        // 设置有效的分类
-        if (StringUtils.hasLength(article.getCategoryUids())) {
-            effectiveCategoryUids = Arrays.stream(article.getCategoryUids().split(","))
-                    .filter(categoryUidStr -> {
-                        try {
-                            Long categoryUid = Long.parseLong(categoryUidStr);
-                            return categoryService.selectByUid(categoryUid) != null;
-                        } catch (NumberFormatException e) {
-                            return false;
-                        }
-                    })
-                    .collect(Collectors.joining(","));
+    private void setCategory(Article article) {
+        // 如果文章中的某个标签或者类别不存在，则添加
+        if (!StringUtils.hasLength(article.getCategoryNames())) {
+            return;
         }
 
-        String effectiveTagUids = null;
-        if (StringUtils.hasLength(article.getTagUids())) {
-            effectiveTagUids = Arrays.stream(article.getTagUids().split(","))
-                    .filter(tagUidStr -> {
-                        try {
-                            Long tagUid = Long.parseLong(tagUidStr);
-                            return tagService.selectByUid(tagUid) != null;
-                        } catch (NumberFormatException e) {
-                            return false;
-                        }
-                    })
-                    .collect(Collectors.joining(","));
+        String categoryNames = Arrays.stream(article.getCategoryNames().split(","))
+                .distinct()
+                .filter(categoryName -> {
+                    // 如果不存在，则添加
+                    Category category = Category.builder().title(categoryName).build();
+                    if (categoryService.selectByTitle(categoryName) == null) {
+                        // 不存在，添加
+                        return categoryService.insertSelective(category) == 1;
+                    }
+                    return true;
+                })
+                .collect(Collectors.joining(","));
+        article.setCategoryNames(categoryNames);
+
+    }
+
+    private void setTag(Article article) {
+        if (!StringUtils.hasLength(article.getTagNames())) {
+            return;
         }
 
-        article.setCategoryUids(effectiveCategoryUids);
-        article.setTagUids(effectiveTagUids);
+        String tagNames = Arrays.stream(article.getTagNames().split(","))
+                .distinct()
+                .filter(tagName -> {
+                    // 如果不存在，则添加
+                    Tag tag = Tag.builder().title(tagName).build();
+                    if (tagService.selectByTitle(tagName) == null) {
+                        // 不存在，添加
+                        return tagService.insertSelective(tag) == 1;
+                    }
+                    return true;
+                })
+                .collect(Collectors.joining(","));
+        article.setTagNames(tagNames);
     }
 
     private void setUserUid(Article article) {

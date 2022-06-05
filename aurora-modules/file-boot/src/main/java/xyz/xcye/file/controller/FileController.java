@@ -68,10 +68,9 @@ public class FileController {
     @SelectOperation
     @Operation(summary = "上传多个文件，返回集合",description = "不接收文件简介，默认本地存储")
     public List<FileVO> multiUploadFile(
-            @RequestParam(value = "files") MultipartFile[] files,
+            @RequestParam(value = "file") MultipartFile[] files,
             @RequestParam(required = false) int storageMode, long userUid)
             throws IOException, FileException {
-
         List<FileVO> fileList = new ArrayList<>();
         for (MultipartFile file : files) {
             FileEntityDTO fileEntity = new FileEntityDTO(file.getOriginalFilename(), file.getInputStream());

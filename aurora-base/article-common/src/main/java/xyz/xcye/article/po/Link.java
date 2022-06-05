@@ -42,7 +42,7 @@ public class Link implements Serializable {
      */
     @Schema(title = "此条友情链接属于哪个分类")
     @NotNull(groups = Insert.class)
-    private Long categoryUid;
+    private String categoryName;
 
     /**
      * logo地址

@@ -36,6 +36,8 @@ public interface TagService {
 
     TagVO selectByUid(Long uid);
 
+    TagVO selectByTitle(String title);
+
     /**
      * update record selective
      * @param record the updated record

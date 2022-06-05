@@ -42,6 +42,8 @@ public interface CategoryService {
 
     CategoryVO selectByUid(Long uid);
 
+    CategoryVO selectByTitle(String title);
+
     /**
      * update record selective
      * @param record the updated record

@@ -30,6 +30,8 @@ public interface CategoryMapper {
      */
     List<Category> selectByCondition(@Param("condition") Condition<Long> condition);
 
+    Category selectByTitle(@Param("title") String title);
+
     /**
      * update record selective
      * @param record the updated record

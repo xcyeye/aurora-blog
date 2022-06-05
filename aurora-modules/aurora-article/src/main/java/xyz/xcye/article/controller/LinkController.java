@@ -34,7 +34,7 @@ public class LinkController {
     private LinkService linkService;
 
     @Operation(summary = "根据uid删除对应的友情链接")
-    @DeleteMapping
+    @PutMapping("/delete")
     @ModifyOperation
     public int deleteByPrimaryKey(Long uid, @RequestParam("msg") String replyMessage) throws BindException {
         return linkService.deleteByPrimaryKey(uid, replyMessage);
@@ -43,8 +43,8 @@ public class LinkController {
     @ModifyOperation
     @Operation(summary = "插入新友情链接")
     @PostMapping
-    public int insertSelective(@Validated({Insert.class, Default.class}) Link record) throws BindException {
-        return linkService.insertSelective(record);
+    public int insertSelective(@Validated({Insert.class, Default.class}) Link link) throws BindException {
+        return linkService.insertSelective(link);
     }
 
     @GetMapping
@@ -64,7 +64,14 @@ public class LinkController {
     @PutMapping
     @ModifyOperation
     @Operation(summary = "修改友情链接信息")
-    public int updateByPrimaryKeySelective(@Validated({Update.class, Default.class}) Link record,@RequestParam("msg") String replyMessage) throws BindException {
-        return linkService.updateByPrimaryKeySelective(record, replyMessage);
+    public int updateByPrimaryKeySelective(@Validated({Update.class, Default.class}) Link link) throws BindException {
+        return linkService.updateByPrimaryKeySelective(link);
+    }
+
+    @PutMapping("/publish")
+    @ModifyOperation
+    @Operation(summary = "修改友情链接的发布状态")
+    public int updateLinkPublishStatus(long uid, boolean publish, @RequestParam("msg") String replyMessage) throws BindException {
+        return linkService.updateLinkPublishStatus(uid, publish, replyMessage);
     }
 }

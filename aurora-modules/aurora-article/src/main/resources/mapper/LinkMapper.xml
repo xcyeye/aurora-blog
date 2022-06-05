@@ -9,7 +9,7 @@
     <!--@Table au_link-->
     <id column="uid" jdbcType="BIGINT" property="uid" />
     <result column="user_uid" jdbcType="BIGINT" property="userUid" />
-    <result column="category_uid" jdbcType="BIGINT" property="categoryUid" />
+    <result column="category_name" jdbcType="VARCHAR" property="categoryName" />
     <result column="link_logo" jdbcType="VARCHAR" property="linkLogo" />
     <result column="link_url" jdbcType="VARCHAR" property="linkUrl" />
     <result column="link_title" jdbcType="VARCHAR" property="linkTitle" />
@@ -23,7 +23,7 @@
   </resultMap>
   <sql id="Base_Column_List">
     <!--@mbg.generated-->
-    `uid`, user_uid, category_uid, link_logo, link_url, link_title, link_description, 
+    `uid`, user_uid, category_name, link_logo, link_url, link_title, link_description, 
     link_cover, is_publish, email, qq_number, create_time, update_time
   </sql>
   <select id="selectByCondition" parameterType="xyz.xcye.article.po.Link" resultMap="BaseResultMap">
@@ -64,8 +64,8 @@
       <if test="userUid != null">
         user_uid,
       </if>
-      <if test="categoryUid != null">
-        category_uid,
+      <if test="categoryName != null">
+        category_name,
       </if>
       <if test="linkLogo != null and linkLogo != ''">
         link_logo,
@@ -99,8 +99,8 @@
       <if test="userUid != null">
         #{userUid,jdbcType=BIGINT},
       </if>
-      <if test="categoryUid != null">
-        #{categoryUid,jdbcType=BIGINT},
+      <if test="categoryName != null">
+        #{categoryName,jdbcType=VARCHAR},
       </if>
       <if test="linkLogo != null and linkLogo != ''">
         #{linkLogo,jdbcType=VARCHAR},
@@ -135,8 +135,8 @@
       <if test="userUid != null">
         user_uid = #{userUid,jdbcType=BIGINT},
       </if>
-      <if test="categoryUid != null">
-        category_uid = #{categoryUid,jdbcType=BIGINT},
+      <if test="categoryName != null">
+        category_name = #{categoryName,jdbcType=VARCHAR},
       </if>
       <if test="linkLogo != null and linkLogo != ''">
         link_logo = #{linkLogo,jdbcType=VARCHAR},

@@ -3,6 +3,7 @@ package xyz.xcye.article.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
+import org.springframework.util.StringUtils;
 import xyz.xcye.article.dao.TagMapper;
 import xyz.xcye.article.po.Tag;
 import xyz.xcye.article.service.TagService;
@@ -10,6 +11,7 @@ import xyz.xcye.article.vo.TagVO;
 import xyz.xcye.aurora.util.UserUtils;
 import xyz.xcye.core.dto.JwtUserInfo;
 import xyz.xcye.core.enums.ResponseStatusCodeEnum;
+import xyz.xcye.core.exception.article.ArticleException;
 import xyz.xcye.core.exception.user.UserException;
 import xyz.xcye.core.util.BeanUtils;
 import xyz.xcye.core.util.lambda.AssertUtils;
@@ -64,6 +66,12 @@ public class TagServiceImpl implements TagService {
     public TagVO selectByUid(Long uid) {
         Assert.notNull(uid, "uid不能为null");
         return BeanUtils.getSingleObjFromList(tagMapper.selectByCondition(Condition.instant(uid, true)), TagVO.class);
+    }
+
+    @Override
+    public TagVO selectByTitle(String title) {
+        AssertUtils.stateThrow(StringUtils.hasLength(title), () -> new ArticleException("标签不能为null"));
+        return BeanUtils.copyProperties(tagMapper.selectByTitle(title), TagVO.class);
     }
 
     @Override

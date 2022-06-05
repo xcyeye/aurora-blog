@@ -3,6 +3,7 @@ package xyz.xcye.article.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
+import org.springframework.util.StringUtils;
 import xyz.xcye.article.dao.CategoryMapper;
 import xyz.xcye.article.po.Category;
 import xyz.xcye.article.service.CategoryService;
@@ -10,6 +11,7 @@ import xyz.xcye.article.vo.CategoryVO;
 import xyz.xcye.aurora.util.UserUtils;
 import xyz.xcye.core.dto.JwtUserInfo;
 import xyz.xcye.core.enums.ResponseStatusCodeEnum;
+import xyz.xcye.core.exception.article.ArticleException;
 import xyz.xcye.core.exception.user.UserException;
 import xyz.xcye.core.util.BeanUtils;
 import xyz.xcye.core.util.lambda.AssertUtils;
@@ -66,6 +68,12 @@ public class CategoryServiceImpl implements CategoryService {
     public CategoryVO selectByUid(Long uid) {
         Assert.notNull(uid, "uid不能为null");
         return BeanUtils.getSingleObjFromList(categoryMapper.selectByCondition(Condition.instant(uid, true)), CategoryVO.class);
+    }
+
+    @Override
+    public CategoryVO selectByTitle(String title) {
+        AssertUtils.stateThrow(StringUtils.hasLength(title), () -> new ArticleException("类别不能为null"));
+        return BeanUtils.copyProperties(categoryMapper.selectByTitle(title), CategoryVO.class);
     }
 
     @Override

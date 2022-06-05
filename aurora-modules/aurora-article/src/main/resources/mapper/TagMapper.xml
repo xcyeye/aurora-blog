@@ -108,4 +108,12 @@
     </set>
     where `uid` = #{uid,jdbcType=BIGINT}
   </update>
+
+  <select id="selectByTitle" resultMap="BaseResultMap">
+    <!--@mbg.generated-->
+    select
+    <include refid="Base_Column_List" />
+    from au_tag
+    where title=#{title,jdbcType=VARCHAR}
+  </select>
 </mapper>
