@@ -43,6 +43,14 @@ public class ReceiveComment {
     @Autowired
     private MessageLogFeignService.UpdateMessageLog updateMessageLog;
 
+    /**
+     * 当某篇文章收到评论时，会向mq中发送消息，文章服务更新该篇文章的评论信息
+     * @param msgJson
+     * @param channel
+     * @param message
+     * @throws IOException
+     * @throws BindException
+     */
     @RabbitListener(queues = AmqpQueueNameConstant.PAGE_COMMENT_QUEUE,ackMode = "AUTO")
     private void receiveCommentConsumer(String msgJson, Channel channel, Message message) throws IOException, BindException {
         Comment comment = parseComment(msgJson, channel, message);
@@ -74,6 +82,14 @@ public class ReceiveComment {
                 true, true, "此评论没有页面可以消费", message);
     }
 
+    /**
+     * 从mq发送的消息中，解析出需要评论数据
+     * @param json
+     * @param channel
+     * @param message
+     * @return
+     * @throws IOException
+     */
     private Comment parseComment(String json, Channel channel, Message message) throws IOException {
         Comment comment = null;
         try {
@@ -85,6 +101,12 @@ public class ReceiveComment {
         return comment;
     }
 
+    /**
+     * 设置文章评论的uid
+     * @param commentUids
+     * @param uid
+     * @return
+     */
     private String setCommentUids(String commentUids, Long uid) {
         if (!StringUtils.hasLength(commentUids)) {
             return uid + "";

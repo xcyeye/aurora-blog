@@ -13,7 +13,7 @@ import xyz.xcye.aurora.interceptor.AuroraGlobalHandlerInterceptor;
 
 
 /**
- * 配置swagger
+ * web配置
  */
 
 @Configuration

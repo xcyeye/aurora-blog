@@ -13,6 +13,12 @@ import java.util.Date;
 
 
 public class TimeUtils {
+
+    /**
+     * 判断传入的时间，是否是一个定时时间
+     * @param dateStr
+     * @return
+     */
     public static boolean isTimingPublishTime(String dateStr) {
         if (!StringUtils.hasLength(dateStr)) {
             return false;
