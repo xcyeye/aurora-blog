@@ -30,7 +30,7 @@ public class RolePermissionController {
     private PermissionRelationService permissionRelationService;
 
     @SelectOperation
-    @Operation(summary = "根据用户uid，加载对应的角色-权限信息，只会给出该用户所拥有的角色和au_permission中的记录存在关系的记录")
+    @Operation(summary = "根据用户uid，加载该用户所拥有的角色权限关系")
     @GetMapping("/userUid/{userUid}")
     public List<RolePermissionDTO> loadPermissionByUserUid(@PathVariable("userUid") long userUid) {
         return permissionRelationService.loadPermissionByUserUid(userUid);
@@ -38,20 +38,20 @@ public class RolePermissionController {
 
     @SelectOperation
     @GetMapping("/rolePermission")
-    @Operation(summary = "加载角色权限关系信息")
+    @Operation(summary = "加载所有的角色权限关系，只返回该角色存在权限部分，如果某个角色没有赋予权限，则不返回")
     public List<RolePermissionDTO> loadAllRolePermission(Condition<Long> condition) {
         return permissionRelationService.loadAllRolePermission(condition);
     }
 
     @SelectOperation
     @GetMapping("/userRole/{username}")
-    @Operation(summary = "加载该用户所拥有的全部角色")
+    @Operation(summary = "根据用户名，获取该用户所拥有的所有角色")
     public List<Role> loadAllRoleByUsername(@PathVariable("username") String username) {
         return permissionRelationService.loadAllRoleByUsername(username);
     }
 
     @SelectOperation
-    @Operation(summary = "根据用户uid，加载对应的角色-权限信息，map集合形式为[ROLE_admin,GET:http://aurora.xcye.xyz]")
+    @Operation(summary = "根据用户名，加载该用户所拥有的角色权限关系，此接口和loadPermissionByUserUid返回的数据一样")
     @GetMapping("/username/{username}")
     public List<RolePermissionDTO> loadPermissionByUsername(@PathVariable("username") String username) {
         return permissionRelationService.loadPermissionByUsername(username);
@@ -59,13 +59,13 @@ public class RolePermissionController {
 
     @SelectOperation
     @GetMapping("/roleName/{roleName}")
-    @Operation(summary = "根据角色名称，加载对应的角色-权限信息，map集合形式为[ROLE_admin,GET:http://aurora.xcye.xyz]")
+    @Operation(summary = "根据角色名称，加载对应的角色-权限信息")
     public List<RolePermissionDTO> loadPermissionByRoleName(@PathVariable("roleName") String roleName) {
         return permissionRelationService.loadPermissionByRoleName(roleName);
     }
 
     @SelectOperation
-    @GetMapping("/role")
+    @GetMapping("/role/permissionPath")
     @Operation(summary = "根据permissionPath，查询哪些角色和角色可以可以访问")
     public List<RolePermissionDTO> queryRoleByPermissionPath(@RequestParam("permissionPath") String permissionPath) {
         return permissionRelationService.queryRoleByPermissionPath(permissionPath);

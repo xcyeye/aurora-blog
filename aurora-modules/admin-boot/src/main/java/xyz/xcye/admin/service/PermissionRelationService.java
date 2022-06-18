@@ -47,7 +47,7 @@ public interface PermissionRelationService {
 
     /**
      * 根据permissionPath，查询哪些角色可以访问
-     * @param permissionPath
+     * @param permissionPath 包含请求方法和路径，如GET:/admin/permission
      * @return
      */
     List<RolePermissionDTO> queryRoleByPermissionPath(String permissionPath);
