@@ -54,7 +54,6 @@ public class RoleController {
     @Operation(summary = "根据uid查询角色")
     @GetMapping("/{uid}")
     public String queryRoleByUid(@PathVariable("uid") int uid) {
-        System.out.println(uid);
         return "roleService.selectByUid(uid)" + uid;
     }
 

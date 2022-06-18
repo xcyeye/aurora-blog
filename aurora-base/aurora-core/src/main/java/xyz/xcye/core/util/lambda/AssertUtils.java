@@ -31,6 +31,12 @@ public class AssertUtils {
         }
     }
 
+    public static <X extends Throwable> void ifNoLengthThrow(String value, Supplier<? extends X> exceptionSupplier) throws X {
+        if (!StringUtils.hasLength(value)) {
+            throw exceptionSupplier.get();
+        }
+    }
+
     public static void hasLength(String value,Consumer<String> consumer) {
         if (StringUtils.hasLength(value)) {
             consumer.accept(value);

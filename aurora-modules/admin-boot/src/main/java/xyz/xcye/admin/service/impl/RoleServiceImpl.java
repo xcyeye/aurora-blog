@@ -30,7 +30,7 @@ public class RoleServiceImpl implements RoleService {
     @Override
     public int insertRole(Role role) {
         Assert.notNull(role, "角色信息不能为null");
-        AssertUtils.ifNullThrow(role.getName(), () -> new RoleException("角色名字不能为null"));
+        AssertUtils.ifNoLengthThrow(role.getName(), () -> new RoleException("角色名字不能为null"));
         // 查看此角色是否存在
         AssertUtils.stateThrow(selectAllRole(Condition.instant(role.getName())).getResult().isEmpty(),
                 () -> new RoleException(ResponseStatusCodeEnum.PERMISSION_ROLE_HAD_EXISTS));
@@ -48,6 +48,9 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public int updateRole(Role role) {
+        // 判断角色是否存在
+        AssertUtils.stateThrow(selectAllRole(Condition.instant(role.getName())).getResult().isEmpty(),
+                () -> new RoleException(ResponseStatusCodeEnum.PERMISSION_ROLE_HAD_EXISTS));
         return roleMapper.updateRole(role);
     }
 
