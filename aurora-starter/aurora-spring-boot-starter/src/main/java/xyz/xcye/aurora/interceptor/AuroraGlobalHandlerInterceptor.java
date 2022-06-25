@@ -125,9 +125,13 @@ public class AuroraGlobalHandlerInterceptor implements HandlerInterceptor {
     private void configSpringDoc(HttpServletRequest request) {
         String requestURI = request.getRequestURI();
         final AntPathMatcher antPathMatcher = new AntPathMatcher();
-        if (OpenApiConstant.SPRING_DOC_REQUEST_PATH.equals(requestURI)) {
+        if (antPathMatcher.match(OpenApiConstant.SPRING_DOC_REQUEST_PATH, requestURI)) {
             RequestContextHolder.currentRequestAttributes()
                     .setAttribute(OpenApiConstant.CONTEXT_REQUEST_HEADER_OF_SPRING_DOC, true, 1);
         }
+        //if (OpenApiConstant.SPRING_DOC_REQUEST_PATH.equals(requestURI)) {
+        //    RequestContextHolder.currentRequestAttributes()
+        //            .setAttribute(OpenApiConstant.CONTEXT_REQUEST_HEADER_OF_SPRING_DOC, true, 1);
+        //}
     }
 }
