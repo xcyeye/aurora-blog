@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
     <!-- 日志存放路径 -->
-    <property name="log_path" value="/Volumes/Code/Java-code/aurora-theme/log" />
+    <property name="log_path" value="/Users/aurora/Code/Java-code/aurora-theme/log" />
     <!-- 控制台打印 -->
     <property name="log_pattern" value="%d{yyyy-MM-dd HH:mm:ss:SSS}  %green(%-5level) %magenta(${PID:-}) --- [%t] %cyan(%logger{10}) : %msg%n" />
     <!-- 打印请求处理时间 -->
