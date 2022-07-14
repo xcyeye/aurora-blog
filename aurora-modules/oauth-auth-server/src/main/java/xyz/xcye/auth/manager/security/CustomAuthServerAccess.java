@@ -71,7 +71,7 @@ public class CustomAuthServerAccess {
         final AntPathMatcher antPathMatcher = new AntPathMatcher();
         if (antPathMatcher.match(OpenApiConstant.SPRING_DOC_REQUEST_PATH, requestURI)) {
             RequestContextHolder.currentRequestAttributes()
-                    .setAttribute(OpenApiConstant.CONTEXT_REQUEST_HEADER_OF_SPRING_DOC, true, 1);
+                    .setAttribute(OpenApiConstant.CONTEXT_REQUEST_HEADER_OF_SPRING_DOC, true, 0);
         }
         //if (OpenApiConstant.SPRING_DOC_REQUEST_PATH.equals(requestURI)) {
         //    RequestContextHolder.currentRequestAttributes()

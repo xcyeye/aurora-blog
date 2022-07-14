@@ -196,7 +196,7 @@ public class AuroraResponseResultHandler implements ResponseBodyAdvice<Object> {
         } catch (IllegalStateException e) {
             return false;
         }
-        Boolean springDocRequest = (Boolean) attributes.getAttribute(OpenApiConstant.CONTEXT_REQUEST_HEADER_OF_SPRING_DOC, 1);
+        Boolean springDocRequest = (Boolean) attributes.getAttribute(OpenApiConstant.CONTEXT_REQUEST_HEADER_OF_SPRING_DOC, 0);
         return springDocRequest != null ? springDocRequest : false;
     }
 }

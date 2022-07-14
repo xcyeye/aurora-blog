@@ -20,7 +20,6 @@ import xyz.xcye.core.exception.user.UserException;
 import xyz.xcye.core.util.ConvertObjectUtils;
 import xyz.xcye.core.util.LogUtils;
 import xyz.xcye.core.util.lambda.AssertUtils;
-import xyz.xcye.mail.api.feign.FileFeignService;
 import xyz.xcye.message.enums.MailTemplateEnum;
 import xyz.xcye.message.mail.SendMailRealize;
 import xyz.xcye.message.po.EmailLog;
@@ -61,8 +60,8 @@ public class SendMailServiceImpl implements SendMailService {
 
     @Autowired
     private EmailService emailService;
-    @Autowired
-    private FileFeignService fileFeignService;
+    //@Autowired
+    //private FileFeignService fileFeignService;
 
     @Override
     public int sendHtmlMail(StorageSendMailInfo storageSendMailInfo)
