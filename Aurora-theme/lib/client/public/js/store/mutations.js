@@ -25,7 +25,6 @@ export default {
 
     },
     setFontFamilyStyle(state,fontFamilyStyle) {
-
         this.state.fontFamilyStyle = "--fontFamily: " + fontFamilyStyle.fontFamily + ";"
     },
     setIsFitter(state,isFitter) {

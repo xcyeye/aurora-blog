@@ -262,6 +262,7 @@ export default defineComponent({
       return 'background-image: url('+this.ico+');'
     },
     setBodyStyle() {
+      console.log("0000000000000")
       if (this.fontStyle === "") {
         return ""
       }

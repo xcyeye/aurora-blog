@@ -159,7 +159,10 @@ export default {
 
     this.$store.commit('setVarOpacity',{
       varOpacity: this.opacity
-    })
+    });
+    this.$store.commit('setFontFamilyStyle',{
+        fontFamily: this.fontArr[0],
+      });
   },
   computed: {
     getShowFont() {
@@ -221,7 +224,7 @@ export default {
       this.$store.commit('setFontFamilyStyle',{
         fontFamily: this.currentFont,
         color: this.currentColor
-      })
+      });
       this.$emit('setBodyStyle')
     },
     setImg() {
