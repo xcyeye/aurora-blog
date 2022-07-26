@@ -41,5 +41,10 @@
             <groupId>xyz.xcye.base</groupId>
             <artifactId>data-common</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>xyz.xcye.starter</groupId>
+            <artifactId>aurora-datasource-starter</artifactId>
+        </dependency>
     </dependencies>
 </project>

@@ -1,12 +1,12 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="xyz.xcye.file.dao.FileMapper">
 
   <cache type="xyz.xcye.mybatis.MybatisFrequentCacheAutoConfig"/>
 
   <resultMap id="BaseResultMap" type="xyz.xcye.file.po.File">
-    <!--@mbg.generated-->
-    <!--@Table au_file-->
     <id column="uid" jdbcType="BIGINT" property="uid" />
     <result column="file_name" jdbcType="VARCHAR" property="fileName" />
     <result column="size" jdbcType="BIGINT" property="size" />
@@ -20,13 +20,11 @@
     <result column="user_uid" jdbcType="BIGINT" property="userUid"/>
   </resultMap>
   <sql id="Base_Column_List">
-    <!--@mbg.generated-->
-    `uid`, file_name, `size`, summary, `path`, storage_mode, storage_path, is_delete, 
+    `uid`, file_name, `size`, summary, `path`, storage_mode, storage_path, is_delete,
     create_time, delete_time,user_uid
   </sql>
   <select id="selectByCondition" resultMap="BaseResultMap">
-    <!--@mbg.generated-->
-    select 
+    select
     <include refid="Base_Column_List" />
     from au_file
     <where>
@@ -49,7 +47,6 @@
   </select>
 
   <select id="selectSpecifyFormatFiles" resultMap="BaseResultMap">
-    <!--@mbg.generated-->
     select
     <include refid="Base_Column_List" />
     from au_file
@@ -76,13 +73,11 @@
   </select>
 
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-    <!--@mbg.generated-->
     delete from au_file
     where `uid` = #{uid,jdbcType=BIGINT}
   </delete>
 
   <insert id="insertSelective" parameterType="xyz.xcye.file.po.File">
-    <!--@mbg.generated-->
     insert into au_file
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="uid != null">
@@ -138,7 +133,6 @@
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="xyz.xcye.file.po.File">
-    <!--@mbg.generated-->
     update au_file
     <set>
       <if test="fileName != null and fileName != ''">
@@ -170,7 +164,6 @@
   </update>
 
   <select id="selectAllFileFormat" resultType="java.lang.String">
-    <!--@mbg.generated-->
     select
     file_name
     from au_file
