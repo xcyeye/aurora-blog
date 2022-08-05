@@ -23,14 +23,14 @@
         <include refid="Base_Column_List" />
         from au_white_url
         <where>
-            <if test="condition.startTime != null and condition.endTime != null">
-                and create_time between #{condition.startTime} and #{condition.endTime}
-            </if>
             <if test="condition.uid != null">
                 and uid=#{condition.uid}
             </if>
             <if test="condition.keyword != null">
                 and url=#{condition.keyword}
+            </if>
+            <if test="condition.startTime != null and condition.endTime != null">
+                and create_time between #{condition.startTime} and #{condition.endTime}
             </if>
         </where>
     </select>

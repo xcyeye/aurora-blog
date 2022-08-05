@@ -46,11 +46,20 @@
     </select>
     <select id="loadAllRoleByUserUid" resultType="xyz.xcye.admin.po.Role">
         SELECT
-            au_role.`name`, au_role.`status`, user_uid,create_time,update_time,au_role.uid,update_time
-        from au_user_role, au_role
+            au_role.uid,
+            au_role.`name`,
+            user_uid,
+            au_role.`status`,
+            create_time,
+            update_time,
+            update_time
+        FROM
+            au_user_role,
+            au_role
         WHERE
             au_user_role.user_uid=#{uid}
-        and au_role.uid=au_user_role.role_uid
+        and
+            au_role.uid=au_user_role.role_uid
     </select>
 
 

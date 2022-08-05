@@ -50,17 +50,17 @@
         from
           au_email_log
         <where>
-            <if test="condition.keyword != null">
-                and receiver like concat('%', #{condition.keyword}, '%')
+            <if test="condition.uid != null">
+                and uid=#{condition.uid}
             </if>
-            <if test="condition.status != null">
-                and is_send=#{condition.status}
+            <if test="condition.keyword != null">
+                and receiver like concat(#{condition.keyword}, '%')
             </if>
             <if test="condition.startTime != null and condition.endTime != null">
                 and create_time between #{condition.startTime} and #{condition.endTime}
             </if>
-            <if test="condition.uid != null">
-                and uid=#{condition.uid}
+            <if test="condition.status != null">
+                and is_send=#{condition.status}
             </if>
         </where>
     </select>
