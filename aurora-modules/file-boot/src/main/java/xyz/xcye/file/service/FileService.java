@@ -9,6 +9,7 @@ import xyz.xcye.file.vo.FileVO;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 /**
  * 文件service层
@@ -24,7 +25,7 @@ public interface FileService {
      * @param storageMode 文件存储模式，值只能在xyz.xcye.common.enums.FileStorageModeEnum中取
      * @return 返回文件的上传情况
      */
-    FileVO insertFile(FileEntityDTO fileEntity, File file, int storageMode, long userUid) throws FileException;
+    FileVO insertFile(FileEntityDTO fileEntity, File file, int storageMode, long userUid) throws FileException, IOException, ExecutionException, InterruptedException;
 
     /**
      * 根据传入uid，修改指定文件的数据库信息（不能修改文件本身的信息，比如文件名，存储路径，path，因为没有意义）
@@ -38,7 +39,7 @@ public interface FileService {
      * @param uid
      * @return 删除之后的情况
      */
-    int deleteFile(long uid) throws IOException, FileException;
+    int deleteFile(long uid) throws IOException, FileException, ExecutionException, InterruptedException;
 
     /**
      * 删除文件的信息

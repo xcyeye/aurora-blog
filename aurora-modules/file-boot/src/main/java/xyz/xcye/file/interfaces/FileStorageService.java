@@ -6,6 +6,7 @@ import xyz.xcye.file.dto.FileEntityDTO;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.concurrent.ExecutionException;
 
 /**
  * 文件上传接口，继承类比如，本地服务器存储，阿里云oss，又拍云等
@@ -19,7 +20,7 @@ public interface FileStorageService {
      * @return 文件实体
      * @throws IOException 异常
      */
-    FileEntityDTO upload(InputStream inputStream, FileEntityDTO fileEntity) throws FileException;
+    FileEntityDTO upload(InputStream inputStream, FileEntityDTO fileEntity) throws FileException, IOException, ExecutionException, InterruptedException;
 
     /**
      * 将文件从存储服务上下载下来

@@ -36,7 +36,7 @@ public class MistakeMessageSendService {
     public void sendMistakeMessageToExchange(String msg, Channel channel, Message message, String exchange, String routingKey) throws IOException {
         // 任何一个出问题，都表示生产者发送的消息不合法，将此消息发送到mistakeMessageExchange交换机 因为这个消息是没有用的，所以也就不更新数据库了
         rabbitTemplate.send(exchange, routingKey,new Message(msg.getBytes(StandardCharsets.UTF_8)));
-        //在此处需要应答 如果新大搜和message都是null，那么直接应答
+        // 在此处需要应答 如果新大搜和message都是null，那么直接应答
         if (channel != null && message != null) {
             channel.basicAck(message.getMessageProperties().getDeliveryTag(),false);
         }

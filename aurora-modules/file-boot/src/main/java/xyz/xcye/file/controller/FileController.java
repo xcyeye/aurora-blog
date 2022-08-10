@@ -27,6 +27,7 @@ import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 /**
  * @author qsyyke
@@ -53,7 +54,7 @@ public class FileController {
     public FileVO singleUploadFile(@Validated({Insert.class, Default.class}) File fileInfo,
                                    @RequestParam(value = "file") MultipartFile file,
                                    @RequestParam(required = false) int storageMode, long userUid)
-            throws IOException, FileException {
+            throws IOException, FileException, ExecutionException, InterruptedException {
 
         FileEntityDTO fileEntity = new FileEntityDTO(file.getOriginalFilename(),file.getInputStream());
         return fileService.insertFile(fileEntity, fileInfo, storageMode, userUid);
@@ -70,7 +71,7 @@ public class FileController {
     public List<FileVO> multiUploadFile(
             @RequestParam(value = "file") MultipartFile[] files,
             @RequestParam(required = false) int storageMode, long userUid)
-            throws IOException, FileException {
+            throws IOException, FileException, ExecutionException, InterruptedException {
         List<FileVO> fileList = new ArrayList<>();
         for (MultipartFile file : files) {
             FileEntityDTO fileEntity = new FileEntityDTO(file.getOriginalFilename(), file.getInputStream());
@@ -91,7 +92,7 @@ public class FileController {
     public String typoraUploadFile(
             @RequestParam(value = "file") MultipartFile file,
             @RequestParam(required = false) int storageMode)
-            throws IOException, FileException {
+            throws IOException, FileException, ExecutionException, InterruptedException {
 
         FileEntityDTO fileEntity = new FileEntityDTO(file.getOriginalFilename(),file.getInputStream());
         File fileInfo = new File();
@@ -152,7 +153,7 @@ public class FileController {
     @ModifyOperation
     @Operation(summary = "根据uid删除某个文件", description = "从数据库中删除对应数据，删除与之关联的本地，对象存储中的文件，返回删除成功之后的文件对象")
     @DeleteMapping("/{uid}")
-    public int deleteFile(@PathVariable("uid") long uid) throws FileException, IOException {
+    public int deleteFile(@PathVariable("uid") long uid) throws FileException, IOException, ExecutionException, InterruptedException {
         return fileService.deleteFile(uid);
     }
 

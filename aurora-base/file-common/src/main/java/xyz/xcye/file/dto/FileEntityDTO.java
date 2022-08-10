@@ -44,6 +44,12 @@ public class FileEntityDTO {
     /** 文件的所有者 **/
     private String owner;
 
+    /** 文件上传时的百分比，只返回小数，不带"%" **/
+    private float uploadPercent;
+
+    /** 文件下载时的百分比 **/
+    private float downloadPercent;
+
     public FileEntityDTO(String name, InputStream inputStream) {
         this.name = name;
         this.inputStream = inputStream;

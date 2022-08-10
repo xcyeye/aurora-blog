@@ -41,7 +41,7 @@ public class MybatisAutoConfig {
         configuration.setMapUnderscoreToCamelCase(true);
         configuration.setDefaultFetchSize(100);
         // 设置打印
-        configuration.setLogImpl(org.apache.ibatis.logging.stdout.StdOutImpl.class);
+        // configuration.setLogImpl(org.apache.ibatis.logging.stdout.StdOutImpl.class);
         configuration.setDefaultStatementTimeout(30);
         sqlSessionFactoryBean.setConfiguration(configuration);
         return sqlSessionFactoryBean.getObject();

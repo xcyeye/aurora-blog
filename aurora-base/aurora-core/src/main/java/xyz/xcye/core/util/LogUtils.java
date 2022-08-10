@@ -78,4 +78,8 @@ public class LogUtils {
     public static void logMistakeMessage(String mistakeMsg) {
         log.error("无法消费的消息: {}",mistakeMsg);
     }
+
+    public static void logCommonInfo(String info) {
+        log.info(info);
+    }
 }

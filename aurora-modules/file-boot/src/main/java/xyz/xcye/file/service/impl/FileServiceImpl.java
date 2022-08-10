@@ -30,6 +30,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
 
 /**
@@ -48,7 +49,7 @@ public class FileServiceImpl implements FileService {
     private AuroraProperties auroraProperties;
 
     @Override
-    public FileVO insertFile(FileEntityDTO fileEntity, File file, int storageMode, long userUid) throws FileException {
+    public FileVO insertFile(FileEntityDTO fileEntity, File file, int storageMode, long userUid) throws FileException, IOException, ExecutionException, InterruptedException {
         Assert.notNull(fileEntity, "文件对象不能为null");
         Assert.notNull(file, "文件信息不能为null");
         AssertUtils.stateThrow(userUid != 0, () -> new FileException("必须要传入UserUid"));
@@ -57,10 +58,10 @@ public class FileServiceImpl implements FileService {
                     ResponseStatusCodeEnum.EXCEPTION_FILE_FAIL_UPLOAD.getCode());
         }
 
-        //生成一个uid
+        // 生成一个uid
         long uid = GenerateInfoUtils.generateUid(auroraProperties.getSnowFlakeWorkerId(),auroraProperties.getSnowFlakeDatacenterId());
 
-        //根据storageMode获取需要使用的文件存储方式
+        // 根据storageMode获取需要使用的文件存储方式
         FileStorageService fileStorageService = getNeedFileStorageService(storageMode);
         FileEntityDTO uploadFileEntity = fileStorageService.upload(fileEntity.getInputStream(), fileEntity);
 
@@ -82,7 +83,7 @@ public class FileServiceImpl implements FileService {
     }
 
     @Override
-    public int deleteFile(long uid) throws IOException, FileException {
+    public int deleteFile(long uid) throws IOException, FileException, ExecutionException, InterruptedException {
         // 查询出此uid对应的文件的存储位置
         File deleteFileInfo = getFileDOByUid(uid);
 

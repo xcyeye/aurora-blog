@@ -66,9 +66,9 @@ public class AmqpSenderService {
         // 调用feign向数据库中插入mq消息
         insertMessageLogData(correlationDataId, msgJson, exchangeName, routingKey, exchangeType);
         JwtUserInfo currentUserInfo = UserUtils.getCurrentUser();
-        /*if (!whiteUrlStatus && currentUserInfo == null) {
-            throw new UserException(ResponseStatusCodeEnum.PERMISSION_USER_NOT_LOGIN);
-        }*/
+        //if (!whiteUrlStatus && currentUserInfo == null) {
+        //    throw new UserException(ResponseStatusCodeEnum.PERMISSION_USER_NOT_LOGIN);
+        //}
 
         MessageProperties messageProperties = new MessageProperties();
         messageProperties.setCorrelationId(correlationDataId);

@@ -6,13 +6,18 @@ import xyz.xcye.core.enums.ResponseStatusCodeEnum;
 import xyz.xcye.core.exception.file.FileException;
 import xyz.xcye.core.util.DateUtils;
 import xyz.xcye.core.util.FileUtils;
+import xyz.xcye.core.util.LogUtils;
 import xyz.xcye.file.dto.FileEntityDTO;
 import xyz.xcye.file.interfaces.FileStorageService;
+import xyz.xcye.file.utils.UploadFileExecutor;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Date;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
+import java.util.concurrent.ThreadPoolExecutor;
 
 /**
  * TODO 部分功能未实现
@@ -61,7 +66,8 @@ public class LocalFileStorageServiceImpl implements FileStorageService {
      * @throws IOException
      */
     @Override
-    public FileEntityDTO upload(InputStream inputStream, FileEntityDTO fileEntity) throws FileException {
+    public FileEntityDTO upload(InputStream inputStream, FileEntityDTO fileEntity) throws FileException, IOException, ExecutionException, InterruptedException {
+        ThreadPoolExecutor executor = UploadFileExecutor.getInstance();
         //获取上传文件的扩展名
         String extName = FileUtils.getExtName(fileEntity.getName());
 
@@ -77,23 +83,38 @@ public class LocalFileStorageServiceImpl implements FileStorageService {
 
         //判断文件夹是否存在aurora.file.nginx-root-path/aurora.file.upload-folder-name/extName/currentYear/currentMonth
         String folderPath = nginxRootPath + uploadFolderName + separator + extName + separator + currentYear + separator + currentMonth;
-        String filePath = getFilePath(fileEntity,folderPath);
+        String filePath = getFilePath(fileEntity, folderPath);
 
-        //1. 创建此path文件路径还有文件夹（如果不存在）
+        // 1. 创建此path文件路径还有文件夹（如果不存在）
         createFile(filePath, folderPath);
 
-        //2. 将此输入流写入到path中
-        File writeFile = null;
-        try {
-            writeFile = FileUtils.writeByStream(inputStream, filePath);
-        } catch (IOException e) {
-            e.printStackTrace();
-            throw new FileException(ResponseStatusCodeEnum.EXCEPTION_FILE_FAIL_UPLOAD);
+        // 重新创建一个线程来上传文件
+        Future<FileEntityDTO> future = executor.submit(() -> {
+            // 2. 将此输入流写入到path中
+            File writeFile = null;
+            try {
+                writeFile = FileUtils.writeByStream(inputStream, filePath);
+            } catch (IOException e) {
+                LogUtils.logExceptionInfo(e);
+                throw new FileException(ResponseStatusCodeEnum.EXCEPTION_FILE_FAIL_UPLOAD);
+            }
+
+            String fileRemoteUrl = host + FileUtils.getFileSplitPath(nginxRootPath, writeFile.getAbsolutePath());
+
+            return new FileEntityDTO(writeFile.getAbsolutePath(), writeFile.getName(), writeFile.length(), fileRemoteUrl);
+        });
+
+        File newFile = new File(filePath);
+        int fileAvailable = inputStream.available();
+        while (!future.isDone()) {
+            // 不断打印上传文件的进度
+            long newFileLength = newFile.length();
+            double l = (double) (newFileLength / fileAvailable);
+            System.out.println(filePath + " 上传进度: " + l);
         }
 
-        String fileRemoteUrl = host + FileUtils.getFileSplitPath(nginxRootPath,writeFile.getAbsolutePath());
-
-        return new FileEntityDTO(writeFile.getAbsolutePath(),writeFile.getName(),writeFile.length(),fileRemoteUrl);
+        // 运行到这里，文件已经上传完成了
+        return future.get();
     }
 
     @Override
@@ -160,23 +181,23 @@ public class LocalFileStorageServiceImpl implements FileStorageService {
      * @throws FileException
      */
     private boolean createFile(String filePath,String folderPath) throws FileException {
-        //文件夹是否存在
+        // 文件夹是否存在
         boolean folderExists = new File(folderPath).exists();
 
         if (!folderExists) {
-            //创建文件夹
+            // 创建文件夹
             if (!FileUtils.createFile(folderPath, true)) {
-                //创建文件夹失败
+                // 创建文件夹失败
                 throw new FileException(ResponseStatusCodeEnum.EXCEPTION_FILE_FAIL_CREATE);
             }
         }
 
-        //执行到这里，说明文件夹已经存在或者创建成功
+        // 执行到这里，说明文件夹已经存在或者创建成功
 
-        //创建需要写入的文件
+        // 创建需要写入的文件
         boolean isCreateFile = FileUtils.createFile(filePath, false);
         if (!isCreateFile) {
-            //创建文件夹失败
+            // 创建文件夹失败
             throw new FileException(ResponseStatusCodeEnum.EXCEPTION_FILE_FAIL_CREATE);
         }
 
