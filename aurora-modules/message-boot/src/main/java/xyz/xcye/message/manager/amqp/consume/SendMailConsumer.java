@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.BindException;
+import org.springframework.web.context.request.RequestAttributes;
+import org.springframework.web.context.request.RequestContextHolder;
 import xyz.xcye.amqp.config.service.MistakeMessageSendService;
 import xyz.xcye.api.mail.sendmail.entity.StorageSendMailInfo;
 import xyz.xcye.api.mail.sendmail.enums.SendHtmlMailTypeNameEnum;
@@ -130,7 +132,7 @@ public class SendMailConsumer {
      */
     @RabbitListener(queues = AmqpQueueNameConstant.SEND_SIMPLE_TEXT_MAIL_DEAD_LETTER_QUEUE_NAME, ackMode = "MANUAL")
     public void sendSimpleTextMailDeadLetterConsumer(String msgJson, Channel channel, Message message)
-            throws ReflectiveOperationException, MessagingException, BindException, IOException {
+            throws MessagingException, BindException, IOException {
         sendSimpleTextMailConsumer(msgJson,channel,message);
     }
 

@@ -22,6 +22,7 @@ import xyz.xcye.auth.constant.RequestConstant;
 import xyz.xcye.auth.model.SecurityUserDetails;
 import xyz.xcye.auth.po.LoginInfo;
 import xyz.xcye.auth.service.LoginInfoService;
+import xyz.xcye.auth.threadpoll.WriteLoginInfoExecutor;
 import xyz.xcye.core.constant.amqp.AmqpExchangeNameConstant;
 import xyz.xcye.core.constant.amqp.AmqpQueueNameConstant;
 import xyz.xcye.core.enums.RegexEnum;
@@ -40,6 +41,7 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.Objects;
+import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.regex.Pattern;
 
@@ -319,7 +321,8 @@ public class LoginInfoAop {
         }
 
         URI finalUri = uri;
-        new Thread(() -> {
+        ThreadPoolExecutor executor = WriteLoginInfoExecutor.getInstance();
+        executor.execute(() -> {
             LinkedHashMap<String, Object> returnObj = null;
             try {
                 returnObj = restTemplate.getForObject(finalUri, LinkedHashMap.class);
@@ -361,7 +364,7 @@ public class LoginInfoAop {
                     .loginLocation(location)
                     .build();
             loginInfoService.updateByPrimaryKeySelective(loginInfo);
-        }).start();
+        });
     }
 
     /**

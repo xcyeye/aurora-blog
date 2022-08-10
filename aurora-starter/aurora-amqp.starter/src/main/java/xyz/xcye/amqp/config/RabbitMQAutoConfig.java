@@ -1,7 +1,9 @@
 package xyz.xcye.amqp.config;
 
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.scheduling.concurrent.CustomizableThreadFactory;
 
 /**
  * @author qsyyke
@@ -11,5 +13,4 @@ import org.springframework.context.annotation.Configuration;
 @EnableConfigurationProperties({AuroraAmqpProperties.class})
 @Configuration
 public class RabbitMQAutoConfig {
-
 }
