@@ -184,8 +184,8 @@ module.exports = {
         ]*/
     ],
     //这里使用本地主题
-    // theme: path.resolve(__dirname, "../../Aurora-theme/lib/node/index.js"),
-    theme: 'aurora',
+     theme: path.resolve(__dirname, "../../Aurora-theme/lib/node/index.js"),
+    //theme: 'aurora',
 
     //站点title
     title: "I do not follow,i lives is always all you want",
@@ -522,7 +522,7 @@ module.exports = {
 
         //在样式控制面板中，显示的字体颜色集合
         fontColor: [
-            "#2c3e50", "#42a5f5", "#8093f1", "#FF6EC7", "#FF7F00", "#8FBC8F", "#EAADEA",
+            "#EAADEA","#42a5f5","#2c3e50", "#8093f1", "#FF6EC7", "#FF7F00", "#8FBC8F", 
             "#3299CC", "#CDCDCD", "#CC3299", "#FF7F00", "#2F4F4F",
         ],
 
@@ -540,7 +540,7 @@ module.exports = {
 
         //样式控制面板显示的字体，有默认值
         fontFamily: [
-            "-apple-system", "hlt", "tzt", "sst", "lf", "xsf", "lsf", "cgt",
+            "cgt","tzt","-apple-system", "hlt",  "sst", "lf", "xsf", "lsf", 
         ],
 
         //页脚信息，支持HTML，这是一个数组
