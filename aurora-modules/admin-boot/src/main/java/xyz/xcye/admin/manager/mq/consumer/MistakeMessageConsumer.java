@@ -4,7 +4,7 @@ import com.rabbitmq.client.Channel;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;
-import xyz.xcye.core.constant.amqp.AmqpQueueNameConstant;
+import xyz.xcye.amqp.comstant.AmqpQueueNameConstant;
 import xyz.xcye.core.util.LogUtils;
 
 import java.io.IOException;

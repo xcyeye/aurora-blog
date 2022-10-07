@@ -20,11 +20,10 @@ import xyz.xcye.admin.constant.RedisStorageConstant;
 import xyz.xcye.admin.dto.RolePermissionDTO;
 import xyz.xcye.admin.po.WhiteUrl;
 import xyz.xcye.amqp.api.AmqpSenderService;
+import xyz.xcye.amqp.comstant.AmqpExchangeNameConstant;
+import xyz.xcye.amqp.comstant.AmqpQueueNameConstant;
 import xyz.xcye.auth.constant.OauthJwtConstant;
 import xyz.xcye.auth.constant.RequestConstant;
-import xyz.xcye.core.constant.amqp.AmqpExchangeNameConstant;
-import xyz.xcye.core.constant.amqp.AmqpQueueNameConstant;
-
 import java.net.URI;
 import java.nio.charset.StandardCharsets;
 import java.util.*;

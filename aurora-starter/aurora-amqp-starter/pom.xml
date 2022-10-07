@@ -3,13 +3,13 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>common-api</artifactId>
-        <groupId>xyz.xcye.api</groupId>
+        <artifactId>aurora-starter</artifactId>
+        <groupId>xyz.xcye.starter</groupId>
         <version>1.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>amqp-api</artifactId>
+    <artifactId>aurora-amqp-starter</artifactId>
 
     <properties>
         <maven.compiler.source>11</maven.compiler.source>
@@ -18,19 +18,13 @@
 
     <dependencies>
         <dependency>
-            <groupId>xyz.xcye.starter</groupId>
-            <artifactId>aurora-feign-starter</artifactId>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-stream-rabbit</artifactId>
         </dependency>
 
         <dependency>
-            <groupId>xyz.xcye.starter</groupId>
-            <artifactId>aurora-amqp-starter</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>xyz.xcye.starter</groupId>
-            <artifactId>aurora-spring-boot-starter</artifactId>
+            <groupId>xyz.xcye.base</groupId>
+            <artifactId>amqp-common</artifactId>
         </dependency>
     </dependencies>
-
 </project>

@@ -17,9 +17,15 @@
     </properties>
 
     <dependencies>
+
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
+            <groupId>xyz.xcye.base</groupId>
+            <artifactId>article-common</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>xyz.xcye.base</groupId>
+            <artifactId>amqp-common</artifactId>
         </dependency>
 
         <dependency>
@@ -49,7 +55,7 @@
 
         <dependency>
             <groupId>xyz.xcye.starter</groupId>
-            <artifactId>aurora-amqp.starter</artifactId>
+            <artifactId>aurora-amqp-starter</artifactId>
         </dependency>
 
         <dependency>
@@ -78,8 +84,8 @@
         </dependency>
 
         <dependency>
-            <groupId>xyz.xcye.base</groupId>
-            <artifactId>article-common</artifactId>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
     </dependencies>
 

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.BindException;
+import xyz.xcye.amqp.comstant.AmqpQueueNameConstant;
 import xyz.xcye.amqp.config.service.MistakeMessageSendService;
 import xyz.xcye.article.po.Article;
 import xyz.xcye.article.po.Talk;
@@ -16,7 +17,6 @@ import xyz.xcye.article.service.TalkService;
 import xyz.xcye.article.vo.ArticleVO;
 import xyz.xcye.article.vo.TalkVO;
 import xyz.xcye.comment.po.Comment;
-import xyz.xcye.core.constant.amqp.AmqpQueueNameConstant;
 import xyz.xcye.core.util.BeanUtils;
 import xyz.xcye.feign.config.service.MessageLogFeignService;
 

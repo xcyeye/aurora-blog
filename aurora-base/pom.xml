@@ -22,5 +22,6 @@
         <module>auth-common</module>
         <module>data-common</module>
         <module>article-common</module>
+        <module>amqp-common</module>
     </modules>
 </project>

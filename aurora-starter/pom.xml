@@ -18,7 +18,7 @@
         <module>aurora-mybatis-starter</module>
         <module>aurora-redis-starter</module>
         <module>aurora-feign-starter</module>
-        <module>aurora-amqp.starter</module>
+        <module>aurora-amqp-starter</module>
         <module>aurora-nacos-starter</module>
         <module>aurora-seata-starter</module>
         <module>aurora-swagger-starter</module>

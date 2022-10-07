@@ -18,8 +18,8 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
+            <groupId>xyz.xcye.base</groupId>
+            <artifactId>comment-common</artifactId>
         </dependency>
 
         <dependency>
@@ -33,13 +33,13 @@
         </dependency>
 
         <dependency>
-            <groupId>xyz.xcye.starter              </groupId>
+            <groupId>xyz.xcye.starter</groupId>
             <artifactId>aurora-datasource-starter</artifactId>
         </dependency>
 
         <dependency>
             <groupId>xyz.xcye.starter</groupId>
-            <artifactId>aurora-amqp.starter</artifactId>
+            <artifactId>aurora-amqp-starter</artifactId>
         </dependency>
 
         <dependency>
@@ -69,7 +69,12 @@
 
         <dependency>
             <groupId>xyz.xcye.base</groupId>
-            <artifactId>comment-common</artifactId>
+            <artifactId>amqp-common</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
     </dependencies>
 

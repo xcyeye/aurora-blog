@@ -1,4 +1,4 @@
-package xyz.xcye.core.constant.amqp;
+package xyz.xcye.amqp.comstant;
 
 /**
  * rabbitmq的交换机名称常量类

@@ -5,8 +5,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Component;
-import xyz.xcye.core.constant.amqp.AmqpExchangeNameConstant;
-import xyz.xcye.core.constant.amqp.AmqpQueueNameConstant;
+import xyz.xcye.amqp.comstant.AmqpExchangeNameConstant;
+import xyz.xcye.amqp.comstant.AmqpQueueNameConstant;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;

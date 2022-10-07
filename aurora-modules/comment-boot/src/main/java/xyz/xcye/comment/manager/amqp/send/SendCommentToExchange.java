@@ -5,9 +5,9 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindException;
 import xyz.xcye.amqp.api.AmqpSenderService;
+import xyz.xcye.amqp.comstant.AmqpExchangeNameConstant;
+import xyz.xcye.amqp.comstant.AmqpQueueNameConstant;
 import xyz.xcye.comment.po.Comment;
-import xyz.xcye.core.constant.amqp.AmqpExchangeNameConstant;
-import xyz.xcye.core.constant.amqp.AmqpQueueNameConstant;
 import xyz.xcye.core.util.ConvertObjectUtils;
 
 /**

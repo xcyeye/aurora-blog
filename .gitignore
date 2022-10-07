@@ -35,4 +35,13 @@ build/
 
 ### 打印日志 ###
 log
-shell
+
+#eclipse ignore
+.settings/
+.project
+.classpatch
+*/.classpatch
+.classpath
+*/.classpath
+*/bin/
+.metadata/

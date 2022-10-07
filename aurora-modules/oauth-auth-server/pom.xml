@@ -58,6 +58,11 @@
         </dependency>
 
         <dependency>
+            <groupId>xyz.xcye.base</groupId>
+            <artifactId>amqp-common</artifactId>
+        </dependency>
+
+        <dependency>
             <groupId>xyz.xcye.starter</groupId>
             <artifactId>aurora-spring-boot-starter</artifactId>
         </dependency>

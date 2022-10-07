@@ -2,6 +2,8 @@ package xyz.xcye.file.interfaces.impl;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import org.springframework.web.context.request.RequestAttributes;
+import org.springframework.web.context.request.RequestContextHolder;
 import xyz.xcye.core.enums.ResponseStatusCodeEnum;
 import xyz.xcye.core.exception.file.FileException;
 import xyz.xcye.core.util.DateUtils;
@@ -114,6 +116,7 @@ public class LocalFileStorageServiceImpl implements FileStorageService {
         }
 
         // 运行到这里，文件已经上传完成了
+        RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
         return future.get();
     }
 

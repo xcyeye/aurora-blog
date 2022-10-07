@@ -19,7 +19,7 @@
     <dependencies>
         <dependency>
             <groupId>xyz.xcye.starter</groupId>
-            <artifactId>aurora-amqp.starter</artifactId>
+            <artifactId>aurora-amqp-starter</artifactId>
         </dependency>
 
         <dependency>

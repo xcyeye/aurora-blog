@@ -1,4 +1,4 @@
-package xyz.xcye.core.constant.amqp;
+package xyz.xcye.amqp.comstant;
 
 /**
  * 这是和rabbitmq相关的枚举

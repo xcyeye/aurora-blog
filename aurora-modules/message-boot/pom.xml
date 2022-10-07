@@ -82,6 +82,11 @@
             <groupId>xyz.xcye.base</groupId>
             <artifactId>file-common</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>xyz.xcye.base</groupId>
+            <artifactId>amqp-common</artifactId>
+        </dependency>
     </dependencies>
 
     <build>

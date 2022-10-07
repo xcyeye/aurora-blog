@@ -18,8 +18,13 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
+            <groupId>xyz.xcye.base</groupId>
+            <artifactId>admin-common</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>xyz.xcye.base</groupId>
+            <artifactId>amqp-common</artifactId>
         </dependency>
 
         <dependency>
@@ -69,13 +74,13 @@
         </dependency>
 
         <dependency>
-            <groupId>xyz.xcye.base</groupId>
-            <artifactId>admin-common</artifactId>
+            <groupId>xyz.xcye.api</groupId>
+            <artifactId>admin-api</artifactId>
         </dependency>
 
         <dependency>
-            <groupId>xyz.xcye.api</groupId>
-            <artifactId>admin-api</artifactId>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
     </dependencies>
 

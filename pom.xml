@@ -48,7 +48,8 @@
         <swagger-core.version>2.2.0</swagger-core.version>
         <fastjson.version>1.2.80</fastjson.version>
         <jedis.version>3.7.1</jedis.version>
-        <pagehelper.version>1.4.0</pagehelper.version>
+        <pagehelper-starter.version>1.4.0</pagehelper-starter.version>
+        <pagehelper.version>5.3.0</pagehelper.version>
         <userAgentUtils.version>1.20</userAgentUtils.version>
         <seata.version>1.4.2</seata.version>
         <nacos-client.version>2.0.4</nacos-client.version>
@@ -146,6 +147,12 @@
             <dependency>
                 <groupId>com.github.pagehelper</groupId>
                 <artifactId>pagehelper-spring-boot-starter</artifactId>
+                <version>${pagehelper-starter.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.github.pagehelper</groupId>
+                <artifactId>pagehelper</artifactId>
                 <version>${pagehelper.version}</version>
             </dependency>
 
@@ -230,7 +237,7 @@
 
             <dependency>
                 <groupId>xyz.xcye.starter</groupId>
-                <artifactId>aurora-amqp.starter</artifactId>
+                <artifactId>aurora-amqp-starter</artifactId>
                 <version>${blog.version}</version>
             </dependency>
 
@@ -323,6 +330,12 @@
             <dependency>
                 <groupId>xyz.xcye.base</groupId>
                 <artifactId>article-common</artifactId>
+                <version>${blog.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>xyz.xcye.base</groupId>
+                <artifactId>amqp-common</artifactId>
                 <version>${blog.version}</version>
             </dependency>
 
