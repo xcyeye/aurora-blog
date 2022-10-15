@@ -45,3 +45,7 @@ log
 */.classpath
 */bin/
 .metadata/
+
+
+### jrebel ###
+**/rebel.xml
