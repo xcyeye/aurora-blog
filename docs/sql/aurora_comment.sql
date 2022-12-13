@@ -13,7 +13,7 @@
 
  Date: 05/08/2022 18:03:14
 */
-
+use aurora_comment;
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
 

@@ -101,8 +101,11 @@ public class LocalFileStorageServiceImpl implements FileStorageService {
                 throw new FileException(ResponseStatusCodeEnum.EXCEPTION_FILE_FAIL_UPLOAD);
             }
 
-            String fileRemoteUrl = host + FileUtils.getFileSplitPath(nginxRootPath, writeFile.getAbsolutePath());
-
+            String fileSplitPath = FileUtils.getFileSplitPath(nginxRootPath, writeFile.getAbsolutePath());
+            if (fileSplitPath.contains("\\")) {
+                fileSplitPath = fileSplitPath.replaceAll("\\\\", "/");
+            }
+            String fileRemoteUrl = host + fileSplitPath;
             return new FileEntityDTO(writeFile.getAbsolutePath(), writeFile.getName(), writeFile.length(), fileRemoteUrl);
         });
 

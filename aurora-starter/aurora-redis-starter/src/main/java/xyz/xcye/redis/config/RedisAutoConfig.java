@@ -3,15 +3,22 @@ package xyz.xcye.redis.config;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.redis.connection.RedisConnection;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
+import org.springframework.data.redis.connection.RedisPassword;
+import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
+import org.springframework.data.redis.connection.jedis.JedisClientConfiguration;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
+
+import java.time.Duration;
 
 /**
  * @author qsyyke
@@ -22,9 +29,26 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 @AutoConfigureBefore(value = {RedisAutoConfiguration.class})
 public class RedisAutoConfig {
 
+    @Value("${spring.redis.host:127.0.0.1}")
+    private String host;
+
+    @Value("${spring.redis.port:6379}")
+    private Integer port;
+
+    @Value("${spring.redis.password:}")
+    private String password;
+
     @Bean
     public RedisConnectionFactory redisConnectionFactory() {
-        return new JedisConnectionFactory();
+        RedisStandaloneConfiguration redisStandaloneConfiguration = new RedisStandaloneConfiguration();
+        redisStandaloneConfiguration.setHostName(host);
+        redisStandaloneConfiguration.setPort(port);
+        //由于我们使用了动态配置库,所以此处省略
+        // redisStandaloneConfiguration.setDatabase();
+        redisStandaloneConfiguration.setPassword(RedisPassword.of(password));
+        JedisClientConfiguration.JedisClientConfigurationBuilder jedisClientConfiguration = JedisClientConfiguration.builder();
+        return new JedisConnectionFactory(redisStandaloneConfiguration,
+                jedisClientConfiguration.build());
     }
 
     @Bean(name = "redisTemplate")

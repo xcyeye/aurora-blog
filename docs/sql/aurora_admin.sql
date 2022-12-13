@@ -14,6 +14,7 @@
  Date: 05/08/2022 18:02:53
 */
 
+use aurora_admin;
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
 

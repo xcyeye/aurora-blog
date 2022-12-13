@@ -13,6 +13,7 @@
 
  Date: 05/08/2022 18:03:07
 */
+use aurora_auth_server;
 
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;

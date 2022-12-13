@@ -21,6 +21,7 @@
         <module>aurora-base</module>
         <module>aurora-modules</module>
         <module>common-api</module>
+        <module>suport</module>
     </modules>
 
     <properties>

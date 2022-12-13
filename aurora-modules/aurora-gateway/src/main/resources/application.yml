@@ -9,6 +9,11 @@ spring:
   main:
     allow-bean-definition-overriding: true
   cloud:
+    inetutils:
+      ignored-interfaces:
+        - VirtualBox Host-Only Network
+        - VMware Network Adapter VMnet1
+        - VMware Network Adapter VMnet8
     gateway:
       # 设置跨域
       globalcors:
@@ -23,7 +28,7 @@ spring:
       enable: true
     nacos:
       discovery:
-        server-addr: 127.0.0.1:8848
+        server-addr: 192.168.158.120:8848
         service: aurora-gateway
 
 springdoc:
