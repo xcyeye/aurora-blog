@@ -12,15 +12,16 @@
     <groupId>xyz.xcye.base</groupId>
     <artifactId>aurora-base</artifactId>
     <packaging>pom</packaging>
+    <version>1.0-SNAPSHOT</version>
 
     <modules>
+        <module>aurora-core</module>
+        <module>data-common</module>
         <module>file-common</module>
         <module>admin-common</module>
         <module>comment-common</module>
-        <module>aurora-core</module>
         <module>message-common</module>
         <module>auth-common</module>
-        <module>data-common</module>
         <module>article-common</module>
         <module>amqp-common</module>
     </modules>

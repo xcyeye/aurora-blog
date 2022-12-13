@@ -61,6 +61,11 @@
             <groupId>xyz.xcye.base</groupId>
             <artifactId>file-common</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>xyz.xcye</groupId>
+            <artifactId>support-service</artifactId>
+        </dependency>
     </dependencies>
 
     <build>
@@ -68,6 +73,7 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>3.0.0</version>
             </plugin>
         </plugins>
     </build>

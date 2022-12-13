@@ -21,7 +21,8 @@
         <module>aurora-base</module>
         <module>aurora-modules</module>
         <module>common-api</module>
-        <module>suport</module>
+        <module>support</module>
+        <module>sql-generator</module>
     </modules>
 
     <properties>
@@ -47,7 +48,7 @@
         <springfox-data-rest.version>3.0.0</springfox-data-rest.version>
         <springdoc.version>1.6.8</springdoc.version>
         <swagger-core.version>2.2.0</swagger-core.version>
-        <fastjson.version>1.2.80</fastjson.version>
+        <fastjson.version>1.2.83</fastjson.version>
         <jedis.version>3.7.1</jedis.version>
         <pagehelper-starter.version>1.4.0</pagehelper-starter.version>
         <pagehelper.version>5.3.0</pagehelper.version>
@@ -108,7 +109,7 @@
             <dependency>
                 <groupId>com.alibaba</groupId>
                 <artifactId>fastjson</artifactId>
-                <version>1.2.79</version>
+                <version>${fastjson.version}</version>
             </dependency>
 
             <!--工具类-->
@@ -380,6 +381,18 @@
             <dependency>
                 <groupId>xyz.xcye.api</groupId>
                 <artifactId>gateway-api</artifactId>
+                <version>${blog.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>xyz.xcye</groupId>
+                <artifactId>support</artifactId>
+                <version>${blog.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>xyz.xcye</groupId>
+                <artifactId>support-service</artifactId>
                 <version>${blog.version}</version>
             </dependency>
         </dependencies>

@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xyz.xcye.file.dao.AuPeopleDao">
+
+    <resultMap id="auPeopleResultMap" type="xyz.xcye.file.po.AuPeople">
+        <id column="uid" property="uid"/>
+        <result column="name" property="name"/>
+    </resultMap>
+
+  	<sql id="Where_Condition">
+        <where>
+            <if test="uid != null">
+                AND uid = #{uid}
+            </if>
+            <if test="name != null and name != '' ">
+                AND name = #{name}
+            </if>
+        </where>
+  	</sql>
+
+    <sql id="Base_Column_List">
+        uid,
+        name
+    </sql>
+
+	<!-- common methods start -->
+    <!-- 新增一条数据 -->
+	<insert id="insert" parameterType="xyz.xcye.file.po.AuPeople" useGeneratedKeys="true" keyProperty="uid">
+        INSERT INTO au_people (
+            <trim suffixOverrides=",">
+                <if test="uid != null">
+                    uid,
+                </if>
+                <if test="name != null">
+                    name,
+                </if>
+            </trim>
+        ) VALUES (
+            <trim suffixOverrides=",">
+                <if test="uid != null">
+                 #{uid},
+                </if>
+                <if test="name != null">
+                 #{name},
+                </if>
+            </trim>
+        )
+	</insert>
+
+    <!-- 通过主键删除数据 -->
+	<delete id="deleteById" parameterType="Integer">
+        DELETE FROM au_people
+        WHERE uid = #{uid} 
+	</delete>
+
+    <!-- 根据id更新数据 -->
+    <update id="updateById" parameterType="xyz.xcye.file.po.AuPeople">
+		UPDATE au_people
+		<set>
+			<if test="name != null">name = #{name},</if>
+		</set>
+		WHERE
+		    uid = #{uid}
+	</update>
+
+	<!-- 根据主键查询数据  -->
+	<select id="queryById" resultMap="auPeopleResultMap" parameterType="Integer">
+        SELECT
+        <include refid="Base_Column_List" />
+  	    FROM au_people
+        WHERE
+            uid = #{uid}
+    </select>
+
+    <!-- 查询一条记录  -->
+	<select id="queryOne" resultMap="auPeopleResultMap" parameterType="xyz.xcye.file.po.AuPeople">
+         SELECT
+         <include refid="Base_Column_List" />
+  	     FROM au_people
+         <include refid="Where_Condition" />
+         LIMIT 1
+    </select>
+
+	<!-- 根据传入参数查询数据列表  -->
+	<select id="queryListByWhere" resultMap="auPeopleResultMap" parameterType="xyz.xcye.file.po.AuPeople">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM au_people
+        <include refid="Where_Condition" />
+    </select>
+
+	<!-- 统计符合条件的数据数量 -->
+	<select id="countByWhere" resultType="int" parameterType="xyz.xcye.file.po.AuPeople">
+		SELECT COUNT(*) FROM au_people
+		<include refid="Where_Condition" />
+	</select>
+
+    <!-- 批量插入多条数据 -->
+	<insert id="batchInsert" parameterType="java.util.List">
+        INSERT INTO au_people (
+        	<include refid="Base_Column_List" />
+        ) VALUES
+        <foreach collection="list" item="item" index= "index" separator =",">
+            (
+            <trim suffixOverrides=",">
+				#{item.uid},
+				#{item.name},
+            </trim>
+            )
+        </foreach>
+    </insert>
+	<!-- common methods end -->
+
+</mapper>

@@ -49,3 +49,6 @@ log
 
 ### jrebel ###
 **/rebel.xml
+
+### sql-generator ###
+/sql-generator

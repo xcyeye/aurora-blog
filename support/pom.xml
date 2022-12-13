@@ -9,10 +9,10 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>suport</artifactId>
+    <artifactId>support</artifactId>
     <packaging>pom</packaging>
     <modules>
-        <module>suport-service</module>
+        <module>support-service</module>
     </modules>
 
     <properties>

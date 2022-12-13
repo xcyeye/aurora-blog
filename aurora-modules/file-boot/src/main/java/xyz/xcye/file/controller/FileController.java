@@ -11,13 +11,18 @@ import xyz.xcye.core.annotaion.controller.ModifyOperation;
 import xyz.xcye.core.annotaion.controller.ResponseRealResult;
 import xyz.xcye.core.annotaion.controller.SelectOperation;
 import xyz.xcye.core.exception.file.FileException;
+import xyz.xcye.core.util.BeanUtils;
 import xyz.xcye.core.valid.Insert;
 import xyz.xcye.core.valid.Update;
 import xyz.xcye.data.entity.Condition;
 import xyz.xcye.data.entity.PageData;
 import xyz.xcye.file.dto.FileEntityDTO;
+import xyz.xcye.file.po.AuPeople;
 import xyz.xcye.file.po.File;
+import xyz.xcye.file.pojo.AuPeoplePojo;
+import xyz.xcye.file.service.AuPeopleService;
 import xyz.xcye.file.service.FileService;
+import xyz.xcye.file.vo.AuPeopleVO;
 import xyz.xcye.file.vo.FileVO;
 
 import javax.servlet.ServletOutputStream;
@@ -126,11 +131,24 @@ public class FileController {
         return fileService.queryByUid(uid);
     }
 
+    @Autowired
+    private AuPeopleService auPeopleService;
+
     @SelectOperation
     @Operation(summary = "查询该userUid所对应的所有文件的后缀信息")
     @GetMapping("/format/{userUid}")
-    public List<String> queryAllFileFormat(@PathVariable("userUid") long userUid) {
-        return fileService.selectAllFileFormat(userUid);
+    // public List<String> queryAllFileFormat(@PathVariable("userUid") long userUid) {
+    public AuPeopleVO queryAllFileFormat(@PathVariable("userUid") long userUid) {
+        // return fileService.selectAllFileFormat(userUid);
+        AuPeoplePojo pojo = new AuPeoplePojo();
+        pojo.setName("xcye");
+        pojo.setUid(10);
+        AuPeople auPeople = BeanUtils.copyProperties(pojo, AuPeople.class);
+
+        AuPeople insert = auPeopleService.insert(auPeople);
+        // auPeopleService.setInfoDao(null);
+        System.out.println(insert);
+        return BeanUtils.copyProperties(insert, AuPeopleVO.class);
     }
 
     /**
