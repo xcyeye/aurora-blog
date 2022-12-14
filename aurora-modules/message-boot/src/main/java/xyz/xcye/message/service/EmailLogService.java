@@ -1,45 +1,54 @@
 package xyz.xcye.message.service;
 
+import com.github.pagehelper.PageHelper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.validation.BindException;
+import xyz.xcye.core.util.BeanUtils;
+import xyz.xcye.core.util.ValidationUtils;
+import xyz.xcye.core.valid.Update;
 import xyz.xcye.data.entity.Condition;
 import xyz.xcye.data.entity.PageData;
+import xyz.xcye.data.util.PageUtils;
 import xyz.xcye.message.po.EmailLog;
+import xyz.xcye.message.pojo.EmailLogPojo;
 import xyz.xcye.message.vo.EmailLogVO;
 
+import javax.validation.groups.Default;
+
 /**
- * 操作au_email_log数据表的service层
  * @author qsyyke
  */
 
-public interface EmailLogService {
-    /**
-     * 插入一条邮件发送日志
-     * @param emailLog
-     * @return
-     */
-    int insertEmailLog(EmailLog emailLog);
+@Service
+public class EmailLogService {
 
-    /**
-     * 更新一条邮件发送日志
-     */
-    int updateEmailLog(EmailLog emailLog) throws BindException;
+    @Autowired
+    private AuroraEmailLogService auroraEmailLogService;
 
-    /**
-     * 根据uid直接删除对应的邮件发送日志记录
-     */
-    int deleteEmailLog(long uid);
+    public void insertEmailLog(EmailLogPojo emailLog) {
+        //因为au_email_log表中的uid是自增的，可以不用设置uid
+        auroraEmailLogService.insert(BeanUtils.copyProperties(emailLog, EmailLog.class));
+    }
 
-    /**
-     * 查询所有满足要求的邮件发送日志
-     * @param condition 查询条件 其中keyword为接收者邮箱号,发送状态为status
-     * @return
-     * @throws InstantiationException
-     * @throws IllegalAccessException
-     */
-    PageData<EmailLogVO> queryAll(Condition<Long> condition);
+    public int updateEmailLog(EmailLogPojo emailLog) throws BindException {
+        //参数验证
+        ValidationUtils.valid(emailLog, Update.class, Default.class);
+        return auroraEmailLogService.updateById(BeanUtils.copyProperties(emailLog, EmailLog.class));
+    }
 
-    /**
-     * 查询uid所对应的邮件发送日志
-     */
-    EmailLogVO queryByUid(long uid);
+    public int deleteEmailLog(long uid) {
+        return auroraEmailLogService.deleteById(uid);
+    }
+
+    public PageData<EmailLogVO> queryAll(Condition<Long> condition) {
+        PageHelper.startPage(condition.getPageNum(),condition.getPageSize(),condition.getOrderBy());
+        return PageUtils.pageList(condition, t -> BeanUtils.copyList(auroraEmailLogService.queryListByCondition(condition),EmailLogVO.class));
+    }
+
+    public EmailLogVO queryByUid(long uid) {
+        Condition<Long> condition = new Condition<>();
+        condition.setUid(uid);
+        return BeanUtils.getSingleObjFromList(auroraEmailLogService.queryListByCondition(condition), EmailLogVO.class);
+    }
 }

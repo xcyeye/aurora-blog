@@ -31,25 +31,25 @@ public class SendMailController {
     @ModifyOperation
     @Operation(summary = "发送普通文本")
     @PostMapping("/simpleText")
-    public int sendSimpleMail( @RequestParam(value = "receiverEmail") String receiverEmail,
+    public void sendSimpleMail( @RequestParam(value = "receiverEmail") String receiverEmail,
                                         @RequestParam(value = "subject") String subject,
                                         @RequestParam(value = "content") String content) throws MessagingException {
-        return sendMailService.sendSimpleMail(receiverEmail,subject,content);
+        sendMailService.sendSimpleMail(receiverEmail,subject,content);
     }
 
     @Operation(summary = "发送自定义html")
     @ModifyOperation
     @PostMapping("/customMail")
-    public int sendCustomMail(@RequestParam("subject") String subject,
+    public void sendCustomMail(@RequestParam("subject") String subject,
                                        @RequestParam("content") String content,
                                        @RequestParam("receiverEmail") String receiverEmail) throws MessagingException {
-        return sendMailService.sendCustomMail(receiverEmail,subject,content);
+       sendMailService.sendCustomMail(receiverEmail,subject,content);
     }
 
     @Operation(summary = "重新发送自定义邮件")
     @ModifyOperation
     @PostMapping("/resend/{uid}")
-    public int resendCustomMail(@PathVariable("uid") Long emailLogUid) throws MessagingException {
-        return sendMailService.resendCustomMail(emailLogUid);
+    public void resendCustomMail(@PathVariable("uid") Long emailLogUid) throws MessagingException {
+        sendMailService.resendCustomMail(emailLogUid);
     }
 }

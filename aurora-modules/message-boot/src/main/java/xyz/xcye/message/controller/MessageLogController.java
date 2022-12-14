@@ -14,6 +14,7 @@ import xyz.xcye.core.valid.Update;
 import xyz.xcye.data.entity.Condition;
 import xyz.xcye.data.entity.PageData;
 import xyz.xcye.message.po.MessageLog;
+import xyz.xcye.message.pojo.MessageLogPojo;
 import xyz.xcye.message.service.MessageLogService;
 import xyz.xcye.message.vo.MessageLogVO;
 
@@ -37,15 +38,15 @@ public class MessageLogController {
     @Operation(summary = "插入新消费消息")
     @ModifyOperation
     @PostMapping("")
-    public int insertMessageLog(@Validated({Insert.class,Default.class}) @RequestBody MessageLog messageLog)
+    public void insertMessageLog(@Validated({Insert.class,Default.class}) @RequestBody MessageLogPojo messageLog)
             throws BindException {
-        return messageLogService.insertMessageLog(messageLog);
+        messageLogService.insertMessageLog(messageLog);
     }
 
     @Operation(summary = "更新消费消息")
     @ModifyOperation
     @PutMapping("")
-    public int updateMessageLog(@Validated(Update.class) @RequestBody MessageLog messageLog) throws BindException {
+    public int updateMessageLog(@Validated(Update.class) @RequestBody MessageLogPojo messageLog) throws BindException {
         return messageLogService.updateMessageLog(messageLog);
     }
 

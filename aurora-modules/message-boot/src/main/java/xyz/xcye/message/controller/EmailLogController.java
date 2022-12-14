@@ -14,6 +14,7 @@ import xyz.xcye.core.valid.Update;
 import xyz.xcye.data.entity.Condition;
 import xyz.xcye.data.entity.PageData;
 import xyz.xcye.message.po.EmailLog;
+import xyz.xcye.message.pojo.EmailLogPojo;
 import xyz.xcye.message.service.EmailLogService;
 import xyz.xcye.message.vo.EmailLogVO;
 
@@ -36,14 +37,14 @@ public class EmailLogController {
     @Operation(summary = "插入邮件发送日志")
     @ModifyOperation
     @PostMapping("")
-    public int insertEmailLog(@Validated({Insert.class, Default.class}) EmailLog emailLog) {
-        return emailLogService.insertEmailLog(emailLog);
+    public void insertEmailLog(@Validated({Insert.class, Default.class}) EmailLogPojo emailLog) {
+        emailLogService.insertEmailLog(emailLog);
     }
 
     @Operation(summary = "根据uid更新邮件发送日志")
     @ModifyOperation
     @PutMapping("")
-    public int updateEmailLog(@Validated({Update.class,Default.class}) EmailLog emailLog) throws BindException {
+    public int updateEmailLog(@Validated({Update.class,Default.class}) EmailLogPojo emailLog) throws BindException {
         return emailLogService.updateEmailLog(emailLog);
     }
 

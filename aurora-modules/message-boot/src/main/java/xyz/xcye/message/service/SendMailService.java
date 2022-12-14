@@ -19,7 +19,7 @@ public interface SendMailService {
      * @return
      * @throws MessagingException 发送失败
      */
-    int sendHtmlMail(StorageSendMailInfo storageSendMailInfo)
+    void sendHtmlMail(StorageSendMailInfo storageSendMailInfo)
             throws MessagingException, IOException, EmailException;
 
     /**
@@ -30,7 +30,7 @@ public interface SendMailService {
      * @return
      * @throws MessagingException
      */
-    int sendSimpleMail(String receiverEmail,String subject, String content) throws MessagingException;
+    void sendSimpleMail(String receiverEmail,String subject, String content) throws MessagingException;
 
     /**
      * 发送自定义html邮件
@@ -40,12 +40,12 @@ public interface SendMailService {
      * @return
      * @throws MessagingException
      */
-    int sendCustomMail(String receiverEmail,String subject,String content) throws MessagingException;
+    void sendCustomMail(String receiverEmail,String subject,String content) throws MessagingException;
 
     /**
      * 重新发送自定义的邮件
      * @param emailLogUid
      * @return
      */
-    int resendCustomMail(Long emailLogUid) throws MessagingException;
+    void resendCustomMail(Long emailLogUid) throws MessagingException;
 }

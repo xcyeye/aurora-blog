@@ -28,18 +28,8 @@
         </dependency>
 
         <dependency>
-            <groupId>xyz.xcye.starter</groupId>
-            <artifactId>aurora-mybatis-starter</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>xyz.xcye.starter</groupId>
-            <artifactId>aurora-datasource-starter</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>xyz.xcye.starter</groupId>
-            <artifactId>aurora-redis-starter</artifactId>
+            <groupId>xyz.xcye.message</groupId>
+            <artifactId>message-service</artifactId>
         </dependency>
 
         <dependency>
@@ -71,11 +61,6 @@
         <dependency>
             <groupId>xyz.xcye.api</groupId>
             <artifactId>mail-api</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>xyz.xcye.base</groupId>
-            <artifactId>message-common</artifactId>
         </dependency>
 
         <dependency>

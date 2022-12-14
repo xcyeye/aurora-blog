@@ -6,8 +6,11 @@ import org.springframework.amqp.rabbit.connection.CorrelationData;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindException;
+import xyz.xcye.core.util.ValidationUtils;
+import xyz.xcye.core.valid.Update;
 import xyz.xcye.message.po.MessageLog;
 import xyz.xcye.core.util.BeanUtils;
+import xyz.xcye.message.service.AuroraMessageLogService;
 import xyz.xcye.message.vo.MessageLogVO;
 import xyz.xcye.message.service.MessageLogService;
 
@@ -19,6 +22,9 @@ import javax.annotation.PostConstruct;
 
 @Slf4j
 public class MessageRabbitMQConfirmConfig implements RabbitTemplate.ConfirmCallback,RabbitTemplate.ReturnsCallback {
+
+    @Autowired
+    private AuroraMessageLogService auroraMessageLogService;
 
     @Autowired
     private MessageLogService messageLogService;
@@ -48,7 +54,8 @@ public class MessageRabbitMQConfirmConfig implements RabbitTemplate.ConfirmCallb
             //更新消息投递状态
             messageLog.setAckStatus(true);
             try {
-                messageLogService.updateMessageLog(messageLog);
+                ValidationUtils.valid(messageLog, Update.class);
+                auroraMessageLogService.updateById(messageLog);
             } catch (BindException e) {
                 e.printStackTrace();
                 // 可能因为服务未开启或者是网络不可用，造成的异常
@@ -74,7 +81,8 @@ public class MessageRabbitMQConfirmConfig implements RabbitTemplate.ConfirmCallb
             //设置错误消息
             messageLog.setErrorMessage(cause);
             try {
-                messageLogService.updateMessageLog(messageLog);
+                ValidationUtils.valid(messageLog, Update.class);
+                auroraMessageLogService.updateById(messageLog);
             } catch (BindException e) {
                 e.printStackTrace();
                 // 可能会由于网络不可用，造成异常

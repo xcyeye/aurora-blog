@@ -1,82 +1,101 @@
 package xyz.xcye.message.po;
 
 import lombok.Data;
-import xyz.xcye.core.valid.Delete;
-import xyz.xcye.core.valid.Insert;
-import xyz.xcye.core.valid.Update;
-import xyz.xcye.core.valid.validator.ValidateString;
-
-import javax.validation.constraints.NotNull;
+import lombok.Builder;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+import java.io.Serializable;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 /**
- * 消息中间件消费消息的日志
- * @author qsyyke
+ * @table message_log <br/>
+ * @description TODO <br/>
+ * @date 2022-12-14 22:01:53 <br/>
+ * @author xcye <br/>
  */
 
 @Data
-public class MessageLog {
-    /**
-     * 唯一uid
-     */
-    @NotNull(message = "消息投递日志uid不能为null", groups={Update.class, Delete.class})
-    private Long uid;
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@Schema(title = "message_log数据表的实体类")
+public class MessageLog implements Serializable {
 
-    /**
-     * 生产者生产的消息
-     */
-    @ValidateString(value = "消息投递日志内容", groups={Insert.class},max = 30000)
-    private String message;
+private static final long serialVersionUID = 13247652346523L;
 
-    /**
-     * 如果发生错误，则错误消息是什么
-     */
-    private String errorMessage;
+	/**
+	 * 唯一uid
+	 */
+	@JsonSerialize(using = ToStringSerializer.class)
+	@Schema(title = "唯一uid")
+	private Long uid;
 
-    /**
-     * 交换机
-     */
-    @ValidateString(value = "消息投递日志的交换机", groups={Insert.class})
-    private String exchange;
+	/**
+	 * 投递的消息
+	 */
+	@Schema(title = "投递的消息")
+	private String message;
 
-    /**
-     * 队列
-     */
-    private String queue;
+	/**
+	 * 交换机名称
+	 */
+	@Schema(title = "交换机名称")
+	private String exchange;
 
-    /**
-     * 绑定路由key
-     */
-    @ValidateString(value = "消息投递日志的绑定路由key", groups={Insert.class})
-    private String routingKey;
+	/**
+	 * 队列名称
+	 */
+	@Schema(title = "队列名称")
+	private String queue;
 
-    /**
-     * 重试次数
-     */
-    @NotNull(message = "消息投递日志的重试次数不能为null", groups={Insert.class})
-    private Integer tryCount;
+	/**
+	 * 绑定路由key
+	 */
+	@Schema(title = "绑定路由key")
+	private String routingKey;
 
-    /**
-     * 消息消费的状态，true
-     */
-    @NotNull(message = "消息投递日志的发送状态不能为null", groups={Insert.class,Update.class})
-    private Boolean consumeStatus;
+	/**
+	 * 重试次数
+	 */
+	@Schema(title = "重试次数")
+	private Integer tryCount;
 
-    @NotNull(groups = {Insert.class},message = "消息的应答状态")
-    private Boolean ackStatus;
+	/**
+	 * 1: 表示消费成功 0：表示消费失败
+	 */
+	@Schema(title = "1: 表示消费成功 0：表示消费失败")
+	private Boolean consumeStatus;
 
-    /**
-     * 创建时间
-     */
-    private String createTime;
+	/**
+	 * 
+	 */
+	@Schema(title = "")
+	private String createTime;
 
-    /**
-     * 修改时间
-     */
-    private String updateTime;
+	/**
+	 * 
+	 */
+	@Schema(title = "")
+	private String updateTime;
 
-    /**
-     * 交换机类型
-     */
-    @ValidateString(value = "消息投递日志的交换机类型", groups={Insert.class})
-    private String exchangeType;
+	/**
+	 * 交换机类型
+	 */
+	@Schema(title = "交换机类型")
+	private String exchangeType;
+
+	/**
+	 * 确认状态 1：应答了
+	 */
+	@Schema(title = "确认状态 1：应答了")
+	private Boolean ackStatus;
+
+	/**
+	 * 如果发生错误，则错误消息是什么
+	 */
+	@Schema(title = "如果发生错误，则错误消息是什么")
+	private String errorMessage;
+
 }

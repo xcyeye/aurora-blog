@@ -3,7 +3,7 @@ package xyz.xcye.message.vo;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import io.swagger.v3.oas.annotations.media.Schema;
-import xyz.xcye.message.po.EmailLog;
+import xyz.xcye.message.po.MailTemplate;
 
 /**
  * @description TODO <br/>
@@ -13,7 +13,7 @@ import xyz.xcye.message.po.EmailLog;
 
 @Data
 @EqualsAndHashCode(callSuper = true)
-@Schema(title = "email_log数据表的VO")
-public class EmailLogVO extends EmailLog {
+@Schema(title = "mail_template数据表的VO")
+public class MailTemplateVO extends MailTemplate {
 
 }

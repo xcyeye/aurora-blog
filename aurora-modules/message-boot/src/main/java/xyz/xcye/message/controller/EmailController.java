@@ -17,6 +17,7 @@ import xyz.xcye.data.entity.Condition;
 import xyz.xcye.data.entity.PageData;
 import xyz.xcye.mail.api.feign.UserFeignService;
 import xyz.xcye.message.po.Email;
+import xyz.xcye.message.pojo.EmailPojo;
 import xyz.xcye.message.service.EmailService;
 import xyz.xcye.message.vo.EmailVO;
 
@@ -42,9 +43,9 @@ public class EmailController {
     @Operation(summary = "向数据库中插入新的邮箱记录，比如主机，授权码等")
     @ModifyOperation
     @PostMapping("")
-    public int insertEmail(@Validated({Insert.class,Default.class}) Email email)
+    public void insertEmail(@Validated({Insert.class,Default.class}) EmailPojo email)
             throws BindException, AuroraException {
-        return emailService.insertEmail(email);
+        emailService.insertEmail(email);
     }
 
     @Operation(summary = "根据唯一uid删除某条邮箱", description = "uid为long型")
@@ -57,7 +58,7 @@ public class EmailController {
     @Operation(summary = "根据emailDO实体，更新邮箱记录", description = "必须传入uid以及delete字段")
     @ModifyOperation
     @PutMapping("")
-    public int updateEmailByUid(@Validated({Update.class, Default.class}) Email email) {
+    public int updateEmailByUid(@Validated({Update.class, Default.class}) EmailPojo email) {
         return emailService.updateEmail(email);
     }
 

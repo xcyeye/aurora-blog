@@ -18,4 +18,30 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
+    <dependencies>
+        <dependency>
+            <groupId>xyz.xcye</groupId>
+            <artifactId>support-service</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>xyz.xcye.starter</groupId>
+            <artifactId>aurora-datasource-starter</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>xyz.xcye.starter</groupId>
+            <artifactId>aurora-mybatis-starter</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>xyz.xcye.starter</groupId>
+            <artifactId>aurora-redis-starter</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>xyz.xcye.base</groupId>
+            <artifactId>message-common</artifactId>
+        </dependency>
+    </dependencies>
 </project>
