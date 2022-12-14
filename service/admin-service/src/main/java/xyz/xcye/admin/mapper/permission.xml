@@ -46,16 +46,16 @@
                 <if test="uid != null">
                     uid,
                 </if>
-                <if test="name != null">
+                <if test="name != null and name != '' ">
                     name,
                 </if>
-                <if test="path != null">
+                <if test="path != null and path != '' ">
                     path,
                 </if>
-                <if test="createTime != null">
+                <if test="createTime != null and createTime != '' ">
                     create_time,
                 </if>
-                <if test="updateTime != null">
+                <if test="updateTime != null and updateTime != '' ">
                     update_time,
                 </if>
             </trim>
@@ -64,16 +64,16 @@
                 <if test="uid != null">
                  #{uid},
                 </if>
-                <if test="name != null">
+                <if test="name != null and name != '' ">
                  #{name},
                 </if>
-                <if test="path != null">
+                <if test="path != null and path != '' ">
                  #{path},
                 </if>
-                <if test="createTime != null">
+                <if test="createTime != null and createTime != '' ">
                  #{createTime},
                 </if>
-                <if test="updateTime != null">
+                <if test="updateTime != null and updateTime != '' ">
                  #{updateTime},
                 </if>
             </trim>
@@ -96,10 +96,9 @@
     <update id="updateById" parameterType="xyz.xcye.admin.po.Permission">
 		UPDATE au_permission
 		<set>
-			<if test="name != null">name = #{name},</if>
-			<if test="path != null">path = #{path},</if>
-			<if test="createTime != null">create_time = #{createTime},</if>
-			<if test="updateTime != null">update_time = #{updateTime},</if>
+			<if test="name != null and name != '' ">name = #{name},</if>
+			<if test="path != null and path != '' ">path = #{path},</if>
+			<if test="updateTime != null and updateTime != '' ">update_time = #{updateTime},</if>
 		</set>
 		WHERE
 		    uid = #{uid}

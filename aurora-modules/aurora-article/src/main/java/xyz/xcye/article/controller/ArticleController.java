@@ -7,6 +7,7 @@ import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import xyz.xcye.article.po.Article;
+import xyz.xcye.article.pojo.ArticlePojo;
 import xyz.xcye.article.service.ArticleService;
 import xyz.xcye.article.vo.ArticleVO;
 import xyz.xcye.core.annotaion.controller.ModifyOperation;
@@ -35,8 +36,8 @@ public class ArticleController {
     @Operation(summary = "插入新文章")
     @ModifyOperation
     @PostMapping
-    public int insertArticle(@Validated({Insert.class, Default.class}) Article article) {
-        return articleService.insertArticle(article);
+    public void insertArticle(@Validated({Insert.class, Default.class}) ArticlePojo article) {
+        articleService.insertArticle(article);
     }
 
     @ModifyOperation
@@ -56,7 +57,7 @@ public class ArticleController {
     @Operation(summary = "修改文章数据")
     @ModifyOperation
     @PutMapping
-    public int updateArticle(@Validated({Update.class, Default.class}) Article article) {
+    public int updateArticle(@Validated({Update.class, Default.class}) ArticlePojo article) {
         return articleService.updateByPrimaryKeySelective(article);
     }
 

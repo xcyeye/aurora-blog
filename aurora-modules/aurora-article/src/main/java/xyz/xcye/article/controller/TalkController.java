@@ -7,6 +7,7 @@ import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import xyz.xcye.article.po.Talk;
+import xyz.xcye.article.pojo.TalkPojo;
 import xyz.xcye.article.service.TalkService;
 import xyz.xcye.article.vo.TalkVO;
 import xyz.xcye.core.annotaion.controller.ModifyOperation;
@@ -35,8 +36,8 @@ public class TalkController {
     @Operation(summary = "插入新的说说")
     @ModifyOperation
     @PostMapping
-    public int insertTalk(@Validated({Insert.class, Default.class})Talk talk) {
-        return talkService.insertSelective(talk);
+    public void insertTalk(@Validated({Insert.class, Default.class}) TalkPojo talk) {
+        talkService.insertSelective(talk);
     }
 
     @Operation(summary = "逻辑删除说说")
@@ -70,7 +71,7 @@ public class TalkController {
     @Operation(summary = "修改说说内容")
     @PutMapping
     @ModifyOperation
-    public int updateTalk(@Validated({Update.class, Default.class}) Talk talk) {
+    public int updateTalk(@Validated({Update.class, Default.class}) TalkPojo talk) {
         return talkService.updateByPrimaryKeySelective(talk);
     }
 }

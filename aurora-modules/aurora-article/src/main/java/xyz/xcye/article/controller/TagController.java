@@ -6,6 +6,7 @@ import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import xyz.xcye.article.po.Tag;
+import xyz.xcye.article.pojo.TagPojo;
 import xyz.xcye.article.service.TagService;
 import xyz.xcye.article.vo.TagVO;
 import xyz.xcye.core.annotaion.controller.ModifyOperation;
@@ -34,8 +35,8 @@ public class TagController {
     @Operation(summary = "插入新标签")
     @PostMapping
     @ModifyOperation
-    public int insertTag(@Validated({Insert.class, Default.class})Tag tag) {
-        return tagService.insertSelective(tag);
+    public void insertTag(@Validated({Insert.class, Default.class}) TagPojo tag) {
+        tagService.insertSelective(tag);
     }
 
     @Operation(summary = "逻辑删除标签信息")
@@ -69,7 +70,7 @@ public class TagController {
     @Operation(summary = "修改标签信息")
     @ModifyOperation
     @PutMapping
-    public int updateTagByUid(@Validated({Update.class, Default.class}) Tag tag) {
+    public int updateTagByUid(@Validated({Update.class, Default.class}) TagPojo tag) {
         return tagService.updateByPrimaryKeySelective(tag);
     }
 }

@@ -31,7 +31,7 @@
 	<!-- common methods start -->
     <!-- 新增一条数据 -->
 	<insert id="insert" parameterType="xyz.xcye.admin.po.UserRoleRelationship" useGeneratedKeys="true" keyProperty="uid">
-        INSERT INTO au_au_user_role (
+        INSERT INTO au_user_role (
             <trim suffixOverrides=",">
                 <if test="uid != null">
                     uid,

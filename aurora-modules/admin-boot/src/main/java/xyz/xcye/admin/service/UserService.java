@@ -230,7 +230,7 @@ public class UserService {
         }
 
         // 如果没有性别的话，那么默认是秘密(0)
-        user.setGender(Optional.ofNullable(user.getGender()).orElse(GenderEnum.SECRET.name()));
+        user.setGender(Optional.ofNullable(user.getGender()).orElse(GenderEnum.SECRET));
     }
 
     private void sendVerifyEmail(UserVO userVO, EmailVO emailVO) throws BindException {

@@ -41,13 +41,13 @@
                 <if test="uid != null">
                     uid,
                 </if>
-                <if test="url != null">
+                <if test="url != null and url != '' ">
                     url,
                 </if>
-                <if test="createTime != null">
+                <if test="createTime != null and createTime != '' ">
                     create_time,
                 </if>
-                <if test="updateTime != null">
+                <if test="updateTime != null and updateTime != '' ">
                     update_time,
                 </if>
             </trim>
@@ -56,13 +56,13 @@
                 <if test="uid != null">
                  #{uid},
                 </if>
-                <if test="url != null">
+                <if test="url != null and url != '' ">
                  #{url},
                 </if>
-                <if test="createTime != null">
+                <if test="createTime != null and createTime != '' ">
                  #{createTime},
                 </if>
-                <if test="updateTime != null">
+                <if test="updateTime != null and updateTime != '' ">
                  #{updateTime},
                 </if>
             </trim>
@@ -85,9 +85,8 @@
     <update id="updateById" parameterType="xyz.xcye.admin.po.WhiteUrl">
 		UPDATE au_white_url
 		<set>
-			<if test="url != null">url = #{url},</if>
-			<if test="createTime != null">create_time = #{createTime},</if>
-			<if test="updateTime != null">update_time = #{updateTime},</if>
+			<if test="url != null and url != '' ">url = #{url},</if>
+			<if test="updateTime != null and updateTime != '' ">update_time = #{updateTime},</if>
 		</set>
 		WHERE
 		    uid = #{uid}

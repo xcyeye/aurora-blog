@@ -1,47 +1,78 @@
 package xyz.xcye.article.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
+import org.springframework.util.StringUtils;
 import xyz.xcye.article.po.Tag;
+import xyz.xcye.article.pojo.TagPojo;
 import xyz.xcye.article.vo.TagVO;
+import xyz.xcye.aurora.util.UserUtils;
+import xyz.xcye.core.dto.JwtUserInfo;
+import xyz.xcye.core.enums.ResponseStatusCodeEnum;
+import xyz.xcye.core.exception.article.ArticleException;
+import xyz.xcye.core.exception.user.UserException;
+import xyz.xcye.core.util.BeanUtils;
+import xyz.xcye.core.util.lambda.AssertUtils;
 import xyz.xcye.data.entity.Condition;
 import xyz.xcye.data.entity.PageData;
+import xyz.xcye.data.util.PageUtils;
 
 /**
  * @author qsyyke
- * @date Created in 2022/5/11 19:30
+ * @date Created in 2022/5/11 19:32
  */
 
-public interface TagService {
-    /**
-     * delete by primary key
-     * @param uid primaryKey
-     * @return deleteCount
-     */
-    int deleteByPrimaryKey(Long uid);
+@Service
+public class TagService {
 
-    int physicsDeleteByUid(Long uid);
+    @Autowired
+    private AuroraTagService auroraTagService;
 
-    /**
-     * insertArticle record to table selective
-     * @param record the record
-     * @return insertArticle count
-     */
-    int insertSelective(Tag record);
+    public int deleteByPrimaryKey(Long uid) {
+        Assert.notNull(uid, "uid不能为null");
+        Tag tag = Tag.builder()
+                .uid(uid)
+                .delete(true)
+                .build();
+        return auroraTagService.updateById(tag);
+    }
 
-    /**
-     * select by primary key
-     * @param condition 查询条件，其中keyword->title(模糊查询)
-     * @return object by primary key
-     */
-    PageData<TagVO> selectByCondition(Condition<Long> condition);
+    public int physicsDeleteByUid(Long uid) {
+        Assert.notNull(uid, "uid不能为null");
+        return auroraTagService.deleteById(uid);
+    }
 
-    TagVO selectByUid(Long uid);
+    public void insertSelective(TagPojo pojo) {
+        Assert.notNull(pojo, "标签信息不能为null");
+        Tag record = BeanUtils.copyProperties(pojo, Tag.class);
+        JwtUserInfo jwtUserInfo = UserUtils.getCurrentUser();
+        AssertUtils.stateThrow(jwtUserInfo != null,
+                () -> new UserException(ResponseStatusCodeEnum.PERMISSION_USER_NOT_LOGIN));
+        record.setUserUid(jwtUserInfo.getUserUid());
+        auroraTagService.insert(record);
+    }
 
-    TagVO selectByTitle(String title);
+    public PageData<TagVO> selectByCondition(Condition<Long> condition) {
+        Assert.notNull(condition, "查询条件不能为null");
+        return PageUtils.pageList(condition, t -> auroraTagService.queryListByCondition(condition), TagVO.class);
+    }
 
-    /**
-     * update record selective
-     * @param record the updated record
-     * @return update count
-     */
-    int updateByPrimaryKeySelective(Tag record);
+    public TagVO selectByUid(Long uid) {
+        Assert.notNull(uid, "uid不能为null");
+        return BeanUtils.getSingleObjFromList(auroraTagService.queryListByCondition(Condition.instant(uid, true)), TagVO.class);
+    }
+
+    public TagVO selectByTitle(String title) {
+        AssertUtils.stateThrow(StringUtils.hasLength(title), () -> new ArticleException("标签不能为null"));
+        Tag tag = new Tag();
+        tag.setTitle(title);
+        return BeanUtils.copyProperties(auroraTagService.queryOne(tag), TagVO.class);
+    }
+
+    public int updateByPrimaryKeySelective(TagPojo record) {
+        Assert.notNull(record, "标签信息不能为null");
+        record.setUserUid(null);
+        return auroraTagService.updateById(BeanUtils.copyProperties(record, Tag.class));
+    }
 }

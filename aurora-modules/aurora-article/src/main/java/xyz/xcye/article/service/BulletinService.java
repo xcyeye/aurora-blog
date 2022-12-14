@@ -1,57 +1,98 @@
 package xyz.xcye.article.service;
 
-import org.apache.ibatis.annotations.Param;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 import xyz.xcye.article.po.Bulletin;
+import xyz.xcye.article.pojo.BulletinPojo;
+import xyz.xcye.article.util.TimeUtils;
 import xyz.xcye.article.vo.BulletinVO;
+import xyz.xcye.aurora.properties.AuroraProperties;
+import xyz.xcye.aurora.util.UserUtils;
+import xyz.xcye.core.dto.JwtUserInfo;
+import xyz.xcye.core.enums.ResponseStatusCodeEnum;
+import xyz.xcye.core.exception.user.UserException;
+import xyz.xcye.core.util.BeanUtils;
+import xyz.xcye.core.util.DateUtils;
+import xyz.xcye.core.util.id.GenerateInfoUtils;
+import xyz.xcye.core.util.lambda.AssertUtils;
 import xyz.xcye.data.entity.Condition;
 import xyz.xcye.data.entity.PageData;
+import xyz.xcye.data.util.PageUtils;
 
 /**
  * @author qsyyke
- * @date Created in 2022/5/11 19:05
+ * @date Created in 2022/5/11 19:07
  */
 
-public interface BulletinService {
+@Service
+public class BulletinService {
+
+    @Autowired
+    private AuroraProperties auroraProperties;
+
+    @Autowired
+    private AuroraBulletinService auroraBulletinService;
+
+    public int deleteByPrimaryKey(Long uid) {
+        Assert.notNull(uid, "uid不能为null");
+        Bulletin bulletin = Bulletin.builder()
+                .delete(true)
+                .uid(uid)
+                .build();
+        return auroraBulletinService.updateById(bulletin);
+    }
+
+    public int physicsDeleteByUid(Long uid) {
+        return auroraBulletinService.deleteById(uid);
+    }
+
+    public void insertSelective(BulletinPojo record) {
+        Assert.notNull(record, "公告不能为null");
+        record.setCreateTime(null);
+        record.setDelete(false);
+        record.setUid(GenerateInfoUtils.generateUid(auroraProperties.getSnowFlakeWorkerId(),
+                auroraProperties.getSnowFlakeDatacenterId()));
+        setTimingPublishTime(record);
+        JwtUserInfo jwtUserInfo = UserUtils.getCurrentUser();
+        AssertUtils.stateThrow(jwtUserInfo != null,
+                () -> new UserException(ResponseStatusCodeEnum.PERMISSION_USER_NOT_LOGIN));
+        record.setUserUid(jwtUserInfo.getUserUid());
+        auroraBulletinService.insert(BeanUtils.copyProperties(record, Bulletin.class));
+    }
+
+    public PageData<BulletinVO> selectByCondition(Condition<Long> condition) {
+        Assert.notNull(condition, "查询条件不能为null");
+        return PageUtils.pageList(condition, t -> auroraBulletinService.queryListByCondition(condition));
+    }
+
+    public BulletinVO selectByUid(Long uid) {
+        Assert.notNull(uid, "uid不能为null");
+        return BeanUtils.getSingleObjFromList(auroraBulletinService.queryListByCondition(Condition.instant(uid, true)), BulletinVO.class);
+    }
+
+    public int updateByPrimaryKeySelective(BulletinPojo record) {
+        Assert.notNull(record, "公告信息不能为null");
+        record.setUserUid(null);
+        setTimingPublishTime(record);
+        return auroraBulletinService.updateById(BeanUtils.copyProperties(record, Bulletin.class));
+    }
 
     /**
-     * 这是一个逻辑删除
-     * @param uid primaryKey
-     * @return deleteCount
+     * 判断公告对象中的定时发布时间是否规范，如果不规范，则设置为null
+     * @param bulletin
      */
-    int deleteByPrimaryKey(Long uid);
+    private void setTimingPublishTime(BulletinPojo bulletin) {
+        if (bulletin.getTiming() == null || !bulletin.getTiming()) {
+            bulletin.setTimingPublishTime(null);
+            return;
+        }
+        if (!TimeUtils.isTimingPublishTime(bulletin.getTimingPublishTime())) {
+            bulletin.setTiming(false);
+            bulletin.setTimingPublishTime(null);
+            return;
+        }
+        bulletin.setTimingPublishTime(DateUtils.parse(bulletin.getTimingPublishTime()));
+    }
 
-    /**
-     * 通过主键物理删除公告
-     * @param uid
-     * @return
-     */
-    int physicsDeleteByUid(Long uid);
-
-    /**
-     * insertArticle record to table selective
-     * @param record the record
-     * @return insertArticle count
-     */
-    int insertSelective(Bulletin record);
-
-    /**
-     * select by primary key
-     * @param condition 查询条件,其中keyword->content(like模糊查询),show->is_show, status->is_timing
-     * @return object by primary key
-     */
-    PageData<BulletinVO> selectByCondition(@Param("condition") Condition<Long> condition);
-
-    /**
-     * 通过uid查询一条公告
-     * @param uid
-     * @return
-     */
-    BulletinVO selectByUid(Long uid);
-
-    /**
-     * update record selective
-     * @param record the updated record
-     * @return update count
-     */
-    int updateByPrimaryKeySelective(Bulletin record);
 }

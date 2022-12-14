@@ -1,56 +1,80 @@
 package xyz.xcye.article.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
 import xyz.xcye.article.po.Talk;
+import xyz.xcye.article.pojo.TalkPojo;
 import xyz.xcye.article.vo.TalkVO;
+import xyz.xcye.aurora.properties.AuroraProperties;
+import xyz.xcye.aurora.util.UserUtils;
+import xyz.xcye.core.dto.JwtUserInfo;
+import xyz.xcye.core.enums.ResponseStatusCodeEnum;
+import xyz.xcye.core.exception.user.UserException;
+import xyz.xcye.core.util.BeanUtils;
+import xyz.xcye.core.util.id.GenerateInfoUtils;
+import xyz.xcye.core.util.lambda.AssertUtils;
 import xyz.xcye.data.entity.Condition;
 import xyz.xcye.data.entity.PageData;
+import xyz.xcye.data.util.PageUtils;
 
 /**
  * @author qsyyke
- * @date Created in 2022/5/11 19:40
+ * @date Created in 2022/5/11 19:42
  */
 
-public interface TalkService {
+@Service
+public class TalkService {
 
-    /**
-     * 逻辑删除
-     * @param uid primaryKey
-     * @return deleteCount
-     */
-    int deleteByPrimaryKey(Long uid);
+    @Autowired
+    private AuroraTalkService auroraTalkService;
 
-    /**
-     * 物理删除
-     * @param uid
-     * @return
-     */
-    int physicsDeleteByUid(Long uid);
+    @Autowired
+    private AuroraProperties auroraProperties;
 
-    /**
-     * insertArticle record to table selective
-     * @param record the record
-     * @return insertArticle count
-     */
-    int insertSelective(Talk record);
+    public int deleteByPrimaryKey(Long uid) {
+        Assert.notNull(uid, "uid不能为null");
+        Talk talk = Talk.builder()
+                .uid(uid)
+                .delete(true)
+                .build();
+        return auroraTalkService.updateById(talk);
+    }
 
-    /**
-     * select by primary key
-     * @param condition 查询条件 其中keyword->content(模糊查询),status->is_show_comment,show->is_show
-     * @return object by primary key
-     */
-    PageData<TalkVO> selectByCondition(Condition<Long> condition);
+    public int physicsDeleteByUid(Long uid) {
+        Assert.notNull(uid, "uid不能为null");
+        return auroraTalkService.deleteById(uid);
+    }
 
-    /**
-     * 返回一条数据
-     * @param uid
-     * @return
-     */
-    TalkVO selectByUid(Long uid);
+    @Transactional
+    public void insertSelective(TalkPojo pojo) {
+        Assert.notNull(pojo, "说说信息不能为null");
+        Talk record = BeanUtils.copyProperties(pojo, Talk.class);
+        record.setUid(GenerateInfoUtils.generateUid(auroraProperties.getSnowFlakeWorkerId(),
+                auroraProperties.getSnowFlakeDatacenterId()));
+        record.setCommentUids(null);
+        JwtUserInfo jwtUserInfo = UserUtils.getCurrentUser();
+        AssertUtils.stateThrow(jwtUserInfo != null,
+                () -> new UserException(ResponseStatusCodeEnum.PERMISSION_USER_NOT_LOGIN));
+        record.setUserUid(jwtUserInfo.getUserUid());
+        auroraTalkService.insert(record);
+    }
 
-    /**
-     * update record selective
-     * @param record the updated record
-     * @return update count
-     */
-    int updateByPrimaryKeySelective(Talk record);
+    public PageData<TalkVO> selectByCondition(Condition<Long> condition) {
+        Assert.notNull(condition, "查询条件不能为null");
+        return PageUtils.pageList(condition,t -> auroraTalkService.queryListByCondition(condition), TalkVO.class);
+    }
+
+    public TalkVO selectByUid(Long uid) {
+        Assert.notNull(uid, "uid不能为null");
+        return BeanUtils.getSingleObjFromList(auroraTalkService.queryListByCondition(Condition.instant(uid, true)), TalkVO.class);
+    }
+
+    @Transactional
+    public int updateByPrimaryKeySelective(TalkPojo record) {
+        Assert.notNull(record, "说说信息不能为null");
+        record.setUserUid(null);
+        return auroraTalkService.updateById(BeanUtils.copyProperties(record, Talk.class));
+    }
 }

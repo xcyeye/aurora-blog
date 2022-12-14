@@ -8,6 +8,7 @@ import org.springframework.validation.BindException;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import xyz.xcye.article.po.Link;
+import xyz.xcye.article.pojo.LinkPojo;
 import xyz.xcye.article.service.LinkService;
 import xyz.xcye.article.vo.LinkVO;
 import xyz.xcye.core.annotaion.controller.ModifyOperation;
@@ -43,8 +44,8 @@ public class LinkController {
     @ModifyOperation
     @Operation(summary = "插入新友情链接")
     @PostMapping
-    public int insertSelective(@Validated({Insert.class, Default.class}) Link link) throws BindException {
-        return linkService.insertSelective(link);
+    public void insertSelective(@Validated({Insert.class, Default.class}) LinkPojo link) throws BindException {
+        linkService.insertSelective(link);
     }
 
     @GetMapping
@@ -64,7 +65,7 @@ public class LinkController {
     @PutMapping
     @ModifyOperation
     @Operation(summary = "修改友情链接信息")
-    public int updateByPrimaryKeySelective(@Validated({Update.class, Default.class}) Link link) throws BindException {
+    public int updateByPrimaryKeySelective(@Validated({Update.class, Default.class}) LinkPojo link) throws BindException {
         return linkService.updateByPrimaryKeySelective(link);
     }
 

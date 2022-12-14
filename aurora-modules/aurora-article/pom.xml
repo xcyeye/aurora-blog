@@ -19,8 +19,8 @@
     <dependencies>
 
         <dependency>
-            <groupId>xyz.xcye.base</groupId>
-            <artifactId>article-common</artifactId>
+            <groupId>xyz.xcye.article</groupId>
+            <artifactId>article-service</artifactId>
         </dependency>
 
         <dependency>
@@ -30,22 +30,7 @@
 
         <dependency>
             <groupId>xyz.xcye.starter</groupId>
-            <artifactId>aurora-mybatis-starter</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>xyz.xcye.starter</groupId>
             <artifactId>aurora-swagger-starter</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>xyz.xcye.starter</groupId>
-            <artifactId>aurora-datasource-starter</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>xyz.xcye.starter</groupId>
-            <artifactId>aurora-redis-starter</artifactId>
         </dependency>
 
         <dependency>

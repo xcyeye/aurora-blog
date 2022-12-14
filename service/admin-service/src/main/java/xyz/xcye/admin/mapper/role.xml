@@ -46,13 +46,13 @@
                 <if test="uid != null">
                     uid,
                 </if>
-                <if test="name != null">
+                <if test="name != null and name != '' ">
                     name,
                 </if>
-                <if test="createTime != null">
+                <if test="createTime != null and createTime != '' ">
                     create_time,
                 </if>
-                <if test="updateTime != null">
+                <if test="updateTime != null and updateTime != '' ">
                     update_time,
                 </if>
                 <if test="status != null">
@@ -64,13 +64,13 @@
                 <if test="uid != null">
                  #{uid},
                 </if>
-                <if test="name != null">
+                <if test="name != null and name != '' ">
                  #{name},
                 </if>
-                <if test="createTime != null">
+                <if test="createTime != null and createTime != '' ">
                  #{createTime},
                 </if>
-                <if test="updateTime != null">
+                <if test="updateTime != null and updateTime != '' ">
                  #{updateTime},
                 </if>
                 <if test="status != null">
@@ -96,9 +96,8 @@
     <update id="updateById" parameterType="xyz.xcye.admin.po.Role">
 		UPDATE au_role
 		<set>
-			<if test="name != null">name = #{name},</if>
-			<if test="createTime != null">create_time = #{createTime},</if>
-			<if test="updateTime != null">update_time = #{updateTime},</if>
+			<if test="name != null and name != '' ">name = #{name},</if>
+			<if test="updateTime != null and updateTime != '' ">update_time = #{updateTime},</if>
 			<if test="status != null">status = #{status},</if>
 		</set>
 		WHERE

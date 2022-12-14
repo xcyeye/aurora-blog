@@ -12,6 +12,8 @@ import xyz.xcye.amqp.comstant.AmqpQueueNameConstant;
 import xyz.xcye.amqp.config.service.MistakeMessageSendService;
 import xyz.xcye.article.po.Article;
 import xyz.xcye.article.po.Talk;
+import xyz.xcye.article.pojo.ArticlePojo;
+import xyz.xcye.article.pojo.TalkPojo;
 import xyz.xcye.article.service.ArticleService;
 import xyz.xcye.article.service.TalkService;
 import xyz.xcye.article.vo.ArticleVO;
@@ -119,13 +121,13 @@ public class ReceiveComment {
     private void updateArticleData(ArticleVO articleVO, Comment comment) {
         // 是文章的评论uid
         articleVO.setCommentUids(setCommentUids(articleVO.getCommentUids(), comment.getUid()));
-        articleService.updateByPrimaryKeySelective(BeanUtils.copyProperties(articleVO, Article.class));
+        articleService.updateByPrimaryKeySelective(BeanUtils.copyProperties(articleVO, ArticlePojo.class));
     }
 
     private void updateTalkData(TalkVO talkVO, Comment comment) {
         // 是文章的评论uid
         talkVO.setCommentUids(setCommentUids(talkVO.getCommentUids(), comment.getUid()));
-        talkService.updateByPrimaryKeySelective(BeanUtils.copyProperties(talkVO, Talk.class));
+        talkService.updateByPrimaryKeySelective(BeanUtils.copyProperties(talkVO, TalkPojo.class));
     }
 
     private void ack(Channel channel, Message message) throws IOException, BindException {

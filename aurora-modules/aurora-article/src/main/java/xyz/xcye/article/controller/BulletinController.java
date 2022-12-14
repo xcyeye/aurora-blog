@@ -7,6 +7,7 @@ import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import xyz.xcye.article.po.Bulletin;
+import xyz.xcye.article.pojo.BulletinPojo;
 import xyz.xcye.article.service.BulletinService;
 import xyz.xcye.article.vo.BulletinVO;
 import xyz.xcye.core.annotaion.controller.ModifyOperation;
@@ -35,8 +36,8 @@ public class BulletinController {
     @Operation(summary = "插入公告")
     @ModifyOperation
     @PostMapping
-    public int insertBulletin(@Validated({Insert.class, Default.class}) Bulletin bulletin) {
-        return bulletinService.insertSelective(bulletin);
+    public void insertBulletin(@Validated({Insert.class, Default.class}) BulletinPojo bulletin) {
+        bulletinService.insertSelective(bulletin);
     }
 
     @ModifyOperation
@@ -56,7 +57,7 @@ public class BulletinController {
     @Operation(summary = "修改公告内容")
     @ModifyOperation
     @PutMapping
-    public int updateBulletin(@Validated({Update.class, Default.class}) Bulletin bulletin) {
+    public int updateBulletin(@Validated({Update.class, Default.class}) BulletinPojo bulletin) {
         return bulletinService.updateByPrimaryKeySelective(bulletin);
     }
 

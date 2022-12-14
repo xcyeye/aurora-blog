@@ -7,6 +7,7 @@ import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import xyz.xcye.article.po.Category;
+import xyz.xcye.article.pojo.CategoryPojo;
 import xyz.xcye.article.service.CategoryService;
 import xyz.xcye.article.vo.CategoryVO;
 import xyz.xcye.core.annotaion.controller.ModifyOperation;
@@ -35,8 +36,8 @@ public class CategoryController {
     @Operation(summary = "插入类别信息")
     @ModifyOperation
     @PostMapping
-    public int insertCategory(@Validated({Insert.class, Default.class})Category category) {
-        return categoryService.insertSelective(category);
+    public void insertCategory(@Validated({Insert.class, Default.class}) CategoryPojo category) {
+        categoryService.insertSelective(category);
     }
 
     @Operation(summary = "逻辑删除类别")
@@ -70,7 +71,7 @@ public class CategoryController {
     @Operation(summary = "修改类别信息")
     @ModifyOperation
     @PutMapping
-    public int updateCategory(@Validated({Update.class, Default.class}) Category category) {
+    public int updateCategory(@Validated({Update.class, Default.class}) CategoryPojo category) {
         return categoryService.updateByPrimaryKeySelective(category);
     }
 }

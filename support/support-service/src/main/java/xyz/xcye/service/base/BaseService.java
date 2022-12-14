@@ -41,8 +41,8 @@ public class BaseService<T> {
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public void deleteByWhere(T t) {
-        baseDao.deleteByWhere(t);
+    public int deleteByWhere(T t) {
+        return baseDao.deleteByWhere(t);
     }
 
     public T queryById(Long uid) {

@@ -40,7 +40,7 @@ public interface BaseDao<T> {
      * 根据条件删除数据
      * @param t 条件实体
      */
-    void deleteByWhere(T t);
+    int deleteByWhere(T t);
 
     /**
      * 根据uid查询数据

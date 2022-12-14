@@ -1,89 +1,90 @@
 package xyz.xcye.article.po;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
+import lombok.Builder;
+import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
-import org.hibernate.validator.constraints.Length;
-import xyz.xcye.core.constant.FieldLengthConstant;
-import xyz.xcye.core.valid.Delete;
-import xyz.xcye.core.valid.Insert;
-import xyz.xcye.core.valid.Update;
-import xyz.xcye.core.valid.validator.ValidateString;
-
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
+import io.swagger.v3.oas.annotations.media.Schema;
 
-@Schema(title = "公告")
+/**
+ * @table bulletin <br/>
+ * @description TODO <br/>
+ * @date 2022-12-14 20:46:02 <br/>
+ * @author xcye <br/>
+ */
+
 @Data
 @Builder
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
+@Schema(title = "bulletin数据表的实体类")
 public class Bulletin implements Serializable {
-    /**
-    * 唯一uid
-    */
-    @Schema(title = "唯一uid")
-    @NotNull(groups = {Delete.class, Update.class})
-    private Long uid;
 
-    /**
-    * 公告的标题
-    */
-    @Schema(title = "公告的标题")
-    @Length(max = FieldLengthConstant.TITLE)
-    private String title;
+private static final long serialVersionUID = 13247652346523L;
 
-    /**
-    * 公告创建时间
-    */
-    @Schema(title = "公告创建时间")
-    private String createTime;
+	/**
+	 * 唯一uid
+	 */
+	@JsonSerialize(using = ToStringSerializer.class)
+	@Schema(title = "唯一uid")
+	private Long uid;
 
-    /**
-    * 公告最后修改时间
-    */
-    @Schema(title = "公告最后修改时间")
-    private String updateTime;
+	/**
+	 * 公告的标题
+	 */
+	@Schema(title = "公告的标题")
+	private String title;
 
-    /**
-    * 发布此公告的用户uid
-    */
-    @Schema(title = "发布此公告的用户uid")
-    private Long userUid;
+	/**
+	 * 公告内容
+	 */
+	@Schema(title = "公告内容")
+	private String content;
 
-    /**
-    * 1: 显示公告 0： 不显示该公告
-    */
-    @Schema(title = "1: 显示公告 0： 不显示该公告")
-    private Boolean show;
+	/**
+	 * 公告创建时间
+	 */
+	@Schema(title = "公告创建时间")
+	private String createTime;
 
-    /**
-    * 1：定时发布 0： 不定时发布公告
-    */
-    @Schema(title = "1：定时发布 0： 不定时发布公告")
-    private Boolean timing;
+	/**
+	 * 公告最后修改时间
+	 */
+	@Schema(title = "公告最后修改时间")
+	private String updateTime;
 
-    /**
-    * 定时发布公告的时间
-    */
-    @Schema(title = "定时发布公告的时间")
-    private String timingPublishTime;
+	/**
+	 * 发布此公告的用户uid
+	 */
+	@JsonSerialize(using = ToStringSerializer.class)
+	@Schema(title = "发布此公告的用户uid")
+	private Long userUid;
 
-    /**
-    * 1:删除 0：未删除
-    */
-    @Schema(title = "1:删除 0：未删除")
-    private Boolean delete;
+	/**
+	 * 1: 显示公告 0： 不显示该公告
+	 */
+	@Schema(title = "1: 显示公告 0： 不显示该公告")
+	private Boolean show;
 
-    /**
-    * 公告内容
-    */
-    @Schema(title = "公告内容")
-    @Length(max = FieldLengthConstant.CONTENT)
-    @ValidateString(value = "公告内容", max = FieldLengthConstant.CONTENT, groups = Insert.class)
-    private String content;
+	/**
+	 * 1：定时发布 0： 不定时发布公告
+	 */
+	@Schema(title = "1：定时发布 0： 不定时发布公告")
+	private Boolean timing;
 
-    private static final long serialVersionUID = 1L;
+	/**
+	 * 定时发布公告的时间
+	 */
+	@Schema(title = "定时发布公告的时间")
+	private String timingPublishTime;
+
+	/**
+	 * 1:删除 0：未删除
+	 */
+	@Schema(title = "1:删除 0：未删除")
+	private Boolean delete;
+
 }

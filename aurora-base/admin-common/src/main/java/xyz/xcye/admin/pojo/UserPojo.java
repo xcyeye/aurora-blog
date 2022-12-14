@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
+import xyz.xcye.admin.enums.GenderEnum;
 import xyz.xcye.core.constant.FieldLengthConstant;
 import xyz.xcye.core.valid.Delete;
 import xyz.xcye.core.valid.Insert;
@@ -59,7 +60,7 @@ public class UserPojo {
     /**
      * 用户性别
      */
-    private String gender;
+    private GenderEnum gender;
 
     /**
      * 该用户对应的网站设置的uid

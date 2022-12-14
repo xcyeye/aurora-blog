@@ -76,31 +76,31 @@
                 <if test="uid != null">
                     uid,
                 </if>
-                <if test="siteIcon != null">
+                <if test="siteIcon != null and siteIcon != '' ">
                     site_icon,
                 </if>
-                <if test="title != null">
+                <if test="title != null and title != '' ">
                     title,
                 </if>
-                <if test="logoTitle != null">
+                <if test="logoTitle != null and logoTitle != '' ">
                     logo_title,
                 </if>
-                <if test="siteLogo != null">
+                <if test="siteLogo != null and siteLogo != '' ">
                     site_logo,
                 </if>
-                <if test="siteCenterLogo != null">
+                <if test="siteCenterLogo != null and siteCenterLogo != '' ">
                     site_center_logo,
                 </if>
-                <if test="additionalHead != null">
+                <if test="additionalHead != null and additionalHead != '' ">
                     additional_head,
                 </if>
                 <if test="userUid != null">
                     user_uid,
                 </if>
-                <if test="createTime != null">
+                <if test="createTime != null and createTime != '' ">
                     create_time,
                 </if>
-                <if test="updateTime != null">
+                <if test="updateTime != null and updateTime != '' ">
                     update_time,
                 </if>
                 <if test="delete != null">
@@ -112,31 +112,31 @@
                 <if test="uid != null">
                  #{uid},
                 </if>
-                <if test="siteIcon != null">
+                <if test="siteIcon != null and siteIcon != '' ">
                  #{siteIcon},
                 </if>
-                <if test="title != null">
+                <if test="title != null and title != '' ">
                  #{title},
                 </if>
-                <if test="logoTitle != null">
+                <if test="logoTitle != null and logoTitle != '' ">
                  #{logoTitle},
                 </if>
-                <if test="siteLogo != null">
+                <if test="siteLogo != null and siteLogo != '' ">
                  #{siteLogo},
                 </if>
-                <if test="siteCenterLogo != null">
+                <if test="siteCenterLogo != null and siteCenterLogo != '' ">
                  #{siteCenterLogo},
                 </if>
-                <if test="additionalHead != null">
+                <if test="additionalHead != null and additionalHead != '' ">
                  #{additionalHead},
                 </if>
                 <if test="userUid != null">
                  #{userUid},
                 </if>
-                <if test="createTime != null">
+                <if test="createTime != null and createTime != '' ">
                  #{createTime},
                 </if>
-                <if test="updateTime != null">
+                <if test="updateTime != null and updateTime != '' ">
                  #{updateTime},
                 </if>
                 <if test="delete != null">
@@ -162,15 +162,14 @@
     <update id="updateById" parameterType="xyz.xcye.admin.po.Site">
 		UPDATE au_site
 		<set>
-			<if test="siteIcon != null">site_icon = #{siteIcon},</if>
-			<if test="title != null">title = #{title},</if>
-			<if test="logoTitle != null">logo_title = #{logoTitle},</if>
-			<if test="siteLogo != null">site_logo = #{siteLogo},</if>
-			<if test="siteCenterLogo != null">site_center_logo = #{siteCenterLogo},</if>
-			<if test="additionalHead != null">additional_head = #{additionalHead},</if>
+			<if test="siteIcon != null and siteIcon != '' ">site_icon = #{siteIcon},</if>
+			<if test="title != null and title != '' ">title = #{title},</if>
+			<if test="logoTitle != null and logoTitle != '' ">logo_title = #{logoTitle},</if>
+			<if test="siteLogo != null and siteLogo != '' ">site_logo = #{siteLogo},</if>
+			<if test="siteCenterLogo != null and siteCenterLogo != '' ">site_center_logo = #{siteCenterLogo},</if>
+			<if test="additionalHead != null and additionalHead != '' ">additional_head = #{additionalHead},</if>
 			<if test="userUid != null">user_uid = #{userUid},</if>
-			<if test="createTime != null">create_time = #{createTime},</if>
-			<if test="updateTime != null">update_time = #{updateTime},</if>
+			<if test="updateTime != null and updateTime != '' ">update_time = #{updateTime},</if>
 			<if test="delete != null">is_delete = #{delete},</if>
 		</set>
 		WHERE

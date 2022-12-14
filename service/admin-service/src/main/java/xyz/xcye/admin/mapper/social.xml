@@ -66,13 +66,13 @@
                 <if test="uid != null">
                     uid,
                 </if>
-                <if test="socialName != null">
+                <if test="socialName != null and socialName != '' ">
                     social_name,
                 </if>
-                <if test="socialIcon != null">
+                <if test="socialIcon != null and socialIcon != '' ">
                     social_icon,
                 </if>
-                <if test="socialUrl != null">
+                <if test="socialUrl != null and socialUrl != '' ">
                     social_url,
                 </if>
                 <if test="show != null">
@@ -81,10 +81,10 @@
                 <if test="userUid != null">
                     user_uid,
                 </if>
-                <if test="createTime != null">
+                <if test="createTime != null and createTime != '' ">
                     create_time,
                 </if>
-                <if test="updateTime != null">
+                <if test="updateTime != null and updateTime != '' ">
                     update_time,
                 </if>
                 <if test="delete != null">
@@ -96,13 +96,13 @@
                 <if test="uid != null">
                  #{uid},
                 </if>
-                <if test="socialName != null">
+                <if test="socialName != null and socialName != '' ">
                  #{socialName},
                 </if>
-                <if test="socialIcon != null">
+                <if test="socialIcon != null and socialIcon != '' ">
                  #{socialIcon},
                 </if>
-                <if test="socialUrl != null">
+                <if test="socialUrl != null and socialUrl != '' ">
                  #{socialUrl},
                 </if>
                 <if test="show != null">
@@ -111,10 +111,10 @@
                 <if test="userUid != null">
                  #{userUid},
                 </if>
-                <if test="createTime != null">
+                <if test="createTime != null and createTime != '' ">
                  #{createTime},
                 </if>
-                <if test="updateTime != null">
+                <if test="updateTime != null and updateTime != '' ">
                  #{updateTime},
                 </if>
                 <if test="delete != null">
@@ -140,13 +140,12 @@
     <update id="updateById" parameterType="xyz.xcye.admin.po.Social">
 		UPDATE au_social
 		<set>
-			<if test="socialName != null">social_name = #{socialName},</if>
-			<if test="socialIcon != null">social_icon = #{socialIcon},</if>
-			<if test="socialUrl != null">social_url = #{socialUrl},</if>
+			<if test="socialName != null and socialName != '' ">social_name = #{socialName},</if>
+			<if test="socialIcon != null and socialIcon != '' ">social_icon = #{socialIcon},</if>
+			<if test="socialUrl != null and socialUrl != '' ">social_url = #{socialUrl},</if>
 			<if test="show != null">is_show = #{show},</if>
 			<if test="userUid != null">user_uid = #{userUid},</if>
-			<if test="createTime != null">create_time = #{createTime},</if>
-			<if test="updateTime != null">update_time = #{updateTime},</if>
+			<if test="updateTime != null and updateTime != '' ">update_time = #{updateTime},</if>
 			<if test="delete != null">is_delete = #{delete},</if>
 		</set>
 		WHERE

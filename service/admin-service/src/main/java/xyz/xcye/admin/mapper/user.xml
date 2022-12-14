@@ -101,13 +101,13 @@
                 <if test="uid != null">
                     uid,
                 </if>
-                <if test="userSummary != null">
+                <if test="userSummary != null and userSummary != '' ">
                     user_summary,
                 </if>
-                <if test="nickname != null">
+                <if test="nickname != null and nickname != '' ">
                     nickname,
                 </if>
-                <if test="gender != null">
+                <if test="gender != null and gender != '' ">
                     gender,
                 </if>
                 <if test="loginUid != null">
@@ -116,25 +116,25 @@
                 <if test="siteUid != null">
                     site_uid,
                 </if>
-                <if test="avatar != null">
+                <if test="avatar != null and avatar != '' ">
                     avatar,
                 </if>
-                <if test="password != null">
+                <if test="password != null and password != '' ">
                     password,
                 </if>
-                <if test="username != null">
+                <if test="username != null and username != '' ">
                     username,
                 </if>
-                <if test="profession != null">
+                <if test="profession != null and profession != '' ">
                     profession,
                 </if>
                 <if test="emailUid != null">
                     email_uid,
                 </if>
-                <if test="createTime != null">
+                <if test="createTime != null and createTime != '' ">
                     create_time,
                 </if>
-                <if test="updateTime != null">
+                <if test="updateTime != null and updateTime != '' ">
                     update_time,
                 </if>
                 <if test="delete != null">
@@ -152,13 +152,13 @@
                 <if test="uid != null">
                  #{uid},
                 </if>
-                <if test="userSummary != null">
+                <if test="userSummary != null and userSummary != '' ">
                  #{userSummary},
                 </if>
-                <if test="nickname != null">
+                <if test="nickname != null and nickname != '' ">
                  #{nickname},
                 </if>
-                <if test="gender != null">
+                <if test="gender != null and gender != '' ">
                  #{gender},
                 </if>
                 <if test="loginUid != null">
@@ -167,25 +167,25 @@
                 <if test="siteUid != null">
                  #{siteUid},
                 </if>
-                <if test="avatar != null">
+                <if test="avatar != null and avatar != '' ">
                  #{avatar},
                 </if>
-                <if test="password != null">
+                <if test="password != null and password != '' ">
                  #{password},
                 </if>
-                <if test="username != null">
+                <if test="username != null and username != '' ">
                  #{username},
                 </if>
-                <if test="profession != null">
+                <if test="profession != null and profession != '' ">
                  #{profession},
                 </if>
                 <if test="emailUid != null">
                  #{emailUid},
                 </if>
-                <if test="createTime != null">
+                <if test="createTime != null and createTime != '' ">
                  #{createTime},
                 </if>
-                <if test="updateTime != null">
+                <if test="updateTime != null and updateTime != '' ">
                  #{updateTime},
                 </if>
                 <if test="delete != null">
@@ -217,18 +217,17 @@
     <update id="updateById" parameterType="xyz.xcye.admin.po.User">
 		UPDATE au_user
 		<set>
-			<if test="userSummary != null">user_summary = #{userSummary},</if>
-			<if test="nickname != null">nickname = #{nickname},</if>
+			<if test="userSummary != null and userSummary != '' ">user_summary = #{userSummary},</if>
+			<if test="nickname != null and nickname != '' ">nickname = #{nickname},</if>
 			<if test="gender != null">gender = #{gender},</if>
 			<if test="loginUid != null">login_uid = #{loginUid},</if>
 			<if test="siteUid != null">site_uid = #{siteUid},</if>
-			<if test="avatar != null">avatar = #{avatar},</if>
-			<if test="password != null">password = #{password},</if>
-			<if test="username != null">username = #{username},</if>
-			<if test="profession != null">profession = #{profession},</if>
+			<if test="avatar != null and avatar != '' ">avatar = #{avatar},</if>
+			<if test="password != null and password != '' ">password = #{password},</if>
+			<if test="username != null and username != '' ">username = #{username},</if>
+			<if test="profession != null and profession != '' ">profession = #{profession},</if>
 			<if test="emailUid != null">email_uid = #{emailUid},</if>
-			<if test="createTime != null">create_time = #{createTime},</if>
-			<if test="updateTime != null">update_time = #{updateTime},</if>
+			<if test="updateTime != null and updateTime != '' ">update_time = #{updateTime},</if>
 			<if test="delete != null">is_delete = #{delete},</if>
 			<if test="accountLock != null">is_account_lock = #{accountLock},</if>
 			<if test="verifyEmail != null">is_verify_email = #{verifyEmail},</if>

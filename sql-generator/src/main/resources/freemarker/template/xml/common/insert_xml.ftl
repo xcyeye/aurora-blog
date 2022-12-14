@@ -4,7 +4,7 @@
             <trim suffixOverrides=",">
                 <#list mybatisXmlDefinition.columns as colm>
                     <#if colm??>
-                <if test="${colm.javaColumnName} != null">
+                <if test="${colm.testNotBlankExpression}">
                     ${colm.columnName},
                 </if>
                     </#if>
@@ -14,7 +14,7 @@
             <trim suffixOverrides=",">
             <#list mybatisXmlDefinition.columns as colm>
                 <#if colm??>
-                <if test="${colm.javaColumnName} != null">
+                <if test="${colm.testNotBlankExpression}">
                  ${'#'}{${colm.javaColumnName}},
                 </if>
                 </#if>

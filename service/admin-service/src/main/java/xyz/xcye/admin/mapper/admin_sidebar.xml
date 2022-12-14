@@ -82,16 +82,16 @@
                 <if test="preSidebarUid != null">
                     pre_sidebar_uid,
                 </if>
-                <if test="title != null">
+                <if test="title != null and title != '' ">
                     title,
                 </if>
-                <if test="path != null">
+                <if test="path != null and path != '' ">
                     path,
                 </if>
                 <if test="external != null">
                     is_external,
                 </if>
-                <if test="iconClassName != null">
+                <if test="iconClassName != null and iconClassName != '' ">
                     icon_class_name,
                 </if>
                 <if test="sort != null">
@@ -100,10 +100,10 @@
                 <if test="userUid != null">
                     user_uid,
                 </if>
-                <if test="createTime != null">
+                <if test="createTime != null and createTime != '' ">
                     create_time,
                 </if>
-                <if test="updateTime != null">
+                <if test="updateTime != null and updateTime != '' ">
                     update_time,
                 </if>
             </trim>
@@ -118,16 +118,16 @@
                 <if test="preSidebarUid != null">
                  #{preSidebarUid},
                 </if>
-                <if test="title != null">
+                <if test="title != null and title != '' ">
                  #{title},
                 </if>
-                <if test="path != null">
+                <if test="path != null and path != '' ">
                  #{path},
                 </if>
                 <if test="external != null">
                  #{external},
                 </if>
-                <if test="iconClassName != null">
+                <if test="iconClassName != null and iconClassName != '' ">
                  #{iconClassName},
                 </if>
                 <if test="sort != null">
@@ -136,10 +136,10 @@
                 <if test="userUid != null">
                  #{userUid},
                 </if>
-                <if test="createTime != null">
+                <if test="createTime != null and createTime != '' ">
                  #{createTime},
                 </if>
-                <if test="updateTime != null">
+                <if test="updateTime != null and updateTime != '' ">
                  #{updateTime},
                 </if>
             </trim>
@@ -164,14 +164,13 @@
 		<set>
 			<if test="level != null">level = #{level},</if>
 			<if test="preSidebarUid != null">pre_sidebar_uid = #{preSidebarUid},</if>
-			<if test="title != null">title = #{title},</if>
-			<if test="path != null">path = #{path},</if>
+			<if test="title != null and title != '' ">title = #{title},</if>
+			<if test="path != null and path != '' ">path = #{path},</if>
 			<if test="external != null">is_external = #{external},</if>
-			<if test="iconClassName != null">icon_class_name = #{iconClassName},</if>
+			<if test="iconClassName != null and iconClassName != '' ">icon_class_name = #{iconClassName},</if>
 			<if test="sort != null">sort = #{sort},</if>
 			<if test="userUid != null">user_uid = #{userUid},</if>
-			<if test="createTime != null">create_time = #{createTime},</if>
-			<if test="updateTime != null">update_time = #{updateTime},</if>
+			<if test="updateTime != null and updateTime != '' ">update_time = #{updateTime},</if>
 		</set>
 		WHERE
 		    uid = #{uid}
