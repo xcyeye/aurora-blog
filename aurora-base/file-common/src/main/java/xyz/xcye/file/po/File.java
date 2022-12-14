@@ -1,96 +1,97 @@
 package xyz.xcye.file.po;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
+import lombok.Builder;
+import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
-import org.hibernate.validator.constraints.Length;
-import xyz.xcye.core.constant.FieldLengthConstant;
-import xyz.xcye.core.valid.Delete;
-import xyz.xcye.core.valid.Insert;
-import xyz.xcye.core.valid.Update;
-import xyz.xcye.core.valid.validator.ValidateString;
-
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 /**
- * 数据表 au_file
- * @author qsyyke
+ * @table file <br/>
+ * @description TODO <br/>
+ * @date 2022-12-14 22:31:22 <br/>
+ * @author xcye <br/>
  */
 
+@Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
-@Data
-@Schema(title = "文件实体")
+@Schema(title = "file数据表的实体类")
 public class File implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+private static final long serialVersionUID = 13247652346523L;
 
-    /**
-     * 唯一uid 不能为null 主键
-     */
-    @Schema(title = "唯一uid")
-    @NotNull(groups = {Delete.class, Update.class})
-    private Long uid;
+	/**
+	 * 唯一uid
+	 */
+	@JsonSerialize(using = ToStringSerializer.class)
+	@Schema(title = "唯一uid")
+	private Long uid;
 
-    @NotNull(groups = {Insert.class})
-    @Schema(title = "用户uid")
-    private Long userUid;
+	/**
+	 * 用户uid
+	 */
+	@JsonSerialize(using = ToStringSerializer.class)
+	@Schema(title = "用户uid")
+	private Long userUid;
 
-    /**
-     * 文件创建时间 不能为null
-     * <p>mysql -> datetime</p>
-     */
-    private String createTime;
+	/**
+	 * 此文件的名称
+	 */
+	@Schema(title = "此文件的名称")
+	private String fileName;
 
-    /**
-     * 此文件的删除状态 true：已删除 false：未删除
-     */
-    @Schema(title = "是否删除", description = "1: 删除")
-    private Boolean delete;
+	/**
+	 * 此文件的大小 字节为单位
+	 */
+	@JsonSerialize(using = ToStringSerializer.class)
+	@Schema(title = "此文件的大小 字节为单位")
+	private Long size;
 
-    /**
-     * 此文件的名字，含后缀
-     * <p>length < 120</p>
-     */
-    private String fileName;
+	/**
+	 * 此文件的简介
+	 */
+	@Schema(title = "此文件的简介")
+	private String summary;
 
-    /**
-     * 文件的大小 字节单位
-     */
-    private Long size;
+	/**
+	 * 此文件的存放路径，如果是对象存储，则表示objectName
+	 */
+	@Schema(title = "此文件的存放路径，如果是对象存储，则表示objectName")
+	private String path;
 
-    /**
-     * 此文件的删除时间 可以为null
-     * <p>mysql -> datetime</p>
-     */
-    private String deleteTime;
+	/**
+	 * 文件存储的模式
+	 */
+	@Schema(title = "文件存储的模式")
+	private Integer storageMode;
 
-    /**
-     * 此文件的简介 可以为null
-     * <p>length < 500</p>
-     */
-    @Length(max = FieldLengthConstant.SUMMARY)
-    @ValidateString(value = "文件，文件简介", max = FieldLengthConstant.SUMMARY, groups = Insert.class)
-    private String summary;
+	/**
+	 * 存储的路径
+	 */
+	@Schema(title = "存储的路径")
+	private String storagePath;
 
-    /**
-     * 此文件的访问路径
-     */
-    @Length(max = FieldLengthConstant.FILE_PATH,message = "文件的访问路径长度不能超过{max}")
-    private String path;
+	/**
+	 * 1.: 已经删除
+	 */
+	@Schema(title = "1.: 已经删除")
+	private Boolean delete;
 
-    /**
-     * 文件的存储模式
-     */
-    private Integer storageMode;
+	/**
+	 * 上传此文件的时间
+	 */
+	@Schema(title = "上传此文件的时间")
+	private String createTime;
 
-    /**
-     * 此文件的存储位置
-     */
-    @Length(message = "文件存储路径长度不能超过{max}",max = FieldLengthConstant.FILE_PATH)
-    private String storagePath;
+	/**
+	 * 最后删除时间
+	 */
+	@Schema(title = "最后删除时间")
+	private String deleteTime;
+
 }

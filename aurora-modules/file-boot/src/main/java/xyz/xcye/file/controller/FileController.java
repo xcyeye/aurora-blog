@@ -17,12 +17,9 @@ import xyz.xcye.core.valid.Update;
 import xyz.xcye.data.entity.Condition;
 import xyz.xcye.data.entity.PageData;
 import xyz.xcye.file.dto.FileEntityDTO;
-import xyz.xcye.file.po.AuPeople;
 import xyz.xcye.file.po.File;
-import xyz.xcye.file.pojo.AuPeoplePojo;
-import xyz.xcye.file.service.AuPeopleService;
+import xyz.xcye.file.pojo.FilePojo;
 import xyz.xcye.file.service.FileService;
-import xyz.xcye.file.vo.AuPeopleVO;
 import xyz.xcye.file.vo.FileVO;
 
 import javax.servlet.ServletOutputStream;
@@ -56,7 +53,7 @@ public class FileController {
     @SelectOperation
     @Operation(summary = "上传单个文件",description = "可以上传任何类型，最大不能操作30M，返回上传之后的文件信息")
     @PostMapping("/single")
-    public FileVO singleUploadFile(@Validated({Insert.class, Default.class}) File fileInfo,
+    public FileVO singleUploadFile(@Validated({Insert.class, Default.class}) FilePojo fileInfo,
                                    @RequestParam(value = "file") MultipartFile file,
                                    @RequestParam(required = false) int storageMode, long userUid)
             throws IOException, FileException, ExecutionException, InterruptedException {
@@ -80,7 +77,7 @@ public class FileController {
         List<FileVO> fileList = new ArrayList<>();
         for (MultipartFile file : files) {
             FileEntityDTO fileEntity = new FileEntityDTO(file.getOriginalFilename(), file.getInputStream());
-            File fileInfo = new File();
+            FilePojo fileInfo = new FilePojo();
             FileVO fileVO = fileService.insertFile(fileEntity, fileInfo, storageMode, userUid);
             fileList.add(fileVO);
         }
@@ -100,7 +97,7 @@ public class FileController {
             throws IOException, FileException, ExecutionException, InterruptedException {
 
         FileEntityDTO fileEntity = new FileEntityDTO(file.getOriginalFilename(),file.getInputStream());
-        File fileInfo = new File();
+        FilePojo fileInfo = new FilePojo();
         fileInfo.setSummary("从typora上传的文件");
         FileVO fileVO = fileService.insertFile(fileEntity, fileInfo, storageMode, 0);
         return fileVO.getPath();
@@ -131,24 +128,11 @@ public class FileController {
         return fileService.queryByUid(uid);
     }
 
-    @Autowired
-    private AuPeopleService auPeopleService;
-
     @SelectOperation
     @Operation(summary = "查询该userUid所对应的所有文件的后缀信息")
     @GetMapping("/format/{userUid}")
-    // public List<String> queryAllFileFormat(@PathVariable("userUid") long userUid) {
-    public AuPeopleVO queryAllFileFormat(@PathVariable("userUid") long userUid) {
-        // return fileService.selectAllFileFormat(userUid);
-        AuPeoplePojo pojo = new AuPeoplePojo();
-        pojo.setName("xcye");
-        pojo.setUid(10);
-        AuPeople auPeople = BeanUtils.copyProperties(pojo, AuPeople.class);
-
-        AuPeople insert = auPeopleService.insert(auPeople);
-        // auPeopleService.setInfoDao(null);
-        System.out.println(insert);
-        return BeanUtils.copyProperties(insert, AuPeopleVO.class);
+    public List<String> queryAllFileFormat(@PathVariable("userUid") long userUid) {
+        return fileService.selectAllFileFormat(userUid);
     }
 
     /**
@@ -159,7 +143,7 @@ public class FileController {
     @ModifyOperation
     @Operation(summary = "修改文件属性", description = "只能修改文件的简介，因为其余的字段，修改没有任何意义，名字这些都是和文件本身绑定")
     @PutMapping
-    public int updateFile(@Validated({Update.class, Default.class}) File fileInfo) {
+    public int updateFile(@Validated({Update.class, Default.class}) FilePojo fileInfo) {
         return fileService.updateFile(fileInfo);
     }
 

@@ -23,23 +23,13 @@
         </dependency>
 
         <dependency>
-            <groupId>xyz.xcye.starter</groupId>
-            <artifactId>aurora-datasource-starter</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>xyz.xcye.starter</groupId>
-            <artifactId>aurora-mybatis-starter</artifactId>
+            <groupId>xyz.xcye.file</groupId>
+            <artifactId>file-service</artifactId>
         </dependency>
 
         <dependency>
             <groupId>xyz.xcye.starter</groupId>
             <artifactId>aurora-sentinel-starter</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>xyz.xcye.starter</groupId>
-            <artifactId>aurora-redis-starter</artifactId>
         </dependency>
 
         <dependency>
@@ -55,16 +45,6 @@
         <dependency>
             <groupId>xyz.xcye.starter</groupId>
             <artifactId>aurora-spring-boot-starter</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>xyz.xcye.base</groupId>
-            <artifactId>file-common</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>xyz.xcye</groupId>
-            <artifactId>support-service</artifactId>
         </dependency>
     </dependencies>
 
