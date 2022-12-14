@@ -78,7 +78,7 @@ public class CommentService {
         updateComment(BeanUtils.copyProperties(comment, CommentPojo.class));
 
         // 发送此评论到交换机，说说或者是文章修改CommentUidS的值
-        sendCommentToExchange.sendCommentToMQ(comment);
+        sendCommentToExchange.sendCommentToMQ(comment, pojo.getPageUid());
 
         // 如果插入成功，并且是回复某条评论，则修改此被回复的评论的nextCommentUidArray值
         if (isReplyCommentFlag) {

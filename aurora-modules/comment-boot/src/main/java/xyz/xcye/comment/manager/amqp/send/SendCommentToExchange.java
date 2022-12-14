@@ -8,6 +8,8 @@ import xyz.xcye.amqp.api.AmqpSenderService;
 import xyz.xcye.amqp.comstant.AmqpExchangeNameConstant;
 import xyz.xcye.amqp.comstant.AmqpQueueNameConstant;
 import xyz.xcye.comment.po.Comment;
+import xyz.xcye.comment.pojo.CommentPojo;
+import xyz.xcye.core.util.BeanUtils;
 import xyz.xcye.core.util.ConvertObjectUtils;
 
 /**
@@ -23,8 +25,10 @@ public class SendCommentToExchange {
     private AmqpSenderService amqpSenderService;
 
     @Transactional
-    public void sendCommentToMQ(Comment comment) throws BindException {
-        String json = ConvertObjectUtils.jsonToString(comment);
+    public void sendCommentToMQ(Comment comment, Long pageUid) throws BindException {
+        CommentPojo commentPojo = BeanUtils.copyProperties(comment, CommentPojo.class);
+        commentPojo.setPageUid(pageUid);
+        String json = ConvertObjectUtils.jsonToString(commentPojo);
         amqpSenderService.sendMQMsg(json, AmqpExchangeNameConstant.AURORA_SEND_COMMENT_EXCHANGE,
                 AmqpQueueNameConstant.PAGE_COMMENT_ROUTING_KEY, "topic");
     }

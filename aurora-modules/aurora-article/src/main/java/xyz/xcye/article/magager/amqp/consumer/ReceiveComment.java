@@ -19,6 +19,7 @@ import xyz.xcye.article.service.TalkService;
 import xyz.xcye.article.vo.ArticleVO;
 import xyz.xcye.article.vo.TalkVO;
 import xyz.xcye.comment.po.Comment;
+import xyz.xcye.comment.pojo.CommentPojo;
 import xyz.xcye.core.util.BeanUtils;
 import xyz.xcye.feign.config.service.MessageLogFeignService;
 
@@ -55,7 +56,7 @@ public class ReceiveComment {
      */
     @RabbitListener(queues = AmqpQueueNameConstant.PAGE_COMMENT_QUEUE,ackMode = "AUTO")
     private void receiveCommentConsumer(String msgJson, Channel channel, Message message) throws IOException, BindException {
-        Comment comment = parseComment(msgJson, channel, message);
+        CommentPojo comment = parseComment(msgJson, channel, message);
         if (comment == null || comment.getPageUid() == null) {
             return;
         }
@@ -92,15 +93,15 @@ public class ReceiveComment {
      * @return
      * @throws IOException
      */
-    private Comment parseComment(String json, Channel channel, Message message) throws IOException {
-        Comment comment = null;
+    private CommentPojo parseComment(String json, Channel channel, Message message) throws IOException {
+        CommentPojo commentPojo = null;
         try {
-            comment = JSON.parseObject(json, Comment.class);
+            commentPojo = JSON.parseObject(json, CommentPojo.class);
         } catch (Exception e) {
             mistakeMessageSendService.sendMistakeMessageToExchange(json,channel,message);
             return null;
         }
-        return comment;
+        return commentPojo;
     }
 
     /**
@@ -118,13 +119,13 @@ public class ReceiveComment {
                 .collect(Collectors.joining(","));
     }
 
-    private void updateArticleData(ArticleVO articleVO, Comment comment) {
+    private void updateArticleData(ArticleVO articleVO, CommentPojo comment) {
         // 是文章的评论uid
         articleVO.setCommentUids(setCommentUids(articleVO.getCommentUids(), comment.getUid()));
         articleService.updateByPrimaryKeySelective(BeanUtils.copyProperties(articleVO, ArticlePojo.class));
     }
 
-    private void updateTalkData(TalkVO talkVO, Comment comment) {
+    private void updateTalkData(TalkVO talkVO, CommentPojo comment) {
         // 是文章的评论uid
         talkVO.setCommentUids(setCommentUids(talkVO.getCommentUids(), comment.getUid()));
         talkService.updateByPrimaryKeySelective(BeanUtils.copyProperties(talkVO, TalkPojo.class));
