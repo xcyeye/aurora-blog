@@ -3,7 +3,7 @@ package xyz.xcye.auth.vo;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import io.swagger.v3.oas.annotations.media.Schema;
-import xyz.xcye.auth.po.LoginInfo;
+import xyz.xcye.auth.po.OauthCode;
 
 /**
  * @description TODO <br/>
@@ -13,7 +13,7 @@ import xyz.xcye.auth.po.LoginInfo;
 
 @Data
 @EqualsAndHashCode(callSuper = true)
-@Schema(title = "login_info数据表的VO")
-public class LoginInfoVO extends LoginInfo {
+@Schema(title = "oauth_code数据表的VO")
+public class OauthCodeVO extends OauthCode {
 
 }

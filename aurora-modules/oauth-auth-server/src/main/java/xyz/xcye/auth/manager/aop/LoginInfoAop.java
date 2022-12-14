@@ -23,6 +23,7 @@ import xyz.xcye.auth.constant.AuthRedisConstant;
 import xyz.xcye.auth.constant.RequestConstant;
 import xyz.xcye.auth.model.SecurityUserDetails;
 import xyz.xcye.auth.po.LoginInfo;
+import xyz.xcye.auth.pojo.LoginInfoPojo;
 import xyz.xcye.auth.service.LoginInfoService;
 import xyz.xcye.auth.threadpoll.WriteLoginInfoExecutor;
 import xyz.xcye.core.enums.RegexEnum;
@@ -102,19 +103,13 @@ public class LoginInfoAop {
         isReachesMaxFailureNum(username);
 
         // 组装对象
-        LoginInfo loginInfo = LoginInfo.builder().
-                username(username)
-                .uid(uid)
-                .build();
-        setDefaultProperties(loginInfo);
+        LoginInfoPojo loginInfoPojo = new LoginInfoPojo();
+        loginInfoPojo.setUsername(username);
+        loginInfoPojo.setUid(uid);
+        setDefaultProperties(loginInfoPojo);
 
         // 查看用户上次
-        int insertNum = loginInfoService.insertSelective(loginInfo);
-
-        // 插入失败，退出
-        if (insertNum != 1) {
-            throw new UsernameNotFoundException("系统异常");
-        }
+        loginInfoService.insertSelective(loginInfoPojo);
     }
 
     @Before("execution(public * xyz.xcye.auth.handler.OauthServerAuthenticationFailureHandler.onAuthenticationFailure(..))")
@@ -261,11 +256,10 @@ public class LoginInfoAop {
         }
 
         // 修改登录信息
-        LoginInfo loginInfo = LoginInfo.builder()
-                .uid(uid)
-                .status(status)
-                .updateTime(DateUtils.format())
-                .build();
+        LoginInfoPojo loginInfo = new LoginInfoPojo();
+        loginInfo.setUid(uid);
+        loginInfo.setStatus(status);
+        loginInfo.setUpdateTime(DateUtils.format());
         if (StringUtils.hasLength(message)) {
             loginInfo.setMessage(message);
         }
@@ -303,7 +297,7 @@ public class LoginInfoAop {
         return (Long) request.getAttribute(RequestConstant.AUTH_SERVER_STORAGE_LOGIN_UID_NAME);
     }
 
-    private void setDefaultProperties(LoginInfo loginInfo) {
+    private void setDefaultProperties(LoginInfoPojo loginInfo) {
         HttpServletRequest request = AuroraRequestUtils.getCurrentRequest();
         loginInfo.setLoginIp(NetWorkUtils.getIpAddr(request));
         loginInfo.setLoginLocation("保山");
@@ -358,11 +352,10 @@ public class LoginInfoAop {
             String location = province + city + district;
 
             // 更新
-            LoginInfo loginInfo = LoginInfo.builder()
-                    .uid(uid)
-                    .loginIp(ip)
-                    .loginLocation(location)
-                    .build();
+            LoginInfoPojo loginInfo = new LoginInfoPojo();
+            loginInfo.setUid(uid);
+            loginInfo.setLoginIp(ip);
+            loginInfo.setLoginLocation(location);
             loginInfoService.updateByPrimaryKeySelective(loginInfo);
         });
     }

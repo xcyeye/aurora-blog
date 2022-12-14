@@ -17,6 +17,7 @@
         <module>comment-service</module>
         <module>file-service</module>
         <module>message-service</module>
+        <module>auth-server-service</module>
     </modules>
 
     <properties>

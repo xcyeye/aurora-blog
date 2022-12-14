@@ -33,28 +33,13 @@
         </dependency>
 
         <dependency>
-            <groupId>xyz.xcye.starter</groupId>
-            <artifactId>aurora-redis-starter</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>xyz.xcye.starter</groupId>
-            <artifactId>aurora-datasource-starter</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>xyz.xcye.starter</groupId>
-            <artifactId>aurora-mybatis-starter</artifactId>
+            <groupId>xyz.xcye</groupId>
+            <artifactId>auth-server-service</artifactId>
         </dependency>
 
         <dependency>
             <groupId>xyz.xcye.api</groupId>
             <artifactId>oauth-api</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>xyz.xcye.base</groupId>
-            <artifactId>auth-common</artifactId>
         </dependency>
 
         <dependency>

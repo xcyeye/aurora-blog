@@ -427,6 +427,12 @@
                 <artifactId>message-service</artifactId>
                 <version>${blog.version}</version>
             </dependency>
+
+            <dependency>
+                <groupId>xyz.xcye</groupId>
+                <artifactId>auth-server-service</artifactId>
+                <version>${blog.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 

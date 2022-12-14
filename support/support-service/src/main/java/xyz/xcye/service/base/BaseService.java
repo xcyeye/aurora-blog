@@ -2,10 +2,8 @@ package xyz.xcye.service.base;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import xyz.xcye.core.util.BeanUtils;
 import xyz.xcye.data.entity.Condition;
 import xyz.xcye.data.entity.PageData;
 

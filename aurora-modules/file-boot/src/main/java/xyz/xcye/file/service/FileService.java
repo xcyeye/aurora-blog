@@ -158,7 +158,7 @@ public class FileService {
 
     public PageData<FileVO> selectSpecifyFormatFiles(Condition<Long> condition) {
         Assert.notNull(condition, "查询条件不能为null");
-        return PageUtils.pageList(condition, t -> auroraFileService.queryListByCondition(condition), FileVO.class);
+        return PageUtils.pageList(condition, t -> fileExtService.selectSpecifyFormatFiles(condition), FileVO.class);
     }
 
     public List<String> selectAllFileFormat(long userUid) {
