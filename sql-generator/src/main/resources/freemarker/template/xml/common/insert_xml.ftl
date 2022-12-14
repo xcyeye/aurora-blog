@@ -1,6 +1,6 @@
     <!-- ${methodDescription.INSERT.comment} -->
 	<insert id="${methodDescription.INSERT.methodName}" parameterType="${mybatisXmlDefinition.parameterType}" useGeneratedKeys="true" keyProperty="uid">
-        INSERT INTO ${tableInfo.tableName} (
+        INSERT INTO au_${tableInfo.tableName} (
             <trim suffixOverrides=",">
                 <#list mybatisXmlDefinition.columns as colm>
                     <#if colm??>

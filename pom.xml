@@ -23,6 +23,7 @@
         <module>common-api</module>
         <module>support</module>
         <module>sql-generator</module>
+        <module>service</module>
     </modules>
 
     <properties>
@@ -393,6 +394,37 @@
             <dependency>
                 <groupId>xyz.xcye</groupId>
                 <artifactId>support-service</artifactId>
+                <version>${blog.version}</version>
+            </dependency>
+
+            <!--service层-->
+            <dependency>
+                <groupId>xyz.xcye.admin</groupId>
+                <artifactId>admin-service</artifactId>
+                <version>${blog.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>xyz.xcye.article</groupId>
+                <artifactId>article-service</artifactId>
+                <version>1.0-SNAPSHOT</version>
+            </dependency>
+
+            <dependency>
+                <groupId>xyz.xcye.comment</groupId>
+                <artifactId>comment-service</artifactId>
+                <version>${blog.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>xyz.xcye.file</groupId>
+                <artifactId>file-service</artifactId>
+                <version>${blog.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>xyz.xcye.message</groupId>
+                <artifactId>message-service</artifactId>
                 <version>${blog.version}</version>
             </dependency>
         </dependencies>

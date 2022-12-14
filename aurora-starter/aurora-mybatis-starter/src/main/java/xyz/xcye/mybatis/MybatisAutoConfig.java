@@ -35,7 +35,7 @@ public class MybatisAutoConfig {
     public SqlSessionFactory sqlSessionFactory() throws Exception {
         SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
         sqlSessionFactoryBean.setDataSource(dataSource);
-        sqlSessionFactoryBean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath*:/mapper/*.xml"));
+        sqlSessionFactoryBean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath*:/xyz/xcye/**/mapper/**/*.xml"));
         org.apache.ibatis.session.Configuration configuration = new org.apache.ibatis.session.Configuration();
          //自动将数据库中的下划线转换为驼峰格式
         configuration.setMapUnderscoreToCamelCase(true);

@@ -6,6 +6,7 @@
   import org.springframework.validation.annotation.Validated;
   import org.springframework.web.bind.annotation.*;
   import xyz.xcye.admin.po.Permission;
+  import xyz.xcye.admin.pojo.PermissionPojo;
   import xyz.xcye.admin.service.PermissionService;
   import xyz.xcye.core.annotaion.controller.ModifyOperation;
   import xyz.xcye.core.annotaion.controller.SelectOperation;
@@ -31,14 +32,14 @@ public class PermissionController {
     @ModifyOperation
     @Operation(summary = "插入路径权限")
     @PostMapping("")
-    public int insertPermission(@Validated({Insert.class, Default.class}) Permission permission) {
-        return permissionService.insertPermission(permission);
+    public void insertPermission(@Validated({Insert.class, Default.class}) PermissionPojo permission) {
+        permissionService.insertPermission(permission);
     }
 
     @ModifyOperation
     @Operation(summary = "修改路径权限信息")
     @PutMapping("")
-    public int updatePermission(@Validated({Update.class, Default.class}) Permission permission) {
+    public int updatePermission(@Validated({Update.class, Default.class}) PermissionPojo permission) {
         return permissionService.updatePermission(permission);
     }
 

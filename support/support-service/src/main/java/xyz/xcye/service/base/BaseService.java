@@ -2,8 +2,11 @@ package xyz.xcye.service.base;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import xyz.xcye.core.util.BeanUtils;
+import xyz.xcye.data.entity.Condition;
 import xyz.xcye.data.entity.PageData;
 
 import java.util.List;
@@ -33,8 +36,8 @@ public class BaseService<T> {
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public int deleteById(Long id) {
-        return baseDao.deleteById(id);
+    public int deleteById(Long uid) {
+        return baseDao.deleteById(uid);
     }
 
     @Transactional(rollbackFor = Exception.class)
@@ -42,8 +45,8 @@ public class BaseService<T> {
         baseDao.deleteByWhere(t);
     }
 
-    public T queryById(Long id) {
-        return baseDao.queryById(id);
+    public T queryById(Long uid) {
+        return baseDao.queryById(uid);
     }
 
     public T queryOne(T t) {
@@ -54,12 +57,16 @@ public class BaseService<T> {
         return baseDao.queryListByWhere(t);
     }
 
-    public List<T> queryListByIds(List<Long> ids) {
-        return baseDao.queryListByIds(ids);
+    public List<T> queryListByIds(List<Long> uids) {
+        return baseDao.queryListByIds(uids);
     }
 
     public int countByWhere(T t) {
         return baseDao.countByWhere(t);
+    }
+
+    public List<T> queryListByCondition(Condition condition) {
+        return baseDao.queryListByCondition(condition);
     }
 
     public PageData<T> pageQuery(T t, int currentPage, int pageSize) {

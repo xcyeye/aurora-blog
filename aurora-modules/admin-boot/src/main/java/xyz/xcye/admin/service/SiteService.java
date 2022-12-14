@@ -1,51 +1,81 @@
 package xyz.xcye.admin.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 import xyz.xcye.admin.po.Site;
+import xyz.xcye.admin.pojo.SitePojo;
 import xyz.xcye.admin.vo.SiteVO;
+import xyz.xcye.admin.vo.UserVO;
+import xyz.xcye.aurora.properties.AuroraProperties;
+import xyz.xcye.aurora.util.UserUtils;
+import xyz.xcye.core.enums.ResponseStatusCodeEnum;
+import xyz.xcye.core.exception.user.UserException;
+import xyz.xcye.core.util.BeanUtils;
+import xyz.xcye.core.util.id.GenerateInfoUtils;
+import xyz.xcye.core.util.lambda.AssertUtils;
 import xyz.xcye.data.entity.Condition;
 import xyz.xcye.data.entity.PageData;
+import xyz.xcye.data.util.PageUtils;
 
-public interface SiteService {
+import java.util.Optional;
 
-    /**
-     * 逻辑删除
-     * @param uid
-     * @return
-     */
-    int deleteByPrimaryKey(long uid);
+/**
+ * @author qsyyke
+ * @date Created in 2022/5/16 16:16
+ */
 
-    /**
-     * 物理删除站点信息
-     * @param uid
-     * @return
-     */
-    int physicsDeleteSite(long uid);
+@Service
+public class SiteService {
 
-    /**
-     * 有选择的插入站点信息
-     * @param record
-     * @return
-     */
-    int insertSelective(Site record);
+    @Autowired
+    private AuroraSiteService auroraSiteService;
+    @Autowired
+    private AuroraProperties auroraProperties;
+    @Autowired
+    private UserService userService;
 
-    /**
-     * 通过条件查询
-     * @param condition 查询参数，keyword->logo_title(不是模糊查询)
-     * @return object by primary key
-     */
-    PageData<SiteVO> selectByCondition(Condition<Long> condition);
+    public int deleteByPrimaryKey(long uid) {
+        Site site = Site.builder()
+                .uid(uid)
+                .delete(true)
+                .build();
+        return auroraSiteService.updateById(site);
+    }
 
-    /**
-     * 通过userUid查询
-     * @param uid
-     * @return
-     */
-    SiteVO selectByUid(long uid);
+    public int physicsDeleteSite(long uid) {
+        return auroraSiteService.deleteById(uid);
+    }
 
-    /**
-     * 有选择的修改站点信息
-     * @param record
-     * @return
-     */
-    int updateByPrimaryKeySelective(Site record);
+    public void insertSelective(SitePojo record) {
+        Assert.notNull(record, "站点信息不能为null");
+        // 因为插入导航，一定要登录才能操作，所以userUid可以直接从认证对象中获取
+        Long userUid = UserUtils.getCurrentUserUid();
+        long uid = GenerateInfoUtils.generateUid(auroraProperties.getSnowFlakeWorkerId(),
+                auroraProperties.getSnowFlakeDatacenterId());
+        record.setUid(uid);
+        record.setUserUid(userUid);
+        record.setDelete(false);
+        auroraSiteService.insert(BeanUtils.copyProperties(record, Site.class));
+    }
+
+    public PageData<SiteVO> selectByCondition(Condition<Long> condition) {
+        Assert.notNull(condition, "查询条件不能为null");
+        return PageUtils.pageList(condition, t -> auroraSiteService.queryListByCondition(condition), SiteVO.class);
+    }
+
+    public SiteVO selectByUid(long uid) {
+        return BeanUtils.getSingleObjFromList(auroraSiteService.queryListByCondition(Condition.instant(uid, true)), SiteVO.class);
+    }
+
+    public int updateByPrimaryKeySelective(SitePojo record) {
+        Assert.notNull(record, "站点信息不能为null");
+        // 如果userUid存在的话，判断此用户是否存在
+        Optional.ofNullable(record.getUserUid()).ifPresent(userUid -> {
+            UserVO userVO = userService.queryUserByUid(userUid);
+            AssertUtils.stateThrow(userVO != null,
+                    () -> new UserException(ResponseStatusCodeEnum.PERMISSION_USER_NOT_EXIST));
+        });
+        return auroraSiteService.updateById(BeanUtils.copyProperties(record, Site.class));
+    }
 }

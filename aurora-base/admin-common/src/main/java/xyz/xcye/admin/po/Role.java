@@ -1,57 +1,60 @@
 package xyz.xcye.admin.po;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.validator.constraints.Length;
-import xyz.xcye.core.constant.FieldLengthConstant;
-import xyz.xcye.core.valid.Delete;
-import xyz.xcye.core.valid.Insert;
-import xyz.xcye.core.valid.Update;
-import xyz.xcye.core.valid.validator.ValidateString;
 
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 /**
- * 角色信息
- * @TableName au_role
+ * @table role <br/>
+ * @description TODO <br/>
+ * @date 2022-12-13 21:00:16 <br/>
+ * @author xcye <br/>
  */
 
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
+@Schema(title = "role数据表的实体类")
 public class Role implements Serializable {
 
-    /**
-     * 唯一uid，自增
-     */
-    @NotNull(groups = {Delete.class, Update.class})
-    private Long uid;
+private static final long serialVersionUID = 13247652346523L;
 
-    /**
-     * 角色的名称，不用添加ROLE_
-     */
-    @Length(max = FieldLengthConstant.USER_ROLE)
-    @ValidateString(value = "角色的名称", max = FieldLengthConstant.USER_ROLE, groups = {Insert.class})
-    private String name;
+	/**
+	 * 唯一uid，自增
+	 */
+	@JsonSerialize(using = ToStringSerializer.class)
+	@Schema(title = "唯一uid，自增")
+	private Long uid;
 
-    /**
-     * 创建时间
-     */
-    private String createTime;
+	/**
+	 * 角色的名称，不用添加ROLE_
+	 */
+	@Schema(title = "角色的名称，不用添加ROLE_")
+	private String name;
 
-    /**
-     * 最后更新时间
-     */
-    private String updateTime;
+	/**
+	 * 
+	 */
+	@Schema(title = "")
+	private String createTime;
 
-    /**
-     * 用户的状态 1：已禁用 0：未禁用
-     */
-    private Boolean status;
+	/**
+	 * 
+	 */
+	@Schema(title = "")
+	private String updateTime;
 
-    private static final long serialVersionUID = 1L;
+	/**
+	 * 用户的状态 1：已禁用 0：未禁用
+	 */
+	@Schema(title = "用户的状态 1：已禁用 0：未禁用")
+	private Boolean status;
+
 }

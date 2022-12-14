@@ -5,7 +5,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import xyz.xcye.admin.po.Site;
+import xyz.xcye.admin.pojo.SitePojo;
 import xyz.xcye.admin.service.SiteService;
 import xyz.xcye.admin.vo.SiteVO;
 import xyz.xcye.core.annotaion.controller.ModifyOperation;
@@ -41,8 +41,8 @@ public class SiteController {
     @PostMapping
     @ModifyOperation
     @Operation(summary = "插入站点信息")
-    public int insertSelective(@Validated({Insert.class, Default.class}) Site record) {
-        return siteService.insertSelective(record);
+    public void insertSelective(@Validated({Insert.class, Default.class}) SitePojo record) {
+        siteService.insertSelective(record);
     }
 
     /**
@@ -72,7 +72,7 @@ public class SiteController {
     @PutMapping
     @ModifyOperation
     @Operation(summary = "根据uid修改站点信息")
-    public int updateByPrimaryKeySelective(Site record) {
+    public int updateByPrimaryKeySelective(SitePojo record) {
         return siteService.updateByPrimaryKeySelective(record);
     }
 }

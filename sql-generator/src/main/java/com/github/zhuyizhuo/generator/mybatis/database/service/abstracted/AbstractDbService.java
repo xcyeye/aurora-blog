@@ -55,8 +55,9 @@ public abstract class AbstractDbService implements DbService {
      * @param targetTableInfo 生成器所需的 java 对象
      */
     protected void setTableInfo(DbTableInfo sourceTableInfo, TableInfo targetTableInfo) {
-
-        targetTableInfo.setTableName(sourceTableInfo.getTableName());
+        String tableName = sourceTableInfo.getTableName();
+        tableName = tableName.substring(3);
+        targetTableInfo.setTableName(tableName);
         targetTableInfo.setTableSchema(sourceTableInfo.getTableSchema());
         if (GeneratorStringUtils.isBlank(sourceTableInfo.getTableComment())){
             targetTableInfo.setTableComment(ClassCommentInfo.tableComment);
@@ -71,8 +72,12 @@ public abstract class AbstractDbService implements DbService {
             javaColumnInfo.setDataType(getDataType(columnInfo.getDataType()));
             javaColumnInfo.setColumnName(columnInfo.getColumnName());
             javaColumnInfo.setColumnComment(replaceEnter(columnInfo.getColumnComment()));
+            String columnName = columnInfo.getColumnName();
+            if (columnName.startsWith("is_")) {
+                columnName = columnName.substring(3);
+            }
             javaColumnInfo.setJavaColumnName(GeneratorStringUtils
-                    .changeColmName2CamelFirstLower(columnInfo.getColumnName(), fieldRegex));
+                    .changeColmName2CamelFirstLower(columnName, fieldRegex));
             javaColumnInfo.setJavaDataType(getJavaDataType(columnInfo));
             /** 设置类全路径 java.lang包下的类不需要import */
             javaColumnInfo.setJavaDataTypeFullPath(TypeConversion.javaDataTypeFullPathMap.get(javaColumnInfo.getJavaDataType()));

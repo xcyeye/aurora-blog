@@ -5,14 +5,8 @@ server:
 spring:
   profiles:
     active: dev
-  cloud:
-    bootstrap:
-      enable: true
   main:
     allow-circular-references: true
-  mvc:
-    pathmatch:
-      matching-strategy: ant_path_matcher
 
 #aurora:
 #  amqp:

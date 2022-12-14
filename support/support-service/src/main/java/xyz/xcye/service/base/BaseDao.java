@@ -2,6 +2,7 @@ package xyz.xcye.service.base;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import xyz.xcye.data.entity.Condition;
 
 import java.util.List;
 
@@ -75,4 +76,11 @@ public interface BaseDao<T> {
      * @return 多行数据
      */
     List<T> queryListByIds(@Param("uids") List<Long> uids);
+
+    /**
+     * 这是一个兼容方法
+     * @param condition 条件
+     * @return 多行数据
+     */
+    List<T> queryListByCondition(@Param("condition") Condition condition);
 }

@@ -1,42 +1,50 @@
 package xyz.xcye.admin.po;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import xyz.xcye.core.valid.Delete;
-import xyz.xcye.core.valid.Insert;
-import xyz.xcye.core.valid.Update;
 
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 /**
- * 角色到用户的关系信息
- * @TableName au_role_permission
+ * @table role_permission <br/>
+ * @description TODO <br/>
+ * @date 2022-12-13 21:00:16 <br/>
+ * @author xcye <br/>
  */
+
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
+@Schema(title = "role_permission数据表的实体类")
 public class RolePermissionRelationship implements Serializable {
-    /**
-     * 唯一uid，如果记录不多的话，可以直接使用int类型
-     */
-    @NotNull(groups = {Delete.class, Update.class})
-    private Long uid;
 
-    /**
-     * 角色的uid
-     */
-    @NotNull(groups = {Insert.class})
-    private Long roleUid;
+private static final long serialVersionUID = 13247652346523L;
 
-    /**
-     *
-     */
-    @NotNull(groups = {Insert.class})
-    private Long permissionUid;
+	/**
+	 * 
+	 */
+	@JsonSerialize(using = ToStringSerializer.class)
+	@Schema(title = "")
+	private Long uid;
 
-    private static final long serialVersionUID = 1L;
+	/**
+	 * 
+	 */
+	@JsonSerialize(using = ToStringSerializer.class)
+	@Schema(title = "")
+	private Long roleUid;
+
+	/**
+	 * 
+	 */
+	@JsonSerialize(using = ToStringSerializer.class)
+	@Schema(title = "")
+	private Long permissionUid;
+
 }

@@ -116,7 +116,7 @@ public class TypeConversion {
         mySqlDbType2JavaMap.put("DATE","Date");
         mySqlDbType2JavaMap.put("TIME","Date");
         mySqlDbType2JavaMap.put("DATETIME","Date");
-        mySqlDbType2JavaMap.put("TIMESTAMP","Date");
+        mySqlDbType2JavaMap.put("TIMESTAMP","String");
         mySqlDbType2JavaMap.put("YEAR","Integer");
     }
 

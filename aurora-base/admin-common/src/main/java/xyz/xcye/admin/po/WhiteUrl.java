@@ -1,43 +1,51 @@
 package xyz.xcye.admin.po;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
-import org.hibernate.validator.constraints.Length;
-import xyz.xcye.core.constant.FieldLengthConstant;
-import xyz.xcye.core.valid.Insert;
-import xyz.xcye.core.valid.Update;
-import xyz.xcye.core.valid.validator.ValidateString;
+import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 /**
- * 这是白名单地址
- * @TableName au_white_url
+ * @table white_url <br/>
+ * @description TODO <br/>
+ * @date 2022-12-13 21:00:16 <br/>
+ * @author xcye <br/>
  */
+
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@Schema(title = "white_url数据表的实体类")
 public class WhiteUrl implements Serializable {
-    /**
-     * 唯一uid
-     */
-    @NotNull(groups = {Update.class})
-    private Integer uid;
 
-    /**
-     * 白名单地址
-     */
-    @Length(max = FieldLengthConstant.URL)
-    @ValidateString(value = "白名单地址", max = FieldLengthConstant.URL, groups = {Insert.class})
-    private String url;
+private static final long serialVersionUID = 13247652346523L;
 
-    /**
-     * 创建时间，自动插入
-     */
-    private String createTime;
+	/**
+	 * 
+	 */
+	@Schema(title = "")
+	private Integer uid;
 
-    /**
-     * 最后更新时间
-     */
-    private String updateTime;
+	/**
+	 * 白名单地址
+	 */
+	@Schema(title = "白名单地址")
+	private String url;
 
-    private static final long serialVersionUID = 1L;
+	/**
+	 * 
+	 */
+	@Schema(title = "")
+	private String createTime;
+
+	/**
+	 * 
+	 */
+	@Schema(title = "")
+	private String updateTime;
+
 }

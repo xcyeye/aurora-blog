@@ -6,7 +6,7 @@
 </#if>
         SELECT
         <include refid="Base_Column_List" />
-  	    FROM ${tableInfo.tableName}
+  	    FROM au_${tableInfo.tableName}
         WHERE
         <#list tableInfo.primaryKeyColumns as colm>
             <#if colm_index != 0>AND </#if>${colm.columnName} = ${'#{'}${colm.javaColumnName}}

@@ -5,7 +5,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import xyz.xcye.admin.po.Social;
+import xyz.xcye.admin.pojo.SocialPojo;
 import xyz.xcye.admin.service.SocialService;
 import xyz.xcye.admin.vo.SocialVO;
 import xyz.xcye.core.annotaion.controller.ModifyOperation;
@@ -43,8 +43,8 @@ public class SocialController {
     @PostMapping
     @Operation(summary = "插入新的社交信息")
     @ModifyOperation
-    public int insertSelective(@Validated({Insert.class, Default.class}) Social record) {
-        return socialService.insertSelective(record);
+    public void insertSelective(@Validated({Insert.class, Default.class}) SocialPojo record) {
+        socialService.insertSelective(record);
     }
 
     @Operation(summary = "根据条件查询社交信息")
@@ -64,7 +64,7 @@ public class SocialController {
     @PutMapping
     @ModifyOperation
     @Operation(summary = "修改社交信息")
-    public int updateByPrimaryKeySelective(@Validated({Update.class, Default.class}) Social record) {
+    public int updateByPrimaryKeySelective(@Validated({Update.class, Default.class}) SocialPojo record) {
         return socialService.updateByPrimaryKeySelective(record);
     }
 }

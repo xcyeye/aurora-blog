@@ -10,6 +10,8 @@ import lombok.Builder;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import java.io.Serializable;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 /**
@@ -26,11 +28,16 @@ import io.swagger.v3.oas.annotations.media.Schema;
 @Schema(title = "${tableInfo.tableName}数据表的实体类")
 public class ${javaClassDefinition.PO.className} implements Serializable {
 
+private static final long serialVersionUID = 13247652346523L;
+
 <#list tableInfo.columnLists as colm>
 	<#if colm??>
 	/**
 	 * ${colm.columnComment}
 	 */
+	<#if "${colm.javaDataType}" == "Long">
+	@JsonSerialize(using = ToStringSerializer.class)
+	</#if>
 	@Schema(title = "${colm.columnComment}")
 	private ${colm.javaDataType} ${colm.javaColumnName};
 	</#if>

@@ -19,27 +19,12 @@
     <dependencies>
         <dependency>
             <groupId>xyz.xcye.base</groupId>
-            <artifactId>admin-common</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>xyz.xcye.base</groupId>
             <artifactId>amqp-common</artifactId>
         </dependency>
 
         <dependency>
-            <groupId>xyz.xcye.starter</groupId>
-            <artifactId>aurora-datasource-starter</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>xyz.xcye.starter</groupId>
-            <artifactId>aurora-mybatis-starter</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>xyz.xcye.starter</groupId>
-            <artifactId>aurora-redis-starter</artifactId>
+            <groupId>xyz.xcye.admin</groupId>
+            <artifactId>admin-service</artifactId>
         </dependency>
 
         <dependency>

@@ -7,6 +7,7 @@ import org.springframework.validation.BindException;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import xyz.xcye.admin.po.User;
+import xyz.xcye.admin.pojo.UserPojo;
 import xyz.xcye.admin.service.UserService;
 import xyz.xcye.admin.vo.UserVO;
 import xyz.xcye.core.annotaion.controller.ModifyOperation;
@@ -35,36 +36,36 @@ public class UserController {
     @PostMapping("")
     @ModifyOperation
     @Operation(summary = "添加新用户")
-    public int insertUser(@Validated({Insert.class, Default.class}) User user) throws UserException {
-        return userService.insertUserSelective(user);
+    public void insertUser(@Validated({Insert.class, Default.class}) UserPojo user) throws UserException {
+        userService.insertUserSelective(user);
     }
 
     @PutMapping("")
     @ModifyOperation
     @Operation(summary = "修改用户信息")
-    public int updateUser(@Validated({Update.class, Default.class})User user) throws UserException {
-        return userService.updateUserSelective(user);
+    public void updateUser(@Validated({Update.class, Default.class})UserPojo user) throws UserException {
+        userService.updateUserSelective(user);
     }
 
     @Operation(summary = "更新密码")
     @PutMapping("/pwd")
     @ModifyOperation
-    public int updatePassword(String username, String originPwd, String newPwd) {
-        return userService.updatePassword(username, originPwd, newPwd);
+    public void updatePassword(String username, String originPwd, String newPwd) {
+        userService.updatePassword(username, originPwd, newPwd);
     }
 
     @DeleteMapping("/{uid}")
     @ModifyOperation
     @Operation(summary = "逻辑删除用户信息")
-    public int logicDeleteUserByUid(@PathVariable("uid") long uid) {
-        return userService.logicDeleteByUid(uid);
+    public void logicDeleteUserByUid(@PathVariable("uid") long uid) {
+        userService.logicDeleteByUid(uid);
     }
 
     @DeleteMapping("/delete/{uid}")
     @ModifyOperation
     @Operation(summary = "真正的从数据库中删除用户信息")
-    public int realDeleteUserByUid(@PathVariable("uid") long uid) {
-        return userService.realDeleteByUid(uid);
+    public void realDeleteUserByUid(@PathVariable("uid") long uid) {
+        userService.realDeleteByUid(uid);
     }
 
     @GetMapping("/userUid/{uid}")

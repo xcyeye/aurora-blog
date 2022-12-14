@@ -2,6 +2,7 @@ package com.github.zhuyizhuo.generator.mybatis.app;
 
 import com.github.zhuyizhuo.generator.mybatis.generator.Generator;
 import com.github.zhuyizhuo.generator.mybatis.generator.GeneratorBuilder;
+import com.github.zhuyizhuo.generator.utils.GeneratorStringUtils;
 import com.github.zhuyizhuo.generator.utils.PropertiesUtils;
 import com.google.common.base.Charsets;
 import org.apache.ibatis.io.Resources;

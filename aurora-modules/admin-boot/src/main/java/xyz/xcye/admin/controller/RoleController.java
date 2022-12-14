@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import xyz.xcye.admin.po.Role;
+import xyz.xcye.admin.pojo.RolePojo;
 import xyz.xcye.admin.service.RoleService;
 import xyz.xcye.core.annotaion.controller.ModifyOperation;
 import xyz.xcye.core.annotaion.controller.ResponseRealResult;
@@ -32,14 +33,14 @@ public class RoleController {
     @ModifyOperation
     @Operation(summary = "插入角色")
     @PostMapping("")
-    public int insertRole(@Validated({Insert.class, Default.class}) Role role) {
-        return roleService.insertRole(role);
+    public void insertRole(@Validated({Insert.class, Default.class}) RolePojo role) {
+        roleService.insertRole(role);
     }
 
     @ModifyOperation
     @Operation(summary = "修改角色信息")
     @PutMapping("")
-    public int updateRole(@Validated({Update.class, Default.class}) Role role) {
+    public int updateRole(@Validated({Update.class, Default.class}) RolePojo role) {
         return roleService.updateRole(role);
     }
 

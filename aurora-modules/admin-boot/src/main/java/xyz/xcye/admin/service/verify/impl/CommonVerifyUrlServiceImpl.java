@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import xyz.xcye.admin.po.User;
+import xyz.xcye.admin.pojo.UserPojo;
 import xyz.xcye.admin.service.UserService;
 import xyz.xcye.admin.service.verify.CommonVerifyUrlService;
 import xyz.xcye.api.mail.sendmail.util.StorageEmailVerifyUrlUtil;
@@ -32,11 +33,10 @@ public class CommonVerifyUrlServiceImpl implements CommonVerifyUrlService {
 
         // 验证成功，修改用户的邮箱绑定状态
         long userUid = StorageEmailVerifyUrlUtil.getUserUidFromVerifyPath(incomingSecretKey);
-        User user = User.builder()
-                .uid(userUid)
-                .verifyEmail(true)
-                .build();
-        int updateUser = userService.updateUserSelective(user);
+        UserPojo userPojo = new UserPojo();
+        userPojo.setUid(userUid);
+        userPojo.setVerifyEmail(true);
+        int updateUser = userService.updateUserSelective(userPojo);
         if (updateUser == 1) {
             boolean deleteKey = StorageEmailVerifyUrlUtil.deleteKey(incomingSecretKey);
             // 如果删除失败，则抛出异常，触发回滚

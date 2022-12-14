@@ -11,6 +11,7 @@ import org.springframework.validation.BindException;
 import xyz.xcye.admin.manager.task.LoadRolePermissionInfo;
 import xyz.xcye.admin.manager.task.LoadWhiteUrlInfo;
 import xyz.xcye.admin.po.User;
+import xyz.xcye.admin.pojo.UserPojo;
 import xyz.xcye.admin.service.UserService;
 import xyz.xcye.admin.vo.UserVO;
 import xyz.xcye.amqp.comstant.AmqpExchangeNameConstant;
@@ -87,11 +88,10 @@ public class OperateUserConsumer {
         }
 
         // 用户存在 修改锁住状态
-        User user = User.builder()
-                .uid(userVO.getUid())
-                .accountLock(true)
-                .build();
-        int updateUserNum = userService.updateUserSelective(user);
+        UserPojo userPojo = new UserPojo();
+        userPojo.setUid(userVO.getUid());
+        userPojo.setAccountLock(true);
+        int updateUserNum = userService.updateUserSelective(userPojo);
         if (updateUserNum == 1) {
             boolean sendStatus = sendEnableAccountEmail(userVO);
             AssertUtils.stateThrow(sendStatus,

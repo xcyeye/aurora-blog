@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import xyz.xcye.admin.dto.NavigationDTO;
-import xyz.xcye.admin.po.Navigation;
+import xyz.xcye.admin.pojo.NavigationPojo;
 import xyz.xcye.admin.service.NavigationService;
 import xyz.xcye.admin.vo.NavigationVO;
 import xyz.xcye.core.annotaion.controller.ModifyOperation;
@@ -43,8 +43,8 @@ public class NavigationController {
     @PostMapping
     @ModifyOperation
     @Operation(summary = "插入新的导航信息")
-    public int insertSelective(@Validated({Insert.class, Default.class}) Navigation record) {
-        return navigationService.insertSelective(record);
+    public void insertSelective(@Validated({Insert.class, Default.class}) NavigationPojo record) {
+        navigationService.insertSelective(record);
     }
 
     @GetMapping
@@ -76,7 +76,7 @@ public class NavigationController {
     @PutMapping
     @ModifyOperation
     @Operation(summary = "修改导航信息")
-    public int updateByPrimaryKeySelective(@Validated({Update.class, Default.class}) Navigation record) {
+    public int updateByPrimaryKeySelective(@Validated({Update.class, Default.class}) NavigationPojo record) {
         return navigationService.updateByPrimaryKeySelective(record);
     }
 }

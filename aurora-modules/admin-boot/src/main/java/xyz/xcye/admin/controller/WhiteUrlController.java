@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import xyz.xcye.admin.po.WhiteUrl;
+import xyz.xcye.admin.pojo.WhiteUrlPojo;
 import xyz.xcye.admin.service.WhiteUrlService;
 import xyz.xcye.core.annotaion.controller.ModifyOperation;
 import xyz.xcye.core.annotaion.controller.SelectOperation;
@@ -40,8 +41,8 @@ public class WhiteUrlController {
     @Operation(summary = "插入白名单记录")
     @ModifyOperation
     @PostMapping
-    public int insert(@Validated({Insert.class, Default.class}) WhiteUrl record) {
-        return whiteUrlService.insertWhiteUrlSelective(record);
+    public void insert(@Validated({Insert.class, Default.class}) @RequestBody WhiteUrlPojo record) {
+        whiteUrlService.insertWhiteUrlSelective(record);
     }
 
     /**
@@ -59,7 +60,7 @@ public class WhiteUrlController {
     @PutMapping
     @Operation(summary = "修改白名单数据")
     @ModifyOperation
-    public int updateByPrimaryKeySelective(@Validated({Update.class}) WhiteUrl record) {
+    public int updateByPrimaryKeySelective(@Validated({Update.class}) WhiteUrlPojo record) {
         return whiteUrlService.updateWhiteUrlSelective(record);
     }
 }

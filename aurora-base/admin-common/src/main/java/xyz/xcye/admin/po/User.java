@@ -1,118 +1,130 @@
 package xyz.xcye.admin.po;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.validator.constraints.Length;
 import xyz.xcye.admin.enums.GenderEnum;
-import xyz.xcye.core.constant.FieldLengthConstant;
-import xyz.xcye.core.valid.Delete;
-import xyz.xcye.core.valid.Insert;
-import xyz.xcye.core.valid.Update;
-import xyz.xcye.core.valid.validator.ValidateString;
 
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 /**
- * 数据库中的aurora_user表的映射
- * @author qsyyke
+ * @table user <br/>
+ * @description TODO <br/>
+ * @date 2022-12-13 21:00:16 <br/>
+ * @author xcye <br/>
  */
 
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@Schema(title = "user数据表的实体类")
 public class User implements Serializable {
-    public static final long serialVersionUID = 42L;
 
-    /**
-     * 用户唯一id
-     */
-    @NotNull(groups = {Delete.class, Update.class})
-    private Long uid;
+private static final long serialVersionUID = 13247652346523L;
 
-    /**
-     * 用户简介
-     */
-    @Length(max = FieldLengthConstant.SUMMARY,message = "用户-简介不能超过{max}")
-    private String userSummary;
+	/**
+	 * 唯一uid
+	 */
+	@JsonSerialize(using = ToStringSerializer.class)
+	@Schema(title = "唯一uid")
+	private Long uid;
 
-    /**
-     * 是否删除
-     */
-    private Boolean delete;
+	/**
+	 * 用户简介
+	 */
+	@Schema(title = "用户简介")
+	private String userSummary;
 
-    /**
-     * 账户是否被锁住
-     */
-    private Boolean accountLock;
+	/**
+	 * 用户昵称
+	 */
+	@Schema(title = "用户昵称")
+	private String nickname;
 
-    /**
-     * 是否验证了邮箱
-     */
-    private Boolean verifyEmail;
+	/**
+	 * 用户性别
+	 */
+	@Schema(title = "用户性别")
+	private GenderEnum gender;
 
-    /**
-     * 用户昵称
-     */
-    @Length(max = FieldLengthConstant.NICKNAME,groups = {Insert.class})
-    private String nickname;
+	/**
+	 * 用户登录记录的uid
+	 */
+	@JsonSerialize(using = ToStringSerializer.class)
+	@Schema(title = "用户登录记录的uid")
+	private Long loginUid;
 
-    /**
-     * 用户性别
-     */
-    private GenderEnum gender;
+	/**
+	 * 用户的站点配置uid
+	 */
+	@JsonSerialize(using = ToStringSerializer.class)
+	@Schema(title = "用户的站点配置uid")
+	private Long siteUid;
 
-    /**
-     * 该用户对应的网站设置的uid
-     */
-    private Long siteUid;
+	/**
+	 * 用户的头像地址
+	 */
+	@Schema(title = "用户的头像地址")
+	private String avatar;
 
-    /**
-     * 用户头像
-     */
-    @Length(max = FieldLengthConstant.URL)
-    private String avatar;
+	/**
+	 * 用户的密码
+	 */
+	@Schema(title = "用户的密码")
+	private String password;
 
-    /**
-     * 密码，使用md5加密
-     */
-    @ValidateString(value = "用户-密码",max = FieldLengthConstant.PASSWORD, groups = Insert.class)
-    @Length(max = FieldLengthConstant.PASSWORD)
-    private String password;
+	/**
+	 * 用户名
+	 */
+	@Schema(title = "用户名")
+	private String username;
 
-    /**
-     * 用户名（和用户昵称不同，用户名唯一，昵称只要符合要求都行）
-     */
-    @ValidateString(value = "用户-用户名",max = FieldLengthConstant.USERNAME, groups = Insert.class)
-    @Length(max = FieldLengthConstant.USERNAME)
-    private String username;
+	/**
+	 * 用户的工作集合
+	 */
+	@Schema(title = "用户的工作集合")
+	private String profession;
 
-    /**
-     * 专业
-     */
-    @Length(max = FieldLengthConstant.PROFESSION,message = "用户-专业不能超过{max}")
-    private String profession;
+	/**
+	 * 此用户对应的邮箱uid
+	 */
+	@JsonSerialize(using = ToStringSerializer.class)
+	@Schema(title = "此用户对应的邮箱uid")
+	private Long emailUid;
 
-    /**
-     * 该用户对应的邮箱设置uid
-     */
-    private Long emailUid;
+	/**
+	 * 
+	 */
+	@Schema(title = "")
+	private String createTime;
 
-    /**
-     * 用户登录记录的uid
-     */
-    private Long loginUid;
+	/**
+	 * 
+	 */
+	@Schema(title = "")
+	private String updateTime;
 
-    /**
-     * 创建时间
-     */
-    private String createTime;
+	/**
+	 * 是否删除 1：删除 
+	 */
+	@Schema(title = "是否删除 1：删除 ")
+	private Boolean delete;
 
-    /**
-     * 更新时间
-     */
-    private String updateTime;
+	/**
+	 * 1: 账户被锁住，0：未被锁住
+	 */
+	@Schema(title = "1: 账户被锁住，0：未被锁住")
+	private Boolean accountLock;
+
+	/**
+	 * 1: 邮箱已验证，0：邮箱未验证
+	 */
+	@Schema(title = "1: 邮箱已验证，0：邮箱未验证")
+	private Boolean verifyEmail;
+
 }

@@ -1,56 +1,64 @@
 package xyz.xcye.admin.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
 import xyz.xcye.admin.po.Role;
+import xyz.xcye.admin.pojo.RolePojo;
+import xyz.xcye.core.enums.ResponseStatusCodeEnum;
+import xyz.xcye.core.exception.role.RoleException;
+import xyz.xcye.core.util.BeanUtils;
+import xyz.xcye.core.util.lambda.AssertUtils;
 import xyz.xcye.data.entity.Condition;
 import xyz.xcye.data.entity.PageData;
+import xyz.xcye.data.util.PageUtils;
 
 /**
  * @author qsyyke
- * @date Created in 2022/5/4 20:59
+ * @date Created in 2022/5/4 21:04
  */
 
+@Service
+public class RoleService {
 
-public interface RoleService {
+    @Autowired
+    private AuroraRoleService auroraRoleService;
 
-    /**
-     * 插入角色信息
-     * @param role
-     * @return
-     */
-    int insertRole(Role role);
+    @Transactional
+    public void insertRole(RolePojo role) {
+        Assert.notNull(role, "角色信息不能为null");
+        AssertUtils.ifNoLengthThrow(role.getName(), () -> new RoleException("角色名字不能为null"));
+        // 查看此角色是否存在
+        AssertUtils.stateThrow(selectAllRole(Condition.instant(role.getName())).getResult().isEmpty(),
+                () -> new RoleException(ResponseStatusCodeEnum.PERMISSION_ROLE_HAD_EXISTS));
+        role.setStatus(false);
+        auroraRoleService.insert(BeanUtils.copyProperties(role, Role.class));
+    }
 
-    /**
-     * 更新角色的状态
-     * @param uid
-     * @return
-     */
-    int updateRoleStatus(long uid, boolean status);
+    public int updateRoleStatus(long uid, boolean status) {
+        RolePojo rolePojo = new RolePojo();
+        rolePojo.setUid(uid);
+        rolePojo.setStatus(status);
+        return updateRole(rolePojo);
+    }
 
-    /**
-     * 修改角色信息
-     * @param role
-     * @return
-     */
-    int updateRole(Role role);
+    public int updateRole(RolePojo role) {
+        // 判断角色是否存在
+        AssertUtils.stateThrow(selectAllRole(Condition.instant(role.getName())).getResult().isEmpty(),
+                () -> new RoleException(ResponseStatusCodeEnum.PERMISSION_ROLE_HAD_EXISTS));
+        return auroraRoleService.updateById(BeanUtils.copyProperties(role, Role.class));
+    }
 
-    /**
-     * 根据uid删除角色信息
-     * @param uid
-     * @return
-     */
-    int deleteByUid(long uid);
+    public int deleteByUid(long uid) {
+        return auroraRoleService.deleteById(uid);
+    }
 
-    /**
-     * 根据自定义条件，查询满足要求的角色信息，只包含角色，不包含权限信息
-     * @param condition
-     * @return
-     */
-    PageData<Role> selectAllRole(Condition<Long> condition);
+    public PageData<Role> selectAllRole(Condition<Long> condition) {
+        return PageUtils.pageList(condition, t -> auroraRoleService.queryListByCondition(condition));
+    }
 
-    /**
-     * 根据uid查询
-     * @param uid
-     * @return
-     */
-    Role selectByUid(long uid);
+    public Role selectByUid(long uid) {
+        return BeanUtils.getSingleObjFromList(auroraRoleService.queryListByCondition(Condition.instant(uid, true)), Role.class);
+    }
 }

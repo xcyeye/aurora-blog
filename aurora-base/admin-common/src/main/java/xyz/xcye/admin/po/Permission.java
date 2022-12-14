@@ -1,58 +1,60 @@
 package xyz.xcye.admin.po;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.validator.constraints.Length;
-import xyz.xcye.core.constant.FieldLengthConstant;
-import xyz.xcye.core.valid.Delete;
-import xyz.xcye.core.valid.Insert;
-import xyz.xcye.core.valid.Update;
-import xyz.xcye.core.valid.validator.ValidateString;
 
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 /**
- * 路径权限
- * @TableName au_permission
+ * @table permission <br/>
+ * @description TODO <br/>
+ * @date 2022-12-13 21:00:16 <br/>
+ * @author xcye <br/>
  */
 
+@Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
-@Data
+@Schema(title = "permission数据表的实体类")
 public class Permission implements Serializable {
-    /**
-     * 唯一uid，自增
-     */
-    @NotNull(groups = {Update.class, Delete.class})
-    private Long uid;
 
-    /**
-     * 此路径的名称
-     */
-    @Length(max = FieldLengthConstant.URL)
-    @ValidateString(value = "资源的名称", max = FieldLengthConstant.URL, groups = {Insert.class})
-    private String name;
+private static final long serialVersionUID = 13247652346523L;
 
-    /**
-     * 权限的地址，可以是组件的名称，必须遵守Method:path的约定
-     */
-    @Length(max = FieldLengthConstant.METHOD_AND_PATH)
-    @ValidateString(value = "路径的名称", max = FieldLengthConstant.METHOD_AND_PATH, groups = {Insert.class})
-    private String path;
+	/**
+	 * 唯一uid，自增
+	 */
+	@JsonSerialize(using = ToStringSerializer.class)
+	@Schema(title = "唯一uid，自增")
+	private Long uid;
 
-    /**
-     * 创建时间
-     */
-    private String createTime;
+	/**
+	 * 权限的名称
+	 */
+	@Schema(title = "权限的名称")
+	private String name;
 
-    /**
-     * 最后更新时间
-     */
-    private String updateTime;
+	/**
+	 * 权限的地址，可以是组件的名称
+	 */
+	@Schema(title = "权限的地址，可以是组件的名称")
+	private String path;
 
-    private static final long serialVersionUID = 1L;
+	/**
+	 * 
+	 */
+	@Schema(title = "")
+	private String createTime;
+
+	/**
+	 * 
+	 */
+	@Schema(title = "")
+	private String updateTime;
+
 }

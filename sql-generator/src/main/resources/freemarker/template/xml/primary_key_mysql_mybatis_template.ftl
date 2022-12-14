@@ -44,4 +44,11 @@
 </#if>
 	<!-- common methods end -->
 
+	<!-- 下面的是兼容旧版本 -->
+	<select id="queryListByCondition" resultMap="${mybatisXmlDefinition.resultMap.id}">
+		select
+		<include refid="Base_Column_List" />
+		from au_${tableInfo.tableName}
+
+	</select>
 </mapper>
