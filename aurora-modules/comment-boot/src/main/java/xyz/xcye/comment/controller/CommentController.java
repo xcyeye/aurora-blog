@@ -9,6 +9,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import xyz.xcye.comment.dto.CommentDTO;
 import xyz.xcye.comment.po.Comment;
+import xyz.xcye.comment.pojo.CommentPojo;
 import xyz.xcye.comment.service.CommentService;
 import xyz.xcye.comment.vo.CommentVO;
 import xyz.xcye.comment.vo.ShowCommentVO;
@@ -38,18 +39,18 @@ public class CommentController {
     @Operation(summary = "更新评论")
     @ModifyOperation
     @PutMapping("")
-    public int updateComment(@Validated({Update.class}) Comment comment) {
-        return commentService.updateComment(comment);
+    public void updateComment(@Validated({Update.class}) CommentPojo comment) {
+        commentService.updateComment(comment);
     }
 
     @Operation(summary = "插入新评论")
     @ModifyOperation
     @PostMapping("")
-    public int insertComment(@Validated({Default.class, Insert.class}) Comment comment,
+    public void insertComment(@Validated({Default.class, Insert.class}) CommentPojo comment,
                              HttpServletRequest request) throws Throwable {
         comment.setCommentIp(NetWorkUtils.getIpAddr(request));
         comment.setOperationSystemInfo(NetWorkUtils.getOperationInfo(request));
-        return commentService.insertComment(comment);
+        commentService.insertComment(comment);
     }
 
     @Operation(summary = "删除单条评论")

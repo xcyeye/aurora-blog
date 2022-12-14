@@ -1,157 +1,139 @@
 package xyz.xcye.comment.po;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
+import lombok.Builder;
+import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
-import org.hibernate.validator.constraints.Length;
-import xyz.xcye.core.constant.FieldLengthConstant;
-import xyz.xcye.core.constant.RegexConstant;
-import xyz.xcye.core.valid.Delete;
-import xyz.xcye.core.valid.Insert;
-import xyz.xcye.core.valid.LogicDelete;
-import xyz.xcye.core.valid.Update;
-import xyz.xcye.core.valid.validator.ValidateString;
-
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 import java.io.Serializable;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 /**
- * 数据表 au_comment
- * @author qsyyke
+ * @table comment <br/>
+ * @description TODO <br/>
+ * @date 2022-12-14 21:35:45 <br/>
+ * @author xcye <br/>
  */
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Schema(title = "comment数据表的实体类")
 public class Comment implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+private static final long serialVersionUID = 13247652346523L;
 
-    /**
-     * 唯一uid 不能为null 主键
-     */
-    @NotNull(groups = {Delete.class, Update.class})
-    private Long uid;
+	/**
+	 * 唯一uid
+	 */
+	@JsonSerialize(using = ToStringSerializer.class)
+	@Schema(title = "唯一uid")
+	private Long uid;
 
-    /**
-     * 此评论对应注册用户中的哪个用户
-     */
-    @NotNull(groups = Insert.class)
-    private Long userUid;
+	/**
+	 * 此评论的用户名
+	 */
+	@Schema(title = "此评论的用户名")
+	private String username;
 
-    /**
-     * 是否逻辑删除
-     */
-    @NotNull(groups = LogicDelete.class)
-    private Boolean delete;
+	/**
+	 * 此评论这的头像uid
+	 */
+	@Schema(title = "此评论这的头像uid")
+	private String avatar;
 
-    /**
-     * 评论这的用户名 不能为null
-     * <p>length < 15</p>
-     */
-    @Length(max = FieldLengthConstant.USERNAME)
-    @ValidateString(value = "评论-用户名", max = FieldLengthConstant.USERNAME, groups = {Insert.class})
-    private String username;
+	/**
+	 * 此评论者的博客地址
+	 */
+	@Schema(title = "此评论者的博客地址")
+	private String site;
 
-    /**
-     * 头像地址 可以为null
-     * <p>length < 255</p>
-     */
-    @Length(max = FieldLengthConstant.URL,message = "评论-头像地址长度不能超过{max}",groups = {Insert.class})
-    private String avatar;
+	/**
+	 * 此评论这的邮箱地址
+	 */
+	@Schema(title = "此评论这的邮箱地址")
+	private String email;
 
-    /**
-     * 站点地址 不能为null
-     * <p>length < 255</p>
-     */
-    @Length(max = FieldLengthConstant.URL)
-    @ValidateString(value = "评论-网站", max = FieldLengthConstant.URL ,groups = {Insert.class})
-    private String site;
+	/**
+	 * 此评论的创时间
+	 */
+	@Schema(title = "此评论的创时间")
+	private String createTime;
 
-    /**
-     * 邮箱地址 不能为null 用于接收邮件
-     * <p>length < 32</p>
-     */
-    @Length(max = FieldLengthConstant.EMAIL_NUMBER)
-    @Pattern(regexp = RegexConstant.EMAIL)
-    @NotNull
-    @NotEmpty
-    private String email;
+	/**
+	 * 此评论最后修改时间
+	 */
+	@Schema(title = "此评论最后修改时间")
+	private String updateTime;
 
-    /**
-     * 创建时间 不能为null
-     * <p>mysql -> datetime</p>
-     */
-    @Length(max = FieldLengthConstant.TIME_FORMAT)
-    private String createTime;
+	/**
+	 * 评论者的ip地址
+	 */
+	@Schema(title = "评论者的ip地址")
+	private String commentIp;
 
-    /**
-     * 最后修改时间 可以为null
-     * <p>mysql -> datetime</p>
-     */
-    private String updateTime;
+	/**
+	 * 评论者的浏览器版本
+	 */
+	@Schema(title = "评论者的浏览器版本")
+	private String operationSystemInfo;
 
-    /**
-     * 评论者的ip 可以为null
-     * <p>length < 12</p>
-     */
-    @Length(max = FieldLengthConstant.IP,message = "评论-ip地址最大长度为{max}", groups = Update.class)
-    private String commentIp;
+	/**
+	 * 是否显示此评论 1： 显示 0： 不显示
+	 */
+	@Schema(title = "是否显示此评论 1： 显示 0： 不显示")
+	private Boolean showComment;
 
-    /**
-     * 评论者的操作系统信息 可以为null
-     * <p>length < 200</p>
-     */
-    @Length(max = FieldLengthConstant.OPERATION_INFO,message = "评论-操作系统信息最大长度为{max}")
-    private String operationSystemInfo;
+	/**
+	 * 此评论是回复哪个评论的
+	 */
+	@JsonSerialize(using = ToStringSerializer.class)
+	@Schema(title = "此评论是回复哪个评论的")
+	private Long replyCommentUid;
 
-    /**
-     * 是否显示此条评论 true：显示 false：不显示
-     */
-    private Boolean showComment;
+	/**
+	 * 如果此评论是回复某条评论，则1：已通知回复的那条评论的邮箱，0：未发送邮箱通知
+	 */
+	@Schema(title = "如果此评论是回复某条评论，则1：已通知回复的那条评论的邮箱，0：未发送邮箱通知")
+	private Boolean emailNotice;
 
-    /**
-     * 此条评论是回复哪条评论的 不能为null
-     */
-    private Long replyCommentUid;
+	/**
+	 * 在哪个地址发布评论
+	 */
+	@Schema(title = "在哪个地址发布评论")
+	private String path;
 
-    /**
-     * 是否发送邮件通知
-     */
-    private Boolean emailNotice;
+	/**
+	 * 此评论的所有下一条集合
+	 */
+	@Schema(title = "此评论的所有下一条集合")
+	private String nextCommentUidArray;
 
-    /**
-     * 评论内容
-     */
-    @Length(max = FieldLengthConstant.COMMENT_CONTENT)
-    @ValidateString(value = "评论的内容", max = FieldLengthConstant.COMMENT_CONTENT, groups = {Insert.class})
-    private String content;
+	/**
+	 * 评论内容
+	 */
+	@Schema(title = "评论内容")
+	private String content;
 
-    /**
-     * 此评论在哪个页面上的评论
-     */
-    @Length(max = FieldLengthConstant.URL)
-    @ValidateString(value = "评论 评论的地址", max = FieldLengthConstant.URL, groups = {Insert.class})
-    private String path;
+	/**
+	 * 此评论是属于哪个用户的
+	 */
+	@JsonSerialize(using = ToStringSerializer.class)
+	@Schema(title = "此评论是属于哪个用户的")
+	private Long userUid;
 
-    /**
-     * 此评论所对应的所有子评论集合，使用,分割开的
-     */
-    private String nextCommentUidArray;
+	/**
+	 * 1：删除 0：未删除
+	 */
+	@Schema(title = "1：删除 0：未删除")
+	private Boolean delete;
 
-    /**
-     * 此评论是在哪种类型的页面上发布的，可以是说说，文章等
-     */
-    @ValidateString(value = "页面类型", groups = Insert.class)
-    private String pageType;
+	/**
+	 * 此评论是在哪种页面发布的
+	 */
+	@Schema(title = "此评论是在哪种页面发布的")
+	private String pageType;
 
-    /**
-     * 如果此评论是在说说发布的，那么此pageUid就表示说说的uid
-     */
-    @NotNull(groups = {Insert.class})
-    private Long pageUid;
 }

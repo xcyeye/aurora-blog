@@ -18,23 +18,8 @@
 
     <dependencies>
         <dependency>
-            <groupId>xyz.xcye.base</groupId>
-            <artifactId>comment-common</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>xyz.xcye.starter</groupId>
-            <artifactId>aurora-mybatis-starter</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>xyz.xcye.starter</groupId>
-            <artifactId>aurora-redis-starter</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>xyz.xcye.starter</groupId>
-            <artifactId>aurora-datasource-starter</artifactId>
+            <groupId>xyz.xcye.comment</groupId>
+            <artifactId>comment-service</artifactId>
         </dependency>
 
         <dependency>
