@@ -7,10 +7,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import org.hibernate.validator.constraints.Length;
 import xyz.xcye.core.constant.FieldLengthConstant;
 import xyz.xcye.core.constant.RegexConstant;
-import xyz.xcye.core.valid.Delete;
-import xyz.xcye.core.valid.Insert;
-import xyz.xcye.core.valid.LogicDelete;
-import xyz.xcye.core.valid.Update;
+import xyz.xcye.core.valid.*;
 import xyz.xcye.core.valid.validator.ValidateString;
 
 import javax.validation.constraints.NotEmpty;
@@ -31,7 +28,7 @@ public class CommentPojo {
     /**
      * 唯一uid 不能为null 主键
      */
-    @NotNull(groups = {Delete.class, Update.class})
+    @NotNull(groups = {Delete.class, Update.class, GetList.class})
     private Long uid;
 
     /**
@@ -151,5 +148,10 @@ public class CommentPojo {
      */
     @NotNull(groups = {Insert.class})
     private Long pageUid;
+
+    /**
+     * 评论uid集合
+     */
+    private long[] commentUidArr;
 
 }

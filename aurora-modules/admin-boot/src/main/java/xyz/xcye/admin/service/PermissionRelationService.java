@@ -4,11 +4,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
+import org.springframework.web.bind.annotation.PostMapping;
 import xyz.xcye.admin.dao.ext.PermissionRelationDaoExt;
 import xyz.xcye.admin.dto.RolePermissionDTO;
 import xyz.xcye.admin.po.Role;
 import xyz.xcye.admin.po.RolePermissionRelationship;
 import xyz.xcye.admin.po.UserRoleRelationship;
+import xyz.xcye.admin.pojo.PermissionRelationshipPojo;
 import xyz.xcye.admin.vo.UserVO;
 import xyz.xcye.core.enums.ResponseStatusCodeEnum;
 import xyz.xcye.core.exception.permission.PermissionException;
@@ -22,6 +24,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.LongStream;
+import java.util.stream.Stream;
 
 /**
  * @author qsyyke
@@ -80,7 +83,10 @@ public class PermissionRelationService {
     }
 
     @Transactional
-    public int insertUserRoleBatch(long[] userUidArr, long roleUid) {
+    public int insertUserRoleBatch(PermissionRelationshipPojo pojo) {
+        Assert.notNull(pojo.getUserUidArr(), "userUidArr不能为空");
+        Assert.notNull(pojo.getRoleUidArr(), "roleUidArr不能为空");
+        long roleUid = pojo.getRoleUidArr()[0];
         Role role = roleService.selectByUid(roleUid);
         // 查询看是否存在此角色
         AssertUtils.stateThrow(role != null,
@@ -89,7 +95,7 @@ public class PermissionRelationService {
         // 判断此角色是否被禁用
         AssertUtils.stateThrow(!role.getStatus(), () -> new RoleException(ResponseStatusCodeEnum.PERMISSION_ROLE_HAD_DISABLED));
 
-        LongStream longStream = Arrays.stream(userUidArr)
+        Stream<Long> longStream = Arrays.stream(pojo.getUserUidArr())
                 .filter(userUid -> userService.queryUserByUid(userUid) != null)
                 .filter(userUid -> auroraUserRoleService.queryListByCondition(Condition.instant(userUid, roleUid)).isEmpty());
         longStream.forEach(userUid -> {
@@ -101,7 +107,10 @@ public class PermissionRelationService {
         return (int) longStream.count();
     }
 
-    public int deleteUserRoleBatch(long userUid, long[] roleUidArr) {
+    public int deleteUserRoleBatch(PermissionRelationshipPojo pojo) {
+        Assert.notNull(pojo.getUserUidArr(), "userUidArr不能为null");
+        Assert.notNull(pojo.getRoleUidArr(), "roleUidArr不能为null");
+        Long userUid = pojo.getUserUidArr()[0];
         final int[] successNum = {0};
         // 判断用户是否存在
         AssertUtils.stateThrow(userService.queryUserByUid(userUid) != null,
@@ -110,7 +119,7 @@ public class PermissionRelationService {
         // 组装查询条件
         Condition<Long> condition = new Condition<>();
         condition.setUid(userUid);
-        Arrays.stream(roleUidArr).forEach(roleUid -> {
+        Arrays.stream(pojo.getRoleUidArr()).forEach(roleUid -> {
             condition.setOtherUid(roleUid);
             // 查询roleUid和userUid对应的uid
             List<UserRoleRelationship> userRoleRelationshipList = auroraUserRoleService
@@ -122,14 +131,19 @@ public class PermissionRelationService {
         return successNum[0];
     }
 
-    public int updateUserRole(long userUid, long originRoleUid, long newRoleUid) {
+    public int updateUserRole(PermissionRelationshipPojo pojo) {
+        Assert.notNull(pojo.getUserUidArr(), "userUidArr不能为null");
+        Assert.notNull(pojo.getOriginRoleUid(), "originRoleUid不能为null");
+        Assert.notNull(pojo.getNewRoleUid(), "newRoleUid不能为null");
+        Long originRoleUid = pojo.getOriginRoleUid();
+        Long newRoleUid = pojo.getNewRoleUid();
         final int[] successNum = {0};
         // 判断用户是否存在
-        AssertUtils.stateThrow(userService.queryUserByUid(userUid) != null,
+        AssertUtils.stateThrow(userService.queryUserByUid(pojo.getUserUidArr()[0]) != null,
                 () -> new UserException(ResponseStatusCodeEnum.PERMISSION_USER_NOT_EXIST));
         // 更新用户角色关系
         Condition<Long> condition = new Condition<>();
-        condition.setUid(userUid);
+        condition.setUid(pojo.getUserUidArr()[0]);
         condition.setOtherUid(originRoleUid);
 
         List<UserRoleRelationship> userRoleRelationshipList = auroraUserRoleService
@@ -146,14 +160,14 @@ public class PermissionRelationService {
         return successNum[0];
     }
 
-    public int insertRolePermissionBatch(long[] roleUidArr, long permissionUid) {
-        final int[] successNum = {0};
-
+    public int insertRolePermissionBatch(PermissionRelationshipPojo pojo) {
+        Assert.notNull(pojo.getRoleUidArr(), "roleUidArr不能为null");
+        Assert.notNull(pojo.getPermissionUidArr(), "permissionUidArr不能为null");
+        Long permissionUid = pojo.getPermissionUidArr()[0];
         // 判断此permissionUid是否可用
         AssertUtils.stateThrow(permissionService.selectByUid(permissionUid) != null,
                 () -> new UserException(ResponseStatusCodeEnum.PERMISSION_RESOURCE_NOT_RIGHT));
-        Assert.notNull(roleUidArr, "传入的角色uid不能为null");
-        LongStream longStream = Arrays.stream(roleUidArr)
+        Stream<Long> longStream =Arrays.stream(pojo.getRoleUidArr())
                 .filter(roleUid -> roleService.selectByUid(roleUid) != null)
                 .filter(roleUid -> auroraRolePermissionService.queryListByCondition(Condition.instant(roleUid, permissionUid)).isEmpty());
         // 遍历可用的roleUid

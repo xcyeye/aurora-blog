@@ -16,6 +16,8 @@ import xyz.xcye.comment.vo.ShowCommentVO;
 import xyz.xcye.core.annotaion.controller.ModifyOperation;
 import xyz.xcye.core.annotaion.controller.SelectOperation;
 import xyz.xcye.core.util.NetWorkUtils;
+import xyz.xcye.core.valid.Delete;
+import xyz.xcye.core.valid.GetList;
 import xyz.xcye.core.valid.Insert;
 import xyz.xcye.core.valid.Update;
 import xyz.xcye.data.entity.Condition;
@@ -38,15 +40,15 @@ public class CommentController {
 
     @Operation(summary = "更新评论")
     @ModifyOperation
-    @PutMapping("")
-    public void updateComment(@Validated({Update.class}) CommentPojo comment) {
+    @PostMapping("/update")
+    public void updateComment(@Validated({Update.class}) @RequestBody CommentPojo comment) {
         commentService.updateComment(comment);
     }
 
     @Operation(summary = "插入新评论")
     @ModifyOperation
-    @PostMapping("")
-    public void insertComment(@Validated({Default.class, Insert.class}) CommentPojo comment,
+    @PostMapping("/insert")
+    public void insertComment(@Validated({Default.class, Insert.class}) @RequestBody CommentPojo comment,
                              HttpServletRequest request) throws Throwable {
         comment.setCommentIp(NetWorkUtils.getIpAddr(request));
         comment.setOperationSystemInfo(NetWorkUtils.getOperationInfo(request));
@@ -55,41 +57,41 @@ public class CommentController {
 
     @Operation(summary = "删除单条评论")
     @ModifyOperation
-    @DeleteMapping("/{uid}")
-    public int deleteComment(@PathVariable("uid") Long uid) {
-        return commentService.deleteComment(uid);
+    @PostMapping("/delete")
+    public int deleteComment(@Validated({Delete.class}) @RequestBody CommentPojo comment) {
+        return commentService.deleteComment(comment);
     }
 
     /**
      * 根据多个uid，返回这些uid所对应的记录以及他们的子评论数据 是所有，没有做分页操作，其中uid是在文章中获取的
-     * @param commentUidArr
+     * @param comment
      * @return
      */
     @Operation(summary = "查询所有满足要求的所有评论")
     @SelectOperation
     @GetMapping("/queryArticleComments")
-    public ShowCommentVO queryAllComment(@RequestParam(value = "uidArr") long[] commentUidArr) {
-        return commentService.queryArticleComments(commentUidArr);
+    public ShowCommentVO queryAllComment( @RequestBody CommentPojo comment) {
+        return commentService.queryArticleComments(comment);
     }
 
     @Operation(summary = "根据自定义条件查询所有评论")
     @SelectOperation
-    @GetMapping
-    public PageData<CommentVO> queryAllCommentByCondition(Condition<Long> condition) {
+    @PostMapping("/queryAllCommentByCondition")
+    public PageData<CommentVO> queryAllCommentByCondition(@RequestBody Condition<Long> condition) {
         return commentService.queryAllComments(condition);
     }
 
     @Operation(summary = "根据uid查询评论")
     @SelectOperation
-    @GetMapping("/{uid}")
-    public CommentDTO queryCommentByUid(@PathVariable("uid") long uid) {
+    @PostMapping("/queryCommentByUid")
+    public CommentDTO queryCommentByUid(@RequestBody long uid) {
         return commentService.queryByUid(uid);
     }
 
     @Operation(summary = "重新发送评论的邮件通知")
     @ModifyOperation
-    @PostMapping("/resendEmail/{uid}")
-    public int resendEmailNotice(@PathVariable("uid") long uid) throws BindException {
+    @PostMapping("/resendEmail")
+    public int resendEmailNotice(@RequestBody long uid) throws BindException {
         return commentService.resendEmailNotice(uid);
     }
 }

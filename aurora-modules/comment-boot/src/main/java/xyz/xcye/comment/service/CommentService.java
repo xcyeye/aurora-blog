@@ -113,9 +113,8 @@ public class CommentService {
         return updateComment(buildCommentPojo);
     }
 
-    public int deleteComment(Long uid) {
-        Assert.notNull(uid, "uid不能为null");
-        return auroraCommentService.deleteById(uid);
+    public int deleteComment(CommentPojo commentPojo) {
+        return auroraCommentService.deleteById(commentPojo.getUid());
     }
 
     public int updateComment(CommentPojo pojo) {
@@ -134,9 +133,10 @@ public class CommentService {
         return auroraCommentService.updateById(comment);
     }
 
-    public ShowCommentVO queryArticleComments(long[] arrayUid) {
+    public ShowCommentVO queryArticleComments(CommentPojo pojo) {
+        Assert.notNull(pojo.getCommentUidArr(), "评论信息不能为null");
         // 获取arrayUid中可用的uid
-        List<Long> effectiveCommentUidList = getEffectiveCommentUid(arrayUid);
+        List<Long> effectiveCommentUidList = getEffectiveCommentUid(pojo.getCommentUidArr());
 
         // 获取arrayUid所涉及的所有评论
         List<CommentDTO> allCommentDTOList = new ArrayList<>();

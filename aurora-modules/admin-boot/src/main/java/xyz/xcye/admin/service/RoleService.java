@@ -14,6 +14,8 @@ import xyz.xcye.data.entity.Condition;
 import xyz.xcye.data.entity.PageData;
 import xyz.xcye.data.util.PageUtils;
 
+import javax.validation.groups.Default;
+
 /**
  * @author qsyyke
  * @date Created in 2022/5/4 21:04
@@ -50,8 +52,8 @@ public class RoleService {
         return auroraRoleService.updateById(BeanUtils.copyProperties(role, Role.class));
     }
 
-    public int deleteByUid(long uid) {
-        return auroraRoleService.deleteById(uid);
+    public int deleteByUid(RolePojo pojo) {
+        return auroraRoleService.deleteById(pojo.getUid());
     }
 
     public PageData<Role> selectAllRole(Condition<Long> condition) {
