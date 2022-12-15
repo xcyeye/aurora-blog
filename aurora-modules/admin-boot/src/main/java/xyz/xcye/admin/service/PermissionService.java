@@ -28,8 +28,8 @@ public class PermissionService {
     @Autowired
     private AuroraPermissionService auroraPermissionService;
 
-    public int deleteByUid(PermissionPojo pojo) {
-        return auroraPermissionService.deleteById(pojo.getUid());
+    public int deleteByUid(long uid) {
+        return auroraPermissionService.deleteById(uid);
     }
 
     public void insertPermission(PermissionPojo permission) {

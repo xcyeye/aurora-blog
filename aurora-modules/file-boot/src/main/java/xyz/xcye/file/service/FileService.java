@@ -158,6 +158,8 @@ public class FileService {
 
     public PageData<FileVO> selectSpecifyFormatFiles(Condition<Long> condition) {
         Assert.notNull(condition, "查询条件不能为null");
+        List<String> strings = fileExtService.selectAllFileFormat(1522074993315815424L);
+        List<File> files = fileExtService.selectSpecifyFormatFiles(condition);
         return PageUtils.pageList(condition, t -> fileExtService.selectSpecifyFormatFiles(condition), FileVO.class);
     }
 

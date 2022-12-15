@@ -10,7 +10,6 @@
   import xyz.xcye.admin.service.PermissionService;
   import xyz.xcye.core.annotaion.controller.ModifyOperation;
   import xyz.xcye.core.annotaion.controller.SelectOperation;
-  import xyz.xcye.core.valid.Delete;
   import xyz.xcye.core.valid.Insert;
   import xyz.xcye.core.valid.Update;
   import xyz.xcye.data.entity.Condition;
@@ -32,36 +31,36 @@ public class PermissionController {
 
     @ModifyOperation
     @Operation(summary = "插入路径权限")
-    @PostMapping("/insert")
-    public void insertPermission(@Validated({Insert.class, Default.class}) @RequestBody PermissionPojo pojo) {
-        permissionService.insertPermission(pojo);
+    @PostMapping("")
+    public void insertPermission(@Validated({Insert.class, Default.class}) PermissionPojo permission) {
+        permissionService.insertPermission(permission);
     }
 
     @ModifyOperation
     @Operation(summary = "修改路径权限信息")
-    @PostMapping("/update")
-    public int updatePermission(@Validated({Update.class, Default.class}) @RequestBody PermissionPojo pojo) {
-        return permissionService.updatePermission(pojo);
+    @PutMapping("")
+    public int updatePermission(@Validated({Update.class, Default.class}) PermissionPojo permission) {
+        return permissionService.updatePermission(permission);
     }
 
     @ModifyOperation
     @Operation(summary = "删除权限")
-    @PostMapping("/delete")
-    public int deletePermission(@Validated(Delete.class) @RequestBody PermissionPojo pojo) {
-        return permissionService.deleteByUid(pojo);
+    @DeleteMapping("/{uid}")
+    public int deletePermission(@PathVariable("uid") int uid) {
+        return permissionService.deleteByUid(uid);
     }
 
     @SelectOperation
     @Operation(summary = "根据uid查询权限")
-    @PostMapping("/queryByUid")
-    public Permission queryPermissionByUid(@RequestBody int uid) {
+    @GetMapping("/{uid}")
+    public Permission queryPermissionByUid(@PathVariable("uid") int uid) {
         return permissionService.selectByUid(uid);
     }
 
     @SelectOperation
     @Operation(summary = "查询满足要求的所有权限信息")
-    @PostMapping("/queryAllByCondition")
-    public PageData<Permission> queryPermissionServiceByUid(@RequestBody Condition<Long> condition) {
+    @GetMapping("")
+    public PageData<Permission> queryPermissionServiceByUid(Condition<Long> condition) {
         return permissionService.selectAllPermission(condition);
     }
 }

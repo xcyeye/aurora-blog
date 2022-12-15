@@ -11,7 +11,6 @@ import xyz.xcye.admin.service.NavigationService;
 import xyz.xcye.admin.vo.NavigationVO;
 import xyz.xcye.core.annotaion.controller.ModifyOperation;
 import xyz.xcye.core.annotaion.controller.SelectOperation;
-import xyz.xcye.core.valid.Delete;
 import xyz.xcye.core.valid.Insert;
 import xyz.xcye.core.valid.Update;
 import xyz.xcye.data.entity.Condition;
@@ -28,56 +27,56 @@ public class NavigationController {
     private NavigationService navigationService;
 
     @ModifyOperation
-    @PostMapping("/delete")
+    @DeleteMapping("/{uid}")
     @Operation(summary = "根据uid逻辑删除导航")
-    public int deleteByPrimaryKey(@Validated({Delete.class}) @RequestBody NavigationPojo pojo) {
-        return navigationService.deleteByPrimaryKey(pojo);
+    public int deleteByPrimaryKey(@PathVariable("uid") long uid) {
+        return navigationService.deleteByPrimaryKey(uid);
     }
 
     @Operation(summary = "物理删除")
-    @PostMapping("/physics/delete")
+    @DeleteMapping("/physics/{uid}")
     @ModifyOperation
-    public int physicsDeleteNavigation(@Validated({Delete.class}) @RequestBody NavigationPojo pojo) {
-        return navigationService.physicsDeleteNavigation(pojo);
+    public int physicsDeleteNavigation(@PathVariable("uid") long uid) {
+        return navigationService.physicsDeleteNavigation(uid);
     }
 
-    @PostMapping("/insert")
+    @PostMapping
     @ModifyOperation
     @Operation(summary = "插入新的导航信息")
-    public void insertSelective(@Validated({Insert.class, Default.class}) @RequestBody NavigationPojo record) {
+    public void insertSelective(@Validated({Insert.class, Default.class}) NavigationPojo record) {
         navigationService.insertSelective(record);
     }
 
-    @PostMapping("queryAllByCondition")
+    @GetMapping
     @SelectOperation
     @Operation(summary = "根据条件查询")
-    public PageData<NavigationVO> selectByCondition(@RequestBody Condition<Long> condition) {
+    public PageData<NavigationVO> selectByCondition(Condition<Long> condition) {
         return navigationService.selectByCondition(condition);
     }
 
     @Operation(summary = "根据uid查询")
-    @PostMapping("/queryByUid")
+    @GetMapping("/{uid}")
     @SelectOperation
-    public NavigationVO selectNavigationByUid(@RequestBody NavigationPojo pojo) {
-        return navigationService.selectNavigationByUid(pojo);
+    public NavigationVO selectNavigationByUid(@PathVariable("uid") long uid) {
+        return navigationService.selectNavigationByUid(uid);
     }
 
     /**
      * 根据用户名，获取该用户的所有导航信息
-     * @param pojo
+     * @param userUid
      * @return
      */
     @SelectOperation
     @Operation(summary = "查询该用户所有的前台导航信息")
-    @PostMapping("queryByUserUid")
-    public NavigationDTO selectAllNavigationByUserUid(@RequestBody NavigationPojo pojo) {
-        return navigationService.selectAllNavigationByUserUid(pojo);
+    @GetMapping("/userUid/{userUid}")
+    public NavigationDTO selectAllNavigationByUserUid(@PathVariable("userUid") long userUid) {
+        return navigationService.selectAllNavigationByUserUid(userUid);
     }
 
-    @PostMapping("/update")
+    @PutMapping
     @ModifyOperation
     @Operation(summary = "修改导航信息")
-    public int updateByPrimaryKeySelective(@Validated({Update.class, Default.class}) @RequestBody NavigationPojo record) {
+    public int updateByPrimaryKeySelective(@Validated({Update.class, Default.class}) NavigationPojo record) {
         return navigationService.updateByPrimaryKeySelective(record);
     }
 }

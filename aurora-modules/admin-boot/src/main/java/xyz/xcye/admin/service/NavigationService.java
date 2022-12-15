@@ -46,16 +46,16 @@ public class NavigationService {
     @Autowired
     private AuroraNavigationService auroraNavigationService;
 
-    public int deleteByPrimaryKey(NavigationPojo record) {
+    public int deleteByPrimaryKey(long uid) {
         Navigation navigation = new Navigation();
-        navigation.setUid(record.getUid());
+        navigation.setUid(uid);
         navigation.setUpdateTime(DateUtils.format());
         navigation.setDelete(true);
         return auroraNavigationService.updateById(navigation);
     }
 
-    public int physicsDeleteNavigation(NavigationPojo pojo) {
-        return auroraNavigationService.deleteById(pojo.getUid());
+    public int physicsDeleteNavigation(long uid) {
+        return auroraNavigationService.deleteById(uid);
     }
 
     @Transactional
@@ -83,12 +83,11 @@ public class NavigationService {
         return PageUtils.pageList(condition, t -> auroraNavigationService.queryListByCondition(condition), NavigationVO.class);
     }
 
-    public NavigationVO selectNavigationByUid(NavigationPojo pojo) {
-        Assert.notNull(pojo.getUid(), "uid不能为null");
-        return BeanUtils.getSingleObjFromList(auroraNavigationService.queryListByCondition(Condition.instant(pojo.getUid(), true)), NavigationVO.class);
+    public NavigationVO selectNavigationByUid(long uid) {
+        return BeanUtils.getSingleObjFromList(auroraNavigationService.queryListByCondition(Condition.instant(uid, true)), NavigationVO.class);
     }
 
-    public NavigationDTO selectAllNavigationByUserUid(NavigationPojo pojo) {
+    public NavigationDTO selectAllNavigationByUserUid(long userUid) {
 
         return null;
     }
@@ -113,7 +112,7 @@ public class NavigationService {
         setEffectiveNavigationUid(record, false);
 
         // 查询该导航的原始导航数据
-        NavigationVO navigationVO = selectNavigationByUid(record);
+        NavigationVO navigationVO = selectNavigationByUid(record.getUid());
         // 判断是否是修改父导航
         boolean updateParentNavigation = isUpdateParentNavigation(navigationVO, record);
         if (updateParentNavigation) {
@@ -136,7 +135,7 @@ public class NavigationService {
                 return;
             }
 
-            NavigationVO navigationVO = selectNavigationByUid(navigation);
+            NavigationVO navigationVO = selectNavigationByUid(navigation.getParentNavUid());
             if (navigationVO == null) {
                 navigation.setParentNavUid(null);
                 return;
@@ -169,9 +168,7 @@ public class NavigationService {
         // 获取有效的导航信息
         return Arrays.stream(navigation.getSonNavUids().split(","))
                 .map(Long::parseLong)
-                .filter(uid -> selectNavigationByUid(new NavigationPojo(){{
-                    setUid(uid);
-                }}) != null)
+                .filter(uid -> selectNavigationByUid(uid) != null)
                 .map(String::valueOf)
                 .collect(Collectors.joining(","));
     }
@@ -181,7 +178,7 @@ public class NavigationService {
             return null;
         }
 
-        NavigationVO navigationVO = selectNavigationByUid(BeanUtils.copyProperties(parentNavigation, NavigationPojo.class));
+        NavigationVO navigationVO = selectNavigationByUid(parentNavigation.getUid());
         if (navigationVO == null) {
             return null;
         }
@@ -193,9 +190,7 @@ public class NavigationService {
 
         return Arrays.stream(navigationVO.getSonNavUids().split(","))
                 .map(Long::parseLong)
-                .filter(uid -> selectNavigationByUid(new NavigationPojo(){{
-                    setUid(uid);
-                }}) != null)
+                .filter(uid -> selectNavigationByUid(uid) != null)
                 .map(String::valueOf)
                 .collect(Collectors.joining(","));
     }
@@ -223,9 +218,7 @@ public class NavigationService {
      * @param newSonNavUid
      */
     private void addSonNavigationUids(long parentNavUid, long newSonNavUid) {
-        NavigationPojo navigationPojo = new NavigationPojo();
-        navigationPojo.setUid(parentNavUid);
-        NavigationVO navigationVO = selectNavigationByUid(navigationPojo);
+        NavigationVO navigationVO = selectNavigationByUid(parentNavUid);
         AssertUtils.stateThrow(navigationVO != null, () -> new CommentException("该" + parentNavUid + "不存在"));
 
         // 获取有效的子导航字符串
