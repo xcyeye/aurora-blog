@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import xyz.xcye.admin.po.WhiteUrl;
 import xyz.xcye.admin.pojo.WhiteUrlPojo;
+import xyz.xcye.admin.vo.WhiteUrlVO;
 import xyz.xcye.core.enums.RegexEnum;
 import xyz.xcye.core.enums.ResponseStatusCodeEnum;
 import xyz.xcye.core.exception.permission.PermissionException;
@@ -44,8 +45,8 @@ public class WhiteUrlService {
        auroraWhiteUrlService.insert(BeanUtils.copyProperties(record, WhiteUrl.class));
     }
 
-    public PageData<WhiteUrl> selectWhiteUrlByCondition(Condition<Integer> condition) {
-        return PageUtils.pageList(condition, t -> auroraWhiteUrlService.queryListByCondition(condition));
+    public PageData<WhiteUrlVO> selectWhiteUrlByCondition(Condition<Integer> condition) {
+        return PageUtils.copyPageDataResult(auroraWhiteUrlService.queryListByCondition(condition), WhiteUrlVO.class);
     }
 
     public int updateWhiteUrlSelective(WhiteUrlPojo record) {

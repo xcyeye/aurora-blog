@@ -38,7 +38,7 @@ public class RolePermissionRelationshipService {
     }
 
     public List<RolePermissionRelationship> selectAllRolePermissionRelationship(Condition<Long> condition) {
-        return auroraRolePermissionService.queryListByCondition(condition);
+        return auroraRolePermissionService.queryListByCondition(condition).getResult();
     }
 
     private void relationshipIsFull(RolePermissionRelationshipPojo relationship) {

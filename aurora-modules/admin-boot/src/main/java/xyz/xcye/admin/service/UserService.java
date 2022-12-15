@@ -147,23 +147,27 @@ public class UserService {
     }
 
     public PageData<UserVO> queryAllByCondition(Condition<Long> condition) {
-        return PageUtils.pageList(condition, t -> auroraUserService.queryListByCondition(condition), UserVO.class);
+        return PageUtils.copyPageDataResult(auroraUserService.queryListByCondition(condition), UserVO.class);
     }
 
     public UserVO queryUserByUid(long uid) {
-        return BeanUtils.getSingleObjFromList(auroraUserService.queryListByCondition(Condition.instant(uid, true)), UserVO.class);
+        return BeanUtils.copyProperties(auroraUserService.queryById(uid), UserVO.class);
     }
 
     public User queryByUsernameContainPassword(String username) {
-        return BeanUtils.getSingleObjFromList(auroraUserService.queryListByCondition(Condition.instant(username, null, null)), User.class);
+        return auroraUserService.queryOne(new User(){{
+            setUsername(username);
+        }});
     }
 
     public User queryByUidContainPassword(long uid) {
-        return BeanUtils.getSingleObjFromList(auroraUserService.queryListByCondition(Condition.instant(uid, true, null, null)), User.class);
+        return auroraUserService.queryById(uid);
     }
 
     public UserVO queryUserByUsername(String username) {
-        return BeanUtils.getSingleObjFromList(auroraUserService.queryListByCondition(Condition.instant(username, null, null)), UserVO.class);
+        User user = new User();
+        user.setUsername(username);
+        return BeanUtils.copyProperties(auroraUserService.queryOne(user), UserVO.class);
     }
 
     @GlobalTransactional(rollbackFor = Exception.class)
@@ -206,7 +210,7 @@ public class UserService {
      */
     private boolean existsUsername(String username) {
         Condition<Long> condition = Condition.instant(username, null, null);
-        return !auroraUserService.queryListByCondition(condition).isEmpty();
+        return !auroraUserService.queryListByCondition(condition).getResult().isEmpty();
     }
 
     private String getUsername(Long userUid) {

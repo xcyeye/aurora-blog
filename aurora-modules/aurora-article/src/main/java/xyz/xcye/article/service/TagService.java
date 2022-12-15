@@ -55,12 +55,12 @@ public class TagService {
 
     public PageData<TagVO> selectByCondition(Condition<Long> condition) {
         Assert.notNull(condition, "查询条件不能为null");
-        return PageUtils.pageList(condition, t -> auroraTagService.queryListByCondition(condition), TagVO.class);
+        return PageUtils.copyPageDataResult(auroraTagService.queryListByCondition(condition), TagVO.class);
     }
 
     public TagVO selectByUid(Long uid) {
         Assert.notNull(uid, "uid不能为null");
-        return BeanUtils.getSingleObjFromList(auroraTagService.queryListByCondition(Condition.instant(uid, true)), TagVO.class);
+        return BeanUtils.copyProperties(auroraTagService.queryById(uid), TagVO.class);
     }
 
     public TagVO selectByTitle(String title) {

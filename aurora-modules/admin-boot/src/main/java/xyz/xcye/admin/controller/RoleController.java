@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import xyz.xcye.admin.po.Role;
 import xyz.xcye.admin.pojo.RolePojo;
 import xyz.xcye.admin.service.RoleService;
+import xyz.xcye.admin.vo.RoleVO;
 import xyz.xcye.core.annotaion.controller.ModifyOperation;
 import xyz.xcye.core.annotaion.controller.ResponseRealResult;
 import xyz.xcye.core.annotaion.controller.SelectOperation;
@@ -61,7 +62,7 @@ public class RoleController {
     @SelectOperation
     @Operation(summary = "查询满足要求的所有角色信息")
     @GetMapping("")
-    public PageData<Role> queryRoleByUid(Condition<Long> condition) {
+    public PageData<RoleVO> queryRoleByUid(Condition<Long> condition) {
         return roleService.selectAllRole(condition);
     }
 }

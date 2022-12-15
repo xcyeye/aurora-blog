@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import xyz.xcye.admin.po.WhiteUrl;
 import xyz.xcye.admin.pojo.WhiteUrlPojo;
 import xyz.xcye.admin.service.WhiteUrlService;
+import xyz.xcye.admin.vo.WhiteUrlVO;
 import xyz.xcye.core.annotaion.controller.ModifyOperation;
 import xyz.xcye.core.annotaion.controller.SelectOperation;
 import xyz.xcye.core.valid.Insert;
@@ -53,7 +54,7 @@ public class WhiteUrlController {
     @Operation(summary = "根据查询条件获取所有的白名单数据")
     @GetMapping
     @SelectOperation
-    public PageData<WhiteUrl> selectByCondition(@Param("condition") Condition<Integer> condition) {
+    public PageData<WhiteUrlVO> selectByCondition(@Param("condition") Condition<Integer> condition) {
         return whiteUrlService.selectWhiteUrlByCondition(condition);
     }
 

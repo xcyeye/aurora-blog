@@ -4,10 +4,12 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import xyz.xcye.core.util.BeanUtils;
 import xyz.xcye.data.entity.Condition;
 import xyz.xcye.data.entity.PageData;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class BaseService<T> {
@@ -63,8 +65,14 @@ public class BaseService<T> {
         return baseDao.countByWhere(t);
     }
 
-    public List<T> queryListByCondition(Condition condition) {
-        return baseDao.queryListByCondition(condition);
+    public PageData<T> queryListByCondition(Condition condition) {
+        Page<T> page = PageHelper.startPage(condition.getPageNum(), condition.getPageSize(), condition.getOrderBy());
+        List<T> list = baseDao.queryListByCondition(condition);
+        PageData<T> pageData = new PageData<>();
+        pageData.setResult(list);
+        pageData.setTotal(page.getTotal());
+        pageData.setPages(page.getPages());
+        return pageData;
     }
 
     public PageData<T> pageQuery(T t, int currentPage, int pageSize) {

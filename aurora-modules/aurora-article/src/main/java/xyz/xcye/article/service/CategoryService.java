@@ -56,12 +56,12 @@ public class CategoryService {
 
     public PageData<CategoryVO> selectByCondition(Condition<Long> condition) {
         Assert.notNull(condition,"查询条件不能为null");
-        return PageUtils.pageList(condition, t -> auroraCategoryService.queryListByCondition(condition), CategoryVO.class);
+        return PageUtils.copyPageDataResult(auroraCategoryService.queryListByCondition(condition), CategoryVO.class);
     }
 
     public CategoryVO selectByUid(Long uid) {
         Assert.notNull(uid, "uid不能为null");
-        return BeanUtils.getSingleObjFromList(auroraCategoryService.queryListByCondition(Condition.instant(uid, true)), CategoryVO.class);
+        return BeanUtils.copyProperties(auroraCategoryService.queryById(uid), CategoryVO.class);
     }
 
     public CategoryVO selectByTitle(String title) {

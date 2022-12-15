@@ -159,12 +159,12 @@ public class CommentService {
 
     public PageData<CommentVO> queryAllComments(Condition<Long> condition) {
         Assert.notNull(condition, "查询条件不能为null");
-        return PageUtils.pageList(condition, t -> auroraCommentService.queryListByCondition(condition), CommentVO.class);
+        return PageUtils.copyPageDataResult(auroraCommentService.queryListByCondition(condition), CommentVO.class);
     }
 
     public CommentDTO queryByUid(long uid) {
-        return xyz.xcye.core.util.BeanUtils.getSingleObjFromList(
-                auroraCommentService.queryListByCondition(Condition.instant(uid, true)),CommentDTO.class);
+        return xyz.xcye.core.util.BeanUtils.copyProperties(
+                auroraCommentService.queryById(uid),CommentDTO.class);
     }
 
     private void setDefaultProperty(Comment comment) {
@@ -228,7 +228,7 @@ public class CommentService {
         //判断是否存在
         Condition<Long> condition = new Condition<>();
         condition.setUid(commentUid);
-        List<Comment> commentDOList = auroraCommentService.queryListByCondition(condition);
+        List<Comment> commentDOList = auroraCommentService.queryListByCondition(condition).getResult();
         return xyz.xcye.core.util.BeanUtils.getSingleObjFromList(commentDOList,Comment.class);
     }
 

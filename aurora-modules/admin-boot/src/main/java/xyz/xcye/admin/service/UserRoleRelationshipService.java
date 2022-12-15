@@ -30,7 +30,7 @@ public class UserRoleRelationshipService {
     }
 
     public List<UserRoleRelationship> selectAllUserRoleRelationship(Condition<Long> condition) {
-        return auroraUserRoleService.queryListByCondition(condition);
+        return auroraUserRoleService.queryListByCondition(condition).getResult();
     }
 
     public int updateUserRoleRelationship(UserRoleRelationshipPojo relationship) {

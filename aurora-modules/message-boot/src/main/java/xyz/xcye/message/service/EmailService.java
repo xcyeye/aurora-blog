@@ -72,24 +72,24 @@ public class EmailService {
     }
 
     public PageData<EmailVO> queryAllEmail(Condition<Long> condition) {
-        return PageUtils.pageList(condition, t -> auroraEmailService.queryListByCondition(condition), EmailVO.class);
+        return PageUtils.copyPageDataResult(auroraEmailService.queryListByCondition(condition), EmailVO.class);
     }
 
     public EmailVO queryByUid(long uid) {
         Condition<Long> condition = new Condition<>();
         condition.setUid(uid);
-        return BeanUtils.getSingleObjFromList(auroraEmailService.queryListByCondition(condition),EmailVO.class);
+        return BeanUtils.copyProperties(auroraEmailService.queryById(uid),EmailVO.class);
     }
 
     public EmailVO queryByUserUid(long userUid) {
-        Condition<Long> condition = new Condition<>();
-        condition.setOtherUid(userUid);
-        return BeanUtils.getSingleObjFromList(auroraEmailService.queryListByCondition(condition), EmailVO.class);
+        Email email = new Email();
+        email.setUserUid(userUid);
+        return BeanUtils.copyProperties(auroraEmailService.queryOne(email), EmailVO.class);
     }
 
-    public EmailVO queryByEmail(String email) {
-        Condition<Long> condition = new Condition();
-        condition.setKeyword(email);
-        return BeanUtils.getSingleObjFromList(auroraEmailService.queryListByCondition(condition), EmailVO.class);
+    public EmailVO queryByEmail(String emailStr) {
+        Email email = new Email();
+        email.setEmail(emailStr);
+        return BeanUtils.copyProperties(auroraEmailService.queryOne(email), EmailVO.class);
     }
 }

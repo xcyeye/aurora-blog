@@ -54,14 +54,14 @@ public class MessageLogService {
 
     public PageData<MessageLogVO> queryAllMessageLog(Condition<Long> condition) {
         PageHelper.startPage(condition.getPageNum(),condition.getPageSize(),condition.getOrderBy());
-        return PageUtils.pageList(condition, t -> BeanUtils.copyList(auroraMessageLogService.queryListByCondition(condition),MessageLogVO.class));
+        return PageUtils.copyPageDataResult(auroraMessageLogService.queryListByCondition(condition),MessageLogVO.class);
     }
 
     public MessageLogVO queryByUid(long uid) {
-        Condition<Long> condition = new Condition<>();
-        condition.setUid(uid);
-        condition.setStatus(null);
-        return BeanUtils.getSingleObjFromList(auroraMessageLogService.queryListByCondition(condition),MessageLogVO.class);
+        MessageLog messageLog = new MessageLog();
+        messageLog.setUid(uid);
+        messageLog.setConsumeStatus(null);
+        return BeanUtils.copyProperties(auroraMessageLogService.queryOne(messageLog),MessageLogVO.class);
     }
 
     public void resendMqMessage(long uid) throws BindException {

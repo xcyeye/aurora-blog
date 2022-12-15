@@ -251,6 +251,19 @@
 		select
 		<include refid="Base_Column_List" />
 		from au_message_log
-
+        <where>
+            <if test="condition.uid != null">
+                and uid=#{condition.uid}
+            </if>
+            <if test="condition.keyword != null">
+                and routing_key like concat('%', #{condition.keyword}, '%')
+            </if>
+            <if test="condition.startTime != null and condition.endTime != null">
+                and create_time between #{condition.startTime} and #{condition.endTime}
+            </if>
+            <if test="condition.status != null">
+                and consume_status=#{condition.status}
+            </if>
+        </where>
 	</select>
 </mapper>

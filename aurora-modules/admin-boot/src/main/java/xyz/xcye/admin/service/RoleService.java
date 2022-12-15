@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 import xyz.xcye.admin.po.Role;
 import xyz.xcye.admin.pojo.RolePojo;
+import xyz.xcye.admin.vo.RoleVO;
 import xyz.xcye.core.enums.ResponseStatusCodeEnum;
 import xyz.xcye.core.exception.role.RoleException;
 import xyz.xcye.core.util.BeanUtils;
@@ -54,11 +55,11 @@ public class RoleService {
         return auroraRoleService.deleteById(uid);
     }
 
-    public PageData<Role> selectAllRole(Condition<Long> condition) {
-        return PageUtils.pageList(condition, t -> auroraRoleService.queryListByCondition(condition));
+    public PageData<RoleVO> selectAllRole(Condition<Long> condition) {
+        return PageUtils.copyPageDataResult(auroraRoleService.queryListByCondition(condition), RoleVO.class);
     }
 
-    public Role selectByUid(long uid) {
-        return BeanUtils.getSingleObjFromList(auroraRoleService.queryListByCondition(Condition.instant(uid, true)), Role.class);
+    public RoleVO selectByUid(long uid) {
+        return BeanUtils.copyProperties(auroraRoleService.queryById(uid), RoleVO.class);
     }
 }

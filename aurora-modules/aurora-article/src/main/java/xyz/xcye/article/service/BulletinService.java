@@ -63,12 +63,12 @@ public class BulletinService {
 
     public PageData<BulletinVO> selectByCondition(Condition<Long> condition) {
         Assert.notNull(condition, "查询条件不能为null");
-        return PageUtils.pageList(condition, t -> auroraBulletinService.queryListByCondition(condition));
+        return PageUtils.copyPageDataResult(auroraBulletinService.queryListByCondition(condition), BulletinVO.class);
     }
 
     public BulletinVO selectByUid(Long uid) {
         Assert.notNull(uid, "uid不能为null");
-        return BeanUtils.getSingleObjFromList(auroraBulletinService.queryListByCondition(Condition.instant(uid, true)), BulletinVO.class);
+        return BeanUtils.copyProperties(auroraBulletinService.queryById(uid), BulletinVO.class);
     }
 
     public int updateByPrimaryKeySelective(BulletinPojo record) {

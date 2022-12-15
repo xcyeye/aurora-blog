@@ -61,11 +61,11 @@ public class SiteService {
 
     public PageData<SiteVO> selectByCondition(Condition<Long> condition) {
         Assert.notNull(condition, "查询条件不能为null");
-        return PageUtils.pageList(condition, t -> auroraSiteService.queryListByCondition(condition), SiteVO.class);
+        return PageUtils.copyPageDataResult(auroraSiteService.queryListByCondition(condition), SiteVO.class);
     }
 
     public SiteVO selectByUid(long uid) {
-        return BeanUtils.getSingleObjFromList(auroraSiteService.queryListByCondition(Condition.instant(uid, true)), SiteVO.class);
+        return BeanUtils.copyProperties(auroraSiteService.queryById(uid), SiteVO.class);
     }
 
     public int updateByPrimaryKeySelective(SitePojo record) {

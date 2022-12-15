@@ -9,6 +9,7 @@ import xyz.xcye.data.entity.PageData;
 
 import java.util.List;
 import java.util.function.Consumer;
+import java.util.function.Function;
 
 /**
  * 这是和分页相关的工具类
@@ -25,6 +26,16 @@ public class PageUtils {
         pageData.setResult(queriedResult);
         pageData.setTotal(pageInfo.getTotal());
         return pageData;
+    }
+
+    public static <T,I> PageData<I> copyPageDataResult(PageData<T> pageData, Class<I> cClass) {
+        List<T> result = pageData.getResult();
+        List<I> list = BeanUtils.copyList(result, cClass);
+        PageData<I> copyPageData = new PageData<>();
+        copyPageData.setTotal(pageData.getTotal());
+        copyPageData.setPages(pageData.getPages());
+        copyPageData.setResult(list);
+        return copyPageData;
     }
 
     @SafeVarargs

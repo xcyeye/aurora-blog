@@ -85,11 +85,11 @@ public class ArticleService {
 
     public PageData<ArticleVO> selectByCondition(Condition<Long> condition) {
         Assert.notNull(condition, "查询条件不能为null");
-        return PageUtils.pageList(condition, t -> auroraArticleService.queryListByCondition(condition), ArticleVO.class);
+        return PageUtils.copyPageDataResult(auroraArticleService.queryListByCondition(condition), ArticleVO.class);
     }
 
     public ArticleVO selectByUid(Long uid) {
-        return BeanUtils.getSingleObjFromList(auroraArticleService.queryListByCondition(Condition.instant(uid, true)), ArticleVO.class);
+        return BeanUtils.copyProperties(auroraArticleService.queryById(uid), ArticleVO.class);
     }
 
     @Transactional

@@ -52,16 +52,14 @@ public class LoginInfoService {
 
     public PageData<LoginInfoVO> selectByCondition(Condition<Long> condition) {
         Assert.notNull(condition, "查询条件不能为null");
-        return PageUtils.pageList(condition, t -> auroraLoginInfoService.queryListByCondition(condition), LoginInfoVO.class);
+        return PageUtils.copyPageDataResult(auroraLoginInfoService.queryListByCondition(condition), LoginInfoVO.class);
     }
 
     public LoginInfoVO selectByUsername(String username) {
         // 返回该用户最近登录的日志信息
-        Condition<Long> condition = Condition.instant(username);
-        condition.setOrderBy("create_time");
-        List<LoginInfoVO> loginInfoVOList = PageUtils.pageList(condition,
-                t -> auroraLoginInfoService.queryListByCondition(condition), LoginInfoVO.class).getResult();
-        return BeanUtils.getSingleObjFromList(loginInfoVOList, LoginInfoVO.class);
+        LoginInfo loginInfo = new LoginInfo();
+        loginInfo.setUsername(username);
+        return BeanUtils.copyProperties(auroraLoginInfoService.queryOne(loginInfo), LoginInfoVO.class);
     }
 
     public int updateByPrimaryKeySelective(LoginInfoPojo record) {

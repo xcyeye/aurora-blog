@@ -52,7 +52,7 @@ public class PermissionService {
     }
 
     public PageData<Permission> selectAllPermission(Condition<Long> condition) {
-        return PageUtils.pageList(condition, t -> auroraPermissionService.queryListByCondition(condition));
+        return auroraPermissionService.queryListByCondition(condition);
     }
 
     private boolean matchesResourcePath(String resourcePath) {
@@ -60,6 +60,6 @@ public class PermissionService {
     }
 
     public Permission selectByUid(long uid) {
-        return BeanUtils.getSingleObjFromList(auroraPermissionService.queryListByCondition(Condition.instant(uid, true, null, null)), Permission.class);
+        return auroraPermissionService.queryById(uid);
     }
 }

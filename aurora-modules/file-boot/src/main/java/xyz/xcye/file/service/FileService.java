@@ -2,6 +2,7 @@ package xyz.xcye.file.service;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import xyz.xcye.aurora.properties.AuroraProperties;
@@ -32,6 +33,9 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.ExecutionException;
+import java.util.function.Consumer;
+import java.util.function.Function;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 /**
@@ -128,11 +132,11 @@ public class FileService {
     }
 
     public PageData<FileVO> queryAllFile(Condition<Long> condition) {
-        return PageUtils.pageList(condition, t -> BeanUtils.copyList(auroraFileService.queryListByCondition(condition), FileVO.class));
+        return PageUtils.copyPageDataResult(auroraFileService.queryListByCondition(condition), FileVO.class);
     }
 
     public FileVO queryByUid(long uid) {
-        return BeanUtils.getSingleObjFromList(auroraFileService.queryListByCondition(Condition.instant(uid, true)), FileVO.class);
+        return BeanUtils.getSingleObjFromList(auroraFileService.queryListByCondition(Condition.instant(uid, true)).getResult(), FileVO.class);
     }
 
     private FileStorageService getNeedFileStorageService(int storageMode) {
@@ -158,9 +162,12 @@ public class FileService {
 
     public PageData<FileVO> selectSpecifyFormatFiles(Condition<Long> condition) {
         Assert.notNull(condition, "查询条件不能为null");
-        List<String> strings = fileExtService.selectAllFileFormat(1522074993315815424L);
-        List<File> files = fileExtService.selectSpecifyFormatFiles(condition);
-        return PageUtils.pageList(condition, t -> fileExtService.selectSpecifyFormatFiles(condition), FileVO.class);
+        List<FileVO> files = BeanUtils.copyList(fileExtService.selectSpecifyFormatFiles(condition), FileVO.class);
+        PageData<FileVO> pageData = new PageData<>();
+        pageData.setResult(files);
+        pageData.setPages(1);
+        pageData.setTotal(files.size());
+        return pageData;
     }
 
     public List<String> selectAllFileFormat(long userUid) {

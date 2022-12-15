@@ -6,6 +6,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 import xyz.xcye.admin.constant.RedisStorageConstant;
 import xyz.xcye.admin.po.WhiteUrl;
+import xyz.xcye.admin.service.AuroraWhiteUrlService;
 import xyz.xcye.admin.service.WhiteUrlService;
 import xyz.xcye.core.util.DateUtils;
 import xyz.xcye.data.entity.Condition;
@@ -24,6 +25,9 @@ import java.util.List;
 public class LoadWhiteUrlInfo {
     @Autowired
     private WhiteUrlService whiteUrlService;
+
+    @Autowired
+    private AuroraWhiteUrlService auroraWhiteUrlService;
 
     @Autowired
     private RedisTemplate<String, Object> redisTemplate;
@@ -45,7 +49,7 @@ public class LoadWhiteUrlInfo {
         condition.setPageNum(0);
         condition.setPageSize(100000000);
         // 获取所有的角色权限关系
-        List<WhiteUrl> whiteUrlList = whiteUrlService.selectWhiteUrlByCondition(condition).getResult();
+        List<WhiteUrl> whiteUrlList = auroraWhiteUrlService.queryListByCondition(condition).getResult();
         // 存入redis中Duration.ofSeconds(DateUtils.getRandomMinute(60, 60 * 24 * 3) * 60)
         template.opsForValue().set(RedisStorageConstant.STORAGE_WHITE_URL_INFO, whiteUrlList,
                 Duration.ofSeconds(DateUtils.getRandomMinute(60, 60 * 24 * 3) * 60));

@@ -53,11 +53,11 @@ public class SocialService {
 
     public PageData<SocialVO> selectByCondition(Condition<Long> condition) {
         Assert.notNull(condition, "查询条件不能为null");
-        return PageUtils.pageList(condition, t -> auroraSocialService.queryListByCondition(condition), SocialVO.class);
+        return PageUtils.copyPageDataResult(auroraSocialService.queryListByCondition(condition), SocialVO.class);
     }
 
     public SocialVO selectByUid(long uid) {
-        return BeanUtils.getSingleObjFromList(auroraSocialService.queryListByCondition(Condition.instant(uid, true)), SocialVO.class);
+        return BeanUtils.copyProperties(auroraSocialService.queryById(uid), SocialVO.class);
     }
 
     public int updateByPrimaryKeySelective(SocialPojo record) {

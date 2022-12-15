@@ -80,11 +80,11 @@ public class NavigationService {
 
     public PageData<NavigationVO> selectByCondition(Condition<Long> condition) {
         Assert.notNull(condition, "查询条件不能为null");
-        return PageUtils.pageList(condition, t -> auroraNavigationService.queryListByCondition(condition), NavigationVO.class);
+        return PageUtils.copyPageDataResult(auroraNavigationService.queryListByCondition(condition), NavigationVO.class);
     }
 
     public NavigationVO selectNavigationByUid(long uid) {
-        return BeanUtils.getSingleObjFromList(auroraNavigationService.queryListByCondition(Condition.instant(uid, true)), NavigationVO.class);
+        return BeanUtils.copyProperties(auroraNavigationService.queryById(uid), NavigationVO.class);
     }
 
     public NavigationDTO selectAllNavigationByUserUid(long userUid) {

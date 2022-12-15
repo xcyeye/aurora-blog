@@ -200,6 +200,22 @@
 		select
 		<include refid="Base_Column_List" />
 		from au_tag
-
+        <where>
+            <if test="condition.uid != null">
+                and uid=#{condition.uid}
+            </if>
+            <if test="condition.keyword != null">
+                and title like concat(#{condition.keyword},'%')
+            </if>
+            <if test="condition.otherUid != null">
+                and user_uid=#{condition.otherUid}
+            </if>
+            <if test="condition.startTime != null and condition.endTime != null">
+                and create_time between #{condition.startTime} and #{condition.endTime}
+            </if>
+            <if test="condition.delete != null">
+                and is_delete=#{condition.delete}
+            </if>
+        </where>
 	</select>
 </mapper>

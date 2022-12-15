@@ -90,6 +90,11 @@ public class AuroraResponseResultHandler implements ResponseBodyAdvice<Object> {
                 Integer influenceRows = (Integer) responseBody;
                 operateStatus = influenceRows == 1;
             }
+
+            // 判断是不是插入操作
+            if (responseBody == null && "void".equals(resultReturnType.getName())) {
+                operateStatus = true;
+            }
             return R.result(ResponseStatusCodeEnum.SUCCESS.getCode(),
                     ResponseStatusCodeEnum.SUCCESS.getMessage(), new HashMap<>(), operateStatus);
         }

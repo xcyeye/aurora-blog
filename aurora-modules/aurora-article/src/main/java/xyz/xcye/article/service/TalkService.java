@@ -63,12 +63,12 @@ public class TalkService {
 
     public PageData<TalkVO> selectByCondition(Condition<Long> condition) {
         Assert.notNull(condition, "查询条件不能为null");
-        return PageUtils.pageList(condition,t -> auroraTalkService.queryListByCondition(condition), TalkVO.class);
+        return PageUtils.copyPageDataResult(auroraTalkService.queryListByCondition(condition), TalkVO.class);
     }
 
     public TalkVO selectByUid(Long uid) {
         Assert.notNull(uid, "uid不能为null");
-        return BeanUtils.getSingleObjFromList(auroraTalkService.queryListByCondition(Condition.instant(uid, true)), TalkVO.class);
+        return BeanUtils.copyProperties(auroraTalkService.queryById(uid), TalkVO.class);
     }
 
     @Transactional

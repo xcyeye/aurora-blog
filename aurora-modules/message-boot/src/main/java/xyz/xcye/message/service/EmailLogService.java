@@ -43,12 +43,10 @@ public class EmailLogService {
 
     public PageData<EmailLogVO> queryAll(Condition<Long> condition) {
         PageHelper.startPage(condition.getPageNum(),condition.getPageSize(),condition.getOrderBy());
-        return PageUtils.pageList(condition, t -> BeanUtils.copyList(auroraEmailLogService.queryListByCondition(condition),EmailLogVO.class));
+        return PageUtils.copyPageDataResult(auroraEmailLogService.queryListByCondition(condition),EmailLogVO.class);
     }
 
     public EmailLogVO queryByUid(long uid) {
-        Condition<Long> condition = new Condition<>();
-        condition.setUid(uid);
-        return BeanUtils.getSingleObjFromList(auroraEmailLogService.queryListByCondition(condition), EmailLogVO.class);
+        return BeanUtils.copyProperties(auroraEmailLogService.queryById(uid), EmailLogVO.class);
     }
 }

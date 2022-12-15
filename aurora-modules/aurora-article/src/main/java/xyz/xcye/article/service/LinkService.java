@@ -112,19 +112,19 @@ public class LinkService {
 
     public PageData<LinkVO> selectByCondition(Condition<Long> condition) {
         Assert.notNull(condition, "查询条件不能为null");
-        return PageUtils.pageList(condition, t -> auroraLinkService.queryListByCondition(condition), LinkVO.class);
+        return PageUtils.copyPageDataResult(auroraLinkService.queryListByCondition(condition), LinkVO.class);
     }
 
     public LinkVO selectByUid(Long uid) {
         Assert.notNull(uid, "uid不能为null");
-        return BeanUtils.getSingleObjFromList(auroraLinkService.queryListByCondition(Condition.instant(uid, true)), LinkVO.class);
+        return BeanUtils.copyProperties(auroraLinkService.queryById(uid), LinkVO.class);
     }
 
     @GlobalTransactional
     public int updateByPrimaryKeySelective(LinkPojo pojo) {
         Assert.notNull(pojo, "友情链接信息不能为null");
         Link record = BeanUtils.copyProperties(pojo, Link.class);
-        setCategory(record);
+        // setCategory(record);
         Optional.ofNullable(UserUtils.getCurrentUserUid()).ifPresent(record::setUserUid);
         return auroraLinkService.updateById(record);
     }
@@ -168,7 +168,7 @@ public class LinkService {
     private void setCategory(Link link) {
         String categoryName = link.getCategoryName();
         AssertUtils.stateThrow(StringUtils.hasLength(categoryName),
-                () -> new LinkException(ResponseStatusCodeEnum.PARAM_NOT_COMPLETE.getMessage()));
+                () -> new LinkException(ResponseStatusCodeEnum.PARAM_NOT_COMPLETE.getMessage() + " categoryName"));
         CategoryVO categoryVO = categoryService.selectByTitle(categoryName);
         if (categoryVO == null) {
             // 插入

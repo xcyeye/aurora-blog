@@ -91,7 +91,7 @@ public class PermissionRelationService {
 
         LongStream longStream = Arrays.stream(userUidArr)
                 .filter(userUid -> userService.queryUserByUid(userUid) != null)
-                .filter(userUid -> auroraUserRoleService.queryListByCondition(Condition.instant(userUid, roleUid)).isEmpty());
+                .filter(userUid -> auroraUserRoleService.queryListByCondition(Condition.instant(userUid, roleUid)).getResult().isEmpty());
         longStream.forEach(userUid -> {
             UserRoleRelationship userRoleRelationship = new UserRoleRelationship();
             userRoleRelationship.setRoleUid(roleUid);
@@ -114,7 +114,7 @@ public class PermissionRelationService {
             condition.setOtherUid(roleUid);
             // 查询roleUid和userUid对应的uid
             List<UserRoleRelationship> userRoleRelationshipList = auroraUserRoleService
-                    .queryListByCondition(condition);
+                    .queryListByCondition(condition).getResult();
             if (userRoleRelationshipList.size() > 0) {
                 successNum[0] = successNum[0] + auroraUserRoleService.deleteById(userRoleRelationshipList.get(0).getUid());
             }
@@ -133,7 +133,7 @@ public class PermissionRelationService {
         condition.setOtherUid(originRoleUid);
 
         List<UserRoleRelationship> userRoleRelationshipList = auroraUserRoleService
-                .queryListByCondition(condition);
+                .queryListByCondition(condition).getResult();
         if (userRoleRelationshipList.size() > 0) {
             // 判断newRoleUid是否存在
             AssertUtils.stateThrow(roleService.selectByUid(newRoleUid) != null,
@@ -155,7 +155,7 @@ public class PermissionRelationService {
         Assert.notNull(roleUidArr, "传入的角色uid不能为null");
         LongStream longStream = Arrays.stream(roleUidArr)
                 .filter(roleUid -> roleService.selectByUid(roleUid) != null)
-                .filter(roleUid -> auroraRolePermissionService.queryListByCondition(Condition.instant(roleUid, permissionUid)).isEmpty());
+                .filter(roleUid -> auroraRolePermissionService.queryListByCondition(Condition.instant(roleUid, permissionUid)).getResult().isEmpty());
         // 遍历可用的roleUid
         longStream.forEach(roleUid -> {
             // 创建角色路径关系
@@ -180,7 +180,7 @@ public class PermissionRelationService {
         Arrays.stream(permissionUidArr).forEach(permissionUid -> {
             // 查询出roleUid和permissionUid对应的uid
             condition.setOtherUid(permissionUid);
-            List<RolePermissionRelationship> rolePermissionRelationshipList = auroraRolePermissionService.queryListByCondition(condition);
+            List<RolePermissionRelationship> rolePermissionRelationshipList = auroraRolePermissionService.queryListByCondition(condition).getResult();
             if (rolePermissionRelationshipList.size() > 0) {
                 // 删除
                 successNum[0] = successNum[0] + auroraRolePermissionService.deleteById(rolePermissionRelationshipList.get(0).getUid());
@@ -199,7 +199,7 @@ public class PermissionRelationService {
         Condition<Long> condition = new Condition<>();
         condition.setUid(roleUid);
         condition.setOtherUid(originPermissionUid);
-        List<RolePermissionRelationship> permissionRelationshipList = auroraRolePermissionService.queryListByCondition(condition);
+        List<RolePermissionRelationship> permissionRelationshipList = auroraRolePermissionService.queryListByCondition(condition).getResult();
         if (permissionRelationshipList.size() > 0) {
             // 判断此newPermissionUid是否存在
             AssertUtils.stateThrow(permissionService.selectByUid(newPermissionUid) != null,
