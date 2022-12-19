@@ -1,3 +1,3 @@
 // export * from './auth';
 export * from './management';
-export * from './auth/auth'
+export * from './auth/auth';

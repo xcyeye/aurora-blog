@@ -32,7 +32,7 @@ export default class CustomAxiosInstance {
       dataKey: 'data',
       msgKey: 'message',
       successCode: 200,
-			successFlag: 'success'
+      successFlag: 'success'
     }
   ) {
     this.backendConfig = backendConfig;

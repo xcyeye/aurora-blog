@@ -6,9 +6,9 @@ export enum EnumUserRole {
 }
 
 export enum EnumRoleName {
-	super= 'ROLE_root',
-	admin = 'ROLE_admin',
-	user = 'ROLE_xxx'
+  super = 'ROLE_root',
+  admin = 'ROLE_admin',
+  user = 'ROLE_xxx'
 }
 
 /** 登录模块 */

@@ -1,5 +1,5 @@
 import { localStg } from '@/utils';
-import {UserInfo} from "@/theme/vo/auth/OauthVo";
+import type { UserInfo } from '@/theme/vo/auth/OauthVo';
 
 /** 获取token */
 export function getToken() {
@@ -12,11 +12,9 @@ export function getUserInfo() {
     user_uid: '',
     username: '',
     userRole: 'user',
-		nickname: '',
-		verify_email: false,
-		authority: [
-			'ROLE_user'
-		]
+    nickname: '',
+    verify_email: false,
+    authority: ['ROLE_user']
   };
   const userInfo: UserInfo = localStg.get('userInfo') || emptyInfo;
 

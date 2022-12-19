@@ -1,4 +1,4 @@
-import {UserInfo} from "@/theme/vo/auth/OauthVo";
+import type { UserInfo } from '@/theme/vo/auth/OauthVo';
 
 declare namespace StorageInterface {
   /** localStorage的存储数据的类型 */

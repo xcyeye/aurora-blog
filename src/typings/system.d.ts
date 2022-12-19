@@ -49,8 +49,8 @@ declare namespace Service {
     msgKey: string;
     /** 后端业务上定义的成功请求的状态 */
     successCode: number | string;
-		/** 接口请求的标志 */
-		successFlag: string;
+    /** 接口请求的标志 */
+    successFlag: string;
   }
 
   /** 自定义的请求成功结果 */
@@ -95,7 +95,7 @@ declare namespace Service {
     /** 接口消息 */
     message: string;
 
-		success: boolean;
+    success: boolean;
   }
 
   /** mock的响应option */

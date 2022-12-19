@@ -21,7 +21,7 @@ const apis: MockMethod[] = [
           routes: filterRoutes,
           home: routeHomeName
         },
-				success: true
+        success: true
       };
     }
   }

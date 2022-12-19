@@ -16,7 +16,7 @@ const apis: MockMethod[] = [
         code: 200,
         message: 'ok',
         data: true,
-				success: true
+        success: true
       };
     }
   },
@@ -32,7 +32,7 @@ const apis: MockMethod[] = [
           code: ERROR_PARAM_CODE,
           message: ERROR_PARAM_MSG,
           data: null,
-					success: true
+          success: true
         };
       }
 
@@ -46,14 +46,14 @@ const apis: MockMethod[] = [
             token: findItem.token,
             refreshToken: findItem.refreshToken
           },
-					success: true
+          success: true
         };
       }
       return {
         code: 1000,
         message: '用户名或密码错误！',
         data: null,
-				success: true
+        success: true
       };
     }
   },
@@ -71,7 +71,7 @@ const apis: MockMethod[] = [
           code: REFRESH_TOKEN_CODE,
           message: '用户已失效或不存在！',
           data: null,
-					success: true
+          success: true
         };
       }
       const userInfo: Auth.UserInfo = {
@@ -93,7 +93,7 @@ const apis: MockMethod[] = [
           code: 200,
           message: 'ok',
           data: userInfo,
-					success: true
+          success: true
         };
       }
 
@@ -101,7 +101,7 @@ const apis: MockMethod[] = [
         code: REFRESH_TOKEN_CODE,
         message: '用户信息异常！',
         data: null,
-				success: true
+        success: true
       };
     }
   },
@@ -121,14 +121,14 @@ const apis: MockMethod[] = [
             token: findItem.token,
             refreshToken: findItem.refreshToken
           },
-					success: true
+          success: true
         };
       }
       return {
         code: 3000,
         message: '用户已失效或不存在！',
         data: null,
-				success: true
+        success: true
       };
     }
   }

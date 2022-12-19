@@ -1,15 +1,15 @@
 import { unref, nextTick } from 'vue';
 import { defineStore } from 'pinia';
+import { EnumRoleName } from '@/enum';
 import { router } from '@/router';
 import { fetchLoginByPassword } from '@/service';
 import { useRouterPush } from '@/composables';
 import { localStg } from '@/utils';
+import type { OauthPasswordPo } from '@/theme/pojo/auth/oauthPassword';
+import type { OauthVo, UserInfo } from '@/theme/vo/auth/OauthVo';
 import { useTabStore } from '../tab';
 import { useRouteStore } from '../route';
 import { getToken, getUserInfo, clearAuthStorage } from './helpers';
-import {OauthPasswordPo} from "@/theme/pojo/auth/oauthPassword";
-import {OauthVo, UserInfo} from "@/theme/vo/auth/OauthVo";
-import {EnumRoleName} from "@/enum";
 
 interface AuthState {
   /** 用户信息 */
@@ -94,24 +94,24 @@ export const useAuthStore = defineStore('auth-store', {
       const { access_token, refresh_token, userInfo } = backendToken;
       localStg.set('token', access_token);
       localStg.set('refreshToken', refresh_token);
-			// 设置用户的角色类别 只有三个类型 super admin user
-			if (userInfo.authority != null) {
-				if (userInfo.authority.indexOf(EnumRoleName.super) > -1) {
-					userInfo.userRole = 'super'
-				}else if (userInfo.authority.indexOf(EnumRoleName.admin) > -1) {
-					userInfo.userRole = 'admin'
-				}else {
-					userInfo.userRole = 'user'
-				}
-			}
-			// 成功后把用户信息存储到缓存中
-			localStg.set('userInfo', userInfo);
+      // 设置用户的角色类别 只有三个类型 super admin user
+      if (userInfo.authority !== null) {
+        if (userInfo.authority.indexOf(EnumRoleName.super) > -1) {
+          userInfo.userRole = 'super';
+        } else if (userInfo.authority.indexOf(EnumRoleName.admin) > -1) {
+          userInfo.userRole = 'admin';
+        } else {
+          userInfo.userRole = 'user';
+        }
+      }
+      // 成功后把用户信息存储到缓存中
+      localStg.set('userInfo', userInfo);
 
-			// 更新状态
-			this.userInfo = userInfo;
-			this.token = access_token;
+      // 更新状态
+      this.userInfo = userInfo;
+      this.token = access_token;
 
-			successFlag = true;
+      successFlag = true;
 
       return successFlag;
     },
@@ -122,13 +122,13 @@ export const useAuthStore = defineStore('auth-store', {
      */
     async login(userName: string, password: string) {
       this.loginLoading = true;
-			const oauthPasswordType: OauthPasswordPo = {
-				username: userName,
-				password: password,
-				client_id: 'xcyeye',
-				client_secret: '123456',
-				grant_type: 'password'
-			}
+      const oauthPasswordType: OauthPasswordPo = {
+        username: userName,
+        password,
+        client_id: 'xcyeye',
+        client_secret: '123456',
+        grant_type: 'password'
+      };
       const { data } = await fetchLoginByPassword(oauthPasswordType);
       if (data) {
         await this.handleActionAfterLogin(data);
@@ -157,13 +157,13 @@ export const useAuthStore = defineStore('auth-store', {
         }
       };
       const { userName, password } = accounts[userRole];
-			const oauthPasswordType: OauthPasswordPo = {
-				username: userName,
-				password: password,
-				client_id: 'myjszl',
-				client_secret: '123456',
-				grant_type: 'password'
-			}
+      const oauthPasswordType: OauthPasswordPo = {
+        username: userName,
+        password,
+        client_id: 'myjszl',
+        client_secret: '123456',
+        grant_type: 'password'
+      };
       const { data } = await fetchLoginByPassword(oauthPasswordType);
       if (data) {
         await this.loginByToken(data);
