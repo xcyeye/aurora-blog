@@ -1,3 +1,5 @@
+import {UserInfo} from "@/theme/vo/auth/OauthVo";
+
 declare namespace StorageInterface {
   /** localStorage的存储数据的类型 */
   interface Session {
@@ -13,7 +15,7 @@ declare namespace StorageInterface {
     /** 用户刷新token */
     refreshToken: string;
     /** 用户信息 */
-    userInfo: Auth.UserInfo;
+    userInfo: UserInfo;
     /** 主题配置 */
     themeSettings: Theme.Setting;
     /** 多页签路由信息 */

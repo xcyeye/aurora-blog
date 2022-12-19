@@ -5,6 +5,12 @@ export enum EnumUserRole {
   user = '普通用户'
 }
 
+export enum EnumRoleName {
+	super= 'ROLE_root',
+	admin = 'ROLE_admin',
+	user = 'ROLE_xxx'
+}
+
 /** 登录模块 */
 export enum EnumLoginModule {
   'pwd-login' = '账密登录',

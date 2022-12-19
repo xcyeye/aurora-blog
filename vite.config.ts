@@ -31,8 +31,8 @@ export default defineConfig(configEnv => {
     },
     server: {
       host: '0.0.0.0',
-      port: 3200,
-      open: true,
+      port: 3400,
+      open: false,
       proxy: createViteProxy(isOpenProxy, envConfig)
     },
     optimizeDeps: {

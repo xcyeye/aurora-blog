@@ -1,16 +1,19 @@
 import { unref, nextTick } from 'vue';
 import { defineStore } from 'pinia';
 import { router } from '@/router';
-import { fetchLogin, fetchUserInfo } from '@/service';
+import { fetchLoginByPassword } from '@/service';
 import { useRouterPush } from '@/composables';
 import { localStg } from '@/utils';
 import { useTabStore } from '../tab';
 import { useRouteStore } from '../route';
 import { getToken, getUserInfo, clearAuthStorage } from './helpers';
+import {OauthPasswordPo} from "@/theme/pojo/auth/oauthPassword";
+import {OauthVo, UserInfo} from "@/theme/vo/auth/OauthVo";
+import {EnumRoleName} from "@/enum";
 
 interface AuthState {
   /** 用户信息 */
-  userInfo: Auth.UserInfo;
+  userInfo: UserInfo;
   /** 用户token */
   token: string;
   /** 登录的加载状态 */
@@ -53,7 +56,7 @@ export const useAuthStore = defineStore('auth-store', {
      * 处理登录后成功或失败的逻辑
      * @param backendToken - 返回的token
      */
-    async handleActionAfterLogin(backendToken: ApiAuth.Token) {
+    async handleActionAfterLogin(backendToken: OauthVo) {
       const route = useRouteStore();
       const { toLoginRedirect } = useRouterPush(false);
 
@@ -69,7 +72,7 @@ export const useAuthStore = defineStore('auth-store', {
         if (route.isInitAuthRoute) {
           window.$notification?.success({
             title: '登录成功!',
-            content: `欢迎回来，${this.userInfo.userName}!`,
+            content: `欢迎回来，${this.userInfo.username}!`,
             duration: 3000
           });
         }
@@ -84,26 +87,31 @@ export const useAuthStore = defineStore('auth-store', {
      * 根据token进行登录
      * @param backendToken - 返回的token
      */
-    async loginByToken(backendToken: ApiAuth.Token) {
+    async loginByToken(backendToken: OauthVo) {
       let successFlag = false;
 
       // 先把token存储到缓存中(后面接口的请求头需要token)
-      const { token, refreshToken } = backendToken;
-      localStg.set('token', token);
-      localStg.set('refreshToken', refreshToken);
+      const { access_token, refresh_token, userInfo } = backendToken;
+      localStg.set('token', access_token);
+      localStg.set('refreshToken', refresh_token);
+			// 设置用户的角色类别 只有三个类型 super admin user
+			if (userInfo.authority != null) {
+				if (userInfo.authority.indexOf(EnumRoleName.super) > -1) {
+					userInfo.userRole = 'super'
+				}else if (userInfo.authority.indexOf(EnumRoleName.admin) > -1) {
+					userInfo.userRole = 'admin'
+				}else {
+					userInfo.userRole = 'user'
+				}
+			}
+			// 成功后把用户信息存储到缓存中
+			localStg.set('userInfo', userInfo);
 
-      // 获取用户信息
-      const { data } = await fetchUserInfo();
-      if (data) {
-        // 成功后把用户信息存储到缓存中
-        localStg.set('userInfo', data);
+			// 更新状态
+			this.userInfo = userInfo;
+			this.token = access_token;
 
-        // 更新状态
-        this.userInfo = data;
-        this.token = token;
-
-        successFlag = true;
-      }
+			successFlag = true;
 
       return successFlag;
     },
@@ -114,7 +122,14 @@ export const useAuthStore = defineStore('auth-store', {
      */
     async login(userName: string, password: string) {
       this.loginLoading = true;
-      const { data } = await fetchLogin(userName, password);
+			const oauthPasswordType: OauthPasswordPo = {
+				username: userName,
+				password: password,
+				client_id: 'xcyeye',
+				client_secret: '123456',
+				grant_type: 'password'
+			}
+      const { data } = await fetchLoginByPassword(oauthPasswordType);
       if (data) {
         await this.handleActionAfterLogin(data);
       }
@@ -142,7 +157,14 @@ export const useAuthStore = defineStore('auth-store', {
         }
       };
       const { userName, password } = accounts[userRole];
-      const { data } = await fetchLogin(userName, password);
+			const oauthPasswordType: OauthPasswordPo = {
+				username: userName,
+				password: password,
+				client_id: 'myjszl',
+				client_secret: '123456',
+				grant_type: 'password'
+			}
+      const { data } = await fetchLoginByPassword(oauthPasswordType);
       if (data) {
         await this.loginByToken(data);
         resetRouteStore();

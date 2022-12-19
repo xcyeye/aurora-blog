@@ -24,7 +24,8 @@ const apis: MockMethod[] = [
       return {
         code: 200,
         message: 'ok',
-        data: data.list
+        data: data.list,
+				success: true
       };
     }
   }
