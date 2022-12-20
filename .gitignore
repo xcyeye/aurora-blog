@@ -1,3 +1,8 @@
+### sql-generator ###
+/sql-generator
+/sql-generator-ts
+/typescript-bean
+
 HELP.md
 target/
 !.mvn/wrapper/maven-wrapper.jar
@@ -49,8 +54,3 @@ log
 
 ### jrebel ###
 **/rebel.xml
-
-### sql-generator ###
-/sql-generator
-/sql-generator-ts
-/typescript-bean

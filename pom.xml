@@ -22,8 +22,6 @@
         <module>aurora-modules</module>
         <module>common-api</module>
         <module>support</module>
-        <module>sql-generator</module>
-        <module>sql-generator-ts</module>
         <module>service</module>
     </modules>
 
