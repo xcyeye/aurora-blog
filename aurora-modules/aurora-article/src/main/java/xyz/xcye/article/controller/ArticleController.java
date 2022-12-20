@@ -35,43 +35,43 @@ public class ArticleController {
 
     @Operation(summary = "插入新文章")
     @ModifyOperation
-    @PostMapping
-    public void insertArticle(@Validated({Insert.class, Default.class}) ArticlePojo article) {
+    @PostMapping("/insertArticle")
+    public void insertArticle(@Validated({Insert.class, Default.class}) @RequestBody ArticlePojo article) {
         articleService.insertArticle(article);
     }
 
     @ModifyOperation
     @Operation(summary = "逻辑删除文章")
-    @DeleteMapping("/{uid}")
-    public int deleteArticleByUid(@PathVariable("uid") long uid) {
-        return articleService.deleteByPrimaryKey(uid);
+    @PostMapping("/logicDeleteArticle")
+    public int logicDeleteArticle(@RequestBody long uid) {
+        return articleService.logicDeleteArticle(uid);
     }
 
     @Operation(summary = "物理删除文章")
     @ModifyOperation
-    @DeleteMapping("/physics/{uid}")
-    public int physicsDeleteArticleByUid(@PathVariable("uid") long uid) {
-        return articleService.physicsDeleteByUid(uid);
+    @PostMapping("/physicalDeleteArticle")
+    public int physicalDeleteArticle(@RequestBody long uid) {
+        return articleService.physicalDeleteArticle(uid);
     }
 
     @Operation(summary = "修改文章数据")
     @ModifyOperation
-    @PutMapping
-    public int updateArticle(@Validated({Update.class, Default.class}) ArticlePojo article) {
-        return articleService.updateByPrimaryKeySelective(article);
+    @PostMapping("/updateArticle")
+    public int updateArticle(@Validated({Update.class, Default.class}) @RequestBody ArticlePojo article) {
+        return articleService.updateArticle(article);
     }
 
     @SelectOperation
     @Operation(summary = "根据uid查询文章数据")
-    @GetMapping("/{uid}")
-    public ArticleVO selectArticleByUid(@PathVariable("uid") long uid) {
-        return articleService.selectByUid(uid);
+    @PostMapping("/queryArticleByUid")
+    public ArticleVO queryArticleByUid(@RequestBody long uid) {
+        return articleService.queryArticleByUid(uid);
     }
 
     @Operation(summary = "通过条件查询文章数据")
-    @GetMapping
+    @PostMapping("/queryListArticleByCondition")
     @SelectOperation
-    public PageData<ArticleVO> selectArticleByCondition(Condition<Long> condition) {
-        return articleService.selectByCondition(condition);
+    public PageData<ArticleVO> queryListArticleByCondition(@RequestBody Condition<Long> condition) {
+        return articleService.queryListArticleByCondition(condition);
     }
 }

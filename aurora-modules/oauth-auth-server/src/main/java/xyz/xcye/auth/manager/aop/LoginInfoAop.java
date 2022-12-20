@@ -109,7 +109,7 @@ public class LoginInfoAop {
         setDefaultProperties(loginInfoPojo);
 
         // 查看用户上次
-        loginInfoService.insertSelective(loginInfoPojo);
+        loginInfoService.insertLoginInfo(loginInfoPojo);
     }
 
     @Before("execution(public * xyz.xcye.auth.handler.OauthServerAuthenticationFailureHandler.onAuthenticationFailure(..))")
@@ -268,9 +268,9 @@ public class LoginInfoAop {
         if (StringUtils.hasLength(cacheUsername)) {
             setDefaultProperties(loginInfo);
             loginInfo.setUsername(username);
-            loginInfoService.insertSelective(loginInfo);
+            loginInfoService.insertLoginInfo(loginInfo);
         }
-        loginInfoService.updateByPrimaryKeySelective(loginInfo);
+        loginInfoService.updateLoginInfo(loginInfo);
         setLoginLocation(uid);
     }
 
@@ -356,7 +356,7 @@ public class LoginInfoAop {
             loginInfo.setUid(uid);
             loginInfo.setLoginIp(ip);
             loginInfo.setLoginLocation(location);
-            loginInfoService.updateByPrimaryKeySelective(loginInfo);
+            loginInfoService.updateLoginInfo(loginInfo);
         });
     }
 

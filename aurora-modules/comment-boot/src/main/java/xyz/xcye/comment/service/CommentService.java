@@ -90,13 +90,13 @@ public class CommentService {
     public int resendEmailNotice(long uid) throws BindException {
         AssertUtils.stateThrow(uid != 0, () -> new CommentException("无效的评论uid"));
         // 查询该uid所对应的评论是回复评论还是单独新建的评论
-        CommentDTO commentDTO = queryByUid(uid);
+        CommentDTO commentDTO = queryCommentByUid(uid);
         AssertUtils.stateThrow(commentDTO != null, () -> new CommentException(ResponseStatusCodeEnum.PARAM_IS_INVALID));
         Comment comment = BeanUtils.copyProperties(commentDTO, Comment.class);
         // 查询被回复的评论
         Comment repliedCommentInfo = null;
         if (commentDTO.getReplyCommentUid() != null) {
-            repliedCommentInfo = BeanUtils.copyProperties(queryByUid(commentDTO.getReplyCommentUid()), Comment.class);
+            repliedCommentInfo = BeanUtils.copyProperties(queryCommentByUid(commentDTO.getReplyCommentUid()), Comment.class);
         }
 
         if (repliedCommentInfo != null) {
@@ -113,7 +113,7 @@ public class CommentService {
         return updateComment(buildCommentPojo);
     }
 
-    public int deleteComment(Long uid) {
+    public int physicalDeleteComment(Long uid) {
         Assert.notNull(uid, "uid不能为null");
         return auroraCommentService.deleteById(uid);
     }
@@ -134,7 +134,7 @@ public class CommentService {
         return auroraCommentService.updateById(comment);
     }
 
-    public ShowCommentVO queryArticleComments(long[] arrayUid) {
+    public ShowCommentVO queryListCommentByUidArr(long[] arrayUid) {
         // 获取arrayUid中可用的uid
         List<Long> effectiveCommentUidList = getEffectiveCommentUid(arrayUid);
 
@@ -157,12 +157,12 @@ public class CommentService {
         return showCommentVO;
     }
 
-    public PageData<CommentVO> queryAllComments(Condition<Long> condition) {
+    public PageData<CommentVO> queryListCommentByCondition(Condition<Long> condition) {
         Assert.notNull(condition, "查询条件不能为null");
         return PageUtils.copyPageDataResult(auroraCommentService.queryListByCondition(condition), CommentVO.class);
     }
 
-    public CommentDTO queryByUid(long uid) {
+    public CommentDTO queryCommentByUid(long uid) {
         return xyz.xcye.core.util.BeanUtils.copyProperties(
                 auroraCommentService.queryById(uid),CommentDTO.class);
     }
@@ -212,7 +212,7 @@ public class CommentService {
             return false;
         }
         //判断是否存在
-        return queryByUid(comment.getReplyCommentUid()) != null;
+        return queryCommentByUid(comment.getReplyCommentUid()) != null;
     }
 
     /**

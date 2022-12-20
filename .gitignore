@@ -52,3 +52,5 @@ log
 
 ### sql-generator ###
 /sql-generator
+/sql-generator-ts
+/typescript-bean

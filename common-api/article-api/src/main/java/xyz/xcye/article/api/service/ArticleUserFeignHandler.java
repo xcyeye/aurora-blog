@@ -18,14 +18,4 @@ public class ArticleUserFeignHandler implements ArticleUserFeignService {
     public R queryUserByUid(long uid) {
         return R.failure();
     }
-
-    @Override
-    public R updateUser(User user) throws UserException {
-        return R.failure();
-    }
-
-    @Override
-    public R bindingEmail(Email email) throws BindException {
-        return R.failure();
-    }
 }

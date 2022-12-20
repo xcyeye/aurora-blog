@@ -109,30 +109,30 @@ public class FileController {
      */
     @SelectOperation
     @Operation(summary = "查询文件数据", description = "其中keyword为文件的名字")
-    @GetMapping
-    public PageData<FileVO> queryAllFile(Condition<Long> condition) {
-        return fileService.queryAllFile(condition);
+    @PostMapping("/queryListFileByCondition")
+    public PageData<FileVO> queryListFileByCondition(@RequestBody Condition<Long> condition) {
+        return fileService.queryListFileByCondition(condition);
     }
 
     @SelectOperation
     @Operation(summary = "查询指定后缀的所有文件", description = "其中keyword为文件的后缀名，需要加上.,如.jpg")
-    @GetMapping("/formatFile")
-    public PageData<FileVO> selectSpecifyFormatFiles(Condition<Long> condition) {
-        return fileService.selectSpecifyFormatFiles(condition);
+    @PostMapping("/querySpecifyFormatFiles")
+    public PageData<FileVO> querySpecifyFormatFiles(@RequestBody Condition<Long> condition) {
+        return fileService.querySpecifyFormatFiles(condition);
     }
 
     @SelectOperation
     @Operation(summary = "查询文件数据", description = "其中keyword为文件的名字")
-    @GetMapping("/{uid}")
-    public FileVO queryFileByUid(@PathVariable("uid") long uid) throws ReflectiveOperationException {
-        return fileService.queryByUid(uid);
+    @PostMapping("/queryFileByUid")
+    public FileVO queryFileByUid(@RequestBody long uid) {
+        return fileService.queryFileByUid(uid);
     }
 
     @SelectOperation
     @Operation(summary = "查询该userUid所对应的所有文件的后缀信息")
-    @GetMapping("/format/{userUid}")
-    public List<String> queryAllFileFormat(@PathVariable("userUid") long userUid) {
-        return fileService.selectAllFileFormat(userUid);
+    @PostMapping("/queryListFileFormat")
+    public List<String> queryListFileFormat(@RequestBody long userUid) {
+        return fileService.queryListFileFormat(userUid);
     }
 
     /**
@@ -142,8 +142,8 @@ public class FileController {
      */
     @ModifyOperation
     @Operation(summary = "修改文件属性", description = "只能修改文件的简介，因为其余的字段，修改没有任何意义，名字这些都是和文件本身绑定")
-    @PutMapping
-    public int updateFile(@Validated({Update.class, Default.class}) FilePojo fileInfo) {
+    @PostMapping("/updateFile")
+    public int updateFile(@Validated({Update.class, Default.class}) @RequestBody FilePojo fileInfo) {
         return fileService.updateFile(fileInfo);
     }
 
@@ -154,16 +154,16 @@ public class FileController {
      */
     @ModifyOperation
     @Operation(summary = "根据uid删除某个文件", description = "从数据库中删除对应数据，删除与之关联的本地，对象存储中的文件，返回删除成功之后的文件对象")
-    @DeleteMapping("/{uid}")
-    public int deleteFile(@PathVariable("uid") long uid) throws FileException, IOException, ExecutionException, InterruptedException {
+    @PostMapping("/deleteFile")
+    public int deleteFile(@RequestBody long uid) throws FileException, IOException, ExecutionException, InterruptedException {
         return fileService.deleteFile(uid);
     }
 
     @ModifyOperation
     @Operation(summary = "根据uid删除某个文件的信息，从数据库中删除", description = "从数据库中删除对应数据，删除与之关联的本地，对象存储中的文件，返回删除成功之后的文件对象")
-    @DeleteMapping("/info/{uid}")
-    public int deleteFileInfo(@PathVariable("uid") long uid) {
-        return fileService.deleteFileInfo(uid);
+    @PostMapping("/physicalDeleteFileInfo")
+    public int physicalDeleteFileInfo(@RequestBody long uid) {
+        return fileService.physicalDeleteFileInfo(uid);
     }
 
     @Operation(summary = "根据uid下载文件")

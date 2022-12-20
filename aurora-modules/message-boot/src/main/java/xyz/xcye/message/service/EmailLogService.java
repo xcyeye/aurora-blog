@@ -37,11 +37,11 @@ public class EmailLogService {
         return auroraEmailLogService.updateById(BeanUtils.copyProperties(emailLog, EmailLog.class));
     }
 
-    public int deleteEmailLog(long uid) {
+    public int physicalDeleteEmailLog(long uid) {
         return auroraEmailLogService.deleteById(uid);
     }
 
-    public PageData<EmailLogVO> queryAll(Condition<Long> condition) {
+    public PageData<EmailLogVO> queryListEmailLogByCondition(Condition<Long> condition) {
         PageHelper.startPage(condition.getPageNum(),condition.getPageSize(),condition.getOrderBy());
         return PageUtils.copyPageDataResult(auroraEmailLogService.queryListByCondition(condition),EmailLogVO.class);
     }

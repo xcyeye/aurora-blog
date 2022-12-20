@@ -27,44 +27,44 @@ public class SocialController {
 
     @ModifyOperation
     @Operation(summary = "逻辑删除此社交信息")
-    @DeleteMapping("/{uid}")
-    public int deleteByPrimaryKey(@PathVariable("uid") long uid) {
-        return socialService.deleteByPrimaryKey(uid);
+    @PostMapping("/loginDeleteSocial")
+    public int loginDeleteSocial(@RequestBody long uid) {
+        return socialService.loginDeleteSocial(uid);
     }
 
-    @DeleteMapping("/physics/{uid}")
+    @PostMapping("/physicalDeleteSocial")
     @Operation(summary = "物理删除此社交信息")
     @ModifyOperation
-    public int physicsDeleteSocial(@PathVariable("uid") long uid) {
-        return socialService.physicsDeleteSocial(uid);
+    public int physicalDeleteSocial(@RequestBody long uid) {
+        return socialService.physicalDeleteSocial(uid);
     }
 
 
-    @PostMapping
+    @PostMapping("/insertSocial")
     @Operation(summary = "插入新的社交信息")
     @ModifyOperation
-    public void insertSelective(@Validated({Insert.class, Default.class}) SocialPojo record) {
-        socialService.insertSelective(record);
+    public void insertSocial(@Validated({Insert.class, Default.class}) @RequestBody SocialPojo record) {
+        socialService.insertSocial(record);
     }
 
     @Operation(summary = "根据条件查询社交信息")
     @SelectOperation
-    @GetMapping
-    public PageData<SocialVO> selectByCondition(Condition<Long> condition) {
-        return socialService.selectByCondition(condition);
+    @PostMapping("/queryListSocialByCondition")
+    public PageData<SocialVO> queryListSocialByCondition(@RequestBody Condition<Long> condition) {
+        return socialService.queryListSocialByCondition(condition);
     }
 
-    @GetMapping("/{uid}")
+    @PostMapping("/querySocialByUid")
     @SelectOperation
     @Operation(summary = "根据uid查询社交信息")
-    public SocialVO selectByUid(@PathVariable("uid") long uid) {
-        return socialService.selectByUid(uid);
+    public SocialVO querySocialByUid(@RequestBody long uid) {
+        return socialService.querySocialByUid(uid);
     }
 
-    @PutMapping
+    @PostMapping("/updateSocial")
     @ModifyOperation
     @Operation(summary = "修改社交信息")
-    public int updateByPrimaryKeySelective(@Validated({Update.class, Default.class}) SocialPojo record) {
-        return socialService.updateByPrimaryKeySelective(record);
+    public int updateSocial(@Validated({Update.class, Default.class}) @RequestBody SocialPojo record) {
+        return socialService.updateSocial(record);
     }
 }

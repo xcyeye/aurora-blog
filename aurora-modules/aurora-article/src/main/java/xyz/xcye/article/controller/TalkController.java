@@ -35,43 +35,43 @@ public class TalkController {
 
     @Operation(summary = "插入新的说说")
     @ModifyOperation
-    @PostMapping
-    public void insertTalk(@Validated({Insert.class, Default.class}) TalkPojo talk) {
-        talkService.insertSelective(talk);
+    @PostMapping("/insertTalk")
+    public void insertTalk(@Validated({Insert.class, Default.class}) @RequestBody TalkPojo talk) {
+        talkService.insertTalk(talk);
     }
 
     @Operation(summary = "逻辑删除说说")
     @ModifyOperation
-    @DeleteMapping("/{uid}")
-    public int deleteTalkByUid(@PathVariable("uid") long uid) {
-        return talkService.deleteByPrimaryKey(uid);
+    @PostMapping("/logicDeleteTalk")
+    public int logicDeleteTalk(@RequestBody long uid) {
+        return talkService.logicDeleteTalk(uid);
     }
 
     @ModifyOperation
     @Operation(summary = "物理删除说说")
-    @DeleteMapping("/physics/{uid}")
-    public int physicsDeleteTalk(@PathVariable("uid") long uid) {
-        return talkService.physicsDeleteByUid(uid);
+    @PostMapping("/physicalDeleteTalk")
+    public int physicalDeleteTalk(@RequestBody long uid) {
+        return talkService.physicalDeleteTalk(uid);
     }
 
     @Operation(summary = "根据条件查询说说")
     @SelectOperation
-    @GetMapping
-    public PageData<TalkVO> selectAllTalk(Condition<Long> condition) {
-        return talkService.selectByCondition(condition);
+    @PostMapping("/queryListTalkByCondition")
+    public PageData<TalkVO> queryListTalkByCondition(@RequestBody Condition<Long> condition) {
+        return talkService.queryListTalkByCondition(condition);
     }
 
     @Operation(summary = "根据uid查询说说")
     @SelectOperation
-    @GetMapping("/{uid}")
-    public TalkVO selectByUid(@PathVariable("uid") long uid) {
-        return talkService.selectByUid(uid);
+    @PostMapping("/queryTalkByUid")
+    public TalkVO queryTalkByUid(@RequestBody long uid) {
+        return talkService.queryTalkByUid(uid);
     }
 
     @Operation(summary = "修改说说内容")
-    @PutMapping
+    @PostMapping("/updateTalk")
     @ModifyOperation
-    public int updateTalk(@Validated({Update.class, Default.class}) TalkPojo talk) {
-        return talkService.updateByPrimaryKeySelective(talk);
+    public int updateTalk(@Validated({Update.class, Default.class}) @RequestBody TalkPojo talk) {
+        return talkService.updateTalk(talk);
     }
 }

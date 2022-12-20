@@ -36,29 +36,29 @@ public class EmailLogController {
 
     @Operation(summary = "插入邮件发送日志")
     @ModifyOperation
-    @PostMapping("")
-    public void insertEmailLog(@Validated({Insert.class, Default.class}) EmailLogPojo emailLog) {
+    @PostMapping("/insertEmailLog")
+    public void insertEmailLog(@Validated({Insert.class, Default.class}) @RequestBody EmailLogPojo emailLog) {
         emailLogService.insertEmailLog(emailLog);
     }
 
     @Operation(summary = "根据uid更新邮件发送日志")
     @ModifyOperation
-    @PutMapping("")
-    public int updateEmailLog(@Validated({Update.class,Default.class}) EmailLogPojo emailLog) throws BindException {
+    @PostMapping("/updateEmailLog")
+    public int updateEmailLog(@Validated({Update.class,Default.class}) @RequestBody EmailLogPojo emailLog) throws BindException {
         return emailLogService.updateEmailLog(emailLog);
     }
 
     @Operation(summary = "删除uid对应邮件发送日志")
     @SelectOperation
-    @DeleteMapping("/{uid}")
-    public int deleteEmailLog(@PathVariable("uid") long uid) {
-        return emailLogService.deleteEmailLog(uid);
+    @PostMapping("/physicalDeleteEmailLog")
+    public int physicalDeleteEmailLog(@RequestBody long uid) {
+        return emailLogService.physicalDeleteEmailLog(uid);
     }
 
     @Operation(summary = "查询所有邮件发送日志")
     @SelectOperation
-    @GetMapping("")
-    public PageData<EmailLogVO> queryAllEmailLog(Condition<Long> condition) {
-        return emailLogService.queryAll(condition);
+    @PostMapping("/queryListEmailLogByCondition")
+    public PageData<EmailLogVO> queryListEmailLogByCondition(@RequestBody Condition<Long> condition) {
+        return emailLogService.queryListEmailLogByCondition(condition);
     }
 }

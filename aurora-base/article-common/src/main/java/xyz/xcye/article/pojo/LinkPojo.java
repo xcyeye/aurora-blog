@@ -117,4 +117,7 @@ public class LinkPojo {
     @Schema(title = "最后更新时间")
     private String updateTime;
 
+    @Schema(title = "回复的信息")
+    private String replyMessage;
+
 }

@@ -2,10 +2,7 @@ package xyz.xcye.admin.controller;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import xyz.xcye.admin.service.verify.CommonVerifyUrlService;
 import xyz.xcye.core.annotaion.controller.ResponseRealResult;
 import xyz.xcye.core.exception.user.UserException;
@@ -29,9 +26,8 @@ public class VerifyAccountController {
     private CommonVerifyUrlService commonVerifyUrlService;
 
     @ResponseRealResult
-    @GetMapping("/bindEmail/{incomingSecretKey}")
-    public String emailVerifyAccount(@PathVariable("incomingSecretKey") String incomingSecretKey,
-                                     HttpServletRequest request, HttpServletResponse response) throws UserException, IOException {
+    @GetMapping("/bindEmail/emailVerifyAccount")
+    public String emailVerifyAccount(@RequestBody String incomingSecretKey) throws UserException {
         boolean bindEmail = commonVerifyUrlService.bindEmail(incomingSecretKey);
 
         if (bindEmail) {
@@ -41,9 +37,8 @@ public class VerifyAccountController {
     }
 
     @ResponseRealResult
-    @GetMapping("/enable/{incomingSecretKey}")
-    public String enableAccount(@PathVariable("incomingSecretKey") String incomingSecretKey,
-                                     HttpServletRequest request, HttpServletResponse response) throws UserException, IOException {
+    @GetMapping("/enable/enableAccount")
+    public String enableAccount(@RequestBody String incomingSecretKey) throws UserException {
         boolean bindEmail = commonVerifyUrlService.bindEmail(incomingSecretKey);
 
         if (bindEmail) {

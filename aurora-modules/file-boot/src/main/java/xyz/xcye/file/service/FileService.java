@@ -80,7 +80,7 @@ public class FileService {
                 .userUid(userUid)
                 .build();
         auroraFileService.insert(newFile);
-        return queryByUid(newFile.getUid());
+        return queryFileByUid(newFile.getUid());
     }
 
     public int updateFile(FilePojo file) {
@@ -123,19 +123,19 @@ public class FileService {
         return updateFileNum;
     }
 
-    public int deleteFileInfo(long uid) {
+    public int physicalDeleteFileInfo(long uid) {
         // 先查看此uid对应的文件是否被删除，只有先删除文件，才可以删除文件记录
-        FileVO fileVO = queryByUid(uid);
+        FileVO fileVO = queryFileByUid(uid);
         AssertUtils.stateThrow(fileVO != null, () -> new FileException(ResponseStatusCodeEnum.EXCEPTION_FILE_NOT_FOUND));
         AssertUtils.stateThrow(fileVO.getDelete(), () -> new FileException("请先删除 " + fileVO.getFileName() + " 文件才可以删除记录"));
         return auroraFileService.deleteById(uid);
     }
 
-    public PageData<FileVO> queryAllFile(Condition<Long> condition) {
+    public PageData<FileVO> queryListFileByCondition(Condition<Long> condition) {
         return PageUtils.copyPageDataResult(auroraFileService.queryListByCondition(condition), FileVO.class);
     }
 
-    public FileVO queryByUid(long uid) {
+    public FileVO queryFileByUid(long uid) {
         return BeanUtils.getSingleObjFromList(auroraFileService.queryListByCondition(Condition.instant(uid, true)).getResult(), FileVO.class);
     }
 
@@ -160,7 +160,7 @@ public class FileService {
         return fileStorageService.query(deleteFileInfo.getStoragePath());
     }
 
-    public PageData<FileVO> selectSpecifyFormatFiles(Condition<Long> condition) {
+    public PageData<FileVO> querySpecifyFormatFiles(Condition<Long> condition) {
         Assert.notNull(condition, "查询条件不能为null");
         List<FileVO> files = BeanUtils.copyList(fileExtService.selectSpecifyFormatFiles(condition), FileVO.class);
         PageData<FileVO> pageData = new PageData<>();
@@ -170,7 +170,7 @@ public class FileService {
         return pageData;
     }
 
-    public List<String> selectAllFileFormat(long userUid) {
+    public List<String> queryListFileFormat(long userUid) {
         // 如果是超级管理员，则查询所有的数据
         JwtUserInfo jwtUserInfo = UserUtils.getCurrentUser();
         if (isSuperRole(jwtUserInfo)) {
@@ -202,7 +202,7 @@ public class FileService {
     private File getFileDOByUid(long uid)
             throws FileException {
         // 查询出此uid对应的文件的存储位置
-        File deleteFileInfo = BeanUtils.copyProperties(queryByUid(uid), File.class);
+        File deleteFileInfo = BeanUtils.copyProperties(queryFileByUid(uid), File.class);
         if (deleteFileInfo == null) {
             // 此uid无效 这里会存在一个问题，因为deleteStatus默认为false，如果你已经删除了文件，但是只传入uid，也会进入到这里
             throw new FileException(ResponseStatusCodeEnum.EXCEPTION_FILE_NOT_FOUND.getMessage(),

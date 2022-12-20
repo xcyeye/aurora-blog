@@ -28,32 +28,32 @@ public class LoginInfoController {
 
     @ModifyOperation
     @Operation(summary = "根据uid删除登录日志")
-    @DeleteMapping("/{uid}")
-    public int deleteByPrimaryKey(@PathVariable("uid") Long uid) {
-        return loginInfoService.deleteByPrimaryKey(uid);
+    @PostMapping("/physicalDeleteLoginInfo")
+    public int physicalDeleteLoginInfo(@RequestBody Long uid) {
+        return loginInfoService.physicalDeleteLoginInfo(uid);
     }
 
     @ModifyOperation
     @Operation(summary = "根据uid，批量删除")
-    @PostMapping
-    public int deleteByUidBatch(Long[] uids) {
-        return loginInfoService.deleteByUidBatch(uids);
+    @PostMapping("/batchDeleteLoginInfoByUid")
+    public int batchDeleteLoginInfoByUid(@RequestBody Long[] uids) {
+        return loginInfoService.batchDeleteLoginInfoByUid(uids);
     }
 
     @FieldFilter(value = LoginInfoVO.class, excludeFields = {"","",""},
             ignoreRole = {OauthJwtConstant.SUPER_ADMINISTRATOR_ROLE_NAME})
     @SelectOperation
     @Operation(summary = "根据条件查询")
-    @GetMapping
-    public PageData<LoginInfoVO> selectByCondition(Condition<Long> condition) {
-        return loginInfoService.selectByCondition(condition);
+    @PostMapping("/queryListLoginInfoByCondition")
+    public PageData<LoginInfoVO> queryListLoginInfoByCondition(@RequestBody Condition<Long> condition) {
+        return loginInfoService.queryListLoginInfoByCondition(condition);
     }
 
     @FieldFilter(value = LoginInfoVO.class, excludeFields = {"loginIp","loginLocation","username"})
     @SelectOperation
     @Operation(summary = "根据用户名查询")
-    @GetMapping("/{username}")
-    public LoginInfoVO selectByUsername(@PathVariable("username") String username) {
-        return loginInfoService.selectByUsername(username);
+    @PostMapping("/queryLoginInfoByUsername")
+    public LoginInfoVO queryLoginInfoByUsername(@RequestBody String username) {
+        return loginInfoService.queryLoginInfoByUsername(username);
     }
 }

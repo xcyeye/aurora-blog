@@ -49,7 +49,7 @@ public class ArticleService {
     @Autowired
     private CategoryService categoryService;
 
-    public int deleteByPrimaryKey(Long uid) {
+    public int logicDeleteArticle(Long uid) {
         Assert.notNull(uid, "uid不能为null");
 
         // 构建一个Article对象
@@ -61,7 +61,7 @@ public class ArticleService {
         return auroraArticleService.deleteByWhere(article);
     }
 
-    public int physicsDeleteByUid(Long uid) {
+    public int physicalDeleteArticle(Long uid) {
         Assert.notNull(uid, "uid不能为null");
         return auroraArticleService.deleteById(uid);
     }
@@ -83,17 +83,17 @@ public class ArticleService {
         auroraArticleService.insert(BeanUtils.copyProperties(record, Article.class));
     }
 
-    public PageData<ArticleVO> selectByCondition(Condition<Long> condition) {
+    public PageData<ArticleVO> queryListArticleByCondition(Condition<Long> condition) {
         Assert.notNull(condition, "查询条件不能为null");
         return PageUtils.copyPageDataResult(auroraArticleService.queryListByCondition(condition), ArticleVO.class);
     }
 
-    public ArticleVO selectByUid(Long uid) {
+    public ArticleVO queryArticleByUid(Long uid) {
         return BeanUtils.copyProperties(auroraArticleService.queryById(uid), ArticleVO.class);
     }
 
     @Transactional
-    public int updateByPrimaryKeySelective(ArticlePojo record) {
+    public int updateArticle(ArticlePojo record) {
         Assert.notNull(record, "文章数据不能为null");
         setCategory(record);
         setTag(record);
@@ -116,7 +116,7 @@ public class ArticleService {
                     categoryPojo.setTitle(categoryName);
                     if (categoryService.selectByTitle(categoryName) == null) {
                         // 不存在，添加
-                        categoryService.insertSelective(categoryPojo);
+                        categoryService.insertCategory(categoryPojo);
                     }
                     return true;
                 })
@@ -138,7 +138,7 @@ public class ArticleService {
                     tagPojo.setTitle(tagName);
                     if (tagService.selectByTitle(tagName) == null) {
                         // 不存在，添加
-                        tagService.insertSelective(tagPojo);
+                        tagService.insertTag(tagPojo);
                     }
                     return true;
                 })

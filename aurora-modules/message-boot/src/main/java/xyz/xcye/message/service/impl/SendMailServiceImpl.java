@@ -24,6 +24,7 @@ import xyz.xcye.message.enums.MailTemplateEnum;
 import xyz.xcye.message.mail.SendMailRealize;
 import xyz.xcye.message.po.EmailLog;
 import xyz.xcye.message.pojo.EmailLogPojo;
+import xyz.xcye.message.pojo.SendMailPojo;
 import xyz.xcye.message.service.EmailLogService;
 import xyz.xcye.message.service.EmailService;
 import xyz.xcye.message.service.SendMailService;
@@ -117,7 +118,10 @@ public class SendMailServiceImpl implements SendMailService {
     }
 
     @Override
-    public void sendSimpleMail(String to, String subject, String content) {
+    public void sendSimpleMail(SendMailPojo pojo) {
+        String content = pojo.getContent();
+        String subject = pojo.getSubject();
+        String to = pojo.getReceiverEmail();
         // 设置标志点
         boolean sendFlag = false;
         try {
@@ -137,8 +141,8 @@ public class SendMailServiceImpl implements SendMailService {
     }
 
     @Override
-    public void sendCustomMail(String receiverEmail, String subject, String content) throws MessagingException {
-        sendEmail(subject, content, receiverEmail);
+    public void sendCustomMail(SendMailPojo pojo) throws MessagingException {
+        sendEmail(pojo.getSubject(), pojo.getContent(), pojo.getReceiverEmail());
     }
 
     @Override
@@ -147,7 +151,11 @@ public class SendMailServiceImpl implements SendMailService {
         // 查询此emailLogUid对应的邮件信息
         EmailLogVO emailLogVO = emailLogService.queryByUid(emailLogUid);
         AssertUtils.stateThrow(emailLogVO != null, () -> new EmailException("没有发送过此邮件"));
-        sendCustomMail(emailLogVO.getReceiver(), emailLogVO.getSubject(), emailLogVO.getContent());
+        SendMailPojo sendMailPojo = new SendMailPojo();
+        sendMailPojo.setContent(emailLogVO.getContent());
+        sendMailPojo.setSubject(emailLogVO.getSubject());
+        sendMailPojo.setReceiverEmail(emailLogVO.getReceiver());
+        sendCustomMail(sendMailPojo);
     }
 
     /**
@@ -226,7 +234,7 @@ public class SendMailServiceImpl implements SendMailService {
     private void setReceiverEmail(StorageSendMailInfo storageSendMailInfo)
             throws EmailException {
         if (!StringUtils.hasLength(storageSendMailInfo.getReceiverEmail())) {
-            EmailVO emailVO = emailService.queryByUserUid(storageSendMailInfo.getUserUid());
+            EmailVO emailVO = emailService.queryEmailByUserUid(storageSendMailInfo.getUserUid());
             if (emailVO == null || !StringUtils.hasLength(emailVO.getEmail())) {
                 throw new EmailException(ResponseStatusCodeEnum.EXCEPTION_EMAIL_NOT_EXISTS);
             }

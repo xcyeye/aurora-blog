@@ -174,7 +174,7 @@ public class UserService {
     public int bindingEmail(String email) throws BindException, EmailException {
         AssertUtils.stateThrow(StringUtils.hasLength(email), () -> new EmailException(ResponseStatusCodeEnum.PARAM_IS_INVALID));
         // 远程调用aurora-message服务，判断此email的uid是否存在
-        R r = emailFeignService.queryByEmail(email);
+        R r = emailFeignService.queryByEmailNumber(email);
         EmailVO queriedEmailInfo = JSONUtils.parseObjFromResult(ConvertObjectUtils.jsonToString(r), "data", EmailVO.class);
 
         AssertUtils.ifNullThrow(queriedEmailInfo,

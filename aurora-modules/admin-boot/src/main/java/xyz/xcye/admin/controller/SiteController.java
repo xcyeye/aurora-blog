@@ -24,25 +24,25 @@ public class SiteController {
     @Autowired
     private SiteService siteService;
 
-    @DeleteMapping("/{uid}")
+    @PostMapping("/logicDeleteSite")
     @ModifyOperation
     @Operation(summary = "逻辑删除此uid对应的站点信息")
-    public int deleteByPrimaryKey(@PathVariable("uid") long uid) {
-        return siteService.deleteByPrimaryKey(uid);
+    public int logicDeleteSite(@RequestBody long uid) {
+        return siteService.logicDeleteSite(uid);
     }
 
-    @DeleteMapping("/physics/{uid}")
+    @PostMapping("/physicalDeleteSite")
     @Operation(summary = "物理删除站点信息")
     @ModifyOperation
-    public int physicsDeleteSiteInfo(@PathVariable("uid") long uid) {
-        return siteService.physicsDeleteSite(uid);
+    public int physicalDeleteSite(@RequestBody long uid) {
+        return siteService.physicalDeleteSite(uid);
     }
 
-    @PostMapping
+    @PostMapping("/insertSite")
     @ModifyOperation
     @Operation(summary = "插入站点信息")
-    public void insertSelective(@Validated({Insert.class, Default.class}) SitePojo record) {
-        siteService.insertSelective(record);
+    public void insertSite(@Validated({Insert.class, Default.class}) @RequestBody SitePojo record) {
+        siteService.insertSite(record);
     }
 
     /**
@@ -50,11 +50,11 @@ public class SiteController {
      * @param condition 查询参数，keyword->logo_title(不是模糊查询)
      * @return object by primary key
      */
-    @GetMapping
+    @PostMapping("/queryListSiteByCondition")
     @SelectOperation
     @Operation(summary = "根据条件查询站点信息")
-    public PageData<SiteVO> selectByCondition(Condition<Long> condition) {
-        return siteService.selectByCondition(condition);
+    public PageData<SiteVO> queryListSiteByCondition(@RequestBody Condition<Long> condition) {
+        return siteService.queryListSiteByCondition(condition);
     }
 
     /**
@@ -62,17 +62,17 @@ public class SiteController {
      * @param uid
      * @return
      */
-    @GetMapping("/{uid}")
+    @PostMapping("/querySiteByUid")
     @SelectOperation
     @Operation(summary = "根据uid查询站点信息")
-    public SiteVO selectByUid(@PathVariable("uid") long uid) {
-        return siteService.selectByUid(uid);
+    public SiteVO querySiteByUid(@RequestBody long uid) {
+        return siteService.querySiteByUid(uid);
     }
 
-    @PutMapping
+    @PostMapping("/updateSite")
     @ModifyOperation
     @Operation(summary = "根据uid修改站点信息")
-    public int updateByPrimaryKeySelective(SitePojo record) {
-        return siteService.updateByPrimaryKeySelective(record);
+    public int updateSite(@RequestBody SitePojo record) {
+        return siteService.updateSite(record);
     }
 }

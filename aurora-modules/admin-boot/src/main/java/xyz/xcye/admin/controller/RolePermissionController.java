@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import xyz.xcye.admin.dto.RolePermissionDTO;
 import xyz.xcye.admin.po.Role;
+import xyz.xcye.admin.po.RolePermissionRelationship;
+import xyz.xcye.admin.pojo.RolePermissionRelationshipPojo;
 import xyz.xcye.admin.service.PermissionRelationService;
 import xyz.xcye.core.annotaion.controller.ModifyOperation;
 import xyz.xcye.core.annotaion.controller.SelectOperation;
@@ -31,89 +33,89 @@ public class RolePermissionController {
 
     @SelectOperation
     @Operation(summary = "根据用户uid，加载该用户所拥有的角色权限关系")
-    @GetMapping("/userUid/{userUid}")
-    public List<RolePermissionDTO> loadPermissionByUserUid(@PathVariable("userUid") long userUid) {
+    @PostMapping("/loadPermissionByUserUid")
+    public List<RolePermissionDTO> loadPermissionByUserUid(@RequestBody long userUid) {
         return permissionRelationService.loadPermissionByUserUid(userUid);
     }
 
     @SelectOperation
-    @GetMapping("/rolePermission")
+    @PostMapping("/loadAllRolePermission")
     @Operation(summary = "加载所有的角色权限关系，只返回该角色存在权限部分，如果某个角色没有赋予权限，则不返回")
-    public List<RolePermissionDTO> loadAllRolePermission(Condition<Long> condition) {
+    public List<RolePermissionDTO> loadAllRolePermission(@RequestBody Condition<Long> condition) {
         return permissionRelationService.loadAllRolePermission(condition);
     }
 
     @SelectOperation
-    @GetMapping("/userRole/{username}")
+    @PostMapping("/loadAllRoleByUsername")
     @Operation(summary = "根据用户名，获取该用户所拥有的所有角色")
-    public List<Role> loadAllRoleByUsername(@PathVariable("username") String username) {
+    public List<Role> loadAllRoleByUsername(@RequestBody String username) {
         return permissionRelationService.loadAllRoleByUsername(username);
     }
 
     @SelectOperation
     @Operation(summary = "根据用户名，加载该用户所拥有的角色权限关系，此接口和loadPermissionByUserUid返回的数据一样")
-    @GetMapping("/username/{username}")
-    public List<RolePermissionDTO> loadPermissionByUsername(@PathVariable("username") String username) {
+    @PostMapping("/loadPermissionByUsername")
+    public List<RolePermissionDTO> loadPermissionByUsername(@RequestBody String username) {
         return permissionRelationService.loadPermissionByUsername(username);
     }
 
     @SelectOperation
-    @GetMapping("/roleName/{roleName}")
+    @PostMapping("/loadPermissionByRoleName")
     @Operation(summary = "根据角色名称，加载对应的角色-权限信息")
-    public List<RolePermissionDTO> loadPermissionByRoleName(@PathVariable("roleName") String roleName) {
+    public List<RolePermissionDTO> loadPermissionByRoleName(@RequestBody String roleName) {
         return permissionRelationService.loadPermissionByRoleName(roleName);
     }
 
     @SelectOperation
-    @GetMapping("/role/permissionPath")
+    @PostMapping("/queryRoleByPermissionPath")
     @Operation(summary = "根据permissionPath，查询哪些角色和角色可以可以访问")
-    public List<RolePermissionDTO> queryRoleByPermissionPath(@RequestParam("permissionPath") String permissionPath) {
+    public List<RolePermissionDTO> queryRoleByPermissionPath(@RequestBody String permissionPath) {
         return permissionRelationService.queryRoleByPermissionPath(permissionPath);
     }
 
     @ModifyOperation
     @Operation(summary = "批量为多个用户增加角色")
-    @PostMapping("/insertUserRoleBatch")
-    public R insertUserRoleBatch(long[] userUid, long roleUid) {
+    @PostMapping("/batchInsertUserRole")
+    public R batchInsertUserRole(@RequestBody RolePermissionRelationshipPojo pojo) {
         return R.success(ResponseStatusCodeEnum.SUCCESS.getCode(),
                 ResponseStatusCodeEnum.SUCCESS.getMessage(),
-                "为" + permissionRelationService.insertUserRoleBatch(userUid, roleUid) + "个用户增加了角色", true);
+                "为" + permissionRelationService.insertUserRoleBatch(pojo) + "个用户增加了角色", true);
     }
 
     @ModifyOperation
     @Operation(summary = "批量为多个角色增加权限")
-    @PostMapping("/insertRolePermissionBatch")
-    public R insertRolePermissionBatch(long[] roleUid, long permissionUid) {
+    @PostMapping("/batchInsertRolePermission")
+    public R batchInsertRolePermission(@RequestBody RolePermissionRelationshipPojo pojo) {
         return R.success(ResponseStatusCodeEnum.SUCCESS.getCode(),
                 ResponseStatusCodeEnum.SUCCESS.getMessage(),
-                "添加成功数" + permissionRelationService.insertRolePermissionBatch(roleUid, permissionUid), true);
+                "添加成功数" + permissionRelationService.insertRolePermissionBatch(pojo), true);
     }
 
     @ModifyOperation
     @Operation(summary = "为某个用户删除多个角色")
-    @DeleteMapping("/deleteUserRoleBatch")
-    public int deleteUserRoleBatch(long userUid, long[] roleUid) {
-        return permissionRelationService.deleteUserRoleBatch(userUid, roleUid);
+    @PostMapping("/batchDeleteUserRole")
+    public int batchDeleteUserRole(@RequestBody RolePermissionRelationshipPojo pojo) {
+        return permissionRelationService.deleteUserRoleBatch(pojo);
     }
 
     @ModifyOperation
     @Operation(summary = "修改某个用户的角色")
-    @PutMapping("/updateUserRole")
-    public int updateUserRole(long userUid, long originRoleUid, long newRoleUid) {
-        return permissionRelationService.updateUserRole(userUid, originRoleUid, newRoleUid);
+    @PostMapping("/updateUserRole")
+    public int updateUserRole(@RequestBody RolePermissionRelationshipPojo pojo) {
+        return permissionRelationService.updateUserRole(pojo);
     }
 
     @ModifyOperation
     @Operation(summary = "删除某个角色的多个权限")
-    @DeleteMapping("/deleteRolePermissionBatch")
-    public int deleteRolePermissionBatch(long roleUid, long[] permissionUid) {
-        return permissionRelationService.deleteRolePermissionBatch(roleUid, permissionUid);
+    @PostMapping("/batchDeleteRolePermission")
+    public int batchDeleteRolePermission(@RequestBody RolePermissionRelationshipPojo pojo) {
+        return permissionRelationService.deleteRolePermissionBatch(pojo);
     }
 
     @ModifyOperation
     @Operation(summary = "更新某个角色的权限")
-    @PutMapping("/updateRolePermission")
-    public int updateRolePermission(long roleUid, long originPermissionUid, long newPermissionUid) {
-        return permissionRelationService.updateRolePermission(roleUid, originPermissionUid, newPermissionUid);
+    @PostMapping("/updateRolePermission")
+    public int updateRolePermission(@RequestBody RolePermissionRelationshipPojo pojo) {
+        return permissionRelationService.updateRolePermission(pojo);
     }
 }

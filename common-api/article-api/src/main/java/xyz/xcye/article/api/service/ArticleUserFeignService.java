@@ -18,12 +18,6 @@ import xyz.xcye.message.po.Email;
 @FeignClient(value = "aurora-admin", name = "aurora-admin", contextId = "article-user-feign", fallback = ArticleUserFeignHandler.class)
 public interface ArticleUserFeignService {
 
-    @GetMapping("/admin/user/userUid/{uid}")
-    R queryUserByUid(@PathVariable("uid") long uid);
-
-    @PutMapping("/admin/user")
-    R updateUser(@SpringQueryMap User user) throws UserException;
-
-    @PutMapping("/admin/user/bindingEmail")
-    R bindingEmail(@SpringQueryMap Email email) throws BindException;
+    @GetMapping("/admin/user/queryUserByUid")
+    R queryUserByUid(@SpringQueryMap long uid);
 }

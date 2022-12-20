@@ -35,44 +35,44 @@ public class LinkController {
     private LinkService linkService;
 
     @Operation(summary = "根据uid删除对应的友情链接")
-    @PutMapping("/delete")
+    @PostMapping("/physicalDeleteLink")
     @ModifyOperation
-    public int deleteByPrimaryKey(Long uid, @RequestParam("msg") String replyMessage) throws BindException {
-        return linkService.deleteByPrimaryKey(uid, replyMessage);
+    public int physicalDeleteLink(@RequestBody LinkPojo link) throws BindException {
+        return linkService.physicalDeleteLink(link);
     }
 
     @ModifyOperation
     @Operation(summary = "插入新友情链接")
-    @PostMapping
-    public void insertSelective(@Validated({Insert.class, Default.class}) LinkPojo link) throws BindException {
-        linkService.insertSelective(link);
+    @PostMapping("/insertLink")
+    public void insertLink(@Validated({Insert.class, Default.class}) @RequestBody LinkPojo link) throws BindException {
+        linkService.insertLink(link);
     }
 
-    @GetMapping
+    @PostMapping("/queryListLinkByCondition")
     @Operation(summary = "根据条件查询")
     @SelectOperation
-    public PageData<LinkVO> selectByCondition(Condition<Long> condition) {
-        return linkService.selectByCondition(condition);
+    public PageData<LinkVO> queryListLinkByCondition(@RequestBody Condition<Long> condition) {
+        return linkService.queryListLinkByCondition(condition);
     }
 
     @Operation(summary = "根据uid查询")
     @SelectOperation
-    @GetMapping("/{uid}")
-    public LinkVO selectByUid(@PathVariable("uid") Long uid) {
-        return linkService.selectByUid(uid);
+    @PostMapping("/queryLinkByUid")
+    public LinkVO queryLinkByUid(@RequestBody Long uid) {
+        return linkService.queryLinkByUid(uid);
     }
 
-    @PutMapping
+    @PostMapping("/updateLink")
     @ModifyOperation
     @Operation(summary = "修改友情链接信息")
-    public int updateByPrimaryKeySelective(@Validated({Update.class, Default.class}) LinkPojo link) throws BindException {
-        return linkService.updateByPrimaryKeySelective(link);
+    public int updateLink(@Validated({Update.class, Default.class}) @RequestBody LinkPojo link) throws BindException {
+        return linkService.updateLink(link);
     }
 
-    @PutMapping("/publish")
+    @PostMapping("/updateLinkPublishStatus")
     @ModifyOperation
     @Operation(summary = "修改友情链接的发布状态")
-    public int updateLinkPublishStatus(long uid, boolean publish, @RequestParam("msg") String replyMessage) throws BindException {
-        return linkService.updateLinkPublishStatus(uid, publish, replyMessage);
+    public int updateLinkPublishStatus(@RequestBody LinkPojo link) throws BindException {
+        return linkService.updateLinkPublishStatus(link);
     }
 }

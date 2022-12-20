@@ -14,7 +14,7 @@ import xyz.xcye.mail.api.feign.FileFeignService;
 public class FileFeignHandler implements FileFeignService {
 
     @Override
-    public R queryAllFile(Condition<Long> condition) {
+    public R queryListFileByCondition(Condition<Long> condition) {
         return R.failure();
     }
 }

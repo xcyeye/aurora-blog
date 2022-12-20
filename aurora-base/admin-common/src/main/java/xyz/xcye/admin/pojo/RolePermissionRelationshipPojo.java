@@ -30,12 +30,19 @@ public class RolePermissionRelationshipPojo {
      * 角色的uid
      */
     @NotNull(groups = {Insert.class})
-    private Long roleUid;
+    private Long[] roleUidArr;
 
+    @NotNull(groups = {Insert.class})
+    private Long[] userUidArr;
     /**
      *
      */
     @NotNull(groups = {Insert.class})
-    private Long permissionUid;
+    private Long[] permissionUidArr;
+
+    private Long[] originRoleUidArr;
+    private Long[] newRoleUidArr;
+    private Long[] originPermissionUidArr;
+    private Long[] newPermissionUidArr;
 
 }

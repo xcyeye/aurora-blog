@@ -32,13 +32,10 @@ public class EmailService {
     @Autowired
     private AuroraProperties auroraProperties;
 
-    @Autowired
-    private UserFeignService userFeignService;
-
     public void insertEmail(EmailPojo pojo)
             throws BindException, AuroraException {
         // 判断邮箱是否已经存在
-        if (queryByEmail(pojo.getEmail()) != null) {
+        if (queryByEmailNumber(pojo.getEmail()) != null) {
             throw new EmailException(ResponseStatusCodeEnum.EXCEPTION_EMAIL_EXISTS);
         }
         Email email = BeanUtils.copyProperties(pojo, Email.class);
@@ -62,7 +59,7 @@ public class EmailService {
         auroraEmailService.insert(email);
     }
 
-    public int deleteEmailByUid(long uid) {
+    public int physicalDeleteEmail(long uid) {
         return auroraEmailService.deleteById(uid);
     }
 
@@ -71,23 +68,23 @@ public class EmailService {
         return auroraEmailService.updateById(BeanUtils.copyProperties(email, Email.class));
     }
 
-    public PageData<EmailVO> queryAllEmail(Condition<Long> condition) {
+    public PageData<EmailVO> queryListEmailByCondition(Condition<Long> condition) {
         return PageUtils.copyPageDataResult(auroraEmailService.queryListByCondition(condition), EmailVO.class);
     }
 
-    public EmailVO queryByUid(long uid) {
+    public EmailVO queryEmailByUid(long uid) {
         Condition<Long> condition = new Condition<>();
         condition.setUid(uid);
         return BeanUtils.copyProperties(auroraEmailService.queryById(uid),EmailVO.class);
     }
 
-    public EmailVO queryByUserUid(long userUid) {
+    public EmailVO queryEmailByUserUid(long userUid) {
         Email email = new Email();
         email.setUserUid(userUid);
         return BeanUtils.copyProperties(auroraEmailService.queryOne(email), EmailVO.class);
     }
 
-    public EmailVO queryByEmail(String emailStr) {
+    public EmailVO queryByEmailNumber(String emailStr) {
         Email email = new Email();
         email.setEmail(emailStr);
         return BeanUtils.copyProperties(auroraEmailService.queryOne(email), EmailVO.class);

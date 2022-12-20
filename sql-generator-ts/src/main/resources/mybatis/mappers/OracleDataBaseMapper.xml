@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.github.zhuyizhuo.generator.mybatis.database.mapper.OracleDataBaseMapper">
+
+    <resultMap id="baseResultMap" type="dbTableInfo">
+        <id column="OWNER" property="tableSchema"/>
+        <result column="TABLE_NAME" property="tableName"/>
+        <result column="tableComment" property="tableComment"/>
+        <collection property="columnLists" column="COLUMN_NAME"
+                    ofType="com.github.zhuyizhuo.generator.mybatis.database.pojo.ColumnInfo"
+                    resultMap="columnResultMap"/>
+    </resultMap>
+
+    <resultMap id="columnResultMap" type="columnInfo">
+        <id column="COLUMN_NAME" property="columnName"/>
+        <result column="DATA_TYPE" property="dataType"/>
+        <result column="columnComment" property="columnComment"/>
+    </resultMap>
+
+    <select id="getTableNameListBySchema" resultType="dbTableInfo" parameterType="dataBaseInfo">
+        SELECT OWNER as tableSchema,TABLE_NAME as tableName FROM ALL_TABLES
+        <where>
+            <if test="tableSchema != null and '' != tableSchema">
+                AND OWNER  = #{tableSchema}
+            </if>
+            <if test="tableNames != null">
+                AND TABLE_NAME IN
+                <foreach collection="tableNames" index="index" item="tableName" open="(" separator="," close=")">
+                    #{tableName}
+                </foreach>
+            </if>
+        </where>
+    </select>
+
+    <select id="getAllColumnsByTable" resultMap="baseResultMap" parameterType="string">
+        SELECT A.OWNER,
+        A.TABLE_NAME,
+        T.COMMENTS as tableComment,
+        U.COLUMN_NAME,
+        U.COMMENTS as columnComment,
+        C.DATA_TYPE,
+        C.NULLABLE,
+        C.DATA_SCALE,
+        C.DATA_LENGTH
+        FROM ALL_TABLES        A,
+        USER_COL_COMMENTS U,
+        USER_TAB_COLUMNS  C,
+        USER_TAB_COMMENTS T
+        WHERE A.TABLE_NAME = U.TABLE_NAME
+        AND U.TABLE_NAME = C.TABLE_NAME
+        AND U.COLUMN_NAME = C.COLUMN_NAME
+        AND A.TABLE_NAME = T.TABLE_NAME
+        <if test="tableSchema != null and '' != tableSchema">
+            AND A.OWNER  = #{tableSchema}
+        </if>
+        <if test="tableName != null and '' != tableName">
+            AND U.TABLE_NAME = #{tableName}
+        </if>
+        ORDER BY C.COLUMN_ID
+    </select>
+
+    <select id="getPrimaryKeys" resultType="columnInfo" parameterType="dbTableInfo">
+        SELECT c.column_name as columnName
+          FROM all_cons_columns c, all_constraints k
+         WHERE k.constraint_type = 'P'
+            AND k.constraint_name = c.constraint_name
+            AND k.table_name = c.table_name
+            AND k.owner = c.owner
+        <if test="tableSchema != null and '' != tableSchema">
+            AND k.owner = #{tableSchema}
+        </if>
+        <if test="tableName != null and '' != tableName">
+            AND k.table_name = #{tableName}
+        </if>
+         ORDER BY c.position
+    </select>
+
+</mapper>

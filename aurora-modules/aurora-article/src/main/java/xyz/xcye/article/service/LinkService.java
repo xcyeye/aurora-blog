@@ -59,10 +59,12 @@ public class LinkService {
     @Autowired
     private SendMQMessageService sendMQMessageService;
 
-    public int deleteByPrimaryKey(Long uid, String replyMessage) throws BindException {
+    public int physicalDeleteLink(LinkPojo linkPojo) throws BindException {
+        Long uid = linkPojo.getUid();
+        String replyMessage = linkPojo.getReplyMessage();
         Assert.notNull(uid, "uid不能为null");
         // 如果删除成功，通知对方
-        LinkVO linkVO = selectByUid(uid);
+        LinkVO linkVO = queryLinkByUid(uid);
         int deleteNum = auroraLinkService.deleteById(uid);
         R r = userFeignService.queryUserByUid(linkVO.getUserUid());
         UserVO userVO = JSONUtils.parseObjFromResult(r, "data", UserVO.class);
@@ -76,7 +78,7 @@ public class LinkService {
     }
 
     @GlobalTransactional
-    public void insertSelective(LinkPojo pojo) throws BindException {
+    public void insertLink(LinkPojo pojo) throws BindException {
         Assert.notNull(pojo, "友情链接信息不能为null");
         Assert.notNull(pojo.getUserUid(), "用户uid不能为null");
         Link record = BeanUtils.copyProperties(pojo, Link.class);
@@ -90,7 +92,7 @@ public class LinkService {
         record.setUid(GenerateInfoUtils.generateUid(auroraProperties.getSnowFlakeWorkerId(), auroraProperties.getSnowFlakeDatacenterId()));
 
         // 查看是否存在相似的链接
-        List<LinkVO> result = selectByCondition(Condition.instant(record.getLinkUrl())).getResult();
+        List<LinkVO> result = queryListLinkByCondition(Condition.instant(record.getLinkUrl())).getResult();
         AssertUtils.stateThrow(result.isEmpty(), () -> new LinkException("已存在相同友情链接，不能重复提交"));
 
         // 审核应该通过用户进行控制
@@ -110,18 +112,18 @@ public class LinkService {
         }
     }
 
-    public PageData<LinkVO> selectByCondition(Condition<Long> condition) {
+    public PageData<LinkVO> queryListLinkByCondition(Condition<Long> condition) {
         Assert.notNull(condition, "查询条件不能为null");
         return PageUtils.copyPageDataResult(auroraLinkService.queryListByCondition(condition), LinkVO.class);
     }
 
-    public LinkVO selectByUid(Long uid) {
+    public LinkVO queryLinkByUid(Long uid) {
         Assert.notNull(uid, "uid不能为null");
         return BeanUtils.copyProperties(auroraLinkService.queryById(uid), LinkVO.class);
     }
 
     @GlobalTransactional
-    public int updateByPrimaryKeySelective(LinkPojo pojo) {
+    public int updateLink(LinkPojo pojo) {
         Assert.notNull(pojo, "友情链接信息不能为null");
         Link record = BeanUtils.copyProperties(pojo, Link.class);
         // setCategory(record);
@@ -129,15 +131,18 @@ public class LinkService {
         return auroraLinkService.updateById(record);
     }
 
-    public int updateLinkPublishStatus(long uid, boolean publish, String msg) throws BindException {
-        LinkVO linkVO = selectByUid(uid);
+    public int updateLinkPublishStatus(LinkPojo link) throws BindException {
+        Long uid = link.getUid();
+        Boolean publish = link.getPublish();
+        String msg = link.getReplyMessage();
+        LinkVO linkVO = queryLinkByUid(uid);
         AssertUtils.stateThrow(linkVO != null, () -> new LinkException("没有该条记录"));
         AssertUtils.stateThrow(linkVO.getPublish() != publish, () -> new LinkException("该条友情链接的发布状态并未改变"));
         // 修改
         LinkPojo linkPojo = new LinkPojo();
         linkPojo.setUid(uid);
         linkPojo.setPublish(publish);
-        int updateNum = updateByPrimaryKeySelective(linkPojo);
+        int updateNum = updateLink(linkPojo);
         // 如果修改成功，发送消息通知对方
         linkVO.setPublish(publish);
         R r = userFeignService.queryUserByUid(linkVO.getUserUid());
@@ -175,7 +180,7 @@ public class LinkService {
             CategoryPojo category = new CategoryPojo();
             category.setTitle(categoryName);
             try {
-                categoryService.insertSelective(category);
+                categoryService.insertCategory(category);
             } catch (Exception e) {
                 link.setCategoryName(null);
             }

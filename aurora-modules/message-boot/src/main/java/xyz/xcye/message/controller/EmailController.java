@@ -42,51 +42,51 @@ public class EmailController {
 
     @Operation(summary = "向数据库中插入新的邮箱记录，比如主机，授权码等")
     @ModifyOperation
-    @PostMapping("")
-    public void insertEmail(@Validated({Insert.class,Default.class}) EmailPojo email)
+    @PostMapping("/insertEmail")
+    public void insertEmail(@Validated({Insert.class,Default.class}) @RequestBody EmailPojo email)
             throws BindException, AuroraException {
         emailService.insertEmail(email);
     }
 
     @Operation(summary = "根据唯一uid删除某条邮箱", description = "uid为long型")
     @ModifyOperation
-    @DeleteMapping("/{uid}")
-    public int deleteEmailByUid(@PathVariable(value = "uid") long uid) {
-        return emailService.deleteEmailByUid(uid);
+    @PostMapping("/physicalDeleteEmail")
+    public int physicalDeleteEmail(@RequestBody long uid) {
+        return emailService.physicalDeleteEmail(uid);
     }
 
     @Operation(summary = "根据emailDO实体，更新邮箱记录", description = "必须传入uid以及delete字段")
     @ModifyOperation
-    @PutMapping("")
-    public int updateEmailByUid(@Validated({Update.class, Default.class}) EmailPojo email) {
+    @PostMapping("/updateEmail")
+    public int updateEmail(@Validated({Update.class, Default.class}) @RequestBody EmailPojo email) {
         return emailService.updateEmail(email);
     }
 
     @Operation(summary = "根据EmailDO实体中的字段以及分页参数查询所有数据，返回一个集合",description = "部分字段使用了模糊查询")
     @SelectOperation
-    @GetMapping("")
-    public PageData<EmailVO> queryAll(Condition<Long> condition) {
-        return emailService.queryAllEmail(condition);
+    @PostMapping("/queryListEmailByCondition")
+    public PageData<EmailVO> queryListEmailByCondition(@RequestBody Condition<Long> condition) {
+        return emailService.queryListEmailByCondition(condition);
     }
 
     @Operation(summary = "根据uid查询")
     @SelectOperation
-    @GetMapping("/{uid}")
-    public EmailVO queryByUid(@PathVariable("uid") long uid) {
-        return emailService.queryByUid(uid);
+    @PostMapping("/queryEmailByUid")
+    public EmailVO queryEmailByUid(@RequestBody long uid) {
+        return emailService.queryEmailByUid(uid);
     }
 
     @Operation(summary = "根据userUid进行查询")
     @SelectOperation
-    @GetMapping("/userUid/{userUid}")
-    public EmailVO queryByUserUid(@PathVariable("userUid") long userUid) {
-        return emailService.queryByUserUid(userUid);
+    @PostMapping("/queryEmailByUserUid")
+    public EmailVO queryEmailByUserUid(@RequestBody long userUid) {
+        return emailService.queryEmailByUserUid(userUid);
     }
 
     @Operation(summary = "根据邮箱号进行查询")
     @SelectOperation
-    @GetMapping("/email/{email}")
-    public EmailVO queryByEmail(@PathVariable("email") String email) {
-        return emailService.queryByEmail(email);
+    @PostMapping("/queryByEmailNumber")
+    public EmailVO queryByEmailNumber(@RequestBody String email) {
+        return emailService.queryByEmailNumber(email);
     }
 }

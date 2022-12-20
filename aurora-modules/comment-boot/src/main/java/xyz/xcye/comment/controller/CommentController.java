@@ -38,15 +38,15 @@ public class CommentController {
 
     @Operation(summary = "更新评论")
     @ModifyOperation
-    @PutMapping("")
-    public void updateComment(@Validated({Update.class}) CommentPojo comment) {
+    @PostMapping("/updateComment")
+    public void updateComment(@Validated({Update.class}) @RequestBody CommentPojo comment) {
         commentService.updateComment(comment);
     }
 
     @Operation(summary = "插入新评论")
     @ModifyOperation
-    @PostMapping("")
-    public void insertComment(@Validated({Default.class, Insert.class}) CommentPojo comment,
+    @PostMapping("/insertComment")
+    public void insertComment(@Validated({Default.class, Insert.class}) @RequestBody CommentPojo comment,
                              HttpServletRequest request) throws Throwable {
         comment.setCommentIp(NetWorkUtils.getIpAddr(request));
         comment.setOperationSystemInfo(NetWorkUtils.getOperationInfo(request));
@@ -55,9 +55,9 @@ public class CommentController {
 
     @Operation(summary = "删除单条评论")
     @ModifyOperation
-    @DeleteMapping("/{uid}")
-    public int deleteComment(@PathVariable("uid") Long uid) {
-        return commentService.deleteComment(uid);
+    @PostMapping("/physicalDeleteComment")
+    public int physicalDeleteComment(@RequestBody Long uid) {
+        return commentService.physicalDeleteComment(uid);
     }
 
     /**
@@ -67,29 +67,29 @@ public class CommentController {
      */
     @Operation(summary = "查询所有满足要求的所有评论")
     @SelectOperation
-    @GetMapping("/queryArticleComments")
-    public ShowCommentVO queryAllComment(@RequestParam(value = "uidArr") long[] commentUidArr) {
-        return commentService.queryArticleComments(commentUidArr);
+    @PostMapping("/queryListCommentByUidArr")
+    public ShowCommentVO queryListCommentByUidArr(@RequestBody long[] commentUidArr) {
+        return commentService.queryListCommentByUidArr(commentUidArr);
     }
 
     @Operation(summary = "根据自定义条件查询所有评论")
     @SelectOperation
-    @GetMapping
-    public PageData<CommentVO> queryAllCommentByCondition(Condition<Long> condition) {
-        return commentService.queryAllComments(condition);
+    @PostMapping("/queryListCommentByCondition")
+    public PageData<CommentVO> queryListCommentByCondition(@RequestBody Condition<Long> condition) {
+        return commentService.queryListCommentByCondition(condition);
     }
 
     @Operation(summary = "根据uid查询评论")
     @SelectOperation
-    @GetMapping("/{uid}")
-    public CommentDTO queryCommentByUid(@PathVariable("uid") long uid) {
-        return commentService.queryByUid(uid);
+    @PostMapping("/queryCommentByUid")
+    public CommentDTO queryCommentByUid(@RequestBody long uid) {
+        return commentService.queryCommentByUid(uid);
     }
 
     @Operation(summary = "重新发送评论的邮件通知")
     @ModifyOperation
-    @PostMapping("/resendEmail/{uid}")
-    public int resendEmailNotice(@PathVariable("uid") long uid) throws BindException {
+    @PostMapping("/resendEmail")
+    public int resendEmailNotice(@RequestBody long uid) throws BindException {
         return commentService.resendEmailNotice(uid);
     }
 }

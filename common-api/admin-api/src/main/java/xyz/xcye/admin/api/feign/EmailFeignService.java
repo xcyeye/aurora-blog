@@ -17,18 +17,6 @@ import xyz.xcye.message.po.Email;
 @FeignClient(value = "aurora-message", contextId = "admin-aurora-email", fallback = EmailFeignHandler.class)
 public interface EmailFeignService {
     
-    @DeleteMapping("/message/email/{uid}")
-    R deleteEmailByUid(@PathVariable(value = "uid") long uid);
-    
-    @PutMapping("/message/email")
-    R updateEmailByUid(@SpringQueryMap Email email);
-    
-    @GetMapping("/message/email/{uid}")
-    R queryByUid(@PathVariable("uid") long uid);
-    
-    @GetMapping("/message/email/userUid/{userUid}")
-    R queryByUserUid(@PathVariable("userUid") long userUid);
-    
-    @GetMapping("/message/email/email/{email}")
-    R queryByEmail(@PathVariable("email") String email);
+    @GetMapping("/message/email/queryByEmailNumber")
+    R queryByEmailNumber(@SpringQueryMap String email);
 }

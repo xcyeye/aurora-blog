@@ -33,44 +33,44 @@ public class TagController {
     private TagService tagService;
 
     @Operation(summary = "插入新标签")
-    @PostMapping
+    @PostMapping("/insertTag")
     @ModifyOperation
-    public void insertTag(@Validated({Insert.class, Default.class}) TagPojo tag) {
-        tagService.insertSelective(tag);
+    public void insertTag(@Validated({Insert.class, Default.class}) @RequestBody TagPojo tag) {
+        tagService.insertTag(tag);
     }
 
     @Operation(summary = "逻辑删除标签信息")
     @ModifyOperation
-    @DeleteMapping("/{uid}")
-    public int deleteTagByUid(@PathVariable("uid") long uid) {
-        return tagService.deleteByPrimaryKey(uid);
+    @PostMapping("/logicDeleteTag")
+    public int logicDeleteTag(@RequestBody long uid) {
+        return tagService.logicDeleteTag(uid);
     }
 
     @Operation(summary = "物理删除标签数据")
     @ModifyOperation
-    @DeleteMapping("/physics/{uid}")
-    public int physicsDeleteTag(@PathVariable("uid") long uid) {
-        return tagService.physicsDeleteByUid(uid);
+    @PostMapping("/physicalDeleteTag")
+    public int physicalDeleteTag(@RequestBody long uid) {
+        return tagService.physicalDeleteTag(uid);
     }
 
     @Operation(summary = "根据条件查询标签")
     @SelectOperation
-    @GetMapping
-    public PageData<TagVO> selectAllTag(Condition<Long> condition) {
-        return tagService.selectByCondition(condition);
+    @PostMapping("/queryListTagByCondition")
+    public PageData<TagVO> queryListTagByCondition(@RequestBody Condition<Long> condition) {
+        return tagService.queryListTagByCondition(condition);
     }
 
     @Operation(summary = "根据uid查询标签")
     @SelectOperation
-    @GetMapping("/{uid}")
-    public TagVO selectTagByUid(@PathVariable("uid") long uid) {
-        return tagService.selectByUid(uid);
+    @PostMapping("/queryTagByUid")
+    public TagVO queryTagByUid(@RequestBody long uid) {
+        return tagService.queryTagByUid(uid);
     }
 
     @Operation(summary = "修改标签信息")
     @ModifyOperation
-    @PutMapping
-    public int updateTagByUid(@Validated({Update.class, Default.class}) TagPojo tag) {
-        return tagService.updateByPrimaryKeySelective(tag);
+    @PostMapping("/updateTag")
+    public int updateTag(@Validated({Update.class, Default.class}) @RequestBody TagPojo tag) {
+        return tagService.updateTag(tag);
     }
 }

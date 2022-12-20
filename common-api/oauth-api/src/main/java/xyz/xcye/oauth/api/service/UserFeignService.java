@@ -20,18 +20,6 @@ import xyz.xcye.oauth.api.service.handler.UserFeignHandler;
         contextId = "authUserFeignServer", fallback = UserFeignHandler.class)
 public interface UserFeignService {
 
-    @GetMapping("/admin/user/userUid/{uid}")
-    R queryUserByUid(@PathVariable("uid") long uid);
-
-    @GetMapping("/admin/user")
-    R insertUser(@SpringQueryMap Condition<Long> condition);
-
-    @PutMapping("/admin/user")
-    R updateUser(@SpringQueryMap User user);
-
-    @GetMapping("/admin/user/username/{username}")
-    R queryUserByUsername(@PathVariable("username") String username);
-
-    @PostMapping("/admin/user/pwd/{username}")
-    R queryUserByUsernameContainPassword(@PathVariable("username") String username);
+    @PostMapping("/admin/user/queryUserByUsernameContainPassword")
+    R queryUserByUsernameContainPassword(@SpringQueryMap String username);
 }

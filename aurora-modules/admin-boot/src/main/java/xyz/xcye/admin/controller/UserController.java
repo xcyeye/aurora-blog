@@ -33,14 +33,14 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @PostMapping("")
+    @PostMapping("/insertUser")
     @ModifyOperation
     @Operation(summary = "添加新用户")
     public void insertUser(@Validated({Insert.class, Default.class}) UserPojo user) throws UserException {
         userService.insertUserSelective(user);
     }
 
-    @PutMapping("")
+    @PostMapping("/updateUser")
     @ModifyOperation
     @Operation(summary = "修改用户信息")
     public void updateUser(@Validated({Update.class, Default.class})UserPojo user) throws UserException {
@@ -48,57 +48,57 @@ public class UserController {
     }
 
     @Operation(summary = "更新密码")
-    @PutMapping("/pwd")
+    @PostMapping("/updatePassword")
     @ModifyOperation
     public void updatePassword(String username, String originPwd, String newPwd) {
         userService.updatePassword(username, originPwd, newPwd);
     }
 
-    @DeleteMapping("/{uid}")
+    @PostMapping("/logicDeleteUser")
     @ModifyOperation
     @Operation(summary = "逻辑删除用户信息")
-    public void logicDeleteUserByUid(@PathVariable("uid") long uid) {
+    public void logicDeleteUser(@RequestBody long uid) {
         userService.logicDeleteByUid(uid);
     }
 
-    @DeleteMapping("/delete/{uid}")
+    @PostMapping("/physicalDeleteUser")
     @ModifyOperation
     @Operation(summary = "真正的从数据库中删除用户信息")
-    public void realDeleteUserByUid(@PathVariable("uid") long uid) {
+    public void physicalDeleteUser(@RequestBody long uid) {
         userService.realDeleteByUid(uid);
     }
 
-    @GetMapping("/userUid/{uid}")
+    @PostMapping("/queryUserByUid")
     @SelectOperation
     @Operation(summary = "通过uid查询用户信息")
-    public UserVO queryUserByUid(@PathVariable("uid") long uid) {
+    public UserVO queryUserByUid(@RequestBody long uid) {
         return userService.queryUserByUid(uid);
     }
 
-    @GetMapping("/username/{username}")
+    @PostMapping("/queryUserByUsername")
     @SelectOperation
     @Operation(summary = "通过username查询用户信息")
-    public UserVO queryUserByUsername(@PathVariable("username") String username) {
+    public UserVO queryUserByUsername(@RequestBody String username) {
         return userService.queryUserByUsername(username);
     }
 
-    @PostMapping("/pwd/{username}")
+    @PostMapping("/queryUserByUsernameContainPassword")
     @SelectOperation
     @Operation(summary = "通过username查询用户信息")
-    public User queryUserByUsernameContainPassword(@PathVariable("username") String username) {
+    public User queryUserByUsernameContainPassword(@RequestBody String username) {
         return userService.queryByUsernameContainPassword(username);
     }
 
-    @GetMapping("")
+    @PostMapping("/queryListUserByCondition")
     @SelectOperation
     @Operation(summary = "查询所有满足要求的用户信息")
-    public PageData<UserVO> insertUser(Condition<Long> condition) {
+    public PageData<UserVO> queryListUserByCondition(Condition<Long> condition) {
         return userService.queryAllByCondition(condition);
     }
 
     @Operation(summary = "绑定邮箱")
     @ModifyOperation
-    @PutMapping("/bindingEmail/{email}")
+    @PostMapping("/bindingEmail/{email}")
     public int bindingEmail(@PathVariable("email") String email) throws BindException, EmailException {
         return userService.bindingEmail(email);
     }

@@ -15,26 +15,6 @@ import xyz.xcye.oauth.api.service.UserFeignService;
 public class UserFeignHandler implements UserFeignService {
 
     @Override
-    public R queryUserByUid(long uid) {
-        return R.failure();
-    }
-
-    @Override
-    public R insertUser(Condition<Long> condition) {
-        return R.failure();
-    }
-
-    @Override
-    public R updateUser(User user) {
-        return R.failure();
-    }
-
-    @Override
-    public R queryUserByUsername(String username) {
-        return R.failure();
-    }
-
-    @Override
     public R queryUserByUsernameContainPassword(String username) {
         return R.failure();
     }

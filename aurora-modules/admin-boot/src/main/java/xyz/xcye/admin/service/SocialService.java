@@ -31,7 +31,7 @@ public class SocialService {
     @Autowired
     private UserService userService;
 
-    public int deleteByPrimaryKey(long uid) {
+    public int loginDeleteSocial(long uid) {
         Social social = Social.builder()
                 .uid(uid)
                 .delete(true)
@@ -39,11 +39,11 @@ public class SocialService {
         return auroraSocialService.updateById(social);
     }
 
-    public int physicsDeleteSocial(long uid) {
+    public int physicalDeleteSocial(long uid) {
         return auroraSocialService.deleteById(uid);
     }
 
-    public void insertSelective(SocialPojo record) {
+    public void insertSocial(SocialPojo record) {
         Assert.notNull(record, "社交信息不能为null");
         // uid是自增的
         record.setUserUid(UserUtils.getCurrentUserUid());
@@ -51,16 +51,16 @@ public class SocialService {
        auroraSocialService.insert(BeanUtils.copyProperties(record, Social.class));
     }
 
-    public PageData<SocialVO> selectByCondition(Condition<Long> condition) {
+    public PageData<SocialVO> queryListSocialByCondition(Condition<Long> condition) {
         Assert.notNull(condition, "查询条件不能为null");
         return PageUtils.copyPageDataResult(auroraSocialService.queryListByCondition(condition), SocialVO.class);
     }
 
-    public SocialVO selectByUid(long uid) {
+    public SocialVO querySocialByUid(long uid) {
         return BeanUtils.copyProperties(auroraSocialService.queryById(uid), SocialVO.class);
     }
 
-    public int updateByPrimaryKeySelective(SocialPojo record) {
+    public int updateSocial(SocialPojo record) {
         Assert.notNull(record, "社交信息不能为null");
         // 如果userUid存在的话，判断此用户是否存在
         Optional.ofNullable(record.getUserUid()).ifPresent(userUid -> {

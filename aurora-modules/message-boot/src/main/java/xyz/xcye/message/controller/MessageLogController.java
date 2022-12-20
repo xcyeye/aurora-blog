@@ -37,7 +37,7 @@ public class MessageLogController {
 
     @Operation(summary = "插入新消费消息")
     @ModifyOperation
-    @PostMapping("")
+    @PostMapping("/insertMessageLog")
     public void insertMessageLog(@Validated({Insert.class,Default.class}) @RequestBody MessageLogPojo messageLog)
             throws BindException {
         messageLogService.insertMessageLog(messageLog);
@@ -45,36 +45,36 @@ public class MessageLogController {
 
     @Operation(summary = "更新消费消息")
     @ModifyOperation
-    @PutMapping("")
+    @PostMapping("/updateMessageLog")
     public int updateMessageLog(@Validated(Update.class) @RequestBody MessageLogPojo messageLog) throws BindException {
         return messageLogService.updateMessageLog(messageLog);
     }
 
     @Operation(summary = "删除消费消息")
     @ModifyOperation
-    @DeleteMapping("/{uid}")
-    public int deleteMessageLog(@PathVariable("uid") long uid) {
-        return messageLogService.deleteMessageLog(uid);
+    @PostMapping("/physicalDeleteMessageLog")
+    public int physicalDeleteMessageLog(@RequestBody long uid) {
+        return messageLogService.physicalDeleteMessageLog(uid);
     }
 
     @Operation(summary = "查询所有消费消息")
     @SelectOperation
-    @GetMapping("")
-    public PageData<MessageLogVO> queryAllMessageLog(Condition<Long> condition) {
-        return messageLogService.queryAllMessageLog(condition);
+    @PostMapping("/queryListMessageLogByCondition")
+    public PageData<MessageLogVO> queryListMessageLogByCondition(@RequestBody Condition<Long> condition) {
+        return messageLogService.queryListMessageLogByCondition(condition);
     }
 
     @Operation(summary = "根据uid查询消费消息")
     @SelectOperation
-    @GetMapping("/{uid}")
-    public MessageLogVO queryMessageLogByUid(@PathVariable("uid") long uid) {
-        return messageLogService.queryByUid(uid);
+    @PostMapping("/queryMessageLogByUid")
+    public MessageLogVO queryMessageLogByUid(@RequestBody long uid) {
+        return messageLogService.queryMessageLogByUid(uid);
     }
 
     @Operation(summary = "重新投递此messageLogUid对应的mq消息")
     @SelectOperation
-    @PostMapping("/resend/{uid}")
-    public void resendRabbitMqMessage(@PathVariable("uid") long messageLogUid) throws BindException {
+    @PostMapping("/resendRabbitMqMessage")
+    public void resendRabbitMqMessage(@RequestBody long messageLogUid) throws BindException {
         messageLogService.resendMqMessage(messageLogUid);
     }
 }

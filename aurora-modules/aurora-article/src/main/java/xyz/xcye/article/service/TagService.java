@@ -29,7 +29,7 @@ public class TagService {
     @Autowired
     private AuroraTagService auroraTagService;
 
-    public int deleteByPrimaryKey(Long uid) {
+    public int logicDeleteTag(Long uid) {
         Assert.notNull(uid, "uid不能为null");
         Tag tag = Tag.builder()
                 .uid(uid)
@@ -38,12 +38,12 @@ public class TagService {
         return auroraTagService.updateById(tag);
     }
 
-    public int physicsDeleteByUid(Long uid) {
+    public int physicalDeleteTag(Long uid) {
         Assert.notNull(uid, "uid不能为null");
         return auroraTagService.deleteById(uid);
     }
 
-    public void insertSelective(TagPojo pojo) {
+    public void insertTag(TagPojo pojo) {
         Assert.notNull(pojo, "标签信息不能为null");
         Tag record = BeanUtils.copyProperties(pojo, Tag.class);
         JwtUserInfo jwtUserInfo = UserUtils.getCurrentUser();
@@ -53,12 +53,12 @@ public class TagService {
         auroraTagService.insert(record);
     }
 
-    public PageData<TagVO> selectByCondition(Condition<Long> condition) {
+    public PageData<TagVO> queryListTagByCondition(Condition<Long> condition) {
         Assert.notNull(condition, "查询条件不能为null");
         return PageUtils.copyPageDataResult(auroraTagService.queryListByCondition(condition), TagVO.class);
     }
 
-    public TagVO selectByUid(Long uid) {
+    public TagVO queryTagByUid(Long uid) {
         Assert.notNull(uid, "uid不能为null");
         return BeanUtils.copyProperties(auroraTagService.queryById(uid), TagVO.class);
     }
@@ -70,7 +70,7 @@ public class TagService {
         return BeanUtils.copyProperties(auroraTagService.queryOne(tag), TagVO.class);
     }
 
-    public int updateByPrimaryKeySelective(TagPojo record) {
+    public int updateTag(TagPojo record) {
         Assert.notNull(record, "标签信息不能为null");
         record.setUserUid(null);
         return auroraTagService.updateById(BeanUtils.copyProperties(record, Tag.class));

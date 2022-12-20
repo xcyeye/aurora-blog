@@ -35,7 +35,7 @@ public class SiteService {
     @Autowired
     private UserService userService;
 
-    public int deleteByPrimaryKey(long uid) {
+    public int logicDeleteSite(long uid) {
         Site site = Site.builder()
                 .uid(uid)
                 .delete(true)
@@ -43,11 +43,11 @@ public class SiteService {
         return auroraSiteService.updateById(site);
     }
 
-    public int physicsDeleteSite(long uid) {
+    public int physicalDeleteSite(long uid) {
         return auroraSiteService.deleteById(uid);
     }
 
-    public void insertSelective(SitePojo record) {
+    public void insertSite(SitePojo record) {
         Assert.notNull(record, "站点信息不能为null");
         // 因为插入导航，一定要登录才能操作，所以userUid可以直接从认证对象中获取
         Long userUid = UserUtils.getCurrentUserUid();
@@ -59,16 +59,16 @@ public class SiteService {
         auroraSiteService.insert(BeanUtils.copyProperties(record, Site.class));
     }
 
-    public PageData<SiteVO> selectByCondition(Condition<Long> condition) {
+    public PageData<SiteVO> queryListSiteByCondition(Condition<Long> condition) {
         Assert.notNull(condition, "查询条件不能为null");
         return PageUtils.copyPageDataResult(auroraSiteService.queryListByCondition(condition), SiteVO.class);
     }
 
-    public SiteVO selectByUid(long uid) {
+    public SiteVO querySiteByUid(long uid) {
         return BeanUtils.copyProperties(auroraSiteService.queryById(uid), SiteVO.class);
     }
 
-    public int updateByPrimaryKeySelective(SitePojo record) {
+    public int updateSite(SitePojo record) {
         Assert.notNull(record, "站点信息不能为null");
         // 如果userUid存在的话，判断此用户是否存在
         Optional.ofNullable(record.getUserUid()).ifPresent(userUid -> {

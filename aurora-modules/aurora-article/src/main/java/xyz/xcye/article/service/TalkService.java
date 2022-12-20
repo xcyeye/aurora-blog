@@ -33,7 +33,7 @@ public class TalkService {
     @Autowired
     private AuroraProperties auroraProperties;
 
-    public int deleteByPrimaryKey(Long uid) {
+    public int logicDeleteTalk(Long uid) {
         Assert.notNull(uid, "uid不能为null");
         Talk talk = Talk.builder()
                 .uid(uid)
@@ -42,13 +42,13 @@ public class TalkService {
         return auroraTalkService.updateById(talk);
     }
 
-    public int physicsDeleteByUid(Long uid) {
+    public int physicalDeleteTalk(Long uid) {
         Assert.notNull(uid, "uid不能为null");
         return auroraTalkService.deleteById(uid);
     }
 
     @Transactional
-    public void insertSelective(TalkPojo pojo) {
+    public void insertTalk(TalkPojo pojo) {
         Assert.notNull(pojo, "说说信息不能为null");
         Talk record = BeanUtils.copyProperties(pojo, Talk.class);
         record.setUid(GenerateInfoUtils.generateUid(auroraProperties.getSnowFlakeWorkerId(),
@@ -61,18 +61,18 @@ public class TalkService {
         auroraTalkService.insert(record);
     }
 
-    public PageData<TalkVO> selectByCondition(Condition<Long> condition) {
+    public PageData<TalkVO> queryListTalkByCondition(Condition<Long> condition) {
         Assert.notNull(condition, "查询条件不能为null");
         return PageUtils.copyPageDataResult(auroraTalkService.queryListByCondition(condition), TalkVO.class);
     }
 
-    public TalkVO selectByUid(Long uid) {
+    public TalkVO queryTalkByUid(Long uid) {
         Assert.notNull(uid, "uid不能为null");
         return BeanUtils.copyProperties(auroraTalkService.queryById(uid), TalkVO.class);
     }
 
     @Transactional
-    public int updateByPrimaryKeySelective(TalkPojo record) {
+    public int updateTalk(TalkPojo record) {
         Assert.notNull(record, "说说信息不能为null");
         record.setUserUid(null);
         return auroraTalkService.updateById(BeanUtils.copyProperties(record, Talk.class));

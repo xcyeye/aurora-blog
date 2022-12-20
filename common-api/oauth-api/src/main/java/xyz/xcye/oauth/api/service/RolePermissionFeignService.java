@@ -1,6 +1,7 @@
 package xyz.xcye.oauth.api.service;
 
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.cloud.openfeign.SpringQueryMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import xyz.xcye.core.entity.R;
@@ -23,8 +24,8 @@ public interface RolePermissionFeignService {
      * @param username
      * @return
      */
-    @GetMapping("/admin/permissionRelation/username/{username}")
-    R loadPermissionByUsername(@PathVariable("username") String username);
+    @GetMapping("/admin/permissionRelation/loadPermissionByUsername")
+    R loadPermissionByUsername(@SpringQueryMap String username);
     //Set<Map<String,String>> loadPermissionByUsername(@PathVariable("username") String username);
 
     /**
@@ -32,14 +33,14 @@ public interface RolePermissionFeignService {
      * @param username
      * @return
      */
-    @GetMapping("/admin/permissionRelation/userRole/{username}")
-    R loadAllRoleByUsername(@PathVariable("username") String username);
+    @GetMapping("/admin/permissionRelation/loadAllRoleByUsername")
+    R loadAllRoleByUsername(@SpringQueryMap String username);
 
     /**
      * 加载所有的角色和权限的关系
      * @param condition
      * @return
      */
-    @GetMapping("/admin/permissionRelation/rolePermission")
-    R loadAllRolePermission(Condition<Long> condition);
+    @GetMapping("/admin/permissionRelation/loadAllRolePermission")
+    R loadAllRolePermission(@SpringQueryMap Condition<Long> condition);
 }

@@ -145,7 +145,7 @@ public class MessageRabbitMQConfirmConfig implements RabbitTemplate.ConfirmCallb
             return null;
         }
 
-        MessageLogVO messageLogVO = messageLogService.queryByUid(uid);
+        MessageLogVO messageLogVO = messageLogService.queryMessageLogByUid(uid);
         return BeanUtils.copyProperties(messageLogVO, MessageLog.class);
     }
 }

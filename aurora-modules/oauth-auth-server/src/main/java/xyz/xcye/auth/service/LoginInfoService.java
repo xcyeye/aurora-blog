@@ -30,12 +30,12 @@ public class LoginInfoService {
     @Autowired
     private AuroraLoginInfoService auroraLoginInfoService;
 
-    public int deleteByPrimaryKey(Long uid) {
+    public int physicalDeleteLoginInfo(Long uid) {
         Assert.notNull(uid, "uid不能为null");
         return auroraLoginInfoService.deleteById(uid);
     }
 
-    public int deleteByUidBatch(Long[] uids) {
+    public int batchDeleteLoginInfoByUid(Long[] uids) {
         Assert.notNull(uids, "批量删除记录，uids不能为null");
         final int[] successDeleteNum = {0};
         Arrays.stream(uids).forEach(uid -> {
@@ -44,25 +44,25 @@ public class LoginInfoService {
         return successDeleteNum[0];
     }
 
-    public void insertSelective(LoginInfoPojo record) {
+    public void insertLoginInfo(LoginInfoPojo record) {
         Assert.notNull(record, "登录信息不能为null");
         record.setStatus(Optional.ofNullable(record.getStatus()).orElse(false));
         auroraLoginInfoService.insert(BeanUtils.copyProperties(record, LoginInfo.class));
     }
 
-    public PageData<LoginInfoVO> selectByCondition(Condition<Long> condition) {
+    public PageData<LoginInfoVO> queryListLoginInfoByCondition(Condition<Long> condition) {
         Assert.notNull(condition, "查询条件不能为null");
         return PageUtils.copyPageDataResult(auroraLoginInfoService.queryListByCondition(condition), LoginInfoVO.class);
     }
 
-    public LoginInfoVO selectByUsername(String username) {
+    public LoginInfoVO queryLoginInfoByUsername(String username) {
         // 返回该用户最近登录的日志信息
         LoginInfo loginInfo = new LoginInfo();
         loginInfo.setUsername(username);
         return BeanUtils.copyProperties(auroraLoginInfoService.queryOne(loginInfo), LoginInfoVO.class);
     }
 
-    public int updateByPrimaryKeySelective(LoginInfoPojo record) {
+    public int updateLoginInfo(LoginInfoPojo record) {
         Assert.notNull(record, "登录信息不能为null");
         // 如果ip为null的话，则从请求中获取
         if (!StringUtils.hasLength(record.getLoginIp())) {

@@ -37,7 +37,7 @@ public class LoginController {
     @Autowired
     private RedisTemplate<String, Object> redisTemplate;
 
-    @PostMapping
+    @PostMapping("/out")
     public R logout(HttpServletRequest request, HttpServletResponse response) {
         // 将当前用户的token放入redis中，也就是黑名单，持有这个jwt的用户，都不能登录
         storageJwtBlacklist(request);

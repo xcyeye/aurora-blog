@@ -43,7 +43,7 @@ public class RolePermissionRelationshipService {
 
     private void relationshipIsFull(RolePermissionRelationshipPojo relationship) {
         Objects.requireNonNull(relationship,"用户角色关系信息不能为null");
-        Objects.requireNonNull(relationship.getRoleUid(),"用户角色的uid不能为null");
-        Objects.requireNonNull(relationship.getPermissionUid(),"用户角色的用户uid不能为null");
+        Objects.requireNonNull(relationship.getRoleUidArr(),"用户角色的uid不能为null");
+        Objects.requireNonNull(relationship.getPermissionUidArr(),"用户角色的用户uid不能为null");
     }
 }

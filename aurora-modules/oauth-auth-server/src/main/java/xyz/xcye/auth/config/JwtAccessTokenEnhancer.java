@@ -8,6 +8,7 @@ import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenCo
 import xyz.xcye.auth.model.SecurityUserDetails;
 import xyz.xcye.auth.constant.OauthJwtConstant;
 
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -31,15 +32,17 @@ public class JwtAccessTokenEnhancer extends JwtAccessTokenConverter {
         // 将额外的信息放入hashmap中
         LinkedHashMap<String, Object> extendInformation = new LinkedHashMap<>();
         // 添加userUid
-        extendInformation.put(OauthJwtConstant.USER_UID, user.getUserUid() + "");
-        extendInformation.put(OauthJwtConstant.NICKNAME, user.getNickname());
-        extendInformation.put(OauthJwtConstant.USERNAME, user.getUsername());
-        extendInformation.put(OauthJwtConstant.VERIFY_EMAIL, user.getVerifyEmail());
+        HashMap<String, Object> userinfoMap = new HashMap<>();
+        userinfoMap.put(OauthJwtConstant.USER_UID, user.getUserUid() + "");
+        userinfoMap.put(OauthJwtConstant.NICKNAME, user.getNickname());
+        userinfoMap.put(OauthJwtConstant.USERNAME, user.getUsername());
+        userinfoMap.put(OauthJwtConstant.VERIFY_EMAIL, user.getVerifyEmail());
         // 将该用户的所有角色放入jwt
         List<String> authorities = authentication.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.toList());
-        extendInformation.put(OauthJwtConstant.AUTHORITY, authorities);
+        userinfoMap.put(OauthJwtConstant.AUTHORITY, authorities);
+        extendInformation.put(OauthJwtConstant.USERiNFO, userinfoMap);
 
         // 将extendInformation添加到额外的信息中
         ((DefaultOAuth2AccessToken) accessToken).setAdditionalInformation(extendInformation);

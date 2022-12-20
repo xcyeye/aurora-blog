@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.web.bind.annotation.*;
 import xyz.xcye.core.annotaion.controller.ModifyOperation;
+import xyz.xcye.message.pojo.SendMailPojo;
 import xyz.xcye.message.service.SendMailService;
 
 import javax.mail.MessagingException;
@@ -31,25 +32,21 @@ public class SendMailController {
     @ModifyOperation
     @Operation(summary = "发送普通文本")
     @PostMapping("/simpleText")
-    public void sendSimpleMail( @RequestParam(value = "receiverEmail") String receiverEmail,
-                                        @RequestParam(value = "subject") String subject,
-                                        @RequestParam(value = "content") String content) throws MessagingException {
-        sendMailService.sendSimpleMail(receiverEmail,subject,content);
+    public void sendSimpleMail(@RequestBody SendMailPojo pojo) throws MessagingException {
+        sendMailService.sendSimpleMail(pojo);
     }
 
     @Operation(summary = "发送自定义html")
     @ModifyOperation
     @PostMapping("/customMail")
-    public void sendCustomMail(@RequestParam("subject") String subject,
-                                       @RequestParam("content") String content,
-                                       @RequestParam("receiverEmail") String receiverEmail) throws MessagingException {
-       sendMailService.sendCustomMail(receiverEmail,subject,content);
+    public void sendCustomMail(@RequestBody SendMailPojo pojo) throws MessagingException {
+       sendMailService.sendCustomMail(pojo);
     }
 
     @Operation(summary = "重新发送自定义邮件")
     @ModifyOperation
-    @PostMapping("/resend/{uid}")
-    public void resendCustomMail(@PathVariable("uid") Long emailLogUid) throws MessagingException {
+    @PostMapping("/resendCustomMail")
+    public void resendCustomMail(@RequestBody Long emailLogUid) throws MessagingException {
         sendMailService.resendCustomMail(emailLogUid);
     }
 }

@@ -35,43 +35,43 @@ public class BulletinController {
 
     @Operation(summary = "插入公告")
     @ModifyOperation
-    @PostMapping
-    public void insertBulletin(@Validated({Insert.class, Default.class}) BulletinPojo bulletin) {
-        bulletinService.insertSelective(bulletin);
+    @PostMapping("/insertBulletin")
+    public void insertBulletin(@Validated({Insert.class, Default.class}) @RequestBody BulletinPojo bulletin) {
+        bulletinService.insertBulletin(bulletin);
     }
 
     @ModifyOperation
     @Operation(summary = "逻辑删除公告")
-    @DeleteMapping("/{uid}")
-    public int deleteBulletin(@PathVariable("uid") long uid) {
-        return bulletinService.deleteByPrimaryKey(uid);
+    @PostMapping("/logicDeleteBulletin")
+    public int logicDeleteBulletin(@RequestBody long uid) {
+        return bulletinService.logicDeleteBulletin(uid);
     }
 
     @Operation(summary = "物理删除公告")
     @ModifyOperation
-    @DeleteMapping("/physics/{uid}")
-    public int physicsDeleteBulletin(@PathVariable("uid") long uid) {
-        return bulletinService.physicsDeleteByUid(uid);
+    @PostMapping("/physicalDeleteBulletin")
+    public int physicalDeleteBulletin(@RequestBody long uid) {
+        return bulletinService.physicalDeleteBulletin(uid);
     }
 
     @Operation(summary = "修改公告内容")
     @ModifyOperation
-    @PutMapping
-    public int updateBulletin(@Validated({Update.class, Default.class}) BulletinPojo bulletin) {
-        return bulletinService.updateByPrimaryKeySelective(bulletin);
+    @PostMapping("/updateBulletin")
+    public int updateBulletin(@Validated({Update.class, Default.class}) @RequestBody BulletinPojo bulletin) {
+        return bulletinService.updateBulletin(bulletin);
     }
 
     @Operation(summary = "根据条件，查询满足要求的公告")
     @SelectOperation
-    @GetMapping
-    public PageData<BulletinVO> selectAllBulletin(Condition<Long> condition) {
-        return bulletinService.selectByCondition(condition);
+    @PostMapping("/queryListBulletinByCondition")
+    public PageData<BulletinVO> queryListBulletinByCondition(@RequestBody Condition<Long> condition) {
+        return bulletinService.queryListBulletinByCondition(condition);
     }
 
     @Operation(summary = "根据uid查询公告")
     @SelectOperation
-    @GetMapping("/{uid}")
-    public BulletinVO selectByUid(@PathVariable("uid") long uid) {
-        return bulletinService.selectByUid(uid);
+    @PostMapping("/queryBulletinByUid")
+    public BulletinVO queryBulletinByUid(@RequestBody long uid) {
+        return bulletinService.queryBulletinByUid(uid);
     }
 }

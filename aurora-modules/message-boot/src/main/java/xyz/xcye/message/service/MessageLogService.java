@@ -42,7 +42,7 @@ public class MessageLogService {
         auroraMessageLogService.insert(BeanUtils.copyProperties(messageLog, MessageLog.class));
     }
 
-    public int deleteMessageLog(long uid) {
+    public int physicalDeleteMessageLog(long uid) {
         return auroraMessageLogService.deleteById(uid);
     }
 
@@ -52,12 +52,12 @@ public class MessageLogService {
         return auroraMessageLogService.updateById(BeanUtils.copyProperties(messageLog, MessageLog.class));
     }
 
-    public PageData<MessageLogVO> queryAllMessageLog(Condition<Long> condition) {
+    public PageData<MessageLogVO> queryListMessageLogByCondition(Condition<Long> condition) {
         PageHelper.startPage(condition.getPageNum(),condition.getPageSize(),condition.getOrderBy());
         return PageUtils.copyPageDataResult(auroraMessageLogService.queryListByCondition(condition),MessageLogVO.class);
     }
 
-    public MessageLogVO queryByUid(long uid) {
+    public MessageLogVO queryMessageLogByUid(long uid) {
         MessageLog messageLog = new MessageLog();
         messageLog.setUid(uid);
         messageLog.setConsumeStatus(null);
@@ -65,7 +65,7 @@ public class MessageLogService {
     }
 
     public void resendMqMessage(long uid) throws BindException {
-        MessageLogVO messageLogVO = queryByUid(uid);
+        MessageLogVO messageLogVO = queryMessageLogByUid(uid);
         AssertUtils.stateThrow(messageLogVO != null, () -> new RuntimeException("没有此mq消息"));
 
         // 重新发送

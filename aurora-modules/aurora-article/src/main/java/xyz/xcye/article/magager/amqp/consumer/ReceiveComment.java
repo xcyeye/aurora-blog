@@ -63,7 +63,7 @@ public class ReceiveComment {
 
         Long pageUid = comment.getPageUid();
         // 根据此pageUid查询article或者talk，看看是哪个的uid
-        ArticleVO articleVO = articleService.selectByUid(pageUid);
+        ArticleVO articleVO = articleService.queryArticleByUid(pageUid);
         if (articleVO != null) {
             updateArticleData(articleVO, comment);
             ack(channel, message);
@@ -71,7 +71,7 @@ public class ReceiveComment {
         }
 
         // 查询是否是说说的评论
-        TalkVO talkVO = talkService.selectByUid(pageUid);
+        TalkVO talkVO = talkService.queryTalkByUid(pageUid);
         if (talkVO != null) {
             // 是文章的评论uid
             updateTalkData(talkVO, comment);
@@ -122,13 +122,13 @@ public class ReceiveComment {
     private void updateArticleData(ArticleVO articleVO, CommentPojo comment) {
         // 是文章的评论uid
         articleVO.setCommentUids(setCommentUids(articleVO.getCommentUids(), comment.getUid()));
-        articleService.updateByPrimaryKeySelective(BeanUtils.copyProperties(articleVO, ArticlePojo.class));
+        articleService.updateArticle(BeanUtils.copyProperties(articleVO, ArticlePojo.class));
     }
 
     private void updateTalkData(TalkVO talkVO, CommentPojo comment) {
         // 是文章的评论uid
         talkVO.setCommentUids(setCommentUids(talkVO.getCommentUids(), comment.getUid()));
-        talkService.updateByPrimaryKeySelective(BeanUtils.copyProperties(talkVO, TalkPojo.class));
+        talkService.updateTalk(BeanUtils.copyProperties(talkVO, TalkPojo.class));
     }
 
     private void ack(Channel channel, Message message) throws IOException, BindException {

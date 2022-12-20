@@ -3,6 +3,7 @@ package xyz.xcye.mail.api.feign.handler;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.BindException;
 import xyz.xcye.admin.po.User;
+import xyz.xcye.admin.pojo.UserPojo;
 import xyz.xcye.core.entity.ModifyResult;
 import xyz.xcye.core.entity.R;
 import xyz.xcye.core.exception.user.UserException;
@@ -22,12 +23,12 @@ public class UserFeignHandler implements UserFeignService {
     }
 
     @Override
-    public ModifyResult updateUser(User user) throws UserException {
+    public ModifyResult updateUser(UserPojo user) throws UserException {
         return null;
     }
 
     @Override
-    public R bindingEmail(Email email) throws BindException {
+    public R bindingEmail(String email) throws BindException {
         return R.failure();
     }
 }

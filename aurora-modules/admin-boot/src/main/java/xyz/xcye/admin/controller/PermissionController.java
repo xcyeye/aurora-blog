@@ -31,36 +31,36 @@ public class PermissionController {
 
     @ModifyOperation
     @Operation(summary = "插入路径权限")
-    @PostMapping("")
-    public void insertPermission(@Validated({Insert.class, Default.class}) PermissionPojo permission) {
+    @PostMapping("/insertPermission")
+    public void insertPermission(@Validated({Insert.class, Default.class}) @RequestBody PermissionPojo permission) {
         permissionService.insertPermission(permission);
     }
 
     @ModifyOperation
     @Operation(summary = "修改路径权限信息")
-    @PutMapping("")
-    public int updatePermission(@Validated({Update.class, Default.class}) PermissionPojo permission) {
+    @PostMapping("/updatePermission")
+    public int updatePermission(@Validated({Update.class, Default.class}) @RequestBody PermissionPojo permission) {
         return permissionService.updatePermission(permission);
     }
 
     @ModifyOperation
     @Operation(summary = "删除权限")
-    @DeleteMapping("/{uid}")
-    public int deletePermission(@PathVariable("uid") int uid) {
+    @PostMapping("/physicalDeletePermission")
+    public int physicalDeletePermission(@RequestBody int uid) {
         return permissionService.deleteByUid(uid);
     }
 
     @SelectOperation
     @Operation(summary = "根据uid查询权限")
-    @GetMapping("/{uid}")
-    public Permission queryPermissionByUid(@PathVariable("uid") int uid) {
+    @PostMapping("/queryPermissionByUid")
+    public Permission queryPermissionByUid(@RequestBody int uid) {
         return permissionService.selectByUid(uid);
     }
 
     @SelectOperation
     @Operation(summary = "查询满足要求的所有权限信息")
-    @GetMapping("")
-    public PageData<Permission> queryPermissionServiceByUid(Condition<Long> condition) {
+    @PostMapping("/queryListPermissionByCondition")
+    public PageData<Permission> queryListPermissionByCondition(@RequestBody Condition<Long> condition) {
         return permissionService.selectAllPermission(condition);
     }
 }

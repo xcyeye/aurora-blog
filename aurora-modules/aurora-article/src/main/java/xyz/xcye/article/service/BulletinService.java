@@ -34,7 +34,7 @@ public class BulletinService {
     @Autowired
     private AuroraBulletinService auroraBulletinService;
 
-    public int deleteByPrimaryKey(Long uid) {
+    public int logicDeleteBulletin(Long uid) {
         Assert.notNull(uid, "uid不能为null");
         Bulletin bulletin = Bulletin.builder()
                 .delete(true)
@@ -43,11 +43,11 @@ public class BulletinService {
         return auroraBulletinService.updateById(bulletin);
     }
 
-    public int physicsDeleteByUid(Long uid) {
+    public int physicalDeleteBulletin(Long uid) {
         return auroraBulletinService.deleteById(uid);
     }
 
-    public void insertSelective(BulletinPojo record) {
+    public void insertBulletin(BulletinPojo record) {
         Assert.notNull(record, "公告不能为null");
         record.setCreateTime(null);
         record.setDelete(false);
@@ -61,17 +61,17 @@ public class BulletinService {
         auroraBulletinService.insert(BeanUtils.copyProperties(record, Bulletin.class));
     }
 
-    public PageData<BulletinVO> selectByCondition(Condition<Long> condition) {
+    public PageData<BulletinVO> queryListBulletinByCondition(Condition<Long> condition) {
         Assert.notNull(condition, "查询条件不能为null");
         return PageUtils.copyPageDataResult(auroraBulletinService.queryListByCondition(condition), BulletinVO.class);
     }
 
-    public BulletinVO selectByUid(Long uid) {
+    public BulletinVO queryBulletinByUid(Long uid) {
         Assert.notNull(uid, "uid不能为null");
         return BeanUtils.copyProperties(auroraBulletinService.queryById(uid), BulletinVO.class);
     }
 
-    public int updateByPrimaryKeySelective(BulletinPojo record) {
+    public int updateBulletin(BulletinPojo record) {
         Assert.notNull(record, "公告信息不能为null");
         record.setUserUid(null);
         setTimingPublishTime(record);

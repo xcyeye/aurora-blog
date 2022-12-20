@@ -30,7 +30,7 @@ public class CategoryService {
     @Autowired
     private AuroraCategoryService auroraCategoryService;
 
-    public int deleteByPrimaryKey(Long uid) {
+    public int logicDeleteCategory(Long uid) {
         Assert.notNull(uid, "uid不能为null");
         Category category = Category.builder()
                 .uid(uid)
@@ -39,12 +39,12 @@ public class CategoryService {
         return auroraCategoryService.updateById(category);
     }
 
-    public int physicsDeleteByUid(Long uid) {
+    public int physicalDeleteCategory(Long uid) {
         Assert.notNull(uid, "uid不能为null");
         return auroraCategoryService.deleteById(uid);
     }
 
-    public void insertSelective(CategoryPojo record) {
+    public void insertCategory(CategoryPojo record) {
         Assert.notNull(record, "类别不能为null");
         record.setDelete(false);
         JwtUserInfo jwtUserInfo = UserUtils.getCurrentUser();
@@ -54,12 +54,12 @@ public class CategoryService {
         auroraCategoryService.insert(BeanUtils.copyProperties(record, Category.class));
     }
 
-    public PageData<CategoryVO> selectByCondition(Condition<Long> condition) {
+    public PageData<CategoryVO> queryListCategoryByCondition(Condition<Long> condition) {
         Assert.notNull(condition,"查询条件不能为null");
         return PageUtils.copyPageDataResult(auroraCategoryService.queryListByCondition(condition), CategoryVO.class);
     }
 
-    public CategoryVO selectByUid(Long uid) {
+    public CategoryVO queryCategoryByUid(Long uid) {
         Assert.notNull(uid, "uid不能为null");
         return BeanUtils.copyProperties(auroraCategoryService.queryById(uid), CategoryVO.class);
     }
@@ -71,7 +71,7 @@ public class CategoryService {
         return BeanUtils.copyProperties(auroraCategoryService.queryOne(category), CategoryVO.class);
     }
 
-    public int updateByPrimaryKeySelective(CategoryPojo record) {
+    public int updateCategory(CategoryPojo record) {
         Assert.notNull(record, "类别不能为null");
         record.setUserUid(null);
         return auroraCategoryService.updateById(BeanUtils.copyProperties(record, Category.class));

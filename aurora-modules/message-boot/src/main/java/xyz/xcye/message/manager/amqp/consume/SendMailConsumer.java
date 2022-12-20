@@ -21,6 +21,7 @@ import xyz.xcye.core.util.BeanUtils;
 import xyz.xcye.core.util.ConvertObjectUtils;
 import xyz.xcye.message.po.MessageLog;
 import xyz.xcye.message.pojo.MessageLogPojo;
+import xyz.xcye.message.pojo.SendMailPojo;
 import xyz.xcye.message.service.EmailService;
 import xyz.xcye.message.service.MessageLogService;
 import xyz.xcye.message.service.SendMailService;
@@ -117,8 +118,11 @@ public class SendMailConsumer {
 
         // 运行到此处，说明一切正常，将数据插入到数据库中 并且修改消息的消费状态
         channel.basicAck(message.getMessageProperties().getDeliveryTag(),false);
-        sendMailService.sendSimpleMail(storageSendMailInfo.getReceiverEmail(),
-                storageSendMailInfo.getSubject(), storageSendMailInfo.getSimpleText());
+        SendMailPojo sendMailPojo = new SendMailPojo();
+        sendMailPojo.setContent(storageSendMailInfo.getSimpleText());
+        sendMailPojo.setSubject(storageSendMailInfo.getSubject());
+        sendMailPojo.setReceiverEmail(storageSendMailInfo.getReceiverEmail());
+        sendMailService.sendSimpleMail(sendMailPojo);
 
         updateMessageLogInfo(getCorrelationDataId(message),true,true,null);
     }
@@ -149,7 +153,7 @@ public class SendMailConsumer {
      */
     private void updateMessageLogInfo(String correlationDataId, boolean ackStatus,
                                       boolean consumeStatus, String errorMessage) throws BindException {
-        MessageLogVO messageLogVO = messageLogService.queryByUid(Long.parseLong(correlationDataId));
+        MessageLogVO messageLogVO = messageLogService.queryMessageLogByUid(Long.parseLong(correlationDataId));
 
         if (messageLogVO == null) {
             return;
@@ -174,7 +178,7 @@ public class SendMailConsumer {
             mistakeMessageSendService.sendMistakeMessageToExchange(msgJson,channel,message);
             return;
         }
-        EmailVO emailVO = emailService.queryByUserUid(mailInfo.getUserUid());
+        EmailVO emailVO = emailService.queryEmailByUserUid(mailInfo.getUserUid());
         if (emailVO == null) {
             mistakeMessageSendService.sendMistakeMessageToExchange(msgJson,channel,message);
             return;

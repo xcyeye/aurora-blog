@@ -35,43 +35,43 @@ public class CategoryController {
 
     @Operation(summary = "插入类别信息")
     @ModifyOperation
-    @PostMapping
-    public void insertCategory(@Validated({Insert.class, Default.class}) CategoryPojo category) {
-        categoryService.insertSelective(category);
+    @PostMapping("/insertCategory")
+    public void insertCategory(@Validated({Insert.class, Default.class}) @RequestBody CategoryPojo category) {
+        categoryService.insertCategory(category);
     }
 
     @Operation(summary = "逻辑删除类别")
     @ModifyOperation
-    @DeleteMapping("/{uid}")
-    public int deleteCategory(@PathVariable("uid") long uid) {
-        return categoryService.deleteByPrimaryKey(uid);
+    @PostMapping("/logicDeleteCategory")
+    public int logicDeleteCategory(@RequestBody long uid) {
+        return categoryService.logicDeleteCategory(uid);
     }
 
     @Operation(summary = "物理删除类别信息")
     @ModifyOperation
-    @DeleteMapping("/physics/{uid}")
-    public int physicsDeleteCategory(@PathVariable("uid") long uid) {
-        return categoryService.physicsDeleteByUid(uid);
+    @PostMapping("/physicalDeleteCategory")
+    public int physicalDeleteCategory(@RequestBody long uid) {
+        return categoryService.physicalDeleteCategory(uid);
     }
 
     @Operation(summary = "根据条件查询类别信息")
     @SelectOperation
-    @GetMapping
-    public PageData<CategoryVO> selectAllCategory(Condition<Long> condition) {
-        return categoryService.selectByCondition(condition);
+    @PostMapping("/queryListCategoryByCondition")
+    public PageData<CategoryVO> queryListCategoryByCondition(@RequestBody Condition<Long> condition) {
+        return categoryService.queryListCategoryByCondition(condition);
     }
 
     @Operation(summary = "根据uid查询类别信息")
     @SelectOperation
-    @GetMapping("/{uid}")
-    public CategoryVO selectCategoryByUid(@PathVariable("uid") long uid) {
-        return categoryService.selectByUid(uid);
+    @PostMapping("/queryCategoryByUid")
+    public CategoryVO queryCategoryByUid(@RequestBody long uid) {
+        return categoryService.queryCategoryByUid(uid);
     }
 
     @Operation(summary = "修改类别信息")
     @ModifyOperation
-    @PutMapping
-    public int updateCategory(@Validated({Update.class, Default.class}) CategoryPojo category) {
-        return categoryService.updateByPrimaryKeySelective(category);
+    @PostMapping("/updateCategory")
+    public int updateCategory(@Validated({Update.class, Default.class}) @RequestBody CategoryPojo category) {
+        return categoryService.updateCategory(category);
     }
 }

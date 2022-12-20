@@ -12,29 +12,8 @@ import xyz.xcye.message.po.Email;
 @Component
 public class EmailFeignHandler implements EmailFeignService {
 
-
     @Override
-    public R deleteEmailByUid(long uid) {
-        return R.failure();
-    }
-
-    @Override
-    public R updateEmailByUid(Email email) {
-        return R.failure();
-    }
-
-    @Override
-    public R queryByUid(long uid) {
-        return R.failure();
-    }
-
-    @Override
-    public R queryByUserUid(long userUid) {
-        return R.failure();
-    }
-
-    @Override
-    public R queryByEmail(String email) {
+    public R queryByEmailNumber(String email) {
         return R.failure();
     }
 }

@@ -28,11 +28,11 @@ public class WhiteUrlService {
     @Autowired
     private AuroraWhiteUrlService auroraWhiteUrlService;
 
-    public int deleteWhiteUrlByUid(Long uid) {
+    public int physicalDeleteWhiteUrl(Long uid) {
         return auroraWhiteUrlService.deleteById(uid);
     }
 
-    public void insertWhiteUrlSelective(WhiteUrlPojo record) {
+    public void insertWhiteUrl(WhiteUrlPojo record) {
         Objects.requireNonNull(record, "白名单记录不能为null");
         Optional.ofNullable(record.getUrl()).orElseThrow(() -> new NullPointerException("白名单地址不能为null"));
 
@@ -40,16 +40,16 @@ public class WhiteUrlService {
         AssertUtils.stateThrow(matchesResourcePath(record.getUrl()),
                 () -> new PermissionException(ResponseStatusCodeEnum.PERMISSION_RESOURCE_NOT_RIGHT));
         // 判断该白名单是否存在于数据库中
-        AssertUtils.stateThrow(selectWhiteUrlByCondition(Condition.instant(record.getUrl())).getResult().isEmpty(),
+        AssertUtils.stateThrow(queryListWhiteUrlByCondition(Condition.instant(record.getUrl())).getResult().isEmpty(),
                 () -> new RuntimeException("该白名单已存在"));
        auroraWhiteUrlService.insert(BeanUtils.copyProperties(record, WhiteUrl.class));
     }
 
-    public PageData<WhiteUrlVO> selectWhiteUrlByCondition(Condition<Integer> condition) {
+    public PageData<WhiteUrlVO> queryListWhiteUrlByCondition(Condition<Integer> condition) {
         return PageUtils.copyPageDataResult(auroraWhiteUrlService.queryListByCondition(condition), WhiteUrlVO.class);
     }
 
-    public int updateWhiteUrlSelective(WhiteUrlPojo record) {
+    public int updateWhiteUrl(WhiteUrlPojo record) {
         return auroraWhiteUrlService.updateById(BeanUtils.copyProperties(record, WhiteUrl.class));
     }
 

@@ -15,6 +15,6 @@ import xyz.xcye.mail.api.feign.handler.FileFeignHandler;
 @FeignClient(value = "aurora-file", name = "aurora-file", fallback = FileFeignHandler.class)
 public interface FileFeignService {
 
-    @GetMapping("/file")
-    R queryAllFile(@SpringQueryMap Condition<Long> condition);
+    @GetMapping("/file/queryListFileByCondition")
+    R queryListFileByCondition(@SpringQueryMap Condition<Long> condition);
 }

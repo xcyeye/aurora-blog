@@ -32,18 +32,18 @@ public class WhiteUrlController {
     @Autowired
     private WhiteUrlService whiteUrlService;
 
-    @DeleteMapping("/{uid}")
+    @PostMapping("/physicalDeleteWhiteUrl")
     @ModifyOperation
     @Operation(summary = "根据uid删除白名单")
-    public int deleteByUid(@PathVariable("uid") Long uid) {
-        return whiteUrlService.deleteWhiteUrlByUid(uid);
+    public int physicalDeleteWhiteUrl(@RequestBody Long uid) {
+        return whiteUrlService.physicalDeleteWhiteUrl(uid);
     }
 
     @Operation(summary = "插入白名单记录")
     @ModifyOperation
-    @PostMapping
-    public void insert(@Validated({Insert.class, Default.class}) @RequestBody WhiteUrlPojo record) {
-        whiteUrlService.insertWhiteUrlSelective(record);
+    @PostMapping("/insertWhiteUrl")
+    public void insertWhiteUrl(@Validated({Insert.class, Default.class}) @RequestBody WhiteUrlPojo record) {
+        whiteUrlService.insertWhiteUrl(record);
     }
 
     /**
@@ -52,16 +52,16 @@ public class WhiteUrlController {
      * @return
      */
     @Operation(summary = "根据查询条件获取所有的白名单数据")
-    @GetMapping
+    @PostMapping("/queryListWhiteUrlByCondition")
     @SelectOperation
-    public PageData<WhiteUrlVO> selectByCondition(@Param("condition") Condition<Integer> condition) {
-        return whiteUrlService.selectWhiteUrlByCondition(condition);
+    public PageData<WhiteUrlVO> queryListWhiteUrlByCondition(@Param("condition") @RequestBody Condition<Integer> condition) {
+        return whiteUrlService.queryListWhiteUrlByCondition(condition);
     }
 
-    @PutMapping
+    @PostMapping("/updateWhiteUrl")
     @Operation(summary = "修改白名单数据")
     @ModifyOperation
-    public int updateByPrimaryKeySelective(@Validated({Update.class}) WhiteUrlPojo record) {
-        return whiteUrlService.updateWhiteUrlSelective(record);
+    public int updateWhiteUrl(@Validated({Update.class}) @RequestBody WhiteUrlPojo record) {
+        return whiteUrlService.updateWhiteUrl(record);
     }
 }
