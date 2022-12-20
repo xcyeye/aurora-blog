@@ -1,5 +1,4 @@
 interface AdminSidebarVo {
-
   /**
    * 唯一uid
    */
@@ -41,20 +40,19 @@ interface AdminSidebarVo {
   sort?: number | null;
 
   /**
-   * 
+   *
    */
   userUid?: string | null;
 
   /**
-   * 
+   *
    */
   createTime?: string | null;
 
   /**
-   * 
+   *
    */
   updateTime?: string | null;
-
 }
 
-export { AdminSidebarVo }
+export { AdminSidebarVo };

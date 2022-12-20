@@ -1,5 +1,4 @@
 interface OauthClientDetails {
-
   /**
    * 客户端id
    */
@@ -56,15 +55,14 @@ interface OauthClientDetails {
   autoapprove?: string | null;
 
   /**
-   * 
+   *
    */
   createTime?: string | null;
 
   /**
-   * 
+   *
    */
   updateTime?: string | null;
-
 }
 
-export { OauthClientDetails }
+export { OauthClientDetails };

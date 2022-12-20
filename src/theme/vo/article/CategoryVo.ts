@@ -1,5 +1,4 @@
 interface CategoryVo {
-
   /**
    * 唯一uid
    */
@@ -39,7 +38,6 @@ interface CategoryVo {
    * 用户的userUid
    */
   userUid?: string | null;
-
 }
 
-export { CategoryVo }
+export { CategoryVo };

@@ -21,5 +21,5 @@ export enum EnumLoginModule {
 }
 
 export enum EnumAuthTokenType {
-	BEARER_TOKEN = 'bearer '
+  BEARER_TOKEN = 'bearer '
 }

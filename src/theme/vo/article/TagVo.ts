@@ -1,5 +1,4 @@
 interface TagVo {
-
   /**
    * 唯一uid
    */
@@ -39,7 +38,6 @@ interface TagVo {
    * 用户的userUid
    */
   userUid?: string | null;
-
 }
 
-export { TagVo }
+export { TagVo };

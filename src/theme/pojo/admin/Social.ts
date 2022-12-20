@@ -1,5 +1,4 @@
 interface Social {
-
   /**
    * 唯一uid,自增
    */
@@ -44,7 +43,6 @@ interface Social {
    * 1: 删除 0：不删除
    */
   delete?: boolean | null;
-
 }
 
-export { Social }
+export { Social };

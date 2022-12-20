@@ -1,5 +1,4 @@
 interface Navigation {
-
   /**
    * 唯一uid
    */
@@ -69,7 +68,6 @@ interface Navigation {
    * 1: 展示，0： 不显示
    */
   show?: boolean | null;
-
 }
 
-export { Navigation }
+export { Navigation };

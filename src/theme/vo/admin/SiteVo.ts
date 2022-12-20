@@ -1,5 +1,4 @@
 interface SiteVo {
-
   /**
    * 唯一uid
    */
@@ -54,7 +53,6 @@ interface SiteVo {
    * 0:不删除 1： 删除
    */
   delete?: boolean | null;
-
 }
 
-export { SiteVo }
+export { SiteVo };

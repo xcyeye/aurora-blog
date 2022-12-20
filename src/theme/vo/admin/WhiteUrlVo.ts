@@ -1,7 +1,6 @@
 interface WhiteUrlVo {
-
   /**
-   * 
+   *
    */
   uid?: number | null;
 
@@ -11,15 +10,14 @@ interface WhiteUrlVo {
   url?: string | null;
 
   /**
-   * 
+   *
    */
   createTime?: string | null;
 
   /**
-   * 
+   *
    */
   updateTime?: string | null;
-
 }
 
-export { WhiteUrlVo }
+export { WhiteUrlVo };

@@ -1,5 +1,4 @@
 interface Tag {
-
   /**
    * 唯一uid
    */
@@ -39,7 +38,6 @@ interface Tag {
    * 用户的userUid
    */
   userUid?: string | null;
-
 }
 
-export { Tag }
+export { Tag };

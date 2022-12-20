@@ -1,5 +1,4 @@
 interface Email {
-
   /**
    * 唯一uid
    */
@@ -36,15 +35,14 @@ interface Email {
   port?: number | null;
 
   /**
-   * 
+   *
    */
   createTime?: string | null;
 
   /**
-   * 
+   *
    */
   updateTime?: string | null;
-
 }
 
-export { Email }
+export { Email };

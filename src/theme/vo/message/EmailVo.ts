@@ -1,5 +1,4 @@
 interface EmailVo {
-
   /**
    * 唯一uid
    */
@@ -36,15 +35,14 @@ interface EmailVo {
   port?: number | null;
 
   /**
-   * 
+   *
    */
   createTime?: string | null;
 
   /**
-   * 
+   *
    */
   updateTime?: string | null;
-
 }
 
-export { EmailVo }
+export { EmailVo };

@@ -1,5 +1,5 @@
-import {AxiosRequestConfig} from "axios";
-import {EnumContentType} from "@/enum";
+import type { AxiosRequestConfig } from 'axios';
+import { EnumContentType } from '@/enum';
 
 /** 用户性别 */
 export const genderLabels: Record<UserManagement.GenderKey, string> = {
@@ -28,7 +28,7 @@ export const userStatusOptions: { value: UserManagement.UserStatusKey; label: st
 ];
 
 export const baseAxiosRequestConfig: AxiosRequestConfig = {
-	headers: {
-		'Content-Type': EnumContentType.json
-	}
-}
+  headers: {
+    'Content-Type': EnumContentType.json
+  }
+};

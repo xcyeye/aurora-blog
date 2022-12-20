@@ -1,5 +1,4 @@
 interface User {
-
   /**
    * 唯一uid
    */
@@ -56,17 +55,17 @@ interface User {
   emailUid?: string | null;
 
   /**
-   * 
+   *
    */
   createTime?: string | null;
 
   /**
-   * 
+   *
    */
   updateTime?: string | null;
 
   /**
-   * 是否删除 1：删除 
+   * 是否删除 1：删除
    */
   delete?: boolean | null;
 
@@ -79,7 +78,6 @@ interface User {
    * 1: 邮箱已验证，0：邮箱未验证
    */
   verifyEmail?: boolean | null;
-
 }
 
-export { User }
+export { User };

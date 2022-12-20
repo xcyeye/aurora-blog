@@ -1,7 +1,6 @@
 interface UserRoleVo {
-
   /**
-   * 
+   *
    */
   uid?: string | null;
 
@@ -14,7 +13,6 @@ interface UserRoleVo {
    * 用户uid
    */
   userUid?: string | null;
-
 }
 
-export { UserRoleVo }
+export { UserRoleVo };

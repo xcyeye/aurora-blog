@@ -1,5 +1,4 @@
 interface Article {
-
   /**
    * 唯一uid
    */
@@ -104,7 +103,6 @@ interface Article {
    * 是否删除 逻辑删除 1： 已删除
    */
   delete?: boolean | null;
-
 }
 
-export { Article }
+export { Article };

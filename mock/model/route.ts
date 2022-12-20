@@ -509,18 +509,18 @@ export const routeModel: Record<Auth.RoleType, AuthRoute.Route[]> = {
         order: 10
       }
     },
-		{
-			name: 'test',
-			path: '/test',
-			component: 'self',
-			meta: {
-				title: '测试页面',
-				requiresAuth: true,
-				singleLayout: 'basic',
-				icon: 'fluent:book-information-24-regular',
-				order: 10
-			}
-		}
+    {
+      name: 'test',
+      path: '/test',
+      component: 'self',
+      meta: {
+        title: '测试页面',
+        requiresAuth: true,
+        singleLayout: 'basic',
+        icon: 'fluent:book-information-24-regular',
+        order: 10
+      }
+    }
   ],
   admin: [
     {

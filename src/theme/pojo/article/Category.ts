@@ -1,5 +1,4 @@
 interface Category {
-
   /**
    * 唯一uid
    */
@@ -39,7 +38,6 @@ interface Category {
    * 用户的userUid
    */
   userUid?: string | null;
-
 }
 
-export { Category }
+export { Category };

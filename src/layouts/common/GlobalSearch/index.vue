@@ -2,13 +2,13 @@
   <div>
     <hover-container
       class="w-40px h-full"
-      tooltip-content="搜索"
+      tooltip-content="Search"
       :inverted="theme.header.inverted"
       @click="handleSearch"
     >
       <icon-uil-search class="text-20px" />
     </hover-container>
-    <search-modal v-model:value="show" />
+    <custom-search-modal v-model:value="show" />
   </div>
 </template>
 
@@ -16,6 +16,7 @@
 import { useThemeStore } from '@/store';
 import { useBoolean } from '@/hooks';
 import { SearchModal } from './components';
+import CustomSearchModal from "@/layouts/common/GlobalSearch/components/CustomSearchModal.vue";
 
 defineOptions({ name: 'GlobalSearch' });
 

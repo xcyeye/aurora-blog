@@ -1,6 +1,6 @@
 import { unref, nextTick } from 'vue';
 import { defineStore } from 'pinia';
-import {EnumAuthTokenType, EnumRoleName} from '@/enum';
+import { EnumAuthTokenType, EnumRoleName } from '@/enum';
 import { router } from '@/router';
 import { authApi } from '@/service';
 import { useRouterPush } from '@/composables';

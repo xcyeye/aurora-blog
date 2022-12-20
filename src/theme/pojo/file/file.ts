@@ -67,4 +67,4 @@ enum FileStorageModeConstant {
   UPYUN_OSS_STORAGE = 2
 }
 
-export {File}
+export { File };

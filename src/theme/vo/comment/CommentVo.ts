@@ -1,5 +1,4 @@
 interface CommentVo {
-
   /**
    * 唯一uid
    */
@@ -89,7 +88,6 @@ interface CommentVo {
    * 此评论是在哪种页面发布的
    */
   pageType?: string | null;
-
 }
 
-export { CommentVo }
+export { CommentVo };

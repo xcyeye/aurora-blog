@@ -1,5 +1,4 @@
 interface EmailLog {
-
   /**
    * 唯一uid
    */
@@ -31,15 +30,14 @@ interface EmailLog {
   send?: boolean | null;
 
   /**
-   * 
+   *
    */
   createTime?: string | null;
 
   /**
-   * 
+   *
    */
   updateTime?: string | null;
-
 }
 
-export { EmailLog }
+export { EmailLog };

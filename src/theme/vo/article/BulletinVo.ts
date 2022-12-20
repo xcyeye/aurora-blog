@@ -1,5 +1,4 @@
 interface BulletinVo {
-
   /**
    * 唯一uid
    */
@@ -49,7 +48,6 @@ interface BulletinVo {
    * 1:删除 0：未删除
    */
   delete?: boolean | null;
-
 }
 
-export { BulletinVo }
+export { BulletinVo };

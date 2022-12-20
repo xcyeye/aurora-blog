@@ -1,5 +1,4 @@
 interface NavigationVo {
-
   /**
    * 唯一uid
    */
@@ -69,7 +68,6 @@ interface NavigationVo {
    * 1: 展示，0： 不显示
    */
   show?: boolean | null;
-
 }
 
-export { NavigationVo }
+export { NavigationVo };

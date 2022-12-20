@@ -1,5 +1,4 @@
 interface LinkVo {
-
   /**
    * 唯一uid
    */
@@ -64,7 +63,6 @@ interface LinkVo {
    * 最后更新时间
    */
   updateTime?: string | null;
-
 }
 
-export { LinkVo }
+export { LinkVo };

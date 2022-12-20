@@ -1,7 +1,6 @@
 interface WhiteUrl {
-
   /**
-   * 
+   *
    */
   uid?: number | null;
 
@@ -11,15 +10,14 @@ interface WhiteUrl {
   url?: string | null;
 
   /**
-   * 
+   *
    */
   createTime?: string | null;
 
   /**
-   * 
+   *
    */
   updateTime?: string | null;
-
 }
 
-export { WhiteUrl }
+export { WhiteUrl };

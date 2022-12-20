@@ -1,5 +1,4 @@
 interface Link {
-
   /**
    * 唯一uid
    */
@@ -64,7 +63,6 @@ interface Link {
    * 最后更新时间
    */
   updateTime?: string | null;
-
 }
 
-export { Link }
+export { Link };

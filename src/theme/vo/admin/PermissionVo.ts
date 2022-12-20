@@ -1,5 +1,4 @@
 interface PermissionVo {
-
   /**
    * 唯一uid，自增
    */
@@ -16,15 +15,14 @@ interface PermissionVo {
   path?: string | null;
 
   /**
-   * 
+   *
    */
   createTime?: string | null;
 
   /**
-   * 
+   *
    */
   updateTime?: string | null;
-
 }
 
-export { PermissionVo }
+export { PermissionVo };

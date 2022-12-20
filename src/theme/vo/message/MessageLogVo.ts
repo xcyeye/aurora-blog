@@ -1,5 +1,4 @@
 interface MessageLogVo {
-
   /**
    * 唯一uid
    */
@@ -36,12 +35,12 @@ interface MessageLogVo {
   consumeStatus?: boolean | null;
 
   /**
-   * 
+   *
    */
   createTime?: string | null;
 
   /**
-   * 
+   *
    */
   updateTime?: string | null;
 
@@ -59,7 +58,6 @@ interface MessageLogVo {
    * 如果发生错误，则错误消息是什么
    */
   errorMessage?: string | null;
-
 }
 
-export { MessageLogVo }
+export { MessageLogVo };

@@ -43,6 +43,7 @@ specifiers:
   form-data: ^4.0.0
   husky: ^8.0.2
   lodash-es: ^4.17.21
+  mitt: ^3.0.0
   mockjs: ^1.1.0
   naive-ui: 2.34.2
   node-html-to-image: ^3.2.4
@@ -93,6 +94,7 @@ dependencies:
   echarts: 5.4.0
   form-data: 4.0.0
   lodash-es: 4.17.21
+  mitt: 3.0.0
   naive-ui: 2.34.2_vue@3.2.45
   pinia: 2.0.27_mgnvym7yiazkylwwogi5r767ue
   print-js: 1.6.0
@@ -7785,6 +7787,10 @@ packages:
       minipass: 3.3.6
       yallist: 4.0.0
     dev: true
+
+  /mitt/3.0.0:
+    resolution: {integrity: sha512-7dX2/10ITVyqh4aOSVI9gdape+t9l2/8QxHrFmUXu4EEUpdlxl6RudZUPZoc+zuY2hk1j7XxVroIVIan/pD/SQ==}
+    dev: false
 
   /mixin-deep/1.3.2:
     resolution: {integrity: sha512-WRoDn//mXBiJ1H40rqa3vH0toePwSsGb45iInWlTySa+Uu4k3tYUSxa2v1KqAiLtvlrSzaExqS1gtk96A9zvEA==}

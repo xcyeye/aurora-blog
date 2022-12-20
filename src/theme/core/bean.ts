@@ -52,7 +52,7 @@ interface Condition {
   /**
    * 排序字段
    */
-  orderBy: string | null;
+  orderBy?: string | null;
 
   /**
    * 其他的字段
@@ -61,16 +61,16 @@ interface Condition {
 }
 
 interface PageData<T> {
-	/**
-	 * 总数
-	 */
-	total?: number | null;
-	/**
-	 * 总页数
-	 */
-	pages?: number | null;
+  /**
+   * 总数
+   */
+  total?: number | null;
+  /**
+   * 总页数
+   */
+  pages?: number | null;
 
-	result: Array<T> | null;
+  result: Array<T> | null;
 }
 
 export { Condition, PageData };

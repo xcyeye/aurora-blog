@@ -1,5 +1,4 @@
 interface EmailLogVo {
-
   /**
    * 唯一uid
    */
@@ -31,15 +30,14 @@ interface EmailLogVo {
   send?: boolean | null;
 
   /**
-   * 
+   *
    */
   createTime?: string | null;
 
   /**
-   * 
+   *
    */
   updateTime?: string | null;
-
 }
 
-export { EmailLogVo }
+export { EmailLogVo };

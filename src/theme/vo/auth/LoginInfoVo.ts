@@ -1,7 +1,6 @@
 interface LoginInfoVo {
-
   /**
-   * 
+   *
    */
   uid?: string | null;
 
@@ -44,7 +43,6 @@ interface LoginInfoVo {
    * 登录消息，记录登录异常等信息
    */
   message?: string | null;
-
 }
 
-export { LoginInfoVo }
+export { LoginInfoVo };

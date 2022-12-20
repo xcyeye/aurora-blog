@@ -1,5 +1,4 @@
 interface Permission {
-
   /**
    * 唯一uid，自增
    */
@@ -16,15 +15,14 @@ interface Permission {
   path?: string | null;
 
   /**
-   * 
+   *
    */
   createTime?: string | null;
 
   /**
-   * 
+   *
    */
   updateTime?: string | null;
-
 }
 
-export { Permission }
+export { Permission };

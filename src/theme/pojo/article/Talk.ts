@@ -1,5 +1,4 @@
 interface Talk {
-
   /**
    * 唯一uid
    */
@@ -59,7 +58,6 @@ interface Talk {
    * 1: 已删除
    */
   delete?: boolean | null;
-
 }
 
-export { Talk }
+export { Talk };

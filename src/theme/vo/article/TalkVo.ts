@@ -1,5 +1,4 @@
 interface TalkVo {
-
   /**
    * 唯一uid
    */
@@ -59,7 +58,6 @@ interface TalkVo {
    * 1: 已删除
    */
   delete?: boolean | null;
-
 }
 
-export { TalkVo }
+export { TalkVo };

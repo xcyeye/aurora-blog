@@ -1,5 +1,4 @@
 interface AdminSidebar {
-
   /**
    * 唯一uid
    */
@@ -41,20 +40,19 @@ interface AdminSidebar {
   sort?: number | null;
 
   /**
-   * 
+   *
    */
   userUid?: string | null;
 
   /**
-   * 
+   *
    */
   createTime?: string | null;
 
   /**
-   * 
+   *
    */
   updateTime?: string | null;
-
 }
 
-export { AdminSidebar }
+export { AdminSidebar };
