@@ -25,6 +25,7 @@ import xyz.xcye.core.util.ConvertObjectUtils;
 import xyz.xcye.wg.util.SecurityResultHandler;
 
 import java.net.URI;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
@@ -216,16 +217,18 @@ public class GlobalAuthenticationFilter implements GlobalFilter {
             return invalidTokenMono(exchange, ResponseStatusCodeEnum.PERMISSION_TOKEN_EXPIRATION);
         }
 
+        HashMap<String, Object> userinfoMap = (HashMap<String, Object>) additionalInformation.get(OauthJwtConstant.USERINFO);
+
         // 获取用户权限
-        List<String> authorities = (List<String>) additionalInformation.get("authorities");
+        List<String> authorities = (List<String>) userinfoMap.get(OauthJwtConstant.AUTHORITY);
 
         // 构建一个在下层服务中，传递的用户对象
         JwtUserInfo jwtUserInfo = JwtUserInfo.builder()
-                .nickname((String) additionalInformation.get(OauthJwtConstant.NICKNAME))
-                .username((String) additionalInformation.get(OauthJwtConstant.USERNAME))
-                .userUid(Long.parseLong((String) additionalInformation.get(OauthJwtConstant.USER_UID)))
+                .nickname((String) userinfoMap.get(OauthJwtConstant.NICKNAME))
+                .username((String) userinfoMap.get(OauthJwtConstant.USERNAME))
+                .userUid(Long.parseLong((String) userinfoMap.get(OauthJwtConstant.USER_UID)))
                 .roleList(authorities)
-                .verifyEmail((Boolean) additionalInformation.get(OauthJwtConstant.VERIFY_EMAIL))
+                .verifyEmail((Boolean) userinfoMap.get(OauthJwtConstant.VERIFY_EMAIL))
                 .jwtToken(token)
                 .build();
 

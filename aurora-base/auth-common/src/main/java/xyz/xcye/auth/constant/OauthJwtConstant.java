@@ -14,7 +14,7 @@ public class OauthJwtConstant {
     public static final String NICKNAME = "nickname";
     public static final String VERIFY_EMAIL = "verify_email";
     public static final String AUTHORITY = "authority";
-    public static final String USERiNFO = "userInfo";
+    public static final String USERINFO = "userInfo";
 
     /** 超级管理员的角色名 **/
     public static final String SUPER_ADMINISTRATOR_ROLE_NAME = "ROLE_root";

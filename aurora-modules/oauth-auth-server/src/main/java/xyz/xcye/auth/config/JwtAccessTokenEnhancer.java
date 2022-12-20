@@ -42,7 +42,7 @@ public class JwtAccessTokenEnhancer extends JwtAccessTokenConverter {
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.toList());
         userinfoMap.put(OauthJwtConstant.AUTHORITY, authorities);
-        extendInformation.put(OauthJwtConstant.USERiNFO, userinfoMap);
+        extendInformation.put(OauthJwtConstant.USERINFO, userinfoMap);
 
         // 将extendInformation添加到额外的信息中
         ((DefaultOAuth2AccessToken) accessToken).setAdditionalInformation(extendInformation);
