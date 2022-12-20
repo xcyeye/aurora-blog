@@ -55,14 +55,14 @@ public class RoleController {
     @ResponseRealResult
     @Operation(summary = "根据uid查询角色")
     @PostMapping("/queryRoleByUid")
-    public String queryRoleByUid(@RequestBody int uid) {
-        return "roleService.selectByUid(uid)" + uid;
+    public RoleVO queryRoleByUid(@RequestBody int uid) {
+        return roleService.queryRoleByUid(uid);
     }
 
     @SelectOperation
     @Operation(summary = "查询满足要求的所有角色信息")
     @PostMapping("/queryListRoleByCondition")
     public PageData<RoleVO> queryListRoleByCondition(@RequestBody Condition<Long> condition) {
-        return roleService.selectAllRole(condition);
+        return roleService.queryListRoleByCondition(condition);
     }
 }

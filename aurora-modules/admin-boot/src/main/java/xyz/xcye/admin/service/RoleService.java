@@ -31,7 +31,7 @@ public class RoleService {
         Assert.notNull(role, "角色信息不能为null");
         AssertUtils.ifNoLengthThrow(role.getName(), () -> new RoleException("角色名字不能为null"));
         // 查看此角色是否存在
-        AssertUtils.stateThrow(selectAllRole(Condition.instant(role.getName())).getResult().isEmpty(),
+        AssertUtils.stateThrow(queryListRoleByCondition(Condition.instant(role.getName())).getResult().isEmpty(),
                 () -> new RoleException(ResponseStatusCodeEnum.PERMISSION_ROLE_HAD_EXISTS));
         role.setStatus(false);
         auroraRoleService.insert(BeanUtils.copyProperties(role, Role.class));
@@ -46,7 +46,7 @@ public class RoleService {
 
     public int updateRole(RolePojo role) {
         // 判断角色是否存在
-        AssertUtils.stateThrow(selectAllRole(Condition.instant(role.getName())).getResult().isEmpty(),
+        AssertUtils.stateThrow(queryListRoleByCondition(Condition.instant(role.getName())).getResult().isEmpty(),
                 () -> new RoleException(ResponseStatusCodeEnum.PERMISSION_ROLE_HAD_EXISTS));
         return auroraRoleService.updateById(BeanUtils.copyProperties(role, Role.class));
     }
@@ -55,11 +55,11 @@ public class RoleService {
         return auroraRoleService.deleteById(uid);
     }
 
-    public PageData<RoleVO> selectAllRole(Condition<Long> condition) {
+    public PageData<RoleVO> queryListRoleByCondition(Condition<Long> condition) {
         return PageUtils.copyPageDataResult(auroraRoleService.queryListByCondition(condition), RoleVO.class);
     }
 
-    public RoleVO selectByUid(long uid) {
+    public RoleVO queryRoleByUid(long uid) {
         return BeanUtils.copyProperties(auroraRoleService.queryById(uid), RoleVO.class);
     }
 }
