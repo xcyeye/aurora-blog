@@ -66,3 +66,5 @@ enum FileStorageModeConstant {
   /** 又拍云存储 **/
   UPYUN_OSS_STORAGE = 2
 }
+
+export {File}

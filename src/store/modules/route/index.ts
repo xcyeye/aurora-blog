@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
 import { ROOT_ROUTE, constantRoutes, router, routes as staticRoutes } from '@/router';
-import { fetchUserRoutes } from '@/service';
+import { authApi } from '@/service';
 import {
   localStg,
   filterAuthRoutesByUserPermission,
@@ -114,7 +114,7 @@ export const useRouteStore = defineStore('route-store', {
         throw new Error('userId 不能为空!');
       }
 
-      const { error, data } = await fetchUserRoutes(user_uid);
+      const { error, data } = await authApi.fetchUserRoutes(user_uid);
 
       if (!error) {
         this.routeHomeName = data.home;

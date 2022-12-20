@@ -19,3 +19,7 @@ export enum EnumLoginModule {
   'reset-pwd' = '重置密码',
   'bind-wechat' = '微信绑定'
 }
+
+export enum EnumAuthTokenType {
+	BEARER_TOKEN = 'bearer '
+}

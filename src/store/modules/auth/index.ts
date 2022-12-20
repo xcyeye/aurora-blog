@@ -1,8 +1,8 @@
 import { unref, nextTick } from 'vue';
 import { defineStore } from 'pinia';
-import { EnumRoleName } from '@/enum';
+import {EnumAuthTokenType, EnumRoleName} from '@/enum';
 import { router } from '@/router';
-import { fetchLoginByPassword } from '@/service';
+import { authApi } from '@/service';
 import { useRouterPush } from '@/composables';
 import { localStg } from '@/utils';
 import type { OauthPasswordPo } from '@/theme/pojo/auth/oauthPassword';
@@ -92,8 +92,8 @@ export const useAuthStore = defineStore('auth-store', {
 
       // 先把token存储到缓存中(后面接口的请求头需要token)
       const { access_token, refresh_token, userInfo } = backendToken;
-      localStg.set('token', access_token);
-      localStg.set('refreshToken', refresh_token);
+      localStg.set('token', EnumAuthTokenType.BEARER_TOKEN + access_token);
+      localStg.set('refreshToken', EnumAuthTokenType.BEARER_TOKEN + refresh_token);
       // 设置用户的角色类别 只有三个类型 super admin user
       if (userInfo.authority !== null) {
         if (userInfo.authority.indexOf(EnumRoleName.super) > -1) {
@@ -125,11 +125,11 @@ export const useAuthStore = defineStore('auth-store', {
       const oauthPasswordType: OauthPasswordPo = {
         username: userName,
         password,
-        client_id: 'xcyeye',
+        client_id: 'myjszl',
         client_secret: '123456',
         grant_type: 'password'
       };
-      const { data } = await fetchLoginByPassword(oauthPasswordType);
+      const { data } = await authApi.loginByPassword(oauthPasswordType);
       if (data) {
         await this.handleActionAfterLogin(data);
       }
@@ -164,7 +164,7 @@ export const useAuthStore = defineStore('auth-store', {
         client_secret: '123456',
         grant_type: 'password'
       };
-      const { data } = await fetchLoginByPassword(oauthPasswordType);
+      const { data } = await authApi.loginByPassword(oauthPasswordType);
       if (data) {
         await this.loginByToken(data);
         resetRouteStore();

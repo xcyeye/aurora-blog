@@ -41,5 +41,6 @@ export const views: Record<RouterPage.LastDegreeRouteKey, RouteComponent | (() =
   plugin_map: () => import('./plugin/map/index.vue'),
   plugin_print: () => import('./plugin/print/index.vue'),
   plugin_swiper: () => import('./plugin/swiper/index.vue'),
-  plugin_video: () => import('./plugin/video/index.vue')
+  plugin_video: () => import('./plugin/video/index.vue'),
+  test: () => import('./test/index.vue')
 };

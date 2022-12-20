@@ -60,4 +60,17 @@ interface Condition {
   otherField?: unknown;
 }
 
-export { Condition };
+interface PageData<T> {
+	/**
+	 * 总数
+	 */
+	total?: number | null;
+	/**
+	 * 总页数
+	 */
+	pages?: number | null;
+
+	result: Array<T> | null;
+}
+
+export { Condition, PageData };

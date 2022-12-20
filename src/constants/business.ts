@@ -1,3 +1,6 @@
+import {AxiosRequestConfig} from "axios";
+import {EnumContentType} from "@/enum";
+
 /** 用户性别 */
 export const genderLabels: Record<UserManagement.GenderKey, string> = {
   0: '女',
@@ -23,3 +26,9 @@ export const userStatusOptions: { value: UserManagement.UserStatusKey; label: st
   { value: '3', label: userStatusLabels['3'] },
   { value: '4', label: userStatusLabels['4'] }
 ];
+
+export const baseAxiosRequestConfig: AxiosRequestConfig = {
+	headers: {
+		'Content-Type': EnumContentType.json
+	}
+}
