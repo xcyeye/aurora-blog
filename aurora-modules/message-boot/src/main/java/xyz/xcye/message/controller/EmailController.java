@@ -51,8 +51,8 @@ public class EmailController {
     @Operation(summary = "根据唯一uid删除某条邮箱", description = "uid为long型")
     @ModifyOperation
     @PostMapping("/physicalDeleteEmail")
-    public int physicalDeleteEmail(@RequestBody long uid) {
-        return emailService.physicalDeleteEmail(uid);
+    public int physicalDeleteEmail(@RequestBody EmailPojo email) {
+        return emailService.physicalDeleteEmail(email.getUid());
     }
 
     @Operation(summary = "根据emailDO实体，更新邮箱记录", description = "必须传入uid以及delete字段")
@@ -72,21 +72,21 @@ public class EmailController {
     @Operation(summary = "根据uid查询")
     @SelectOperation
     @PostMapping("/queryEmailByUid")
-    public EmailVO queryEmailByUid(@RequestBody long uid) {
-        return emailService.queryEmailByUid(uid);
+    public EmailVO queryEmailByUid(@RequestBody EmailPojo email) {
+        return emailService.queryEmailByUid(email.getUid());
     }
 
     @Operation(summary = "根据userUid进行查询")
     @SelectOperation
     @PostMapping("/queryEmailByUserUid")
-    public EmailVO queryEmailByUserUid(@RequestBody long userUid) {
-        return emailService.queryEmailByUserUid(userUid);
+    public EmailVO queryEmailByUserUid(@RequestBody EmailPojo email) {
+        return emailService.queryEmailByUserUid(email.getUserUid());
     }
 
     @Operation(summary = "根据邮箱号进行查询")
     @SelectOperation
     @PostMapping("/queryByEmailNumber")
-    public EmailVO queryByEmailNumber(@RequestBody String email) {
-        return emailService.queryByEmailNumber(email);
+    public EmailVO queryByEmailNumber(@RequestBody EmailPojo email) {
+        return emailService.queryByEmailNumber(email.getEmail());
     }
 }

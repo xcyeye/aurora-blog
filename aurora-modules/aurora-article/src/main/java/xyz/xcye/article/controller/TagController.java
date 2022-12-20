@@ -42,15 +42,15 @@ public class TagController {
     @Operation(summary = "逻辑删除标签信息")
     @ModifyOperation
     @PostMapping("/logicDeleteTag")
-    public int logicDeleteTag(@RequestBody long uid) {
-        return tagService.logicDeleteTag(uid);
+    public int logicDeleteTag(@RequestBody TagPojo tag) {
+        return tagService.logicDeleteTag(tag.getUid());
     }
 
     @Operation(summary = "物理删除标签数据")
     @ModifyOperation
     @PostMapping("/physicalDeleteTag")
-    public int physicalDeleteTag(@RequestBody long uid) {
-        return tagService.physicalDeleteTag(uid);
+    public int physicalDeleteTag(@RequestBody TagPojo tag) {
+        return tagService.physicalDeleteTag(tag.getUid());
     }
 
     @Operation(summary = "根据条件查询标签")
@@ -63,8 +63,8 @@ public class TagController {
     @Operation(summary = "根据uid查询标签")
     @SelectOperation
     @PostMapping("/queryTagByUid")
-    public TagVO queryTagByUid(@RequestBody long uid) {
-        return tagService.queryTagByUid(uid);
+    public TagVO queryTagByUid(@RequestBody TagPojo tag) {
+        return tagService.queryTagByUid(tag.getUid());
     }
 
     @Operation(summary = "修改标签信息")

@@ -70,4 +70,6 @@ public class LoginInfoPojo {
     @Schema(title = "登录消息，记录登录异常等信息")
     private String message;
 
+    private Long[] uids;
+
 }

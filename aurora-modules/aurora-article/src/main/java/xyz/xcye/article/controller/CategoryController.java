@@ -43,15 +43,15 @@ public class CategoryController {
     @Operation(summary = "逻辑删除类别")
     @ModifyOperation
     @PostMapping("/logicDeleteCategory")
-    public int logicDeleteCategory(@RequestBody long uid) {
-        return categoryService.logicDeleteCategory(uid);
+    public int logicDeleteCategory(@RequestBody CategoryPojo category) {
+        return categoryService.logicDeleteCategory(category.getUid());
     }
 
     @Operation(summary = "物理删除类别信息")
     @ModifyOperation
     @PostMapping("/physicalDeleteCategory")
-    public int physicalDeleteCategory(@RequestBody long uid) {
-        return categoryService.physicalDeleteCategory(uid);
+    public int physicalDeleteCategory(@RequestBody CategoryPojo category) {
+        return categoryService.physicalDeleteCategory(category.getUid());
     }
 
     @Operation(summary = "根据条件查询类别信息")
@@ -64,8 +64,8 @@ public class CategoryController {
     @Operation(summary = "根据uid查询类别信息")
     @SelectOperation
     @PostMapping("/queryCategoryByUid")
-    public CategoryVO queryCategoryByUid(@RequestBody long uid) {
-        return categoryService.queryCategoryByUid(uid);
+    public CategoryVO queryCategoryByUid(@RequestBody CategoryPojo category) {
+        return categoryService.queryCategoryByUid(category.getUid());
     }
 
     @Operation(summary = "修改类别信息")

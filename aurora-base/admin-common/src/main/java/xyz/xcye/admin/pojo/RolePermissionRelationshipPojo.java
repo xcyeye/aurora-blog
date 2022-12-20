@@ -45,4 +45,8 @@ public class RolePermissionRelationshipPojo {
     private Long[] originPermissionUidArr;
     private Long[] newPermissionUidArr;
 
+    private String[] usernameArr;
+    private String[] roleNameArr;
+    private String[] permissionPathArr;
+
 }

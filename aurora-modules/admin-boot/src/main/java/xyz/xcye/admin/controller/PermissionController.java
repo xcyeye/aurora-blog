@@ -46,21 +46,21 @@ public class PermissionController {
     @ModifyOperation
     @Operation(summary = "删除权限")
     @PostMapping("/physicalDeletePermission")
-    public int physicalDeletePermission(@RequestBody int uid) {
-        return permissionService.deleteByUid(uid);
+    public int physicalDeletePermission(@RequestBody PermissionPojo permission) {
+        return permissionService.physicalDeletePermission(permission.getUid());
     }
 
     @SelectOperation
     @Operation(summary = "根据uid查询权限")
     @PostMapping("/queryPermissionByUid")
-    public Permission queryPermissionByUid(@RequestBody int uid) {
-        return permissionService.selectByUid(uid);
+    public Permission queryPermissionByUid(@RequestBody PermissionPojo permission) {
+        return permissionService.queryPermissionByUid(permission.getUid());
     }
 
     @SelectOperation
     @Operation(summary = "查询满足要求的所有权限信息")
     @PostMapping("/queryListPermissionByCondition")
     public PageData<Permission> queryListPermissionByCondition(@RequestBody Condition<Long> condition) {
-        return permissionService.selectAllPermission(condition);
+        return permissionService.queryListPermissionByCondition(condition);
     }
 }

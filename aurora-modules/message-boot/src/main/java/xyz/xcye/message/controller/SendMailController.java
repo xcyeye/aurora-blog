@@ -46,7 +46,7 @@ public class SendMailController {
     @Operation(summary = "重新发送自定义邮件")
     @ModifyOperation
     @PostMapping("/resendCustomMail")
-    public void resendCustomMail(@RequestBody Long emailLogUid) throws MessagingException {
-        sendMailService.resendCustomMail(emailLogUid);
+    public void resendCustomMail(@RequestBody SendMailPojo pojo) throws MessagingException {
+        sendMailService.resendCustomMail(pojo.getEmailLogUid());
     }
 }

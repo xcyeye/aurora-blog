@@ -152,4 +152,6 @@ public class CommentPojo {
     @NotNull(groups = {Insert.class})
     private Long pageUid;
 
+    private Long[] commentUidArr;
+
 }

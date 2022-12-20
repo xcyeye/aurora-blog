@@ -100,12 +100,12 @@ public class UserService {
 
     /**
      * 更新密码，忘记密码也会进入此流程，如果是更新密码，那么username,originPwd,newPwd是必须的，如果是忘记密码，需要username，secretKey
-     * @param username
-     * @param originPwd
-     * @param newPwd
      * @return
      */
-    public int updatePassword(String username, String originPwd, String newPwd) {
+    public int updatePassword(UserPojo userPojo) {
+        String username = userPojo.getUsername();
+        String originPwd = userPojo.getOriginPwd();
+        String newPwd = userPojo.getNewPwd();
         AssertUtils.stateThrow(StringUtils.hasLength(username), () -> new UserException("用户名不能为空"));
         // 查询此用户的原始密码
         User user = queryByUsernameContainPassword(username);

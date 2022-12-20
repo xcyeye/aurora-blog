@@ -43,15 +43,15 @@ public class TalkController {
     @Operation(summary = "逻辑删除说说")
     @ModifyOperation
     @PostMapping("/logicDeleteTalk")
-    public int logicDeleteTalk(@RequestBody long uid) {
-        return talkService.logicDeleteTalk(uid);
+    public int logicDeleteTalk(@RequestBody TalkPojo talk) {
+        return talkService.logicDeleteTalk(talk.getUid());
     }
 
     @ModifyOperation
     @Operation(summary = "物理删除说说")
     @PostMapping("/physicalDeleteTalk")
-    public int physicalDeleteTalk(@RequestBody long uid) {
-        return talkService.physicalDeleteTalk(uid);
+    public int physicalDeleteTalk(@RequestBody TalkPojo talk) {
+        return talkService.physicalDeleteTalk(talk.getUid());
     }
 
     @Operation(summary = "根据条件查询说说")
@@ -64,8 +64,8 @@ public class TalkController {
     @Operation(summary = "根据uid查询说说")
     @SelectOperation
     @PostMapping("/queryTalkByUid")
-    public TalkVO queryTalkByUid(@RequestBody long uid) {
-        return talkService.queryTalkByUid(uid);
+    public TalkVO queryTalkByUid(@RequestBody TalkPojo talk) {
+        return talkService.queryTalkByUid(talk.getUid());
     }
 
     @Operation(summary = "修改说说内容")

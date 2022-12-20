@@ -58,8 +58,8 @@ public class LinkController {
     @Operation(summary = "根据uid查询")
     @SelectOperation
     @PostMapping("/queryLinkByUid")
-    public LinkVO queryLinkByUid(@RequestBody Long uid) {
-        return linkService.queryLinkByUid(uid);
+    public LinkVO queryLinkByUid(@RequestBody LinkPojo link) {
+        return linkService.queryLinkByUid(link.getUid());
     }
 
     @PostMapping("/updateLink")

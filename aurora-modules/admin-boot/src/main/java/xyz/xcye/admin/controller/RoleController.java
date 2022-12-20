@@ -48,15 +48,15 @@ public class RoleController {
     @ModifyOperation
     @Operation(summary = "删除角色")
     @PostMapping("/physicalDeleteRole")
-    public int physicalDeleteRole(@RequestBody int uid) {
-        return roleService.deleteByUid(uid);
+    public int physicalDeleteRole(@RequestBody RolePojo role) {
+        return roleService.physicalDeleteRole(role.getUid());
     }
 
-    @ResponseRealResult
+    @SelectOperation
     @Operation(summary = "根据uid查询角色")
-    @PostMapping("/queryRoleByUid")
-    public RoleVO queryRoleByUid(@RequestBody int uid) {
-        return roleService.queryRoleByUid(uid);
+    @PostMapping(value = "/queryRoleByUid", produces = "application/json;charset=UTF-8")
+    public RoleVO queryRoleByUid(@RequestBody RolePojo role) {
+        return roleService.queryRoleByUid(role.getUid());
     }
 
     @SelectOperation

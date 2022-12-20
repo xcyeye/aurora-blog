@@ -124,15 +124,15 @@ public class FileController {
     @SelectOperation
     @Operation(summary = "查询文件数据", description = "其中keyword为文件的名字")
     @PostMapping("/queryFileByUid")
-    public FileVO queryFileByUid(@RequestBody long uid) {
-        return fileService.queryFileByUid(uid);
+    public FileVO queryFileByUid(@RequestBody FilePojo fileInfo) {
+        return fileService.queryFileByUid(fileInfo.getUid());
     }
 
     @SelectOperation
     @Operation(summary = "查询该userUid所对应的所有文件的后缀信息")
     @PostMapping("/queryListFileFormat")
-    public List<String> queryListFileFormat(@RequestBody long userUid) {
-        return fileService.queryListFileFormat(userUid);
+    public List<String> queryListFileFormat(@RequestBody FilePojo fileInfo) {
+        return fileService.queryListFileFormat(fileInfo.getUserUid());
     }
 
     /**
@@ -149,21 +149,21 @@ public class FileController {
 
     /**
      * 删除指定文件
-     * @param uid 一定要传入uid
+     * @param fileInfo 一定要传入uid
      * @return 文件的修改情况
      */
     @ModifyOperation
     @Operation(summary = "根据uid删除某个文件", description = "从数据库中删除对应数据，删除与之关联的本地，对象存储中的文件，返回删除成功之后的文件对象")
     @PostMapping("/deleteFile")
-    public int deleteFile(@RequestBody long uid) throws FileException, IOException, ExecutionException, InterruptedException {
-        return fileService.deleteFile(uid);
+    public int deleteFile(@RequestBody FilePojo fileInfo) throws FileException, IOException, ExecutionException, InterruptedException {
+        return fileService.deleteFile(fileInfo.getUid());
     }
 
     @ModifyOperation
     @Operation(summary = "根据uid删除某个文件的信息，从数据库中删除", description = "从数据库中删除对应数据，删除与之关联的本地，对象存储中的文件，返回删除成功之后的文件对象")
     @PostMapping("/physicalDeleteFileInfo")
-    public int physicalDeleteFileInfo(@RequestBody long uid) {
-        return fileService.physicalDeleteFileInfo(uid);
+    public int physicalDeleteFileInfo(@RequestBody FilePojo fileInfo) {
+        return fileService.physicalDeleteFileInfo(fileInfo.getUid());
     }
 
     @Operation(summary = "根据uid下载文件")

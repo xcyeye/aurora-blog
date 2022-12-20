@@ -26,8 +26,8 @@ public class VerifyAccountController {
     private CommonVerifyUrlService commonVerifyUrlService;
 
     @ResponseRealResult
-    @GetMapping("/bindEmail/emailVerifyAccount")
-    public String emailVerifyAccount(@RequestBody String incomingSecretKey) throws UserException {
+    @GetMapping("/bindEmail/emailVerifyAccount/{incomingSecretKey}")
+    public String emailVerifyAccount(@PathVariable("incomingSecretKey") String incomingSecretKey) throws UserException {
         boolean bindEmail = commonVerifyUrlService.bindEmail(incomingSecretKey);
 
         if (bindEmail) {
@@ -37,8 +37,8 @@ public class VerifyAccountController {
     }
 
     @ResponseRealResult
-    @GetMapping("/enable/enableAccount")
-    public String enableAccount(@RequestBody String incomingSecretKey) throws UserException {
+    @GetMapping("/enable/enableAccount/{incomingSecretKey}")
+    public String enableAccount(@PathVariable("incomingSecretKey") String incomingSecretKey) throws UserException {
         boolean bindEmail = commonVerifyUrlService.bindEmail(incomingSecretKey);
 
         if (bindEmail) {

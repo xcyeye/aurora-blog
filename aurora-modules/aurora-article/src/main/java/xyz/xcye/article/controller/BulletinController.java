@@ -43,15 +43,15 @@ public class BulletinController {
     @ModifyOperation
     @Operation(summary = "逻辑删除公告")
     @PostMapping("/logicDeleteBulletin")
-    public int logicDeleteBulletin(@RequestBody long uid) {
-        return bulletinService.logicDeleteBulletin(uid);
+    public int logicDeleteBulletin(@RequestBody BulletinPojo bulletin) {
+        return bulletinService.logicDeleteBulletin(bulletin.getUid());
     }
 
     @Operation(summary = "物理删除公告")
     @ModifyOperation
     @PostMapping("/physicalDeleteBulletin")
-    public int physicalDeleteBulletin(@RequestBody long uid) {
-        return bulletinService.physicalDeleteBulletin(uid);
+    public int physicalDeleteBulletin(@RequestBody BulletinPojo bulletin) {
+        return bulletinService.physicalDeleteBulletin(bulletin.getUid());
     }
 
     @Operation(summary = "修改公告内容")
@@ -71,7 +71,7 @@ public class BulletinController {
     @Operation(summary = "根据uid查询公告")
     @SelectOperation
     @PostMapping("/queryBulletinByUid")
-    public BulletinVO queryBulletinByUid(@RequestBody long uid) {
-        return bulletinService.queryBulletinByUid(uid);
+    public BulletinVO queryBulletinByUid(@RequestBody BulletinPojo bulletin) {
+        return bulletinService.queryBulletinByUid(bulletin.getUid());
     }
 }

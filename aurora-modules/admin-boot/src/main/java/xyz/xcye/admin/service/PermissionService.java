@@ -28,7 +28,7 @@ public class PermissionService {
     @Autowired
     private AuroraPermissionService auroraPermissionService;
 
-    public int deleteByUid(long uid) {
+    public int physicalDeletePermission(long uid) {
         return auroraPermissionService.deleteById(uid);
     }
 
@@ -51,7 +51,7 @@ public class PermissionService {
         return auroraPermissionService.updateById(BeanUtils.copyProperties(permission, Permission.class));
     }
 
-    public PageData<Permission> selectAllPermission(Condition<Long> condition) {
+    public PageData<Permission> queryListPermissionByCondition(Condition<Long> condition) {
         return auroraPermissionService.queryListByCondition(condition);
     }
 
@@ -59,7 +59,7 @@ public class PermissionService {
         return Pattern.matches(RegexEnum.REST_FUL_PATH.getRegex(),resourcePath);
     }
 
-    public Permission selectByUid(long uid) {
+    public Permission queryPermissionByUid(long uid) {
         return auroraPermissionService.queryById(uid);
     }
 }

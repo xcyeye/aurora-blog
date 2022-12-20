@@ -113,4 +113,14 @@ public class UserPojo {
      */
     private String updateTime;
 
+    /**
+     * 原始密码
+     */
+    private String originPwd;
+
+    /**
+     * 新密码
+     */
+    private String newPwd;
+
 }

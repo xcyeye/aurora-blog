@@ -56,8 +56,8 @@ public class CommentController {
     @Operation(summary = "删除单条评论")
     @ModifyOperation
     @PostMapping("/physicalDeleteComment")
-    public int physicalDeleteComment(@RequestBody Long uid) {
-        return commentService.physicalDeleteComment(uid);
+    public int physicalDeleteComment(@RequestBody CommentPojo comment) {
+        return commentService.physicalDeleteComment(comment.getUid());
     }
 
     /**
@@ -68,8 +68,8 @@ public class CommentController {
     @Operation(summary = "查询所有满足要求的所有评论")
     @SelectOperation
     @PostMapping("/queryListCommentByUidArr")
-    public ShowCommentVO queryListCommentByUidArr(@RequestBody long[] commentUidArr) {
-        return commentService.queryListCommentByUidArr(commentUidArr);
+    public ShowCommentVO queryListCommentByUidArr(@RequestBody CommentPojo comment) {
+        return commentService.queryListCommentByUidArr(comment.getCommentUidArr());
     }
 
     @Operation(summary = "根据自定义条件查询所有评论")
@@ -82,14 +82,14 @@ public class CommentController {
     @Operation(summary = "根据uid查询评论")
     @SelectOperation
     @PostMapping("/queryCommentByUid")
-    public CommentDTO queryCommentByUid(@RequestBody long uid) {
-        return commentService.queryCommentByUid(uid);
+    public CommentDTO queryCommentByUid(@RequestBody CommentPojo comment) {
+        return commentService.queryCommentByUid(comment.getUid());
     }
 
     @Operation(summary = "重新发送评论的邮件通知")
     @ModifyOperation
     @PostMapping("/resendEmail")
-    public int resendEmailNotice(@RequestBody long uid) throws BindException {
-        return commentService.resendEmailNotice(uid);
+    public int resendEmailNotice(@RequestBody CommentPojo comment) throws BindException {
+        return commentService.resendEmailNotice(comment.getUid());
     }
 }

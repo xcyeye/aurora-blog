@@ -53,8 +53,8 @@ public class MessageLogController {
     @Operation(summary = "删除消费消息")
     @ModifyOperation
     @PostMapping("/physicalDeleteMessageLog")
-    public int physicalDeleteMessageLog(@RequestBody long uid) {
-        return messageLogService.physicalDeleteMessageLog(uid);
+    public int physicalDeleteMessageLog(@RequestBody MessageLogPojo messageLog) {
+        return messageLogService.physicalDeleteMessageLog(messageLog.getUid());
     }
 
     @Operation(summary = "查询所有消费消息")
@@ -67,14 +67,14 @@ public class MessageLogController {
     @Operation(summary = "根据uid查询消费消息")
     @SelectOperation
     @PostMapping("/queryMessageLogByUid")
-    public MessageLogVO queryMessageLogByUid(@RequestBody long uid) {
-        return messageLogService.queryMessageLogByUid(uid);
+    public MessageLogVO queryMessageLogByUid(@RequestBody MessageLogPojo messageLog) {
+        return messageLogService.queryMessageLogByUid(messageLog.getUid());
     }
 
     @Operation(summary = "重新投递此messageLogUid对应的mq消息")
     @SelectOperation
     @PostMapping("/resendRabbitMqMessage")
-    public void resendRabbitMqMessage(@RequestBody long messageLogUid) throws BindException {
-        messageLogService.resendMqMessage(messageLogUid);
+    public void resendRabbitMqMessage(@RequestBody MessageLogPojo messageLog) throws BindException {
+        messageLogService.resendMqMessage(messageLog.getUid());
     }
 }

@@ -26,7 +26,7 @@ public class WhiteUrlPojo {
      * 唯一uid
      */
     @NotNull(groups = {Update.class})
-    private Integer uid;
+    private Long uid;
 
     /**
      * 白名单地址

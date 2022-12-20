@@ -27,15 +27,15 @@ public class SiteController {
     @PostMapping("/logicDeleteSite")
     @ModifyOperation
     @Operation(summary = "逻辑删除此uid对应的站点信息")
-    public int logicDeleteSite(@RequestBody long uid) {
-        return siteService.logicDeleteSite(uid);
+    public int logicDeleteSite(@RequestBody SitePojo record) {
+        return siteService.logicDeleteSite(record.getUid());
     }
 
     @PostMapping("/physicalDeleteSite")
     @Operation(summary = "物理删除站点信息")
     @ModifyOperation
-    public int physicalDeleteSite(@RequestBody long uid) {
-        return siteService.physicalDeleteSite(uid);
+    public int physicalDeleteSite(@RequestBody SitePojo record) {
+        return siteService.physicalDeleteSite(record.getUid());
     }
 
     @PostMapping("/insertSite")
@@ -59,14 +59,14 @@ public class SiteController {
 
     /**
      * 通过userUid查询
-     * @param uid
+     * @param record
      * @return
      */
     @PostMapping("/querySiteByUid")
     @SelectOperation
     @Operation(summary = "根据uid查询站点信息")
-    public SiteVO querySiteByUid(@RequestBody long uid) {
-        return siteService.querySiteByUid(uid);
+    public SiteVO querySiteByUid(@RequestBody SitePojo record) {
+        return siteService.querySiteByUid(record.getUid());
     }
 
     @PostMapping("/updateSite")

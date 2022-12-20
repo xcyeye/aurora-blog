@@ -43,15 +43,15 @@ public class ArticleController {
     @ModifyOperation
     @Operation(summary = "逻辑删除文章")
     @PostMapping("/logicDeleteArticle")
-    public int logicDeleteArticle(@RequestBody long uid) {
-        return articleService.logicDeleteArticle(uid);
+    public int logicDeleteArticle(@RequestBody ArticlePojo article) {
+        return articleService.logicDeleteArticle(article.getUid());
     }
 
     @Operation(summary = "物理删除文章")
     @ModifyOperation
     @PostMapping("/physicalDeleteArticle")
-    public int physicalDeleteArticle(@RequestBody long uid) {
-        return articleService.physicalDeleteArticle(uid);
+    public int physicalDeleteArticle(@RequestBody ArticlePojo article) {
+        return articleService.physicalDeleteArticle(article.getUid());
     }
 
     @Operation(summary = "修改文章数据")
@@ -64,8 +64,8 @@ public class ArticleController {
     @SelectOperation
     @Operation(summary = "根据uid查询文章数据")
     @PostMapping("/queryArticleByUid")
-    public ArticleVO queryArticleByUid(@RequestBody long uid) {
-        return articleService.queryArticleByUid(uid);
+    public ArticleVO queryArticleByUid(@RequestBody ArticlePojo article) {
+        return articleService.queryArticleByUid(article.getUid());
     }
 
     @Operation(summary = "通过条件查询文章数据")

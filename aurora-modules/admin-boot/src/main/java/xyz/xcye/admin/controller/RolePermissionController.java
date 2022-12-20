@@ -34,8 +34,8 @@ public class RolePermissionController {
     @SelectOperation
     @Operation(summary = "根据用户uid，加载该用户所拥有的角色权限关系")
     @PostMapping("/loadPermissionByUserUid")
-    public List<RolePermissionDTO> loadPermissionByUserUid(@RequestBody long userUid) {
-        return permissionRelationService.loadPermissionByUserUid(userUid);
+    public List<RolePermissionDTO> loadPermissionByUserUid(@RequestBody RolePermissionRelationshipPojo pojo) {
+        return permissionRelationService.loadPermissionByUserUid(pojo);
     }
 
     @SelectOperation
@@ -48,29 +48,29 @@ public class RolePermissionController {
     @SelectOperation
     @PostMapping("/loadAllRoleByUsername")
     @Operation(summary = "根据用户名，获取该用户所拥有的所有角色")
-    public List<Role> loadAllRoleByUsername(@RequestBody String username) {
-        return permissionRelationService.loadAllRoleByUsername(username);
+    public List<Role> loadAllRoleByUsername(@RequestBody RolePermissionRelationshipPojo pojo) {
+        return permissionRelationService.loadAllRoleByUsername(pojo);
     }
 
     @SelectOperation
     @Operation(summary = "根据用户名，加载该用户所拥有的角色权限关系，此接口和loadPermissionByUserUid返回的数据一样")
     @PostMapping("/loadPermissionByUsername")
-    public List<RolePermissionDTO> loadPermissionByUsername(@RequestBody String username) {
-        return permissionRelationService.loadPermissionByUsername(username);
+    public List<RolePermissionDTO> loadPermissionByUsername(@RequestBody RolePermissionRelationshipPojo pojo) {
+        return permissionRelationService.loadPermissionByUsername(pojo);
     }
 
     @SelectOperation
     @PostMapping("/loadPermissionByRoleName")
     @Operation(summary = "根据角色名称，加载对应的角色-权限信息")
-    public List<RolePermissionDTO> loadPermissionByRoleName(@RequestBody String roleName) {
-        return permissionRelationService.loadPermissionByRoleName(roleName);
+    public List<RolePermissionDTO> loadPermissionByRoleName(@RequestBody RolePermissionRelationshipPojo pojo) {
+        return permissionRelationService.loadPermissionByRoleName(pojo);
     }
 
     @SelectOperation
     @PostMapping("/queryRoleByPermissionPath")
     @Operation(summary = "根据permissionPath，查询哪些角色和角色可以可以访问")
-    public List<RolePermissionDTO> queryRoleByPermissionPath(@RequestBody String permissionPath) {
-        return permissionRelationService.queryRoleByPermissionPath(permissionPath);
+    public List<RolePermissionDTO> queryRoleByPermissionPath(@RequestBody RolePermissionRelationshipPojo pojo) {
+        return permissionRelationService.queryRoleByPermissionPath(pojo);
     }
 
     @ModifyOperation

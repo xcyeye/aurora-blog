@@ -134,7 +134,7 @@ public class CommentService {
         return auroraCommentService.updateById(comment);
     }
 
-    public ShowCommentVO queryListCommentByUidArr(long[] arrayUid) {
+    public ShowCommentVO queryListCommentByUidArr(Long[] arrayUid) {
         // 获取arrayUid中可用的uid
         List<Long> effectiveCommentUidList = getEffectiveCommentUid(arrayUid);
 
@@ -246,7 +246,7 @@ public class CommentService {
      * @param arrayUid
      * @return
      */
-    private List<Long> getEffectiveCommentUid(long[] arrayUid) {
+    private List<Long> getEffectiveCommentUid(Long[] arrayUid) {
         List<Long> listUid = new ArrayList<>();
         for (Long uid : arrayUid) {
             if (isExistsComment(uid)) {

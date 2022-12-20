@@ -51,8 +51,8 @@ public class EmailLogController {
     @Operation(summary = "删除uid对应邮件发送日志")
     @SelectOperation
     @PostMapping("/physicalDeleteEmailLog")
-    public int physicalDeleteEmailLog(@RequestBody long uid) {
-        return emailLogService.physicalDeleteEmailLog(uid);
+    public int physicalDeleteEmailLog(@RequestBody EmailLogPojo emailLog) {
+        return emailLogService.physicalDeleteEmailLog(emailLog.getUid());
     }
 
     @Operation(summary = "查询所有邮件发送日志")

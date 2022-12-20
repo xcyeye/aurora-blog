@@ -51,7 +51,7 @@ public class RoleService {
         return auroraRoleService.updateById(BeanUtils.copyProperties(role, Role.class));
     }
 
-    public int deleteByUid(long uid) {
+    public int physicalDeleteRole(long uid) {
         return auroraRoleService.deleteById(uid);
     }
 

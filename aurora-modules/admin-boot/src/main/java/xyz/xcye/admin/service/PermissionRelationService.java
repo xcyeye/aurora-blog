@@ -50,11 +50,14 @@ public class PermissionRelationService {
     @Autowired
     private PermissionRelationDaoExt permissionRelationDao;
 
-    public List<RolePermissionDTO> loadPermissionByUserUid(long userUid) {
-        return packageCollectResult(permissionRelationDao.loadPermissionByUserUid(userUid));
+    public List<RolePermissionDTO> loadPermissionByUserUid(RolePermissionRelationshipPojo pojo) {
+        Assert.notNull(pojo.getUserUidArr(), "userUidArr不能为null");
+        return packageCollectResult(permissionRelationDao.loadPermissionByUserUid(pojo.getUserUidArr()[0]));
     }
 
-    public List<Role> loadAllRoleByUsername(String username) {
+    public List<Role> loadAllRoleByUsername(RolePermissionRelationshipPojo pojo) {
+        Assert.notNull(pojo.getUsernameArr(), "usernameArr不能为null");
+        String username = pojo.getUsernameArr()[0];
         UserVO userVO = userService.queryUserByUsername(username);
         AssertUtils.stateThrow(username != null,
                 () -> new UserException(ResponseStatusCodeEnum.PERMISSION_USER_NOT_EXIST));
@@ -63,7 +66,9 @@ public class PermissionRelationService {
                 .collect(Collectors.toList());
     }
 
-    public List<RolePermissionDTO> loadPermissionByUsername(String username) {
+    public List<RolePermissionDTO> loadPermissionByUsername(RolePermissionRelationshipPojo pojo) {
+        Assert.notNull(pojo.getUsernameArr(), "usernameArr不能为null");
+        String username = pojo.getUsernameArr()[0];
         UserVO userVO = userService.queryUserByUsername(username);
         if (userVO == null) {
             return new ArrayList<>();
@@ -71,16 +76,18 @@ public class PermissionRelationService {
         return packageCollectResult(permissionRelationDao.loadPermissionByUserUid(userVO.getUid()));
     }
 
-    public List<RolePermissionDTO> loadPermissionByRoleName(String roleName) {
-        return packageCollectResult(permissionRelationDao.loadPermissionByRoleName(roleName));
+    public List<RolePermissionDTO> loadPermissionByRoleName(RolePermissionRelationshipPojo pojo) {
+        Assert.notNull(pojo.getRoleNameArr(), "roleNameArr不能为null");
+        return packageCollectResult(permissionRelationDao.loadPermissionByRoleName(pojo.getRoleNameArr()[0]));
     }
 
     public List<RolePermissionDTO> loadAllRolePermission(Condition<Long> condition) {
         return packageCollectResult(permissionRelationDao.loadAllRolePermission(condition));
     }
 
-    public List<RolePermissionDTO> queryRoleByPermissionPath(String permissionPath) {
-        return packageCollectResult(permissionRelationDao.queryRoleByPermissionPath(permissionPath));
+    public List<RolePermissionDTO> queryRoleByPermissionPath(RolePermissionRelationshipPojo pojo) {
+        Assert.notNull(pojo.getPermissionPathArr(), "permissionPathArr不能为null");
+        return packageCollectResult(permissionRelationDao.queryRoleByPermissionPath(pojo.getPermissionPathArr()[0]));
     }
 
     @Transactional
@@ -173,7 +180,7 @@ public class PermissionRelationService {
         final int[] successNum = {0};
 
         // 判断此permissionUid是否可用
-        AssertUtils.stateThrow(permissionService.selectByUid(permissionUid) != null,
+        AssertUtils.stateThrow(permissionService.queryPermissionByUid(permissionUid) != null,
                 () -> new UserException(ResponseStatusCodeEnum.PERMISSION_RESOURCE_NOT_RIGHT));
         Assert.notNull(roleUidArr, "传入的角色uid不能为null");
         Stream<Long> longStream = Arrays.stream(roleUidArr)
@@ -235,7 +242,7 @@ public class PermissionRelationService {
         List<RolePermissionRelationship> permissionRelationshipList = auroraRolePermissionService.queryListByCondition(condition).getResult();
         if (permissionRelationshipList.size() > 0) {
             // 判断此newPermissionUid是否存在
-            AssertUtils.stateThrow(permissionService.selectByUid(newPermissionUid) != null,
+            AssertUtils.stateThrow(permissionService.queryPermissionByUid(newPermissionUid) != null,
                     () -> new PermissionException(ResponseStatusCodeEnum.PERMISSION_RESOURCE_NOT_RIGHT));
             // 更新
             permissionRelationshipList.get(0).setPermissionUid(newPermissionUid);

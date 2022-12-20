@@ -28,15 +28,15 @@ public class SocialController {
     @ModifyOperation
     @Operation(summary = "逻辑删除此社交信息")
     @PostMapping("/loginDeleteSocial")
-    public int loginDeleteSocial(@RequestBody long uid) {
-        return socialService.loginDeleteSocial(uid);
+    public int loginDeleteSocial(@RequestBody SocialPojo record) {
+        return socialService.loginDeleteSocial(record.getUid());
     }
 
     @PostMapping("/physicalDeleteSocial")
     @Operation(summary = "物理删除此社交信息")
     @ModifyOperation
-    public int physicalDeleteSocial(@RequestBody long uid) {
-        return socialService.physicalDeleteSocial(uid);
+    public int physicalDeleteSocial(@RequestBody SocialPojo record) {
+        return socialService.physicalDeleteSocial(record.getUid());
     }
 
 
@@ -57,8 +57,8 @@ public class SocialController {
     @PostMapping("/querySocialByUid")
     @SelectOperation
     @Operation(summary = "根据uid查询社交信息")
-    public SocialVO querySocialByUid(@RequestBody long uid) {
-        return socialService.querySocialByUid(uid);
+    public SocialVO querySocialByUid(@RequestBody SocialPojo record) {
+        return socialService.querySocialByUid(record.getUid());
     }
 
     @PostMapping("/updateSocial")

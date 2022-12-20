@@ -36,63 +36,63 @@ public class UserController {
     @PostMapping("/insertUser")
     @ModifyOperation
     @Operation(summary = "添加新用户")
-    public void insertUser(@Validated({Insert.class, Default.class}) UserPojo user) throws UserException {
+    public void insertUser(@Validated({Insert.class, Default.class}) @RequestBody UserPojo user) throws UserException {
         userService.insertUserSelective(user);
     }
 
     @PostMapping("/updateUser")
     @ModifyOperation
     @Operation(summary = "修改用户信息")
-    public void updateUser(@Validated({Update.class, Default.class})UserPojo user) throws UserException {
+    public void updateUser(@Validated({Update.class, Default.class}) @RequestBody UserPojo user) throws UserException {
         userService.updateUserSelective(user);
     }
 
     @Operation(summary = "更新密码")
     @PostMapping("/updatePassword")
     @ModifyOperation
-    public void updatePassword(String username, String originPwd, String newPwd) {
-        userService.updatePassword(username, originPwd, newPwd);
+    public void updatePassword(@RequestBody UserPojo user) {
+        userService.updatePassword(user);
     }
 
     @PostMapping("/logicDeleteUser")
     @ModifyOperation
     @Operation(summary = "逻辑删除用户信息")
-    public void logicDeleteUser(@RequestBody long uid) {
-        userService.logicDeleteByUid(uid);
+    public void logicDeleteUser(@RequestBody UserPojo user) {
+        userService.logicDeleteByUid(user.getUid());
     }
 
     @PostMapping("/physicalDeleteUser")
     @ModifyOperation
     @Operation(summary = "真正的从数据库中删除用户信息")
-    public void physicalDeleteUser(@RequestBody long uid) {
-        userService.realDeleteByUid(uid);
+    public void physicalDeleteUser(@RequestBody UserPojo user) {
+        userService.realDeleteByUid(user.getUid());
     }
 
     @PostMapping("/queryUserByUid")
     @SelectOperation
     @Operation(summary = "通过uid查询用户信息")
-    public UserVO queryUserByUid(@RequestBody long uid) {
-        return userService.queryUserByUid(uid);
+    public UserVO queryUserByUid(@RequestBody UserPojo user) {
+        return userService.queryUserByUid(user.getUid());
     }
 
     @PostMapping("/queryUserByUsername")
     @SelectOperation
     @Operation(summary = "通过username查询用户信息")
-    public UserVO queryUserByUsername(@RequestBody String username) {
-        return userService.queryUserByUsername(username);
+    public UserVO queryUserByUsername(@RequestBody UserPojo user) {
+        return userService.queryUserByUsername(user.getUsername());
     }
 
     @PostMapping("/queryUserByUsernameContainPassword")
     @SelectOperation
     @Operation(summary = "通过username查询用户信息")
-    public User queryUserByUsernameContainPassword(@RequestBody String username) {
-        return userService.queryByUsernameContainPassword(username);
+    public User queryUserByUsernameContainPassword(@RequestBody UserPojo user) {
+        return userService.queryByUsernameContainPassword(user.getUsername());
     }
 
     @PostMapping("/queryListUserByCondition")
     @SelectOperation
     @Operation(summary = "查询所有满足要求的用户信息")
-    public PageData<UserVO> queryListUserByCondition(Condition<Long> condition) {
+    public PageData<UserVO> queryListUserByCondition(@RequestBody Condition<Long> condition) {
         return userService.queryAllByCondition(condition);
     }
 

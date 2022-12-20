@@ -35,8 +35,8 @@ public class WhiteUrlController {
     @PostMapping("/physicalDeleteWhiteUrl")
     @ModifyOperation
     @Operation(summary = "根据uid删除白名单")
-    public int physicalDeleteWhiteUrl(@RequestBody Long uid) {
-        return whiteUrlService.physicalDeleteWhiteUrl(uid);
+    public int physicalDeleteWhiteUrl(@RequestBody WhiteUrlPojo record) {
+        return whiteUrlService.physicalDeleteWhiteUrl(record.getUid());
     }
 
     @Operation(summary = "插入白名单记录")
@@ -54,7 +54,7 @@ public class WhiteUrlController {
     @Operation(summary = "根据查询条件获取所有的白名单数据")
     @PostMapping("/queryListWhiteUrlByCondition")
     @SelectOperation
-    public PageData<WhiteUrlVO> queryListWhiteUrlByCondition(@Param("condition") @RequestBody Condition<Integer> condition) {
+    public PageData<WhiteUrlVO> queryListWhiteUrlByCondition(@RequestBody Condition<Integer> condition) {
         return whiteUrlService.queryListWhiteUrlByCondition(condition);
     }
 

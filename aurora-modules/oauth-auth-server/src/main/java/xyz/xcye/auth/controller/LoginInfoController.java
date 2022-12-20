@@ -5,6 +5,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import xyz.xcye.auth.constant.OauthJwtConstant;
+import xyz.xcye.auth.pojo.LoginInfoPojo;
 import xyz.xcye.auth.service.LoginInfoService;
 import xyz.xcye.auth.vo.LoginInfoVO;
 import xyz.xcye.core.annotaion.FieldFilter;
@@ -29,15 +30,15 @@ public class LoginInfoController {
     @ModifyOperation
     @Operation(summary = "根据uid删除登录日志")
     @PostMapping("/physicalDeleteLoginInfo")
-    public int physicalDeleteLoginInfo(@RequestBody Long uid) {
-        return loginInfoService.physicalDeleteLoginInfo(uid);
+    public int physicalDeleteLoginInfo(@RequestBody LoginInfoPojo pojo) {
+        return loginInfoService.physicalDeleteLoginInfo(pojo.getUid());
     }
 
     @ModifyOperation
     @Operation(summary = "根据uid，批量删除")
     @PostMapping("/batchDeleteLoginInfoByUid")
-    public int batchDeleteLoginInfoByUid(@RequestBody Long[] uids) {
-        return loginInfoService.batchDeleteLoginInfoByUid(uids);
+    public int batchDeleteLoginInfoByUid(@RequestBody LoginInfoPojo pojo) {
+        return loginInfoService.batchDeleteLoginInfoByUid(pojo.getUids());
     }
 
     @FieldFilter(value = LoginInfoVO.class, excludeFields = {"","",""},
@@ -53,7 +54,7 @@ public class LoginInfoController {
     @SelectOperation
     @Operation(summary = "根据用户名查询")
     @PostMapping("/queryLoginInfoByUsername")
-    public LoginInfoVO queryLoginInfoByUsername(@RequestBody String username) {
-        return loginInfoService.queryLoginInfoByUsername(username);
+    public LoginInfoVO queryLoginInfoByUsername(@RequestBody LoginInfoPojo pojo) {
+        return loginInfoService.queryLoginInfoByUsername(pojo.getUsername());
     }
 }

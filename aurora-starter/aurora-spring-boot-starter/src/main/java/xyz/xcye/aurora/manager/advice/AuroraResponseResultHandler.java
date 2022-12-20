@@ -47,7 +47,11 @@ public class AuroraResponseResultHandler implements ResponseBodyAdvice<Object> {
     }
 
     @Override
-    public Object beforeBodyWrite(Object responseBody, MethodParameter methodParameter, MediaType selectedContentType, Class<? extends HttpMessageConverter<?>> selectedConverterType, ServerHttpRequest request, ServerHttpResponse response) {
+    public Object beforeBodyWrite(Object responseBody,
+                                  MethodParameter methodParameter,
+                                  MediaType selectedContentType,
+                                  Class<? extends HttpMessageConverter<?>> selectedConverterType,
+                                  ServerHttpRequest request, ServerHttpResponse response) {
 
 
         String path = request.getURI().getPath();
@@ -84,19 +88,8 @@ public class AuroraResponseResultHandler implements ResponseBodyAdvice<Object> {
         }
 
         if (hasModifyOperationAnnotation) {
-            boolean operateStatus = false;
-            // 通过判断返回结果，设置success的值
-            if (responseBody instanceof Integer) {
-                Integer influenceRows = (Integer) responseBody;
-                operateStatus = influenceRows == 1;
-            }
-
-            // 判断是不是插入操作
-            if (responseBody == null && "void".equals(resultReturnType.getName())) {
-                operateStatus = true;
-            }
-            return R.result(ResponseStatusCodeEnum.SUCCESS.getCode(),
-                    ResponseStatusCodeEnum.SUCCESS.getMessage(), new HashMap<>(), operateStatus);
+            return R.success(ResponseStatusCodeEnum.SUCCESS.getCode(),
+                    ResponseStatusCodeEnum.SUCCESS.getMessage(), new HashMap<>(), true);
         }
 
         if (responseBody instanceof ExceptionResultEntity) {

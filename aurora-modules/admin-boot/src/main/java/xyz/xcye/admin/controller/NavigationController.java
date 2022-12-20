@@ -29,54 +29,54 @@ public class NavigationController {
     @ModifyOperation
     @PostMapping("/loginDeleteNavigation")
     @Operation(summary = "根据uid逻辑删除导航")
-    public int loginDeleteNavigation(@RequestBody long uid) {
-        return navigationService.deleteByPrimaryKey(uid);
+    public int loginDeleteNavigation(@RequestBody NavigationPojo pojo) {
+        return navigationService.loginDeleteNavigation(pojo.getUid());
     }
 
     @Operation(summary = "物理删除")
     @PostMapping("/physicsDeleteNavigation")
     @ModifyOperation
-    public int physicsDeleteNavigation(@RequestBody long uid) {
-        return navigationService.physicsDeleteNavigation(uid);
+    public int physicsDeleteNavigation(@RequestBody NavigationPojo pojo) {
+        return navigationService.physicsDeleteNavigation(pojo.getUid());
     }
 
     @PostMapping("/insertNavigation")
     @ModifyOperation
     @Operation(summary = "插入新的导航信息")
     public void insertNavigation(@Validated({Insert.class, Default.class}) @RequestBody NavigationPojo record) {
-        navigationService.insertSelective(record);
+        navigationService.insertNavigation(record);
     }
 
     @PostMapping("/queryListNavigationByCondition")
     @SelectOperation
     @Operation(summary = "根据条件查询")
     public PageData<NavigationVO> queryListNavigationByCondition(@RequestBody Condition<Long> condition) {
-        return navigationService.selectByCondition(condition);
+        return navigationService.queryListNavigationByCondition(condition);
     }
 
     @Operation(summary = "根据uid查询")
     @PostMapping("/queryNavigationByUid")
     @SelectOperation
-    public NavigationVO queryNavigationByUid(@RequestBody long uid) {
-        return navigationService.selectNavigationByUid(uid);
+    public NavigationVO queryNavigationByUid(@RequestBody NavigationPojo pojo) {
+        return navigationService.queryNavigationByUid(pojo.getUid());
     }
 
     /**
      * 根据用户名，获取该用户的所有导航信息
-     * @param userUid
+     * @param pojo
      * @return
      */
     @SelectOperation
     @Operation(summary = "查询该用户所有的前台导航信息")
     @PostMapping("/queryAllNavigationByUserUid")
-    public NavigationDTO queryAllNavigationByUserUid(@RequestBody long userUid) {
-        return navigationService.selectAllNavigationByUserUid(userUid);
+    public NavigationDTO queryAllNavigationByUserUid(@RequestBody NavigationPojo pojo) {
+        return navigationService.queryAllNavigationByUserUid(pojo.getUserUid());
     }
 
     @PostMapping("/updateNavigation")
     @ModifyOperation
     @Operation(summary = "修改导航信息")
     public int updateNavigation(@Validated({Update.class, Default.class}) @RequestBody NavigationPojo record) {
-        return navigationService.updateByPrimaryKeySelective(record);
+        return navigationService.updateNavigation(record);
     }
 }
