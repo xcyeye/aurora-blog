@@ -1,68 +1,22 @@
 <template>
-	<n-p> 你选中了 {{ checkedRowKeys.length }} 行。 </n-p>
-
-	<n-data-table
-		:columns="columns"
-		:data="data"
-		:pagination="pagination"
-		:row-key="rowKey"
-		@update:checked-row-keys="handleCheck"
-	/>
+	<n-drawer v-model:show="active" :width="502" :placement="placement">
+		<n-drawer-content title="斯通纳">
+			《斯通纳》是美国作家约翰·威廉姆斯在 1965 年出版的小说。
+		</n-drawer-content>
+	</n-drawer>
 </template>
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue'
-import type { DataTableColumns, DataTableRowKey } from 'naive-ui'
-
-type RowData = {
-	key: number
-	name: string
-	age: string
-	address: string
-}
-
-const createColumns = (): DataTableColumns<RowData> => [
-	{
-		type: 'selection',
-		disabled (row: RowData) {
-			return row.name === 'Edward King 3'
-		}
-	},
-	{
-		title: 'Name',
-		key: 'name'
-	},
-	{
-		title: 'Age',
-		key: 'age'
-	},
-	{
-		title: 'Address',
-		key: 'address'
-	}
-]
-
-const data = Array.from({ length: 46 }).map((_, index) => ({
-	name: `Edward King ${index}`,
-	age: 32,
-	address: `London, Park Lane no. ${index}`
-}))
+import type { DrawerPlacement } from 'naive-ui'
 
 export default defineComponent({
 	setup () {
-		const checkedRowKeysRef = ref<DataTableRowKey[]>([])
-
+		const active = ref(true)
+		const placement = ref<DrawerPlacement>('right')
 		return {
-			data,
-			columns: createColumns(),
-			checkedRowKeys: checkedRowKeysRef,
-			pagination: {
-				pageSize: 5
-			},
-			rowKey: (row: RowData) => row.address,
-			handleCheck (rowKeys: DataTableRowKey[]) {
-				checkedRowKeysRef.value = rowKeys
-			}
+			active,
+			placement
 		}
 	}
 })

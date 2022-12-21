@@ -533,6 +533,16 @@ export const routeModel: Record<Auth.RoleType, AuthRoute.Route[]> = {
 						requiresAuth: true,
 						icon: 'carbon:user-role'
 					}
+				},
+				{
+					name: 'test_test3',
+					path: '/test/test3',
+					component: 'self',
+					meta: {
+						title: 'test3',
+						requiresAuth: true,
+						icon: 'carbon:user-role'
+					}
 				}
 			],
 			meta: {
