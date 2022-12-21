@@ -9,117 +9,117 @@
     :class="[isMobile ? 'wh-full top-0px rounded-0' : 'w-630px top-50px']"
     @after-leave="handleClose"
   >
-		<n-card class="rounded-16px shadow-sm" size="small">
-			<n-space vertical :size="25">
-				<n-grid cols="4" item-responsive responsive="screen">
-					<n-grid-item span="l:1">
-						<n-tag checkable> Uid </n-tag>
-					</n-grid-item>
-					<n-grid-item span="l:3">
-						<n-input
-							ref="inputRef"
-							v-model:value="condition.uid"
-							round
-							clearable
-							placeholder="请输入Uid"
-							@blur="validateUid"
-						>
-							<template #prefix>
-								<icon-uil-search class="text-15px text-[#c2c2c2]" />
-							</template>
-						</n-input>
-					</n-grid-item>
-				</n-grid>
+    <n-card class="rounded-16px shadow-sm" size="small">
+      <n-space vertical :size="25">
+        <n-grid cols="4" item-responsive responsive="screen">
+          <n-grid-item span="l:1">
+            <n-tag checkable> Uid </n-tag>
+          </n-grid-item>
+          <n-grid-item span="l:3">
+            <n-input
+              ref="inputRef"
+              v-model:value="condition.uid"
+              round
+              clearable
+              placeholder="请输入Uid"
+              @blur="validateUid"
+            >
+              <template #prefix>
+                <icon-uil-search class="text-15px text-[#c2c2c2]" />
+              </template>
+            </n-input>
+          </n-grid-item>
+        </n-grid>
 
-				<n-grid cols="4" item-responsive responsive="screen">
-					<n-grid-item span="l:1">
-						<n-tag checkable> 其他Uid </n-tag>
-					</n-grid-item>
-					<n-grid-item span="l:3">
-						<n-input
-							ref="inputRef"
-							v-model:value="condition.otherUid"
-							round
-							clearable
-							placeholder="请输入其他Uid"
-							@blur="validateOtherUid"
-						>
-							<template #prefix>
-								<icon-uil-search class="text-15px text-[#c2c2c2]" />
-							</template>
-						</n-input>
-					</n-grid-item>
-				</n-grid>
+        <n-grid cols="4" item-responsive responsive="screen">
+          <n-grid-item span="l:1">
+            <n-tag checkable> 其他Uid </n-tag>
+          </n-grid-item>
+          <n-grid-item span="l:3">
+            <n-input
+              ref="inputRef"
+              v-model:value="condition.otherUid"
+              round
+              clearable
+              placeholder="请输入其他Uid"
+              @blur="validateOtherUid"
+            >
+              <template #prefix>
+                <icon-uil-search class="text-15px text-[#c2c2c2]" />
+              </template>
+            </n-input>
+          </n-grid-item>
+        </n-grid>
 
-				<n-grid cols="4" item-responsive responsive="screen">
-					<n-grid-item span="l:1">
-						<n-tag checkable> 关键词 </n-tag>
-					</n-grid-item>
-					<n-grid-item span="l:3">
-						<n-input ref="inputRef" v-model:value="condition.keyword" round clearable placeholder="请输入关键词">
-							<template #prefix>
-								<icon-uil-search class="text-15px text-[#c2c2c2]" />
-							</template>
-						</n-input>
-					</n-grid-item>
-				</n-grid>
+        <n-grid cols="4" item-responsive responsive="screen">
+          <n-grid-item span="l:1">
+            <n-tag checkable> 关键词 </n-tag>
+          </n-grid-item>
+          <n-grid-item span="l:3">
+            <n-input ref="inputRef" v-model:value="condition.keyword" round clearable placeholder="请输入关键词">
+              <template #prefix>
+                <icon-uil-search class="text-15px text-[#c2c2c2]" />
+              </template>
+            </n-input>
+          </n-grid-item>
+        </n-grid>
 
-				<n-date-picker
-					v-model:value="startAndEndTime"
-					type="datetimerange"
-					:shortcuts="rangeShortcuts"
-					@clear="clearDate"
-					@update:show="handleSelectDate"
-				/>
-			</n-space>
+        <n-date-picker
+          v-model:value="startAndEndTime"
+          type="datetimerange"
+          :shortcuts="rangeShortcuts"
+          @clear="clearDate"
+          @update:show="handleSelectDate"
+        />
+      </n-space>
 
-			<n-divider />
-			<n-space vertical :size="20">
-				<n-grid x-gap="12" :cols="3">
-					<n-gi>
-						<n-grid x-gap="12" :cols="2">
-							<n-gi>
-								<n-tag checkable>删除</n-tag>
-							</n-gi>
-							<n-gi>
-								<n-switch v-model:value="condition.delete" />
-							</n-gi>
-						</n-grid>
-					</n-gi>
+      <n-divider />
+      <n-space vertical :size="20">
+        <n-grid x-gap="12" :cols="3">
+          <n-gi>
+            <n-grid x-gap="12" :cols="2">
+              <n-gi>
+                <n-tag checkable>删除</n-tag>
+              </n-gi>
+              <n-gi>
+                <n-switch v-model:value="condition.delete" />
+              </n-gi>
+            </n-grid>
+          </n-gi>
 
-					<n-gi>
-						<n-grid x-gap="12" :cols="2">
-							<n-gi>
-								<n-tag checkable>展示</n-tag>
-							</n-gi>
-							<n-gi>
-								<n-switch v-model:value="condition.show" />
-							</n-gi>
-						</n-grid>
-					</n-gi>
+          <n-gi>
+            <n-grid x-gap="12" :cols="2">
+              <n-gi>
+                <n-tag checkable>展示</n-tag>
+              </n-gi>
+              <n-gi>
+                <n-switch v-model:value="condition.show" />
+              </n-gi>
+            </n-grid>
+          </n-gi>
 
-					<n-gi>
-						<n-grid x-gap="12" :cols="2">
-							<n-gi>
-								<n-tag checkable>状态</n-tag>
-							</n-gi>
-							<n-gi>
-								<n-switch v-model:value="condition.status" />
-							</n-gi>
-						</n-grid>
-					</n-gi>
-				</n-grid>
-				<!--<n-divider />-->
+          <n-gi>
+            <n-grid x-gap="12" :cols="2">
+              <n-gi>
+                <n-tag checkable>状态</n-tag>
+              </n-gi>
+              <n-gi>
+                <n-switch v-model:value="condition.status" />
+              </n-gi>
+            </n-grid>
+          </n-gi>
+        </n-grid>
+        <!--<n-divider />-->
 
-				<n-row :gutter="[0, 24]">
-					<n-col :span="24">
-						<div style="display: flex; justify-content: flex-end">
-							<n-button round type="primary" @click="handleClickSearchButton"> 确定 </n-button>
-						</div>
-					</n-col>
-				</n-row>
-			</n-space>
-		</n-card>
+        <n-row :gutter="[0, 24]">
+          <n-col :span="24">
+            <div style="display: flex; justify-content: flex-end">
+              <n-button round type="primary" @click="handleClickSearchButton"> 确定 </n-button>
+            </div>
+          </n-col>
+        </n-row>
+      </n-space>
+    </n-card>
     <template #footer>
       <search-footer v-if="!isMobile" />
     </template>
@@ -129,12 +129,12 @@
 <script lang="ts" setup>
 import { computed, nextTick, ref, watch } from 'vue';
 import { onKeyStroke, useDebounceFn } from '@vueuse/core';
+import { EnumMittEventName } from '@/enum';
 import { useBasicLayout } from '@/composables';
+import { formatTime } from '@/utils';
+import type { Condition } from '@/theme/core/bean';
+import emitter from '@/utils/mitt';
 import SearchFooter from './SearchFooter.vue';
-import {Condition} from "@/theme/core/bean";
-import {formatTime} from "@/utils";
-import emitter from "@/utils/mitt";
-import {EnumMittEventName} from "@/enum";
 
 defineOptions({ name: 'SearchModal' });
 
@@ -151,10 +151,10 @@ interface Emits {
 
 // 定义condition
 const conditionInfo: Condition = {
-	delete: false,
-	status: true,
-	show: true
-}
+  delete: false,
+  status: true,
+  show: true
+};
 
 const emit = defineEmits<Emits>();
 
@@ -163,14 +163,14 @@ const inputRef = ref<HTMLInputElement>();
 const condition = ref(conditionInfo);
 const startAndEndTime = ref();
 const rangeShortcuts = ref({
-	此刻: () => {
-		const nowDate = new Date().getTime();
-		return [nowDate - 1000 * 60 * 60 * 24, nowDate];
-	},
-	近五天: () => {
-		const nowDate = new Date().getTime();
-		return [nowDate - 1000 * 60 * 60 * 24 * 5, nowDate];
-	}
+  此刻: () => {
+    const nowDate = new Date().getTime();
+    return [nowDate - 1000 * 60 * 60 * 24, nowDate];
+  },
+  近五天: () => {
+    const nowDate = new Date().getTime();
+    return [nowDate - 1000 * 60 * 60 * 24 * 5, nowDate];
+  }
 });
 
 const handleSearch = useDebounceFn(search, 300);
@@ -194,74 +194,68 @@ watch(show, async val => {
 
 /** 验证输入的uid */
 const validateUid = () => {
-	const uidRegex = /^[0-9]+/;
-	if (condition.value.uid !== null) {
-		if (!uidRegex.test(`${condition.value.uid}`)) {
-			condition.value.uid = null;
-		}
-	}
+  const uidRegex = /^[0-9]+/;
+  if (condition.value.uid !== null) {
+    if (!uidRegex.test(`${condition.value.uid}`)) {
+      condition.value.uid = null;
+    }
+  }
 };
 
 /** 验证其他uid字段 */
 const validateOtherUid = () => {
-	const uidRegex = /^[0-9]+/;
-	if (condition.value.otherUid !== null) {
-		if (!uidRegex.test(`${condition.value.otherUid}`)) {
-			condition.value.otherUid = null;
-		}
-	}
+  const uidRegex = /^[0-9]+/;
+  if (condition.value.otherUid !== null) {
+    if (!uidRegex.test(`${condition.value.otherUid}`)) {
+      condition.value.otherUid = null;
+    }
+  }
 };
 
 /** 清除选择的时间 */
 const clearDate = () => {
-	condition.value.startTime = null;
-	condition.value.endTime = null;
+  condition.value.startTime = null;
+  condition.value.endTime = null;
 };
 
 /** 处理选择的时间 */
 const handleSelectDate = (showControl: boolean) => {
-	if (!showControl) {
-		if (startAndEndTime.value !== null) {
-			condition.value.startTime = formatTime(startAndEndTime.value[0]);
-			condition.value.endTime = formatTime(startAndEndTime.value[1]);
-		}
-	}
+  if (!showControl) {
+    if (startAndEndTime.value !== null) {
+      condition.value.startTime = formatTime(startAndEndTime.value[0]);
+      condition.value.endTime = formatTime(startAndEndTime.value[1]);
+    }
+  }
 };
 
 /** 处理点击确定之后的逻辑 */
 const handleClickSearchButton = () => {
-	if (condition.value.keyword === '') {
-		condition.value.keyword = null;
-	}
-	if (condition.value.otherUid === '') {
-		condition.value.otherUid = null;
-	}
-	if (condition.value.uid === '') {
-		condition.value.uid = null;
-	}
-	// 将当前的condition发送到当前使用的页面
-	emitter.emit(EnumMittEventName.globalSearchCondition, condition.value);
-	handleClose();
+  if (condition.value.keyword === '') {
+    condition.value.keyword = null;
+  }
+  if (condition.value.otherUid === '') {
+    condition.value.otherUid = null;
+  }
+  if (condition.value.uid === '') {
+    condition.value.uid = null;
+  }
+  // 将当前的condition发送到当前使用的页面
+  emitter.emit(EnumMittEventName.globalSearchCondition, condition.value);
+  handleClose();
 };
 
 /** 查询 */
-function search() {
-
-}
+function search() {}
 
 function handleClose() {
   show.value = false;
 }
 
 /** key up */
-function handleUp() {
-
-}
+function handleUp() {}
 
 /** key down */
-function handleDown() {
-
-}
+function handleDown() {}
 
 /** key enter */
 function handleEnter() {

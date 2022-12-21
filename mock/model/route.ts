@@ -509,18 +509,38 @@ export const routeModel: Record<Auth.RoleType, AuthRoute.Route[]> = {
         order: 10
       }
     },
-    {
-      name: 'test',
-      path: '/test',
-      component: 'self',
-      meta: {
-        title: '测试页面',
-        requiresAuth: true,
-        singleLayout: 'basic',
-        icon: 'fluent:book-information-24-regular',
-        order: 10
-      }
-    }
+		{
+			name: 'test',
+			path: '/test',
+			component: 'basic',
+			children: [
+				{
+					name: 'test_test1',
+					path: '/test/test1',
+					component: 'self',
+					meta: {
+						title: 'test1',
+						requiresAuth: true,
+						icon: 'ic:baseline-security'
+					}
+				},
+				{
+					name: 'test_test2',
+					path: '/test/test2',
+					component: 'self',
+					meta: {
+						title: 'test2',
+						requiresAuth: true,
+						icon: 'carbon:user-role'
+					}
+				}
+			],
+			meta: {
+				title: '测试',
+				icon: 'carbon:cloud-service-management',
+				order: 9
+			}
+		},
   ],
   admin: [
     {

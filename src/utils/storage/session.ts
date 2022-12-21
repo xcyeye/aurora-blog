@@ -1,5 +1,5 @@
+import type { StorageInterface } from '@/typings/storage';
 import { decrypto, encrypto } from '../crypto';
-import {StorageInterface} from "@/typings/storage";
 
 export function setSession(key: string, value: unknown) {
   const json = encrypto(value);
