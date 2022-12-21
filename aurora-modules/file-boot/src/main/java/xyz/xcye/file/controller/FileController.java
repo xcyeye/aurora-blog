@@ -52,7 +52,7 @@ public class FileController {
      */
     @SelectOperation
     @Operation(summary = "上传单个文件",description = "可以上传任何类型，最大不能操作30M，返回上传之后的文件信息")
-    @PostMapping("/single")
+    @PostMapping("/singleUploadFile")
     public FileVO singleUploadFile(@Validated({Insert.class, Default.class}) FilePojo fileInfo,
                                    @RequestParam(value = "file") MultipartFile file,
                                    @RequestParam(required = false) int storageMode, long userUid)
@@ -67,7 +67,7 @@ public class FileController {
      * @param files
      * @return
      */
-    @PostMapping("/multi")
+    @PostMapping("/multiUploadFile")
     @SelectOperation
     @Operation(summary = "上传多个文件，返回集合",description = "不接收文件简介，默认本地存储")
     public List<FileVO> multiUploadFile(
@@ -90,7 +90,7 @@ public class FileController {
      */
     @ResponseRealResult
     @Operation(summary = "在typora中自动上传图片", description = "用于在typora中粘贴图片时，将图片上传到本地服务器或者某个对象存储中")
-    @PostMapping("/typora")
+    @PostMapping("/typoraUploadFile")
     public String typoraUploadFile(
             @RequestParam(value = "file") MultipartFile file,
             @RequestParam(required = false) int storageMode)

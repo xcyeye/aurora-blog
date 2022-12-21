@@ -50,8 +50,8 @@ public class UserController {
     @Operation(summary = "更新密码")
     @PostMapping("/updatePassword")
     @ModifyOperation
-    public void updatePassword(@RequestBody UserPojo user) {
-        userService.updatePassword(user);
+    public int updatePassword(@RequestBody UserPojo user) {
+        return userService.updatePassword(user);
     }
 
     @PostMapping("/logicDeleteUser")

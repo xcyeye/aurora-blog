@@ -62,7 +62,7 @@ public class CommentController {
 
     /**
      * 根据多个uid，返回这些uid所对应的记录以及他们的子评论数据 是所有，没有做分页操作，其中uid是在文章中获取的
-     * @param commentUidArr
+     * @param comment
      * @return
      */
     @Operation(summary = "查询所有满足要求的所有评论")
