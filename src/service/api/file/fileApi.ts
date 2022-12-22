@@ -3,11 +3,11 @@ import { baseAxiosRequestConfig } from '@/constants';
 import { request } from '@/service/request';
 import type { Condition, PageData } from '@/theme/core/bean';
 import type { FileVo } from '@/theme/vo/file/fileVo';
-import type { File } from '@/theme/pojo/file/file';
+import type { AuroraFile } from '@/theme/pojo/file/file';
 
 /** 接口前缀 */
 const apiPrefix = '/file/';
-type beanType = File;
+type beanType = AuroraFile;
 type viewBeanType = FileVo;
 
 function _baseApi() {
@@ -95,10 +95,10 @@ function _baseApi() {
     return request.post<void>(`${apiPrefix}/download/${uid}`, baseAxiosRequestConfig);
   }
 
-  function singleUploadFile(fileInfo: beanType, file: File, storageMode: number, userUid: number) {
+  function singleUploadFile(file: File, storageMode: number, userUid: string, summary: string) {
     return request.post<viewBeanType>(
       `${apiPrefix}singleUploadFile`,
-      { fileInfo, file, storageMode, userUid },
+      { file, storageMode, userUid, summary },
       {
         headers: {
           'Content-Type': EnumContentType.formData
@@ -107,10 +107,10 @@ function _baseApi() {
     );
   }
 
-  function multiUploadFile(files: File[], storageMode: number, userUid: number) {
+  function multiUploadFile(files: File[], storageMode: number, userUid: string, summary: string) {
     return request.post<Array<viewBeanType>>(
       `${apiPrefix}multiUploadFile`,
-      { files, storageMode, userUid },
+      { files, storageMode, userUid, summary },
       {
         headers: {
           'Content-Type': EnumContentType.formData
@@ -124,10 +124,10 @@ function _baseApi() {
    * @param file
    * @param storageMode
    */
-  function typoraUploadFile(file: File, storageMode: number) {
+  function typoraUploadFile(file: File, storageMode: number, userUid: string, summary: string) {
     return request.post<string>(
       `${apiPrefix}typoraUploadFile`,
-      { file, storageMode },
+      { file, storageMode, userUid, summary },
       {
         headers: {
           'Content-Type': EnumContentType.formData
