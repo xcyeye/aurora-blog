@@ -43,8 +43,16 @@ export function handleAxiosError(axiosError: AxiosError) {
       // 请求不成功的错误
       Boolean(axiosError.response),
       () => {
-        const errorCode: ErrorStatus = (axiosError.response?.status as ErrorStatus) || 'DEFAULT';
-        const msg = ERROR_STATUS[errorCode];
+        let errorCode: ErrorStatus = (axiosError.response?.status as ErrorStatus) || 'DEFAULT';
+        let msg = ERROR_STATUS[errorCode];
+
+				// 获取后端返回的信息
+				if (axiosError.response?.data) {
+					// @ts-ignore
+					errorCode = axiosError.response.data.code;
+					// @ts-ignore
+					msg = axiosError.response.data.message;
+				}
         Object.assign(error, { code: errorCode, msg });
       }
     ]
