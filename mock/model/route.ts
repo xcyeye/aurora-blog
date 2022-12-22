@@ -497,18 +497,6 @@ export const routeModel: Record<Auth.RoleType, AuthRoute.Route[]> = {
         order: 9
       }
     },
-    {
-      name: 'about',
-      path: '/about',
-      component: 'self',
-      meta: {
-        title: '关于',
-        requiresAuth: true,
-        singleLayout: 'basic',
-        icon: 'fluent:book-information-24-regular',
-        order: 10
-      }
-    },
 		{
 			name: 'test',
 			path: '/test',
@@ -548,6 +536,48 @@ export const routeModel: Record<Auth.RoleType, AuthRoute.Route[]> = {
 			meta: {
 				title: '测试',
 				icon: 'carbon:cloud-service-management',
+				order: 9
+			}
+		},
+		{
+			name: 'monitor',
+			path: '/monitor',
+			component: 'basic',
+			children: [
+				{
+					name: 'monitor_nacos',
+					path: '/monitor/nacos',
+					component: 'self',
+					meta: {
+						title: 'Nacos',
+						requiresAuth: true,
+						icon: 'material-symbols:monitoring'
+					}
+				},
+				{
+					name: 'monitor_rabbitmq',
+					path: '/monitor/rabbitmq',
+					component: 'self',
+					meta: {
+						title: 'RabbitMQ',
+						requiresAuth: true,
+						icon: 'logos:rabbitmq-icon'
+					}
+				},
+				{
+					name: 'monitor_sentinel',
+					path: '/monitor/sentinel',
+					component: 'self',
+					meta: {
+						title: 'Sentinel',
+						requiresAuth: true,
+						icon: 'uil:monitor-heart-rate'
+					}
+				}
+			],
+			meta: {
+				title: '监控',
+				icon: 'eos-icons:monitoring',
 				order: 9
 			}
 		},
@@ -1039,18 +1069,6 @@ export const routeModel: Record<Auth.RoleType, AuthRoute.Route[]> = {
         icon: 'carbon:cloud-service-management',
         order: 9
       }
-    },
-    {
-      name: 'about',
-      path: '/about',
-      component: 'self',
-      meta: {
-        title: '关于',
-        requiresAuth: true,
-        singleLayout: 'basic',
-        icon: 'fluent:book-information-24-regular',
-        order: 10
-      }
     }
   ],
   user: [
@@ -1150,18 +1168,6 @@ export const routeModel: Record<Auth.RoleType, AuthRoute.Route[]> = {
         title: '多级菜单',
         icon: 'carbon:menu',
         order: 7
-      }
-    },
-    {
-      name: 'about',
-      path: '/about',
-      component: 'self',
-      meta: {
-        title: '关于',
-        requiresAuth: true,
-        singleLayout: 'basic',
-        icon: 'fluent:book-information-24-regular',
-        order: 8
       }
     }
   ]
