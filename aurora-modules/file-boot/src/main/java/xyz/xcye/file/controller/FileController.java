@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
+import org.springframework.util.StringUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -53,13 +54,11 @@ public class FileController {
     @SelectOperation
     @Operation(summary = "上传单个文件",description = "可以上传任何类型，最大不能操作30M，返回上传之后的文件信息")
     @PostMapping("/singleUploadFile")
-    public FileVO singleUploadFile(@Validated({Insert.class, Default.class}) FilePojo fileInfo,
-                                   @RequestParam(value = "file") MultipartFile file,
-                                   @RequestParam(required = false) int storageMode, long userUid)
+    public FileVO singleUploadFile(FilePojo fileInfo, @RequestParam(value = "file") MultipartFile file)
             throws IOException, FileException, ExecutionException, InterruptedException {
 
         FileEntityDTO fileEntity = new FileEntityDTO(file.getOriginalFilename(),file.getInputStream());
-        return fileService.insertFile(fileEntity, fileInfo, storageMode, userUid);
+        return fileService.insertFile(fileEntity, fileInfo);
     }
 
     /**
@@ -71,14 +70,12 @@ public class FileController {
     @SelectOperation
     @Operation(summary = "上传多个文件，返回集合",description = "不接收文件简介，默认本地存储")
     public List<FileVO> multiUploadFile(
-            @RequestParam(value = "file") MultipartFile[] files,
-            @RequestParam(required = false) int storageMode, long userUid)
+            @RequestParam(value = "files") MultipartFile[] files, FilePojo fileInfo)
             throws IOException, FileException, ExecutionException, InterruptedException {
         List<FileVO> fileList = new ArrayList<>();
         for (MultipartFile file : files) {
             FileEntityDTO fileEntity = new FileEntityDTO(file.getOriginalFilename(), file.getInputStream());
-            FilePojo fileInfo = new FilePojo();
-            FileVO fileVO = fileService.insertFile(fileEntity, fileInfo, storageMode, userUid);
+            FileVO fileVO = fileService.insertFile(fileEntity, fileInfo);
             fileList.add(fileVO);
         }
         return fileList;
@@ -92,14 +89,14 @@ public class FileController {
     @Operation(summary = "在typora中自动上传图片", description = "用于在typora中粘贴图片时，将图片上传到本地服务器或者某个对象存储中")
     @PostMapping("/typoraUploadFile")
     public String typoraUploadFile(
-            @RequestParam(value = "file") MultipartFile file,
-            @RequestParam(required = false) int storageMode)
+            @RequestParam(value = "file") MultipartFile file, FilePojo fileInfo)
             throws IOException, FileException, ExecutionException, InterruptedException {
 
         FileEntityDTO fileEntity = new FileEntityDTO(file.getOriginalFilename(),file.getInputStream());
-        FilePojo fileInfo = new FilePojo();
-        fileInfo.setSummary("从typora上传的文件");
-        FileVO fileVO = fileService.insertFile(fileEntity, fileInfo, storageMode, 0);
+        if (!StringUtils.hasLength(fileInfo.getSummary())) {
+            fileInfo.setSummary("从typora上传的文件");
+        }
+        FileVO fileVO = fileService.insertFile(fileEntity, fileInfo);
         return fileVO.getPath();
     }
 

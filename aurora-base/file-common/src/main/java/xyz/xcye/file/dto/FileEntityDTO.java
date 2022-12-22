@@ -35,6 +35,9 @@ public class FileEntityDTO {
     /** 返回文件的url地址 **/
     private String remoteUrl;
 
+    /** 文件路径部分的uri **/
+    private String filePathUri;
+
     /** 文件输入流 **/
     private InputStream inputStream;
 

@@ -83,6 +83,9 @@ public class LocalFileStorageServiceImpl implements FileStorageService {
             nginxRootPath = nginxRootPath + File.separator;
         }
 
+        // 如果文件名中包含空格，则去掉
+        fileEntity.setName(fileEntity.getName().replaceAll(" ", ""));
+
         //判断文件夹是否存在aurora.file.nginx-root-path/aurora.file.upload-folder-name/extName/currentYear/currentMonth
         String folderPath = nginxRootPath + uploadFolderName + separator + extName + separator + currentYear + separator + currentMonth;
         String filePath = getFilePath(fileEntity, folderPath);
@@ -106,7 +109,9 @@ public class LocalFileStorageServiceImpl implements FileStorageService {
                 fileSplitPath = fileSplitPath.replaceAll("\\\\", "/");
             }
             String fileRemoteUrl = host + fileSplitPath;
-            return new FileEntityDTO(writeFile.getAbsolutePath(), writeFile.getName(), writeFile.length(), fileRemoteUrl);
+            FileEntityDTO fileEntityDTO = new FileEntityDTO(writeFile.getAbsolutePath(), writeFile.getName(), writeFile.length(), fileRemoteUrl);
+            fileEntityDTO.setFilePathUri(fileSplitPath);
+            return fileEntityDTO;
         });
 
         File newFile = new File(filePath);

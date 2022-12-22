@@ -55,10 +55,9 @@ public class FileService {
     @Autowired
     private FileExtService fileExtService;
 
-    public FileVO insertFile(FileEntityDTO fileEntity, FilePojo filePojo, int storageMode, long userUid) throws FileException, IOException, ExecutionException, InterruptedException {
+    public FileVO insertFile(FileEntityDTO fileEntity, FilePojo filePojo) throws FileException, IOException, ExecutionException, InterruptedException {
         Assert.notNull(fileEntity, "文件对象不能为null");
-        Assert.notNull(filePojo, "文件信息不能为null");
-        AssertUtils.stateThrow(userUid != 0, () -> new FileException("必须要传入UserUid"));
+        AssertUtils.stateThrow(filePojo.getUserUid() != 0, () -> new FileException("必须要传入UserUid"));
         File file = BeanUtils.copyProperties(filePojo, File.class);
         if (fileEntity.getName() == null || fileEntity.getInputStream() == null) {
             throw new FileException(ResponseStatusCodeEnum.EXCEPTION_FILE_FAIL_UPLOAD.getMessage() + "原因: 文件名为null或者获取文件流失败",
@@ -69,18 +68,20 @@ public class FileService {
         long uid = GenerateInfoUtils.generateUid(auroraProperties.getSnowFlakeWorkerId(),auroraProperties.getSnowFlakeDatacenterId());
 
         // 根据storageMode获取需要使用的文件存储方式
-        FileStorageService fileStorageService = getNeedFileStorageService(storageMode);
+        FileStorageService fileStorageService = getNeedFileStorageService(filePojo.getStorageMode());
         FileEntityDTO uploadFileEntity = fileStorageService.upload(fileEntity.getInputStream(), fileEntity);
 
         File newFile = File.builder()
                 .uid(uid).delete(false).fileName(uploadFileEntity.getName())
                 .size(uploadFileEntity.getSize()).summary(file.getSummary())
-                .path(uploadFileEntity.getRemoteUrl()).storageMode(storageMode)
+                .path(uploadFileEntity.getRemoteUrl()).storageMode(filePojo.getStorageMode())
                 .storagePath(uploadFileEntity.getStoragePath())
-                .userUid(userUid)
+                .userUid(filePojo.getUserUid())
                 .build();
         auroraFileService.insert(newFile);
-        return queryFileByUid(newFile.getUid());
+        FileVO fileVO = queryFileByUid(newFile.getUid());
+        fileVO.setFilePathUri(uploadFileEntity.getFilePathUri());
+        return fileVO;
     }
 
     public int updateFile(FilePojo file) {

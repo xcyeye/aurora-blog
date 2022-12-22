@@ -15,5 +15,8 @@ import xyz.xcye.file.po.File;
 @EqualsAndHashCode(callSuper = true)
 @Schema(title = "file数据表的VO")
 public class FileVO extends File {
-
+    /**
+     * 文件路径部分的uri
+     */
+    private String filePathUri;
 }
