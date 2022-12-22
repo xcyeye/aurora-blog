@@ -1,3 +1,5 @@
+import {EnumFileStorageModeConstant} from "@/enum";
+
 interface File {
   /**
    * 唯一uid 不能为null 主键
@@ -48,23 +50,12 @@ interface File {
   /**
    * 文件的存储模式
    */
-  storageMode?: FileStorageModeConstant;
+  storageMode?: EnumFileStorageModeConstant;
 
   /**
    * 此文件的存储位置
    */
   storagePath?: string | null;
-}
-
-enum FileStorageModeConstant {
-  /** 本地存储 **/
-  LOCAL_STORAGE = 0,
-
-  /** 阿里云oss存储 **/
-  ALIYUN_OSS_STORAGE = 1,
-
-  /** 又拍云存储 **/
-  UPYUN_OSS_STORAGE = 2
 }
 
 export type AuroraFile = File

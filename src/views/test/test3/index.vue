@@ -1,20 +1,14 @@
 <template>
 	<div>
-		<upload-file :control-upload-file="false" @handleFinishUploadFile="handleFinishUploadFile" upload-file-interface="single" :accept-file-type-str="['.png','.jpg']" :show-upload-dragger="true" :parameter-data="{userUid: '1522074993315815424', summary: '这是props测试', storageMode: 0}">
-
-		</upload-file>
+		<markdown-editor :vditor="{outline: {enable:true}}" summary="ceshiceshi"></markdown-editor>
 	</div>
 </template>
 
 <script lang="ts" setup>
 import {defineComponent} from "vue";
-import {UploadFileInfo} from "naive-ui";
+import MarkdownEditor from "@/components/article/MarkdownEditor.vue";
 
-defineComponent({name: 'index'})
-
-const handleFinishUploadFile = (file: UploadFileInfo) => {
-
-}
+defineComponent({name: 'index'});
 </script>
 
 <style scoped>

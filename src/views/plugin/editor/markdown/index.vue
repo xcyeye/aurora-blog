@@ -26,8 +26,12 @@ function renderVditor() {
     minHeight: 400,
     theme: theme.darkMode ? 'dark' : 'classic',
     icon: 'material',
-    cache: { enable: false }
-  });
+    cache: { enable: false },
+		select(value: string) {
+			vditor.value?.blur();
+		}
+	});
+	// vditor.value?.tip("a", 100)
 }
 
 const stopHandle = watch(

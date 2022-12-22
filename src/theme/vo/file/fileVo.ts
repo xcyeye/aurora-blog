@@ -1,3 +1,5 @@
+import {EnumFileStorageModeConstant} from "@/enum";
+
 interface FileVo {
   /**
    * 唯一uid
@@ -13,6 +15,8 @@ interface FileVo {
    * 此文件的名称
    */
   fileName?: string | null;
+
+	filePathUri?: string | null;
 
   /**
    * 此文件的大小 字节为单位
@@ -32,7 +36,7 @@ interface FileVo {
   /**
    * 文件存储的模式
    */
-  storageMode?: FileStorageModeConstant;
+  storageMode?: EnumFileStorageModeConstant;
 
   /**
    * 存储的路径
