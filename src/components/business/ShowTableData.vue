@@ -15,6 +15,8 @@
 					<!-- 数据展示相关 -->
 					<n-space vertical>
 						<n-data-table
+							class="h-480px"
+							:flex-height="true"
 							:row-key="getRowKey"
 							:columns="dataTableColumns"
 							:data="dataTableRowData"

@@ -7,7 +7,7 @@
           <n-button @click="getEmptyDataSource">空数据</n-button>
         </n-space>
         <loading-empty-wrapper class="h-480px" :loading="loading" :empty="empty">
-          <n-data-table :columns="columns" :data="dataSource" :flex-height="true" class="h-480px" />
+          <n-data-table :columns="columns" :data="[]" :flex-height="true" class="h-480px" />
         </loading-empty-wrapper>
       </n-space>
     </n-card>
