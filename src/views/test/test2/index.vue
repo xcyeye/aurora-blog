@@ -7,6 +7,20 @@
 			:data="data"
 			:pagination="pagination"
 		/>
+		<n-data-table
+			:bordered="false"
+			:columns="columns"
+			:data="data"
+			:pagination="pagination"
+		/>
+		<n-data-table
+			:bordered="false"
+			:single-line="false"
+			single-column
+			:columns="columns"
+			:data="data"
+			:pagination="pagination"
+		/>
 	</n-space>
 </template>
 
