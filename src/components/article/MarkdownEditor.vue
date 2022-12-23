@@ -17,6 +17,9 @@ import {isImage} from "@/utils";
 
 defineComponent({name: 'MarkdownEditor'});
 
+// 定义emits
+const emits = defineEmits(['vditorInput'])
+
 // 定义props
 interface Props {
 	storageMode?: number,
@@ -64,15 +67,14 @@ const props = withDefaults(defineProps<Props>(), {
 const theme = useThemeStore();
 const authStore = useAuthStore();
 const vditor = ref<Vditor>();
-const vditorOptionConfig: IOptions = {
+let vditorOptionConfig: IOptions = {
 	theme: theme.darkMode ? 'dark' : 'classic',
-	minHeight: props.vditor.minHeight,
+	minHeight: 500,
 	cache: {
-		enable: false,
-		id: 'xcye-cache',
-		after: (markdown: string) => {
-			// console.log(`缓存内容 ${markdown}`);
-		}
+		enable: false
+	},
+	input(value: string) {
+		emits('vditorInput', value)
 	},
 	placeholder: `${authStore.userInfo.username} 今天记录了么( ´◔︎ ‸◔︎\`)`,
 
@@ -82,16 +84,29 @@ const vditorOptionConfig: IOptions = {
 	blur(value: string) {
 
 	},
-	tab: props.vditor.tabKey,
-	mode: props.vditor.mode,
-	icon: props.vditor.icon,
+	esc(value: string) {
+		// window.$dialog?.warning({
+		// 	title: '◔ ‸◔?',
+		// 	content: '你确定要退出么(⊙.⊙)',
+		// 	positiveText: '(◕‿◕)',
+		// 	negativeText: '(→_←)',
+		// 	onPositiveClick: () => {
+		// 	},
+		// 	onNegativeClick: () => {
+		//
+		// 	}
+		// })
+	},
+	tab: '\t\t',
+	mode: 'ir',
+	icon: 'material',
 	toolbarConfig: {
 		hide: false,
 		pin: true
 	},
 	counter: {
-		enable: props.vditor.counter?.enable!,
-		max: props.vditor.counter?.max,
+		enable: false,
+		max: 10000,
 		type: 'markdown',
 	},
 	preview: {
@@ -130,8 +145,8 @@ const vditorOptionConfig: IOptions = {
 		position: 'bottom'
 	},
 	outline: {
-		enable: props.vditor.outline?.enable!,
-		position: props.vditor.outline?.position!
+		enable: false,
+		position: 'left'
 	}
 }
 
@@ -142,6 +157,36 @@ onMounted(() =>{
 
 // 定义方法
 const renderVditor = () => {
+	if (props.vditor.mode) {
+		vditorOptionConfig.mode = props.vditor.mode
+	}
+	if (props.vditor.outline) {
+		if (props.vditor.outline.enable) {
+			vditorOptionConfig.outline!.enable = props.vditor.outline.enable
+		}
+		if (props.vditor.outline.position) {
+			vditorOptionConfig.outline!.position = props.vditor.outline.position
+		}
+	}
+
+	if (props.vditor.counter) {
+		if (props.vditor.counter.enable) {
+			vditorOptionConfig.counter!.enable = props.vditor.counter.enable
+		}
+		if (props.vditor.counter.max) {
+			vditorOptionConfig.counter!.max = props.vditor.counter.max
+		}
+	}
+
+	if (props.vditor.minHeight) {
+		vditorOptionConfig.minHeight = props.vditor.minHeight
+	}
+	if (props.vditor.tabKey) {
+		vditorOptionConfig.tab = props.vditor.tabKey
+	}
+	if (props.vditor.icon) {
+		vditorOptionConfig.icon = props.vditor.icon
+	}
 	vditor.value = new Vditor('vditor', vditorOptionConfig);
 	if (props.renderMdContent) {
 		vditor.value?.setValue(props.renderMdContent);

@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<markdown-editor summary="ceshiceshi"></markdown-editor>
+		<markdown-editor @vditorInput="vditorInput" :vditor="{outline: {enable: true, position: 'right'}, counter: {enable: true, max: 200}}" summary="ceshiceshi"></markdown-editor>
 	</div>
 </template>
 
@@ -9,6 +9,10 @@ import {defineComponent} from "vue";
 import MarkdownEditor from "@/components/article/MarkdownEditor.vue";
 
 defineComponent({name: 'index'});
+
+const vditorInput = (value: string) => {
+	// console.log(value);
+}
 </script>
 
 <style scoped>
