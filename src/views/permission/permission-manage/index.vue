@@ -1,12 +1,9 @@
 <template>
-	<div>
-		<markdown-editor summary="ceshiceshi"></markdown-editor>
-	</div>
+	<div></div>
 </template>
 
 <script lang="ts" setup>
 import {defineComponent} from "vue";
-import MarkdownEditor from "@/components/article/MarkdownEditor.vue";
 
 defineComponent({name: 'index'});
 </script>
