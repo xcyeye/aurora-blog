@@ -38,8 +38,8 @@ export const routeModel: Record<Auth.RoleType, AuthRoute.Route[]> = {
 			component: 'basic',
 			children: [
 				{
-					name: 'user_account',
-					path: '/user/account',
+					name: 'user_profile',
+					path: '/user/profile',
 					component: 'self',
 					meta: {
 						title: '账户',
@@ -556,7 +556,7 @@ export const routeModel: Record<Auth.RoleType, AuthRoute.Route[]> = {
 					meta: {
 						title: '超级管理员可见',
 						requiresAuth: true,
-						icon: 'ic:round-supervisor-account'
+						icon: 'ic:round-supervisor-profile'
 					}
 				}
 			],

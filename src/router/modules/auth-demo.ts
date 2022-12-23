@@ -21,7 +21,7 @@ const authDemo: AuthRoute.Route = {
         title: '超级管理员可见',
         requiresAuth: true,
         permissions: ['super'],
-        icon: 'ic:round-supervisor-account'
+        icon: 'ic:round-supervisor-profile'
       }
     }
   ],

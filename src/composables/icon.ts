@@ -9,7 +9,7 @@ export const useIconRender = () => {
   interface IconConfig {
     /**
      * 图标名称(iconify图标的名称)
-     * - 例如：mdi-account 或者 mdi:account
+     * - 例如：mdi-profile 或者 mdi:profile
      */
     icon?: string;
     /**
@@ -30,7 +30,7 @@ export const useIconRender = () => {
   /**
    * 图标渲染
    * @param config
-   * @property icon - 图标名称(iconify图标的名称), 例如：mdi-account 或者 mdi:account
+   * @property icon - 图标名称(iconify图标的名称), 例如：mdi-profile 或者 mdi:profile
    * @property localIcon - 本地svg图标文件名(assets/svg-icon文件夹下)
    * @property color - 图标颜色
    * @property fontSize - 图标大小
