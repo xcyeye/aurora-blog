@@ -18,7 +18,7 @@
 </template>
 
 <script lang="ts" setup>
-import {defineComponent, ref} from "vue";
+import {defineComponent, onBeforeMount, ref, watch} from "vue";
 
 defineComponent({name: 'OperateDrawer'});
 
@@ -26,7 +26,7 @@ interface Props {
 	showDrawer?: boolean,
 	drawerTitle?: string,
 	drawerPlacement?: 'top' | 'right' | 'bottom' | 'left',
-	width: number
+	width?: number
 }
 
 // @ts-ignore
@@ -37,7 +37,14 @@ const props = withDefaults(defineProps<Props>(), {
 	width: 502
 });
 
-const showDrawerFlag = ref(true);
+const showDrawerFlag = ref(false);
+onBeforeMount(() => {
+	showDrawerFlag.value = props.showDrawer
+})
+
+watch(() => props.showDrawer, (n, o) => {
+	showDrawerFlag.value = n
+})
 
 </script>
 

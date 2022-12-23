@@ -1,13 +1,15 @@
 <template>
 	<div>
 		<show-table-data
+			@handleChangePageSize="handleChangePageSize"
+			@handleChangePageNum="handleChangePageNum"
 			:data-table-row-data="userDataArr"
 			:data-table-info="{title: '用户管理', rowKey: 'uid', striped: true}"
 			:data-table-columns="columns"
 			:pagination="pagination">
 			<template #cardHeader1>
 				<n-space>
-					<n-button strong secondary tertiary round type="success"> 添加用户</n-button>
+					<n-button strong secondary tertiary round type="success" @click="handleAddUserAction">添加用户</n-button>
 				</n-space>
 			</template>
 		</show-table-data>
@@ -30,8 +32,11 @@ defineComponent({name: 'index'});
 const loadData = () => {
 	userApi.queryListDataByCondition(condition.value).then(result => {
 		if (result.data) {
-			pagination.value.pageSize = result.data.pages!
+			pagination.value.pageNum = result.data.pageNum!
 			pagination.value.pageTotal = result.data.total!
+			pagination.value.pageCount = result.data.pages!
+			pagination.value.pageSize = result.data.pageSize!
+			pagination.value.pageSizes = [1,2,3]
 			if (result.data.result) {
 				userDataArr.value = result.data.result
 			}
@@ -69,7 +74,21 @@ const handleDeleteAction = (data: UserVo) => {
 }
 
 const handleModifyAction = (data: UserVo) => {
+	emitter.emit('userManageModifyUserAction', data)
+}
 
+const handleAddUserAction = () => {
+	emitter.emit('userManageAddUserAction')
+}
+
+const handleChangePageSize = (pageSize: number) => {
+  condition.value.pageSize = pageSize
+	loadData()
+}
+
+const handleChangePageNum = (page: number) => {
+  condition.value.pageNum = page
+	loadData()
 }
 
 const createColumns = ({
@@ -249,7 +268,10 @@ onMounted(() => {
 			condition.value = event as Condition;
 			loadData();
 		}
-	});
+	})
+	emitter.on('userManageReloadData', e => {
+		loadData()
+	})
 	emitter.emit(EnumMittEventName.resetGlobalSearchCondition, condition.value);
 })
 

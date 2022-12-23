@@ -3,29 +3,30 @@
 		<n-space vertical>
 			<n-card :title="props.dataTableInfo.title" class="h-full shadow-sm rounded-16px">
 				<!-- 空白页展示 -->
-				<loading-empty-wrapper
-					:loading="loadingEmptyWrapperData.loading"
-					:empty="loadingEmptyWrapperData.empty"
-					:loading-size="props.loadingEmptyWrapperProps.loadingSize"
-					:placeholder-class="props.loadingEmptyWrapperProps.placeholderClass"
-					:empty-desc="props.loadingEmptyWrapperProps.emptyDesc"
-					:icon-class="props.loadingEmptyWrapperProps.iconClass"
-					:desc-class="props.loadingEmptyWrapperProps.descClass"
-					:show-network-reload="props.loadingEmptyWrapperProps.showNetworkReload" >
-					<!-- 数据展示相关 -->
-					<n-space vertical>
-						<n-data-table
-							:scroll-x="props.dataTableInfo.scrollX"
-							:striped="props.dataTableInfo.striped"
-							class="h-480px"
-							:flex-height="true"
-							:row-key="getRowKey"
-							:columns="dataTableColumns"
-							:data="dataTableRowData"
-							:render-expand-icon="renderExpandIcon"
-							@update:checked-row-keys="handleCheckedRowKeys"/>
-					</n-space>
-				</loading-empty-wrapper>
+				<!--<loading-empty-wrapper-->
+				<!--	:loading="loadingEmptyWrapperData.loading"-->
+				<!--	:empty="loadingEmptyWrapperData.empty"-->
+				<!--	:loading-size="props.loadingEmptyWrapperProps.loadingSize"-->
+				<!--	:placeholder-class="props.loadingEmptyWrapperProps.placeholderClass"-->
+				<!--	:empty-desc="props.loadingEmptyWrapperProps.emptyDesc"-->
+				<!--	:icon-class="props.loadingEmptyWrapperProps.iconClass"-->
+				<!--	:desc-class="props.loadingEmptyWrapperProps.descClass"-->
+				<!--	:show-network-reload="props.loadingEmptyWrapperProps.showNetworkReload" >-->
+				<!--	-->
+				<!--</loading-empty-wrapper>-->
+				<!-- 数据展示相关 -->
+				<n-space vertical>
+					<n-data-table
+						:scroll-x="props.dataTableInfo.scrollX"
+						:striped="props.dataTableInfo.striped"
+						class="h-480px"
+						:flex-height="true"
+						:row-key="getRowKey"
+						:columns="dataTableColumns"
+						:data="dataTableRowData"
+						:render-expand-icon="renderExpandIcon"
+						@update:checked-row-keys="handleCheckedRowKeys"/>
+				</n-space>
 				<template #header-extra>
 					<n-space justify="end">
 						<slot name="cardHeader1"/>
@@ -37,22 +38,16 @@
 					</n-space>
 				</template>
 			</n-card>
-			<n-row :gutter="[0, 24]">
-				<n-col :span="24">
-					<div style="display: flex; justify-content: right">
-						<n-pagination
-							v-model:page="pagination.pageNum"
-							v-model:page-size="pagination.pageSize"
-							:item-count="pagination.pageTotal"
-							:page-slot="10"
-							show-size-picker
-							:page-sizes="pagination.pageSizes"
-							@update:page-size="handleChangePageSize"
-							@update:page="handleChangePageNum"
-						/>
-					</div>
-				</n-col>
-			</n-row>
+			<n-pagination
+				v-model:page="pagination.pageNum"
+				v-model:page-size="pagination.pageSize"
+				:item-count="pagination.pageTotal"
+				:page-slot="10"
+				show-size-picker
+				:page-sizes="pagination.pageSizes"
+				@update:page-size="handleChangePageSize"
+				@update:page="handleChangePageNum"
+			/>
 		</n-space>
   </div>
 </template>
@@ -60,7 +55,7 @@
 <script lang="ts" setup>
 import {DataTableColumn, DataTableRowKey} from "naive-ui";
 import {RowData} from "naive-ui/es/data-table/src/interface";
-import {reactive, VNode, watch} from "vue";
+import {onBeforeMount, onMounted, reactive, ref, VNode, watch} from "vue";
 
 // 定义emit
 const emits = defineEmits(['handleChangePageSize', 'handleChangePageNum', 'handleCheckedRowKeys'])
@@ -84,7 +79,8 @@ interface DataTablePaginationProps {
 	pageNum?: number,
 	pageSize?: number,
 	pageTotal?: number,
-	pageSizes?: number[]
+	pageSizes?: number[],
+	pageCount?: number
 }
 
 interface DataTableInfo {
@@ -123,7 +119,6 @@ const props = withDefaults(defineProps<Props>(), {
 			pageSizes: [10, 20, 30]
 		}
 	},
-	dataTableRowData: () => new Array<RowData>(),
 	dataTableInfo: () => {
 		return {
 			rowKey: '',
@@ -138,9 +133,11 @@ const loadingEmptyWrapperData = reactive({
 	loading: false,
 	empty: false
 })
+const showTableDataArr = ref<Array<RowData>>()
 
 // 方法
 const handleChangePageSize = (pageSize: number):void => {
+	if (props.pagination.pageSize === pageSize) return
 	loadingEmptyWrapperData.loading = true;
 	emits('handleChangePageSize', pageSize);
 }
@@ -162,8 +159,23 @@ const handleCheckedRowKeys = (rowKeys: DataTableRowKey) => {
 	emits('handleCheckedRowKeys', rowKeys);
 }
 
+const assertPageSizes = () => {
+	if (props.pagination) {
+		if (props.pagination.pageSize && props.pagination.pageSizes) {
+			if (props.pagination.pageSizes.indexOf(props.pagination.pageSize) === -1) {
+				// 不存在
+				props.pagination.pageSizes.push(props.pagination.pageSize)
+			}
+		}
+	}
+	setTimeout(() => {
+		props.pagination.pageSizes?.sort((a: number, b: number) => a - b)
+	}, 500)
+}
+
 // 监听数据变化
 watch(props.dataTableRowData, (newValue, oldValue) => {
+	console.log("数据变化了");
 	if (newValue.length === 0) {
 		loadingEmptyWrapperData.empty = true;
 		loadingEmptyWrapperData.loading = false;
@@ -171,6 +183,18 @@ watch(props.dataTableRowData, (newValue, oldValue) => {
 		loadingEmptyWrapperData.empty = false;
 		loadingEmptyWrapperData.loading = false;
 	}
+	assertPageSizes()
+})
+
+watch(props.pagination, (nv, ov) => {
+	assertPageSizes()
+})
+
+onMounted(() => {
+	if (!props.pagination.pageSizes) {
+		props.pagination.pageSizes = [10, 20, 30]
+	}
+	assertPageSizes()
 })
 
 </script>
