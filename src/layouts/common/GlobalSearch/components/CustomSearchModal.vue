@@ -173,6 +173,7 @@ const rangeShortcuts = ref({
   }
 });
 
+// @ts-ignore
 const handleSearch = useDebounceFn(search, 300);
 
 const show = computed({

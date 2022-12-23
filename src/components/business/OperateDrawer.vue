@@ -18,7 +18,7 @@
 </template>
 
 <script lang="ts" setup>
-import {defineComponent, reactive, ref} from "vue";
+import {defineComponent, ref} from "vue";
 
 defineComponent({name: 'OperateDrawer'});
 
@@ -29,6 +29,7 @@ interface Props {
 	width: number
 }
 
+// @ts-ignore
 const props = withDefaults(defineProps<Props>(), {
 	showDrawer: false,
 	drawerTitle: '',

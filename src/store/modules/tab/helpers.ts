@@ -62,6 +62,7 @@ export function getTabRoutes() {
   const routes: App.GlobalTabRoute[] = [];
   const data = localStg.get('multiTabRoutes');
   if (data) {
+		// @ts-ignore
     const defaultTabRoutes = data.map(item => ({
       ...item,
       scrollPosition: {

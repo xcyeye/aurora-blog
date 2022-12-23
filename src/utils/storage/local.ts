@@ -1,4 +1,5 @@
 import { decrypto, encrypto } from '../crypto';
+import {StorageInterface} from "@/typings/storage";
 interface StorageData<T> {
   value: T;
   expire: number | null;

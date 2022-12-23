@@ -55,13 +55,6 @@
 </template>
 
 <script lang="ts" setup>
-
-const data = Array.from({ length: 46 }).map((_, index) => ({
-	name: `Edward King ${index}`,
-	age: 32,
-	address: `London, Park Lane no. ${index}`
-}))
-
 import {DataTableColumns, DataTableRowKey} from "naive-ui";
 import {RowData} from "naive-ui/es/data-table/src/interface";
 import {reactive, watch} from "vue";

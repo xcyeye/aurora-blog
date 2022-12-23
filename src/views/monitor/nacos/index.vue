@@ -10,7 +10,7 @@
 </template>
 
 <script lang="ts" setup>
-import {computed, defineComponent, ref} from "vue";
+import {defineComponent, ref} from "vue";
 import systemInfo from "~/src/field/systemInfo/systemInfo.json"
 
 defineComponent({name: 'index'});

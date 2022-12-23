@@ -16,7 +16,6 @@
 import { useThemeStore } from '@/store';
 import { useBoolean } from '@/hooks';
 import CustomSearchModal from '@/layouts/common/GlobalSearch/components/CustomSearchModal.vue';
-import { SearchModal } from './components';
 
 defineOptions({ name: 'GlobalSearch' });
 

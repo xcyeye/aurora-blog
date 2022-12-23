@@ -31,6 +31,8 @@
 </template>
 
 <script lang="ts" setup>
+import {reactive} from "vue";
+import {DataTableColumns, DataTableRowKey} from "naive-ui";
 
 type RowData = {
 	key: number
@@ -40,9 +42,6 @@ type RowData = {
 }
 
 type aa = RowData;
-
-import {reactive} from "vue";
-import {DataTableColumns, DataTableRowKey} from "naive-ui";
 
 const pagination = reactive({
 	pageNum: 1,
