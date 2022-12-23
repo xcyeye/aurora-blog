@@ -1,3 +1,4 @@
 export enum EnumMittEventName {
-  globalSearchCondition = 'globalSearchCondition'
+  globalSearchCondition = 'globalSearchCondition',
+  resetGlobalSearchCondition = 'resetGlobalSearchCondition'
 }

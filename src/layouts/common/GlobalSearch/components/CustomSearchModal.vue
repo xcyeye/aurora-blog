@@ -114,7 +114,10 @@
         <n-row :gutter="[0, 24]">
           <n-col :span="24">
             <div style="display: flex; justify-content: flex-end">
-              <n-button round type="primary" @click="handleClickSearchButton"> 确定 </n-button>
+              <n-space justify="end">
+								<n-button round type="warning" @click="handleResetSearchButton"> 重置 </n-button>
+								<n-button round type="primary" @click="handleClickSearchButton"> 确定 </n-button>
+							</n-space>
             </div>
           </n-col>
         </n-row>
@@ -127,7 +130,7 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, nextTick, ref, watch } from 'vue';
+import {computed, nextTick, onBeforeMount, onMounted, ref, watch} from 'vue';
 import { onKeyStroke, useDebounceFn } from '@vueuse/core';
 import { EnumMittEventName } from '@/enum';
 import { useBasicLayout } from '@/composables';
@@ -161,6 +164,7 @@ const emit = defineEmits<Emits>();
 const { isMobile } = useBasicLayout();
 const inputRef = ref<HTMLInputElement>();
 const condition = ref(conditionInfo);
+const originCondition = ref<Condition>()
 const startAndEndTime = ref();
 const rangeShortcuts = ref({
   此刻: () => {
@@ -231,19 +235,29 @@ const handleSelectDate = (showControl: boolean) => {
 
 /** 处理点击确定之后的逻辑 */
 const handleClickSearchButton = () => {
-  if (condition.value.keyword === '') {
-    condition.value.keyword = null;
-  }
-  if (condition.value.otherUid === '') {
-    condition.value.otherUid = null;
-  }
-  if (condition.value.uid === '') {
-    condition.value.uid = null;
-  }
-  // 将当前的condition发送到当前使用的页面
-  emitter.emit(EnumMittEventName.globalSearchCondition, condition.value);
-  handleClose();
+	if (condition.value.keyword === '') {
+		condition.value.keyword = null;
+	}
+	if (condition.value.otherUid === '') {
+		condition.value.otherUid = null;
+	}
+	if (condition.value.uid === '') {
+		condition.value.uid = null;
+	}
+	// 将当前的condition发送到当前使用的页面
+	emitter.emit(EnumMittEventName.globalSearchCondition, condition.value);
+	handleClose();
 };
+
+/** 处理点击重置之后的逻辑 */
+const handleResetSearchButton = () => {
+	if (originCondition.value) {
+		condition.value = originCondition.value
+		// 将当前的condition发送到当前使用的页面
+		emitter.emit(EnumMittEventName.globalSearchCondition, condition.value);
+	}
+	handleClose();
+}
 
 /** 查询 */
 function search() {}
@@ -267,6 +281,14 @@ onKeyStroke('Escape', handleClose);
 onKeyStroke('Enter', handleEnter);
 onKeyStroke('ArrowUp', handleUp);
 onKeyStroke('ArrowDown', handleDown);
+
+onBeforeMount(() => {
+	emitter.on(EnumMittEventName.resetGlobalSearchCondition, e => {
+		if (e) {
+			originCondition.value = e as Condition
+		}
+	})
+})
 </script>
 
 <style lang="scss" scoped></style>

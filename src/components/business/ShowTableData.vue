@@ -15,11 +15,14 @@
 					<!-- 数据展示相关 -->
 					<n-space vertical>
 						<n-data-table
+							:scroll-x="props.dataTableInfo.scrollX"
+							:striped="props.dataTableInfo.striped"
 							class="h-480px"
 							:flex-height="true"
 							:row-key="getRowKey"
 							:columns="dataTableColumns"
 							:data="dataTableRowData"
+							:render-expand-icon="renderExpandIcon"
 							@update:checked-row-keys="handleCheckedRowKeys"/>
 					</n-space>
 				</loading-empty-wrapper>
@@ -55,9 +58,9 @@
 </template>
 
 <script lang="ts" setup>
-import {DataTableColumns, DataTableRowKey} from "naive-ui";
+import {DataTableColumn, DataTableRowKey} from "naive-ui";
 import {RowData} from "naive-ui/es/data-table/src/interface";
-import {reactive, watch} from "vue";
+import {reactive, VNode, watch} from "vue";
 
 // 定义emit
 const emits = defineEmits(['handleChangePageSize', 'handleChangePageNum', 'handleCheckedRowKeys'])
@@ -78,24 +81,27 @@ interface LoadingEmptyWrapperProps {
 }
 
 interface DataTablePaginationProps {
-	pageNum: number,
-	pageSize: number,
-	pageTotal: number,
-	pageSizes: number[]
+	pageNum?: number,
+	pageSize?: number,
+	pageTotal?: number,
+	pageSizes?: number[]
 }
 
 interface DataTableInfo {
 	title?: string,
-	rowKey: string
+	rowKey: string,
+	striped?: boolean,
+	scrollX?: number
 }
 
 interface Props {
 	/** 和加载数据展示页相关的属性 */
 	loadingEmptyWrapperProps?: LoadingEmptyWrapperProps,
-	dataTableColumns: DataTableColumns,
+	dataTableColumns: Array<DataTableColumn>,
 	dataTableRowData: Array<RowData>,
-	pagination: DataTablePaginationProps,
-	dataTableInfo: DataTableInfo
+	pagination?: DataTablePaginationProps,
+	dataTableInfo: DataTableInfo,
+	renderExpandIcon?: () => VNode
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -120,7 +126,9 @@ const props = withDefaults(defineProps<Props>(), {
 	dataTableRowData: () => new Array<RowData>(),
 	dataTableInfo: () => {
 		return {
-			rowKey: ''
+			rowKey: '',
+			striped: true,
+			scrollX: undefined
 		}
 	}
 });

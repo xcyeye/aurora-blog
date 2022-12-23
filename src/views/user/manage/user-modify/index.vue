@@ -1,13 +1,11 @@
 <template>
 	<div>
-		<user-list/>
+		<h1>this is user add</h1>
 	</div>
 </template>
 
 <script lang="ts" setup>
 import {defineComponent} from "vue";
-import UserList from './user-list/index.vue'
-import UserModify from './user-modify/index.vue'
 
 defineComponent({name: 'index'});
 </script>

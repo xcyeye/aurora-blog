@@ -73,4 +73,11 @@ interface PageData<T> {
   result: Array<T> | null;
 }
 
-export { Condition, PageData };
+interface Pagination {
+	pageNum?: number,
+	pageSize?: number,
+	pageTotal?: number,
+	pageSizes?: number[]
+}
+
+export { Condition, PageData, Pagination };
