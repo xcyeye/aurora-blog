@@ -40,7 +40,6 @@ export function createRequest(axiosConfig: AxiosRequestConfig, backendConfig?: S
       data: param.data,
       config: param.axiosConfig
     })) as Service.RequestResult<T>;
-
     return res;
   }
 

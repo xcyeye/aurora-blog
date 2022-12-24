@@ -1,145 +1,52 @@
 <template>
-	<n-form ref="formRef" :model="model" :rules="rules">
-		<n-form-item path="age" label="年龄">
-			<n-input v-model:value="model.age" @keydown.enter.prevent />
-		</n-form-item>
-		<n-form-item path="password" label="密码">
-			<n-input
-				v-model:value="model.password"
-				type="password"
-				@input="handlePasswordInput"
-				@keydown.enter.prevent
-			/>
-		</n-form-item>
-		<n-form-item
-			ref="rPasswordFormItemRef"
-			first
-			path="reenteredPassword"
-			label="重复密码"
-		>
-			<n-input
-				v-model:value="model.reenteredPassword"
-				:disabled="!model.password"
-				type="password"
-				@keydown.enter.prevent
-			/>
-		</n-form-item>
-		<n-button
-			round
-			type="primary"
-			@click="handleValidateButtonClick"
-		>
-			验证
-		</n-button>
-	</n-form>
-
-	<pre>{{ JSON.stringify(model, null, 2) }}
-</pre>
+	<n-data-table :columns="columns" :data="data" :pagination="pagination" />
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue'
-import {
-	FormInst,
-	FormItemInst,
-	FormItemRule,
-	useMessage,
-	FormRules
-} from 'naive-ui'
+import { defineComponent, reactive } from 'vue'
 
-interface ModelType {
-	age: string | null
-	password: string | null
-	reenteredPassword: string | null
-}
+const columns = [
+	{
+		title: 'Name',
+		key: 'name'
+	},
+	{
+		title: 'Age',
+		key: 'age'
+	},
+	{
+		title: 'Address',
+		key: 'address'
+	}
+]
+
+const data = Array.from({ length: 46 }).map((_, index) => ({
+	key: index,
+	name: `Edward King ${index}`,
+	age: 32,
+	address: `London, Park Lane no. ${index}`
+}))
 
 export default defineComponent({
 	setup () {
-		const formRef = ref<FormInst | null>(null)
-		const rPasswordFormItemRef = ref<FormItemInst | null>(null)
-		const message = useMessage()
-		const modelRef = ref<ModelType>({
-			age: null,
-			password: null,
-			reenteredPassword: null
-		})
-		function validatePasswordStartWith (
-			rule: FormItemRule,
-			value: string
-		): boolean {
-			return (
-				!!modelRef.value.password &&
-				modelRef.value.password.startsWith(value) &&
-				modelRef.value.password.length >= value.length
-			)
-		}
-		function validatePasswordSame (rule: FormItemRule, value: string): boolean {
-			return value === modelRef.value.password
-		}
-		const rules: FormRules = {
-			age: [
-				{
-					required: true,
-					validator (rule: FormItemRule, value: string) {
-						if (!value) {
-							return new Error('需要年龄')
-						} else if (!/^\d*$/.test(value)) {
-							return new Error('年龄应该为整数')
-						} else if (Number(value) < 18) {
-							return new Error('年龄应该超过十八岁')
-						}
-						return true
-					},
-					trigger: ['input', 'blur']
-				}
-			],
-			password: [
-				{
-					required: true,
-					message: '请输入密码',
-					trigger: 'blur'
-				}
-			],
-			reenteredPassword: [
-				{
-					required: true,
-					message: '请再次输入密码',
-					trigger: ['input', 'blur']
-				},
-				{
-					validator: validatePasswordStartWith,
-					message: '两次密码输入不一致',
-					trigger: 'input'
-				},
-				{
-					validator: validatePasswordSame,
-					message: '两次密码输入不一致',
-					trigger: ['blur', 'password-input']
-				}
-			]
-		}
-		return {
-			formRef,
-			rPasswordFormItemRef,
-			model: modelRef,
-			rules,
-			handlePasswordInput () {
-				if (modelRef.value.reenteredPassword) {
-					rPasswordFormItemRef.value?.validate({ trigger: 'password-input' })
-				}
+		const paginationReactive = reactive({
+			page: 2,
+			pageSize: 5,
+			showSizePicker: true,
+			pageSizes: [3, 5, 7],
+			onChange: (page: number) => {
+				paginationReactive.page = page
 			},
-			handleValidateButtonClick (e: MouseEvent) {
-				console.log(/^\w{5,10}/.test('xcasdyeyeasdfa'));
-				e.preventDefault()
-				formRef.value?.validate((errors) => {
-					if (!errors) {
-						message.success('验证成功')
-					} else {
-						console.log(errors)
-						message.error('验证失败')
-					}
-				})
+			onUpdatePageSize: (pageSize: number) => {
+				paginationReactive.pageSize = pageSize
+				paginationReactive.page = 1
 			}
+		})
+
+		return {
+			data,
+			columns,
+			pagination: paginationReactive
 		}
 	}
 })

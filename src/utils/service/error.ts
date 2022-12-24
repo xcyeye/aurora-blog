@@ -49,8 +49,7 @@ export function handleAxiosError(axiosError: AxiosError) {
 				// 获取后端返回的信息
 				if (axiosError.response?.data) {
 					// @ts-ignore
-					errorCode = axiosError.response.data.code;
-					// @ts-ignore
+					// 获取自己的message
 					msg = axiosError.response.data.message;
 				}
         Object.assign(error, { code: errorCode, msg });

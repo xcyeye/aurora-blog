@@ -3,10 +3,10 @@
 		<show-table-data
 			@handleChangePageSize="handleChangePageSize"
 			@handleChangePageNum="handleChangePageNum"
-			:data-table-row-data="userDataArr"
 			:data-table-info="{title: '用户管理', rowKey: 'uid', striped: true}"
 			:data-table-columns="columns"
-			:pagination="pagination">
+			:query-data-method="queryDataMethod"
+			:page-sizes="[1,2,3,4,5,6]">
 			<template #cardHeader1>
 				<n-space>
 					<n-button strong secondary tertiary round type="success" @click="handleAddUserAction">添加用户</n-button>
@@ -19,29 +19,35 @@
 <script lang="ts" setup>
 import {defineComponent, h, onBeforeMount, onMounted, ref} from "vue";
 import {UserVo} from "@/theme/vo/admin/UserVo";
-import {Condition, Pagination} from "@/theme/core/bean";
+import {Condition, PageData, Pagination} from "@/theme/core/bean";
 import {emailApi, userApi} from "@/service";
 import {DataTableColumn, NAvatar, NButton, NSpace, NTag} from "naive-ui";
 import emitter from "@/utils/mitt";
 import {EnumMittEventName} from "@/enum";
 import {User} from "@/theme/pojo/admin/User";
+import {RowData} from "naive-ui/es/data-table/src/interface";
+import RequestResult = Service.RequestResult;
 
 defineComponent({name: 'index'});
 
 // 从后端获取用户数据
 const loadData = () => {
-	userApi.queryListDataByCondition(condition.value).then(result => {
-		if (result.data) {
-			pagination.value.pageNum = result.data.pageNum!
-			pagination.value.pageTotal = result.data.total!
-			pagination.value.pageCount = result.data.pages!
-			pagination.value.pageSize = result.data.pageSize!
-			pagination.value.pageSizes = [1,2,3]
-			if (result.data.result) {
-				userDataArr.value = result.data.result
-			}
-		}
-	})
+	// userApi.queryListDataByCondition(condition.value).then(result => {
+	// 	if (result.data) {
+	// 		pagination.value.pageNum = result.data.pageNum!
+	// 		pagination.value.pageTotal = result.data.total!
+	// 		pagination.value.pageCount = result.data.pages!
+	// 		pagination.value.pageSize = result.data.pageSize!
+	// 		pagination.value.pageSizes = [1,2,3]
+	// 		if (result.data.result) {
+	// 			userDataArr.value = result.data.result
+	// 		}
+	// 	}
+	// })
+}
+
+const queryDataMethod = (condition: Condition): Promise<RequestResult<PageData<UserVo>>> => {
+	return userApi.queryListDataByCondition(condition);
 }
 
 // 定义方法

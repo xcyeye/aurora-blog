@@ -33,3 +33,6 @@ stats.html
 /src/typings/components.d.ts
 package-lock.json
 yarn.lock
+
+# 排除测试页面
+/src/views/test
