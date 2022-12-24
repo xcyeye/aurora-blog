@@ -129,6 +129,8 @@ const createColumns = ({
 			key: 'username',
 			titleColSpan: 1,
 			width: 120,
+			sortOrder: false,
+			sorter: 'default'
 		},
 		{
 			title: '昵称',
@@ -202,6 +204,7 @@ const createColumns = ({
 			key: 'createTime',
 			titleColSpan: 1,
 			sorter: 'default',
+			sortOrder: false,
 			width: 170
 		},
 		{

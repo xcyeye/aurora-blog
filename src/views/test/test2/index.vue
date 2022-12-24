@@ -1,52 +1,119 @@
 <template>
-	<n-data-table :columns="columns" :data="data" :pagination="pagination" />
+	<n-space vertical :size="12">
+		<n-space>
+			<n-button @click="sortName('ascend')">Sort By Name (Ascend)</n-button>
+			<n-button @click="sortName('descend')">Sort By Name (Descend)</n-button>
+			<n-button @click="clearSorter">Clear Sorter</n-button>
+		</n-space>
+		<n-data-table
+			:columns="columns"
+			:data="data"
+			:pagination="pagination"
+			@update:sorter="handleSorterChange"
+		/>
+	</n-space>
 </template>
 
-<script lang="ts">
-import { defineComponent, reactive } from 'vue'
+<script>
+import { defineComponent, reactive, ref } from 'vue'
+
+const nameColumn = {
+	title: 'Name',
+	key: 'name',
+	sortOrder: false,
+	sorter: 'default'
+}
+
+const ageColumn = {
+	title: 'Age',
+	key: 'age',
+	sortOrder: false,
+	sorter (rowA, rowB) {
+		return rowA.age - rowB.age
+	}
+}
 
 const columns = [
-	{
-		title: 'Name',
-		key: 'name'
-	},
-	{
-		title: 'Age',
-		key: 'age'
-	},
+	nameColumn,
+	ageColumn,
 	{
 		title: 'Address',
-		key: 'address'
+		key: 'address',
+		defaultFilter: ['London', 'New York'],
+		filterOptions: [
+			{
+				label: 'London',
+				value: 'London'
+			},
+			{
+				label: 'New York',
+				value: 'New York'
+			}
+		],
+		filter (value, row) {
+			return row.address.indexOf(value) >= 0
+		}
 	}
 ]
 
-const data = Array.from({ length: 46 }).map((_, index) => ({
-	key: index,
-	name: `Edward King ${index}`,
-	age: 32,
-	address: `London, Park Lane no. ${index}`
-}))
+const data = [
+	{
+		key: 0,
+		name: 'John Brown',
+		age: 38,
+		address: 'New York No. 1 Lake Park'
+	},
+	{
+		key: 1,
+		name: 'Jim Green',
+		age: 42,
+		address: 'London No. 1 Lake Park'
+	},
+	{
+		key: 2,
+		name: 'Joe Black',
+		age: 36,
+		address: 'Sidney No. 1 Lake Park'
+	},
+	{
+		key: 3,
+		name: 'Jim Red',
+		age: 32,
+		address: 'London No. 2 Lake Park'
+	}
+]
 
 export default defineComponent({
 	setup () {
-		const paginationReactive = reactive({
-			page: 2,
-			pageSize: 5,
-			showSizePicker: true,
-			pageSizes: [3, 5, 7],
-			onChange: (page: number) => {
-				paginationReactive.page = page
-			},
-			onUpdatePageSize: (pageSize: number) => {
-				paginationReactive.pageSize = pageSize
-				paginationReactive.page = 1
-			}
-		})
+		const nameColumnReactive = reactive(nameColumn)
+		const ageColumnReactive = reactive(ageColumn)
+		const columnsRef = ref(columns)
 
 		return {
 			data,
-			columns,
-			pagination: paginationReactive
+			columns: columnsRef,
+			nameColumn: nameColumnReactive,
+			ageColumn: ageColumnReactive,
+			pagination: { pageSize: 5 },
+			sortName (order) {
+				nameColumnReactive.sortOrder = order
+			},
+			clearSorter () {
+				nameColumnReactive.sortOrder = false
+				ageColumnReactive.sortOrder = false
+			},
+			handleSorterChange (sorter) {
+				columnsRef.value.forEach((column) => {
+					/** column.sortOrder !== undefined means it is uncontrolled */
+					if (column.sortOrder === undefined) return
+					if (!sorter) {
+						column.sortOrder = false
+						return
+					}
+					if (column.key === sorter.columnKey) column.sortOrder = sorter.order
+					else column.sortOrder = false
+				})
+			}
 		}
 	}
 })

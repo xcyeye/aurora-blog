@@ -18,6 +18,7 @@
 						:pagination="pagination"
 						@update:page="handleChangePageNum"
 						@update:page-size="handleChangePageSize"
+						@update-sorter="handleSorterChange"
 						@update:checked-row-keys="handleCheckedRowKeys"/>
 				</n-space>
 				<template #header-extra>
@@ -46,8 +47,8 @@
 </template>
 
 <script lang="ts" setup>
-import {DataTableColumn, DataTableRowKey, PaginationProps, PaginationSizeOption} from "naive-ui";
-import {RowData} from "naive-ui/es/data-table/src/interface";
+import {DataTableColumn, DataTableRowKey, DataTableSortState, PaginationProps, PaginationSizeOption} from "naive-ui";
+import {RowData, TableBaseColumn} from "naive-ui/es/data-table/src/interface";
 import {onBeforeMount, ref, VNode} from "vue";
 import {Condition, PageData} from "@/theme/core/bean";
 import RequestResult = Service.RequestResult;
@@ -64,7 +65,7 @@ interface DataTableInfo {
 
 interface Props {
 	/** 和加载数据展示页相关的属性 */
-	dataTableColumns: Array<DataTableColumn>,
+	dataTableColumns: Array<TableBaseColumn>,
 	pageSizes?: number[],
 	dataTableInfo: DataTableInfo,
 	renderExpandIcon?: () => VNode,
@@ -101,7 +102,7 @@ const pagination = ref<PaginationProps>({
 })
 
 // 方法
-const loadData = (pageSize: number | null, pageNum: number | null) => {
+const loadData = (pageSize: number | null, pageNum: number | null, orderBy: string | null, order: string | null) => {
 	if (!dataTableLoadingStatus.value) dataTableLoadingStatus.value = true
 	if (pageSize) {
 		pagination.value.pageSize = pageSize
@@ -110,6 +111,15 @@ const loadData = (pageSize: number | null, pageNum: number | null) => {
 	if (pageNum) {
 		pagination.value.page = pageNum
 		props.queryCondition.pageNum = pagination.value.page
+	}
+	if (orderBy && order) {
+		let orderByStr = orderBy
+		if (order === 'ascend') {
+			orderByStr = orderByStr + " asc"
+		}else if (order === 'descend') {
+			orderByStr = orderByStr + " desc"
+		}
+		props.queryCondition.orderBy = orderByStr
 	}
 	props.queryDataMethod(props.queryCondition).then(result => {
 		dataTableLoadingStatus.value = false
@@ -128,13 +138,13 @@ const loadData = (pageSize: number | null, pageNum: number | null) => {
 }
 
 const handleChangePageSize = (pageSize: number):void => {
-	loadData(pageSize, null);
+	loadData(pageSize, null, null, null);
 	pagination.value.page = 1
 	emits('handleChangePageSize', pageSize);
 }
 
 const handleChangePageNum = (page: number):void => {
-	loadData(null, page)
+	loadData(null, page, null, null)
 	pagination.value.page = page
 	emits('handleChangePageNum', page);
 }
@@ -149,6 +159,23 @@ const getRowKey = (rowData: object): string => {
 
 const handleCheckedRowKeys = (rowKeys: DataTableRowKey): undefined => {
 	emits('handleCheckedRowKeys', rowKeys);
+	return undefined
+}
+
+const handleSorterChange = (sorter: DataTableSortState): undefined => {
+	props.dataTableColumns.forEach((column: TableBaseColumn) => {
+		if (column.sortOrder === undefined) return
+		if (!sorter) {
+			column.sortOrder = false
+			return;
+		}
+		if (column.key === sorter.columnKey) {
+			column.sortOrder = sorter.order
+			loadData(null, null, column.key as string, sorter.order as string)
+		}else {
+			column.sortOrder = false
+		}
+	})
 	return undefined
 }
 
@@ -173,7 +200,7 @@ const assertPageSizes = () => {
 
 onBeforeMount(() => {
 	assertPageSizes()
-	loadData(null, null)
+	loadData(null, null, null, null)
 })
 
 </script>
