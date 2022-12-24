@@ -2,12 +2,10 @@ package xyz.xcye.admin.api.feign;
 
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.cloud.openfeign.SpringQueryMap;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.*;
 import xyz.xcye.core.entity.R;
 import xyz.xcye.message.po.Email;
+import xyz.xcye.message.pojo.EmailPojo;
 
 /**
  * @author qsyyke
@@ -17,6 +15,9 @@ import xyz.xcye.message.po.Email;
 @FeignClient(value = "aurora-message", contextId = "admin-aurora-email", fallback = EmailFeignHandler.class)
 public interface EmailFeignService {
     
-    @GetMapping("/message/email/queryByEmailNumber")
-    R queryByEmailNumber(@SpringQueryMap String email);
+    @PostMapping("/message/email/queryByEmailNumber")
+    R queryByEmailNumber(@RequestBody EmailPojo pojo);
+
+    @PostMapping("/message/email/insertEmail")
+    R insertEmail(@RequestBody EmailPojo pojo);
 }

@@ -8,6 +8,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import xyz.xcye.admin.po.User;
 import xyz.xcye.admin.pojo.UserPojo;
+import xyz.xcye.admin.service.AuroraPermissionService;
 import xyz.xcye.admin.service.UserService;
 import xyz.xcye.admin.vo.UserVO;
 import xyz.xcye.core.annotaion.controller.ModifyOperation;
@@ -50,7 +51,7 @@ public class UserController {
     @Operation(summary = "更新密码")
     @PostMapping("/updatePassword")
     @ModifyOperation
-    public int updatePassword(@RequestBody UserPojo user) {
+    public Integer updatePassword(@RequestBody UserPojo user) {
         return userService.updatePassword(user);
     }
 
@@ -98,8 +99,8 @@ public class UserController {
 
     @Operation(summary = "绑定邮箱")
     @ModifyOperation
-    @PostMapping("/bindingEmail/{email}")
-    public int bindingEmail(@PathVariable("email") String email) throws BindException, EmailException {
-        return userService.bindingEmail(email);
+    @PostMapping("/bindingEmail")
+    public int bindingEmail(@RequestBody UserPojo pojo) throws BindException, EmailException {
+        return userService.bindingEmail(pojo);
     }
 }

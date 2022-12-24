@@ -81,7 +81,12 @@ public class JwtTokenUserDetailsService implements UserDetailsService {
                 .collect(Collectors.joining(","))
                 .split(",");
 
-        return SecurityUserDetails.builder()
+        SecurityUserDetails.SecurityUserDetailsBuilder builder = SecurityUserDetails.builder();
+        if (!rolePermissionDTOList.isEmpty()) {
+            builder.grantedAuthorities(AuthorityUtils.createAuthorityList(roleArray));
+        }
+
+        return builder
                 .username(username)
                 .nickname(user.getNickname())
                 .avatar(user.getAvatar())
@@ -90,6 +95,6 @@ public class JwtTokenUserDetailsService implements UserDetailsService {
                 .password(user.getPassword())
                 .userUid(user.getUid())
                 .accountNonLocked(!Optional.ofNullable(user.getAccountLock()).orElse(false))
-                .grantedAuthorities(AuthorityUtils.createAuthorityList(roleArray)).build();
+                .build();
     }
 }

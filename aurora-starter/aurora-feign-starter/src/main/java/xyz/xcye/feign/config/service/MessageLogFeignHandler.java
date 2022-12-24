@@ -4,6 +4,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.validation.BindException;
 import xyz.xcye.core.entity.R;
 import xyz.xcye.message.po.MessageLog;
+import xyz.xcye.message.pojo.MessageLogPojo;
 
 /**
  * @author qsyyke
@@ -14,17 +15,17 @@ import xyz.xcye.message.po.MessageLog;
 public class MessageLogFeignHandler implements MessageLogFeignService {
 
     @Override
-    public R insertMessageLog(MessageLog messageLog) throws BindException {
+    public R insertMessageLog(MessageLogPojo messageLog) throws BindException {
         return R.failure();
     }
 
     @Override
-    public R updateMessageLog(MessageLog messageLog) throws BindException {
+    public R updateMessageLog(MessageLogPojo messageLog) throws BindException {
         return R.failure();
     }
 
     @Override
-    public R queryMessageLogByUid(long uid) {
+    public R queryMessageLogByUid(MessageLogPojo messageLog) {
         return R.failure();
     }
 }

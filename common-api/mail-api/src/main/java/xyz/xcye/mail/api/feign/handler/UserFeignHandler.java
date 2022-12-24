@@ -18,17 +18,17 @@ import xyz.xcye.message.po.Email;
 public class UserFeignHandler implements UserFeignService {
 
     @Override
-    public R queryUserByUid(long uid) {
+    public R queryUserByUid(UserPojo pojo) {
         return R.failure();
     }
 
     @Override
-    public ModifyResult updateUser(UserPojo user) throws UserException {
+    public R updateUser(UserPojo pojo) throws UserException {
         return null;
     }
 
     @Override
-    public R bindingEmail(String email) throws BindException {
+    public R bindingEmail(UserPojo pojo) throws BindException {
         return R.failure();
     }
 }

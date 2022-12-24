@@ -26,7 +26,7 @@ public class VerifyAccountController {
     private CommonVerifyUrlService commonVerifyUrlService;
 
     @ResponseRealResult
-    @GetMapping("/bindEmail/emailVerifyAccount/{incomingSecretKey}")
+    @GetMapping("/bindEmail/{incomingSecretKey}")
     public String emailVerifyAccount(@PathVariable("incomingSecretKey") String incomingSecretKey) throws UserException {
         boolean bindEmail = commonVerifyUrlService.bindEmail(incomingSecretKey);
 

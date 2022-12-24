@@ -1,6 +1,7 @@
 package xyz.xcye.api.gateway.handler;
 
 import org.springframework.stereotype.Component;
+import xyz.xcye.admin.pojo.RolePermissionRelationshipPojo;
 import xyz.xcye.api.gateway.GatewayRolePermissionFeignService;
 import xyz.xcye.core.entity.R;
 import xyz.xcye.data.entity.Condition;
@@ -15,14 +16,13 @@ import xyz.xcye.data.entity.Condition;
 @Component
 public class GatewayRolePermissionFeignHandler implements GatewayRolePermissionFeignService {
 
-
     @Override
-    public R loadPermissionByUsername(String username) {
+    public R loadPermissionByUsername(RolePermissionRelationshipPojo pojo) {
         return R.failure();
     }
 
     @Override
-    public R loadAllRoleByUsername(String username) {
+    public R loadAllRoleByUsername(RolePermissionRelationshipPojo pojo) {
         return R.failure();
     }
 

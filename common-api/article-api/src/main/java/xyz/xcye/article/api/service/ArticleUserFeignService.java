@@ -3,10 +3,9 @@ package xyz.xcye.article.api.service;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.cloud.openfeign.SpringQueryMap;
 import org.springframework.validation.BindException;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.*;
 import xyz.xcye.admin.po.User;
+import xyz.xcye.admin.pojo.UserPojo;
 import xyz.xcye.core.entity.R;
 import xyz.xcye.core.exception.user.UserException;
 import xyz.xcye.message.po.Email;
@@ -18,6 +17,6 @@ import xyz.xcye.message.po.Email;
 @FeignClient(value = "aurora-admin", name = "aurora-admin", contextId = "article-user-feign", fallback = ArticleUserFeignHandler.class)
 public interface ArticleUserFeignService {
 
-    @GetMapping("/admin/user/queryUserByUid")
-    R queryUserByUid(@SpringQueryMap long uid);
+    @PostMapping("/admin/user/queryUserByUid")
+    R queryUserByUid(@RequestBody UserPojo pojo);
 }

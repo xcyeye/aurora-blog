@@ -38,6 +38,7 @@ import xyz.xcye.core.util.lambda.AssertUtils;
 import xyz.xcye.data.entity.Condition;
 import xyz.xcye.data.entity.PageData;
 import xyz.xcye.data.util.PageUtils;
+import xyz.xcye.message.pojo.EmailPojo;
 import xyz.xcye.message.vo.EmailVO;
 
 import java.util.*;
@@ -112,7 +113,7 @@ public class UserService {
         User user = queryByUsernameContainPassword(username);
         AssertUtils.stateThrow(user != null, () -> new UserException(ResponseStatusCodeEnum.PERMISSION_USER_NOT_EXIST));
         // 查看密码是否匹配
-        boolean matches = passwordEncoder.matches(user.getPassword(), originPwd);
+        boolean matches = passwordEncoder.matches(originPwd, user.getPassword());
         AssertUtils.stateThrow(matches, () -> new UserException("密码错误"));
 
         // 修改密码
@@ -172,29 +173,51 @@ public class UserService {
     }
 
     @GlobalTransactional(rollbackFor = Exception.class)
-    public int bindingEmail(String email) throws BindException, EmailException {
+    public int bindingEmail(UserPojo pojo) throws BindException, EmailException {
+        String email = pojo.getEmailNumber();
+        Long userUid = pojo.getUid();
         AssertUtils.stateThrow(StringUtils.hasLength(email), () -> new EmailException(ResponseStatusCodeEnum.PARAM_IS_INVALID));
         // 远程调用aurora-message服务，判断此email的uid是否存在
-        R r = emailFeignService.queryByEmailNumber(email);
+        EmailPojo emailPojo = new EmailPojo();
+        emailPojo.setEmail(email);
+        emailPojo.setUserUid(userUid);
+        R r = emailFeignService.queryByEmailNumber(emailPojo);
         EmailVO queriedEmailInfo = JSONUtils.parseObjFromResult(ConvertObjectUtils.jsonToString(r), "data", EmailVO.class);
 
-        AssertUtils.ifNullThrow(queriedEmailInfo,
-                () -> new EmailException(ResponseStatusCodeEnum.EXCEPTION_EMAIL_NOT_EXISTS));
-        AssertUtils.ifNullThrow(queriedEmailInfo.getEmail(),
-                () -> new EmailException(ResponseStatusCodeEnum.EXCEPTION_EMAIL_NOT_EXISTS));
+        // AssertUtils.ifNullThrow(queriedEmailInfo,
+        //         () -> new EmailException(ResponseStatusCodeEnum.EXCEPTION_EMAIL_NOT_EXISTS));
+        // AssertUtils.ifNullThrow(queriedEmailInfo.getEmail(),
+        //         () -> new EmailException(ResponseStatusCodeEnum.EXCEPTION_EMAIL_NOT_EXISTS));
+        // 如果此邮箱号不存在则添加
+        if (queriedEmailInfo == null || queriedEmailInfo.getUid() == null) {
+            R insertEmailR = emailFeignService.insertEmail(emailPojo);
+            if (insertEmailR.getSuccess()) {
+                // 插入成功
+                R r1 = emailFeignService.queryByEmailNumber(emailPojo);
+                queriedEmailInfo = JSONUtils.parseObjFromResult(ConvertObjectUtils.jsonToString(r1), "data", EmailVO.class);
+            }else {
+                throw new EmailException("添加邮箱失败");
+            }
+        }
+        AssertUtils.ifNullThrow(queriedEmailInfo, () -> new EmailException(ResponseStatusCodeEnum.EXCEPTION_EMAIL_FAIL_BINDING));
+        if (queriedEmailInfo.getUserUid() != null && !Objects.equals(queriedEmailInfo.getUserUid(), userUid)) {
+            // 查询此用户是否绑定
+            UserVO otherUserInfo = queryUserByUid(queriedEmailInfo.getUserUid());
+            if (otherUserInfo != null && otherUserInfo.getVerifyEmail()) {
+                throw new EmailException("此邮箱号属于另一用户");
+            }
+        }
         UserPojo userPojo = new UserPojo();
         userPojo.setEmailUid(queriedEmailInfo.getUid());
-        userPojo.setUid(queriedEmailInfo.getUserUid());
+        userPojo.setUid(userUid);
         // 判断该用户是否绑定
         UserVO userVO = queryUserByUid(userPojo.getUid());
-        AssertUtils.stateThrow(!userVO.getVerifyEmail(), () -> new EmailException(ResponseStatusCodeEnum.EXCEPTION_EMAIL_HAD_BINDING));
+        // 如果已经绑定，那么则换绑
+        userVO.setEmailUid(queriedEmailInfo.getUid());
+        userVO.setVerifyEmail(false);
         // 判断该用户是否被删除
         AssertUtils.stateThrow(!userVO.getDelete(), () -> new UserException(ResponseStatusCodeEnum.PERMISSION_USER_NOT_DELETE));
-        if (userVO.getVerifyEmail() != null && userVO.getVerifyEmail()) {
-            throw new EmailException(ResponseStatusCodeEnum.EXCEPTION_EMAIL_HAD_BINDING);
-        }
 
-        // 运行到这里，用户没有绑定邮箱，则直接修改，发送，尽管记录里面存在emailUid
         int updateUserNum = updateUser(userPojo);
         if (updateUserNum == 1) {
             sendVerifyEmail(userVO, queriedEmailInfo);

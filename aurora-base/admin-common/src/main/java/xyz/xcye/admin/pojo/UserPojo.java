@@ -121,4 +121,9 @@ public class UserPojo {
      */
     private String newPwd;
 
+    /**
+     * 邮箱号
+     */
+    private String emailNumber;
+
 }

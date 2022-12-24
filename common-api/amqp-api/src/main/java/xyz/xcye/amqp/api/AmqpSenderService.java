@@ -21,6 +21,7 @@ import xyz.xcye.core.util.id.GenerateInfoUtils;
 import xyz.xcye.core.valid.Insert;
 import xyz.xcye.feign.config.service.MessageLogFeignService;
 import xyz.xcye.message.po.MessageLog;
+import xyz.xcye.message.pojo.MessageLogPojo;
 
 import javax.annotation.Resource;
 import javax.validation.groups.Default;
@@ -102,11 +103,11 @@ public class AmqpSenderService {
     private void insertMessageLogData(String correlationDataId, String msgJson, String exchangeName,
                                       String routingKey, String exchangeType) throws BindException {
         //向au_message_log表中插入生产信息
-        MessageLog messageLog = getMessageLog(msgJson, Long.parseLong(correlationDataId), exchangeName, "",
+        MessageLogPojo pojo = getMessageLog(msgJson, Long.parseLong(correlationDataId), exchangeName, "",
                 routingKey, false, 0, exchangeType, false, "");
         // 验证messageLogDO对象属性是否合法
-        ValidationUtils.valid(messageLog, Insert.class, Default.class);
-        R r = messageLogFeignService.insertMessageLog(messageLog);
+        ValidationUtils.valid(pojo, Insert.class, Default.class);
+        R r = messageLogFeignService.insertMessageLog(pojo);
         if (!r.getSuccess()) {
             throw new FeignException(ResponseStatusCodeEnum.REQUEST_REMOTE_MESSAGE_LOG_SERVICE_FAILURE);
         }
@@ -126,20 +127,20 @@ public class AmqpSenderService {
      * @param errorMessage
      * @return
      */
-    private MessageLog getMessageLog(String message, long uid, String exchange,
-                                       String queue, String routingKey, boolean ackStatus,
-                                       int tryCount, String exchangeType, boolean consumeStatus,
-                                       String errorMessage) {
-        MessageLog messageLogDO = new MessageLog();
-        messageLogDO.setMessage(message);
-        messageLogDO.setUid(uid);
-        messageLogDO.setExchange(exchange);
-        messageLogDO.setRoutingKey(routingKey);
-        messageLogDO.setAckStatus(ackStatus);
-        messageLogDO.setTryCount(tryCount);
-        messageLogDO.setExchangeType(exchangeType);
-        messageLogDO.setConsumeStatus(consumeStatus);
-        messageLogDO.setErrorMessage(errorMessage);
-        return messageLogDO;
+    private MessageLogPojo getMessageLog(String message, long uid, String exchange,
+                                         String queue, String routingKey, boolean ackStatus,
+                                         int tryCount, String exchangeType, boolean consumeStatus,
+                                         String errorMessage) {
+        MessageLogPojo pojo = new MessageLogPojo();
+        pojo.setMessage(message);
+        pojo.setUid(uid);
+        pojo.setExchange(exchange);
+        pojo.setRoutingKey(routingKey);
+        pojo.setAckStatus(ackStatus);
+        pojo.setTryCount(tryCount);
+        pojo.setExchangeType(exchangeType);
+        pojo.setConsumeStatus(consumeStatus);
+        pojo.setErrorMessage(errorMessage);
+        return pojo;
     }
 }

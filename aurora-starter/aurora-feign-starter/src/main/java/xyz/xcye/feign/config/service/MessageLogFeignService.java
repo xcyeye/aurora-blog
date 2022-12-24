@@ -11,6 +11,7 @@ import xyz.xcye.core.util.BeanUtils;
 import xyz.xcye.core.util.JSONUtils;
 import xyz.xcye.core.util.LogUtils;
 import xyz.xcye.message.po.MessageLog;
+import xyz.xcye.message.pojo.MessageLogPojo;
 import xyz.xcye.message.vo.MessageLogVO;
 
 /**
@@ -20,14 +21,14 @@ import xyz.xcye.message.vo.MessageLogVO;
 
 @FeignClient(value = "aurora-message", name = "aurora-message", fallback = MessageLogFeignHandler.class)
 public interface MessageLogFeignService {
-    @PostMapping("/message/messageLog")
-    R insertMessageLog(@RequestBody MessageLog messageLog) throws BindException;
+    @PostMapping("/message/messageLog/insertMessageLog")
+    R insertMessageLog(@RequestBody MessageLogPojo messageLog) throws BindException;
 
-    @PutMapping("/message/messageLog")
-    R updateMessageLog(@RequestBody MessageLog messageLog) throws BindException;
+    @PostMapping("/message/messageLog/updateMessageLog")
+    R updateMessageLog(@RequestBody MessageLogPojo messageLog) throws BindException;
 
-    @GetMapping("/message/messageLog/{uid}")
-    R queryMessageLogByUid(@PathVariable("uid") long uid);
+    @PostMapping("/message/messageLog/queryMessageLogByUid")
+    R queryMessageLogByUid(@RequestBody MessageLogPojo messageLog);
 
     @Component
     static class UpdateMessageLog {
@@ -47,7 +48,9 @@ public interface MessageLogFeignService {
                                           boolean consumeStatus, String errorMessage, Message message) throws BindException {
             MessageLogVO messageLogVO = null;
             try {
-                R r = messageLogFeignService.queryMessageLogByUid(Long.parseLong(correlationDataId));
+                R r = messageLogFeignService.queryMessageLogByUid(new MessageLogPojo(){{
+                    setUid(Long.parseLong(correlationDataId));
+                }});
                 messageLogVO = JSONUtils.parseObjFromResult(r, "data", MessageLogVO.class);
             } catch (Exception e) {
                 LogUtils.logExceptionInfo(e);
@@ -61,7 +64,7 @@ public interface MessageLogFeignService {
             messageLogVO.setAckStatus(ackStatus);
             messageLogVO.setConsumeStatus(consumeStatus);
             messageLogVO.setErrorMessage(errorMessage);
-            messageLogFeignService.updateMessageLog(BeanUtils.copyProperties(messageLogVO, MessageLog.class));
+            messageLogFeignService.updateMessageLog(BeanUtils.copyProperties(messageLogVO, MessageLogPojo.class));
         }
     }
 }

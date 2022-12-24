@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.BindException;
+import xyz.xcye.admin.pojo.UserPojo;
 import xyz.xcye.admin.vo.UserVO;
 import xyz.xcye.amqp.comstant.AmqpExchangeNameConstant;
 import xyz.xcye.amqp.comstant.AmqpQueueNameConstant;
@@ -66,7 +67,9 @@ public class LinkService {
         // 如果删除成功，通知对方
         LinkVO linkVO = queryLinkByUid(uid);
         int deleteNum = auroraLinkService.deleteById(uid);
-        R r = userFeignService.queryUserByUid(linkVO.getUserUid());
+        R r = userFeignService.queryUserByUid(new UserPojo(){{
+            setUid(linkVO.getUserUid());
+        }});
         UserVO userVO = JSONUtils.parseObjFromResult(r, "data", UserVO.class);
         if (deleteNum == 1) {
             String mailMessage = "<p>您在" + userVO.getUsername() + "用户处申请的友链被移除！┭┮﹏┭┮</p><p>原因:" + replyMessage + "</p>";
@@ -83,7 +86,9 @@ public class LinkService {
         Assert.notNull(pojo.getUserUid(), "用户uid不能为null");
         Link record = BeanUtils.copyProperties(pojo, Link.class);
         // 查看是否存在该用户
-        R r = userFeignService.queryUserByUid(record.getUserUid());
+        R r = userFeignService.queryUserByUid(new UserPojo(){{
+            setUid(record.getUserUid());
+        }});
         UserVO userVO = JSONUtils.parseObjFromResult(r, "data", UserVO.class);
         AssertUtils.stateThrow(userVO != null,
                 () -> new UserException(ResponseStatusCodeEnum.PERMISSION_USER_NOT_EXIST));
@@ -145,7 +150,9 @@ public class LinkService {
         int updateNum = updateLink(linkPojo);
         // 如果修改成功，发送消息通知对方
         linkVO.setPublish(publish);
-        R r = userFeignService.queryUserByUid(linkVO.getUserUid());
+        R r = userFeignService.queryUserByUid(new UserPojo(){{
+            setUid(linkVO.getUserUid());
+        }});
         UserVO userVO = JSONUtils.parseObjFromResult(r, "data", UserVO.class);
         if (updateNum == 1 && !publish) {
             // 没有审核通过，则把message发送给该站长
