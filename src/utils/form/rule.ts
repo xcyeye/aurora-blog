@@ -1,6 +1,6 @@
 import type { Ref } from 'vue';
 import type { FormItemRule } from 'naive-ui';
-import { REGEXP_CODE_SIX, REGEXP_EMAIL, REGEXP_PHONE, REGEXP_PWD } from '@/config';
+import {REGEXP_CODE_SIX, REGEXP_EMAIL, REGEXP_PHONE, REGEXP_PWD, REGEXP_USERNAME} from '@/config';
 
 /** 创建自定义错误信息的必填表单规则 */
 export const createRequiredFormRule = (message = '不能为空'): FormItemRule => ({ required: true, message });
@@ -17,6 +17,9 @@ interface CustomFormRules {
   code: FormItemRule[];
   /** 邮箱 */
   email: FormItemRule[];
+
+	/** 用户名 */
+	username: FormItemRule[];
 }
 
 /** 表单规则 */
@@ -33,7 +36,8 @@ export const formRules: CustomFormRules = {
     createRequiredFormRule('请输入验证码'),
     { pattern: REGEXP_CODE_SIX, message: '验证码格式错误', trigger: 'input' }
   ],
-  email: [{ pattern: REGEXP_EMAIL, message: '邮箱格式错误', trigger: 'blur' }]
+  email: [{ pattern: REGEXP_EMAIL, message: '邮箱格式错误', trigger: 'blur' }],
+	username: [{pattern: REGEXP_USERNAME, message: '用户名格式错误', trigger: 'blur', required: true}]
 };
 
 /** 是否为空字符串 */

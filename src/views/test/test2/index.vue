@@ -1,117 +1,148 @@
 <template>
-	<n-space vertical :size="12">
-		<n-space>
-			<n-button @click="sortName('ascend')">Sort By Name (Ascend)</n-button>
-			<n-button @click="sortName('descend')">Sort By Name (Descend)</n-button>
-			<n-button @click="clearSorter">Clear Sorter</n-button>
-		</n-space>
-		<n-data-table
-			:columns="columns"
-			:data="data"
-			:pagination="pagination"
-			@update:sorter="handleSorterChange"
-		/>
-	</n-space>
+	<n-form ref="formRef" :model="model" :rules="rules">
+		<n-form-item path="age" label="年龄">
+			<n-input v-model:value="model.age" @keydown.enter.prevent />
+		</n-form-item>
+		<n-form-item path="password" label="密码">
+			<n-input
+				v-model:value="model.password"
+				type="password"
+				@input="handlePasswordInput"
+				@keydown.enter.prevent
+			/>
+		</n-form-item>
+		<n-form-item
+			ref="rPasswordFormItemRef"
+			first
+			path="reenteredPassword"
+			label="重复密码"
+		>
+			<n-input
+				v-model:value="model.reenteredPassword"
+				:disabled="!model.password"
+				type="password"
+				@keydown.enter.prevent
+			/>
+		</n-form-item>
+		<n-row :gutter="[0, 24]">
+			<n-col :span="24">
+				<div style="display: flex; justify-content: flex-end">
+					<n-button
+						:disabled="model.age === null"
+						round
+						type="primary"
+						@click="handleValidateButtonClick"
+					>
+						验证
+					</n-button>
+				</div>
+			</n-col>
+		</n-row>
+	</n-form>
+
+	<pre>{{ JSON.stringify(model, null, 2) }}
+</pre>
 </template>
 
-<script>
-import { defineComponent, reactive, ref } from 'vue'
+<script lang="ts">
+import { defineComponent, ref } from 'vue'
+import {
+	FormInst,
+	FormItemInst,
+	FormItemRule,
+	useMessage,
+	FormRules
+} from 'naive-ui'
 
-const nameColumn = {
-	title: 'Name',
-	key: 'name',
-	sortOrder: false,
-	sorter: 'default'
+interface ModelType {
+	age: string | null
+	password: string | null
+	reenteredPassword: string | null
 }
-
-const ageColumn = {
-	title: 'Age',
-	key: 'age',
-	sortOrder: false,
-	sorter (rowA, rowB) {
-		return rowA.age - rowB.age
-	}
-}
-
-const columns = [
-	nameColumn,
-	ageColumn,
-	{
-		title: 'Address',
-		key: 'address',
-		defaultFilter: ['London', 'New York'],
-		filterOptions: [
-			{
-				label: 'London',
-				value: 'London'
-			},
-			{
-				label: 'New York',
-				value: 'New York'
-			}
-		],
-		filter (value, row) {
-			return row.address.indexOf(value) >= 0
-		}
-	}
-]
-
-const data = [
-	{
-		key: 0,
-		name: 'John Brown',
-		age: 38,
-		address: 'New York No. 1 Lake Park'
-	},
-	{
-		key: 1,
-		name: 'Jim Green',
-		age: 42,
-		address: 'London No. 1 Lake Park'
-	},
-	{
-		key: 2,
-		name: 'Joe Black',
-		age: 36,
-		address: 'Sidney No. 1 Lake Park'
-	},
-	{
-		key: 3,
-		name: 'Jim Red',
-		age: 32,
-		address: 'London No. 2 Lake Park'
-	}
-]
 
 export default defineComponent({
 	setup () {
-		const nameColumnReactive = reactive(nameColumn)
-		const ageColumnReactive = reactive(ageColumn)
-		const columnsRef = ref(columns)
-
+		const formRef = ref<FormInst | null>(null)
+		const rPasswordFormItemRef = ref<FormItemInst | null>(null)
+		const message = useMessage()
+		const modelRef = ref<ModelType>({
+			age: null,
+			password: null,
+			reenteredPassword: null
+		})
+		function validatePasswordStartWith (
+			rule: FormItemRule,
+			value: string
+		): boolean {
+			return (
+				!!modelRef.value.password &&
+				modelRef.value.password.startsWith(value) &&
+				modelRef.value.password.length >= value.length
+			)
+		}
+		function validatePasswordSame (rule: FormItemRule, value: string): boolean {
+			return value === modelRef.value.password
+		}
+		const rules: FormRules = {
+			age: [
+				{
+					required: true,
+					validator (rule: FormItemRule, value: string) {
+						if (!value) {
+							return new Error('需要年龄')
+						} else if (!/^\d*$/.test(value)) {
+							return new Error('年龄应该为整数')
+						} else if (Number(value) < 18) {
+							return new Error('年龄应该超过十八岁')
+						}
+						return true
+					},
+					trigger: ['input', 'blur']
+				}
+			],
+			password: [
+				{
+					required: true,
+					message: '请输入密码'
+				}
+			],
+			reenteredPassword: [
+				{
+					required: true,
+					message: '请再次输入密码',
+					trigger: ['input', 'blur']
+				},
+				{
+					validator: validatePasswordStartWith,
+					message: '两次密码输入不一致',
+					trigger: 'input'
+				},
+				{
+					validator: validatePasswordSame,
+					message: '两次密码输入不一致',
+					trigger: ['blur', 'password-input']
+				}
+			]
+		}
 		return {
-			data,
-			columns: columnsRef,
-			nameColumn: nameColumnReactive,
-			ageColumn: ageColumnReactive,
-			pagination: { pageSize: 5 },
-			sortName (order) {
-				nameColumnReactive.sortOrder = order
+			formRef,
+			rPasswordFormItemRef,
+			model: modelRef,
+			rules,
+			handlePasswordInput () {
+				if (modelRef.value.reenteredPassword) {
+					rPasswordFormItemRef.value?.validate({ trigger: 'password-input' })
+				}
 			},
-			clearSorter () {
-				nameColumnReactive.sortOrder = false
-				ageColumnReactive.sortOrder = false
-			},
-			handleSorterChange (sorter) {
-				columnsRef.value.forEach((column) => {
-					/** column.sortOrder !== undefined means it is uncontrolled */
-					if (column.sortOrder === undefined) return
-					if (!sorter) {
-						column.sortOrder = false
-						return
+			handleValidateButtonClick (e: MouseEvent) {
+				e.preventDefault()
+				formRef.value?.validate((errors) => {
+					if (!errors) {
+						message.success('验证成功')
+					} else {
+						console.log(errors)
+						message.error('验证失败')
 					}
-					if (column.key === sorter.columnKey) column.sortOrder = sorter.order
-					else column.sortOrder = false
 				})
 			}
 		}

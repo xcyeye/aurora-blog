@@ -1,4 +1,5 @@
 import RoleType = Auth.RoleType;
+import {EmailVo} from "@/theme/vo/message/EmailVo";
 
 interface UserInfo {
   user_uid: string;
@@ -7,6 +8,7 @@ interface UserInfo {
   verify_email: boolean;
   authority: Array<string>;
   userRole: RoleType;
+	emailInfo: EmailVo
 }
 interface OauthVo {
   access_token: string;

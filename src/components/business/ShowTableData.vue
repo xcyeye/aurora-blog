@@ -38,8 +38,8 @@
 
 <script lang="ts" setup>
 import {DataTableRowKey, DataTableSortState, PaginationProps, PaginationSizeOption} from "naive-ui";
-import {RowData, TableBaseColumn, TableColumn} from "naive-ui/es/data-table/src/interface";
-import {onBeforeMount, onMounted, ref, VNode, watch} from "vue";
+import {RowData, TableColumn} from "naive-ui/es/data-table/src/interface";
+import {onBeforeMount, onMounted, ref, VNode} from "vue";
 import {Condition, PageData} from "@/theme/core/bean";
 import RequestResult = Service.RequestResult;
 import {EnumMittEventName} from "@/enum";

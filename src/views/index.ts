@@ -56,5 +56,7 @@ export const views: Record<RouterPage.LastDegreeRouteKey, RouteComponent | (() =
   user_manage: () => import('./user/manage/index.vue'),
   'user_manage_user-list': () => import('./user/manage/user-list/index.vue'),
   'user_manage_user-modify': () => import('./user/manage/user-modify/index.vue'),
-  user_profile: () => import('./user/profile/index.vue')
+  user_profile: () => import('./user/profile/index.vue'),
+  'user_profile_user-info': () => import('./user/profile/user-info/index.vue'),
+  'user_profile_user-security': () => import('./user/profile/user-security/index.vue')
 };

@@ -9,7 +9,6 @@
 import {defineComponent, ref} from "vue";
 import UserList from './user-list/index.vue'
 import UserModify from './user-modify/index.vue'
-import {AuroraFile} from "@/theme/pojo/file/file";
 
 defineComponent({name: 'index'});
 
