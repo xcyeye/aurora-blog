@@ -167,7 +167,7 @@ public class FileService {
         PageData<FileVO> pageData = new PageData<>();
         pageData.setResult(files);
         pageData.setPages(1);
-        pageData.setTotal(files.size());
+        pageData.setTotal((long) files.size());
         return pageData;
     }
 

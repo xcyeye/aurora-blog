@@ -1,49 +1,31 @@
 package xyz.xcye.data.entity;
 
+import lombok.Data;
+
 import java.util.List;
 
+@Data
 public class PageData<T>{
     /**
      * 总数
      */
-    private long total;
+    private Long total;
     /**
      * 总页数
      */
-    private int pages;
+    private Integer pages;
+
+    private Integer pageSize;
+    private Integer pageNum;
 
     private List<T> result;
 
     public static <T> PageData<T> getInstance(List<T> res){
         PageData<T> data = new PageData<>();
-        data.setTotal(res.size());
+        data.setTotal((long) res.size());
         data.setPages(1);
         data.setResult(res);
         return data;
-    }
-
-    public long getTotal() {
-        return total;
-    }
-
-    public void setTotal(long total) {
-        this.total = total;
-    }
-
-    public int getPages() {
-        return pages;
-    }
-
-    public void setPages(int pages) {
-        this.pages = pages;
-    }
-
-    public List<T> getResult() {
-        return result;
-    }
-
-    public void setResult(List<T> result) {
-        this.result = result;
     }
 
     @Override

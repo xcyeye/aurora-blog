@@ -32,7 +32,7 @@
             <if test="nickname != null and nickname != '' ">
                 AND nickname = #{nickname}
             </if>
-            <if test="gender != null and gender != '' ">
+            <if test="gender != null">
                 AND gender = #{gender}
             </if>
             <if test="loginUid != null">
@@ -107,7 +107,7 @@
                 <if test="nickname != null and nickname != '' ">
                     nickname,
                 </if>
-                <if test="gender != null and gender != '' ">
+                <if test="gender != null">
                     gender,
                 </if>
                 <if test="loginUid != null">
@@ -158,7 +158,7 @@
                 <if test="nickname != null and nickname != '' ">
                  #{nickname},
                 </if>
-                <if test="gender != null and gender != '' ">
+                <if test="gender != null">
                  #{gender},
                 </if>
                 <if test="loginUid != null">

@@ -1,6 +1,7 @@
 package xyz.xcye.oauth.api.service.handler;
 
 import org.springframework.stereotype.Component;
+import xyz.xcye.admin.pojo.RolePermissionRelationshipPojo;
 import xyz.xcye.core.entity.R;
 import xyz.xcye.data.entity.Condition;
 import xyz.xcye.oauth.api.service.RolePermissionFeignService;
@@ -16,12 +17,12 @@ public class RolePermissionFeignHandler implements RolePermissionFeignService {
 
 
     @Override
-    public R loadPermissionByUsername(String username) {
+    public R loadPermissionByUsername(RolePermissionRelationshipPojo pojo) {
         return R.failure();
     }
 
     @Override
-    public R loadAllRoleByUsername(String username) {
+    public R loadAllRoleByUsername(RolePermissionRelationshipPojo pojo) {
         return R.failure();
     }
 

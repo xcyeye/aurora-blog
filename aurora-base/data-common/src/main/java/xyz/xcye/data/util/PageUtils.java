@@ -35,6 +35,8 @@ public class PageUtils {
         copyPageData.setTotal(pageData.getTotal());
         copyPageData.setPages(pageData.getPages());
         copyPageData.setResult(list);
+        copyPageData.setPageSize(pageData.getPageSize());
+        copyPageData.setPageNum(pageData.getPageNum());
         return copyPageData;
     }
 

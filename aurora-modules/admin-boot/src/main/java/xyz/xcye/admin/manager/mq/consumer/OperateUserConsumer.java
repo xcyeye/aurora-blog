@@ -91,7 +91,7 @@ public class OperateUserConsumer {
         UserPojo userPojo = new UserPojo();
         userPojo.setUid(userVO.getUid());
         userPojo.setAccountLock(true);
-        int updateUserNum = userService.updateUserSelective(userPojo);
+        int updateUserNum = userService.updateUser(userPojo);
         if (updateUserNum == 1) {
             boolean sendStatus = sendEnableAccountEmail(userVO);
             AssertUtils.stateThrow(sendStatus,

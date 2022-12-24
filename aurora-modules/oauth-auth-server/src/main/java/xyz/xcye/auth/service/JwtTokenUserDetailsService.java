@@ -10,6 +10,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import xyz.xcye.admin.po.User;
+import xyz.xcye.admin.pojo.RolePermissionRelationshipPojo;
+import xyz.xcye.admin.pojo.UserPojo;
 import xyz.xcye.auth.model.SecurityUserDetails;
 import xyz.xcye.core.entity.R;
 import xyz.xcye.core.util.ConvertObjectUtils;
@@ -18,8 +20,7 @@ import xyz.xcye.core.util.LogUtils;
 import xyz.xcye.oauth.api.service.RolePermissionFeignService;
 import xyz.xcye.oauth.api.service.UserFeignService;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -47,7 +48,9 @@ public class JwtTokenUserDetailsService implements UserDetailsService {
         User user = null;
         // 根据用户名远程查询用户信息
         try {
-            R r = userFeignService.queryUserByUsernameContainPassword(username);
+            UserPojo userPojo = new UserPojo();
+            userPojo.setUsername(username);
+            R r = userFeignService.queryUserByUsernameContainPassword(userPojo);
             String json = ConvertObjectUtils.jsonToString(r);
             user = JSONUtils.parseObjFromResult(json, "data", User.class);
         } catch (Exception e) {
@@ -62,7 +65,9 @@ public class JwtTokenUserDetailsService implements UserDetailsService {
         // 用户存在，获取用户的角色信息
         List<JSONObject> rolePermissionDTOList = null;
         try {
-            R r = rolePermissionFeignService.loadAllRoleByUsername(username);
+            R r = rolePermissionFeignService.loadAllRoleByUsername(new RolePermissionRelationshipPojo(){{
+                setUsernameArr(Collections.singletonList(username));
+            }});
             rolePermissionDTOList = JSONUtils.parseObjFromResult(ConvertObjectUtils.jsonToString(r), "data", List.class);
         } catch (Exception e) {
             LogUtils.logExceptionInfo(e);

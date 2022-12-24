@@ -36,7 +36,7 @@ public class CommonVerifyUrlServiceImpl implements CommonVerifyUrlService {
         UserPojo userPojo = new UserPojo();
         userPojo.setUid(userUid);
         userPojo.setVerifyEmail(true);
-        int updateUser = userService.updateUserSelective(userPojo);
+        int updateUser = userService.updateUser(userPojo);
         if (updateUser == 1) {
             boolean deleteKey = StorageEmailVerifyUrlUtil.deleteKey(incomingSecretKey);
             // 如果删除失败，则抛出异常，触发回滚

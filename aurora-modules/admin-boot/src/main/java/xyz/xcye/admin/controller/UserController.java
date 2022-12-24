@@ -37,14 +37,14 @@ public class UserController {
     @ModifyOperation
     @Operation(summary = "添加新用户")
     public void insertUser(@Validated({Insert.class, Default.class}) @RequestBody UserPojo user) throws UserException {
-        userService.insertUserSelective(user);
+        userService.insertUser(user);
     }
 
     @PostMapping("/updateUser")
     @ModifyOperation
     @Operation(summary = "修改用户信息")
-    public void updateUser(@Validated({Update.class, Default.class}) @RequestBody UserPojo user) throws UserException {
-        userService.updateUserSelective(user);
+    public Integer updateUser(@Validated({Update.class, Default.class}) @RequestBody UserPojo user) throws UserException {
+        return userService.updateUser(user);
     }
 
     @Operation(summary = "更新密码")
@@ -57,15 +57,15 @@ public class UserController {
     @PostMapping("/logicDeleteUser")
     @ModifyOperation
     @Operation(summary = "逻辑删除用户信息")
-    public void logicDeleteUser(@RequestBody UserPojo user) {
-        userService.logicDeleteByUid(user.getUid());
+    public Integer logicDeleteUser(@RequestBody UserPojo user) {
+        return userService.logicDeleteUser(user.getUid());
     }
 
     @PostMapping("/physicalDeleteUser")
     @ModifyOperation
     @Operation(summary = "真正的从数据库中删除用户信息")
-    public void physicalDeleteUser(@RequestBody UserPojo user) {
-        userService.realDeleteByUid(user.getUid());
+    public Integer physicalDeleteUser(@RequestBody UserPojo user) {
+        return userService.physicalDeleteUser(user.getUid());
     }
 
     @PostMapping("/queryUserByUid")
@@ -82,7 +82,7 @@ public class UserController {
         return userService.queryUserByUsername(user.getUsername());
     }
 
-    @PostMapping("/queryUserByUsernameContainPassword")
+    @PostMapping(value = "/queryUserByUsernameContainPassword", headers = "content-type=application/json;charset=UTF-8;")
     @SelectOperation
     @Operation(summary = "通过username查询用户信息")
     public User queryUserByUsernameContainPassword(@RequestBody UserPojo user) {

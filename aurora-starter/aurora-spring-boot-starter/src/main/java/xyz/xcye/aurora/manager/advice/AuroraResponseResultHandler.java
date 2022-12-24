@@ -89,7 +89,7 @@ public class AuroraResponseResultHandler implements ResponseBodyAdvice<Object> {
 
         if (hasModifyOperationAnnotation) {
             return R.success(ResponseStatusCodeEnum.SUCCESS.getCode(),
-                    ResponseStatusCodeEnum.SUCCESS.getMessage(), new HashMap<>(), true);
+                    ResponseStatusCodeEnum.SUCCESS.getMessage(), responseBody, true);
         }
 
         if (responseBody instanceof ExceptionResultEntity) {

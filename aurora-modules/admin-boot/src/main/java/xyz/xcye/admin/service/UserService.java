@@ -1,6 +1,7 @@
 package xyz.xcye.admin.service;
 
 import io.seata.spring.annotation.GlobalTransactional;
+import io.swagger.v3.oas.models.security.SecurityScheme;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -68,18 +69,18 @@ public class UserService {
     private AuroraUserService auroraUserService;
 
     @Transactional(rollbackFor = Exception.class)
-    public void insertUserSelective(UserPojo user)
+    public void insertUser(UserPojo user)
             throws UserException {
         // 判断用户名是否存在
         AssertUtils.stateThrow(!existsUsername(user.getUsername()),
                 () -> new UserException(ResponseStatusCodeEnum.PERMISSION_USER_EXIST));
         // 设置默认属性
         setUserProperties(user);
-       auroraUserService.insert(BeanUtils.copyProperties(user, User.class));
+        auroraUserService.insert(BeanUtils.copyProperties(user, User.class));
     }
 
     @Transactional
-    public int updateUserSelective(UserPojo user) throws UserException {
+    public int updateUser(UserPojo user) throws UserException {
         Objects.requireNonNull(user, "用户信息不能为null");
         // 密码应该单独修改
         Optional.ofNullable(user.getPassword()).ifPresent(t -> user.setPassword(null));
@@ -135,15 +136,15 @@ public class UserService {
     }
 
     @Transactional
-    public void realDeleteByUid(long uid) {
-        auroraUserService.deleteById(uid);
+    public Integer physicalDeleteUser(long uid) {
+        return auroraUserService.deleteById(uid);
     }
 
-    public void logicDeleteByUid(long uid) {
+    public Integer logicDeleteUser(long uid) {
         UserPojo pojo = new UserPojo();
         pojo.setDelete(true);
         pojo.setUid(uid);
-        updateUserSelective(pojo);
+        return updateUser(pojo);
     }
 
     public PageData<UserVO> queryAllByCondition(Condition<Long> condition) {
@@ -194,7 +195,7 @@ public class UserService {
         }
 
         // 运行到这里，用户没有绑定邮箱，则直接修改，发送，尽管记录里面存在emailUid
-        int updateUserNum = updateUserSelective(userPojo);
+        int updateUserNum = updateUser(userPojo);
         if (updateUserNum == 1) {
             sendVerifyEmail(userVO, queriedEmailInfo);
         }

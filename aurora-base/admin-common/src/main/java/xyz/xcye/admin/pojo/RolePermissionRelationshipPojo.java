@@ -8,6 +8,8 @@ import xyz.xcye.core.valid.Insert;
 import xyz.xcye.core.valid.Update;
 
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @description role_permission数据表的POJO <br/>
@@ -30,23 +32,23 @@ public class RolePermissionRelationshipPojo {
      * 角色的uid
      */
     @NotNull(groups = {Insert.class})
-    private Long[] roleUidArr;
+    private List<Long> roleUidArr;
 
     @NotNull(groups = {Insert.class})
-    private Long[] userUidArr;
+    private List<Long> userUidArr;
     /**
      *
      */
     @NotNull(groups = {Insert.class})
-    private Long[] permissionUidArr;
+    private List<Long> permissionUidArr;
 
-    private Long[] originRoleUidArr;
-    private Long[] newRoleUidArr;
-    private Long[] originPermissionUidArr;
-    private Long[] newPermissionUidArr;
+    private List<Long> originRoleUidArr;
+    private List<Long> newRoleUidArr;
+    private List<Long> originPermissionUidArr;
+    private List<Long> newPermissionUidArr;
 
-    private String[] usernameArr;
-    private String[] roleNameArr;
-    private String[] permissionPathArr;
+    private List<String> usernameArr;
+    private List<String> roleNameArr;
+    private List<String> permissionPathArr;
 
 }

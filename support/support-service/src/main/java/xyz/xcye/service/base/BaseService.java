@@ -72,6 +72,8 @@ public class BaseService<T> {
         pageData.setResult(list);
         pageData.setTotal(page.getTotal());
         pageData.setPages(page.getPages());
+        pageData.setPageSize(page.getPageSize());
+        pageData.setPageNum(page.getPageNum());
         return pageData;
     }
 
