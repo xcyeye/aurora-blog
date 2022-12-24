@@ -1,7 +1,15 @@
 <template>
   <n-dropdown :options="options" @select="handleDropdown">
     <hover-container class="px-12px" :inverted="theme.header.inverted">
-      <icon-local-avatar class="text-32px" />
+			<n-avatar
+				class="profile-avatar"
+				round
+				:bordered="true"
+				size="small"
+				style="cursor: pointer"
+				fallback-src="https://picture.xcye.xyz/avatar.jpg"
+				:src="auth.userInfo.userDetailInfo? auth.userInfo.userDetailInfo.avatar : 'https://picture.xcye.xyz/avatar.jpg'"
+			/>
       <span class="pl-8px text-16px font-medium">{{ auth.userInfo.username }}</span>
     </hover-container>
   </n-dropdown>

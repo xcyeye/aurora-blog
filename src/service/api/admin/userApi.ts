@@ -87,10 +87,10 @@ function _baseApi() {
 
   /**
    * 绑定邮箱
-   * @param email 邮箱号
+   * @param data 邮箱号
    */
-  function bindingEmail(email: string) {
-    return request.post<number>(`${apiPrefix}/bindingEmail/${email}`, baseAxiosRequestConfig);
+  function bindingEmail(data: beanType) {
+    return request.post<number>(`${apiPrefix}bindingEmail`, data, baseAxiosRequestConfig);
   }
 
   /**
@@ -106,7 +106,7 @@ function _baseApi() {
    * @param data
    */
   function updatePassword(data: beanType) {
-    return request.post<number>(`${apiPrefix}`, data, baseAxiosRequestConfig);
+    return request.post<number>(`${apiPrefix}updatePassword`, data, baseAxiosRequestConfig);
   }
 
   return {

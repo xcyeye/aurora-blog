@@ -2,7 +2,7 @@ import { unref, nextTick } from 'vue';
 import { defineStore } from 'pinia';
 import { EnumAuthTokenType, EnumRoleName } from '@/enum';
 import { router } from '@/router';
-import { authApi } from '@/service';
+import {authApi, emailApi, userApi} from '@/service';
 import { useRouterPush } from '@/composables';
 import { localStg } from '@/utils';
 import type { OauthPasswordPo } from '@/theme/pojo/auth/oauthPassword';
@@ -107,6 +107,23 @@ export const useAuthStore = defineStore('auth-store', {
       // 成功后把用户信息存储到缓存中
       localStg.set('userInfo', userInfo);
 
+			// 获取用户详细信息
+			userApi.queryOneDataByUid({uid: userInfo.user_uid}).then(result => {
+				if (result.data) {
+					userInfo.userDetailInfo = result.data
+					// 获取用户邮箱信息
+					if (result.data.emailUid) {
+						emailApi.queryOneDataByUid({uid: result.data.emailUid}).then(result => {
+							if (result.data) {
+								userInfo.emailInfo = result.data
+								localStg.set('userInfo', userInfo);
+							}
+						})
+					}else {
+						localStg.set('userInfo', userInfo);
+					}
+				}
+			})
       // 更新状态
       this.userInfo = userInfo;
       this.token = access_token;

@@ -95,7 +95,7 @@
 						</n-form-item>
 						<n-form-item label="邮箱">
 							<n-input
-								:value="authStore.userInfo.emailInfo.email === undefined ? '未绑定' : authStore.userInfo.emailInfo.email"
+								:value="authStore.userInfo.emailInfo === undefined ? '未绑定' : authStore.userInfo.emailInfo.email"
 								:minlength="4"
 								disabled
 								:maxlength="254"
@@ -175,8 +175,8 @@ const loadLoginInfo = () => {
 }
 
 const loadUserEmailInfo = () => {
-  if (!authStore.userInfo.emailInfo) {
-		emailApi.queryEmailByUserUid({userUid: authStore.userInfo.user_uid}).then(result => {
+  if (!authStore.userInfo.emailInfo || !authStore.userInfo.emailInfo.email && authStore.userInfo.verify_email) {
+		emailApi.queryOneDataByUid({uid: authStore.userInfo.userDetailInfo.emailUid}).then(result => {
 			if (result.data) {
 				authStore.userInfo.emailInfo = result.data
 				localStg.set('userInfo', authStore.userInfo)

@@ -78,6 +78,12 @@ interface User {
    * 1: 邮箱已验证，0：邮箱未验证
    */
   verifyEmail?: boolean | null;
+
+	originPwd?: string | null;
+
+	newPwd?: string | null;
+
+	emailNumber?: string | null
 }
 
 export { User };

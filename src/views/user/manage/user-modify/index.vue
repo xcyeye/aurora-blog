@@ -38,9 +38,8 @@
 								<n-input :round="true" v-model:value="modifyUserInfo.nickname" />
 							</n-form-item>
 
-							<n-form-item path="email" label="邮箱">
-								<n-input :round="true" v-if="showPassword" v-model:value="email" />
-								<n-p v-else>{{userEmail}}</n-p>
+							<n-form-item v-if="!showPassword" label="邮箱">
+								<n-p>{{userEmail}}</n-p>
 							</n-form-item>
 						</n-form>
 					</n-card>
@@ -133,7 +132,6 @@ defineComponent({name: 'index'});
 const showDrawer = ref<boolean>(false)
 const currentModifyUserInfo = ref<User>()
 const modifyUserInfo = ref<User>({})
-const email = ref<string>()
 const showPassword = ref(false)
 const userEmail = ref<string>('正在获取╥﹏╥...')
 const addUserFormRef = ref<FormInst | null>(null)
@@ -213,12 +211,6 @@ const handleClickModifyAction = () => {
 			}
 		})
 	}else {
-		if (email.value) {
-			if (!/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(email.value!)) {
-				window.$message?.error("邮箱格式不对(* ￣︿￣)")
-				return;
-			}
-		}
 		addUserFormRef.value!.validate(errors => {
 			if (errors) {
 				window.$message?.error("字段验证失败(* ￣︿￣)")
@@ -228,31 +220,11 @@ const handleClickModifyAction = () => {
 
 		// 先插入用户
 		userApi.insertData(modifyUserInfo.value).then(result => {
-			if (email.value) {
-				userApi.queryListDataByCondition({keyword: modifyUserInfo.value.username}).then(result => {
-					if (result.data?.result) {
-						window.$message?.success(`添加用户 ${modifyUserInfo.value.username}成功`)
-						modifyUserInfo.value.uid = result.data.result[0].uid
-						emailApi.insertData({email: email.value, userUid: modifyUserInfo.value.uid}).then(result => {
-							emailApi.queryEmailByUserUid({userUid: modifyUserInfo.value.uid}).then(result => {
-								emitter.emit(EnumMittEventName.reloadData)
-								if (!result.data?.uid) {
-									window.$message?.error(`添加邮箱 ${email.value}失败`)
-								}else {
-									window.$message?.success(`添加邮箱 ${email.value}成功`)
-									modifyUserInfo.value.emailUid = result.data.uid
-									userApi.updateData(modifyUserInfo.value)
-									showDrawer.value = false
-								}
-							})
-						})
-					}else {
-						window.$message?.error(`添加用户 ${modifyUserInfo.value.username}失败`)
-					}
-				})
-			}else {
+			if (!result.error) {
 				window.$message?.success(`添加用户 ${modifyUserInfo.value.username}成功`)
 				showDrawer.value = false
+			}else {
+				window.$message?.error(`添加用户 ${modifyUserInfo.value.username}失败`)
 			}
 		})
 	}
@@ -300,7 +272,6 @@ onMounted(() => {
 		showDrawer.value = !showDrawer.value
 		showPassword.value = true
 		userEmail.value = '正在获取╥﹏╥...'
-		email.value = ''
 	})
 	emitter.on('userManageModifyUserAction', e => {
 		userEmail.value = '正在获取╥﹏╥...'
