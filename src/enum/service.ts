@@ -1,4 +1,5 @@
 export enum EnumMittEventName {
-  globalSearchCondition = 'globalSearchCondition',
-  resetGlobalSearchCondition = 'resetGlobalSearchCondition'
+  globalSearchCondition = 'clickGlobalSearchCondition',
+  resetGlobalSearchCondition = 'resetGlobalSearchCondition',
+	reloadData = 'reloadData'
 }

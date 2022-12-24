@@ -32,26 +32,18 @@
 					</n-space>
 				</template>
 			</n-card>
-			<!--<n-pagination-->
-			<!--	v-model:page="pagination.pageNum"-->
-			<!--	v-model:page-size="pagination.pageSize"-->
-			<!--	:item-count="pagination.pageTotal"-->
-			<!--	:page-slot="10"-->
-			<!--	show-size-picker-->
-			<!--	:page-sizes="pagination.pageSizes"-->
-			<!--	@update:page-size="handleChangePageSize"-->
-			<!--	@update:page="handleChangePageNum"-->
-			<!--/>-->
 		</n-space>
   </div>
 </template>
 
 <script lang="ts" setup>
-import {DataTableColumn, DataTableRowKey, DataTableSortState, PaginationProps, PaginationSizeOption} from "naive-ui";
-import {RowData, TableBaseColumn} from "naive-ui/es/data-table/src/interface";
-import {onBeforeMount, ref, VNode} from "vue";
+import {DataTableRowKey, DataTableSortState, PaginationProps, PaginationSizeOption} from "naive-ui";
+import {RowData, TableBaseColumn, TableColumn} from "naive-ui/es/data-table/src/interface";
+import {onBeforeMount, onMounted, ref, VNode, watch} from "vue";
 import {Condition, PageData} from "@/theme/core/bean";
 import RequestResult = Service.RequestResult;
+import {EnumMittEventName} from "@/enum";
+import emitter from "@/utils/mitt";
 
 // 定义emit
 const emits = defineEmits(['handleChangePageSize', 'handleChangePageNum', 'handleCheckedRowKeys'])
@@ -65,12 +57,12 @@ interface DataTableInfo {
 
 interface Props {
 	/** 和加载数据展示页相关的属性 */
-	dataTableColumns: Array<TableBaseColumn>,
+	dataTableColumns: Array<TableColumn>,
 	pageSizes?: number[],
 	dataTableInfo: DataTableInfo,
 	renderExpandIcon?: () => VNode,
+	originCondition?: Condition,
 	queryDataMethod: (condition: Condition) => Promise<RequestResult<PageData<RowData>>>,
-	queryCondition?: Condition
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -79,13 +71,6 @@ const props = withDefaults(defineProps<Props>(), {
 			rowKey: '',
 			striped: true,
 			scrollX: undefined
-		}
-	},
-	queryCondition: () => {
-		return {
-			keyword: null,
-			pageSize: 20,
-			pageNum: 1
 		}
 	}
 });
@@ -100,17 +85,20 @@ const pagination = ref<PaginationProps>({
 	showSizePicker: true,
 	pageSizes: [10, 20, 30],
 })
+const queryCondition = ref<Condition>({
+	delete: false
+})
 
 // 方法
 const loadData = (pageSize: number | null, pageNum: number | null, orderBy: string | null, order: string | null) => {
 	if (!dataTableLoadingStatus.value) dataTableLoadingStatus.value = true
 	if (pageSize) {
 		pagination.value.pageSize = pageSize
-		props.queryCondition.pageSize = pagination.value.pageSize
+		queryCondition.value.pageSize = pagination.value.pageSize
 	}
 	if (pageNum) {
 		pagination.value.page = pageNum
-		props.queryCondition.pageNum = pagination.value.page
+		queryCondition.value.pageNum = pagination.value.page
 	}
 	if (orderBy && order) {
 		let orderByStr = orderBy
@@ -119,9 +107,9 @@ const loadData = (pageSize: number | null, pageNum: number | null, orderBy: stri
 		}else if (order === 'descend') {
 			orderByStr = orderByStr + " desc"
 		}
-		props.queryCondition.orderBy = orderByStr
+		queryCondition.value.orderBy = orderByStr
 	}
-	props.queryDataMethod(props.queryCondition).then(result => {
+	props.queryDataMethod(queryCondition.value).then(result => {
 		dataTableLoadingStatus.value = false
 		if (result.data) {
 			if (result.data.result) {
@@ -163,16 +151,22 @@ const handleCheckedRowKeys = (rowKeys: DataTableRowKey): undefined => {
 }
 
 const handleSorterChange = (sorter: DataTableSortState): undefined => {
-	props.dataTableColumns.forEach((column: TableBaseColumn) => {
+	props.dataTableColumns.forEach((column) => {
+		// @ts-ignore
 		if (column.sortOrder === undefined) return
 		if (!sorter) {
+			// @ts-ignore
 			column.sortOrder = false
 			return;
 		}
+		// @ts-ignore
 		if (column.key === sorter.columnKey) {
+			// @ts-ignore
 			column.sortOrder = sorter.order
+			// @ts-ignore
 			loadData(null, null, column.key as string, sorter.order as string)
 		}else {
+			// @ts-ignore
 			column.sortOrder = false
 		}
 	})
@@ -190,13 +184,22 @@ const assertPageSizes = () => {
 	}
 }
 
-// 监听数据变化
-// watch(props.queryCondition, (newValue: Condition, oldValue: Condition) => {
-// 	console.log("查询条件发生变化了");
-// 	console.log(newValue);
-// 	assertPageSizes();
-// 	loadData(null, null)
-// })
+// 挂载emit
+onMounted(() => {
+	emitter.on(EnumMittEventName.globalSearchCondition, event => {
+		if (event) {
+			queryCondition.value = event as Condition;
+			loadData(null, null, null, null)
+		}
+	})
+	emitter.on(EnumMittEventName.reloadData, e => {
+		loadData(null, null, null, null)
+	})
+	emitter.on(EnumMittEventName.resetGlobalSearchCondition, e => {
+		queryCondition.value = e as Condition
+		loadData(null, null, null, null)
+	})
+})
 
 onBeforeMount(() => {
 	assertPageSizes()

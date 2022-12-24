@@ -125,6 +125,7 @@ import {UserVo} from "@/theme/vo/admin/UserVo";
 import {User} from "@/theme/pojo/admin/User";
 import {FormInst, FormItemRule, FormRules, UploadFileInfo} from "naive-ui";
 import {emailApi, userApi} from "@/service";
+import {EnumMittEventName} from "@/enum";
 
 defineComponent({name: 'index'});
 
@@ -206,7 +207,7 @@ const handleClickModifyAction = () => {
 		userApi.updateData(modifyUserInfo.value).then(result => {
 			if (result.data === 1) {
 				window.$message?.success(`修改用户 ${modifyUserInfo.value.username} 信息成功`)
-				emitter.emit('userManageReloadData')
+				emitter.emit(EnumMittEventName.reloadData)
 			}else {
 				window.$message?.error(`修改用户 ${modifyUserInfo.value.username} 信息失败`)
 			}
@@ -234,7 +235,7 @@ const handleClickModifyAction = () => {
 						modifyUserInfo.value.uid = result.data.result[0].uid
 						emailApi.insertData({email: email.value, userUid: modifyUserInfo.value.uid}).then(result => {
 							emailApi.queryEmailByUserUid({userUid: modifyUserInfo.value.uid}).then(result => {
-								emitter.emit('userManageReloadData')
+								emitter.emit(EnumMittEventName.reloadData)
 								if (!result.data?.uid) {
 									window.$message?.error(`添加邮箱 ${email.value}失败`)
 								}else {

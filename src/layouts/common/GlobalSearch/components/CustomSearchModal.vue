@@ -253,8 +253,11 @@ const handleClickSearchButton = () => {
 const handleResetSearchButton = () => {
 	if (originCondition.value) {
 		condition.value = originCondition.value
+		if (!originCondition.value?.delete) condition.value.delete = false
+		if (!originCondition.value?.show) condition.value.show = false
+		if (!originCondition.value?.status) condition.value.status = false
 		// 将当前的condition发送到当前使用的页面
-		emitter.emit(EnumMittEventName.globalSearchCondition, condition.value);
+		emitter.emit(EnumMittEventName.resetGlobalSearchCondition, originCondition.value);
 	}
 	handleClose();
 }
@@ -286,6 +289,9 @@ onBeforeMount(() => {
 	emitter.on(EnumMittEventName.resetGlobalSearchCondition, e => {
 		if (e) {
 			originCondition.value = e as Condition
+			if (!originCondition.value?.delete) condition.value.delete = false
+			if (!originCondition.value?.show) condition.value.show = false
+			if (!originCondition.value?.status) condition.value.status = false
 		}
 	})
 })

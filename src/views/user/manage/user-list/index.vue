@@ -1,8 +1,6 @@
 <template>
 	<div>
 		<show-table-data
-			@handleChangePageSize="handleChangePageSize"
-			@handleChangePageNum="handleChangePageNum"
 			:data-table-info="{title: '用户管理', rowKey: 'uid', striped: true}"
 			:data-table-columns="columns"
 			:query-data-method="queryDataMethod"
@@ -30,21 +28,12 @@ import RequestResult = Service.RequestResult;
 
 defineComponent({name: 'index'});
 
-// 从后端获取用户数据
-const loadData = () => {
-	// userApi.queryListDataByCondition(condition.value).then(result => {
-	// 	if (result.data) {
-	// 		pagination.value.pageNum = result.data.pageNum!
-	// 		pagination.value.pageTotal = result.data.total!
-	// 		pagination.value.pageCount = result.data.pages!
-	// 		pagination.value.pageSize = result.data.pageSize!
-	// 		pagination.value.pageSizes = [1,2,3]
-	// 		if (result.data.result) {
-	// 			userDataArr.value = result.data.result
-	// 		}
-	// 	}
-	// })
-}
+// 定义data
+const condition = ref<Condition>({
+	delete: null,
+	// 账户是否锁住
+	status: null
+})
 
 const queryDataMethod = (condition: Condition): Promise<RequestResult<PageData<UserVo>>> => {
 	return userApi.queryListDataByCondition(condition);
@@ -62,7 +51,7 @@ const handleDeleteAction = (data: UserVo) => {
 				if (result.data === 1) {
 					condition.value.delete = false
 					window.$message?.error(`删除 ${data.username} 成功 ○|￣|_`);
-					loadData()
+					emitter.emit(EnumMittEventName.reloadData)
 				}
 			})
 		},
@@ -71,7 +60,7 @@ const handleDeleteAction = (data: UserVo) => {
 				if (result.data === 1) {
 					window.$message?.error(`永久删除 ${data.username} 成功 ㄟ( ▔, ▔ )ㄏ `)
 					condition.value.delete = false
-					loadData()
+					emitter.emit(EnumMittEventName.reloadData)
 				}
 			})
 		}
@@ -85,16 +74,6 @@ const handleModifyAction = (data: UserVo) => {
 
 const handleAddUserAction = () => {
 	emitter.emit('userManageAddUserAction')
-}
-
-const handleChangePageSize = (pageSize: number) => {
-  condition.value.pageSize = pageSize
-	loadData()
-}
-
-const handleChangePageNum = (page: number) => {
-  condition.value.pageNum = page
-	loadData()
 }
 
 const createColumns = ({
@@ -248,17 +227,6 @@ const createColumns = ({
 	]
 }
 
-// 定义data
-const userDataArr = ref<Array<UserVo>>([])
-const condition = ref<Condition>({
-	delete: null,
-	// 账户是否锁住
-	status: null
-})
-const pagination = ref<Pagination>({
-	pageNum: 1,
-	pageSize: 20
-})
 const columns = ref<Array<DataTableColumn>>(createColumns({
 	getTagInfo(row: UserVo) {
 		if (row.gender === 'MALE') return 'success'
@@ -267,27 +235,10 @@ const columns = ref<Array<DataTableColumn>>(createColumns({
 	}
 }))
 
-// 调用方法
-loadData();
-
 // 挂载emit
 onMounted(() => {
-	emitter.on(EnumMittEventName.globalSearchCondition, event => {
-		if (event) {
-			condition.value = event as Condition;
-			loadData();
-		}
-	})
-	emitter.on('userManageReloadData', e => {
-		loadData()
-	})
 	emitter.emit(EnumMittEventName.resetGlobalSearchCondition, condition.value);
 })
-
-// 测试方法
-const button = () => {
-	emitter.emit(EnumMittEventName.resetGlobalSearchCondition, condition.value)
-}
 
 </script>
 
