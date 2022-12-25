@@ -1,9 +1,9 @@
 <template>
   <div>
 		<n-space vertical>
-			<n-card :title="props.dataTableInfo.title" class="h-full shadow-sm rounded-16px">
+			<n-card :bordered="props.dataTableInfo.bordered" :title="props.dataTableInfo.title" class="h-full shadow-sm rounded-16px">
 				<!-- 数据展示相关 -->
-				<n-space vertical>
+				<n-space v-if="showTableData" vertical>
 					<n-data-table
 						:loading="dataTableLoadingStatus"
 						:remote="true"
@@ -21,6 +21,9 @@
 						@update-sorter="handleSorterChange"
 						@update:checked-row-keys="handleCheckedRowKeys"/>
 				</n-space>
+				<n-space v-if="!showTableData" vertical>
+					<slot name="content"/>
+				</n-space>
 				<template #header-extra>
 					<n-space justify="end">
 						<slot name="cardHeader1"/>
@@ -37,13 +40,13 @@
 </template>
 
 <script lang="ts" setup>
-import {DataTableRowKey, DataTableSortState, PaginationProps, PaginationSizeOption} from "naive-ui";
+import {DataTableSortState, PaginationProps, PaginationSizeOption} from "naive-ui";
 import {RowData, TableColumn} from "naive-ui/es/data-table/src/interface";
 import {onBeforeMount, onMounted, ref, VNode} from "vue";
 import {Condition, PageData} from "@/theme/core/bean";
-import RequestResult = Service.RequestResult;
 import {EnumMittEventName} from "@/enum";
-import emitter from "@/utils/mitt";
+import {emitter} from "@/utils";
+import RequestResult = Service.RequestResult;
 
 // 定义emit
 const emits = defineEmits(['handleChangePageSize', 'handleChangePageNum', 'handleCheckedRowKeys'])
@@ -52,7 +55,8 @@ interface DataTableInfo {
 	title?: string,
 	rowKey: string,
 	striped?: boolean,
-	scrollX?: number
+	scrollX?: number,
+	bordered?: boolean
 }
 
 interface Props {
@@ -63,6 +67,7 @@ interface Props {
 	renderExpandIcon?: () => VNode,
 	originCondition?: Condition,
 	queryDataMethod: (condition: Condition) => Promise<RequestResult<PageData<RowData>>>,
+	showTableData?: boolean
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -70,9 +75,11 @@ const props = withDefaults(defineProps<Props>(), {
 		return {
 			rowKey: '',
 			striped: true,
-			scrollX: undefined
+			scrollX: undefined,
+			bordered: true
 		}
-	}
+	},
+	showTableData: true
 });
 
 // 定义data

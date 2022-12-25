@@ -19,7 +19,7 @@ import {UserVo} from "@/theme/vo/admin/UserVo";
 import {Condition, PageData} from "@/theme/core/bean";
 import {userApi} from "@/service";
 import {DataTableColumn, NButton, NSpace, NTag} from "naive-ui";
-import emitter from "@/utils/mitt";
+import {emitter} from "@/utils";
 import {EnumMittEventName} from "@/enum";
 import {User} from "@/theme/pojo/admin/User";
 import {oauthClientApi} from "@/service/api/auth/oauthClientApi";

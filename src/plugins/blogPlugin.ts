@@ -15,6 +15,10 @@ function handleCopy(copyContent: string) {
 	window.$message?.success(`复制成功：${copyContent}`);
 }
 
-export const copyContent = (copyContent: string) => {
-  handleCopy(copyContent)
+export const copyContent = (copyContent: string | null | undefined) => {
+	if (!copyContent) {
+		handleCopy('无拷贝内容')
+	}else {
+		handleCopy(copyContent)
+	}
 }

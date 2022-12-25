@@ -83,6 +83,14 @@ function _baseApi() {
     return request.post<viewBeanType>(`${apiPrefix}`, data, baseAxiosRequestConfig);
   }
 
+	function queryListFileFormat(data: beanType) {
+		return request.post<Array<string>>(`${apiPrefix}queryListFileFormat`, data, baseAxiosRequestConfig);
+	}
+
+	function querySpecifyFormatFiles(data: beanType) {
+		return request.post<PageData<viewBeanType>>(`${apiPrefix}querySpecifyFormatFiles`, data, baseAxiosRequestConfig);
+	}
+
   function deleteFile(data: beanType) {
     return request.post<number>(`${apiPrefix}deleteFile`, data, baseAxiosRequestConfig);
   }
@@ -150,7 +158,9 @@ function _baseApi() {
     logicDeleteData,
     physicalDeleteData,
     insertData,
-    batchInsertData
+    batchInsertData,
+		queryListFileFormat,
+		querySpecifyFormatFiles
   };
 }
 
