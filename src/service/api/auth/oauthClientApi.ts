@@ -109,4 +109,4 @@ function _baseApi() {
 	};
 }
 
-export const baseApi = _baseApi();
+export const oauthClientApi = _baseApi();

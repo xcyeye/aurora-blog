@@ -1,3 +1,3 @@
 import setupAssets from './assets';
-
-export { setupAssets };
+import {copyContent} from './blogPlugin'
+export { setupAssets, copyContent };

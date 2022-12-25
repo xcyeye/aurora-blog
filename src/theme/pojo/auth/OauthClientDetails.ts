@@ -52,7 +52,7 @@ interface OauthClientDetails {
   /**
    * 默认false，是否自动授权
    */
-  autoapprove?: string | null;
+  autoapprove?: boolean | null;
 
   /**
    *
