@@ -117,6 +117,8 @@ export const useAuthStore = defineStore('auth-store', {
 							if (result.data) {
 								userInfo.emailInfo = result.data
 								localStg.set('userInfo', userInfo);
+							}else {
+								localStg.set('userInfo', userInfo);
 							}
 						})
 					}else {

@@ -175,13 +175,15 @@ const loadLoginInfo = () => {
 }
 
 const loadUserEmailInfo = () => {
-  if (!authStore.userInfo.emailInfo || !authStore.userInfo.emailInfo.email && authStore.userInfo.verify_email) {
-		emailApi.queryOneDataByUid({uid: authStore.userInfo.userDetailInfo.emailUid}).then(result => {
-			if (result.data) {
-				authStore.userInfo.emailInfo = result.data
-				localStg.set('userInfo', authStore.userInfo)
-			}
-		})
+	if (authStore.userInfo.verify_email) {
+		if (!authStore.userInfo.emailInfo || !authStore.userInfo.emailInfo.email) {
+			emailApi.queryOneDataByUid({uid: authStore.userInfo.userDetailInfo.emailUid}).then(result => {
+				if (result.data) {
+					authStore.userInfo.emailInfo = result.data
+					localStg.set('userInfo', authStore.userInfo)
+				}
+			})
+		}
 	}
 }
 

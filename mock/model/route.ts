@@ -1067,6 +1067,38 @@ export const routeModel: Record<Auth.RoleType, AuthRoute.Route[]> = {
     }
   ],
   user: [
+		{
+			name: 'user',
+			path: '/user',
+			component: 'basic',
+			children: [
+				{
+					name: 'user_profile',
+					path: '/user/profile',
+					component: 'self',
+					meta: {
+						title: '账户',
+						requiresAuth: true,
+						icon: 'dashicons:universal-access'
+					}
+				},
+				{
+					name: 'user_manage',
+					path: '/user/manage',
+					component: 'self',
+					meta: {
+						title: '用户管理',
+						requiresAuth: true,
+						icon: 'cil:3d'
+					}
+				}
+			],
+			meta: {
+				title: '用户',
+				icon: 'system-uicons:user-circle',
+				order: 3
+			}
+		},
     {
       name: 'dashboard',
       path: '/dashboard',
