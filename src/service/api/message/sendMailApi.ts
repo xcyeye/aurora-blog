@@ -3,9 +3,9 @@ import { request } from '@/service/request';
 import type { Condition, PageData } from '@/theme/core/bean';
 
 /** 接口前缀 */
-const apiPrefix = '/admin/user/';
-type beanType = any;
-type viewBeanType = any;
+const apiPrefix = '/message/sendMail/';
+type beanType = SendMailPojo;
+type viewBeanType = void;
 
 function _baseApi() {
   /**
@@ -16,14 +16,21 @@ function _baseApi() {
     return request.post<void>(`${apiPrefix}`, data, baseAxiosRequestConfig);
   }
 
-  /**
-   * 插入多条数据
-   * @deprecated
-   * @param data
-   */
-  function batchInsertData(data: Array<beanType>) {
-    return request.post<void>(`${apiPrefix}`, data, baseAxiosRequestConfig);
+  function simpleText(data: beanType) {
+    return request.post<void>(`${apiPrefix}simpleText`, data, baseAxiosRequestConfig);
   }
+
+	function customMail(data: beanType) {
+		return request.post<void>(`${apiPrefix}customMail`, data, baseAxiosRequestConfig);
+	}
+
+	function resendCustomMail(data: beanType) {
+		return request.post<void>(`${apiPrefix}resendCustomMail`, data, baseAxiosRequestConfig);
+	}
+
+	function batchInsertData(data: Array<beanType>) {
+		return request.post<void>(`${apiPrefix}`, data, baseAxiosRequestConfig);
+	}
 
   /**
    * 物理删除数据
@@ -92,7 +99,10 @@ function _baseApi() {
     logicDeleteData,
     physicalDeleteData,
     insertData,
-    batchInsertData
+    batchInsertData,
+		simpleText,
+		customMail,
+		resendCustomMail
   };
 }
 
