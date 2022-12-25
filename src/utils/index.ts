@@ -6,3 +6,4 @@ export * from './form';
 export * from './date';
 export * from './mitt';
 export * from './tool'
+export * from './string'
