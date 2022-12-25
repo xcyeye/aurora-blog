@@ -32,3 +32,7 @@ export const baseAxiosRequestConfig: AxiosRequestConfig = {
     'Content-Type': EnumContentType.json
   }
 };
+
+export const authorizedGrantTypes: Array<string> = [
+	'authorization_code','client_credentials','implicit','refresh_token','password'
+]

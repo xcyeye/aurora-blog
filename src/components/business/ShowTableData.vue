@@ -145,8 +145,8 @@ const getRowKey = (rowData: object): string => {
 	return ''
 }
 
-const handleCheckedRowKeys = (rowKeys: DataTableRowKey): undefined => {
-	emits('handleCheckedRowKeys', rowKeys);
+const handleCheckedRowKeys = (keys: Array<string>): undefined => {
+	emits('handleCheckedRowKeys', keys);
 	return undefined
 }
 

@@ -43,6 +43,8 @@ interface LoginInfo {
    * 登录消息，记录登录异常等信息
    */
   message?: string | null;
+
+	uids?: string[]
 }
 
 export { LoginInfo };

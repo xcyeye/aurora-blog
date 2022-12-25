@@ -1,151 +1,65 @@
 <template>
-	<n-form ref="formRef" :model="model" :rules="rules">
-		<n-form-item path="age" label="年龄">
-			<n-input v-model:value="model.age" @keydown.enter.prevent />
-		</n-form-item>
-		<n-form-item path="password" label="密码">
-			<n-input
-				v-model:value="model.password"
-				type="password"
-				@input="handlePasswordInput"
-				@keydown.enter.prevent
-			/>
-		</n-form-item>
-		<n-form-item
-			ref="rPasswordFormItemRef"
-			first
-			path="reenteredPassword"
-			label="重复密码"
+	<n-timeline :icon-size="20">
+		<n-timeline-item color="grey" content="啊">
+			<template #icon>
+				<n-icon>
+					<cash-icon />
+				</n-icon>
+			</template>
+		</n-timeline-item>
+		<n-timeline-item
+			type="success"
+			title="成功"
+			content="哪里成功"
+			time="2018-04-03 20:46"
 		>
-			<n-input
-				v-model:value="model.reenteredPassword"
-				:disabled="!model.password"
-				type="password"
-				@keydown.enter.prevent
-			/>
-		</n-form-item>
-		<n-row :gutter="[0, 24]">
-			<n-col :span="24">
-				<div style="display: flex; justify-content: flex-end">
-					<n-button
-						:disabled="model.age === null"
-						round
-						type="primary"
-						@click="handleValidateButtonClick"
-					>
-						验证
-					</n-button>
-				</div>
-			</n-col>
-		</n-row>
-	</n-form>
-
-	<pre>{{ JSON.stringify(model, null, 2) }}
-</pre>
+			<template #icon>
+				<n-icon>
+					<cash-icon />
+				</n-icon>
+			</template>
+		</n-timeline-item>
+		<n-timeline-item type="error" content="哪里错误" time="2018-04-03 20:46">
+			<template #icon>
+				<n-icon>
+					<cash-icon />
+				</n-icon>
+			</template>
+		</n-timeline-item>
+		<n-timeline-item
+			type="warning"
+			title="警告"
+			content="哪里警告"
+			time="2018-04-03 20:46"
+		>
+			<template #icon>
+				<n-icon>
+					<cash-icon />
+				</n-icon>
+			</template>
+		</n-timeline-item>
+		<n-timeline-item
+			type="info"
+			title="信息"
+			content="是的"
+			time="2018-04-03 20:46"
+		>
+			<template #icon>
+				<n-icon>
+					<cash-icon />
+				</n-icon>
+			</template>
+		</n-timeline-item>
+	</n-timeline>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue'
-import {
-	FormInst,
-	FormItemInst,
-	FormItemRule,
-	useMessage,
-	FormRules
-} from 'naive-ui'
-
-interface ModelType {
-	age: string | null
-	password: string | null
-	reenteredPassword: string | null
-}
+import { defineComponent } from 'vue'
+import { CashOutline as CashIcon } from '@vicons/ionicons5'
 
 export default defineComponent({
-	setup () {
-		const formRef = ref<FormInst | null>(null)
-		const rPasswordFormItemRef = ref<FormItemInst | null>(null)
-		const message = useMessage()
-		const modelRef = ref<ModelType>({
-			age: null,
-			password: null,
-			reenteredPassword: null
-		})
-		function validatePasswordStartWith (
-			rule: FormItemRule,
-			value: string
-		): boolean {
-			return (
-				!!modelRef.value.password &&
-				modelRef.value.password.startsWith(value) &&
-				modelRef.value.password.length >= value.length
-			)
-		}
-		function validatePasswordSame (rule: FormItemRule, value: string): boolean {
-			return value === modelRef.value.password
-		}
-		const rules: FormRules = {
-			age: [
-				{
-					required: true,
-					validator (rule: FormItemRule, value: string) {
-						if (!value) {
-							return new Error('需要年龄')
-						} else if (!/^\d*$/.test(value)) {
-							return new Error('年龄应该为整数')
-						} else if (Number(value) < 18) {
-							return new Error('年龄应该超过十八岁')
-						}
-						return true
-					},
-					trigger: ['input', 'blur']
-				}
-			],
-			password: [
-				{
-					required: true,
-					message: '请输入密码'
-				}
-			],
-			reenteredPassword: [
-				{
-					required: true,
-					message: '请再次输入密码',
-					trigger: ['input', 'blur']
-				},
-				{
-					validator: validatePasswordStartWith,
-					message: '两次密码输入不一致',
-					trigger: 'input'
-				},
-				{
-					validator: validatePasswordSame,
-					message: '两次密码输入不一致',
-					trigger: ['blur', 'password-input']
-				}
-			]
-		}
-		return {
-			formRef,
-			rPasswordFormItemRef,
-			model: modelRef,
-			rules,
-			handlePasswordInput () {
-				if (modelRef.value.reenteredPassword) {
-					rPasswordFormItemRef.value?.validate({ trigger: 'password-input' })
-				}
-			},
-			handleValidateButtonClick (e: MouseEvent) {
-				e.preventDefault()
-				formRef.value?.validate((errors) => {
-					if (!errors) {
-						message.success('验证成功')
-					} else {
-						console.log(errors)
-						message.error('验证失败')
-					}
-				})
-			}
-		}
+	components: {
+		CashIcon
 	}
 })
 </script>

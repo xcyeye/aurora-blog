@@ -82,7 +82,7 @@ function _baseApi() {
    * @param data
    */
   function queryOneData(data: beanType) {
-    return request.post<viewBeanType>(`${apiPrefix}`, data, baseAxiosRequestConfig);
+    return request.post<viewBeanType>(`${apiPrefix}queryOneData`, data, baseAxiosRequestConfig);
   }
 
   /**
