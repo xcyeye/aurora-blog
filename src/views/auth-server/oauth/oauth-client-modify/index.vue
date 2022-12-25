@@ -97,8 +97,7 @@
 
 <script lang="ts" setup>
 import {defineComponent, onMounted, ref} from "vue";
-import emitter from "@/utils/mitt";
-import {removeDuplicateElement} from "@/utils";
+import {removeDuplicateElement, StringUtil, emitter} from "@/utils";
 import {EnumMittEventName} from "@/enum";
 import {OauthClientDetails} from "@/theme/pojo/auth/OauthClientDetails";
 import {authorizedGrantTypes} from "@/constants";
@@ -136,30 +135,15 @@ const handleClickModifyAction = () => {
 		}
 	}else {
 		if (modifyOauthClientConfigInfo.value) {
-			if (modifyOauthClientConfigInfo.value.clientSecret) {
-				if (modifyOauthClientConfigInfo.value.clientSecret.length > 0) {
-					if (!REGEXP_PWD.test(modifyOauthClientConfigInfo.value.clientSecret!)) {
-						window.$message?.error('客户端秘钥为6-18位数字/字符/符号的组合')
-						return;
-					}
+			if (StringUtil.haveLength(modifyOauthClientConfigInfo.value.clientSecret)) {
+				if (!REGEXP_PWD.test(modifyOauthClientConfigInfo.value.clientSecret!)) {
+					window.$message?.error('客户端秘钥为6-18位数字/字符/符号的组合')
+					return;
 				}
 			}
 		}
 	}
 	// 判断令牌过期时间
-	if (modifyOauthClientConfigInfo.value.refreshTokenValidity) {
-		if (typeof modifyOauthClientConfigInfo.value.refreshTokenValidity !== 'number') {
-			window.$message?.error('时间必须为字符')
-			return;
-		}
-	}
-
-	if (modifyOauthClientConfigInfo.value.accessTokenValidity) {
-		if (typeof modifyOauthClientConfigInfo.value.accessTokenValidity === 'number') {
-			window.$message?.error('时间必须为字符')
-			return;
-		}
-	}
 
 	if (authorizedGrantTypeArr.value.length === 0) {
 		window.$message?.error('必须要选择一个授权类型')

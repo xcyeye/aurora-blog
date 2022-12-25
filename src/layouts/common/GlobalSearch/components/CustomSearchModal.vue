@@ -130,13 +130,12 @@
 </template>
 
 <script lang="ts" setup>
-import {computed, nextTick, onBeforeMount, onMounted, ref, watch} from 'vue';
-import { onKeyStroke, useDebounceFn } from '@vueuse/core';
-import { EnumMittEventName } from '@/enum';
-import { useBasicLayout } from '@/composables';
-import { formatTime } from '@/utils';
-import type { Condition } from '@/theme/core/bean';
-import emitter from '@/utils/mitt';
+import {computed, nextTick, onBeforeMount, ref, watch} from 'vue';
+import {onKeyStroke, useDebounceFn} from '@vueuse/core';
+import {EnumMittEventName} from '@/enum';
+import {useBasicLayout} from '@/composables';
+import {emitter, formatTime} from '@/utils';
+import type {Condition} from '@/theme/core/bean';
 import SearchFooter from './SearchFooter.vue';
 
 defineOptions({ name: 'SearchModal' });

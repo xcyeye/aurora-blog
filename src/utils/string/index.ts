@@ -1,5 +1,5 @@
 const stringTool = () => {
-  const haveLength = (obj: string): boolean => {
+  const haveLength = (obj: string | null | undefined): boolean => {
     if (obj === null || obj === undefined) {
 			return false
 		}

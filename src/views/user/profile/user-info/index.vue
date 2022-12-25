@@ -131,7 +131,6 @@ import {useAuthStore} from "@/store";
 import {User} from "@/theme/pojo/admin/User";
 import {emailApi, loginInfoApi, userApi} from "@/service";
 import {FormInst, FormRules, UploadFileInfo} from "naive-ui";
-import {LoginInfo} from "@/theme/pojo/auth/LoginInfo";
 import {LoginInfoVo} from "@/theme/vo/auth/LoginInfoVo";
 import {formRules, localStg} from "@/utils";
 

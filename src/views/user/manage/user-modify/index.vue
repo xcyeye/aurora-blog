@@ -118,13 +118,12 @@
 </template>
 
 <script lang="ts" setup>
-import {defineComponent, onMounted, reactive, ref, watch} from "vue";
-import emitter from "@/utils/mitt";
-import {UserVo} from "@/theme/vo/admin/UserVo";
+import {defineComponent, onMounted, ref, watch} from "vue";
 import {User} from "@/theme/pojo/admin/User";
 import {FormInst, FormItemRule, FormRules, UploadFileInfo} from "naive-ui";
 import {emailApi, userApi} from "@/service";
 import {EnumMittEventName} from "@/enum";
+import {emitter} from "@/utils";
 
 defineComponent({name: 'index'});
 

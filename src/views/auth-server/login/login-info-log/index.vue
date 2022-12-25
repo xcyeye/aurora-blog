@@ -54,11 +54,11 @@
 </template>
 
 <script lang="ts" setup>
-import {defineComponent, onBeforeMount, onMounted, ref, watch} from "vue";
-import emitter from "@/utils/mitt";
+import {defineComponent, onBeforeMount, ref, watch} from "vue";
 import {LoginInfoVo} from "@/theme/vo/auth/LoginInfoVo";
 import {loginInfoApi, userApi} from "@/service";
 import {UserVo} from "@/theme/vo/admin/UserVo";
+import {emitter} from "@/utils";
 
 defineComponent({name: 'index'});
 

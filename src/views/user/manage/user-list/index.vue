@@ -15,16 +15,15 @@
 </template>
 
 <script lang="ts" setup>
-import {defineComponent, h, onBeforeMount, onMounted, ref} from "vue";
+import {defineComponent, h, onMounted, ref} from "vue";
 import {UserVo} from "@/theme/vo/admin/UserVo";
-import {Condition, PageData, Pagination} from "@/theme/core/bean";
-import {emailApi, userApi} from "@/service";
+import {Condition, PageData} from "@/theme/core/bean";
+import {userApi} from "@/service";
 import {DataTableColumn, NAvatar, NButton, NSpace, NTag} from "naive-ui";
-import emitter from "@/utils/mitt";
 import {EnumMittEventName} from "@/enum";
 import {User} from "@/theme/pojo/admin/User";
-import {RowData} from "naive-ui/es/data-table/src/interface";
 import RequestResult = Service.RequestResult;
+import {emitter} from "@/utils";
 
 defineComponent({name: 'index'});
 
