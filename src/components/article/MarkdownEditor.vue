@@ -1,6 +1,6 @@
 <template>
 	<div class="h-full">
-		<n-card class="h-full shadow-sm rounded-16px">
+		<n-card :bordered="bordered" class="h-full shadow-sm rounded-16px">
 			<div id="vditor"/>
 		</n-card>
 	</div>
@@ -13,7 +13,7 @@ import 'vditor/dist/index.css';
 import {useThemeStore, useAuthStore} from "@/store";
 import {fileApi} from "@/service";
 import {FileVo} from "@/theme/vo/file/fileVo";
-import {isImage} from "@/utils";
+import {isImage, StringUtil} from "@/utils";
 
 defineComponent({name: 'MarkdownEditor'});
 
@@ -25,42 +25,44 @@ interface Props {
 	storageMode?: number,
 	summary?: string,
 	nginxServerDomain?: string,
-	vditor?: {
-		tabKey?: string,
-		mode?: 'wysiwyg' | 'sv' | 'ir',
-		icon?: 'ant' | 'material',
-		counter?: {
-			enable?: boolean,
-			max?: number
-		},
-		outline?: {
-			enable?: boolean,
-			position?: 'left' | 'right',
-		},
-		minHeight?: number
+	bordered?: boolean,
+	tabKey?: string,
+	mode?: 'wysiwyg' | 'sv' | 'ir',
+	icon?: 'ant' | 'material',
+	counter?: {
+		enable?: boolean,
+		max?: number
 	},
-	renderMdContent?: string
+	outline?: {
+		enable?: boolean,
+		position?: 'left' | 'right',
+	},
+	minHeight?: number
+	renderMdContent?: string,
+	contentMaxNumber?: number
 }
 
 const props = withDefaults(defineProps<Props>(), {
 	storageMode: 0,
 	nginxServerDomain: 'http://127.0.0.1',
-	vditor: () => {
+	bordered: false,
+	tabKey: '\t\t',
+	mode: 'ir',
+	icon: 'material',
+	counter: () => {
 		return {
-			tabKey: '\t\t',
-			mode: 'ir',
-			icon: 'material',
-			counter: {
-				enable: false,
-				max: 100000
-			},
-			outline: {
-				enable: false,
-				position: 'left'
-			},
-			minHeight: 500
+			enable: false,
+			max: 100000
 		}
-	}
+	},
+	outline: () => {
+		return {
+			enable: false,
+			position: 'left'
+		}
+	},
+	minHeight: 500,
+	contentMaxNumber: 100000
 })
 
 // 定义data
@@ -157,40 +159,47 @@ onMounted(() =>{
 
 // 定义方法
 const renderVditor = () => {
-	if (props.vditor.mode) {
-		vditorOptionConfig.mode = props.vditor.mode
+	if (props.mode) {
+		vditorOptionConfig.mode = props.mode
 	}
-	if (props.vditor.outline) {
-		if (props.vditor.outline.enable) {
-			vditorOptionConfig.outline!.enable = props.vditor.outline.enable
+	if (props.outline) {
+		if (props.outline.enable) {
+			vditorOptionConfig.outline!.enable = props.outline.enable
 		}
-		if (props.vditor.outline.position) {
-			vditorOptionConfig.outline!.position = props.vditor.outline.position
-		}
-	}
-
-	if (props.vditor.counter) {
-		if (props.vditor.counter.enable) {
-			vditorOptionConfig.counter!.enable = props.vditor.counter.enable
-		}
-		if (props.vditor.counter.max) {
-			vditorOptionConfig.counter!.max = props.vditor.counter.max
+		if (props.outline.position) {
+			vditorOptionConfig.outline!.position = props.outline.position
 		}
 	}
 
-	if (props.vditor.minHeight) {
-		vditorOptionConfig.minHeight = props.vditor.minHeight
+	if (props.counter) {
+		if (props.counter.enable) {
+			vditorOptionConfig.counter!.enable = props.counter.enable
+		}
+		if (props.counter.max) {
+			vditorOptionConfig.counter!.max = props.counter.max
+		}
 	}
-	if (props.vditor.tabKey) {
-		vditorOptionConfig.tab = props.vditor.tabKey
+
+	if (props.minHeight) {
+		vditorOptionConfig.minHeight = props.minHeight
 	}
-	if (props.vditor.icon) {
-		vditorOptionConfig.icon = props.vditor.icon
+	if (props.tabKey) {
+		vditorOptionConfig.tab = props.tabKey
+	}
+	if (props.icon) {
+		vditorOptionConfig.icon = props.icon
+	}
+	if (props.contentMaxNumber) {
+		vditorOptionConfig.counter!.enable = true
+		vditorOptionConfig.counter!.max = props.contentMaxNumber
+		vditorOptionConfig.counter!.type = 'markdown'
 	}
 	vditor.value = new Vditor('vditor', vditorOptionConfig);
-	if (props.renderMdContent) {
-		vditor.value?.setValue(props.renderMdContent);
-	}
+	setTimeout(() =>{
+		if (StringUtil.haveLength(props.renderMdContent)) {
+			vditor.value?.setValue(props.renderMdContent as string);
+		}
+	}, 200)
 }
 
 const getAfterUploadFileContent = (fileVoInfoArr: FileVo[]): Promise<string> => {
