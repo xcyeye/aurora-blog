@@ -274,9 +274,10 @@ function handleUp() {}
 /** key down */
 function handleDown() {}
 
+// TODO 这里有个bug，在编辑文章的时候，只要按下回车，就会发送请求
 /** key enter */
 function handleEnter() {
-  handleClickSearchButton();
+  // handleClickSearchButton();
 }
 
 onKeyStroke('Escape', handleClose);
