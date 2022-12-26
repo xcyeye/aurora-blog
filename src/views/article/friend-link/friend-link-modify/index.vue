@@ -41,7 +41,7 @@
 									<n-p>审核状态</n-p>
 								</n-gi>
 								<n-gi>
-									<n-switch v-model:value="modifyLinkInfo.publish" />
+									<n-switch :disabled="addStatus" v-model:value="modifyLinkInfo.publish" />
 								</n-gi>
 							</n-grid>
 							<n-grid x-gap="12" :cols="2">
