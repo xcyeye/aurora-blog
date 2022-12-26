@@ -44,6 +44,7 @@
 							<n-button round :disabled="!uploadFileLength" type="info" @click="handleClearUploadFileList">
 								清除
 							</n-button>
+							<slot name="extraButton"/>
 						</n-space>
 					</div>
 				</n-col>
