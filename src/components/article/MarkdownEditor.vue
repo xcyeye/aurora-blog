@@ -136,6 +136,9 @@ let vditorOptionConfig: IOptions = {
 					getAfterUploadFileContent(result.data).then(content => {
 						vditor.value?.setValue(vditor.value?.getValue() + content);
 						vditor.value?.enable();
+						setTimeout(() => {
+							emits('vditorInput', (vditor.value?.getValue()))
+						}, 700)
 					})
 				}
 			})

@@ -111,7 +111,7 @@ const handleDeleteAction = (data: TalkVo) => {
 			talkApi.logicDeleteData(data as Talk).then(result => {
 				if (result.data === 1) {
 					window.$message?.success(`删除 ${data.title} 说说成功 ○|￣|_`);
-					// emitter.emit(EnumMittEventName.reloadData)
+					emitter.emit(EnumMittEventName.reloadData)
 				}
 			})
 		},
@@ -119,7 +119,7 @@ const handleDeleteAction = (data: TalkVo) => {
 			talkApi.physicalDeleteData(data as Talk).then(result => {
 				if (result.data === 1) {
 					window.$message?.success(`删除 ${data.title} 说说成功 ○|￣|_`);
-					// emitter.emit(EnumMittEventName.reloadData)
+					emitter.emit(EnumMittEventName.reloadData)
 				}
 			})
 		},
@@ -150,7 +150,7 @@ const handleModifyOrAddAction = (row?: TalkVo | null) => {
 		bulletinApi.updateData(row!).then(result => {
 			if (result.data && result.data === 1) {
 				window.$message?.success('修改成功 ○|￣|_')
-				// emitter.emit(EnumMittEventName.reloadData)
+				emitter.emit(EnumMittEventName.reloadData)
 				showDrawer.value = false
 			}
 		})
@@ -167,7 +167,7 @@ const handleModifyOrAddAction = (row?: TalkVo | null) => {
 		talkApi.insertData(currentTalkInfo.value).then(result => {
 			if (!result.error) {
 				window.$message?.success('添加成功 ○|￣|_')
-				// emitter.emit(EnumMittEventName.reloadData)
+				emitter.emit(EnumMittEventName.reloadData)
 				showDrawer.value = false
 			}
 		})
@@ -175,7 +175,7 @@ const handleModifyOrAddAction = (row?: TalkVo | null) => {
 		talkApi.updateData(currentTalkInfo.value).then(result => {
 			if (result.data && result.data === 1) {
 				window.$message?.success('修改成功 ○|￣|_')
-				// emitter.emit(EnumMittEventName.reloadData)
+				emitter.emit(EnumMittEventName.reloadData)
 				showDrawer.value = false
 			}
 		})
@@ -346,10 +346,10 @@ const handleFinishUploadFile = (file: UploadFileInfo) => {
 		uid: file.thumbnailUrl!,
 		src: file.url!
 	})
-	if (currentTalkInfo.value.pictureUids?.lastIndexOf(",") !== -1) {
-		currentTalkInfo.value.pictureUids = currentTalkInfo.value.pictureUids + ',' + file.thumbnailUrl
-	}else {
+	if (!currentTalkInfo.value.pictureUids) {
 		currentTalkInfo.value.pictureUids = file.thumbnailUrl
+	}else {
+		currentTalkInfo.value.pictureUids = currentTalkInfo.value.pictureUids + ',' + file.thumbnailUrl
 	}
 }
 
