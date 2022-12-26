@@ -63,6 +63,8 @@ interface Link {
    * 最后更新时间
    */
   updateTime?: string | null;
+
+	replyMessage?: string | null;
 }
 
 export { Link };
