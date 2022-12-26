@@ -38,7 +38,7 @@
 							<markdown-editor
 								:content-max-number="300"
 								:render-md-content="addStatus ? ''
-								: currentBulletinInfo.content"
+								:currentBulletinInfo.content"
 								@vditorInput="handleVditorInputValue"
 								:min-height="270"
 								:bordered="false"/>
@@ -59,16 +59,14 @@
 <script lang="ts" setup>
 import {defineComponent, h, onMounted, ref} from "vue";
 import {Condition, PageData} from "@/theme/core/bean";
-import {bulletinApi, emailLogApi, sendMailApi} from "@/service";
+import {bulletinApi} from "@/service";
 import {DataTableColumn, NButton, NSpace, NSwitch, NTag, useLoadingBar} from "naive-ui";
 import {EnumMittEventName} from "@/enum";
-import {LoginInfoVo} from "@/theme/vo/auth/LoginInfoVo";
 import {emitter, StringUtil} from "@/utils";
 import {EmailLogVo} from "@/theme/vo/message/EmailLogVo";
-import {EmailLog} from "@/theme/pojo/message/EmailLog";
 import {BulletinVo} from "@/theme/vo/article/BulletinVo";
-import RequestResult = Service.RequestResult;
 import {Bulletin} from "@/theme/pojo/article/Bulletin";
+import RequestResult = Service.RequestResult;
 
 defineComponent({name: 'index'});
 
@@ -197,16 +195,16 @@ const createColumns = (): Array<DataTableColumn> => {
 					NSwitch, {
 						value: row.timing,
 						onUpdateValue(value: boolean) {
-							bulletinApi.updateData(row).then(result => {
-								if (!StringUtil.haveLength(row.timingPublishTime)) {
-									window.$message?.error('需要设置定时时间(*￣︿￣) ')
-								}else {
-									row.timing = value
+							if (!StringUtil.haveLength(row.timingPublishTime)) {
+								window.$message?.error('需要设置定时时间(*￣︿￣) ')
+							}else {
+								row.timing = value
+								bulletinApi.updateData(row).then(result => {
 									if (result.data && result.data === 1) {
 										window.$message?.success(`修改成功o(￣▽￣)ｄ `)
 									}
-								}
-							})
+								})
+							}
 						}
 					}
 				)

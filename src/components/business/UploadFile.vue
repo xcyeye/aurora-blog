@@ -41,6 +41,9 @@
 							<n-button round :disabled="!uploadFileLength" type="error" @click="handleInterruptUploadFile">
 								中断
 							</n-button>
+							<n-button round :disabled="!uploadFileLength" type="info" @click="handleClearUploadFileList">
+								清除
+							</n-button>
 						</n-space>
 					</div>
 				</n-col>
@@ -96,7 +99,7 @@ const props = withDefaults(defineProps<Props>(), {
 
 // 定义data
 const uploadFileInfoArr = reactive<UploadFileInfo[]>([]);
-const uploadFileInfoTempArr = reactive<UploadFileInfo[]>([]);
+let uploadFileInfoTempArr = reactive<UploadFileInfo[]>([]);
 const uploadFileRef = ref<UploadInst | null>(null);
 const uploadFileLength = ref(0);
 const acceptFileType = computed(() => {
@@ -193,6 +196,10 @@ const handleInterruptUploadFile = () => {
 
 }
 
+const handleClearUploadFileList = () => {
+	uploadFileInfoTempArr = []
+}
+
 const handleSubmitUploadFile = () => {
 	uploadFileRef.value?.submit();
 }
@@ -217,7 +224,7 @@ const generateFileInfo = (file: UploadFileInfo, fileVoArr: FileVo[]): Promise<Up
 				status: 'finished',
 				batchId: file.batchId,
 				name: v.fileName!,
-				thumbnailUrl: file.thumbnailUrl
+				thumbnailUrl: v.uid
 			});
 		})
 		resolve(temp);

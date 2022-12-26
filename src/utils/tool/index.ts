@@ -26,3 +26,17 @@ export const getFileFormat = (fileName: string | null | undefined): string => {
 	if (fileName?.indexOf(".") === -1) return '未知格式'
 	return fileName!.substring(fileName!.lastIndexOf(".") + 1, fileName!.length);
 }
+
+export const getFileSize = (size: number | null | undefined): string => {
+	if (!size) {
+		return '0 KB'
+	}
+	if ((size / 1024 / 1024) < 1) {
+		return (size / 1024).toFixed(2) + " KB"
+	}
+	if ((size / 1024 / 1024) > 1024) {
+		return (size / 1024 / 1024 / 1024).toFixed(2) + " GB"
+	}
+
+	return (size / 1024 / 1024).toFixed(2) + " MB"
+}

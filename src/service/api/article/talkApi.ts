@@ -98,4 +98,4 @@ function _baseApi() {
   };
 }
 
-export const baseApi = _baseApi();
+export const talkApi = _baseApi();
