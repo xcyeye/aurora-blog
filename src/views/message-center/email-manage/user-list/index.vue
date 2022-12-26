@@ -15,17 +15,17 @@
 </template>
 
 <script lang="ts" setup>
-import {computed, defineComponent, h, onMounted, ref} from "vue";
-import {UserVo} from "@/theme/vo/admin/UserVo";
+import {defineComponent, h, onMounted, ref} from "vue";
 import {Condition, PageData} from "@/theme/core/bean";
 import {emailApi, userApi} from "@/service";
-import {DataTableColumn, NAvatar, NButton, NSpace, NTag, NText} from "naive-ui";
+import {DataTableColumn, NButton, NSpace} from "naive-ui";
 import {EnumMittEventName} from "@/enum";
-import {User} from "@/theme/pojo/admin/User";
-import RequestResult = Service.RequestResult;
 import {emitter} from "@/utils";
 import {EmailVo} from "@/theme/vo/message/EmailVo";
 import {Email} from "@/theme/pojo/message/Email";
+import RequestResult = Service.RequestResult;
+import {useRouterPush} from "@/composables";
+import {useRouter} from "vue-router";
 
 defineComponent({name: 'index'});
 
@@ -35,6 +35,7 @@ const condition = ref<Condition>({
 	// 账户是否锁住
 	status: null
 })
+const router = useRouterPush()
 
 const queryDataMethod = (condition: Condition): Promise<RequestResult<PageData<EmailVo>>> => {
 	return emailApi.queryListDataByCondition(condition);
@@ -61,6 +62,15 @@ const handleDeleteAction = (data: EmailVo) => {
 
 const handleModifyAction = (data: EmailVo) => {
 	emitter.emit('messageCenterManageModifyEmailAction', data)
+}
+
+const handleSendMailAction = (data: EmailVo) => {
+	router.routerPush({
+		name: 'message-center_send-mail',
+		query: {
+			receiverEmail: data.email
+		}
+	})
 }
 
 const handleAddUserAction = () => {
@@ -148,6 +158,16 @@ const createColumns = (): Array<DataTableColumn> => {
 									onClick: () => handleModifyAction(row)
 								},
 								{ default: () => '编辑' }
+							),
+							h(
+								NButton,
+								{
+									size: 'small',
+									type: 'primary',
+									ghost: true,
+									onClick: () => handleSendMailAction(row)
+								},
+								{ default: () => '发送' }
 							)
 						)
 					}

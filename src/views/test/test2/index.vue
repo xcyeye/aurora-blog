@@ -1,15 +1,21 @@
 <template>
-	<n-dynamic-tags v-model:value="tags" />
+	<n-grid x-gap="12" :cols="2">
+		<n-gi>
+			<div class="light-green" />
+		</n-gi>
+		<n-gi>
+			<div class="green" />
+		</n-gi>
+	</n-grid>
 </template>
 
-<script lang="ts" setup>
-import {defineComponent, onMounted, ref, watch} from 'vue';
-import {getFileFormat, getRandomNum} from "@/utils";
-import {EnumFileStorageModeConstant} from "@/enum";
-const tags = ref([])
-
-onMounted(() => {
-	// console.log(EnumFileStorageModeConstant.LOCAL_STORAGE.toString(0));
-	console.log(getFileFormat('.png'));
-})
-</script>
+<style scoped>
+.light-green {
+	height: 108px;
+	background-color: rgba(0, 128, 0, 0.12);
+}
+.green {
+	height: 108px;
+	background-color: rgba(0, 128, 0, 0.24);
+}
+</style>
