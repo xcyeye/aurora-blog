@@ -80,13 +80,23 @@ export const routeModel: Record<Auth.RoleType, AuthRoute.Route[]> = {
 					}
 				},
 				{
-					name: 'article_category-tag',
-					path: '/article/category-tag',
+					name: 'article_category',
+					path: '/article/category',
 					component: 'self',
 					meta: {
-						title: '分类&标签',
+						title: '分类',
 						requiresAuth: true,
 						icon: 'cil:bookmark'
+					}
+				},
+				{
+					name: 'article_tag',
+					path: '/article/tag',
+					component: 'self',
+					meta: {
+						title: '标签',
+						requiresAuth: true,
+						icon: 'ic:round-filter-vintage'
 					}
 				},
 				{
