@@ -9,14 +9,17 @@
 <script lang="ts" setup>
 import {onMounted, ref} from 'vue';
 import * as echarts from 'echarts';
-import {ECharts} from 'echarts';
+import {ECharts, EChartsOption} from 'echarts';
 import {rand} from '@vueuse/core';
 import {useAuthStore} from '@/store';
 import {Article} from "@/theme/pojo/article/Article";
 import {Condition} from "@/theme/core/bean";
-import {articleApi, categoryApi} from "@/service";
+import {articleApi, categoryApi, linkApi} from "@/service";
 import {ECBasicOption} from "echarts/types/dist/shared";
 import {Category} from "@/theme/pojo/article/Category";
+import {CategoryVo} from "@/theme/vo/article/CategoryVo";
+import {ArticleVo} from "@/theme/vo/article/ArticleVo";
+import {LinkVo} from "@/theme/vo/article/LinkVo";
 
 let myChart: ECharts;
 
@@ -47,8 +50,9 @@ const graphCategories = ref<Array<GraphCategory>>([])
 const graphCategoryNodes = ref<Array<GraphNode>>([])
 const graphNodes = ref<Array<GraphNode>>([])
 const graphLinks = ref<Array<GraphLink>>([])
-const categoryArr = ref<Array<Category>>([])
-const articleArr = ref<Array<Article>>([])
+const categoryArr = ref<Array<CategoryVo>>([])
+const articleArr = ref<Array<ArticleVo>>([])
+const friendLinkArr = ref<Array<LinkVo>>([])
 const condition =ref<Condition>({})
 const echartsId = ref(`main${new Date().getTime()}`);
 const authStore = useAuthStore()
@@ -125,12 +129,35 @@ async function loadAllArticleData() {
 	});
 }
 
+async function loadAllFriendLinkData() {
+	friendLinkArr.value = [];
+	const condition: Condition = {
+		delete: null,
+		status: null,
+		show: null
+	}
+	condition.pageSize = 100000;
+	condition.otherUid = authStore.userInfo.user_uid
+
+	await linkApi.queryListDataByCondition(condition).then(result => {
+		if (result.data && result.data.result) {
+			Promise.all(
+				result.data.result.map(link => {
+					friendLinkArr.value.push(link);
+					return true;
+				})
+			);
+		}
+	});
+}
+
 async function packageArticleNode() {
 	// 文章
 	await Promise.all(
 		articleArr.value.map(async article => {
 			// 因为每篇文章的类别会存在多个，使用,分割开的
-			let split: Array<string> = article.tagNames?.split(',')!;
+			if (!article.categoryNames) return
+			let split: Array<string> = article.categoryNames?.split(',');
 			if (!split) {
 				split = new Array<string>();
 			}
@@ -157,10 +184,45 @@ async function packageArticleNode() {
 	);
 }
 
+async function packageFriendLinkNode() {
+	// 文章
+	await Promise.all(
+		friendLinkArr.value.map(async link => {
+			// 因为每篇文章的类别会存在多个，使用,分割开的
+			if (!link.categoryName) return
+			let split: Array<string> = link.categoryName.split(",");
+			if (!split) {
+				split = new Array<string>();
+			}
+			await Promise.all(
+				split.map(articleCategory => {
+					graphNodes.value.push({
+						id: (link.uid as string) + articleCategory,
+						name: link.linkUrl as string,
+						symbolSize: calculateSymbolSizeByCreateTime(link.createTime as string),
+						x: getRandomCoordinateX(),
+						y: getRandomCoordinateY(),
+						value: link.linkUrl as string,
+						category: articleCategory as string,
+						label: {
+							show: true
+						}
+					});
+					return true;
+				})
+			);
+
+			return true;
+		})
+	);
+}
+
 async function rePackageGraph() {
 	await loadAllCategoryData();
 	await loadAllArticleData();
+	await loadAllFriendLinkData()
 	await packageArticleNode();
+	await packageFriendLinkNode()
 
 	await Promise.all(
 		graphCategoryNodes.value.map(graphCategoryNode => {
@@ -206,7 +268,7 @@ const setOption = () => {
 		animationEasingUpdate: 'quinticInOut',
 		series: [
 			{
-				name: 'Les Miserables',
+				name: '',
 				type: 'graph',
 				layout: 'none',
 				data: graphNodes.value,
@@ -234,10 +296,8 @@ const setOption = () => {
 };
 
 onMounted(() => {
-	type EChartsOption = echarts.EChartsOption;
 	const chartDom = document.getElementById(echartsId.value)!;
 	myChart = echarts.init(chartDom, 'dark');
-	let option: EChartsOption;
 	myChart.showLoading();
 
 	rePackageGraph().then(data => {
