@@ -17,7 +17,7 @@ interface TagVo {
   /**
    * 创建时间
    */
-  createdTime?: string | null;
+  createTime?: string | null;
 
   /**
    * 最后修改时间

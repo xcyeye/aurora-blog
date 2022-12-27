@@ -9,14 +9,14 @@
 <script lang="ts" setup>
 import {onMounted, ref} from 'vue';
 import * as echarts from 'echarts';
+import {ECharts} from 'echarts';
 import {rand} from '@vueuse/core';
 import {useAuthStore} from '@/store';
-import {TagVo} from "@/theme/vo/article/TagVo";
 import {Article} from "@/theme/pojo/article/Article";
 import {Condition} from "@/theme/core/bean";
-import {articleApi, tagApi} from "@/service";
-import {ECharts} from "echarts";
+import {articleApi, categoryApi} from "@/service";
 import {ECBasicOption} from "echarts/types/dist/shared";
+import {Category} from "@/theme/pojo/article/Category";
 
 let myChart: ECharts;
 
@@ -47,7 +47,7 @@ const graphCategories = ref<Array<GraphCategory>>([])
 const graphCategoryNodes = ref<Array<GraphNode>>([])
 const graphNodes = ref<Array<GraphNode>>([])
 const graphLinks = ref<Array<GraphLink>>([])
-const tagArr = ref<Array<TagVo>>([])
+const categoryArr = ref<Array<Category>>([])
 const articleArr = ref<Array<Article>>([])
 const condition =ref<Condition>({})
 const echartsId = ref(`main${new Date().getTime()}`);
@@ -73,28 +73,28 @@ const getRandomCoordinateY = () => {
 
 // 加载数据
 async function loadAllCategoryData() {
-	tagArr.value = []
+	categoryArr.value = []
 	graphCategories.value = []
 	graphCategoryNodes.value = []
 
 	// 加载所有的类别
 	condition.value.pageSize = 1000000;
-	await tagApi.queryListDataByCondition(condition.value).then(result => {
+	await categoryApi.queryListDataByCondition(condition.value).then(result => {
 		if (result.data && result.data?.result) {
 			Promise.all(
-				result.data?.result.map(tag => {
-					tagArr.value.push(tag);
-					graphCategories.value.push({ name: tag.title as string, uid: tag.uid as string });
+				result.data?.result.map(category => {
+					categoryArr.value.push(category);
+					graphCategories.value.push({ name: category.title as string, uid: category.uid as string });
 
 					// 将类别节点也封装成图节点
 					graphCategoryNodes.value.push({
-						id: tag.title as string,
-						name: tag.title as string,
-						symbolSize: calculateSymbolSizeByCreateTime(tag.createTime as string),
+						id: category.title as string,
+						name: category.title as string,
+						symbolSize: calculateSymbolSizeByCreateTime(category.createTime as string),
 						x: getRandomCoordinateX(),
 						y: getRandomCoordinateY(),
-						value: tag.title as string,
-						category: tag.title as string
+						value: category.title as string,
+						category: category.title as string
 					});
 					return true;
 				})

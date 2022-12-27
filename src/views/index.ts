@@ -10,6 +10,7 @@ export const views: Record<RouterPage.LastDegreeRouteKey, RouteComponent | (() =
   article_bulletin: () => import('./article/bulletin/index.vue'),
   'article_category_category-list': () => import('./article/category/category-list/index.vue'),
   'article_category_category-modify': () => import('./article/category/category-modify/index.vue'),
+  article_category_chart: () => import('./article/category/chart/index.vue'),
   article_category: () => import('./article/category/index.vue'),
   article_edit: () => import('./article/edit/index.vue'),
   'article_friend-link_friend-link-list': () => import('./article/friend-link/friend-link-list/index.vue'),

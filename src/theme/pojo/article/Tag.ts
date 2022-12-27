@@ -17,12 +17,12 @@ interface Tag {
   /**
    * 创建时间
    */
-  createdTime?: string | null;
+  createTime?: string | null;
 
   /**
    * 最后修改时间
    */
-  updatedTime?: string | null;
+  updateTime?: string | null;
 
   /**
    * 此类别的封面图uid

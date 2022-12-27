@@ -1,35 +1,20 @@
 <template>
 	<div>
-		<n-modal
-			v-model:show="showModal"
-			preset="dialog"
-			:title="currentLinkInfo.publish ? '下架' : '审核通过'"
-			:positive-text="!currentLinkInfo.publish ? '(○｀ 3′○)' : ''"
-			:negative-text="!currentLinkInfo.publish? '' : '→)╥﹏╥)'"
-			@positive-click="handleLinkPublishStatus"
-			@negative-click="handleLinkPublishStatus"
-		>
-			<n-input type="textarea" :placeholder="!currentLinkInfo.publish ? '审核通过后系统会发邮件通知该用户o(￣▽￣)ｄ ' : '可以告知对方下架原因 (ノへ￣、)'" :autosize="{minRows: 4}" v-model:value="currentLinkInfo.replyMessage"/>
-		</n-modal>
 		<n-card class="h-full shadow-sm rounded-16px">
 			<n-tabs type="line" animated>
-				<n-tab-pane name="oasis" tab="标签">
+				<n-tab-pane name="oasis" tab="列表">
 					<show-table-data
-						:data-table-info="{title: '', rowKey: 'uid', striped: true, scrollX: 1700, bordered: false}"
+						:data-table-info="{title: '', rowKey: 'uid', striped: true, bordered: false}"
 						:data-table-columns="tagColumns"
-						:query-data-method="queryTagDataMethod">
+						:query-data-method="queryDataMethod">
 					</show-table-data>
 				</n-tab-pane>
-				<n-tab-pane name="the beatles" tab="类别">
-					<show-table-data
-						:data-table-info="{title: '', rowKey: 'uid', striped: true, scrollX: 1700, bordered: false}"
-						:data-table-columns="categoryColumns"
-						:query-data-method="queryCategoryDataMethod">
-					</show-table-data>
+				<n-tab-pane name="the beatles" tab="图表">
+					<category-chart/>
 				</n-tab-pane>
 				<template #suffix>
 					<n-space>
-						<n-button strong secondary tertiary round type="success" @click="handleAddLinkAction">添加</n-button>
+						<n-button strong secondary tertiary round type="success" @click="handleAddTagAction">添加</n-button>
 					</n-space>
 				</template>
 			</n-tabs>
@@ -40,16 +25,15 @@
 <script lang="ts" setup>
 import {defineComponent, h, onMounted, ref} from "vue";
 import {Condition, PageData} from "@/theme/core/bean";
-import {categoryApi, linkApi, tagApi} from "@/service";
-import {DataTableColumn, NA, NAvatar, NButton, NSpace, NSwitch, NText} from "naive-ui";
+import {DataTableColumn, NButton, NSpace} from "naive-ui";
 import {EnumMittEventName} from "@/enum";
-import {emitter, StringUtil} from "@/utils";
-import {LinkVo} from "@/theme/vo/article/LinkVo";
+import {emitter} from "@/utils";
 import {useRouterPush} from "@/composables";
-import {Link} from "@/theme/pojo/article/Link";
-import RequestResult = Service.RequestResult;
+import CategoryChart from '../chart/index.vue';
+import {categoryApi} from "@/service";
+import {Category} from "@/theme/pojo/article/Category";
 import {CategoryVo} from "@/theme/vo/article/CategoryVo";
-import {TagVo} from "@/theme/vo/article/TagVo";
+import RequestResult = Service.RequestResult;
 
 defineComponent({name: 'index'});
 
@@ -61,27 +45,31 @@ const condition = ref<Condition>({
 })
 const router = useRouterPush()
 const showModal = ref(false)
-const currentLinkInfo = ref<Link>({})
+const currentCategoryInfo = ref<Category>({})
 
-const queryCategoryDataMethod = (condition: Condition): Promise<RequestResult<PageData<CategoryVo>>> => {
+const queryDataMethod = (condition: Condition): Promise<RequestResult<PageData<CategoryVo>>> => {
 	return categoryApi.queryListDataByCondition(condition);
 }
 
-const queryTagDataMethod = (condition: Condition): Promise<RequestResult<PageData<TagVo>>> => {
-	return tagApi.queryListDataByCondition(condition);
-}
-
 // 定义方法
-const handleDeleteAction = (data: LinkVo) => {
+const handleDeleteAction = (data: CategoryVo) => {
 	window.$dialog?.warning({
-		title: `删除 ${data.linkUrl} ◔ ‸◔?`,
-		content: '其实还有个下架选项(ノへ￣、)',
-		positiveText: '删除',
-		negativeText: '取消',
+		title: `删除 ${data.title} ◔ ‸◔?`,
+		content: '可以临时删除和永久删除 (ノへ￣、)',
+		positiveText: '临时删除',
+		negativeText: '永久删除',
 		onPositiveClick: () => {
-			linkApi.physicalDeleteData(data as Link).then(result => {
+			categoryApi.logicDeleteData(data as Category).then(result => {
 				if (result.data === 1) {
-					window.$message?.success(`删除 ${data.linkUrl} 成功 ○|￣|_`);
+					window.$message?.success(`删除 ${data.title} 成功 ○|￣|_`);
+					emitter.emit(EnumMittEventName.reloadData)
+				}
+			})
+		},
+		onNegativeClick: () => {
+			categoryApi.physicalDeleteData(data as Category).then(result => {
+				if (result.data === 1) {
+					window.$message?.success(`删除 ${data.title} 成功 ○|￣|_`);
 					emitter.emit(EnumMittEventName.reloadData)
 				}
 			})
@@ -89,123 +77,15 @@ const handleDeleteAction = (data: LinkVo) => {
 	})
 }
 
-const handleModifyAction = (data: LinkVo) => {
-	emitter.emit('linkManageModifyLinkAction', data)
+const handleModifyAction = (data: CategoryVo) => {
+	emitter.emit('categoryManageModifyCategoryAction', data)
 }
 
-const handleAddLinkAction = () => {
-	emitter.emit('linkManageAddLinkAction')
+const handleAddTagAction = () => {
+	emitter.emit('categoryManageAddCategoryAction')
 }
 
-const handleLinkPublishStatus = () => {
-	if (!StringUtil.haveLength(currentLinkInfo.value.replyMessage)) {
-		window.$message?.error('请输入回复消息')
-		return
-	}
-	currentLinkInfo.value.publish = !currentLinkInfo.value.publish
-  if (currentLinkInfo.value.publish) {
-		// 从未发布到发布
-		linkApi.updateLinkPublishStatus(currentLinkInfo.value).then(result => {
-			if (!result.error && result.data === 1) {
-				window.$message?.success('已修改状态为发布 o(￣▽￣)ｄ ')
-				showModal.value = false
-				emitter.emit(EnumMittEventName.reloadData)
-			}
-		})
-	}else {
-		// 从发布到未发布
-		linkApi.updateLinkPublishStatus(currentLinkInfo.value).then(result => {
-			if (!result.error && result.data === 1) {
-				window.$message?.success('已下架该链接 (ノへ￣、)')
-				showModal.value = false
-				emitter.emit(EnumMittEventName.reloadData)
-			}
-		})
-	}
-}
-
-const createCategoryColumns = (): Array<DataTableColumn> => {
-  return [
-		{
-			type: 'selection'
-		},
-		{
-			title: '名称',
-			key: 'title',
-			titleColSpan: 1,
-			width: 150,
-			ellipsis: {
-				tooltip: true
-			}
-		},
-		{
-			title: '简介',
-			key: 'summary',
-			titleColSpan: 1,
-			width: 300,
-			ellipsis: {
-				tooltip: true
-			}
-		},
-		{
-			title: '所属用户',
-			key: 'userUid',
-			titleColSpan: 1,
-			width: 150,
-			ellipsis: {
-				tooltip: true
-			}
-		},
-		{
-			title: '创建时间',
-			key: 'createTime',
-			titleColSpan: 1,
-			sorter: 'default',
-			sortOrder: false,
-			width: 170
-		},
-		{
-			title: '操作',
-			key: 'actions',
-			fixed: 'right',
-			width: 200,
-			render(row) {
-				return h(
-					NSpace,
-					{
-						justify: 'center'
-					},
-					{
-						default:() => Array.of(
-							h(
-								NButton,
-								{
-									size: 'small',
-									type: 'warning',
-									ghost: true,
-									onClick: () => handleDeleteAction(row)
-								},
-								{ default: () => '删除' }
-							),
-							h(
-								NButton,
-								{
-									size: 'small',
-									type: 'primary',
-									ghost: true,
-									onClick: () => handleModifyAction(row)
-								},
-								{ default: () => '编辑' }
-							)
-						)
-					}
-				);
-			}
-		}
-	]
-}
-
-const createTagColumns = (): Array<DataTableColumn> => {
+const createColumns = (): Array<DataTableColumn> => {
 	return [
 		{
 			type: 'selection'
@@ -215,6 +95,8 @@ const createTagColumns = (): Array<DataTableColumn> => {
 			key: 'title',
 			titleColSpan: 1,
 			width: 150,
+			sorter: 'default',
+			sortOrder: false,
 			ellipsis: {
 				tooltip: true
 			}
@@ -223,7 +105,7 @@ const createTagColumns = (): Array<DataTableColumn> => {
 			title: '简介',
 			key: 'summary',
 			titleColSpan: 1,
-			width: 300,
+			width: 200,
 			ellipsis: {
 				tooltip: true
 			}
@@ -286,8 +168,7 @@ const createTagColumns = (): Array<DataTableColumn> => {
 	]
 }
 
-const tagColumns = ref<Array<DataTableColumn>>(createTagColumns())
-const categoryColumns = ref<Array<DataTableColumn>>(createCategoryColumns())
+const tagColumns = ref<Array<DataTableColumn>>(createColumns())
 
 // 挂载emit
 onMounted(() => {
