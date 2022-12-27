@@ -248,6 +248,9 @@
             <if test="condition.keyword != null">
                 and file_name=#{condition.keyword}
             </if>
+            <if test="condition.otherField != null and condition.otherField != ''">
+                and `file_name` REGEXP #{condition.otherField,jdbcType=VARCHAR}
+            </if>
             <if test="condition.startTime != null and condition.endTime != null">
                 and create_time between #{condition.startTime} and #{condition.endTime}
             </if>

@@ -90,6 +90,13 @@ public class UserController {
         return userService.queryByUsernameContainPassword(user.getUsername());
     }
 
+    @PostMapping(value = "/queryOneData", headers = "content-type=application/json;charset=UTF-8;")
+    @SelectOperation
+    @Operation(summary = "通过username查询用户信息")
+    public User queryOneData(@RequestBody UserPojo user) {
+        return userService.queryOneData(user);
+    }
+
     @PostMapping("/queryListUserByCondition")
     @SelectOperation
     @Operation(summary = "查询所有满足要求的用户信息")

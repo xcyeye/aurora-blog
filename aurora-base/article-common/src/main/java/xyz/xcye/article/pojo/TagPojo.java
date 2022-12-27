@@ -51,13 +51,13 @@ public class TagPojo {
      * 创建时间
      */
     @Schema(title = "创建时间")
-    private String createdTime;
+    private String createTime;
 
     /**
      * 最后修改时间
      */
     @Schema(title = "最后修改时间")
-    private String updatedTime;
+    private String updateTime;
 
     /**
      * 此类别的封面图uid

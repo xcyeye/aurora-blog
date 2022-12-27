@@ -133,6 +133,11 @@ public class FileService {
     }
 
     public PageData<FileVO> queryListFileByCondition(Condition<Long> condition) {
+        // 如果是超级管理员，则查询所有的数据
+        JwtUserInfo jwtUserInfo = UserUtils.getCurrentUser();
+        if (isSuperRole(jwtUserInfo)) {
+            condition.setOtherUid(null);
+        }
         return PageUtils.copyPageDataResult(auroraFileService.queryListByCondition(condition), FileVO.class);
     }
 

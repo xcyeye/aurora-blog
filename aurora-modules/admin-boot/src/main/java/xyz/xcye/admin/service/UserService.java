@@ -162,6 +162,10 @@ public class UserService {
         }});
     }
 
+    public UserVO queryOneData(UserPojo pojo) {
+        return BeanUtils.copyProperties(auroraUserService.queryOne(BeanUtils.copyProperties(pojo, User.class)), UserVO.class);
+    }
+
     public User queryByUidContainPassword(long uid) {
         return auroraUserService.queryById(uid);
     }

@@ -7,8 +7,8 @@
         <result column="user_uid" property="userUid"/>
         <result column="is_show_comment" property="showComment"/>
         <result column="comment_uids" property="commentUids"/>
-        <result column="updated_time" property="updatedTime"/>
-        <result column="created_time" property="createdTime"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="create_time" property="createTime"/>
         <result column="content" property="content"/>
         <result column="title" property="title"/>
         <result column="is_show" property="show"/>
@@ -31,11 +31,11 @@
             <if test="commentUids != null and commentUids != '' ">
                 AND comment_uids = #{commentUids}
             </if>
-            <if test="updatedTime != null and updatedTime != '' ">
-                AND updated_time = #{updatedTime}
+            <if test="updateTime != null and updateTime != '' ">
+                AND update_time = #{updateTime}
             </if>
-            <if test="createdTime != null and createdTime != '' ">
-                AND created_time = #{createdTime}
+            <if test="createTime != null and createTime != '' ">
+                AND create_time = #{createTime}
             </if>
             <if test="content != null and content != '' ">
                 AND content = #{content}
@@ -63,8 +63,8 @@
         user_uid,
         is_show_comment,
         comment_uids,
-        updated_time,
-        created_time,
+        update_time,
+        create_time,
         content,
         title,
         is_show,
@@ -90,11 +90,11 @@
                 <if test="commentUids != null and commentUids != '' ">
                     comment_uids,
                 </if>
-                <if test="updatedTime != null and updatedTime != '' ">
-                    updated_time,
+                <if test="updateTime != null and updateTime != '' ">
+                    update_time,
                 </if>
-                <if test="createdTime != null and createdTime != '' ">
-                    created_time,
+                <if test="createTime != null and createTime != '' ">
+                    create_time,
                 </if>
                 <if test="content != null and content != '' ">
                     content,
@@ -129,11 +129,11 @@
                 <if test="commentUids != null and commentUids != '' ">
                  #{commentUids},
                 </if>
-                <if test="updatedTime != null and updatedTime != '' ">
-                 #{updatedTime},
+                <if test="updateTime != null and updateTime != '' ">
+                 #{updateTime},
                 </if>
-                <if test="createdTime != null and createdTime != '' ">
-                 #{createdTime},
+                <if test="createTime != null and createTime != '' ">
+                 #{createTime},
                 </if>
                 <if test="content != null and content != '' ">
                  #{content},
@@ -176,8 +176,8 @@
 			<if test="userUid != null">user_uid = #{userUid},</if>
 			<if test="showComment != null">is_show_comment = #{showComment},</if>
 			<if test="commentUids != null and commentUids != '' ">comment_uids = #{commentUids},</if>
-			<if test="updatedTime != null and updatedTime != '' ">updated_time = #{updatedTime},</if>
-			<if test="createdTime != null and createdTime != '' ">created_time = #{createdTime},</if>
+			<if test="updateTime != null and updateTime != '' ">update_time = #{updateTime},</if>
+			<if test="createTime != null and createTime != '' ">create_time = #{createTime},</if>
 			<if test="content != null and content != '' ">content = #{content},</if>
 			<if test="title != null and title != '' ">title = #{title},</if>
 			<if test="show != null">is_show = #{show},</if>
@@ -233,8 +233,8 @@
 				#{item.userUid},
 				#{item.showComment},
 				#{item.commentUids},
-				#{item.updatedTime},
-				#{item.createdTime},
+				#{item.updateTime},
+				#{item.createTime},
 				#{item.content},
 				#{item.title},
 				#{item.show},

@@ -38,7 +38,7 @@ public class LoginInfoController {
     @Operation(summary = "根据uid，批量删除")
     @PostMapping("/batchDeleteLoginInfoByUid")
     public int batchDeleteLoginInfoByUid(@RequestBody LoginInfoPojo pojo) {
-        return loginInfoService.batchDeleteLoginInfoByUid(pojo.getUids());
+        return loginInfoService.batchDeleteLoginInfoByUid(pojo);
     }
 
     @FieldFilter(value = LoginInfoVO.class, excludeFields = {"","",""},

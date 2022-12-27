@@ -6,8 +6,8 @@
         <id column="uid" property="uid"/>
         <result column="title" property="title"/>
         <result column="summary" property="summary"/>
-        <result column="created_time" property="createdTime"/>
-        <result column="updated_time" property="updatedTime"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
         <result column="cover_Url" property="coverUrl"/>
         <result column="is_delete" property="delete"/>
         <result column="user_uid" property="userUid"/>
@@ -24,11 +24,11 @@
             <if test="summary != null and summary != '' ">
                 AND summary = #{summary}
             </if>
-            <if test="createdTime != null and createdTime != '' ">
-                AND created_time = #{createdTime}
+            <if test="createTime != null and createTime != '' ">
+                AND create_time = #{createTime}
             </if>
-            <if test="updatedTime != null and updatedTime != '' ">
-                AND updated_time = #{updatedTime}
+            <if test="updateTime != null and updateTime != '' ">
+                AND update_time = #{updateTime}
             </if>
             <if test="coverUrl != null and coverUrl != '' ">
                 AND cover_Url = #{coverUrl}
@@ -46,8 +46,8 @@
         uid,
         title,
         summary,
-        created_time,
-        updated_time,
+        create_time,
+        update_time,
         cover_Url,
         is_delete,
         user_uid
@@ -67,11 +67,11 @@
                 <if test="summary != null and summary != '' ">
                     summary,
                 </if>
-                <if test="createdTime != null and createdTime != '' ">
-                    created_time,
+                <if test="createTime != null and createTime != '' ">
+                    create_time,
                 </if>
-                <if test="updatedTime != null and updatedTime != '' ">
-                    updated_time,
+                <if test="updateTime != null and updateTime != '' ">
+                    update_time,
                 </if>
                 <if test="coverUrl != null and coverUrl != '' ">
                     cover_Url,
@@ -94,11 +94,11 @@
                 <if test="summary != null and summary != '' ">
                  #{summary},
                 </if>
-                <if test="createdTime != null and createdTime != '' ">
-                 #{createdTime},
+                <if test="createTime != null and createTime != '' ">
+                 #{createTime},
                 </if>
-                <if test="updatedTime != null and updatedTime != '' ">
-                 #{updatedTime},
+                <if test="updateTime != null and updateTime != '' ">
+                 #{updateTime},
                 </if>
                 <if test="coverUrl != null and coverUrl != '' ">
                  #{coverUrl},
@@ -131,8 +131,8 @@
 		<set>
 			<if test="title != null and title != '' ">title = #{title},</if>
 			<if test="summary != null and summary != '' ">summary = #{summary},</if>
-			<if test="createdTime != null and createdTime != '' ">created_time = #{createdTime},</if>
-			<if test="updatedTime != null and updatedTime != '' ">updated_time = #{updatedTime},</if>
+			<if test="createTime != null and createTime != '' ">create_time = #{createTime},</if>
+			<if test="updateTime != null and updateTime != '' ">update_time = #{updateTime},</if>
 			<if test="coverUrl != null and coverUrl != '' ">cover_Url = #{coverUrl},</if>
 			<if test="delete != null">is_delete = #{delete},</if>
 			<if test="userUid != null">user_uid = #{userUid},</if>
@@ -184,8 +184,8 @@
 				#{item.uid},
 				#{item.title},
 				#{item.summary},
-				#{item.createdTime},
-				#{item.updatedTime},
+				#{item.createTime},
+				#{item.updateTime},
 				#{item.coverUrl},
 				#{item.delete},
 				#{item.userUid},

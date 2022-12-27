@@ -4,6 +4,7 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 import xyz.xcye.core.util.BeanUtils;
 import xyz.xcye.data.entity.Condition;
 import xyz.xcye.data.entity.PageData;
@@ -66,6 +67,14 @@ public class BaseService<T> {
     }
 
     public PageData<T> queryListByCondition(Condition condition) {
+        String orderBy = "";
+        if (StringUtils.hasLength(condition.getOrderBy())) {
+            orderBy = condition.getOrderBy();
+        }else {
+            // 默认采用创建时间降序
+            orderBy = "create_time desc";
+        }
+        condition.setOrderBy(orderBy);
         Page<T> page = PageHelper.startPage(condition.getPageNum(), condition.getPageSize(), condition.getOrderBy());
         List<T> list = baseDao.queryListByCondition(condition);
         PageData<T> pageData = new PageData<>();

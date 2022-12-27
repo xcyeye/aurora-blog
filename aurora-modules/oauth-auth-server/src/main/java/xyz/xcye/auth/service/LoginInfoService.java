@@ -35,12 +35,11 @@ public class LoginInfoService {
         return auroraLoginInfoService.deleteById(uid);
     }
 
-    public int batchDeleteLoginInfoByUid(Long[] uids) {
+    public int batchDeleteLoginInfoByUid(LoginInfoPojo pojo) {
+        Long[] uids = pojo.getUids();
         Assert.notNull(uids, "批量删除记录，uids不能为null");
         final int[] successDeleteNum = {0};
-        Arrays.stream(uids).forEach(uid -> {
-            successDeleteNum[0] = successDeleteNum[0] + auroraLoginInfoService.deleteById(uid);
-        });
+        Arrays.stream(uids).forEach(uid -> successDeleteNum[0] = successDeleteNum[0] + auroraLoginInfoService.deleteById(uid));
         return successDeleteNum[0];
     }
 

@@ -13,7 +13,7 @@
         <result column="access_token_validity" property="accessTokenValidity"/>
         <result column="refresh_token_validity" property="refreshTokenValidity"/>
         <result column="additional_information" property="additionalInformation"/>
-        <result column="autoapprove" property="autoApprove"/>
+        <result column="autoapprove" property="autoapprove"/>
         <result column="create_time" property="createTime"/>
         <result column="update_time" property="updateTime"/>
     </resultMap>
@@ -268,14 +268,11 @@
             <if test="condition.startTime != null and condition.endTime != null">
                 and create_time between #{condition.startTime} and #{condition.endTime}
             </if>
-            <if test="condition.otherUid != null">
-                and user_uid=#{condition.otherUid}
-            </if>
             <if test="condition.keyword != null">
                 and client_id=#{condition.keyword}
             </if>
-            <if test="condition.status != null">
-                and status=#{condition.status,jdbcType=BOOLEAN}
+            <if test="condition.otherField != null">
+                and resoutfe_ids=#{condition.otherField,jdbcType=BOOLEAN}
             </if>
         </where>
 	</select>

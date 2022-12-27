@@ -8,6 +8,7 @@ import org.springframework.util.Assert;
 import org.springframework.validation.BindException;
 import xyz.xcye.amqp.api.AmqpSenderService;
 import xyz.xcye.aurora.properties.AuroraProperties;
+import xyz.xcye.core.exception.mq.RabbitMQException;
 import xyz.xcye.core.util.BeanUtils;
 import xyz.xcye.core.util.ValidationUtils;
 import xyz.xcye.core.util.lambda.AssertUtils;
@@ -48,6 +49,18 @@ public class MessageLogService {
 
     public int updateMessageLog(MessageLogPojo messageLog) throws BindException {
         ValidationUtils.valid(messageLog, Update.class);
+        // 如果是从未消费，未应答修改为应答，消费，先查询是否应答了
+        MessageLog query = auroraMessageLogService.queryById(messageLog.getUid());
+        if (messageLog.getAckStatus() != null && messageLog.getAckStatus()) {
+            if (query.getAckStatus()) {
+                throw new RabbitMQException("应答失败，此条MQ已被系统应答");
+            }
+        }
+        if (messageLog.getConsumeStatus() != null && messageLog.getConsumeStatus()) {
+            if (query.getConsumeStatus()) {
+                throw new RabbitMQException("消费失败，此条MQ已被系统消费");
+            }
+        }
         //如果修改成功，返回最新的数据
         return auroraMessageLogService.updateById(BeanUtils.copyProperties(messageLog, MessageLog.class));
     }

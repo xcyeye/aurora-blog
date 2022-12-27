@@ -81,7 +81,7 @@ public class LinkService {
     }
 
     @GlobalTransactional
-    public void insertLink(LinkPojo pojo) throws BindException {
+    public void insertLink(LinkPojo pojo) {
         Assert.notNull(pojo, "友情链接信息不能为null");
         Assert.notNull(pojo.getUserUid(), "用户uid不能为null");
         Link record = BeanUtils.copyProperties(pojo, Link.class);
@@ -105,8 +105,9 @@ public class LinkService {
         // 插入
         auroraLinkService.insert(record);
         // 如果插入成功，则发送消息通知该用户
+        String simpleText = "新友情链接信息: " + record.getLinkTitle();
         StorageSendMailInfo mailInfo = getMailInfo(null, "你有新的友情链接待审核",
-                "新友情链接信息: " + record, record, SendHtmlMailTypeNameEnum.FRIEND_LINK_NOTICE);
+                simpleText, record, SendHtmlMailTypeNameEnum.FRIEND_LINK_NOTICE);
         try {
             List<Map<SendHtmlMailTypeNameEnum, Object>> replacedMailObject =
                     StorageMailUtils.generateReplacedMailObject(SendHtmlMailTypeNameEnum.FRIEND_LINK_NOTICE, record);
@@ -128,11 +129,17 @@ public class LinkService {
     }
 
     @GlobalTransactional
-    public int updateLink(LinkPojo pojo) {
+    public int updateLink(LinkPojo pojo) throws BindException {
         Assert.notNull(pojo, "友情链接信息不能为null");
         Link record = BeanUtils.copyProperties(pojo, Link.class);
         // setCategory(record);
         Optional.ofNullable(UserUtils.getCurrentUserUid()).ifPresent(record::setUserUid);
+
+        // 如果审核状态发生改变，则通知对方
+        Link link = auroraLinkService.queryById(pojo.getUid());
+        if (pojo.getPublish() != null && link.getPublish() != pojo.getPublish()) {
+            updateLinkPublishStatus(pojo);
+        }
         return auroraLinkService.updateById(record);
     }
 

@@ -3,11 +3,16 @@ package xyz.xcye.message.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindException;
+import xyz.xcye.admin.pojo.UserPojo;
+import xyz.xcye.admin.vo.UserVO;
 import xyz.xcye.aurora.properties.AuroraProperties;
+import xyz.xcye.core.entity.R;
 import xyz.xcye.core.enums.ResponseStatusCodeEnum;
 import xyz.xcye.core.exception.AuroraException;
 import xyz.xcye.core.exception.email.EmailException;
 import xyz.xcye.core.util.BeanUtils;
+import xyz.xcye.core.util.ConvertObjectUtils;
+import xyz.xcye.core.util.JSONUtils;
 import xyz.xcye.core.util.id.GenerateInfoUtils;
 import xyz.xcye.data.entity.Condition;
 import xyz.xcye.data.entity.PageData;
@@ -31,6 +36,8 @@ public class EmailService {
 
     @Autowired
     private AuroraProperties auroraProperties;
+    @Autowired
+    private UserFeignService userFeignService;
 
     public void insertEmail(EmailPojo pojo)
             throws BindException, AuroraException {
@@ -60,6 +67,20 @@ public class EmailService {
     }
 
     public int physicalDeleteEmail(long uid) {
+        // 查询此邮箱是否绑定在某个用户上
+        Email email = auroraEmailService.queryById(uid);
+        if (email == null) {
+            throw new EmailException("无效的uid " + uid);
+        }
+        R r = userFeignService.queryUserByUid(new UserPojo() {{
+            setUid(email.getUid());
+        }});
+        UserVO userVO = JSONUtils.parseObjFromResult(ConvertObjectUtils.jsonToString(r), "data", UserVO.class);
+        if (userVO != null && userVO.getVerifyEmail() != null && userVO.getVerifyEmail()) {
+            if (userVO.getEmailUid() == uid) {
+                throw new EmailException("此邮箱已和" + userVO.getUsername() + "用户绑定，不能删除");
+            }
+        }
         return auroraEmailService.deleteById(uid);
     }
 

@@ -58,7 +58,7 @@ public class ArticleService {
                 .delete(true)
                 .build();
         // 逻辑删除
-        return auroraArticleService.deleteByWhere(article);
+        return auroraArticleService.updateById(article);
     }
 
     public int physicalDeleteArticle(Long uid) {

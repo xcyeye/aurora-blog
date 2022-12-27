@@ -53,13 +53,13 @@ public class TalkPojo {
      * 最后更新时间
      */
     @Schema(title = "最后更新时间")
-    private String updatedTime;
+    private String updateTime;
 
     /**
      * 此说说发布时间
      */
     @Schema(title = "此说说发布时间")
-    private String createdTime;
+    private String createTime;
 
     /**
      * 此说说标题
