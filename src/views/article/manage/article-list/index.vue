@@ -20,31 +20,24 @@
 			</n-space>
 		</n-modal>
 		<show-table-data
-			:data-table-info="{title: '友情链接', rowKey: 'uid', striped: true, scrollX: 2100}"
+			:data-table-info="{title: '友情链接', rowKey: 'uid', striped: true, scrollX: 2700}"
 			:data-table-columns="columns"
-			:query-data-method="queryDataMethod"
-			:page-sizes="[1,2,3,4,5,6]">
-			<template #cardHeader1>
-				<n-space>
-					<n-button strong secondary tertiary round type="success" @click="handleAddLinkAction">添加</n-button>
-				</n-space>
-			</template>
-		</show-table-data>
+			:query-data-method="queryDataMethod"/>
 	</div>
 </template>
 
 <script lang="ts" setup>
 import {defineComponent, h, onMounted, ref} from "vue";
 import {Condition, PageData} from "@/theme/core/bean";
-import {articleApi, linkApi} from "@/service";
-import {DataTableColumn, NA, NAvatar, NButton, NSpace, NSwitch, NText} from "naive-ui";
+import {articleApi} from "@/service";
+import {DataTableColumn, NButton, NSpace, NSwitch, NTag} from "naive-ui";
 import {EnumMittEventName} from "@/enum";
-import {emitter, StringUtil} from "@/utils";
+import {emitter, getRandomTagType, StringUtil} from "@/utils";
 import {useRouterPush} from "@/composables";
 import {Article} from "@/theme/pojo/article/Article";
-import RequestResult = Service.RequestResult;
 import {ArticleVo} from "@/theme/vo/article/ArticleVo";
 import {REGEXP_URL} from "@/config";
+import RequestResult = Service.RequestResult;
 
 defineComponent({name: 'index'});
 
@@ -272,6 +265,56 @@ const createColumns = (): Array<DataTableColumn> => {
 			}
 		},
 		{
+			title: '标签',
+			key: 'tagNames',
+			width: 300,
+			titleColSpan: 1,
+			render (row: ArticleVo) {
+				const tags = row.tagNames?.split(",").map((tagKey) => {
+					return h(
+						// @ts-ignore
+						NTag,
+						{
+							style: {
+								marginRight: '6px'
+							},
+							type: getRandomTagType(),
+							bordered: false
+						},
+						{
+							default: () => tagKey
+						}
+					)
+				})
+				return tags
+			}
+		},
+		{
+			title: '分类',
+			key: 'categoryNames',
+			width: 300,
+			titleColSpan: 1,
+			render (row: ArticleVo) {
+				const tags = row.categoryNames?.split(",").map((tagKey) => {
+					return h(
+						// @ts-ignore
+						NTag,
+						{
+							style: {
+								marginRight: '6px'
+							},
+							type: getRandomTagType(),
+							bordered: false
+						},
+						{
+							default: () => tagKey
+						}
+					)
+				})
+				return tags
+			}
+		},
+		{
 			title: '创建时间',
 			key: 'createTime',
 			titleColSpan: 1,
@@ -324,6 +367,9 @@ const columns = ref<Array<DataTableColumn>>(createColumns())
 
 // 挂载emit
 onMounted(() => {
+	console.log("发送重置搜索");
+	console.log(condition.value);
+	console.log("------------------");
 	emitter.emit(EnumMittEventName.resetGlobalSearchCondition, condition.value);
 })
 

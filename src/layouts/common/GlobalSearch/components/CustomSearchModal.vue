@@ -289,9 +289,9 @@ onBeforeMount(() => {
 	emitter.on(EnumMittEventName.resetGlobalSearchCondition, e => {
 		if (e) {
 			originCondition.value = e as Condition
-			if (!originCondition.value?.delete) condition.value.delete = false
-			if (!originCondition.value?.show) condition.value.show = false
-			if (!originCondition.value?.status) condition.value.status = false
+			if (!originCondition.value?.delete) condition.value.delete = null
+			if (!originCondition.value?.show) condition.value.show = null
+			if (!originCondition.value?.status) condition.value.status = null
 		}
 	})
 })
