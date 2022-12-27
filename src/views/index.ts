@@ -19,6 +19,7 @@ export const views: Record<RouterPage.LastDegreeRouteKey, RouteComponent | (() =
   'article_manage_article-modify': () => import('./article/manage/article-modify/index.vue'),
   article_manage: () => import('./article/manage/index.vue'),
   article_share: () => import('./article/share/index.vue'),
+  article_tag_chart: () => import('./article/tag/chart/index.vue'),
   article_tag: () => import('./article/tag/index.vue'),
   'article_tag_tag-list': () => import('./article/tag/tag-list/index.vue'),
   'article_tag_tag-modify': () => import('./article/tag/tag-modify/index.vue'),

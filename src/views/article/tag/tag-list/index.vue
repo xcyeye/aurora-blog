@@ -10,7 +10,7 @@
 					</show-table-data>
 				</n-tab-pane>
 				<n-tab-pane name="the beatles" tab="图表">
-
+					<tag-chart/>
 				</n-tab-pane>
 				<template #suffix>
 					<n-space>
@@ -33,6 +33,7 @@ import {useRouterPush} from "@/composables";
 import {TagVo} from "@/theme/vo/article/TagVo";
 import {Tag} from "@/theme/pojo/article/Tag";
 import RequestResult = Service.RequestResult;
+import TagChart from '../chart/index.vue'
 
 defineComponent({name: 'index'});
 
