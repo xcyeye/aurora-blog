@@ -28,7 +28,10 @@
 								<n-text>定时</n-text>
 								<n-switch v-model:value="currentBulletinInfo.timing" />
 								<n-text v-if="currentBulletinInfo.timing">时间</n-text>
-								<n-date-picker v-if="currentBulletinInfo.timing" value-format="yyyy-MM-dd HH:mm:ss" v-model:formatted-value="currentBulletinInfo.timingPublishTime" size="small" type="datetime" clearable />
+								<n-date-picker v-if="currentBulletinInfo.timing"
+															 value-format="yyyy-MM-dd HH:mm:ss"
+															 v-model:formatted-value="currentBulletinInfo.timingPublishTime"
+															 size="small" type="datetime" clearable />
 							</n-space>
 						</n-space>
 					</n-card>

@@ -367,9 +367,6 @@ const columns = ref<Array<DataTableColumn>>(createColumns())
 
 // 挂载emit
 onMounted(() => {
-	console.log("发送重置搜索");
-	console.log(condition.value);
-	console.log("------------------");
 	emitter.emit(EnumMittEventName.resetGlobalSearchCondition, condition.value);
 })
 

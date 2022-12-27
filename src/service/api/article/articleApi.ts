@@ -15,7 +15,7 @@ function _baseApi() {
    * @param data
    */
   function insertData(data: beanType) {
-    return request.post<void>(`${apiPrefix}insertArticle`, data, baseAxiosRequestConfig);
+    return request.post<string>(`${apiPrefix}insertArticle`, data, baseAxiosRequestConfig);
   }
 
   /**

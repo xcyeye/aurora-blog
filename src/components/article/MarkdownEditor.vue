@@ -7,7 +7,7 @@
 </template>
 
 <script lang="ts" setup>
-import {defineComponent, onMounted, ref} from "vue";
+import {defineComponent, onMounted, ref, watch} from "vue";
 import Vditor from "vditor";
 import 'vditor/dist/index.css';
 import {useAuthStore, useThemeStore} from "@/store";
@@ -69,6 +69,8 @@ const props = withDefaults(defineProps<Props>(), {
 const theme = useThemeStore();
 const authStore = useAuthStore();
 const vditor = ref<Vditor>();
+const originContent = ref<string>('')
+const vditorRenderFinishFlag = ref(false)
 let vditorOptionConfig: IOptions = {
 	theme: theme.darkMode ? 'dark' : 'classic',
 	minHeight: 500,
@@ -160,8 +162,7 @@ onMounted(() =>{
 	renderVditor();
 })
 
-// 定义方法
-const renderVditor = () => {
+const setVditorProperties = () => {
 	if (props.mode) {
 		vditorOptionConfig.mode = props.mode
 	}
@@ -197,12 +198,15 @@ const renderVditor = () => {
 		vditorOptionConfig.counter!.max = props.contentMaxNumber
 		vditorOptionConfig.counter!.type = 'markdown'
 	}
+}
+
+// 定义方法
+const renderVditor = () => {
+	setVditorProperties()
 	vditor.value = new Vditor('vditor', vditorOptionConfig);
 	setTimeout(() =>{
-		if (StringUtil.haveLength(props.renderMdContent)) {
-			vditor.value?.setValue(props.renderMdContent as string);
-		}
-	}, 200)
+		vditorRenderFinishFlag.value = true
+	}, 10)
 }
 
 const getAfterUploadFileContent = (fileVoInfoArr: FileVo[]): Promise<string> => {
@@ -219,6 +223,33 @@ const getAfterUploadFileContent = (fileVoInfoArr: FileVo[]): Promise<string> => 
 		resolve(pictureMdContent + otherFileMdContent)
 	})
 }
+
+watch(() => props.renderMdContent, () =>{
+	console.log("正在设置内容");
+	const time = setInterval(() => {
+		if (vditorRenderFinishFlag.value) {
+			if (vditor.value) {
+				vditor.value.setValue(props.renderMdContent as string)
+				clearInterval(time)
+			}
+		}
+	}, 2)
+})
+
+// 监听大纲
+// watch(() => props.outline, () => {
+// 	vditor.value?.disabled()
+// 	window.$message?.success('正在设置 o(￣▽￣)ｄ ')
+// 	originContent.value = vditor.value?.getValue()!
+// 	renderVditor()
+// 	setTimeout(() => {
+// 		vditor.value?.setValue(originContent.value)
+// 		vditor.value?.enable()
+// 	}, 100)
+// })
+// 监听模式
+// 监听icon
+// 监听tabKey
 
 </script>
 
