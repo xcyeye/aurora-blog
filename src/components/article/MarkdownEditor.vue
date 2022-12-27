@@ -83,7 +83,7 @@ let vditorOptionConfig: IOptions = {
 	placeholder: `${authStore.userInfo.username} 今天记录了么( ´◔︎ ‸◔︎\`)`,
 
 	focus(value: string) {
-
+		console.log(value);
 	},
 	blur(value: string) {
 
@@ -136,7 +136,8 @@ let vditorOptionConfig: IOptions = {
 					return null;
 				}else {
 					getAfterUploadFileContent(result.data).then(content => {
-						vditor.value?.setValue(vditor.value?.getValue() + content);
+						// vditor.value?.setValue(vditor.value?.getValue() + content);
+						vditor.value?.insertValue(content, true);
 						vditor.value?.enable();
 						setTimeout(() => {
 							emits('vditorInput', (vditor.value?.getValue()))
@@ -220,7 +221,8 @@ const getAfterUploadFileContent = (fileVoInfoArr: FileVo[]): Promise<string> => 
 		fileVoInfoArr.filter(v => !isImage(v.fileName!)).forEach(v => {
 			otherFileMdContent = otherFileMdContent + `\n [${v.fileName}](${v.path})`
 		})
-		resolve(pictureMdContent + otherFileMdContent)
+		// resolve(pictureMdContent + otherFileMdContent)
+		resolve(pictureMdContent)
 	})
 }
 

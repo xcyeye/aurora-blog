@@ -43,6 +43,7 @@
 											{{ !addArticleStatus ? '更新' : '发布' }}
 										</n-button>
 										<n-button round type="info" @click="handleSaveArticleAction"> 保存 </n-button>
+										<n-button v-if="!addArticleStatus" round type="warning" @click="handleNewArticleAction"> 新建 </n-button>
 									</n-space>
 								</div>
 							</n-col>
@@ -235,6 +236,7 @@ import {Tag} from "@/theme/pojo/article/Tag";
 import {TagVo} from "@/theme/vo/article/TagVo";
 import {CategoryVo} from "@/theme/vo/article/CategoryVo";
 import {Category} from "@/theme/pojo/article/Category";
+import {useRouterPush} from "@/composables";
 
 interface VditorPropsProperties {
 	tabKey?: string,
@@ -265,6 +267,7 @@ const outline = ref(false)
 const authStore = useAuthStore();
 const themeStore = useThemeStore();
 const router = useRouter()
+const routerPush = useRouterPush()
 const app = useAppStore();
 const inputRef = ref<HTMLElement>()
 const controlInputCoverUrl = ref<string>('')
@@ -441,6 +444,17 @@ const handleModifyArticleAction = () => {
 
 const handleSaveArticleAction = () => {
 
+}
+
+const handleNewArticleAction = () => {
+	addArticleStatus.value = false
+	routerPush.routerPush({
+		name: 'article_edit',
+		query: {
+			pageUid: ''
+		}
+	})
+	app.reloadPage()
 }
 
 const customRenderTag = (tag: string, index: number) => {
