@@ -83,7 +83,7 @@ let vditorOptionConfig: IOptions = {
 	placeholder: `${authStore.userInfo.username} 今天记录了么( ´◔︎ ‸◔︎\`)`,
 
 	focus(value: string) {
-		console.log(value);
+
 	},
 	blur(value: string) {
 
@@ -227,7 +227,7 @@ const getAfterUploadFileContent = (fileVoInfoArr: FileVo[]): Promise<string> => 
 }
 
 watch(() => props.renderMdContent, () =>{
-	console.log("正在设置内容");
+	console.debug("正在设置内容");
 	const time = setInterval(() => {
 		if (vditorRenderFinishFlag.value) {
 			if (vditor.value) {

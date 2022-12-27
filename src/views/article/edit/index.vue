@@ -416,9 +416,18 @@ const handleModifyArticleAction = () => {
 		window.$message?.error('没有内容')
 		return;
 	}
-	currentArticle.value.title = originTitle.value
+	if (StringUtil.haveLength(originTitle.value)) {
+		currentArticle.value.title = originTitle.value
+	}
 	if (addArticleStatus.value) {
 		currentArticle.value.userUid = authStore.userInfo.user_uid
+		if (!StringUtil.haveLength(currentArticle.value.summary)) {
+			if (currentArticle.value.content!.length > 120) {
+				currentArticle.value.summary = currentArticle.value.content?.substring(0, 120)
+			}else {
+				currentArticle.value.summary = currentArticle.value.content
+			}
+		}
 		// 增加文章
 		if (!StringUtil.haveLength(currentArticle.value.title)) {
 			window.$message?.error('需要设置标题')
