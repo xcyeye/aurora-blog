@@ -1,52 +1,36 @@
 <template>
-	<div>
-		<show-picture :show-drawer-operation="false" :picture-src-arr="pictureArr"></show-picture>
-	</div>
+	<n-space vertical>
+		<n-button @click="handleClick">
+			没有任何意义的改动
+		</n-button>
+		<n-tabs ref="tabsInstRef" v-model:value="value">
+			<n-tab v-for="tab in tabs" :key="tab" :name="tab">
+				我是 {{ tab }}
+			</n-tab>
+		</n-tabs>
+	</n-space>
 </template>
 
-<script setup lang="ts">
-import ShowPicture from "@/components/file/ShowPicture.vue";
+<script lang="ts">
+import { defineComponent, nextTick, ref } from 'vue'
+import { TabsInst } from 'naive-ui'
 
-const pictureArr = [
-	{
-		uid: '1603239846169460736',
-		src: 'http://127.0.0.1/aurora-upload/png/2022/12/wallhaven-wqve97.png'
-	},
-	{
-		uid: '1603239846169460737',
-		src: 'http://127.0.0.1/aurora-upload/png/2022/12/wallhaven-q22jv7.png'
-	},
-	{
-		uid: '1607274975418302464',
-		src: 'http://127.0.0.1/aurora-upload/png/2022/12/image1672039190585.png'
-	},
-	{
-		uid: '1607276299765596160',
-		src: 'http://127.0.0.1/aurora-upload/png/2022/12/image1672039506271.png'
-	},
-	{
-		uid: '1607277208964874240',
-		src: 'http://127.0.0.1/aurora-upload/png/2022/12/image1672039723040.png'
-	},
-	{
-		uid: '1603239846169460736',
-		src: 'http://127.0.0.1/aurora-upload/png/2022/12/wallhaven-wqve97.png'
-	},
-	{
-		uid: '1603239846169460736',
-		src: 'http://127.0.0.1/aurora-upload/png/2022/12/wallhaven-wqve97.png'
-	},
-
-]
+export default defineComponent({
+	setup () {
+		const tabsInstRef = ref<TabsInst | null>(null)
+		const tabsRef = ref(['a', 'b'])
+		const valueRef = ref('a')
+		const handleClick = () => {
+			tabsRef.value.reverse()
+			valueRef.value = 'a'
+			nextTick(() => tabsInstRef.value?.syncBarPosition())
+		}
+		return {
+			tabsInstRef,
+			tabs: tabsRef,
+			value: valueRef,
+			handleClick
+		}
+	}
+})
 </script>
-
-<style scoped>
-.light-green {
-	height: 108px;
-	background-color: rgba(0, 128, 0, 0.12);
-}
-.green {
-	height: 108px;
-	background-color: rgba(0, 128, 0, 0.24);
-}
-</style>

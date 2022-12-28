@@ -88,6 +88,8 @@ interface Comment {
    * 此评论是在哪种页面发布的
    */
   pageType?: string | null;
+
+	commentUidArr?: Array<string> | null
 }
 
 export { Comment };

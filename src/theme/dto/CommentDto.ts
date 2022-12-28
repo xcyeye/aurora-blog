@@ -43,6 +43,8 @@ interface CommentDto {
    * 此条评论是回复哪条评论的 不能为null
    */
   replyCommentUid?: string | null;
+	// 这是回复哪个评论的父级评论用户名
+  replyCommentParentUsername?: string | null;
 
   /**
    * 评论的内容

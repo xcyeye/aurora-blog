@@ -65,6 +65,18 @@ export const routeModel: Record<Auth.RoleType, AuthRoute.Route[]> = {
 			}
 		},
 		{
+			name: 'comment',
+			path: '/comment',
+			component: 'self',
+			meta: {
+				title: '评论',
+				requiresAuth: true,
+				singleLayout: 'basic',
+				icon: 'ic:baseline-comment',
+				order: 8
+			}
+		},
+		{
 			name: 'article',
 			path: '/article',
 			component: 'basic',
