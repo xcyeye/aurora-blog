@@ -39,8 +39,8 @@ public class CommentController {
     @Operation(summary = "更新评论")
     @ModifyOperation
     @PostMapping("/updateComment")
-    public void updateComment(@Validated({Update.class}) @RequestBody CommentPojo comment) {
-        commentService.updateComment(comment);
+    public Integer updateComment(@Validated({Update.class}) @RequestBody CommentPojo comment) {
+        return commentService.updateComment(comment);
     }
 
     @Operation(summary = "插入新评论")

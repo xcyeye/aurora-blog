@@ -36,8 +36,8 @@ public class ArticleController {
     @Operation(summary = "插入新文章")
     @ModifyOperation
     @PostMapping("/insertArticle")
-    public void insertArticle(@Validated({Insert.class, Default.class}) @RequestBody ArticlePojo article) {
-        articleService.insertArticle(article);
+    public Long insertArticle(@Validated({Insert.class, Default.class}) @RequestBody ArticlePojo article) {
+        return articleService.insertArticle(article);
     }
 
     @ModifyOperation

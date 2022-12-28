@@ -68,7 +68,7 @@ public class ArticleService {
 
     // TODO 这里需要有一个定时任务
     @Transactional
-    public void insertArticle(ArticlePojo record) {
+    public Long insertArticle(ArticlePojo record) {
         Assert.notNull(record, "插入的文章数据不能为null");
         record.setUid(GenerateInfoUtils.generateUid(auroraProperties.getSnowFlakeWorkerId(),
                 auroraProperties.getSnowFlakeDatacenterId()));
@@ -80,7 +80,7 @@ public class ArticleService {
         setCategory(record);
         setTag(record);
         setTimingPublishTime(record);
-        auroraArticleService.insert(BeanUtils.copyProperties(record, Article.class));
+        return auroraArticleService.insert(BeanUtils.copyProperties(record, Article.class)).getUid();
     }
 
     public PageData<ArticleVO> queryListArticleByCondition(Condition<Long> condition) {

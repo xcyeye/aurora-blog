@@ -18,6 +18,8 @@ import xyz.xcye.data.entity.Condition;
 import xyz.xcye.data.entity.PageData;
 import xyz.xcye.data.util.PageUtils;
 
+import java.util.Objects;
+
 /**
  * @author qsyyke
  * @date Created in 2022/5/11 19:32
@@ -45,6 +47,7 @@ public class TagService {
 
     public void insertTag(TagPojo pojo) {
         Assert.notNull(pojo, "标签信息不能为null");
+        judgeTag(pojo, true);
         Tag record = BeanUtils.copyProperties(pojo, Tag.class);
         JwtUserInfo jwtUserInfo = UserUtils.getCurrentUser();
         AssertUtils.stateThrow(jwtUserInfo != null,
@@ -72,7 +75,20 @@ public class TagService {
 
     public int updateTag(TagPojo record) {
         Assert.notNull(record, "标签信息不能为null");
+        judgeTag(record, false);
         record.setUserUid(null);
         return auroraTagService.updateById(BeanUtils.copyProperties(record, Tag.class));
+    }
+
+    private void judgeTag(TagPojo pojo, boolean isInsert) {
+        Tag tag = auroraTagService.queryOne(new Tag() {{
+            setTitle(pojo.getTitle());
+        }});
+        if (isInsert) {
+            AssertUtils.stateThrow(tag == null, () -> new ArticleException("存在相同的标签"));
+        }
+        if (tag != null && !Objects.equals(tag.getUid(), pojo.getUid())) {
+            throw new ArticleException("存在相同的标签");
+        }
     }
 }
