@@ -10,7 +10,9 @@
 					</show-table-data>
 				</n-tab-pane>
 				<n-tab-pane name="commentDetail" tab="详情">
-					<blog-comment :show-comment-info="showCommentInfo"/>
+					<blog-comment :page-path="currentCommentInfo.path"
+												:page-uid="currentCommentInfo.uid"
+												:parent-comment-uid-arr="[currentCommentInfo.uid]"/>
 				</n-tab-pane>
 			</n-tabs>
 		</n-card>
@@ -18,7 +20,7 @@
 </template>
 
 <script lang="ts" setup>
-import {defineComponent, h, nextTick, onMounted, ref} from "vue";
+import {defineComponent, h, onMounted, ref} from "vue";
 import {Condition, PageData} from "@/theme/core/bean";
 import {commentApi,} from "@/service";
 import {DataTableColumn, NA, NAvatar, NButton, NSpace, NSwitch, NTag, TabsInst} from "naive-ui";
@@ -26,8 +28,9 @@ import {EnumMittEventName} from "@/enum";
 import {emitter, getRandomTagType} from "@/utils";
 import {useRouterPush} from "@/composables";
 import {CommentVo} from "@/theme/vo/comment/CommentVo";
-import RequestResult = Service.RequestResult;
 import {Comment} from "@/theme/pojo/comment/Comment";
+import RequestResult = Service.RequestResult;
+import {useAuthStore} from "@/store";
 
 defineComponent({name: 'index'});
 
@@ -43,6 +46,7 @@ const showCommentInfo = ref<ShowCommentVo>({})
 const currentCommentInfo = ref<CommentVo>({})
 const tabsInstRef = ref<TabsInst | null>(null)
 const tabPaneValue = ref<string>('commentList')
+const autoStore = useAuthStore()
 
 const queryDataMethod = (condition: Condition): Promise<RequestResult<PageData<CommentVo>>> => {
 	return commentApi.queryListDataByCondition(condition);
@@ -88,7 +92,6 @@ const handleShowDetailAction = (data: CommentVo) => {
 	currentCommentInfo.value = data
 	parentCommentUidArr.value.push(currentCommentInfo.value.uid!)
 	loadCommentDetailInfo()
-	console.log(showCommentInfo);
 	tabPaneValue.value = 'commentDetail'
 }
 

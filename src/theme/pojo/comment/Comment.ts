@@ -87,7 +87,9 @@ interface Comment {
   /**
    * 此评论是在哪种页面发布的
    */
-  pageType?: string | null;
+  pageType?: 'ARTICLE' | 'TALK';
+
+	pageUid?: string | null;
 
 	commentUidArr?: Array<string> | null
 }

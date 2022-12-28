@@ -44,7 +44,7 @@ interface CommentDto {
    */
   replyCommentUid?: string | null;
 	// 这是回复哪个评论的父级评论用户名
-  replyCommentParentUsername?: string | null;
+	replyCommentInfo?: CommentDto | null;
 
   /**
    * 评论的内容
