@@ -1,15 +1,15 @@
+import type {AxiosError, AxiosInstance, AxiosRequestConfig} from 'axios';
 import axios from 'axios';
-import type { AxiosError, AxiosInstance, AxiosRequestConfig } from 'axios';
-import { REFRESH_TOKEN_CODE } from '@/config';
+import {REFRESH_TOKEN_CODE, REGEXP_SWAGGER_CONFIG_INTERFACE, REGEXP_SWAGGER_INTERFACE_INFO} from '@/config';
 import {
-  localStg,
-  handleAxiosError,
-  handleBackendError,
-  handleResponseError,
-  handleServiceResult,
-  transformRequestData
+	handleAxiosError,
+	handleBackendError,
+	handleResponseError,
+	handleServiceResult,
+	localStg,
+	transformRequestData
 } from '@/utils';
-import { handleRefreshToken } from './helpers';
+import {handleRefreshToken} from './helpers';
 
 /**
  * 封装axios请求类
@@ -63,7 +63,17 @@ export default class CustomAxiosInstance {
       async response => {
         const { status } = response;
         if (status === 200 || status < 300 || status === 304) {
-          const backend = response.data;
+          let backend = response.data;
+					// 对swagger的请求进行封装
+					const requestUrl = response.config.url
+					if (REGEXP_SWAGGER_INTERFACE_INFO.test(requestUrl!) || REGEXP_SWAGGER_CONFIG_INTERFACE.test(requestUrl!)) {
+						backend = {
+							code: 200,
+							data: response.data,
+							message: 'swagger配置封装',
+							success: true
+						}
+					}
           const { codeKey, dataKey, successFlag } = this.backendConfig;
           // 请求成功
           if (backend[successFlag] === true) {

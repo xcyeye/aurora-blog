@@ -1,113 +1,44 @@
 <template>
-  <div>
-    <show-table-data
-			:data-table-info="{title: '测试表格', rowKey: 'name'}"
-			:data-table-columns="createColumns"
-			:data-table-row-data="showData"
-			:pagination="pagination"
-			@handleCheckedRowKeys="handleCheckedRowKeys"
-			@handleChangePageSize="handleChangePageSize"
-			@handleChangePageNum="handleChangePageNum">
-			<template #cardHeader1>
-				<n-button>这是按钮1</n-button>
-			</template>
-		</show-table-data>
-		<!--<loading-empty-wrapper :loading="true"/>-->
-    <!--<app-loading/>-->
-    <!--<dark-mode-container :inverted="true"/>-->
-    <!--<dark-mode-switch :dark="true"/>-->
-    <!--<exception-base/>-->
-    <!--<hover-container tooltip-content="aurora"/>-->
-    <!--<naive-provider/>-->
-    <!--<count-to :end-value="100999" :autoplay="true" prefix="xcyeye" suffix="aurora" separator=""/>-->
-    <!--<github-link link="https://github.com/xcyeye"/>-->
-    <!--<icon-select/>-->
-    <!--<image-verify/>-->
-    <!--<svg-icon/>-->
-    <!--<login-agreement/>-->
-    <!--<loading-empty-wrapper :loading="true"/>-->
-    <!--<button @click="click">click</button>-->
-  </div>
+	<n-tree
+		block-line
+		:data="data"
+		checkable
+		expand-on-click
+		selectable
+	/>
 </template>
 
-<script lang="ts" setup>
-import {reactive} from "vue";
-import {DataTableColumns, DataTableRowKey} from "naive-ui";
+<script lang="ts">
+import { defineComponent, ref } from 'vue'
+import { repeat } from 'seemly'
+import { TreeOption } from 'naive-ui'
 
-type RowData = {
-	key: number
-	name: string
-	age: number
-	address: string
-}
-
-type aa = RowData;
-
-const pagination = reactive({
-	pageNum: 1,
-	pageSize: 10,
-	pageTotal: 100,
-	pageSizes: [5, 10, 15]
-})
-
-interface DataStr {
-	name: string,
-	age: number,
-	address: string
-}
-
-const aa:DataStr[] = [];
-const showData = reactive(aa)
-const handleChangePageSize = (pageSize: number):void => {
-	// console.log(`pageSize ${pageSize}`)
-	pagination.pageSize = pageSize
-	showData.splice(0, showData.length)
-	for (let i = pagination.pageNum * pagination.pageSize; i < pagination.pageNum * pagination.pageSize + pagination.pageSize; i++) {
-		showData.push({
-			name: `xcye ${i}`,
-			age: i,
-			address: `云南省保山市${i}`
-		})
-	}
-}
-
-const handleChangePageNum = (page: number):void => {
-	// console.log(`page ${page}`)
-	pagination.pageNum = page
-	showData.splice(0, showData.length)
-	for (let i = pagination.pageNum * pagination.pageSize; i < pagination.pageNum * pagination.pageSize + pagination.pageSize; i++) {
-		showData.push({
-			name: `xcye ${i}`,
-			age: i,
-			address: `云南省保山市${i}`
-		})
-	}
-}
-
-const handleCheckedRowKeys = (rowKeys: DataTableRowKey) => {
-	console.log(rowKeys)
-}
-
-const createColumns: DataTableColumns<RowData> = [
-	{
-		type: 'selection',
-		disabled (row: RowData) {
-			return row.name === 'Edward King 3'
+function createData (level = 4, baseKey = ''): TreeOption[] | undefined {
+	if (!level) return undefined
+	return repeat(6 - level, undefined).map((_, index) => {
+		const key = '' + baseKey + level + index
+		return {
+			label: key,
+			key,
+			children: createData(level - 1, key)
 		}
-	},
-	{
-		title: 'Name',
-		key: 'name'
-	},
-	{
-		title: 'Age',
-		key: 'age'
-	},
-	{
-		title: 'Address',
-		key: 'address'
-	}
-]
-</script>
+	})
+}
 
-<style scoped></style>
+function createLabel (level: number): string {
+	if (level === 4) return '道生一'
+	if (level === 3) return '一生二'
+	if (level === 2) return '二生三'
+	if (level === 1) return '三生万物'
+	return ''
+}
+
+export default defineComponent({
+	setup () {
+		return {
+			data: createData(),
+			defaultExpandedKeys: ref(['40', '41'])
+		}
+	}
+})
+</script>
