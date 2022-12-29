@@ -2,13 +2,12 @@ import type {AxiosRequestConfig} from 'axios';
 import {EnumContentType} from '@/enum';
 import {request} from '@/service/request';
 import type {Condition, PageData} from '@/theme/core/bean';
-import {Permission} from "@/theme/pojo/admin/Permission";
-import {PermissionVo} from "@/theme/vo/admin/PermissionVo";
+import {RolePermission} from "@/theme/pojo/admin/RolePermission";
 
 /** 接口前缀 */
-const apiPrefix = '/admin/permission/';
-type beanType = Permission;
-type viewBeanType = PermissionVo;
+const apiPrefix = '/admin/permissionRelation/';
+type beanType = RolePermission;
+type viewBeanType = RolePermissionDto;
 
 const baseAxiosRequestConfig: AxiosRequestConfig = {
   headers: {
@@ -24,10 +23,6 @@ function _baseApi() {
   function insertData(data: beanType) {
     return request.post<void>(`${apiPrefix}insertPermission`, data, baseAxiosRequestConfig);
   }
-
-	function batchInsertPermission(data: beanType) {
-		return request.post<void>(`${apiPrefix}batchInsertPermission`, data, baseAxiosRequestConfig);
-	}
 
   /**
    * 插入多条数据
@@ -45,10 +40,6 @@ function _baseApi() {
   function physicalDeleteData(data: beanType) {
     return request.post<number>(`${apiPrefix}physicalDeletePermission`, data, baseAxiosRequestConfig);
   }
-
-	function batchPhysicalDeletePermission(data: beanType) {
-		return request.post<number>(`${apiPrefix}batchPhysicalDeletePermission`, data, baseAxiosRequestConfig);
-	}
 
   /**
    * 逻辑删除数据
@@ -105,6 +96,50 @@ function _baseApi() {
     return request.post<any>(`${apiPrefix}`, data, baseAxiosRequestConfig);
   }
 
+	function loadPermissionByUserUid(data: beanType) {
+		return request.post<Array<viewBeanType>>(`${apiPrefix}loadPermissionByUserUid`, data, baseAxiosRequestConfig);
+	}
+
+	function loadAllRolePermission(data: beanType) {
+		return request.post<Array<viewBeanType>>(`${apiPrefix}loadAllRolePermission`, data, baseAxiosRequestConfig);
+	}
+
+	function loadAllRoleByUsername(data: beanType) {
+		return request.post<Array<viewBeanType>>(`${apiPrefix}loadAllRoleByUsername`, data, baseAxiosRequestConfig);
+	}
+
+	function loadPermissionByUsername(data: beanType) {
+		return request.post<Array<viewBeanType>>(`${apiPrefix}loadPermissionByUsername`, data, baseAxiosRequestConfig);
+	}
+
+	function loadPermissionByRoleName(data: beanType) {
+		return request.post<Array<viewBeanType>>(`${apiPrefix}loadPermissionByRoleName`, data, baseAxiosRequestConfig);
+	}
+
+	function queryRoleByPermissionPath(data: beanType) {
+		return request.post<Array<viewBeanType>>(`${apiPrefix}queryRoleByPermissionPath`, data, baseAxiosRequestConfig);
+	}
+
+	function batchInsertUserRole(data: beanType) {
+		return request.post<Array<viewBeanType>>(`${apiPrefix}batchInsertUserRole`, data, baseAxiosRequestConfig);
+	}
+
+	function batchDeleteUserRole(data: beanType) {
+		return request.post<Array<viewBeanType>>(`${apiPrefix}batchDeleteUserRole`, data, baseAxiosRequestConfig);
+	}
+
+	function updateUserRole(data: beanType) {
+		return request.post<Array<viewBeanType>>(`${apiPrefix}updateUserRole`, data, baseAxiosRequestConfig);
+	}
+
+	function batchDeleteRolePermission(data: beanType) {
+		return request.post<Array<viewBeanType>>(`${apiPrefix}batchDeleteRolePermission`, data, baseAxiosRequestConfig);
+	}
+
+	function updateRolePermission(data: beanType) {
+		return request.post<Array<viewBeanType>>(`${apiPrefix}updateRolePermission`, data, baseAxiosRequestConfig);
+	}
+
 
   return {
     queryOneData,
@@ -115,10 +150,19 @@ function _baseApi() {
     logicDeleteData,
     physicalDeleteData,
     insertData,
-		batchInsertPermission,
     batchInsertData,
-		batchPhysicalDeletePermission
+		loadPermissionByUserUid,
+		updateRolePermission,
+		batchDeleteRolePermission,
+		updateUserRole,
+		batchDeleteUserRole,
+		batchInsertUserRole,
+		queryRoleByPermissionPath,
+		loadPermissionByRoleName,
+		loadPermissionByUsername,
+		loadAllRoleByUsername,
+		loadAllRolePermission
   };
 }
 
-export const permissionApi = _baseApi();
+export const rolePermissionRelApi = _baseApi();

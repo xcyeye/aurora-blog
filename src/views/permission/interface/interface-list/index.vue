@@ -3,6 +3,7 @@
 		<show-table-data
 			:data-table-info="{title: '用户管理', rowKey: 'uid', striped: true}"
 			:data-table-columns="columns"
+			@handleCheckedRowKeys="handleCheckedRowKeys"
 			:query-data-method="queryDataMethod">
 		</show-table-data>
 	</div>
@@ -54,6 +55,10 @@ const handleDeleteAction = (data: PermissionVo) => {
 
 const handleModifyAction = (data: Permission) => {
 	emitter.emit('permissionManageModifyPermissionAction', data)
+}
+
+const handleCheckedRowKeys = (keys: Array<string>) => {
+	emitter.emit('permissionManageBatchDeletePermissionAction', keys)
 }
 
 const createColumns = (): Array<DataTableColumn> => {

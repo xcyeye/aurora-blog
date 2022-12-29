@@ -23,6 +23,8 @@ interface Permission {
    *
    */
   updateTime?: string | null;
+
+	permissionList?: Array<Permission> | []
 }
 
 export { Permission };
