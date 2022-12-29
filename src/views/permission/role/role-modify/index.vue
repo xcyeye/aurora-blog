@@ -28,6 +28,13 @@
 							</n-col>
 						</n-row>
 					</n-card>
+					<n-card hoverable v-if="rolePermissionDtoArr.length > 0" class="rounded-16px shadow-sm" size="small">
+						<n-space vertical>
+							<n-tag v-for="(item, index) in rolePermissionDtoArr" :bordered="false" :key="index" :type="getRandomTagType()">
+								{{item.permissionName}} {{item.path}}
+							</n-tag>
+						</n-space>
+					</n-card>
 				</n-space>
 			</n-drawer-content>
 		</n-drawer>
@@ -37,9 +44,9 @@
 <script lang="ts" setup>
 import {defineComponent, onMounted, ref} from "vue";
 import {EnumMittEventName} from "@/enum";
-import {emitter, StringUtil} from "@/utils";
+import {emitter, getRandomTagType, StringUtil} from "@/utils";
 import {Role} from "@/theme/pojo/admin/Role";
-import {roleApi} from "@/service";
+import {permissionApi, roleApi} from "@/service";
 
 defineComponent({name: 'index'});
 
@@ -47,6 +54,7 @@ defineComponent({name: 'index'});
 const showDrawer = ref<boolean>(false)
 const modifyRoleInfo = ref<Role>({})
 const addStatus = ref(false)
+const rolePermissionDtoArr = ref<Array<RolePermissionDto>>([])
 
 // 定义方法
 const handleClickModifyAction = () => {
@@ -74,6 +82,14 @@ const handleClickModifyAction = () => {
 	}
 }
 
+const loadRolePermissionInfo = () => {
+	permissionApi.loadPermissionByRoleName({roleNameArr: [modifyRoleInfo.value.name!]}).then(result => {
+		if (result.data) {
+			rolePermissionDtoArr.value = result.data
+		}
+	})
+}
+
 // 监听mitt
 onMounted(() => {
 	emitter.on('roleManageAddRoleAction', e => {
@@ -86,6 +102,7 @@ onMounted(() => {
 		addStatus.value = false
 		if (e) {
 			modifyRoleInfo.value = e as Role
+			loadRolePermissionInfo()
 		}
 	})
 })
