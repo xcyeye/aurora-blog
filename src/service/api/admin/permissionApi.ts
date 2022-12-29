@@ -6,7 +6,7 @@ import type { Permission } from '@/theme/pojo/admin/Permission';
 import type { PermissionVo } from '@/theme/vo/admin/PermissionVo';
 
 /** 接口前缀 */
-const apiPrefix = '/admin/permission';
+const apiPrefix = '/admin/permission/';
 type beanType = Permission;
 type viewBeanType = PermissionVo;
 

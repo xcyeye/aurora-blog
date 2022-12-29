@@ -1,9 +1,10 @@
 <template>
 	<div class="wh-full">
+		<interface-modify/>
 		<n-card class="h-full shadow-sm rounded-16px">
 			<n-tabs type="line" animated>
 				<n-tab-pane name="list" tab="列表">
-					Hey Jude
+					<interface-list/>
 				</n-tab-pane>
 				<n-tab-pane name="scan" tab="扫描">
 					<n-transfer
@@ -13,9 +14,6 @@
 						:render-source-list="renderSourceList"
 						source-filterable
 					/>
-				</n-tab-pane>
-				<n-tab-pane name="control" tab="手动添加">
-					Hey Jude
 				</n-tab-pane>
 				<template #suffix>
 					<n-space justify="end">
@@ -32,6 +30,9 @@
 import {defineComponent, h, ref} from "vue";
 import {NTree, TransferRenderSourceList, TreeOption} from "naive-ui";
 import {interfaceInfoApi} from "@/service/api/auth/interfaceInfoApi";
+import InterfaceList from './interface-list/index.vue'
+import InterfaceModify from './interface-modify/index.vue'
+import {emitter} from "@/utils";
 
 defineComponent({name: 'index'});
 
@@ -137,7 +138,7 @@ const handleScanAllInterfaceAction = () => {
 }
 
 const handleScanAddInterfaceAction = () => {
-
+	emitter.emit('permissionManageAddPermissionAction')
 }
 </script>
 
