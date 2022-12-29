@@ -91,7 +91,9 @@ interface Comment {
 
 	pageUid?: string | null;
 
-	commentUidArr?: Array<string> | null
+	commentUidArr?: Array<string> | null;
+
+	batchDeleteDataUidArr?: Array<string> | null
 }
 
 export { Comment };

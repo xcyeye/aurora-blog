@@ -124,6 +124,7 @@ import {FormInst, FormItemRule, FormRules, UploadFileInfo} from "naive-ui";
 import {emailApi, userApi} from "@/service";
 import {EnumMittEventName} from "@/enum";
 import {emitter} from "@/utils";
+import {REGEXP_PWD} from "@/config";
 
 defineComponent({name: 'index'});
 
@@ -163,7 +164,7 @@ const addUserFormRules: FormRules = {
 						return new Error('被盗了别怪我ヾ(´∀`o)+')
 					}else if (value.length > 20) {
 						return new Error('太长了记不住(⊙﹏⊙) ')
-					}else if (!/\w+[&@#$%^*+]*/.test(value)) {
+					}else if (REGEXP_PWD.test(value)) {
 						return new Error('密码不符合规范')
 					}
 					return true

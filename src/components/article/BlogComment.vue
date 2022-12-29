@@ -196,6 +196,7 @@ import {commentApi} from "@/service";
 import {Comment} from "@/theme/pojo/comment/Comment";
 import {StringUtil} from "@/utils";
 import {useAuthStore} from "@/store";
+import {UploadFileInfo} from "naive-ui";
 
 defineComponent({name: 'BlogComment'});
 
@@ -235,6 +236,8 @@ const handleClickComment = (commentInfo: CommentDto, parentCommentDto: CommentDt
 }
 
 const loadCommentInfo = () => {
+	showCommentInfo.value = {}
+	replyCommentData.value.content = ''
  	if (props.parentCommentUidArr.length === 0) {
 		 window.$message?.error('没有需要加载的评论数据')
 		return
@@ -262,8 +265,9 @@ const setReplyUserInfo = () => {
 			username: authStore.userInfo.userDetailInfo.username,
 			userUid: authStore.userInfo.user_uid,
 			email: authStore.userInfo.emailInfo.email,
-			site: `https://aurora.xcyeye.xyz/${authStore.userInfo.username}`
+			site: `https://aurora.xcye.xyz/${authStore.userInfo.username}`
 		}
+		console.log(replyUserInfo.value);
 	}
 }
 
@@ -293,14 +297,14 @@ const handleReplyCommentAction = () => {
 
 	commentApi.insertData(replyCommentData.value).then(result => {
 		if (!result.error) {
-			window.$message?.success(`回复 ${currentClickCommentDto.value.username} 成功o(￣▽￣)ｄ `)
+			window.$message?.success(`回复成功o(￣▽￣)ｄ `)
 			loadCommentInfo()
 		}
 	})
 }
 
-const handleFinishUploadFile = () => {
-
+const handleFinishUploadFile = (file: UploadFileInfo) => {
+	replyUserInfo.value.avatar = file.url
 }
 
 onBeforeMount(() => {

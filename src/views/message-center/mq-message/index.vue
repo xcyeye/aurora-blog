@@ -168,7 +168,7 @@ const createColumns = (): Array<DataTableColumn> => {
 			render(row: MessageLogVo) {
 				return h(
 					NTag, {
-						bordered: true,
+						bordered: false,
 						type: row.ackStatus ? 'success' : 'warning'
 					},
 					{
@@ -185,7 +185,7 @@ const createColumns = (): Array<DataTableColumn> => {
 			render(row: MessageLogVo) {
 				return h(
 					NTag, {
-						bordered: true,
+						bordered: false,
 						type: row.consumeStatus ? 'success' : 'warning'
 					},
 					{

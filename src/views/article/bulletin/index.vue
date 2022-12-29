@@ -178,7 +178,7 @@ const createColumns = (): Array<DataTableColumn> => {
 			render(row: BulletinVo) {
 				return h(
 					NTag, {
-						bordered: true,
+						bordered: false,
 						type: row.delete ? 'warning' : 'success'
 					},
 					{

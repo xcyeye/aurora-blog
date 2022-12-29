@@ -4,6 +4,7 @@
 			<n-tabs ref="tabsInstRef" v-model:value="tabPaneValue" type="line" animated>
 				<n-tab-pane name="commentList" tab="列表">
 					<show-table-data
+						@handleCheckedRowKeys="handleCheckedRowKeys"
 						:data-table-info="{rowKey: 'uid', striped: true, scrollX: 2500, bordered: false}"
 						:data-table-columns="columns"
 						:query-data-method="queryDataMethod">
@@ -14,6 +15,9 @@
 												:page-uid="currentCommentInfo.uid"
 												:parent-comment-uid-arr="[currentCommentInfo.uid]"/>
 				</n-tab-pane>
+				<template #suffix>
+					<n-button v-if="batchDeleteCommentInfoUidArr.length !== 0" strong secondary tertiary round type="error" @click="handleBatchDeleteComment">删除</n-button>
+				</template>
 			</n-tabs>
 		</n-card>
 	</div>
@@ -29,8 +33,8 @@ import {emitter, getRandomTagType} from "@/utils";
 import {useRouterPush} from "@/composables";
 import {CommentVo} from "@/theme/vo/comment/CommentVo";
 import {Comment} from "@/theme/pojo/comment/Comment";
-import RequestResult = Service.RequestResult;
 import {useAuthStore} from "@/store";
+import RequestResult = Service.RequestResult;
 
 defineComponent({name: 'index'});
 
@@ -47,6 +51,7 @@ const currentCommentInfo = ref<CommentVo>({})
 const tabsInstRef = ref<TabsInst | null>(null)
 const tabPaneValue = ref<string>('commentList')
 const autoStore = useAuthStore()
+const batchDeleteCommentInfoUidArr = ref<Array<string>>([])
 
 const queryDataMethod = (condition: Condition): Promise<RequestResult<PageData<CommentVo>>> => {
 	return commentApi.queryListDataByCondition(condition);
@@ -93,6 +98,23 @@ const handleShowDetailAction = (data: CommentVo) => {
 	parentCommentUidArr.value.push(currentCommentInfo.value.uid!)
 	loadCommentDetailInfo()
 	tabPaneValue.value = 'commentDetail'
+}
+
+
+const handleCheckedRowKeys = (keys: Array<string>) => {
+	batchDeleteCommentInfoUidArr.value = keys
+}
+
+const handleBatchDeleteComment = () => {
+  window.$dialog?.success({
+		title: `删除${batchDeleteCommentInfoUidArr.value.length}条评论`,
+		content: `你确定要删除 ${batchDeleteCommentInfoUidArr.value.length}条评论么`,
+		positiveText: '确定',
+		negativeText: '再想想',
+		onPositiveClick() {
+
+		}
+	})
 }
 
 const createColumns = (): Array<DataTableColumn> => {
@@ -157,7 +179,7 @@ const createColumns = (): Array<DataTableColumn> => {
 						value: row.delete,
 						onUpdateValue(value: boolean) {
 							row.delete = value
-							commentApi.updateData(row).then(result => {
+							commentApi.updateData(row as Comment).then(result => {
 								if (result.data && result.data === 1) {
 									window.$message?.success('修改成功')
 								}
@@ -179,7 +201,7 @@ const createColumns = (): Array<DataTableColumn> => {
 						value: row.showComment,
 						onUpdateValue(value: boolean) {
 							row.showComment = value
-							commentApi.updateData(row).then(result => {
+							commentApi.updateData(row as Comment).then(result => {
 								if (result.data && result.data === 1) {
 									window.$message?.success('修改成功')
 								}

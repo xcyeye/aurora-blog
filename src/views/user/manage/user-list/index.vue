@@ -132,7 +132,7 @@ const createColumns = ({
 			render(row: UserVo) {
 				return h(
 					NTag, {
-						bordered: true,
+						bordered: false,
 						type: row.verifyEmail ? 'success' : 'warning'
 					},
 					{
@@ -149,7 +149,7 @@ const createColumns = ({
 			render(row: UserVo) {
 				return h(
 					NTag, {
-						bordered: true,
+						bordered: false,
 						type: row.delete ? 'warning' : 'success'
 					},
 					{
@@ -168,7 +168,7 @@ const createColumns = ({
 					// @ts-ignore
 					NTag,
 					{
-						bordered: true,
+						bordered: false,
 						type: getTagInfo(row)
 					},
 					{

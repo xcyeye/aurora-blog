@@ -48,7 +48,11 @@
 						/>
 					</n-tab-pane>
 					<n-tab-pane name="comment" tab="评论">
-						评论
+						<blog-comment
+							:page-uid="currentTalkInfo.uid"
+							:page-path="`https://xcyeye.xyz/${currentTalkInfo.title}`"
+							:parent-comment-uid-arr="currentTalkCommentUidArr"
+							reply-page-type="TALK"/>
 					</n-tab-pane>
 				</n-tabs>
 
@@ -94,6 +98,7 @@ const addStatus = ref(false)
 const currentTalkInfo = ref<Talk>({})
 const pictureInfoArr = ref<Array<PictureInfo>>([])
 const authStore = useAuthStore()
+const currentTalkCommentUidArr = ref<Array<string>>([])
 
 
 const queryDataMethod = (condition: Condition): Promise<RequestResult<PageData<TalkVo>>> => {
@@ -143,6 +148,10 @@ const handleShowTalkInfoAction = (data: TalkVo) => {
 			}
 		})
 	})
+
+	if (StringUtil.haveLength(currentTalkInfo.value.commentUids)) {
+		currentTalkCommentUidArr.value = currentTalkInfo.value.commentUids?.split(",")!
+	}
 }
 
 const handleModifyOrAddAction = (row?: TalkVo | null) => {
@@ -211,7 +220,7 @@ const createColumns = (): Array<DataTableColumn> => {
 			render(row: TalkVo) {
 				return h(
 					NTag, {
-						bordered: true,
+						bordered: false,
 						type: row.delete ? 'warning' : 'success'
 					},
 					{

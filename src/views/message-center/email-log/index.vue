@@ -135,7 +135,7 @@ const createColumns = (): Array<DataTableColumn> => {
 			render(row: EmailLogVo) {
 				return h(
 					NTag, {
-						bordered: true,
+						bordered: false,
 						type: row.send ? 'success' : 'warning'
 					},
 					{

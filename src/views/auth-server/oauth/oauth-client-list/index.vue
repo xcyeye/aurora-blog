@@ -237,7 +237,7 @@ const createColumns = ({
 			render(row: OauthClientDetailsVo) {
 				return h(
 					NTag, {
-						bordered: true,
+						bordered: false,
 						type: row.autoapprove ? 'warning' : 'success'
 					},
 					{

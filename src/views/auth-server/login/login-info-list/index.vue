@@ -104,7 +104,7 @@ const createColumns = ({
 			render(row: LoginInfoVo) {
 				return h(
 					NTag, {
-						bordered: true,
+						bordered: false,
 						type: row.status ? 'success' : 'warning'
 					},
 					{
