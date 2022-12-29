@@ -81,14 +81,6 @@ const handleClickModifyAction = () => {
 	}
 	modifyPermissionInfo.value.path = selectRequestMethodName.value + ":" + interfacePath.value
 	if (addStatus.value) {
-		if (!StringUtil.haveLength(modifyPermissionInfo.value.name)) {
-			window.$message?.error('名称不能为空')
-			return
-		}
-		if (!StringUtil.haveLength(modifyPermissionInfo.value.path)) {
-			window.$message?.error('路径不能为空')
-			return
-		}
 		permissionApi.insertData(modifyPermissionInfo.value).then(result => {
 			if (!result.error) {
 				window.$message?.success('插入接口成功')
