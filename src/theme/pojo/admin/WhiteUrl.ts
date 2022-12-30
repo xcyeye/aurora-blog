@@ -18,6 +18,8 @@ interface WhiteUrl {
    *
    */
   updateTime?: string | null;
+
+	uidList?: Array<string> | []
 }
 
 export { WhiteUrl };

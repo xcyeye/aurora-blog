@@ -300,6 +300,16 @@ export const routeModel: Record<Auth.RoleType, AuthRoute.Route[]> = {
 					}
 				},
 				{
+					name: 'permission_white-url',
+					path: '/permission/white-url',
+					component: 'self',
+					meta: {
+						title: '白名单',
+						requiresAuth: true,
+						icon: 'ic:baseline-hourglass-bottom'
+					}
+				},
+				{
 					name: 'permission_permission-manage',
 					path: '/permission/permission-manage',
 					component: 'self',

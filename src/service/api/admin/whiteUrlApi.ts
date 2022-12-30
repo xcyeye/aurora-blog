@@ -35,6 +35,10 @@ function _baseApi() {
     return request.post<number>(`${apiPrefix}physicalDeleteWhiteUrl`, data, baseAxiosRequestConfig);
   }
 
+	function batchDeleteWhiteUrl(data: beanType) {
+		return request.post<number>(`${apiPrefix}batchDeleteWhiteUrl`, data, baseAxiosRequestConfig);
+	}
+
   /**
    * 逻辑删除数据
    * @deprecated
@@ -100,7 +104,8 @@ function _baseApi() {
     logicDeleteData,
     physicalDeleteData,
     insertData,
-    batchInsertData
+    batchInsertData,
+		batchDeleteWhiteUrl
   };
 }
 
