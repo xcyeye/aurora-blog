@@ -77,6 +77,18 @@ export const routeModel: Record<Auth.RoleType, AuthRoute.Route[]> = {
 			}
 		},
 		{
+			name: 'system',
+			path: '/system',
+			component: 'self',
+			meta: {
+				title: '系统设置',
+				requiresAuth: true,
+				singleLayout: 'basic',
+				icon: 'ic:twotone-settings-system-daydream',
+				order: 8
+			}
+		},
+		{
 			name: 'article',
 			path: '/article',
 			component: 'basic',
@@ -408,28 +420,6 @@ export const routeModel: Record<Auth.RoleType, AuthRoute.Route[]> = {
 				title: '测试',
 				icon: 'carbon:cloud-service-management',
 				order: 9
-			}
-		},
-		{
-			name: 'component',
-			path: '/component',
-			component: 'basic',
-			children: [
-				{
-					name: 'component_table',
-					path: '/component/table',
-					component: 'self',
-					meta: {
-						title: '表格',
-						requiresAuth: true,
-						icon: 'mdi:table-large'
-					}
-				}
-			],
-			meta: {
-				title: '组件示例',
-				icon: 'cib:app-store',
-				order: 3
 			}
 		},
 		{
@@ -773,29 +763,6 @@ export const routeModel: Record<Auth.RoleType, AuthRoute.Route[]> = {
         title: '仪表盘',
         icon: 'mdi:monitor-dashboard',
         order: 1
-      }
-    },
-    {
-      name: 'component',
-      path: '/component',
-      component: 'basic',
-      children: [
-
-        {
-          name: 'component_table',
-          path: '/component/table',
-          component: 'self',
-          meta: {
-            title: '表格',
-            requiresAuth: true,
-            icon: 'mdi:table-large'
-          }
-        }
-      ],
-      meta: {
-        title: '组件示例',
-        icon: 'cib:app-store',
-        order: 3
       }
     },
     {
@@ -1497,28 +1464,6 @@ export const routeModel: Record<Auth.RoleType, AuthRoute.Route[]> = {
 				title: '测试',
 				icon: 'carbon:cloud-service-management',
 				order: 9
-			}
-		},
-		{
-			name: 'component',
-			path: '/component',
-			component: 'basic',
-			children: [
-				{
-					name: 'component_table',
-					path: '/component/table',
-					component: 'self',
-					meta: {
-						title: '表格',
-						requiresAuth: true,
-						icon: 'mdi:table-large'
-					}
-				}
-			],
-			meta: {
-				title: '组件示例',
-				icon: 'cib:app-store',
-				order: 3
 			}
 		},
 		{
