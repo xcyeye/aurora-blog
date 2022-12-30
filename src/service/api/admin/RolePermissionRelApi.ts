@@ -100,7 +100,7 @@ function _baseApi() {
 		return request.post<Array<viewBeanType>>(`${apiPrefix}loadPermissionByUserUid`, data, baseAxiosRequestConfig);
 	}
 
-	function loadAllRolePermission(data: beanType) {
+	function loadAllRolePermission(data: Condition) {
 		return request.post<Array<viewBeanType>>(`${apiPrefix}loadAllRolePermission`, data, baseAxiosRequestConfig);
 	}
 
@@ -121,7 +121,11 @@ function _baseApi() {
 	}
 
 	function batchInsertUserRole(data: beanType) {
-		return request.post<Array<viewBeanType>>(`${apiPrefix}batchInsertUserRole`, data, baseAxiosRequestConfig);
+		return request.post<void>(`${apiPrefix}batchInsertUserRole`, data, baseAxiosRequestConfig);
+	}
+
+	function batchInsertRolePermission(data: beanType) {
+		return request.post<void>(`${apiPrefix}batchInsertRolePermission`, data, baseAxiosRequestConfig);
 	}
 
 	function batchDeleteUserRole(data: beanType) {
@@ -161,7 +165,8 @@ function _baseApi() {
 		loadPermissionByRoleName,
 		loadPermissionByUsername,
 		loadAllRoleByUsername,
-		loadAllRolePermission
+		loadAllRolePermission,
+		batchInsertRolePermission
   };
 }
 

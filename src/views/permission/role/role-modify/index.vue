@@ -46,7 +46,8 @@ import {defineComponent, onMounted, ref} from "vue";
 import {EnumMittEventName} from "@/enum";
 import {emitter, getRandomTagType, StringUtil} from "@/utils";
 import {Role} from "@/theme/pojo/admin/Role";
-import {permissionApi, roleApi} from "@/service";
+import {roleApi} from "@/service";
+import {rolePermissionRelApi} from "@/service/api/admin/RolePermissionRelApi";
 
 defineComponent({name: 'index'});
 
@@ -83,7 +84,7 @@ const handleClickModifyAction = () => {
 }
 
 const loadRolePermissionInfo = () => {
-	permissionApi.loadPermissionByRoleName({roleNameArr: [modifyRoleInfo.value.name!]}).then(result => {
+	rolePermissionRelApi.loadPermissionByRoleName({roleNameArr: [modifyRoleInfo.value.name!]}).then(result => {
 		if (result.data) {
 			rolePermissionDtoArr.value = result.data
 		}

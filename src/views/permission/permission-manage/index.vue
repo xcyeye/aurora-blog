@@ -1,13 +1,336 @@
 <template>
-	<div></div>
+  <div class="h-full">
+    <n-card title="用户角色管理" class="h-full shadow-sm rounded-16px">
+      <n-tabs type="line" animated>
+				<n-tab-pane name="list" tab="列表">
+					<n-space vertical>
+						<n-grid x-gap="12" :cols="3" v-for="(item, index) in userRolePermissionInfoArr" :key="index">
+							<n-gi>
+								<n-card hoverable class="rounded-16px shadow-sm">
+									<n-space justify="center">
+										<n-space vertical>
+											<n-tag v-if="item.userInfoArr.length !== 0" v-for="(userItem, userIndex) in item.userInfoArr"
+														 :key="userIndex" :bordered="false" :type="getPermissionRandomTagType(userIndex)">
+												{{userItem.username}}
+											</n-tag>
+											<n-tag v-else :bordered="false" :type="getPermissionRandomTagType(1)">
+												无用户
+											</n-tag>
+										</n-space>
+									</n-space>
+								</n-card>
+							</n-gi>
+							<n-gi>
+								<n-card hoverable class="rounded-16px shadow-sm">
+									<n-space justify="center">
+										<n-tag type="success" :bordered="false">
+											{{item.roleInfo.name}}
+										</n-tag>
+									</n-space>
+								</n-card>
+							</n-gi>
+							<n-gi>
+								<n-card hoverable class="rounded-16px shadow-sm">
+									<n-space justify="center">
+										<n-space vertical>
+											<n-tag v-if="item.permissionArr.length !== 0" v-for="(permissionItem, permissionIndex) in item.permissionArr"
+														 :key="permissionIndex" :bordered="false" :type="getPermissionRandomTagType(permissionIndex)">
+												{{permissionItem.name}}
+											</n-tag>
+											<n-tag v-else :bordered="false" :type="getPermissionRandomTagType(2)">
+												无权限
+											</n-tag>
+										</n-space>
+									</n-space>
+								</n-card>
+							</n-gi>
+						</n-grid>
+					</n-space>
+				</n-tab-pane>
+        <n-tab-pane name="userRole" tab="用户角色">
+          <n-space vertical>
+            <n-card hoverable title="选择用户" class="rounded-16px shadow-sm" size="small">
+              <n-select v-model:value="selectedUserUidArr" multiple :options="allUserOption" />
+            </n-card>
+
+            <n-card hoverable title="选择角色" class="rounded-16px shadow-sm" size="small">
+              <n-select v-model:value="selectedRoleUidArr" multiple :options="allRoleOption" />
+              <template #footer>
+                <n-space justify="end">
+                  <n-button strong secondary tertiary round type="success" @click="handleBindRoleForUserAction"
+                    >添加</n-button
+                  >
+                </n-space>
+              </template>
+            </n-card>
+          </n-space>
+        </n-tab-pane>
+        <n-tab-pane name="rolePermission" tab="角色权限">
+          <n-space vertical>
+            <n-card hoverable title="选择角色" class="rounded-16px shadow-sm" size="small">
+              <n-select v-model:value="selectedRoleUidArr" multiple :options="allRoleOption" />
+            </n-card>
+            <n-card hoverable title="选择接口" class="rounded-16px shadow-sm" size="small">
+              <n-transfer
+                ref="transfer"
+                v-model:value="selectedPermissionUidArr"
+                :render-source-list="renderSourceList"
+                :options="allPermissionOption"
+              />
+              <template #footer>
+                <n-space justify="end">
+                  <n-button strong secondary tertiary round type="success" @click="handleBindPermissionForRoleAction"
+                    >添加</n-button
+                  >
+                </n-space>
+              </template>
+            </n-card>
+          </n-space>
+        </n-tab-pane>
+      </n-tabs>
+    </n-card>
+  </div>
 </template>
 
 <script lang="ts" setup>
-import {defineComponent} from "vue";
+import {computed, defineComponent, h, onBeforeMount, ref} from 'vue';
+import type {TransferRenderSourceList} from 'naive-ui';
+import {NSpace, NTag, NTree} from 'naive-ui';
+import type {SelectBaseOption} from 'naive-ui/es/select/src/interface';
+import {permissionApi, roleApi, userApi} from '@/service';
+import type {UserVo} from '@/theme/vo/admin/UserVo';
+import {rolePermissionRelApi} from '@/service/api/admin/RolePermissionRelApi';
+import type {PermissionVo} from '@/theme/vo/admin/PermissionVo';
+import type {RoleVo} from '@/theme/vo/admin/RoleVo';
+import {getRandomTagType} from "@/utils";
 
-defineComponent({name: 'index'});
+defineComponent({ name: 'Index' });
+
+interface PermissionRoleTreeOption {
+  label?: string;
+  value?: string;
+  summary?: string;
+}
+
+interface UserRolePermissionInfo {
+	roleInfo: RoleVo,
+	userInfoArr: Array<UserVo>,
+	permissionArr: Array<PermissionVo>
+}
+
+const allUserOption = ref<Array<SelectBaseOption>>([]);
+const allRoleOption = ref<Array<SelectBaseOption>>([]);
+const allPermissionOption = ref<Array<PermissionRoleTreeOption>>([]);
+const selectedUserUidArr = ref<Array<string>>([]);
+const selectedRoleUidArr = ref<Array<string>>([]);
+const selectedPermissionUidArr = ref<Array<string>>([]);
+const userInfoArr = ref<Array<UserVo>>([]);
+const roleInfoArr = ref<Array<RoleVo>>([]);
+const permissionInfoArr = ref<Array<PermissionVo>>([]);
+const userRolePermissionInfoArr = ref<Array<UserRolePermissionInfo>>([])
+
+const getPermissionRandomTagType = computed(() => (index: number) => getRandomTagType())
+
+const loadUserRolePermissionInfo = () => {
+  // 先查询role信息
+	roleApi.queryListDataByCondition({pageSize: 10000}).then(result => {
+		if (result.data && result.data.result) {
+			// 查询此角色的用户
+			result.data.result.forEach(v => {
+				rolePermissionRelApi.loadPermissionByRoleName({roleNameArr: [v.name!]}).then(roleResult => {
+					if (roleResult.data) {
+						// 数据封装
+						const userVos = roleResult.data.map(userInfo => {
+							const user: UserVo = {
+								username: userInfo.username,
+								uid: userInfo.userUid
+							}
+							return user
+						}).concat();
+
+						const permissionVos = roleResult.data.map(permissionInfo => {
+							const permission: PermissionVo = {
+								name: permissionInfo.permissionName
+							}
+							return permission
+						}).concat();
+
+						userRolePermissionInfoArr.value.push({
+							roleInfo: v,
+							userInfoArr: userVos,
+							permissionArr: permissionVos
+						})
+					}
+				})
+			})
+		}
+	})
+}
+
+const loadAllUserInfo = () => {
+  userApi.queryListDataByCondition({ pageSize: 10000 }).then(result => {
+    if (result.data && result.data.result) {
+      userInfoArr.value = result.data.result;
+      result.data.result.forEach(v => {
+        allUserOption.value.push({
+          label: v.username!,
+          value: v.uid!
+        });
+      });
+    }
+  });
+
+  roleApi.queryListDataByCondition({ pageSize: 10000 }).then(result => {
+    if (result.data && result.data.result) {
+      roleInfoArr.value = result.data.result;
+      result.data.result.forEach(v => {
+        allRoleOption.value.push({
+          label: v.name!,
+          value: v.uid!
+        });
+      });
+    }
+  });
+
+  permissionApi.queryListDataByCondition({ pageSize: 10000 }).then(result => {
+    if (result.data && result.data.result) {
+      permissionInfoArr.value = result.data.result;
+      result.data.result.forEach(v => {
+        allPermissionOption.value.push({
+          label: v.path!,
+          value: v.uid!,
+          summary: v.name!
+        });
+      });
+    }
+  });
+};
+
+function handleRenderLabel({ option }: { option: PermissionRoleTreeOption }) {
+  const splits = option.label!.split(':');
+  return h(
+    NSpace,
+    {
+      justify: 'start'
+    },
+    {
+      default: () =>
+        Array.of(
+          h(
+            NTag,
+            {
+              type: 'success',
+              bordered: false
+            },
+            {
+              default: () => splits[0]
+            }
+          ),
+          h(
+            NTag,
+            {
+              type: 'info',
+              bordered: false
+            },
+            {
+              default: () => splits[1]
+            }
+          ),
+          h(
+            NTag,
+            {
+              type: 'error',
+              bordered: false
+            },
+            {
+              default: () => (option.summary ? option.summary : '')
+            }
+          )
+        )
+    }
+  );
+}
+
+const renderSourceList: TransferRenderSourceList = function ({ onCheck, pattern }) {
+  return h(
+		// @ts-ignore
+    NTree,
+    {
+      checkboxPlacement: 'right',
+      style: 'margin: 0 4px;',
+      keyField: 'value',
+      checkable: true,
+      cascade: true,
+      selectable: false,
+      blockLine: true,
+      checkOnClick: true,
+      renderLabel: handleRenderLabel,
+      data: allPermissionOption.value,
+      pattern,
+      checkedKeys: selectedPermissionUidArr.value,
+      onUpdateCheckedKeys: (checkedKeys: Array<string | number>) => {
+        onCheck(checkedKeys);
+      }
+    }
+  );
+};
+
+const handleBindRoleForUserAction = () => {
+  if (selectedUserUidArr.value.length === 0 || selectedRoleUidArr.value.length === 0) {
+    window.$message?.error('请至少选择一个用户或者角色');
+    return;
+  }
+
+  window.$dialog?.success({
+    title: 'Tip',
+    content: `你确定要为 ${selectedUserUidArr.value.length} 个用户增加选中的角色?`,
+    positiveText: '确定',
+    negativeText: '取消',
+    onPositiveClick() {
+      // 因为后端只有批量为多个用户添加某个权限，所以需要遍历
+      selectedRoleUidArr.value.forEach(v => {
+        rolePermissionRelApi
+          .batchInsertUserRole({ userUidArr: selectedUserUidArr.value, roleUidArr: [v] })
+          .then(result => {
+            if (!result.error) {
+              window.$message?.success('操作成功');
+            }
+          });
+      });
+    }
+  });
+};
+
+const handleBindPermissionForRoleAction = () => {
+  if (selectedPermissionUidArr.value.length === 0 || selectedRoleUidArr.value.length === 0) {
+    window.$message?.error('请至少选择一个接口或者角色');
+    return;
+  }
+
+  window.$dialog?.success({
+    title: 'Tip',
+    content: `你确定要为 ${selectedRoleUidArr.value.length} 个角色增加选中的接口?`,
+    positiveText: '确定',
+    negativeText: '取消',
+    onPositiveClick() {
+      // 因为后端只有批量为多个用户添加某个权限，所以需要遍历
+      selectedPermissionUidArr.value.forEach(v => {
+        rolePermissionRelApi
+          .batchInsertRolePermission({ roleUidArr: selectedRoleUidArr.value, permissionUidArr: [v] })
+          .then(result => {
+            if (!result.error) {
+              window.$message?.success('操作成功');
+            }
+          });
+      });
+    }
+  });
+};
+
+onBeforeMount(() => {
+  loadAllUserInfo();
+	loadUserRolePermissionInfo()
+});
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

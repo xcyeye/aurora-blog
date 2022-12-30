@@ -4,6 +4,8 @@ interface RolePermissionDto {
 	 */
 	roleName?: string | null;
 
+	username?: string | null;
+
 	/**
 	 * 角色的状态
 	 */
