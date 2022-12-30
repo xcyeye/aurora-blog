@@ -60,6 +60,13 @@ public class CommentController {
         return commentService.physicalDeleteComment(comment.getUid());
     }
 
+    // @Operation(summary = "删除多条数据")
+    // @ModifyOperation
+    // @PostMapping("/batchDeleteComment")
+    // public int batchDeleteComment(@RequestBody CommentPojo comment) {
+    //     return commentService.batchDeleteComment(comment.getUid());
+    // }
+
     /**
      * 根据多个uid，返回这些uid所对应的记录以及他们的子评论数据 是所有，没有做分页操作，其中uid是在文章中获取的
      * @param comment

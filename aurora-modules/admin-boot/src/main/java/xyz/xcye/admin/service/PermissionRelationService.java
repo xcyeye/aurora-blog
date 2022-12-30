@@ -23,6 +23,7 @@ import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.LongStream;
 import java.util.stream.Stream;
@@ -91,7 +92,7 @@ public class PermissionRelationService {
     }
 
     @Transactional
-    public int insertUserRoleBatch(RolePermissionRelationshipPojo pojo) {
+    public void insertUserRoleBatch(RolePermissionRelationshipPojo pojo) {
         Assert.notNull(pojo.getUserUidArr(), "userUidArr不能为null");
         Assert.notNull(pojo.getRoleUidArr(), "roleUidArr不能为null");
         List<Long> userUidArr = pojo.getUserUidArr();
@@ -102,18 +103,17 @@ public class PermissionRelationService {
                 () -> new RoleException(ResponseStatusCodeEnum.PERMISSION_ROLE_NOT_EXISTS));
 
         // 判断此角色是否被禁用
-        AssertUtils.stateThrow(!role.getStatus(), () -> new RoleException(ResponseStatusCodeEnum.PERMISSION_ROLE_HAD_DISABLED));
+        AssertUtils.stateThrow(role.getStatus(), () -> new RoleException(ResponseStatusCodeEnum.PERMISSION_ROLE_HAD_DISABLED));
 
-        Stream<Long> longStream = userUidArr.stream()
+        userUidArr.stream()
                 .filter(userUid -> userService.queryUserByUid(userUid) != null)
-                .filter(userUid -> auroraUserRoleService.queryListByCondition(Condition.instant(userUid, roleUid)).getResult().isEmpty());
-        longStream.forEach(userUid -> {
-            UserRoleRelationship userRoleRelationship = new UserRoleRelationship();
-            userRoleRelationship.setRoleUid(roleUid);
-            userRoleRelationship.setUserUid(userUid);
-            auroraUserRoleService.insert(userRoleRelationship);
-        });
-        return (int) longStream.count();
+                .filter(userUid -> auroraUserRoleService.queryListByCondition(Condition.instant(userUid, roleUid)).getResult().isEmpty())
+                .forEach(userUid -> {
+                    UserRoleRelationship userRoleRelationship = new UserRoleRelationship();
+                    userRoleRelationship.setRoleUid(roleUid);
+                    userRoleRelationship.setUserUid(userUid);
+                    auroraUserRoleService.insert(userRoleRelationship);
+                });
     }
 
     public int deleteUserRoleBatch(RolePermissionRelationshipPojo pojo) {
@@ -171,7 +171,7 @@ public class PermissionRelationService {
         return successNum[0];
     }
 
-    public int insertRolePermissionBatch(RolePermissionRelationshipPojo pojo) {
+    public void insertRolePermissionBatch(RolePermissionRelationshipPojo pojo) {
         Assert.notNull(pojo.getPermissionUidArr(), "permissionUidArr不能为null");
         Assert.notNull(pojo.getRoleUidArr(), "roleUidArr不能为null");
         List<Long> roleUidArr = pojo.getRoleUidArr();
@@ -181,21 +181,18 @@ public class PermissionRelationService {
         // 判断此permissionUid是否可用
         AssertUtils.stateThrow(permissionService.queryPermissionByUid(permissionUid) != null,
                 () -> new UserException(ResponseStatusCodeEnum.PERMISSION_RESOURCE_NOT_RIGHT));
-        Assert.notNull(roleUidArr, "传入的角色uid不能为null");
-        Stream<Long> longStream = roleUidArr.stream()
+        Assert.notNull(roleUidArr, "传入的角色uid不能为null");roleUidArr.stream()
                 .filter(roleUid -> roleService.queryRoleByUid(roleUid) != null)
-                .filter(roleUid -> auroraRolePermissionService.queryListByCondition(Condition.instant(roleUid, permissionUid)).getResult().isEmpty());
-        // 遍历可用的roleUid
-        longStream.forEach(roleUid -> {
-            // 创建角色路径关系
-            RolePermissionRelationship rolePermissionRelationship = RolePermissionRelationship.builder()
-                    .permissionUid(permissionUid)
-                    .roleUid(roleUid)
-                    .build();
+                .filter(roleUid -> auroraRolePermissionService.queryListByCondition(Condition.instant(roleUid, permissionUid)).getResult().isEmpty())
+                .forEach(roleUid -> {
+                    // 创建角色路径关系
+                    RolePermissionRelationship rolePermissionRelationship = RolePermissionRelationship.builder()
+                            .permissionUid(permissionUid)
+                            .roleUid(roleUid)
+                            .build();
                     // 插入角色路径关系
                     auroraRolePermissionService.insert(rolePermissionRelationship);
                 });
-        return (int) longStream.count();
     }
 
     public int deleteRolePermissionBatch(RolePermissionRelationshipPojo pojo) {

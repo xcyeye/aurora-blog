@@ -37,6 +37,13 @@ public class PermissionController {
     }
 
     @ModifyOperation
+    @Operation(summary = "批量插入路径权限")
+    @PostMapping("/batchInsertPermission")
+    public void batchInsertPermission(@Validated({Insert.class, Default.class}) @RequestBody PermissionPojo permission) {
+        permissionService.batchInsertPermission(permission);
+    }
+
+    @ModifyOperation
     @Operation(summary = "修改路径权限信息")
     @PostMapping("/updatePermission")
     public int updatePermission(@Validated({Update.class, Default.class}) @RequestBody PermissionPojo permission) {
@@ -48,6 +55,13 @@ public class PermissionController {
     @PostMapping("/physicalDeletePermission")
     public int physicalDeletePermission(@RequestBody PermissionPojo permission) {
         return permissionService.physicalDeletePermission(permission.getUid());
+    }
+
+    @ModifyOperation
+    @Operation(summary = "删除权限")
+    @PostMapping("/batchPhysicalDeletePermission")
+    public int batchPhysicalDeletePermission(@RequestBody PermissionPojo permission) {
+        return permissionService.batchPhysicalDeletePermission(permission);
     }
 
     @SelectOperation

@@ -118,6 +118,10 @@ public class CommentService {
         return auroraCommentService.deleteById(uid);
     }
 
+    // public int batchDeleteComment(CommentPojo pojo) {
+    //     return auroraCommentService.batchInsert()
+    // }
+
     public int updateComment(CommentPojo pojo) {
         Assert.notNull(pojo, "评论信息不能为null");
         Comment comment = BeanUtils.copyProperties(pojo, Comment.class);
@@ -146,8 +150,8 @@ public class CommentService {
             if (comment == null || !comment.getShowComment()) {
                 continue;
             }
-            CommentDTO copyCommentDTO = BeanUtils.copyProperties(comment,CommentDTO.class);
-            CommentDTO sonNode = getAllSingleParentNodeList(copyCommentDTO);
+            CommentDTO parentCommentDto = BeanUtils.copyProperties(comment,CommentDTO.class);
+            CommentDTO sonNode = getAllSingleParentNodeList(parentCommentDto, parentCommentDto);
             allCommentDTOList.add(sonNode);
         }
 
@@ -226,10 +230,7 @@ public class CommentService {
             return null;
         }
         //判断是否存在
-        Condition<Long> condition = new Condition<>();
-        condition.setUid(commentUid);
-        List<Comment> commentDOList = auroraCommentService.queryListByCondition(condition).getResult();
-        return xyz.xcye.core.util.BeanUtils.getSingleObjFromList(commentDOList,Comment.class);
+        return auroraCommentService.queryById(commentUid);
     }
 
     /**
@@ -258,14 +259,14 @@ public class CommentService {
 
     /**
      *
-     * @param commentDTO
+     * @param parentCommentDto
      * @return
      */
-    private CommentDTO getAllSingleParentNodeList(CommentDTO commentDTO) {
-        List<Long> uidList = parseUidArray(commentDTO.getNextCommentUidArray());
+    private CommentDTO getAllSingleParentNodeList(CommentDTO parentCommentDto, CommentDTO copyCommentDto) {
+        List<Long> uidList = parseUidArray(copyCommentDto.getNextCommentUidArray());
         if (uidList.isEmpty()) {
             //commentDTO下没有任何的子评论，直接返回
-            return commentDTO;
+            return parentCommentDto;
         }
 
         //存在子评论，循环获取
@@ -277,14 +278,17 @@ public class CommentService {
             }
 
             //将此commentDO添加到singleParentCommentDTOList中
-            CommentDTO copyCommentDTO = BeanUtils.copyProperties(comment, CommentDTO.class);
-            if (commentDTO.getSonCommentList() == null) {
-                commentDTO.setSonCommentList(new ArrayList<>());
+            CommentDTO sonCopyCommentDto = BeanUtils.copyProperties(comment, CommentDTO.class);
+            if (parentCommentDto.getSonCommentList() == null) {
+                parentCommentDto.setSonCommentList(new ArrayList<>());
             }
-            commentDTO.getSonCommentList().add(copyCommentDTO);
-            getAllSingleParentNodeList(copyCommentDTO);
+            if (sonCopyCommentDto.getReplyCommentUid() != null) {
+                sonCopyCommentDto.setReplyCommentInfo(BeanUtils.copyProperties(getCommentByUid(sonCopyCommentDto.getReplyCommentUid()), CommentDTO.class));
+            }
+            parentCommentDto.getSonCommentList().add(sonCopyCommentDto);
+            getAllSingleParentNodeList(parentCommentDto, sonCopyCommentDto);
         }
-        return commentDTO;
+        return parentCommentDto;
     }
 
     /**

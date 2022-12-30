@@ -16,6 +16,7 @@ import xyz.xcye.core.valid.validator.ValidateString;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
+import java.util.List;
 
 /**
  * @description comment数据表的POJO <br/>
@@ -154,4 +155,5 @@ public class CommentPojo {
 
     private Long[] commentUidArr;
 
+    private List<Long> batchDeleteDataUidArr;
 }

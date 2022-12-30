@@ -7,5 +7,5 @@ package xyz.xcye.comment.enums;
 
 public enum CommentPageTypeEnum {
     ARTICLE,
-    TALK;
+    TALK
 }

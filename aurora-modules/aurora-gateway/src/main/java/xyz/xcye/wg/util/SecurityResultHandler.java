@@ -1,6 +1,7 @@
 package xyz.xcye.wg.util;
 
 import org.springframework.core.io.buffer.DataBuffer;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.http.server.reactive.ServerHttpResponse;
@@ -29,7 +30,7 @@ public class SecurityResultHandler {
     public static Mono<Void> success(ServerWebExchange exchange, Authentication authentication) {
         //1. 获取用户名等信息
         List<GrantedAuthority> grantedAuthorities = (List<GrantedAuthority>) authentication.getAuthorities();
-        setContentType(exchange);
+        setContentType(exchange, null);
         Map<String,Object> grantedAuthoritiesMap = new HashMap<>();
         grantedAuthoritiesMap.put("permission",grantedAuthorities);
         R success = R.success(ResponseStatusCodeEnum.SUCCESS.getCode(), ResponseStatusCodeEnum.SUCCESS.getMessage(),grantedAuthoritiesMap, true);
@@ -51,7 +52,7 @@ public class SecurityResultHandler {
         String uri = request.getPath().value();
 
         //设置响应头信息
-        setContentType(exchange);
+        setContentType(exchange, statusCodeEnum);
 
         //封装数据
         R failureResult = R.failure(statusCodeEnum.getCode(), statusCodeEnum.getMessage());
@@ -75,10 +76,15 @@ public class SecurityResultHandler {
      * 设置响应头
      * @param exchange
      */
-    private static void setContentType(ServerWebExchange exchange) {
+    private static void setContentType(ServerWebExchange exchange, ResponseStatusCodeEnum statusCodeEnum) {
+        ServerHttpResponse response = exchange.getResponse();
+        if (statusCodeEnum != null && ResponseStatusCodeEnum.PERMISSION_TOKEN_EXPIRATION == statusCodeEnum) {
+            // token过期
+            // response.setStatusCode(HttpStatus.FORBIDDEN);
+        }
         //设置响应头
         MediaType applicationJson = new MediaType(MediaType.APPLICATION_JSON, StandardCharsets.UTF_8);
-        exchange.getResponse().getHeaders().setContentType(applicationJson);
+        response.getHeaders().setContentType(applicationJson);
     }
 
     /**

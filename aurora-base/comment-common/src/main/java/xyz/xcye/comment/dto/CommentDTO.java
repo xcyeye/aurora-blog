@@ -1,5 +1,7 @@
 package xyz.xcye.comment.dto;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import lombok.Data;
 
 import javax.validation.constraints.NotNull;
@@ -14,6 +16,7 @@ public class CommentDTO {
     /**
      * 唯一uid 不能为null 主键
      */
+    @JsonSerialize(using = ToStringSerializer.class)
     private Long uid;
 
     /**
@@ -55,7 +58,13 @@ public class CommentDTO {
      * 此条评论是回复哪条评论的 不能为null
      */
     @NotNull
+    @JsonSerialize(using = ToStringSerializer.class)
     private Long replyCommentUid;
+
+    /**
+     * 回复哪个评论的信息
+     */
+    private CommentDTO replyCommentInfo;
 
     /**
      * 评论的内容
@@ -70,6 +79,7 @@ public class CommentDTO {
     /**
      * 此评论对应此页面的用户
      */
+    @JsonSerialize(using = ToStringSerializer.class)
     private Long userUid;
 
     private List<CommentDTO> sonCommentList;

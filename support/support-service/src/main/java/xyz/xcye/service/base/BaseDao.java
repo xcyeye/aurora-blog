@@ -37,6 +37,13 @@ public interface BaseDao<T> {
     int deleteById(@Param("uid") Long uid);
 
     /**
+     * 批量删除
+     * @param list uid集合
+     * @return
+     */
+    int batchDelete(@Param("list") List<Long> list);
+
+    /**
      * 根据条件删除数据
      * @param t 条件实体
      */

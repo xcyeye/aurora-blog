@@ -50,9 +50,9 @@
             au_role.`name`,
             user_uid,
             au_role.`status`,
-            create_time,
-            update_time,
-            update_time
+            au_role.create_time,
+            au_role.update_time,
+            au_user_role.update_time
         FROM
             au_user_role,
             au_role

@@ -3,10 +3,12 @@ package xyz.xcye.admin.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import xyz.xcye.admin.dto.RolePermissionDTO;
 import xyz.xcye.admin.po.Role;
-import xyz.xcye.admin.po.RolePermissionRelationship;
 import xyz.xcye.admin.pojo.RolePermissionRelationshipPojo;
 import xyz.xcye.admin.service.PermissionRelationService;
 import xyz.xcye.core.annotaion.controller.ModifyOperation;
@@ -76,19 +78,15 @@ public class RolePermissionController {
     @ModifyOperation
     @Operation(summary = "批量为多个用户增加角色")
     @PostMapping("/batchInsertUserRole")
-    public R batchInsertUserRole(@RequestBody RolePermissionRelationshipPojo pojo) {
-        return R.success(ResponseStatusCodeEnum.SUCCESS.getCode(),
-                ResponseStatusCodeEnum.SUCCESS.getMessage(),
-                "为" + permissionRelationService.insertUserRoleBatch(pojo) + "个用户增加了角色", true);
+    public void batchInsertUserRole(@RequestBody RolePermissionRelationshipPojo pojo) {
+        permissionRelationService.insertUserRoleBatch(pojo);
     }
 
     @ModifyOperation
     @Operation(summary = "批量为多个角色增加权限")
     @PostMapping("/batchInsertRolePermission")
-    public R batchInsertRolePermission(@RequestBody RolePermissionRelationshipPojo pojo) {
-        return R.success(ResponseStatusCodeEnum.SUCCESS.getCode(),
-                ResponseStatusCodeEnum.SUCCESS.getMessage(),
-                "添加成功数" + permissionRelationService.insertRolePermissionBatch(pojo), true);
+    public void batchInsertRolePermission(@RequestBody RolePermissionRelationshipPojo pojo) {
+        permissionRelationService.insertRolePermissionBatch(pojo);
     }
 
     @ModifyOperation

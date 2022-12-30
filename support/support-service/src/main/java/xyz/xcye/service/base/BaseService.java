@@ -5,12 +5,10 @@ import com.github.pagehelper.PageHelper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
-import xyz.xcye.core.util.BeanUtils;
 import xyz.xcye.data.entity.Condition;
 import xyz.xcye.data.entity.PageData;
 
 import java.util.List;
-import java.util.Objects;
 
 @Service
 public class BaseService<T> {
@@ -44,6 +42,11 @@ public class BaseService<T> {
     @Transactional(rollbackFor = Exception.class)
     public int deleteByWhere(T t) {
         return baseDao.deleteByWhere(t);
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    public int batchDelete(List<Long> list) {
+        return baseDao.batchDelete(list);
     }
 
     public T queryById(Long uid) {

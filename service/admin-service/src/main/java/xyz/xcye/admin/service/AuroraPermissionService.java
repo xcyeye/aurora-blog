@@ -6,6 +6,8 @@ import xyz.xcye.admin.po.Permission;
 import xyz.xcye.admin.dao.AuroraPermissionDao;
 import xyz.xcye.service.base.BaseService;
 
+import java.util.List;
+
 /**
  * @table permission <br/>
  * @description permission 数据表Service层 <br/>

@@ -19,7 +19,7 @@ public class Condition<T> {
 
     public static final Integer PAGE_NUM = 0;
     public static final Integer PAGE_SIZE = 10;
-    public static final Integer NAX_PAGE_SIZE = 35;
+    public static final Integer NAX_PAGE_SIZE = 10000;
     public static final String ORDER_BY = "";
 
     /**

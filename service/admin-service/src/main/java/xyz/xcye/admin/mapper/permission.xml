@@ -155,6 +155,14 @@
     </insert>
 	<!-- common methods end -->
 
+    <!-- 批量删除 -->
+    <delete id="batchDelete" parameterType="java.util.List">
+        delete from au_permission where uid in
+        <foreach collection="list" item="id"  separator="," open="(" close=")">
+            #{id}
+        </foreach>
+    </delete>
+
 	<!-- 下面的是兼容旧版本 -->
     <select id="queryListByCondition" resultMap="permissionResultMap">
         select

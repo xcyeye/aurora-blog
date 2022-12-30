@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
+import org.springframework.util.StringUtils;
 import xyz.xcye.admin.po.Role;
 import xyz.xcye.admin.pojo.RolePojo;
 import xyz.xcye.admin.vo.RoleVO;
@@ -33,7 +34,7 @@ public class RoleService {
         // 查看此角色是否存在
         AssertUtils.stateThrow(queryListRoleByCondition(Condition.instant(role.getName())).getResult().isEmpty(),
                 () -> new RoleException(ResponseStatusCodeEnum.PERMISSION_ROLE_HAD_EXISTS));
-        role.setStatus(false);
+        role.setStatus(true);
         auroraRoleService.insert(BeanUtils.copyProperties(role, Role.class));
     }
 
@@ -46,8 +47,13 @@ public class RoleService {
 
     public int updateRole(RolePojo role) {
         // 判断角色是否存在
-        AssertUtils.stateThrow(queryListRoleByCondition(Condition.instant(role.getName())).getResult().isEmpty(),
-                () -> new RoleException(ResponseStatusCodeEnum.PERMISSION_ROLE_HAD_EXISTS));
+        Role queryRole = auroraRoleService.queryById(role.getUid());
+        if (queryRole != null && StringUtils.hasLength(role.getName()) && !queryRole.getName().equals(role.getName())) {
+            Role one = auroraRoleService.queryOne(new Role() {{
+                setName(role.getName());
+            }});
+            AssertUtils.stateThrow(one == null, () -> new RoleException(ResponseStatusCodeEnum.PERMISSION_ROLE_HAD_EXISTS));
+        }
         return auroraRoleService.updateById(BeanUtils.copyProperties(role, Role.class));
     }
 
