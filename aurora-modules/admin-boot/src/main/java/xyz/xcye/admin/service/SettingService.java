@@ -28,21 +28,20 @@ public class SettingService {
     @Transactional
     public void insertSysSetting(SettingPojo pojo) {
         Assert.notNull(pojo, "系统信息不能为null");
-        // 查看此角色是否存在
-        Setting setting = auroraSettingService.queryOne(new Setting() {{
-            setParamName(pojo.getParamName());
-        }});
-        AssertUtils.stateThrow(setting != null, () -> new SettingException("数据库中存在相同名称"));
+        Setting settingInfo = new Setting();
+        settingInfo.setParamCode(pojo.getParamCode());
+        Setting setting = auroraSettingService.queryOne(settingInfo);
+        AssertUtils.stateThrow(setting == null, () -> new SettingException("数据库中存在相同名称"));
         auroraSettingService.insert(BeanUtils.copyProperties(pojo, Setting.class));
     }
 
     public int updateSysSetting(SettingPojo pojo) {
         // 判断此参数名是否存在
         Setting setting = auroraSettingService.queryOne(new Setting() {{
-            setParamName(pojo.getParamName());
+            setParamCode(pojo.getParamCode());
         }});
         if (setting != null && !setting.getUid().equals(pojo.getUid())) {
-            throw new SettingException("存在相似参数名");
+            throw new SettingException("存在相似参数编码");
         }
         return auroraSettingService.updateById(BeanUtils.copyProperties(pojo, Setting.class));
     }
