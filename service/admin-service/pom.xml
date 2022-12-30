@@ -44,5 +44,4 @@
             <artifactId>admin-common</artifactId>
         </dependency>
     </dependencies>
-
 </project>

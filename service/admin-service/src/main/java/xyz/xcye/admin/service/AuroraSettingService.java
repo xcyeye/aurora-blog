@@ -16,11 +16,11 @@ import xyz.xcye.service.base.BaseService;
 @Service
 public class AuroraSettingService extends BaseService<Setting> {
 	@SuppressWarnings("unused")
-	private AuroraSettingDao settingDao;
+	private AuroraSettingDao auroraSettingDao;
 	
 	@Autowired
-    public void setInfoDao(AuroraSettingDao settingDao) {
-        super.setBaseDao(settingDao);
-        this.settingDao = settingDao;
+    public void setInfoDao(AuroraSettingDao auroraSettingDao) {
+        super.setBaseDao(auroraSettingDao);
+        this.auroraSettingDao = auroraSettingDao;
     }
 }

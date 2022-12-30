@@ -46,7 +46,7 @@
 	<!-- common methods start -->
     <!-- 新增一条数据 -->
 	<insert id="insert" parameterType="xyz.xcye.admin.po.Setting" useGeneratedKeys="true" keyProperty="uid">
-        INSERT INTO setting (
+        INSERT INTO au_setting (
             <trim suffixOverrides=",">
                 <if test="uid != null">
                     uid,
@@ -93,13 +93,13 @@
 
     <!-- 通过主键删除数据 -->
 	<delete id="deleteById" parameterType="Long">
-        DELETE FROM setting
+        DELETE FROM au_setting
         WHERE uid = #{uid} 
 	</delete>
 
     <!-- 根据id更新数据 -->
     <update id="updateById" parameterType="xyz.xcye.admin.po.Setting">
-		UPDATE setting
+		UPDATE au_setting
 		<set>
 			<if test="paramCode != null">param_code = #{paramCode},</if>
 			<if test="paramName != null">param_name = #{paramName},</if>
@@ -115,7 +115,7 @@
 	<select id="queryById" resultMap="settingResultMap" parameterType="Long">
         SELECT
         <include refid="Base_Column_List" />
-  	    FROM setting
+  	    FROM au_setting
         WHERE
             uid = #{uid}
     </select>
@@ -124,7 +124,7 @@
 	<select id="queryOne" resultMap="settingResultMap" parameterType="xyz.xcye.admin.po.Setting">
          SELECT
          <include refid="Base_Column_List" />
-  	     FROM setting
+  	     FROM au_setting
          <include refid="Where_Condition" />
          LIMIT 1
     </select>
@@ -133,19 +133,19 @@
 	<select id="queryListByWhere" resultMap="settingResultMap" parameterType="xyz.xcye.admin.po.Setting">
         SELECT
         <include refid="Base_Column_List" />
-        FROM setting
+        FROM au_setting
         <include refid="Where_Condition" />
     </select>
 
 	<!-- 统计符合条件的数据数量 -->
 	<select id="countByWhere" resultType="int" parameterType="xyz.xcye.admin.po.Setting">
-		SELECT COUNT(*) FROM setting
+		SELECT COUNT(*) FROM au_setting
 		<include refid="Where_Condition" />
 	</select>
 
     <!-- 批量插入多条数据 -->
 	<insert id="batchInsert" parameterType="java.util.List">
-        INSERT INTO setting (
+        INSERT INTO au_setting (
         	<include refid="Base_Column_List" />
         ) VALUES
         <foreach collection="list" item="item" index= "index" separator =",">
