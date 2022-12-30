@@ -21,6 +21,11 @@ public class RolePermissionDTO {
     private String roleName;
 
     /**
+     * 用户名
+     */
+    private String username;
+
+    /**
      * 角色的状态
      */
     private Boolean roleStatus;

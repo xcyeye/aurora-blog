@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="xyz.xcye.admin.dao.AuroraWhiteUrlDao">
+<mapper namespace="xyz.xcye.admin.dao.AuroraSettingDao">
 
-    <resultMap id="whiteUrlResultMap" type="xyz.xcye.admin.po.WhiteUrl">
+    <resultMap id="settingResultMap" type="xyz.xcye.admin.po.Setting">
         <id column="uid" property="uid"/>
-        <result column="url" property="url"/>
+        <result column="param_code" property="paramCode"/>
+        <result column="param_name" property="paramName"/>
+        <result column="param_value" property="paramValue"/>
         <result column="create_time" property="createTime"/>
         <result column="update_time" property="updateTime"/>
     </resultMap>
@@ -14,8 +16,14 @@
             <if test="uid != null">
                 AND uid = #{uid}
             </if>
-            <if test="url != null and url != '' ">
-                AND url = #{url}
+            <if test="paramCode != null and paramCode != '' ">
+                AND param_code = #{paramCode}
+            </if>
+            <if test="paramName != null and paramName != '' ">
+                AND param_name = #{paramName}
+            </if>
+            <if test="paramValue != null and paramValue != '' ">
+                AND param_value = #{paramValue}
             </if>
             <if test="createTime != null and createTime != '' ">
                 AND create_time = #{createTime}
@@ -28,26 +36,34 @@
 
     <sql id="Base_Column_List">
         uid,
-        url,
+        param_code,
+        param_name,
+        param_value,
         create_time,
         update_time
     </sql>
 
 	<!-- common methods start -->
     <!-- 新增一条数据 -->
-	<insert id="insert" parameterType="xyz.xcye.admin.po.WhiteUrl" useGeneratedKeys="true" keyProperty="uid">
-        INSERT INTO au_white_url (
+	<insert id="insert" parameterType="xyz.xcye.admin.po.Setting" useGeneratedKeys="true" keyProperty="uid">
+        INSERT INTO setting (
             <trim suffixOverrides=",">
                 <if test="uid != null">
                     uid,
                 </if>
-                <if test="url != null and url != '' ">
-                    url,
+                <if test="paramCode != null">
+                    param_code,
                 </if>
-                <if test="createTime != null and createTime != '' ">
+                <if test="paramName != null">
+                    param_name,
+                </if>
+                <if test="paramValue != null">
+                    param_value,
+                </if>
+                <if test="createTime != null">
                     create_time,
                 </if>
-                <if test="updateTime != null and updateTime != '' ">
+                <if test="updateTime != null">
                     update_time,
                 </if>
             </trim>
@@ -56,13 +72,19 @@
                 <if test="uid != null">
                  #{uid},
                 </if>
-                <if test="url != null and url != '' ">
-                 #{url},
+                <if test="paramCode != null">
+                 #{paramCode},
                 </if>
-                <if test="createTime != null and createTime != '' ">
+                <if test="paramName != null">
+                 #{paramName},
+                </if>
+                <if test="paramValue != null">
+                 #{paramValue},
+                </if>
+                <if test="createTime != null">
                  #{createTime},
                 </if>
-                <if test="updateTime != null and updateTime != '' ">
+                <if test="updateTime != null">
                  #{updateTime},
                 </if>
             </trim>
@@ -71,69 +93,68 @@
 
     <!-- 通过主键删除数据 -->
 	<delete id="deleteById" parameterType="Long">
-        DELETE FROM au_white_url
+        DELETE FROM setting
         WHERE uid = #{uid} 
 	</delete>
 
-    <!-- 根据传入参数删除数据 -->
-	<delete id="deleteByWhere" parameterType="xyz.xcye.admin.po.WhiteUrl">
-        DELETE FROM au_white_url
-        <include refid="Where_Condition" />
-	</delete>
-
     <!-- 根据id更新数据 -->
-    <update id="updateById" parameterType="xyz.xcye.admin.po.WhiteUrl">
-		UPDATE au_white_url
+    <update id="updateById" parameterType="xyz.xcye.admin.po.Setting">
+		UPDATE setting
 		<set>
-			<if test="url != null and url != '' ">url = #{url},</if>
-			<if test="updateTime != null and updateTime != '' ">update_time = #{updateTime},</if>
+			<if test="paramCode != null">param_code = #{paramCode},</if>
+			<if test="paramName != null">param_name = #{paramName},</if>
+			<if test="paramValue != null">param_value = #{paramValue},</if>
+			<if test="createTime != null">create_time = #{createTime},</if>
+			<if test="updateTime != null">update_time = #{updateTime},</if>
 		</set>
 		WHERE
 		    uid = #{uid}
 	</update>
 
 	<!-- 根据主键查询数据  -->
-	<select id="queryById" resultMap="whiteUrlResultMap" parameterType="Integer">
+	<select id="queryById" resultMap="settingResultMap" parameterType="Long">
         SELECT
         <include refid="Base_Column_List" />
-  	    FROM au_white_url
+  	    FROM setting
         WHERE
             uid = #{uid}
     </select>
 
     <!-- 查询一条记录  -->
-	<select id="queryOne" resultMap="whiteUrlResultMap" parameterType="xyz.xcye.admin.po.WhiteUrl">
+	<select id="queryOne" resultMap="settingResultMap" parameterType="xyz.xcye.admin.po.Setting">
          SELECT
          <include refid="Base_Column_List" />
-  	     FROM au_white_url
+  	     FROM setting
          <include refid="Where_Condition" />
          LIMIT 1
     </select>
 
 	<!-- 根据传入参数查询数据列表  -->
-	<select id="queryListByWhere" resultMap="whiteUrlResultMap" parameterType="xyz.xcye.admin.po.WhiteUrl">
+	<select id="queryListByWhere" resultMap="settingResultMap" parameterType="xyz.xcye.admin.po.Setting">
         SELECT
         <include refid="Base_Column_List" />
-        FROM au_white_url
+        FROM setting
         <include refid="Where_Condition" />
     </select>
 
 	<!-- 统计符合条件的数据数量 -->
-	<select id="countByWhere" resultType="int" parameterType="xyz.xcye.admin.po.WhiteUrl">
-		SELECT COUNT(*) FROM au_white_url
+	<select id="countByWhere" resultType="int" parameterType="xyz.xcye.admin.po.Setting">
+		SELECT COUNT(*) FROM setting
 		<include refid="Where_Condition" />
 	</select>
 
     <!-- 批量插入多条数据 -->
 	<insert id="batchInsert" parameterType="java.util.List">
-        INSERT INTO au_white_url (
+        INSERT INTO setting (
         	<include refid="Base_Column_List" />
         ) VALUES
         <foreach collection="list" item="item" index= "index" separator =",">
             (
             <trim suffixOverrides=",">
 				#{item.uid},
-				#{item.url},
+				#{item.paramCode},
+				#{item.paramName},
+				#{item.paramValue},
 				#{item.createTime},
 				#{item.updateTime},
             </trim>
@@ -142,30 +163,22 @@
     </insert>
 	<!-- common methods end -->
 
-
-    <!-- 批量删除 -->
-    <delete id="batchDelete" parameterType="java.util.List">
-        delete from au_white_url where uid in
-        <foreach collection="list" item="id"  separator="," open="(" close=")">
-            #{id}
-        </foreach>
-    </delete>
-
-	<!-- 下面的是兼容旧版本 -->
-    <select id="queryListByCondition" resultMap="whiteUrlResultMap" parameterType="xyz.xcye.data.entity.Condition">
+    <!-- 下面的是兼容旧版本 -->
+    <select id="queryListByCondition" resultMap="settingResultMap">
         select
         <include refid="Base_Column_List" />
-        from au_white_url
+        from au_setting
         <where>
             <if test="condition.uid != null">
                 and uid=#{condition.uid}
             </if>
             <if test="condition.keyword != null">
-                and url=#{condition.keyword}
+                and param_code=#{condition.keyword}
             </if>
             <if test="condition.startTime != null and condition.endTime != null">
                 and create_time between #{condition.startTime} and #{condition.endTime}
             </if>
         </where>
     </select>
+
 </mapper>

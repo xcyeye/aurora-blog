@@ -2,11 +2,12 @@ package xyz.xcye.admin.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
-import xyz.xcye.admin.po.WhiteUrl;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import xyz.xcye.admin.pojo.WhiteUrlPojo;
 import xyz.xcye.admin.service.WhiteUrlService;
 import xyz.xcye.admin.vo.WhiteUrlVO;
@@ -37,6 +38,13 @@ public class WhiteUrlController {
     @Operation(summary = "根据uid删除白名单")
     public int physicalDeleteWhiteUrl(@RequestBody WhiteUrlPojo record) {
         return whiteUrlService.physicalDeleteWhiteUrl(record.getUid());
+    }
+
+    @PostMapping("/batchDeleteWhiteUrl")
+    @ModifyOperation
+    @Operation(summary = "批量删除白名单")
+    public int batchDeleteWhiteUrl(@RequestBody WhiteUrlPojo record) {
+        return whiteUrlService.batchDeleteWhiteUrl(record);
     }
 
     @Operation(summary = "插入白名单记录")

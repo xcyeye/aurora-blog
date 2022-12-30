@@ -10,6 +10,7 @@ import xyz.xcye.core.valid.Update;
 import xyz.xcye.core.valid.validator.ValidateString;
 
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 /**
  * @description white_url数据表的POJO <br/>
@@ -45,4 +46,5 @@ public class WhiteUrlPojo {
      */
     private String updateTime;
 
+    private List<Long> uidList;
 }

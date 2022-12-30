@@ -7,17 +7,20 @@
     <cache type="xyz.xcye.mybatis.MybatisLowFrequentCacheAutoConfig"/>
 
     <sql id="Base_Column_List">
-        SELECT
-            au_role.`name` roleName, au_role.`status` roleStatus, au_permission.`name` permissionName,
-            au_user_role.user_uid userUid, au_permission.path path
-        from
-            au_role,au_permission, au_role_permission,au_user_role
-        WHERE
-            au_role.uid=au_role_permission.role_uid
-        and
-            au_role_permission.permission_uid=au_permission.uid
-        and
-            au_user_role.role_uid=au_role.uid
+        SELECT au_role.`name`        roleName,
+               au_role.`status`      roleStatus,
+               au_permission.`name`  permissionName,
+               au_user_role.user_uid userUid,
+               au_permission.path    path,
+               au_user.username      username
+        FROM au_role,
+             au_permission,
+             au_role_permission,
+             au_user_role
+                 LEFT JOIN au_user ON au_user.uid = au_user_role.user_uid
+        WHERE au_role.uid = au_role_permission.role_uid
+          AND au_role_permission.permission_uid = au_permission.uid
+          AND au_user_role.role_uid = au_role.uid
     </sql>
 
     <select id="loadPermissionByUserUid" resultType="xyz.xcye.admin.dto.RolePermissionDTO">

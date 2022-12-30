@@ -32,6 +32,10 @@ public class WhiteUrlService {
         return auroraWhiteUrlService.deleteById(uid);
     }
 
+    public int batchDeleteWhiteUrl(WhiteUrlPojo pojo) {
+        return auroraWhiteUrlService.batchDelete(pojo.getUidList());
+    }
+
     public void insertWhiteUrl(WhiteUrlPojo record) {
         Objects.requireNonNull(record, "白名单记录不能为null");
         Optional.ofNullable(record.getUrl()).orElseThrow(() -> new NullPointerException("白名单地址不能为null"));
