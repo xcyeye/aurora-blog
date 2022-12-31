@@ -29,7 +29,7 @@ export const routeModel: Record<Auth.RoleType, AuthRoute.Route[]> = {
       meta: {
         title: '仪表盘',
         icon: 'mdi:monitor-dashboard',
-        order: 1
+        order: 3
       }
     },
 		{
@@ -59,9 +59,10 @@ export const routeModel: Record<Auth.RoleType, AuthRoute.Route[]> = {
 				}
 			],
 			meta: {
+				affix: true,
 				title: '用户',
 				icon: 'system-uicons:user-circle',
-				order: 3
+				order: 2
 			}
 		},
 		{
@@ -83,9 +84,10 @@ export const routeModel: Record<Auth.RoleType, AuthRoute.Route[]> = {
 			meta: {
 				title: '系统设置',
 				requiresAuth: true,
+				hide: false,
 				singleLayout: 'basic',
 				icon: 'ic:twotone-settings-system-daydream',
-				order: 8
+				order: 0
 			}
 		},
 		{
@@ -309,6 +311,16 @@ export const routeModel: Record<Auth.RoleType, AuthRoute.Route[]> = {
 						title: '角色',
 						requiresAuth: true,
 						icon: 'ic:outline-clear-all'
+					}
+				},
+				{
+					name: 'permission_admin-router',
+					path: '/permission/admin-router',
+					component: 'self',
+					meta: {
+						title: '路由',
+						requiresAuth: true,
+						icon: 'ic:round-waterfall-chart'
 					}
 				},
 				{
