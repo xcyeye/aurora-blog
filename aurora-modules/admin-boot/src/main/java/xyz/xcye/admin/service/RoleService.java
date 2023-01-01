@@ -15,6 +15,8 @@ import xyz.xcye.core.util.lambda.AssertUtils;
 import xyz.xcye.data.entity.Condition;
 import xyz.xcye.data.entity.PageData;
 import xyz.xcye.data.util.PageUtils;
+import xyz.xcye.service.redis.annotation.CleanRedisData;
+import xyz.xcye.service.redis.annotation.GetByRedis;
 
 /**
  * @author qsyyke
@@ -28,6 +30,7 @@ public class RoleService {
     private AuroraRoleService auroraRoleService;
 
     @Transactional
+    @CleanRedisData
     public void insertRole(RolePojo role) {
         Assert.notNull(role, "角色信息不能为null");
         AssertUtils.ifNoLengthThrow(role.getName(), () -> new RoleException("角色名字不能为null"));
@@ -38,13 +41,7 @@ public class RoleService {
         auroraRoleService.insert(BeanUtils.copyProperties(role, Role.class));
     }
 
-    public int updateRoleStatus(long uid, boolean status) {
-        RolePojo rolePojo = new RolePojo();
-        rolePojo.setUid(uid);
-        rolePojo.setStatus(status);
-        return updateRole(rolePojo);
-    }
-
+    @CleanRedisData
     public int updateRole(RolePojo role) {
         // 判断角色是否存在
         Role queryRole = auroraRoleService.queryById(role.getUid());
@@ -57,14 +54,17 @@ public class RoleService {
         return auroraRoleService.updateById(BeanUtils.copyProperties(role, Role.class));
     }
 
+    @CleanRedisData
     public int physicalDeleteRole(long uid) {
         return auroraRoleService.deleteById(uid);
     }
 
+    @GetByRedis
     public PageData<RoleVO> queryListRoleByCondition(Condition<Long> condition) {
         return PageUtils.copyPageDataResult(auroraRoleService.queryListByCondition(condition), RoleVO.class);
     }
 
+    @GetByRedis
     public RoleVO queryRoleByUid(long uid) {
         return BeanUtils.copyProperties(auroraRoleService.queryById(uid), RoleVO.class);
     }

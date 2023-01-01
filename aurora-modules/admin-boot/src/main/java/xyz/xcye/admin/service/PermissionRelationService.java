@@ -17,6 +17,7 @@ import xyz.xcye.core.exception.role.RoleException;
 import xyz.xcye.core.exception.user.UserException;
 import xyz.xcye.core.util.lambda.AssertUtils;
 import xyz.xcye.data.entity.Condition;
+import xyz.xcye.service.redis.annotation.GetByRedis;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -71,6 +72,7 @@ public class PermissionRelationService {
         return packageCollectResult(permissionRelationDao.loadPermissionByUserUid(userVO.getUid()));
     }
 
+    @GetByRedis(type = GetByRedis.TYPE.HASH, key = "asdkfhasdf")
     public List<RolePermissionDTO> loadPermissionByRoleName(RolePermissionRelationshipPojo pojo) {
         Assert.notNull(pojo.getRoleNameArr(), "roleNameArr不能为null");
         return packageCollectResult(permissionRelationDao.loadPermissionByRoleName(pojo.getRoleNameArr().get(0)));

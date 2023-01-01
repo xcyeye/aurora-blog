@@ -18,27 +18,7 @@ public @interface SyncToRedis {
 	TYPE type() default TYPE.HASH;
 	
 	/**
-	 * 参数名，如果objField存在，则结合objField一起配合使用，这时的paramName必须为对象类型
-	 */
-	String[] paramName() default {};
-	
-	/**
-	 * objField：对象中一个或多个属性，多个属性通过“_”构成缓存中的key
-	 */
-	String[] objField() default {};
-	
-	/**
 	 * key
 	 */
 	String key() default "";
-	
-	/**
-	 * 参数名key，如果objFieldKey存在，则结合objFieldKey一起配合使用，这时的paramNameKey必须为对象类型
-	 */
-	String[] paramNameKey() default {};
-	
-	/**
-	 * objFieldKey：对象中一个或多个属性，多个属性通过“_”构成缓存中的key
-	 */
-	String[] objFieldKey() default {};
 }
