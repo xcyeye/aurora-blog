@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
-import org.springframework.web.bind.annotation.RequestBody;
 import xyz.xcye.admin.dao.ext.PermissionRelationDaoExt;
 import xyz.xcye.admin.dto.RolePermissionDTO;
 import xyz.xcye.admin.po.Role;
@@ -19,14 +18,9 @@ import xyz.xcye.core.exception.user.UserException;
 import xyz.xcye.core.util.lambda.AssertUtils;
 import xyz.xcye.data.entity.Condition;
 
-import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.function.Supplier;
 import java.util.stream.Collectors;
-import java.util.stream.LongStream;
-import java.util.stream.Stream;
 
 /**
  * @author qsyyke
@@ -107,7 +101,12 @@ public class PermissionRelationService {
 
         userUidArr.stream()
                 .filter(userUid -> userService.queryUserByUid(userUid) != null)
-                .filter(userUid -> auroraUserRoleService.queryListByCondition(Condition.instant(userUid, roleUid)).getResult().isEmpty())
+                .filter(userUid -> {
+                    UserRoleRelationship relationship = new UserRoleRelationship();
+                    relationship.setRoleUid(roleUid);
+                    relationship.setUserUid(userUid);
+                    return auroraUserRoleService.queryListByWhere(relationship).isEmpty();
+                })
                 .forEach(userUid -> {
                     UserRoleRelationship userRoleRelationship = new UserRoleRelationship();
                     userRoleRelationship.setRoleUid(roleUid);
@@ -176,7 +175,6 @@ public class PermissionRelationService {
         Assert.notNull(pojo.getRoleUidArr(), "roleUidArr不能为null");
         List<Long> roleUidArr = pojo.getRoleUidArr();
         Long permissionUid = pojo.getPermissionUidArr().get(0);
-        final int[] successNum = {0};
 
         // 判断此permissionUid是否可用
         AssertUtils.stateThrow(permissionService.queryPermissionByUid(permissionUid) != null,

@@ -2,6 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="xyz.xcye.admin.dao.AuroraUserRoleDao">
 
+<!--    <cache type="xyz.xcye.mybatis.MybatisLowFrequentCacheAutoConfig"/>-->
+
     <resultMap id="userRoleResultMap" type="xyz.xcye.admin.po.UserRoleRelationship">
         <id column="uid" property="uid"/>
         <result column="role_uid" property="roleUid"/>
