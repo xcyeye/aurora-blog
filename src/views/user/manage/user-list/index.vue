@@ -4,7 +4,7 @@
 			:data-table-info="{title: '用户管理', rowKey: 'uid', striped: true}"
 			:data-table-columns="columns"
 			:query-data-method="queryDataMethod"
-			:page-sizes="[1,2,3,4,5,6]">
+			:page-sizes="[10,20,30]">
 			<template #cardHeader1>
 				<n-space>
 					<n-button strong secondary tertiary round type="success" @click="handleAddUserAction">添加用户</n-button>
@@ -49,7 +49,7 @@ const handleDeleteAction = (data: UserVo) => {
 			userApi.logicDeleteData(data as User).then(result => {
 				if (result.data === 1) {
 					condition.value.delete = false
-					window.$message?.error(`删除 ${data.username} 成功 ○|￣|_`);
+					window.$message?.success(`删除 ${data.username} 成功 ○|￣|_`);
 					emitter.emit(EnumMittEventName.reloadData)
 				}
 			})
@@ -57,7 +57,7 @@ const handleDeleteAction = (data: UserVo) => {
 		onNegativeClick: () => {
 			userApi.physicalDeleteData(data as User).then(result => {
 				if (result.data === 1) {
-					window.$message?.error(`永久删除 ${data.username} 成功 ㄟ( ▔, ▔ )ㄏ `)
+					window.$message?.success(`永久删除 ${data.username} 成功 ㄟ( ▔, ▔ )ㄏ `)
 					condition.value.delete = false
 					emitter.emit(EnumMittEventName.reloadData)
 				}

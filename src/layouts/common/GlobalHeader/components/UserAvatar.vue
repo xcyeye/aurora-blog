@@ -18,12 +18,13 @@
 <script lang="ts" setup>
 import type { DropdownOption } from 'naive-ui';
 import { useAuthStore, useThemeStore } from '@/store';
-import { useIconRender } from '@/composables';
+import {useIconRender, useRouterPush} from '@/composables';
 
 defineOptions({ name: 'UserAvatar' });
 
 const auth = useAuthStore();
 const theme = useThemeStore();
+const router = useRouterPush()
 const { iconRender } = useIconRender();
 
 const options: DropdownOption[] = [
@@ -57,7 +58,11 @@ function handleDropdown(optionKey: string) {
         auth.resetAuthStore();
       }
     });
-  }
+  }else if (key === 'user-center') {
+		router.routerPush({
+			name: 'user_profile'
+		})
+	}
 }
 </script>
 

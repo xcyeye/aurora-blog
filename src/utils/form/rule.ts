@@ -37,7 +37,10 @@ export const formRules: CustomFormRules = {
     { pattern: REGEXP_CODE_SIX, message: '验证码格式错误', trigger: 'input' }
   ],
   email: [{ pattern: REGEXP_EMAIL, message: '邮箱格式错误', trigger: 'blur' }],
-	username: [{pattern: REGEXP_USERNAME, message: '用户名格式错误', trigger: 'blur', required: true}]
+	username: [
+		createRequiredFormRule('请输入用户名'),
+		{pattern: REGEXP_USERNAME, message: '用户名格式错误', trigger: 'input', required: true}
+	]
 };
 
 /** 是否为空字符串 */

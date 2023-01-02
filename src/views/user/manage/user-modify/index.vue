@@ -124,7 +124,7 @@ import {FormInst, FormItemRule, FormRules, UploadFileInfo} from "naive-ui";
 import {emailApi, userApi} from "@/service";
 import {EnumMittEventName} from "@/enum";
 import {emitter} from "@/utils";
-import {REGEXP_PWD} from "@/config";
+import {REGEXP_PWD, REGEXP_USERNAME} from "@/config";
 
 defineComponent({name: 'index'});
 
@@ -145,7 +145,7 @@ const addUserFormRules: FormRules = {
 					return new Error('怎么会不需要名字呢(o_ _)ﾉ')
 				}else if (value.length > 15) {
 					return new Error('长度为5-15(o_ _)ﾉ')
-				}else if (!/^\w{5,10}/.test(value)) {
+				}else if (!REGEXP_USERNAME.test(value)) {
 					return new Error('只能包含数字字母和_(o_ _)ﾉ')
 				}
 				return true
@@ -164,7 +164,7 @@ const addUserFormRules: FormRules = {
 						return new Error('被盗了别怪我ヾ(´∀`o)+')
 					}else if (value.length > 20) {
 						return new Error('太长了记不住(⊙﹏⊙) ')
-					}else if (REGEXP_PWD.test(value)) {
+					}else if (!REGEXP_PWD.test(value)) {
 						return new Error('密码不符合规范')
 					}
 					return true

@@ -1,25 +1,19 @@
 <template>
   <n-form ref="formRef" :model="model" :rules="rules" size="large" :show-label="false">
-    <n-form-item path="phone">
-      <n-input v-model:value="model.phone" placeholder="手机号码" />
-    </n-form-item>
-    <n-form-item path="code">
-      <div class="flex-y-center w-full">
-        <n-input v-model:value="model.code" placeholder="验证码" />
-        <div class="w-18px"></div>
-        <n-button size="large" :disabled="isCounting" :loading="smsLoading" @click="handleSmsCode">
-          {{ label }}
-        </n-button>
-      </div>
+    <!--<n-form-item path="phone">-->
+    <!--  <n-input v-model:value="model.phone" placeholder="手机号码" />-->
+    <!--</n-form-item>-->
+    <n-form-item path="username">
+			<n-input round v-model:value="model.username" show-password-on="click" placeholder="用户名" />
     </n-form-item>
     <n-form-item path="pwd">
-      <n-input v-model:value="model.pwd" type="password" show-password-on="click" placeholder="密码" />
+      <n-input round v-model:value="model.pwd" type="password" show-password-on="click" placeholder="密码" />
     </n-form-item>
     <n-form-item path="confirmPwd">
-      <n-input v-model:value="model.confirmPwd" type="password" show-password-on="click" placeholder="确认密码" />
+      <n-input round v-model:value="model.confirmPwd" type="password" show-password-on="click" placeholder="确认密码" />
     </n-form-item>
     <n-space :vertical="true" :size="18">
-      <login-agreement v-model:value="agreement" />
+      <!--<login-agreement v-model:value="agreement" />-->
       <n-button type="primary" size="large" :block="true" :round="true" @click="handleSubmit">确定</n-button>
       <n-button size="large" :block="true" :round="true" @click="toLoginModule('pwd-login')">返回</n-button>
     </n-space>
@@ -32,6 +26,8 @@ import type { FormInst, FormRules } from 'naive-ui';
 import { useRouterPush } from '@/composables';
 import { useSmsCode } from '@/hooks';
 import { formRules, getConfirmPwdRule } from '@/utils';
+import {userApi} from "@/service";
+import {User} from "@/theme/pojo/admin/User";
 
 const { toLoginModule } = useRouterPush();
 const { label, isCounting, loading: smsLoading, start } = useSmsCode();
@@ -39,15 +35,13 @@ const { label, isCounting, loading: smsLoading, start } = useSmsCode();
 const formRef = ref<HTMLElement & FormInst>();
 
 const model = reactive({
-  phone: '',
-  code: '',
+  username: '',
   pwd: '',
   confirmPwd: ''
 });
 
 const rules: FormRules = {
-  phone: formRules.phone,
-  code: formRules.code,
+  username: formRules.username,
   pwd: formRules.pwd,
   confirmPwd: getConfirmPwdRule(toRefs(model).pwd)
 };
@@ -60,7 +54,16 @@ function handleSmsCode() {
 
 async function handleSubmit() {
   await formRef.value?.validate();
-  window.$message?.success('验证成功!');
+  // 在插入成功用户之后，使用该用户名和密码作为clientId和clientSecret
+	const registerUserInfo: User = {
+		username: model.username,
+		password: model.pwd
+	}
+	userApi.insertData(registerUserInfo).then(result => {
+		if (!result.error) {
+			window.$message?.success('注册成功 o(￣▽￣)ｄ')
+		}
+	})
 }
 </script>
 

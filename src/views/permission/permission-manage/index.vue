@@ -76,6 +76,7 @@
                 v-model:value="selectedPermissionUidArr"
                 :render-source-list="renderSourceList"
                 :options="allPermissionOption"
+								:source-filterable="true"
               />
               <template #footer>
                 <n-space justify="end">

@@ -1,30 +1,17 @@
 <template>
-	<n-tree
-		block-line
-		:data="data"
-		:default-expanded-keys="defaultExpandedKeys"
-		:render-label="renderLabel"
-		:checkable="true"
+	<n-transfer
+		ref="transfer"
+		v-model:value="value"
+		:options="options"
+		:render-source-list="renderSourceList"
+		source-filterable
 	/>
 </template>
 
 <script lang="ts">
-import { h, defineComponent, ref } from 'vue'
-import { NButton, TreeOption } from 'naive-ui'
+import { defineComponent, ref, h } from 'vue'
 import { repeat } from 'seemly'
-
-function createData (level = 4, baseKey = ''): TreeOption[] | undefined {
-	if (!level) return undefined
-	return repeat(6 - level, undefined).map((_, index) => {
-		const key = '' + baseKey + level + index
-		return {
-			label: createLabel(level),
-			key,
-			children: createData(level - 1, key),
-			level
-		}
-	})
-}
+import { NTree, TransferRenderSourceList } from 'naive-ui'
 
 function createLabel (level: number): string {
 	if (level === 4) return '道生一'
@@ -34,34 +21,63 @@ function createLabel (level: number): string {
 	return ''
 }
 
-function renderPrefix ({ option }: { option: TreeOption }) {
-	return h(
-		NButton,
-		{ text: true, type: 'primary' },
-		{ default: () => `Prefix-${option.level}` }
-	)
+type Option = {
+	label: string
+	value: string
+	children?: Option[]
 }
 
-function renderLabel ({ option }: { option: TreeOption }) {
-	return `${option.label} :)asdf`
+function createData (level = 4, baseKey = ''): Option[] | undefined {
+	if (!level) return undefined
+	return repeat(6 - level, undefined).map((_, index) => {
+		const value = '' + baseKey + level + index
+		return {
+			label: createLabel(level),
+			value,
+			children: createData(level - 1, value)
+		}
+	})
 }
 
-function renderSuffix ({ option }: { option: TreeOption }) {
-	return h(
-		NButton,
-		{ text: true, type: 'primary' },
-		{ default: () => `Suffix-${option.level}` }
-	)
+function flattenTree (list: undefined | Option[]): Option[] {
+	const result: Option[] = []
+	function flatten (_list: Option[] = []) {
+		_list.forEach((item) => {
+			result.push(item)
+			flatten(item.children)
+		})
+	}
+	flatten(list)
+	return result
 }
 
 export default defineComponent({
 	setup () {
+		const treeData = createData()
+		const valueRef = ref<Array<string | number>>([])
+		const renderSourceList: TransferRenderSourceList = function ({
+																																	 onCheck,
+																																	 pattern
+																																 }) {
+			return h(NTree, {
+				style: 'margin: 0 4px;',
+				keyField: 'value',
+				checkable: true,
+				selectable: false,
+				blockLine: true,
+				checkOnClick: true,
+				data: treeData,
+				pattern,
+				checkedKeys: valueRef.value,
+				onUpdateCheckedKeys: (checkedKeys: Array<string | number>) => {
+					onCheck(checkedKeys)
+				}
+			})
+		}
 		return {
-			data: createData(),
-			defaultExpandedKeys: ref(['40', '41']),
-			renderPrefix,
-			renderLabel,
-			renderSuffix
+			options: flattenTree(createData()),
+			value: valueRef,
+			renderSourceList
 		}
 	}
 })

@@ -5,14 +5,14 @@
       class="absolute left-48px top-24px z-3 text-20px"
       @update:dark="theme.setDarkMode"
     />
-    <n-card :bordered="false" size="large" class="z-4 !w-auto rounded-20px shadow-sm">
+    <n-card :bordered="false" size="large" class="z-4 !w-auto rounded-20px shadow-sm aurora-login-bg-box">
       <div class="w-300px sm:w-360px">
-        <header class="flex-y-center justify-between">
-          <div class="w-70px h-70px rounded-35px overflow-hidden">
-            <system-logo class="text-70px text-primary" :fill="true" />
-          </div>
-          <n-gradient-text type="primary" :size="28">{{ title }}</n-gradient-text>
-        </header>
+        <!--<header class="flex-y-center justify-between">-->
+        <!--  <div class="w-70px h-70px rounded-35px overflow-hidden">-->
+        <!--    <system-logo class="text-70px text-primary" :fill="true" />-->
+        <!--  </div>-->
+        <!--  <n-gradient-text type="primary" :size="28">{{ title }}</n-gradient-text>-->
+        <!--</header>-->
         <main class="pt-24px">
           <h3 class="text-18px text-primary font-medium">{{ activeModule.label }}</h3>
           <div class="pt-24px">
@@ -78,4 +78,8 @@ const bgColor = computed(() => {
 });
 </script>
 
-<style scoped></style>
+<style scoped lang="css">
+	.aurora-login-bg-box {
+		background-color: rgba(255, 255, 255, .2);
+	}
+</style>
