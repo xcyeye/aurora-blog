@@ -222,9 +222,8 @@ const handleClickModifyAction = () => {
 		userApi.insertData(modifyUserInfo.value).then(result => {
 			if (!result.error) {
 				window.$message?.success(`添加用户 ${modifyUserInfo.value.username}成功`)
+				emitter.emit(EnumMittEventName.reloadData)
 				showDrawer.value = false
-			}else {
-				window.$message?.error(`添加用户 ${modifyUserInfo.value.username}失败`)
 			}
 		})
 	}

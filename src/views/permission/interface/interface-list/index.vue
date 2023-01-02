@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<show-table-data
-			:data-table-info="{title: '用户管理', rowKey: 'uid', striped: true}"
+			:data-table-info="{title: '接口管理', rowKey: 'uid', striped: true}"
 			:data-table-columns="columns"
 			@handleCheckedRowKeys="handleCheckedRowKeys"
 			:query-data-method="queryDataMethod">

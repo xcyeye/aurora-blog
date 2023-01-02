@@ -104,6 +104,10 @@ function _baseApi() {
 		return request.post<Array<viewBeanType>>(`${apiPrefix}loadAllRolePermission`, data, baseAxiosRequestConfig);
 	}
 
+	function loadRolePermissionRelByRoleUid(data: beanType) {
+		return request.post<Array<viewBeanType>>(`${apiPrefix}loadRolePermissionRelByRoleUid`, data, baseAxiosRequestConfig);
+	}
+
 	function loadAllRoleByUsername(data: beanType) {
 		return request.post<Array<viewBeanType>>(`${apiPrefix}loadAllRoleByUsername`, data, baseAxiosRequestConfig);
 	}
@@ -166,7 +170,8 @@ function _baseApi() {
 		loadPermissionByUsername,
 		loadAllRoleByUsername,
 		loadAllRolePermission,
-		batchInsertRolePermission
+		batchInsertRolePermission,
+		loadRolePermissionRelByRoleUid
   };
 }
 

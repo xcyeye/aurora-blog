@@ -92,12 +92,12 @@ const pagination = ref<PaginationProps>({
 	showSizePicker: true,
 	pageSizes: [10, 20, 30],
 })
-const queryCondition = ref<Condition>({
-	delete: false
-})
+const queryCondition = ref<Condition>({})
+const requestDataStatus = ref(false)
 
 // 方法
 const loadData = (pageSize: number | null, pageNum: number | null, orderBy: string | null, order: string | null) => {
+	// if (!requestDataStatus.value) return
 	if (!dataTableLoadingStatus.value) dataTableLoadingStatus.value = true
 	if (pageSize) {
 		pagination.value.pageSize = pageSize
@@ -195,14 +195,17 @@ const assertPageSizes = () => {
 onMounted(() => {
 	emitter.on(EnumMittEventName.globalSearchCondition, event => {
 		if (event) {
+			requestDataStatus.value = true
 			queryCondition.value = event as Condition;
 			loadData(null, null, null, null)
 		}
 	})
 	emitter.on(EnumMittEventName.reloadData, e => {
+		requestDataStatus.value = true
 		loadData(null, null, null, null)
 	})
 	emitter.on(EnumMittEventName.resetGlobalSearchCondition, e => {
+		requestDataStatus.value = true
 		queryCondition.value = e as Condition
 		loadData(null, null, null, null)
 	})

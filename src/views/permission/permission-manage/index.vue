@@ -68,16 +68,16 @@
         <n-tab-pane name="rolePermission" tab="角色权限">
           <n-space vertical>
             <n-card hoverable title="选择角色" class="rounded-16px shadow-sm" size="small">
-              <n-select v-model:value="selectedRoleUidArr" multiple :options="allRoleOption" />
+              <n-select @update:value="handleSelectRoleAction" v-model:value="selectedRoleUidArr" multiple :options="allRoleOption" />
             </n-card>
             <n-card hoverable title="选择接口" class="rounded-16px shadow-sm" size="small">
-              <n-transfer
-                ref="transfer"
-                v-model:value="selectedPermissionUidArr"
-                :render-source-list="renderSourceList"
-                :options="allPermissionOption"
-								:source-filterable="true"
-              />
+							<n-transfer
+								ref="transfer"
+								v-model:value="transferInterfaceArr"
+								:options="transferInterfaceOptions"
+								:render-source-list="renderPermissionPathSourceList"
+								source-filterable
+							/>
               <template #footer>
                 <n-space justify="end">
                   <n-button strong secondary tertiary round type="success" @click="handleBindPermissionForRoleAction"
@@ -103,9 +103,35 @@ import type {UserVo} from '@/theme/vo/admin/UserVo';
 import {rolePermissionRelApi} from '@/service/api/admin/RolePermissionRelApi';
 import type {PermissionVo} from '@/theme/vo/admin/PermissionVo';
 import type {RoleVo} from '@/theme/vo/admin/RoleVo';
-import {getRandomTagType} from "@/utils";
+import {getRandomTagType, removeDuplicateElement} from "@/utils";
+import {interfaceInfoApi} from "@/service/api/auth/interfaceInfoApi";
 
 defineComponent({ name: 'Index' });
+
+interface InterfaceTreeOption {
+	label?: string,
+	value?: string,
+	children?: InterfaceTreeOption[],
+	isInterfacePath?: boolean,
+	requestMethod?: string,
+	realLabel?: string,
+	requestPath?: string,
+	disabled?: boolean
+}
+
+interface ModuleServiceInterfaceProperties {
+	moduleTagName?: string | null,
+	interfaceArr?: {
+		summary?: string | null,
+		requestPath?: string | null,
+		requestMethod?: string | null
+	}[]
+}
+
+interface InterfaceProperties {
+	serviceTagName: string | null,
+	servicePathArr: Array<ModuleServiceInterfaceProperties> | []
+}
 
 interface PermissionRoleTreeOption {
   label?: string;
@@ -129,8 +155,145 @@ const userInfoArr = ref<Array<UserVo>>([]);
 const roleInfoArr = ref<Array<RoleVo>>([]);
 const permissionInfoArr = ref<Array<PermissionVo>>([]);
 const userRolePermissionInfoArr = ref<Array<UserRolePermissionInfo>>([])
+const selectedRolePermissionPathArr = ref<Array<string>>([])
+
+/** transferInterfaceOptions后端的所有接口选项 */
+const transferInterfaceOptions = ref<Array<InterfaceTreeOption>>([])
+/** 选中某个权限之后的值 */
+const transferInterfaceArr = ref<Array<string>>([])
+/** 渲染权限树的数组 */
+const transferTreeOptions = ref<Array<InterfaceTreeOption>>([])
 
 const getPermissionRandomTagType = computed(() => (index: number) => getRandomTagType())
+
+async function scanAllInterfaceAction(allPermissionArr: Array<PermissionVo>): Promise<null> {
+	transferInterfaceOptions.value = []
+	transferInterfaceArr.value = []
+	transferTreeOptions.value = []
+	return new Promise((resolve, reject) => {
+		interfaceInfoApi.queryListSwaggerConfig().then(result => {
+			if (result.data) {
+				result.data.urls?.forEach((v, index) => {
+					const parentOneTreeOption: InterfaceTreeOption = {
+						label: v.name!,
+						value: v.name!,
+						children: new Array<InterfaceTreeOption>(),
+						isInterfacePath: false
+					}
+					interfaceInfoApi.querySingleSwaggerInterfaceInfo(v.name!).then(result1 => {
+						if (!result1.tags) return
+						const interfaceProperties :InterfaceProperties = {
+							serviceTagName: v.name!,
+							servicePathArr: []
+						}
+						result1.tags.forEach((tag, tagIndex) => {
+							const moduleServiceInterfaceProperties :ModuleServiceInterfaceProperties = {
+								moduleTagName: tag.name,
+								interfaceArr: []
+							}
+							const parentTwoTreeOption: InterfaceTreeOption = {
+								label: tag.name!,
+								value: tag.name!,
+								children: new Array<InterfaceTreeOption>(),
+								isInterfacePath: false
+							}
+							moduleServiceInterfaceProperties.moduleTagName = tag.name
+							result1.requestPaths?.forEach((pathInfo, pathInfoIndex) => {
+								// @ts-ignore
+								if (pathInfo.tags!.indexOf(tag.name) !== -1) {
+									allPermissionArr.forEach((permission, permissionIndex) => {
+										const pathTemp = pathInfo.requestMethod!.toUpperCase() + ":" + pathInfo.requestPath
+										if (permission.path === pathTemp) {
+											const parentThreeTreeOption: InterfaceTreeOption = {
+												label: `${pathInfo.requestMethod!.toUpperCase()}-${pathInfo.summary}-${pathInfo.requestPath}`,
+												value: permission.uid!,
+												isInterfacePath: true,
+												requestMethod: pathInfo.requestMethod!.toUpperCase(),
+												realLabel: pathInfo.summary!,
+												requestPath: pathInfo.requestPath!,
+												disabled: false
+											}
+											transferInterfaceOptions.value.push(parentThreeTreeOption)
+											parentTwoTreeOption.children?.push(parentThreeTreeOption)
+											moduleServiceInterfaceProperties.interfaceArr?.push({
+												summary: pathInfo.summary,
+												requestMethod: pathInfo.requestMethod,
+												requestPath: pathInfo.requestPath
+											})
+										}
+										if ((index === result.data.urls!.length - 1) && (permissionIndex === allPermissionArr.length - 1)) {
+											resolve(null)
+										}
+									})
+								}else {
+
+								}
+							})
+							// @ts-ignore
+							interfaceProperties.servicePathArr.push(moduleServiceInterfaceProperties)
+							parentOneTreeOption.children?.push(parentTwoTreeOption)
+						})
+						transferTreeOptions.value.push(parentOneTreeOption)
+					})
+				})
+			}else {
+				resolve(null)
+			}
+		})
+	})
+}
+
+async function loadPermissionInfo(): Promise<null> {
+	return new Promise((resolve, reject) => {
+		// 查询某个角色所拥有的权限
+		permissionApi.queryListDataByCondition({ pageSize: 10000 }).then(result => {
+			if (result.data && result.data.result) {
+				permissionInfoArr.value = result.data.result;
+				result.data.result.forEach((v, index) => {
+					allPermissionOption.value.push({
+						label: v.path!,
+						value: v.uid!,
+						summary: v.name!
+					});
+					if (index === result.data.result!.length - 1) {
+						resolve(null)
+					}
+				});
+			}
+		});
+	})
+}
+
+async function packInterfaceAndPermissionPath() {
+	await loadPermissionInfo()
+	await scanAllInterfaceAction(permissionInfoArr.value)
+}
+
+async function handleSelectRoleAction(value: Array<string>) {
+	await scanAllInterfaceAction(permissionInfoArr.value)
+	rolePermissionRelApi.loadRolePermissionRelByRoleUid({roleUidArr: value}).then(result => {
+		if (result.data) {
+			transferTreeOptions.value.forEach(v => {
+				if (v.children) {
+					v.children.forEach(firstChildren => {
+						if (firstChildren.children) {
+							firstChildren.children.forEach(secondChildren => {
+								result.data.forEach(permission => {
+									const pathTemp = secondChildren.requestMethod?.toUpperCase() + ":" + secondChildren.requestPath
+									if (permission.path === pathTemp) {
+										secondChildren.disabled = true
+										selectedRolePermissionPathArr.value.push(secondChildren.value!)
+										transferInterfaceArr.value.push(secondChildren.value!)
+									}
+								})
+							})
+						}
+					})
+				}
+			})
+		}
+	})
+}
 
 const loadUserRolePermissionInfo = () => {
   // 先查询role信息
@@ -192,19 +355,6 @@ const loadAllUserInfo = () => {
       });
     }
   });
-
-  permissionApi.queryListDataByCondition({ pageSize: 10000 }).then(result => {
-    if (result.data && result.data.result) {
-      permissionInfoArr.value = result.data.result;
-      result.data.result.forEach(v => {
-        allPermissionOption.value.push({
-          label: v.path!,
-          value: v.uid!,
-          summary: v.name!
-        });
-      });
-    }
-  });
 };
 
 function handleRenderLabel({ option }: { option: PermissionRoleTreeOption }) {
@@ -250,6 +400,31 @@ function handleRenderLabel({ option }: { option: PermissionRoleTreeOption }) {
         )
     }
   );
+}
+
+const renderPermissionPathSourceList: TransferRenderSourceList = function ({
+																															 onCheck,
+																															 pattern
+																														 }) {
+	return h(
+		// @ts-ignore
+		NTree,
+		{
+			checkboxPlacement: 'right',
+			style: 'margin: 0 4px;',
+			keyField: 'value',
+			checkable: true,
+			cascade: true,
+			selectable: false,
+			blockLine: true,
+			checkOnClick: true,
+			data: transferTreeOptions.value,
+			pattern,
+			checkedKeys: transferInterfaceArr.value,
+			onUpdateCheckedKeys: (checkedKeys: Array<string | number>) => {
+				onCheck(checkedKeys)
+			}
+		})
 }
 
 const renderSourceList: TransferRenderSourceList = function ({ onCheck, pattern }) {
@@ -303,7 +478,11 @@ const handleBindRoleForUserAction = () => {
 };
 
 const handleBindPermissionForRoleAction = () => {
-  if (selectedPermissionUidArr.value.length === 0 || selectedRoleUidArr.value.length === 0) {
+	const transferInterfaceArrTemp: Array<string> = transferInterfaceArr.value
+		.filter(v => /^[0-9]+$/.test(v))
+		.filter(v => selectedRolePermissionPathArr.value.indexOf(v) === -1)
+
+  if (transferInterfaceArrTemp.length === 0 || selectedRoleUidArr.value.length === 0) {
     window.$message?.error('请至少选择一个接口或者角色');
     return;
   }
@@ -315,15 +494,11 @@ const handleBindPermissionForRoleAction = () => {
     negativeText: '取消',
     onPositiveClick() {
       // 因为后端只有批量为多个用户添加某个权限，所以需要遍历
-      selectedPermissionUidArr.value.forEach(v => {
-        rolePermissionRelApi
-          .batchInsertRolePermission({ roleUidArr: selectedRoleUidArr.value, permissionUidArr: [v] })
-          .then(result => {
-            if (!result.error) {
-              window.$message?.success('操作成功');
-            }
-          });
-      });
+			rolePermissionRelApi.batchInsertRolePermission({ roleUidArr: selectedRoleUidArr.value, permissionUidArr: transferInterfaceArrTemp }).then(result => {
+				if (!result.error) {
+					window.$message?.success('操作成功');
+				}
+			});
     }
   });
 };
@@ -331,6 +506,7 @@ const handleBindPermissionForRoleAction = () => {
 onBeforeMount(() => {
   loadAllUserInfo();
 	loadUserRolePermissionInfo()
+	packInterfaceAndPermissionPath()
 });
 </script>
 

@@ -15,7 +15,7 @@ const { loading, startLoading, endLoading } = useLoading();
 
 function handleRefresh() {
   startLoading();
-  app.reloadPage();
+	app.reloadPage();
   setTimeout(() => {
     endLoading();
   }, 1000);
