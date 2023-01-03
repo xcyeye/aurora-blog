@@ -8,6 +8,8 @@ export {}
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     Archive: typeof import('./../components/common/Archive.vue')['default']
+    ArchiveItem: typeof import('./../components/common/child/archive/ArchiveItem.vue')['default']
+    AuroraArchive: typeof import('./../components/common/AuroraArchive.vue')['default']
     AuroraCenter: typeof import('./../components/common/AuroraCenter.vue')['default']
     AuroraCommon: typeof import('./../components/common/AuroraCommon.vue')['default']
     AuroraGlobal: typeof import('./../components/common/AuroraGlobal.vue')['default']
@@ -48,6 +50,7 @@ declare module '@vue/runtime-core' {
     NLoadingBarProvider: typeof import('naive-ui')['NLoadingBarProvider']
     NMessageProvider: typeof import('naive-ui')['NMessageProvider']
     NNotificationProvider: typeof import('naive-ui')['NNotificationProvider']
+    NSpace: typeof import('naive-ui')['NSpace']
     Page: typeof import('./../components/common/Page.vue')['default']
     PageMeta: typeof import('./../components/common/PageMeta.vue')['default']
     PageNav: typeof import('./../components/common/PageNav.vue')['default']

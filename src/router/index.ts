@@ -12,6 +12,11 @@ const router = createRouter({
       path: '/friendLink',
       name: 'friendLink',
       component: () => import('../views/friend-link/index.vue')
+    },
+    {
+      path: '/archive',
+      name: 'archive',
+      component: () => import('../views/archive/index.vue')
     }
   ]
 })
