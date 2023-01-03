@@ -1,18 +1,13 @@
 <template>
-	<div>
-		<h2>
-			this is a test
-		</h2>
-		<n-card title="test">
-			asdfasdf
-		</n-card>
+	<div class="aurora-main-content">
+		<slot name="globalContent"></slot>
 	</div>
 </template>
 
 <script lang="ts" setup>
 import {defineComponent} from "vue";
 
-defineComponent({name: 'AuroraTest'});
+defineComponent({name: 'index'});
 </script>
 
 <style scoped>

@@ -11,13 +11,18 @@
     "type-check": "vue-tsc --noEmit -p tsconfig.vitest.json --composite false"
   },
   "dependencies": {
+    "axios": "^1.2.2",
+    "easy-typer-js": "^2.1.0",
+    "jquery": "^3.6.3",
     "pinia": "^2.0.28",
+    "smoothscroll-polyfill": "^0.4.4",
     "swiper": "^8.4.5",
     "vue": "^3.2.45",
     "vue-router": "^4.1.6",
     "vuex": "^4.1.0"
   },
   "devDependencies": {
+    "@types/jquery": "^3.5.16",
     "@types/jsdom": "^20.0.1",
     "@types/node": "^18.11.12",
     "@vitejs/plugin-vue": "^4.0.0",
