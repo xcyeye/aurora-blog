@@ -8,6 +8,7 @@ export {}
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     Archive: typeof import('./../components/common/Archive.vue')['default']
+    AuroraCommon: typeof import('./../components/common/AuroraCommon.vue')['default']
     AuroraGlobal: typeof import('./../components/common/AuroraGlobal.vue')['default']
     AuroraTest: typeof import('./../components/aurora/AuroraTest.vue')['default']
     Badge: typeof import('./../components/common/Badge.vue')['default']
@@ -54,7 +55,8 @@ declare module '@vue/runtime-core' {
     RecommendPage: typeof import('./../components/common/RecommendPage.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
-    SocialSpin: typeof import('./../components/common/SocialSpin.vue')['default']
+    SocialSpin: typeof import('./../components/common/child/SocialSpin.vue')['default']
+    StyleMenu: typeof import('./../components/common/child/home/StyleMenu.vue')['default']
     ToggleDarkModeButton: typeof import('./../components/common/ToggleDarkModeButton.vue')['default']
     ToggleSidebarButton: typeof import('./../components/common/ToggleSidebarButton.vue')['default']
     TopImage: typeof import('./../components/common/TopImage.vue')['default']

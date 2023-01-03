@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<header id="c-navbar" class="aurora-header header-bg-show navbar">
-			我是导航栏
+			<router-link to="/friendLink">友情链接</router-link>
 		</header>
 	</div>
 </template>

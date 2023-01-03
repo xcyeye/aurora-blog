@@ -1,5 +1,5 @@
 <template>
-	<div class="common">
+	<div>
 		<global-header/>
 		<global-content>
 			<template #globalContent>

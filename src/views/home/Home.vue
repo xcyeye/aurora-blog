@@ -1,13 +1,6 @@
 <template>
 	<home-content :theme-property="themeProperty" :show-random-say="true" :is-home="true"/>
-	<home-bottom>
-		<template #home-footer>
-			<Footer :theme-property="themeProperty"
-							:is-home="true"
-							:is-show-footer="true">
-			</Footer>
-		</template>
-	</home-bottom>
+	<home-bottom/>
 </template>
 
 <script lang="ts">

@@ -13,8 +13,10 @@
   "dependencies": {
     "axios": "^1.2.2",
     "easy-typer-js": "^2.1.0",
+    "gsap": "^3.11.4",
     "jquery": "^3.6.3",
     "pinia": "^2.0.28",
+    "reading-time-estimator": "^1.7.2",
     "smoothscroll-polyfill": "^0.4.4",
     "swiper": "^8.4.5",
     "vue": "^3.2.45",
