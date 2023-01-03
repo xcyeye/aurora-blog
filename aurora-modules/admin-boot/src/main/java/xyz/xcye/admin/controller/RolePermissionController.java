@@ -13,8 +13,6 @@ import xyz.xcye.admin.pojo.RolePermissionRelationshipPojo;
 import xyz.xcye.admin.service.PermissionRelationService;
 import xyz.xcye.core.annotaion.controller.ModifyOperation;
 import xyz.xcye.core.annotaion.controller.SelectOperation;
-import xyz.xcye.core.entity.R;
-import xyz.xcye.core.enums.ResponseStatusCodeEnum;
 import xyz.xcye.data.entity.Condition;
 
 import java.util.List;
@@ -45,6 +43,13 @@ public class RolePermissionController {
     @Operation(summary = "加载所有的角色权限关系，只返回该角色存在权限部分，如果某个角色没有赋予权限，则不返回")
     public List<RolePermissionDTO> loadAllRolePermission(@RequestBody Condition<Long> condition) {
         return permissionRelationService.loadAllRolePermission(condition);
+    }
+
+    @SelectOperation
+    @PostMapping("/loadRolePermissionRelByRoleUid")
+    @Operation(summary = "加载角色权限关系根据角色名，不返回用户信息")
+    public List<RolePermissionDTO> loadRolePermissionRelByRoleUid(@RequestBody RolePermissionRelationshipPojo pojo) {
+        return permissionRelationService.loadRolePermissionRelByRoleUid(pojo);
     }
 
     @SelectOperation

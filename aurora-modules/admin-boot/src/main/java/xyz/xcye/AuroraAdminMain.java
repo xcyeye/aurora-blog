@@ -4,8 +4,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.ConfigurableApplicationContext;
-import xyz.xcye.admin.manager.task.LoadRolePermissionInfo;
-import xyz.xcye.admin.manager.task.LoadWhiteUrlInfo;
+import xyz.xcye.admin.service.PermissionRelationService;
+import xyz.xcye.admin.service.WhiteUrlService;
+import xyz.xcye.data.entity.Condition;
 
 /**
  * @author qsyyke
@@ -17,9 +18,12 @@ public class AuroraAdminMain {
     public static void main(String[] args) {
         ConfigurableApplicationContext run = SpringApplication.run(AuroraAdminMain.class, args);
 
-        LoadRolePermissionInfo loadRolePermissionInfo = run.getBean(LoadRolePermissionInfo.class);
-        loadRolePermissionInfo.storagePermissionInfoToRedis();
-        // 将mysql中的白名单数据加载到redis中
-        run.getBean(LoadWhiteUrlInfo.class).storageWhiteUrlInfoToRedis();
+        // 将角色权限信息和白名单存入redis
+        Condition<Long> condition = new Condition<>();
+        condition.setPageSize(10000);
+        run.getBean(PermissionRelationService.class).loadAllRolePermission(condition);
+        run.getBean(WhiteUrlService.class).queryListWhiteUrlByCondition(new Condition<>(){{
+            setPageSize(10000);
+        }});
     }
 }

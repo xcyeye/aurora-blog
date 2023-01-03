@@ -8,6 +8,7 @@ import org.springframework.util.StringUtils;
 import xyz.xcye.admin.po.Role;
 import xyz.xcye.admin.pojo.RolePojo;
 import xyz.xcye.admin.vo.RoleVO;
+import xyz.xcye.core.constant.RedisConstant;
 import xyz.xcye.core.enums.ResponseStatusCodeEnum;
 import xyz.xcye.core.exception.role.RoleException;
 import xyz.xcye.core.util.BeanUtils;
@@ -41,7 +42,7 @@ public class RoleService {
         auroraRoleService.insert(BeanUtils.copyProperties(role, Role.class));
     }
 
-    @CleanRedisData
+    @CleanRedisData(otherKey = RedisConstant.STORAGE_ROLE_PERMISSION_INFO)
     public int updateRole(RolePojo role) {
         // 判断角色是否存在
         Role queryRole = auroraRoleService.queryById(role.getUid());
@@ -54,7 +55,7 @@ public class RoleService {
         return auroraRoleService.updateById(BeanUtils.copyProperties(role, Role.class));
     }
 
-    @CleanRedisData
+    @CleanRedisData(otherKey = RedisConstant.STORAGE_ROLE_PERMISSION_INFO)
     public int physicalDeleteRole(long uid) {
         return auroraRoleService.deleteById(uid);
     }
@@ -67,5 +68,10 @@ public class RoleService {
     @GetByRedis
     public RoleVO queryRoleByUid(long uid) {
         return BeanUtils.copyProperties(auroraRoleService.queryById(uid), RoleVO.class);
+    }
+
+    @GetByRedis
+    public RoleVO queryOneRole(RolePojo pojo) {
+        return BeanUtils.copyProperties(auroraRoleService.queryOne(BeanUtils.copyProperties(pojo, Role.class)), RoleVO.class);
     }
 }

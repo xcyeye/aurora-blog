@@ -16,14 +16,17 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
-import xyz.xcye.admin.constant.RedisStorageConstant;
 import xyz.xcye.admin.dto.RolePermissionDTO;
 import xyz.xcye.admin.po.WhiteUrl;
+import xyz.xcye.admin.vo.WhiteUrlVO;
 import xyz.xcye.amqp.api.AmqpSenderService;
 import xyz.xcye.amqp.comstant.AmqpExchangeNameConstant;
 import xyz.xcye.amqp.comstant.AmqpQueueNameConstant;
 import xyz.xcye.auth.constant.OauthJwtConstant;
 import xyz.xcye.auth.constant.RequestConstant;
+import xyz.xcye.core.constant.RedisConstant;
+import xyz.xcye.data.entity.PageData;
+
 import java.net.URI;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
@@ -74,7 +77,7 @@ public class AuroraReactiveAuthorizationManager implements ReactiveAuthorization
         // 获取redis中的所有角色权限关系
         List<RolePermissionDTO> allRolePermissionList = null;
         try {
-            allRolePermissionList = (List<RolePermissionDTO>) redisTemplate.opsForValue().get(RedisStorageConstant.STORAGE_ROLE_PERMISSION_INFO);
+            allRolePermissionList = (List<RolePermissionDTO>) redisTemplate.opsForValue().get(RedisConstant.STORAGE_ROLE_PERMISSION_INFO);
         } catch (Exception e) {
             // 如果redis中没有角色权限关系信息，直接返回鉴权失败 为了保护系统
             return Mono.just(new AuthorizationDecision(false));
@@ -117,7 +120,11 @@ public class AuroraReactiveAuthorizationManager implements ReactiveAuthorization
 
     private boolean isWhiteUrl(String restFulPath) {
         // 获取redis中的所有白名单
-        List<WhiteUrl> whiteUrlList = (List<WhiteUrl>) redisTemplate.opsForValue().get(RedisStorageConstant.STORAGE_WHITE_URL_INFO);
+        PageData<WhiteUrlVO> pageData = (PageData<WhiteUrlVO>) redisTemplate.opsForValue().get(RedisConstant.STORAGE_WHITE_URL_INFO);
+        List<WhiteUrlVO> whiteUrlList = new ArrayList<>();
+        if (pageData != null) {
+            whiteUrlList = pageData.getResult();
+        }
         if (whiteUrlList == null || whiteUrlList.isEmpty()) {
             // 发送消息更新缓存
             rabbitTemplate.send(AmqpExchangeNameConstant.AURORA_SEND_OPERATE_USER_EXCHANGE,
@@ -133,8 +140,8 @@ public class AuroraReactiveAuthorizationManager implements ReactiveAuthorization
         return false;
     }
 
-    private String[] getStaticResourceWhiteUrlArr(List<WhiteUrl> whiteUrlList) {
-        whiteUrlList = Optional.ofNullable(whiteUrlList).orElse(List.of(new WhiteUrl()));
+    private String[] getStaticResourceWhiteUrlArr(List<WhiteUrlVO> whiteUrlList) {
+        whiteUrlList = Optional.ofNullable(whiteUrlList).orElse(List.of(new WhiteUrlVO()));
 
         Stream<String> whiteUrlStream = whiteUrlList.stream().map(WhiteUrl::getUrl);
         Stream<String> staticResourceStream = Arrays.stream(OauthJwtConstant.PUBLIC_STATIC_RESOURCE)

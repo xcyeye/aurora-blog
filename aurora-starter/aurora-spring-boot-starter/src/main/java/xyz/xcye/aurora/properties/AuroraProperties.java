@@ -3,6 +3,8 @@ package xyz.xcye.aurora.properties;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
+import java.util.List;
+
 /**
  * @author qsyyke
  * @date Created in 2022/4/30 11:59
@@ -25,6 +27,8 @@ public class AuroraProperties {
      * 使用雪花算法生成id时的数据中心机房id
      */
     private Integer snowFlakeDatacenterId;
+
+    private List<String> defaultRoleList;
 
     @Data
     @ConfigurationProperties(prefix = AuroraFileProperties.AURORA_FILE_PREFIX)

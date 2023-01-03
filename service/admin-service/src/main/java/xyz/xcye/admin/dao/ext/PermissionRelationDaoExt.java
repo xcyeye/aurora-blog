@@ -38,6 +38,8 @@ public interface PermissionRelationDaoExt {
      */
     List<RolePermissionDTO> loadAllRolePermission(@Param("condition") Condition condition);
 
+    List<RolePermissionDTO> loadRolePermissionRelByRoleUid(Long roleUid);
+
     /**
      * 根据permissionPath，查询哪些角色可以访问
      * @param permissionPath

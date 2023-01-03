@@ -22,4 +22,10 @@ public @interface CleanRedisData {
 	 * key
 	 */
 	String key() default "";
+
+	/**
+	 * 其他的key值，比如可以根据key清除字段，也可以根据这个otherKey来清除字段
+	 * @return
+	 */
+	String[] otherKey() default {};
 }

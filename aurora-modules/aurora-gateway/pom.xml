@@ -98,6 +98,11 @@
 
         <dependency>
             <groupId>xyz.xcye.base</groupId>
+            <artifactId>data-common</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>xyz.xcye.base</groupId>
             <artifactId>aurora-core</artifactId>
             <exclusions>
                 <exclusion>

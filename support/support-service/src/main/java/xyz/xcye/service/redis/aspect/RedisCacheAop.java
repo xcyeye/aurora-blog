@@ -87,6 +87,7 @@ public class RedisCacheAop {
 
         // 自定义key值
         String customKey = cleanRedisData.key();
+        String[] otherKeyArr = cleanRedisData.otherKey();
 
         String prefixRedisKey = getPrefixRedisKey(point);
         String redisKey = prefixRedisKey + ":*";
@@ -96,6 +97,21 @@ public class RedisCacheAop {
         Set<String> keys = redisTemplate.keys(redisKey);
         if (keys != null && !keys.isEmpty()) {
             redisTemplate.delete(keys);
+        }
+
+        // 清除其他key所对应的值
+        if (otherKeyArr != null) {
+            for (String otherKey : otherKeyArr) {
+                Set<String> prefixOtherKeys = redisTemplate.keys(otherKey + ":*");
+                if (prefixOtherKeys != null && !prefixOtherKeys.isEmpty()) {
+                    redisTemplate.delete(prefixOtherKeys);
+                }
+
+                Set<String> otherKeys = redisTemplate.keys(otherKey);
+                if (otherKeys != null && !otherKeys.isEmpty()) {
+                    redisTemplate.delete(otherKeys);
+                }
+            }
         }
         return point.proceed();
     }

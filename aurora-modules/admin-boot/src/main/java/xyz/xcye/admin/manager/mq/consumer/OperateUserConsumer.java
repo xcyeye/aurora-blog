@@ -10,8 +10,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.validation.BindException;
 import xyz.xcye.admin.manager.task.LoadRolePermissionInfo;
 import xyz.xcye.admin.manager.task.LoadWhiteUrlInfo;
-import xyz.xcye.admin.po.User;
 import xyz.xcye.admin.pojo.UserPojo;
+import xyz.xcye.admin.service.PermissionRelationService;
 import xyz.xcye.admin.service.UserService;
 import xyz.xcye.admin.vo.UserVO;
 import xyz.xcye.amqp.comstant.AmqpExchangeNameConstant;
@@ -26,6 +26,7 @@ import xyz.xcye.aurora.properties.AuroraProperties;
 import xyz.xcye.core.enums.ResponseStatusCodeEnum;
 import xyz.xcye.core.exception.email.EmailException;
 import xyz.xcye.core.util.lambda.AssertUtils;
+import xyz.xcye.data.entity.Condition;
 import xyz.xcye.feign.config.service.MessageLogFeignService;
 
 /**
@@ -56,6 +57,9 @@ public class OperateUserConsumer {
     private LoadWhiteUrlInfo loadWhiteUrlInfo;
     @Autowired
     private RedisTemplate<String,Object> redisTemplate;
+
+    @Autowired
+    private PermissionRelationService permissionRelationService;
 
     /**
      * 当用户在认证服务中，登录次数达到最大值之后，认证服务会向mq中发送消息，禁用该用户
@@ -113,7 +117,10 @@ public class OperateUserConsumer {
      */
     @RabbitListener(queues = AmqpQueueNameConstant.UPDATE_ROLE_PERMISSION_CACHE_QUEUE, ackMode = "MANUAL")
     public void updateRolePermissionCacheConsumer(String msgJson, Channel channel, Message message) throws Exception {
-        loadRolePermissionInfo.storagePermissionInfoToRedis();
+        // loadRolePermissionInfo.storagePermissionInfoToRedis();
+        permissionRelationService.loadAllRolePermission(new Condition<>(){{
+            setPageSize(10000);
+        }});
         channel.basicAck(message.getMessageProperties().getDeliveryTag(), false);
     }
 

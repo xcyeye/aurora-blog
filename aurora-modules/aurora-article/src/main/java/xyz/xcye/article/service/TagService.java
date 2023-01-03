@@ -81,8 +81,13 @@ public class TagService {
     }
 
     private void judgeTag(TagPojo pojo, boolean isInsert) {
+        Long currentUserUid = UserUtils.getCurrentUserUid();
+        if (currentUserUid == null) {
+            throw new UserException(ResponseStatusCodeEnum.PERMISSION_USER_NOT_LOGIN);
+        }
         Tag tag = auroraTagService.queryOne(new Tag() {{
             setTitle(pojo.getTitle());
+            setUserUid(currentUserUid);
         }});
         if (isInsert) {
             AssertUtils.stateThrow(tag == null, () -> new ArticleException("存在相同的标签"));

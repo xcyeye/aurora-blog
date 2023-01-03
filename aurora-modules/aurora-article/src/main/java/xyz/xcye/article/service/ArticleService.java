@@ -5,15 +5,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
-import xyz.xcye.article.dao.AuroraArticleDao;
 import xyz.xcye.article.po.Article;
-import xyz.xcye.article.po.Category;
-import xyz.xcye.article.po.Tag;
 import xyz.xcye.article.pojo.ArticlePojo;
 import xyz.xcye.article.pojo.CategoryPojo;
 import xyz.xcye.article.pojo.TagPojo;
-import xyz.xcye.article.service.CategoryService;
-import xyz.xcye.article.service.TagService;
 import xyz.xcye.article.util.TimeUtils;
 import xyz.xcye.article.vo.ArticleVO;
 import xyz.xcye.aurora.properties.AuroraProperties;
@@ -103,6 +98,10 @@ public class ArticleService {
     }
 
     private void setCategory(ArticlePojo article) {
+        Long currentUserUid = UserUtils.getCurrentUserUid();
+        if (currentUserUid == null) {
+            throw new UserException(ResponseStatusCodeEnum.PERMISSION_USER_NOT_LOGIN);
+        }
         // 如果文章中的某个标签或者类别不存在，则添加
         if (!StringUtils.hasLength(article.getCategoryNames())) {
             return;
@@ -114,6 +113,7 @@ public class ArticleService {
                     // 如果不存在，则添加
                     CategoryPojo categoryPojo = new CategoryPojo();
                     categoryPojo.setTitle(categoryName);
+                    categoryPojo.setUserUid(currentUserUid);
                     if (categoryService.selectByTitle(categoryName) == null) {
                         // 不存在，添加
                         categoryService.insertCategory(categoryPojo);
@@ -126,6 +126,10 @@ public class ArticleService {
     }
 
     private void setTag(ArticlePojo article) {
+        Long currentUserUid = UserUtils.getCurrentUserUid();
+        if (currentUserUid == null) {
+            throw new UserException(ResponseStatusCodeEnum.PERMISSION_USER_NOT_LOGIN);
+        }
         if (!StringUtils.hasLength(article.getTagNames())) {
             return;
         }
@@ -136,6 +140,7 @@ public class ArticleService {
                     // 如果不存在，则添加
                     TagPojo tagPojo = new TagPojo();
                     tagPojo.setTitle(tagName);
+                    tagPojo.setUserUid(currentUserUid);
                     if (tagService.selectByTitle(tagName) == null) {
                         // 不存在，添加
                         tagService.insertTag(tagPojo);

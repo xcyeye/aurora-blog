@@ -4,14 +4,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
-import xyz.xcye.admin.constant.RedisStorageConstant;
 import xyz.xcye.admin.dto.RolePermissionDTO;
 import xyz.xcye.admin.service.PermissionRelationService;
-import xyz.xcye.core.util.DateUtils;
 import xyz.xcye.data.entity.Condition;
 
-import java.time.Duration;
-import java.util.*;
+import java.util.List;
 
 /**
  * 加载角色和权限对应信息，程序应该在启动之初，就将角色和权限信息加载到redis中进行存储，并且该加载方法可以通过mq进行调用
@@ -50,7 +47,7 @@ public class LoadRolePermissionInfo {
 
         List<RolePermissionDTO> rolePermissionDTOList = permissionRelationService.loadAllRolePermission(condition);
         // 存入redis中Duration.ofSeconds(DateUtils.getRandomMinute(60, 60 * 24 * 3) * 60)
-        template.opsForValue().set(RedisStorageConstant.STORAGE_ROLE_PERMISSION_INFO, rolePermissionDTOList,
-                Duration.ofSeconds(DateUtils.getRandomMinute(60, 60 * 24 * 3) * 60));
+        // template.opsForValue().set(RedisStorageConstant.STORAGE_ROLE_PERMISSION_INFO, rolePermissionDTOList,
+        //         Duration.ofSeconds(DateUtils.getRandomMinute(60, 60 * 24 * 3) * 60));
     }
 }

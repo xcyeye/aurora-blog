@@ -3,12 +3,15 @@ package xyz.xcye.admin.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.validation.BindException;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import xyz.xcye.admin.po.User;
 import xyz.xcye.admin.pojo.UserPojo;
-import xyz.xcye.admin.service.AuroraPermissionService;
 import xyz.xcye.admin.service.UserService;
 import xyz.xcye.admin.vo.UserVO;
 import xyz.xcye.core.annotaion.controller.ModifyOperation;
@@ -28,6 +31,7 @@ import javax.validation.groups.Default;
 
 @RequestMapping("/admin/user")
 @RestController
+@RefreshScope
 @Tag(name = "用户相关写操作")
 public class UserController {
 
@@ -46,6 +50,13 @@ public class UserController {
     @Operation(summary = "修改用户信息")
     public Integer updateUser(@Validated({Update.class, Default.class}) @RequestBody UserPojo user) throws UserException {
         return userService.updateUser(user);
+    }
+
+    @Operation(summary = "忘记密码")
+    @PostMapping("/forgotPassword")
+    @ModifyOperation
+    public Integer forgotPassword(@RequestBody UserPojo user) {
+        return userService.forgotPassword(user);
     }
 
     @Operation(summary = "更新密码")

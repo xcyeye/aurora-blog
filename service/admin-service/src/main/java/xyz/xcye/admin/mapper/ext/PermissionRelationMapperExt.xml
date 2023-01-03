@@ -4,8 +4,6 @@
 
 <mapper namespace="xyz.xcye.admin.dao.ext.PermissionRelationDaoExt">
 
-    <cache type="xyz.xcye.mybatis.MybatisLowFrequentCacheAutoConfig"/>
-
     <sql id="Base_Column_List">
         SELECT au_role.`name`        roleName,
                au_role.`status`      roleStatus,
@@ -63,6 +61,15 @@
             au_user_role.user_uid=#{uid}
         and
             au_role.uid=au_user_role.role_uid
+    </select>
+    <select id="loadRolePermissionRelByRoleUid" resultType="xyz.xcye.admin.dto.RolePermissionDTO">
+        SELECT au_role.name roleName, au_role.status roleStatus, au_permission.path, au_permission.name permissionName
+        FROM au_role,
+             au_role_permission,
+             au_permission
+        WHERE au_role.uid = au_role_permission.role_uid
+          AND au_permission.uid = au_role_permission.permission_uid
+          AND au_role.uid = #{roleUid};
     </select>
 
 

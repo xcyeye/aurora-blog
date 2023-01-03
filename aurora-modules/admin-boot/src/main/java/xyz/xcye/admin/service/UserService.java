@@ -1,7 +1,6 @@
 package xyz.xcye.admin.service;
 
 import io.seata.spring.annotation.GlobalTransactional;
-import io.swagger.v3.oas.models.security.SecurityScheme;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -14,8 +13,11 @@ import xyz.xcye.admin.api.feign.EmailFeignService;
 import xyz.xcye.admin.dto.EmailVerifyAccountDTO;
 import xyz.xcye.admin.enums.GenderEnum;
 import xyz.xcye.admin.po.User;
+import xyz.xcye.admin.pojo.RolePermissionRelationshipPojo;
+import xyz.xcye.admin.pojo.RolePojo;
 import xyz.xcye.admin.pojo.UserPojo;
 import xyz.xcye.admin.properties.AdminDefaultProperties;
+import xyz.xcye.admin.vo.RoleVO;
 import xyz.xcye.admin.vo.UserVO;
 import xyz.xcye.amqp.comstant.AmqpExchangeNameConstant;
 import xyz.xcye.amqp.comstant.AmqpQueueNameConstant;
@@ -68,6 +70,13 @@ public class UserService {
     private RedisTemplate<String, Object> redisTemplate;
     @Autowired
     private AuroraUserService auroraUserService;
+    @Autowired
+    private AuroraSettingService auroraSettingService;
+
+    @Autowired
+    private PermissionRelationService permissionRelationService;
+    @Autowired
+    private RoleService roleService;
 
     @Transactional(rollbackFor = Exception.class)
     public void insertUser(UserPojo user)
@@ -78,6 +87,25 @@ public class UserService {
         // 设置默认属性
         setUserProperties(user);
         auroraUserService.insert(BeanUtils.copyProperties(user, User.class));
+        // 插入成功之后，设置默认用户角色
+
+        List<String> defaultRoleList = auroraProperties.getDefaultRoleList();
+        if (defaultRoleList.isEmpty()) {
+            return;
+        }
+
+        defaultRoleList.forEach(roleName -> {
+            RolePojo rolePojo = new RolePojo();
+            rolePojo.setName(roleName);
+            RoleVO roleVO = roleService.queryOneRole(rolePojo);
+            if (roleVO == null) {
+                return;
+            }
+            RolePermissionRelationshipPojo relationshipPojo = new RolePermissionRelationshipPojo();
+            relationshipPojo.setUserUidArr(Collections.singletonList(user.getUid()));
+            relationshipPojo.setRoleUidArr(Collections.singletonList(roleVO.getUid()));
+            permissionRelationService.insertUserRoleBatch(relationshipPojo);
+        });
     }
 
     @Transactional
@@ -128,10 +156,10 @@ public class UserService {
     /**
      * 忘记密码，先验证此用户名是否存在，如果存在，远程调用，查看此用户是否绑定了email，如果没有email，则不支持找回，如果存在，则发送重置密码
      * 的html到该email中
-     * @param username
+     * @param userPojo
      * @return
      */
-    public int forgotPassword(String username) {
+    public int forgotPassword(UserPojo userPojo) {
 
         return 0;
     }

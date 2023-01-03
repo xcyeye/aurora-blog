@@ -18,6 +18,8 @@ import xyz.xcye.data.entity.Condition;
 import xyz.xcye.data.entity.PageData;
 import xyz.xcye.data.util.PageUtils;
 
+import java.util.Objects;
+
 /**
  * @author qsyyke
  * @date Created in 2022/5/11 19:23
@@ -50,6 +52,7 @@ public class CategoryService {
         JwtUserInfo jwtUserInfo = UserUtils.getCurrentUser();
         AssertUtils.stateThrow(jwtUserInfo != null,
                 () -> new UserException(ResponseStatusCodeEnum.PERMISSION_USER_NOT_LOGIN));
+        judgeCategory(record, true);
         record.setUserUid(jwtUserInfo.getUserUid());
         auroraCategoryService.insert(BeanUtils.copyProperties(record, Category.class));
     }
@@ -74,6 +77,24 @@ public class CategoryService {
     public int updateCategory(CategoryPojo record) {
         Assert.notNull(record, "类别不能为null");
         record.setUserUid(null);
+        judgeCategory(record, false);
         return auroraCategoryService.updateById(BeanUtils.copyProperties(record, Category.class));
+    }
+
+    private void judgeCategory(CategoryPojo pojo, boolean isInsert) {
+        Long currentUserUid = UserUtils.getCurrentUserUid();
+        if (currentUserUid == null) {
+            throw new UserException(ResponseStatusCodeEnum.PERMISSION_USER_NOT_LOGIN);
+        }
+        CategoryPojo categoryPojo = new CategoryPojo();
+        categoryPojo.setUserUid(currentUserUid);
+        categoryPojo.setTitle(pojo.getTitle());
+        Category category = auroraCategoryService.queryOne(BeanUtils.copyProperties(categoryPojo, Category.class));
+        if (isInsert) {
+            AssertUtils.stateThrow(category == null, () -> new ArticleException("存在相同的类别"));
+        }
+        if (category != null && !Objects.equals(category.getUid(), pojo.getUid())) {
+            throw new ArticleException("存在相同的类别");
+        }
     }
 }

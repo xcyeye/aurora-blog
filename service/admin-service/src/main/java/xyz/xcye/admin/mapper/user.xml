@@ -307,6 +307,9 @@
             <if test="condition.uid != null">
                 and uid=#{condition.uid}
             </if>
+            <if test="condition.otherUid != null">
+                and uid=#{condition.otherUid}
+            </if>
             <if test="condition.keyword != null">
                 and username=#{condition.keyword}
             </if>

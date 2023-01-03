@@ -6,17 +6,20 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 import xyz.xcye.admin.dao.ext.PermissionRelationDaoExt;
 import xyz.xcye.admin.dto.RolePermissionDTO;
+import xyz.xcye.admin.po.Permission;
 import xyz.xcye.admin.po.Role;
 import xyz.xcye.admin.po.RolePermissionRelationship;
 import xyz.xcye.admin.po.UserRoleRelationship;
 import xyz.xcye.admin.pojo.RolePermissionRelationshipPojo;
 import xyz.xcye.admin.vo.UserVO;
+import xyz.xcye.core.constant.RedisConstant;
 import xyz.xcye.core.enums.ResponseStatusCodeEnum;
 import xyz.xcye.core.exception.permission.PermissionException;
 import xyz.xcye.core.exception.role.RoleException;
 import xyz.xcye.core.exception.user.UserException;
 import xyz.xcye.core.util.lambda.AssertUtils;
 import xyz.xcye.data.entity.Condition;
+import xyz.xcye.service.redis.annotation.CleanRedisData;
 import xyz.xcye.service.redis.annotation.GetByRedis;
 
 import java.util.ArrayList;
@@ -32,6 +35,8 @@ import java.util.stream.Collectors;
 public class PermissionRelationService {
 
     private final String rolePrefix = "ROLE_";
+
+    public static String aa = "";
 
     @Autowired
     private AuroraUserRoleService auroraUserRoleService;
@@ -72,14 +77,21 @@ public class PermissionRelationService {
         return packageCollectResult(permissionRelationDao.loadPermissionByUserUid(userVO.getUid()));
     }
 
-    @GetByRedis(type = GetByRedis.TYPE.HASH, key = "asdkfhasdf")
     public List<RolePermissionDTO> loadPermissionByRoleName(RolePermissionRelationshipPojo pojo) {
         Assert.notNull(pojo.getRoleNameArr(), "roleNameArr不能为null");
         return packageCollectResult(permissionRelationDao.loadPermissionByRoleName(pojo.getRoleNameArr().get(0)));
     }
 
+    @GetByRedis(key = RedisConstant.STORAGE_ROLE_PERMISSION_INFO, expriedSecond = 60 * 60 * 24)
     public List<RolePermissionDTO> loadAllRolePermission(Condition<Long> condition) {
         return packageCollectResult(permissionRelationDao.loadAllRolePermission(condition));
+    }
+
+    public List<RolePermissionDTO> loadRolePermissionRelByRoleUid(RolePermissionRelationshipPojo pojo) {
+        List<Long> roleUidArr = pojo.getRoleUidArr();
+        List<RolePermissionDTO> rolePermissionList = new ArrayList<>();
+        roleUidArr.forEach(v -> rolePermissionList.addAll(permissionRelationDao.loadRolePermissionRelByRoleUid(v)));
+        return rolePermissionList;
     }
 
     public List<RolePermissionDTO> queryRoleByPermissionPath(RolePermissionRelationshipPojo pojo) {
@@ -87,36 +99,37 @@ public class PermissionRelationService {
         return packageCollectResult(permissionRelationDao.queryRoleByPermissionPath(pojo.getPermissionPathArr().get(0)));
     }
 
+    @CleanRedisData(key = RedisConstant.STORAGE_ROLE_PERMISSION_INFO)
     @Transactional
     public void insertUserRoleBatch(RolePermissionRelationshipPojo pojo) {
         Assert.notNull(pojo.getUserUidArr(), "userUidArr不能为null");
         Assert.notNull(pojo.getRoleUidArr(), "roleUidArr不能为null");
         List<Long> userUidArr = pojo.getUserUidArr();
-        Long roleUid = pojo.getRoleUidArr().get(0);
-        Role role = roleService.queryRoleByUid(roleUid);
-        // 查询看是否存在此角色
-        AssertUtils.stateThrow(role != null,
-                () -> new RoleException(ResponseStatusCodeEnum.PERMISSION_ROLE_NOT_EXISTS));
-
-        // 判断此角色是否被禁用
-        AssertUtils.stateThrow(role.getStatus(), () -> new RoleException(ResponseStatusCodeEnum.PERMISSION_ROLE_HAD_DISABLED));
-
-        userUidArr.stream()
-                .filter(userUid -> userService.queryUserByUid(userUid) != null)
-                .filter(userUid -> {
-                    UserRoleRelationship relationship = new UserRoleRelationship();
-                    relationship.setRoleUid(roleUid);
-                    relationship.setUserUid(userUid);
-                    return auroraUserRoleService.queryListByWhere(relationship).isEmpty();
-                })
-                .forEach(userUid -> {
-                    UserRoleRelationship userRoleRelationship = new UserRoleRelationship();
-                    userRoleRelationship.setRoleUid(roleUid);
-                    userRoleRelationship.setUserUid(userUid);
-                    auroraUserRoleService.insert(userRoleRelationship);
-                });
+        List<Long> roleUidArr = pojo.getRoleUidArr();
+        roleUidArr.forEach(roleUid -> {
+            Role role = roleService.queryRoleByUid(roleUid);
+            if (role == null) {
+                return;
+            }
+            // 查询看是否存在此角色
+            userUidArr.stream()
+                    .filter(userUid -> userService.queryUserByUid(userUid) != null)
+                    .filter(userUid -> {
+                        UserRoleRelationship relationship = new UserRoleRelationship();
+                        relationship.setRoleUid(roleUid);
+                        relationship.setUserUid(userUid);
+                        return auroraUserRoleService.queryListByWhere(relationship).isEmpty();
+                    })
+                    .forEach(userUid -> {
+                        UserRoleRelationship userRoleRelationship = new UserRoleRelationship();
+                        userRoleRelationship.setRoleUid(roleUid);
+                        userRoleRelationship.setUserUid(userUid);
+                        auroraUserRoleService.insert(userRoleRelationship);
+                    });
+        });
     }
 
+    @CleanRedisData(key = RedisConstant.STORAGE_ROLE_PERMISSION_INFO)
     public int deleteUserRoleBatch(RolePermissionRelationshipPojo pojo) {
         Assert.notNull(pojo.getUserUidArr(), "userUidArr不能为null");
         Assert.notNull(pojo.getRoleUidArr(), "roleUidArr不能为null");
@@ -142,6 +155,7 @@ public class PermissionRelationService {
         return successNum[0];
     }
 
+    @CleanRedisData(key = RedisConstant.STORAGE_ROLE_PERMISSION_INFO)
     public int updateUserRole(RolePermissionRelationshipPojo pojo) {
         Assert.notNull(pojo.getUserUidArr(), "userUidArr不能为null");
         Assert.notNull(pojo.getOriginRoleUidArr(), "originRoleUidArr不能为null");
@@ -172,29 +186,35 @@ public class PermissionRelationService {
         return successNum[0];
     }
 
+    @CleanRedisData(key = RedisConstant.STORAGE_ROLE_PERMISSION_INFO)
     public void insertRolePermissionBatch(RolePermissionRelationshipPojo pojo) {
         Assert.notNull(pojo.getPermissionUidArr(), "permissionUidArr不能为null");
         Assert.notNull(pojo.getRoleUidArr(), "roleUidArr不能为null");
         List<Long> roleUidArr = pojo.getRoleUidArr();
-        Long permissionUid = pojo.getPermissionUidArr().get(0);
+        List<Long> permissionUidArr = pojo.getPermissionUidArr();
 
         // 判断此permissionUid是否可用
-        AssertUtils.stateThrow(permissionService.queryPermissionByUid(permissionUid) != null,
-                () -> new UserException(ResponseStatusCodeEnum.PERMISSION_RESOURCE_NOT_RIGHT));
-        Assert.notNull(roleUidArr, "传入的角色uid不能为null");roleUidArr.stream()
-                .filter(roleUid -> roleService.queryRoleByUid(roleUid) != null)
-                .filter(roleUid -> auroraRolePermissionService.queryListByCondition(Condition.instant(roleUid, permissionUid)).getResult().isEmpty())
-                .forEach(roleUid -> {
-                    // 创建角色路径关系
-                    RolePermissionRelationship rolePermissionRelationship = RolePermissionRelationship.builder()
-                            .permissionUid(permissionUid)
-                            .roleUid(roleUid)
-                            .build();
-                    // 插入角色路径关系
-                    auroraRolePermissionService.insert(rolePermissionRelationship);
-                });
+        permissionUidArr.forEach(permissionUid -> {
+            Permission permission = permissionService.queryPermissionByUid(permissionUid);
+            if (permission == null) {
+                return;
+            }
+            roleUidArr.stream()
+                    .filter(roleUid -> roleService.queryRoleByUid(roleUid) != null)
+                    .filter(roleUid -> auroraRolePermissionService.queryListByCondition(Condition.instant(roleUid, permissionUid)).getResult().isEmpty())
+                    .forEach(roleUid -> {
+                        // 创建角色路径关系
+                        RolePermissionRelationship rolePermissionRelationship = RolePermissionRelationship.builder()
+                                .permissionUid(permissionUid)
+                                .roleUid(roleUid)
+                                .build();
+                        // 插入角色路径关系
+                        auroraRolePermissionService.insert(rolePermissionRelationship);
+                    });
+        });
     }
 
+    @CleanRedisData(key = RedisConstant.STORAGE_ROLE_PERMISSION_INFO)
     public int deleteRolePermissionBatch(RolePermissionRelationshipPojo pojo) {
         Assert.notNull(pojo.getPermissionUidArr(), "permissionUidArr不能为null");
         Assert.notNull(pojo.getRoleUidArr(), "roleUidArr不能为null");
@@ -220,6 +240,7 @@ public class PermissionRelationService {
         return successNum[0];
     }
 
+    @CleanRedisData(key = RedisConstant.STORAGE_ROLE_PERMISSION_INFO)
     public int updateRolePermission(RolePermissionRelationshipPojo pojo) {
         Assert.notNull(pojo.getOriginPermissionUidArr(), "originPermissionUidArr不能为null");
         Assert.notNull(pojo.getRoleUidArr(), "roleUidArr不能为null");

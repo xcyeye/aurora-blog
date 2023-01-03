@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import xyz.xcye.admin.po.WhiteUrl;
 import xyz.xcye.admin.pojo.WhiteUrlPojo;
 import xyz.xcye.admin.vo.WhiteUrlVO;
+import xyz.xcye.core.constant.RedisConstant;
 import xyz.xcye.core.enums.RegexEnum;
 import xyz.xcye.core.enums.ResponseStatusCodeEnum;
 import xyz.xcye.core.exception.permission.PermissionException;
@@ -13,6 +14,8 @@ import xyz.xcye.core.util.lambda.AssertUtils;
 import xyz.xcye.data.entity.Condition;
 import xyz.xcye.data.entity.PageData;
 import xyz.xcye.data.util.PageUtils;
+import xyz.xcye.service.redis.annotation.CleanRedisData;
+import xyz.xcye.service.redis.annotation.GetByRedis;
 
 import java.util.Objects;
 import java.util.Optional;
@@ -28,14 +31,17 @@ public class WhiteUrlService {
     @Autowired
     private AuroraWhiteUrlService auroraWhiteUrlService;
 
+    @CleanRedisData(key = RedisConstant.STORAGE_WHITE_URL_INFO)
     public int physicalDeleteWhiteUrl(Long uid) {
         return auroraWhiteUrlService.deleteById(uid);
     }
 
+    @CleanRedisData(key = RedisConstant.STORAGE_WHITE_URL_INFO)
     public int batchDeleteWhiteUrl(WhiteUrlPojo pojo) {
         return auroraWhiteUrlService.batchDelete(pojo.getUidList());
     }
 
+    @CleanRedisData(key = RedisConstant.STORAGE_WHITE_URL_INFO)
     public void insertWhiteUrl(WhiteUrlPojo record) {
         Objects.requireNonNull(record, "白名单记录不能为null");
         Optional.ofNullable(record.getUrl()).orElseThrow(() -> new NullPointerException("白名单地址不能为null"));
@@ -49,10 +55,12 @@ public class WhiteUrlService {
        auroraWhiteUrlService.insert(BeanUtils.copyProperties(record, WhiteUrl.class));
     }
 
+    @GetByRedis(key = RedisConstant.STORAGE_WHITE_URL_INFO, expriedSecond = 60 * 60 * 24)
     public PageData<WhiteUrlVO> queryListWhiteUrlByCondition(Condition<Integer> condition) {
         return PageUtils.copyPageDataResult(auroraWhiteUrlService.queryListByCondition(condition), WhiteUrlVO.class);
     }
 
+    @CleanRedisData(key = RedisConstant.STORAGE_WHITE_URL_INFO)
     public int updateWhiteUrl(WhiteUrlPojo record) {
         return auroraWhiteUrlService.updateById(BeanUtils.copyProperties(record, WhiteUrl.class));
     }
