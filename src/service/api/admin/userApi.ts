@@ -109,6 +109,10 @@ function _baseApi() {
     return request.post<number>(`${apiPrefix}updatePassword`, data, baseAxiosRequestConfig);
   }
 
+	function forgotPassword(data: beanType) {
+		return request.post<number>(`${apiPrefix}forgotPassword`, data, baseAxiosRequestConfig);
+	}
+
   return {
     queryOneData,
     queryOneDataByUid,
@@ -121,7 +125,8 @@ function _baseApi() {
     batchInsertData,
     bindingEmail,
     updatePassword,
-    queryUserByUsernameContainPassword
+    queryUserByUsernameContainPassword,
+		forgotPassword
   };
 }
 

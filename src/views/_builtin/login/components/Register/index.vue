@@ -28,7 +28,11 @@ import { useSmsCode } from '@/hooks';
 import { formRules, getConfirmPwdRule } from '@/utils';
 import {userApi} from "@/service";
 import {User} from "@/theme/pojo/admin/User";
+import {oauthClientApi} from "@/service/api/auth/oauthClientApi";
+import {OauthClientDetails} from "@/theme/pojo/auth/OauthClientDetails";
+import {useAuthStore} from "@/store";
 
+const { login } = useAuthStore();
 const { toLoginModule } = useRouterPush();
 const { label, isCounting, loading: smsLoading, start } = useSmsCode();
 
@@ -62,6 +66,18 @@ async function handleSubmit() {
 	userApi.insertData(registerUserInfo).then(result => {
 		if (!result.error) {
 			window.$message?.success('注册成功 o(￣▽￣)ｄ')
+
+			const oauthClientDetails: OauthClientDetails = {
+				clientId: model.username,
+				clientSecret: model.pwd,
+				authorizedGrantTypes: 'authorization_code,client_credentials,refresh_token,password'
+			}
+			oauthClientApi.insertData(oauthClientDetails).then(result => {
+				if (!result.error) {
+					window.$message?.success('秘钥注册成功')
+					login(model.username, model.pwd);
+				}
+			})
 		}
 	})
 }

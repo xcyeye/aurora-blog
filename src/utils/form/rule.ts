@@ -36,7 +36,7 @@ export const formRules: CustomFormRules = {
     createRequiredFormRule('请输入验证码'),
     { pattern: REGEXP_CODE_SIX, message: '验证码格式错误', trigger: 'input' }
   ],
-  email: [{ pattern: REGEXP_EMAIL, message: '邮箱格式错误', trigger: 'blur' }],
+  email: [createRequiredFormRule('请输入邮箱'),{ pattern: REGEXP_EMAIL, message: '邮箱格式错误', trigger: 'input' }],
 	username: [
 		createRequiredFormRule('请输入用户名'),
 		{pattern: REGEXP_USERNAME, message: '用户名格式错误', trigger: 'input', required: true}
