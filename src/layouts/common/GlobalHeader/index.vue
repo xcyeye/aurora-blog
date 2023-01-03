@@ -8,7 +8,7 @@
 				<router-link to="/tag-category">标签</router-link>
 				<router-link to="/about">关于</router-link>
 				<router-link to="/shareSpace1">说说1</router-link>
-				<router-link to="/shareSpace2">说说2</router-link>
+				<router-link to="/article">文章</router-link>
 			</n-space>
 		</header>
 	</div>

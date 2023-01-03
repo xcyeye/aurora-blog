@@ -37,6 +37,11 @@ const router = createRouter({
       path: '/shareSpace2',
       name: '说说2',
       component: () => import('../views/share-space/sharePage2.vue')
+    },
+    {
+      path: '/article',
+      name: '文章',
+      component: () => import('../views/archive/index.vue')
     }
   ]
 })

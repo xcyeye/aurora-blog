@@ -5,6 +5,7 @@ import '../styles/theme/theme.style.css';
 import '../styles/theme/coverStyle.css';
 import '../styles/theme/aurora-archive.css';
 import '../styles/theme/coze-plugin.css';
+import '../styles/theme/navbar.css';
 
 /** import static assets: css, js , font and so on. - [引入静态资源，css、js和字体文件等] */
 export default function setupAssets() {}
