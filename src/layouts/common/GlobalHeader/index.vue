@@ -6,6 +6,7 @@
 				<router-link to="/friendLink">友情链接</router-link>
 				<router-link to="/archive">时间轴</router-link>
 				<router-link to="/tag-category">标签</router-link>
+				<router-link to="/about">关于</router-link>
 			</n-space>
 		</header>
 	</div>
