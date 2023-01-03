@@ -11,6 +11,7 @@
     "type-check": "vue-tsc --noEmit -p tsconfig.vitest.json --composite false"
   },
   "dependencies": {
+    "@waline/client": "^2.14.4",
     "axios": "^1.2.2",
     "easy-typer-js": "^2.1.0",
     "gsap": "^3.11.4",

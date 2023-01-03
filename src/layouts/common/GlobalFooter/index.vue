@@ -1,18 +1,18 @@
 <template>
 	<div>
-		<footer class="aurora-footer">
-			<div :style="$store.state.borderRadiusStyle +
-       $store.state.opacityStyle + $store.state.fontColorStyle +
-       $store.state.fontFamilyStyle + $store.state.filterBlurStyle" class="sidebar-single-enter-animate footer-layout-center" v-if="!isHome">
-				<div v-if="isShowFooter"
-						 class="footer box" id="footer">
-					<FooterItem v-for="(item,index) in footerArr" :key="index" :item="item"></FooterItem>
-					<div class="footer-item" v-if="isShowRunTime" id="footer-item">
-						<span >{{runTime}}</span>
-					</div>
-				</div>
-			</div>
-		</footer>
+		<!--<footer class="aurora-footer">-->
+		<!--	<div :style="$store.state.borderRadiusStyle +-->
+    <!--   $store.state.opacityStyle + $store.state.fontColorStyle +-->
+    <!--   $store.state.fontFamilyStyle + $store.state.filterBlurStyle" class="sidebar-single-enter-animate footer-layout-center" v-if="!isHome">-->
+		<!--		<div v-if="isShowFooter"-->
+		<!--				 class="footer box" id="footer">-->
+		<!--			<FooterItem v-for="(item,index) in footerArr" :key="index" :item="item"></FooterItem>-->
+		<!--			<div class="footer-item" v-if="isShowRunTime" id="footer-item">-->
+		<!--				<span >{{runTime}}</span>-->
+		<!--			</div>-->
+		<!--		</div>-->
+		<!--	</div>-->
+		<!--</footer>-->
 	</div>
 </template>
 

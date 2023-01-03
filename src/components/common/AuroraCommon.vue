@@ -81,13 +81,14 @@
 		</div>
 	</div>
 </template>
-<script lang="ts">
+<script>
 
 //组件导入
 //配置导入
 import {computed, defineComponent, Transition,} from 'vue'
 import $ from 'jquery'
 import {blogPageData} from "@/assets/config";
+import {setTag} from "@/assets/tag";
 
 export default defineComponent({
 	name: 'Common',

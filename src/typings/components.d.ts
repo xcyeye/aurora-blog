@@ -8,6 +8,7 @@ export {}
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     Archive: typeof import('./../components/common/Archive.vue')['default']
+    AuroraCenter: typeof import('./../components/common/AuroraCenter.vue')['default']
     AuroraCommon: typeof import('./../components/common/AuroraCommon.vue')['default']
     AuroraGlobal: typeof import('./../components/common/AuroraGlobal.vue')['default']
     AuroraTest: typeof import('./../components/aurora/AuroraTest.vue')['default']
@@ -21,7 +22,7 @@ declare module '@vue/runtime-core' {
     DropdownLink: typeof import('./../components/common/DropdownLink.vue')['default']
     DropdownTransition: typeof import('./../components/common/DropdownTransition.vue')['default']
     Footer: typeof import('./../components/common/Footer.vue')['default']
-    FooterItem: typeof import('./../components/common/child/FooterItem.vue')['default']
+    FooterItem: typeof import('./../components/common/child/foot/FooterItem.vue')['default']
     Home: typeof import('./../components/common/Home.vue')['default']
     HomeBottom: typeof import('./../components/common/HomeBottom.vue')['default']
     HomeContent: typeof import('./../components/common/child/HomeContent.vue')['default']
@@ -33,6 +34,7 @@ declare module '@vue/runtime-core' {
     IconEcosystem: typeof import('./../components/icons/IconEcosystem.vue')['default']
     IconSupport: typeof import('./../components/icons/IconSupport.vue')['default']
     IconTooling: typeof import('./../components/icons/IconTooling.vue')['default']
+    LinkItem: typeof import('./../components/common/child/link/LinkItem.vue')['default']
     Message: typeof import('./../components/common/Message.vue')['default']
     MobileSidebar: typeof import('./../components/common/child/sider/MobileSidebar.vue')['default']
     MobileSidebarNav: typeof import('./../components/common/child/sider/MobileSidebarNav.vue')['default']
