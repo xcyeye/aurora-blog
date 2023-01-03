@@ -27,6 +27,16 @@ const router = createRouter({
       path: '/about',
       name: 'about',
       component: () => import('../views/about/index.vue')
+    },
+    {
+      path: '/shareSpace1',
+      name: '说说1',
+      component: () => import('../views/share-space/sharePage1.vue')
+    },
+    {
+      path: '/shareSpace2',
+      name: '说说2',
+      component: () => import('../views/share-space/sharePage2.vue')
     }
   ]
 })

@@ -1,0 +1,956 @@
+.mood-top-set {
+    width: 100%;
+    height: 4rem
+}
+
+.mood-edit {
+    max-height: 2.5rem;
+    height: 2.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center
+}
+
+.mood-edit-left {
+    flex: 5
+}
+
+.mood-edit-right {
+    height: 100%;
+    line-height: 2.5rem;
+    flex: 5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center
+}
+
+.mood-edit-single-common {
+    flex: 1
+}
+
+.aurora-coze-custom-edit:before {
+    content: "\e60b"
+}
+
+.aurora-coze-custom-comment:before {
+    content: "\e6e7"
+}
+
+.aurora-coze-custom-love:before {
+    content: "\e665"
+}
+
+.aurora-coze-custom-poster:before {
+    content: "\e656"
+}
+
+.aurora-coze-font {
+    font-size: 20px;
+    cursor: pointer
+}
+
+.mood_checkbox {
+    display: inline-block;
+    width: 60%
+}
+
+.show_mood_status_checkbox {
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    border-radius: 30px
+}
+
+.mood_update_status {
+    display: flex;
+    flex: 1
+}
+
+.mood_checkbox {
+    flex: 2
+}
+
+.edit-upload,
+.mood_checkbox {
+    display: flex;
+    justify-content: center;
+    align-items: center
+}
+
+.mood_update_status button {
+    flex: 1;
+    margin-left: .5rem;
+    margin-right: .5rem
+}
+
+.mood_checkbox_left {
+    flex: 2
+}
+
+.mood_checkbox_right {
+    flex: 1.1
+}
+
+#upload-file {
+    width: 100%
+}
+
+.mood_like_love_active {
+    -webkit-animation: mood_like_love_active .5s;
+    animation: mood_like_love_active .5s;
+    -webkit-animation-iteration-count: 1;
+    animation-iteration-count: 1;
+    -webkit-animation-fill-mode: forwards;
+    animation-fill-mode: forwards
+}
+
+.mood_like_love_active:before {
+    color: red;
+}
+
+@-webkit-keyframes mood_like_love_active {
+    0% {
+        font-size: 20px
+    }
+
+    10% {
+        font-size: 21px
+    }
+
+    20% {
+        font-size: 22.5px
+    }
+
+    30% {
+        font-size: 24px
+    }
+
+    40% {
+        font-size: 25.5px
+    }
+
+    50% {
+        font-size: 27px
+    }
+
+    60% {
+        font-size: 25.5px
+    }
+
+    70% {
+        font-size: 24px
+    }
+
+    80% {
+        font-size: 22.5px
+    }
+
+    90% {
+        font-size: 21px
+    }
+
+    to {
+        font-size: 20px
+    }
+}
+
+@keyframes mood_like_love_active {
+    0% {
+        font-size: 20px
+    }
+
+    10% {
+        font-size: 21px
+    }
+
+    20% {
+        font-size: 22.5px
+    }
+
+    30% {
+        font-size: 24px
+    }
+
+    40% {
+        font-size: 25.5px
+    }
+
+    50% {
+        font-size: 27px
+    }
+
+    60% {
+        font-size: 25.5px
+    }
+
+    70% {
+        font-size: 24px
+    }
+
+    80% {
+        font-size: 22.5px
+    }
+
+    90% {
+        font-size: 21px
+    }
+
+    to {
+        font-size: 20px
+    }
+}
+
+@media screen and (min-width:719px) {
+    .add-mood-pwd {
+        width: 34%
+    }
+
+    #mood-verify-pwd {
+        width: 100%
+    }
+}
+
+@media screen and (max-width:719px) {
+
+    #mood_checkbox,
+    #mood_update_status {
+        flex: 2.5
+    }
+
+    #mood_checkbox_left {
+        width: 4rem;
+        flex: 1
+    }
+
+    #mood_checkbox_right {
+        flex: 4
+    }
+}
+
+.coze-mood-list {
+    margin: 0 auto
+}
+
+.coze-mood-control {
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    margin-top: var(--coze-margin-top, 1.5rem);
+    margin-bottom: var(--coze-margin-bottom, 1.5rem);
+    background: var(--coze-background, #fff);
+    border-radius: var(--coze-border-radius, 10px)
+}
+
+.coze-mood-item-parent {
+    width: 100%
+}
+
+.mood-article {
+    width: 100%;
+    background-color: rgba(255, 255, 255, var(--opacity));
+    position: relative;
+    display: block;
+    z-index: 2;
+    margin: 0 auto;
+    border-radius: var(--coze-border-radius, 10px);
+    overflow: hidden
+}
+
+.mood-text {
+    display: none
+}
+
+.mood-page {
+    padding: 2rem 2.5rem
+}
+
+.coze-mood-item {
+    min-height: 4rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    align-items: center
+}
+
+.coze-mood-item,
+.mood-item-img {
+    width: 100%;
+    display: flex;
+    justify-content: center
+}
+
+.mood-item-img {
+    height: 100%
+}
+
+.mood-img {
+    display: flex;
+    justify-content: center;
+    align-items: center
+}
+
+.mood-img-left {
+    flex: 1.2
+}
+
+.mood-img-right {
+    flex: 5;
+    max-height: 8rem;
+    height: -webkit-max-content;
+    height: -moz-max-content;
+    height: max-content;
+    overflow: scroll
+}
+
+.mood-img-right::-webkit-scrollbar {
+    background-color: #8186d5;
+    width: .3rem;
+    border-radius: var(--coze-border-radius, 10px);
+    display: none
+}
+
+.mood-img li {
+    list-style: none;
+    padding: 10px;
+    border-radius: var(--coze-border-radius, 10px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, .15);
+    width: 13rem;
+    height: 5.5rem;
+    float: left;
+    margin-left: .2rem;
+    margin-right: .2rem;
+    margin-top: .5rem;
+    margin-bottom: .5rem;
+    background-size: 100%
+}
+
+#mood-bottom-img {
+    width: 100%;
+    height: 100%;
+    -o-object-fit: cover;
+    object-fit: cover
+}
+
+.mood-item-common,
+.mood-item-img-parent {
+    display: flex;
+    justify-content: center;
+    align-items: center
+}
+
+.mood-item-left {
+    flex: 1.2
+}
+
+.mood-item-right {
+    flex: 5
+}
+
+.file-upload-status {
+    width: 100%;
+    max-height: 5rem;
+    overflow-y: scroll
+}
+
+.file-upload-status::-webkit-scrollbar {
+    display: none
+}
+
+.file-upload-status li {
+    list-style: none;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center
+}
+
+.coze-file-upload-common {
+    display: inline-block
+}
+
+.coze-file-upload-name::-webkit-scrollbar {
+    display: none
+}
+
+.coze-file-upload-name {
+    overflow-x: scroll;
+    flex: 1.5;
+    max-width: 5rem
+}
+
+.coze-file-upload-status-par {
+    display: inline-block;
+    flex: 5
+}
+
+.coze-file-upload-status {
+    background: #00cfc8;
+    flex: 5;
+    height: 5px;
+    width: 70%;
+    margin-left: .5rem;
+    margin-right: .5rem;
+    border-radius: 30px
+}
+
+.coze-mood-item-content {
+    background: var(--coze-mood-content-background, rgba(255, 202, 212, .35));
+    border-radius: var(--coze-border-radius, 10px);
+    box-shadow: -4px 9px 25px -6px rgba(0, 0, 0, .1);
+    height: 100%;
+    width: 97%
+}
+
+.mood-item-right-common {
+    --mood-item-heigth: 65%
+}
+
+.mood-item-content {
+    text-align: left;
+    align-items: center;
+    overflow: hidden;
+    padding: 6px 6px
+}
+
+.mood-item-content span iframe {
+    width: 100%;
+}
+
+.mood-item-title {
+    height: 2.2rem
+}
+
+@media screen and (max-width:719px) {
+    #mood-page {
+        padding: .5rem
+    }
+
+    #coze-mood-item-img img {
+        border-radius: 40px;
+        height: 3.8rem;
+        width: 3.8rem;
+        cursor: pointer
+    }
+
+    #mood-item-left {
+        flex: 2
+    }
+
+    #mood-item-right {
+        flex: 6;
+        overflow: hidden;
+    }
+
+    #mood-img-right {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative
+    }
+
+    .mood-li-control {
+        width: 14rem;
+        max-height: 8rem;
+        text-align: right
+    }
+
+    #mood-img-li {
+        position: relative;
+        right: 0
+    }
+}
+
+#coze-mood-item-img img {
+    border-radius: 100px
+}
+
+@media screen and (min-width:719px) {
+    #coze-mood-item-img img {
+        height: 40%;
+        width: 40%;
+        cursor: pointer
+    }
+}
+
+.add-mood {
+    padding-bottom: 1rem;
+    padding-top: 1rem;
+    border-radius: var(--coze-border-radius, 10px);
+    margin: 0 auto;
+    margin-top: 1rem;
+    width: 34%;
+    height: -webkit-max-content;
+    height: -moz-max-content;
+    height: max-content;
+    box-shadow: 0 25px 50px -12px rgb(0 0 0/25%);
+    background-color: hsla(0, 0%, 100%, .7)
+}
+
+.poster-cancel {
+    text-align: right;
+    padding-top: 5px;
+    padding-right: 1rem
+}
+
+.coze-home-menu-ico:before {
+    font-family: aurora-coze-font;
+    content: "\e600";
+    cursor: pointer;
+    margin-right: 5px
+}
+
+.coze-donate-pay,
+.coze-login {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    margin: 0 auto;
+    margin-top: 1rem;
+    border-radius: var(--coze-border-radius, 10px);
+    background-color: hsla(0, 0%, 100%, .9);
+    box-shadow: 0 50px 100px -20px rgba(50, 50, 93, .25), 0 30px 60px -30px rgba(0, 0, 0, .3)
+}
+
+.coze-donate-pay {
+    width: 90%
+}
+
+.donate-bottom-input {
+    flex: 1
+}
+
+.pro-message {
+    width: 90%;
+    margin: 0 auto
+}
+
+.pro-single {
+    margin-top: 1rem;
+    text-align: left
+}
+
+.donate-bottom-input input {
+    padding-left: 15px;
+    padding-right: 15px;
+    width: 90%;
+    height: 2.15rem;
+    border-radius: 30px;
+    border: none;
+    outline: none;
+    text-align: center;
+    box-shadow: 0 7px 29px 0 rgba(100, 100, 111, .2)
+}
+
+.donate-bottom-input input::-webkit-inner-spin-button,
+.donate-bottom-input input::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    appearance: none;
+    margin: 0
+}
+
+.donate-bottom-input input {
+    -moz-appearance: textfield
+}
+
+.donate-bottom-button {
+    flex: 1
+}
+
+.donate-bottom-button button {
+    width: 40%;
+    height: 2.15rem;
+    background-color: #f5365c;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    border-radius: var(--coze-border-radius, 10px);
+    box-shadow: 0 10px 36px 0 rgba(0, 0, 0, .16), 0 0 0 1px rgba(0, 0, 0, .06)
+}
+
+.coze-pro-common {
+    justify-content: center;
+    align-items: center;
+    display: flex
+}
+
+.edit-content textarea {
+    width: 90%;
+    min-width: 90%;
+    padding-left: 15px;
+    padding-right: 15px;
+    height: -webkit-max-content;
+    height: -moz-max-content;
+    height: max-content;
+    min-height: 10rem;
+    border-radius: 30px;
+    border: none;
+    outline: none;
+    text-align: left;
+    box-shadow: 0 7px 29px 0 rgb(100 100 111/20%)
+}
+
+.edit-content textarea::-webkit-scrollbar {
+    display: none
+}
+
+.edit-upload button {
+    width: 16%;
+    height: 2.15rem;
+    background-color: #f5365c;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    border-radius: var(--coze-border-radius, 10px);
+    box-shadow: 0 10px 36px 0 rgb(0 0 0/16%), 0 0 0 1px rgb(0 0 0/6%)
+}
+
+.add-mood-button {
+    position: absolute;
+    bottom: 1%;
+    right: 1%;
+    z-index: 5
+}
+
+.add-mood-button span {
+    display: inline-block;
+    background: linear-gradient(40deg, #e0c3fc, #8ec5fc);
+    position: relative;
+    color: #fff;
+    line-height: normal;
+    padding-left: 7px;
+    padding-right: 7px;
+    border-radius: 4px;
+    cursor: pointer
+}
+
+.add-mood-pwd {
+    margin-bottom: .5rem;
+    z-index: 33
+}
+
+#textarea-content {
+    font-size: 16px;
+    margin-top: 1.5rem
+}
+
+.add-coze-mood-control {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    width: 100vw;
+    background: #db7093
+}
+
+.coze-mask,
+.cozeEditMood {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, .7);
+    z-index: 9999999
+}
+
+#app,
+.coze-box {
+    position: relative
+}
+
+#pro-single-mood {
+    margin-top: 0
+}
+
+#edit-mood-load {
+    display: flex;
+    justify-content: center;
+    align-items: center
+}
+
+.editMoodLoad span:first-child {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-image: url(https://ooszy.cco.vin/img/blog-note/load3line.png);
+    -webkit-animation: round_animate 1.5s linear infinite;
+    animation: round_animate 1.5s linear infinite
+}
+
+.editMoodLoad span:nth-child(2) {
+    margin-left: .5rem
+}
+
+.coze-mood-time {
+    margin-top: .5rem;
+    font-size: 13px
+}
+
+.coze-mood-bottom-left {
+    flex: 2.5
+}
+
+.register-button {
+    margin-top: 1rem
+}
+
+.coze-enter-animate {
+    -webkit-animation: cozeEnterAnimateEnter 1s;
+    animation: cozeEnterAnimateEnter 1s;
+    -webkit-animation-iteration-count: 1;
+    animation-iteration-count: 1;
+    -webkit-animation-fill-mode: forwards;
+    animation-fill-mode: forwards;
+    box-shadow: 0 8px 24px rgba(149, 157, 165, .2);
+    border-radius: var(--coze-border-radius, 10px)
+}
+
+@-webkit-keyframes cozeEnterAnimateEnter {
+    0% {
+        opacity: 0;
+        transform: translateY(-15%)
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0)
+    }
+}
+
+@keyframes cozeEnterAnimateEnter {
+    0% {
+        opacity: 0;
+        transform: translateY(-15%)
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0)
+    }
+}
+
+.photo-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: -33;
+    height: 100vh;
+    background-image: linear-gradient(0deg, #fff1eb 0, #ace0f9)
+}
+
+.photo-bg,
+.waterfull {
+    width: 100%
+}
+
+.v-waterfall-content {
+    width: 100%;
+    height: 100vh;
+    position: relative;
+    overflow-y: auto
+}
+
+.v-waterfall-content::-webkit-scrollbar {
+    display: none
+}
+
+.v-waterfall-item {
+    float: left;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.v-waterfall-item img {
+    width: 98%;
+    height: auto;
+    border-radius: 6px;
+}
+
+.loadingAnimate {
+    position: fixed;
+    height: 100vh;
+    width: 100%;
+    z-index: 19;
+    background-image: linear-gradient(0deg, #fff1eb 0, #ace0f9)
+}
+
+.photo {
+    top: 0;
+    right: 0;
+    position: absolute;
+    height: var(--navbar-height);
+    text-align: center;
+    width: 100%
+}
+
+.photo-center {
+    margin: 0 auto;
+    position: fixed;
+    top: 0;
+    z-index: 20;
+    width: 100%;
+    height: 3.6rem
+}
+
+@media screen and (max-width:550px) {
+    .v-waterfall-item img {
+        width: 90%;
+    }
+    .waterfull {
+        margin-bottom: 1rem;
+    }
+}
+
+@media screen and (min-width:550px) {
+    .photo-waterfull {
+        margin: 0 auto;
+        margin-bottom: 1rem;
+    }
+    .v-waterfall-item img {
+        width: 95%;
+    }
+}
+
+.photo-center,
+.photo-center div {
+    display: flex;
+    justify-content: center;
+    align-items: center
+}
+
+.photo li {
+    list-style: none;
+    margin-left: 2rem;
+    margin-right: 2rem;
+    background-color: rgba(109, 213, 250, .45);
+    border-radius: 7px
+}
+
+.photo li a {
+    color: #fff;
+    padding-left: 10px;
+    padding-right: 10px
+}
+
+.photo li a:hover {
+    color: #6dd5fa
+}
+
+.loader {
+    top: calc(50% - 32px);
+    left: calc(50% - 32px);
+    width: 64px;
+    height: 64px;
+    perspective: 800px
+}
+
+.inner,
+.loader {
+    position: absolute;
+    border-radius: 50%
+}
+
+.inner {
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%
+}
+
+.inner.one {
+    left: 0;
+    top: 0;
+    -webkit-animation: rotate-one 1s linear infinite;
+    animation: rotate-one 1s linear infinite;
+    border-bottom: 5px solid rgba(109, 213, 250, .5)
+}
+
+.inner.two {
+    right: 0;
+    top: 0;
+    -webkit-animation: rotate-two 1s linear infinite;
+    animation: rotate-two 1s linear infinite;
+    border-right: 5px solid rgba(109, 213, 250, .5)
+}
+
+.inner.three {
+    right: 0;
+    bottom: 0;
+    -webkit-animation: rotate-three 1s linear infinite;
+    animation: rotate-three 1s linear infinite;
+    border-top: 5px solid rgba(109, 213, 250, .5)
+}
+
+@-webkit-keyframes rotate-one {
+    0% {
+        transform: rotateX(35deg) rotateY(-45deg) rotate(0deg)
+    }
+
+    to {
+        transform: rotateX(35deg) rotateY(-45deg) rotate(1turn)
+    }
+}
+
+@keyframes rotate-one {
+    0% {
+        transform: rotateX(35deg) rotateY(-45deg) rotate(0deg)
+    }
+
+    to {
+        transform: rotateX(35deg) rotateY(-45deg) rotate(1turn)
+    }
+}
+
+@-webkit-keyframes rotate-two {
+    0% {
+        transform: rotateX(50deg) rotateY(10deg) rotate(0deg)
+    }
+
+    to {
+        transform: rotateX(50deg) rotateY(10deg) rotate(1turn)
+    }
+}
+
+@keyframes rotate-two {
+    0% {
+        transform: rotateX(50deg) rotateY(10deg) rotate(0deg)
+    }
+
+    to {
+        transform: rotateX(50deg) rotateY(10deg) rotate(1turn)
+    }
+}
+
+@-webkit-keyframes rotate-three {
+    0% {
+        transform: rotateX(35deg) rotateY(55deg) rotate(0deg)
+    }
+
+    to {
+        transform: rotateX(35deg) rotateY(55deg) rotate(1turn)
+    }
+}
+
+@keyframes rotate-three {
+    0% {
+        transform: rotateX(35deg) rotateY(55deg) rotate(0deg)
+    }
+
+    to {
+        transform: rotateX(35deg) rotateY(55deg) rotate(1turn)
+    }
+}
+
+#coze-flowers-canvas {
+    z-index: 9999;
+    position: fixed;
+    top: 0;
+    right: 0
+}

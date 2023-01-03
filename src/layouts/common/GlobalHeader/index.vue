@@ -7,6 +7,8 @@
 				<router-link to="/archive">时间轴</router-link>
 				<router-link to="/tag-category">标签</router-link>
 				<router-link to="/about">关于</router-link>
+				<router-link to="/shareSpace1">说说1</router-link>
+				<router-link to="/shareSpace2">说说2</router-link>
 			</n-space>
 		</header>
 	</div>

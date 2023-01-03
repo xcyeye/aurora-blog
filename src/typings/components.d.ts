@@ -7,6 +7,7 @@ export {}
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
+    AddMood: typeof import('./../components/common/child/shareSpace/AddMood.vue')['default']
     Archive: typeof import('./../components/common/Archive.vue')['default']
     ArchiveItem: typeof import('./../components/common/child/archive/ArchiveItem.vue')['default']
     AuroraArchive: typeof import('./../components/common/AuroraArchive.vue')['default']
@@ -40,6 +41,7 @@ declare module '@vue/runtime-core' {
     Message: typeof import('./../components/common/Message.vue')['default']
     MobileSidebar: typeof import('./../components/common/child/sider/MobileSidebar.vue')['default']
     MobileSidebarNav: typeof import('./../components/common/child/sider/MobileSidebarNav.vue')['default']
+    MoodItem: typeof import('./../components/common/child/shareSpace/MoodItem.vue')['default']
     NaiveProvider: typeof import('./../components/common/NaiveProvider.vue')['default']
     Navbar: typeof import('./../components/common/Navbar.vue')['default']
     NavbarLinks: typeof import('./../components/common/NavbarLinks.vue')['default']
