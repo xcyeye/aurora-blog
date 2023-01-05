@@ -80,6 +80,7 @@ export const defaultSiteSettingInfo: SiteSettingInfo = {
         "#8093f1", "#9ed8d8", "#7ea8be", "#ef90b3", "#b892ef", "#c0b9dd", "#c0d9dd",
         "#75c9c8", "#ded9e2", "#b5e2fa", "#62b6cb", "#5fa8d3", "#0fa3b1", "#b5e2fa",
         "#5fa8d3", "#62b6cb", "#b892ff",
-    ]
+    ],
+    homePageLazyLoadingImg: 'https://gss0.baidu.com/9vo3dSag_xI4khGko9WTAnF6hhy/zhidao/pic/item/7af40ad162d9f2d39ed74a22abec8a136227cc3d.jpg'
 
 }

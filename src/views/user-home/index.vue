@@ -1,6 +1,6 @@
 <template>
 	<home-content :user-uid="userUid" :is-home="true"/>
-	<!--<home-bottom/>-->
+	<home-bottom :user-uid="userUid"/>
 </template>
 
 <script lang="ts" setup>

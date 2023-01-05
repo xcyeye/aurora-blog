@@ -220,7 +220,7 @@ export default defineComponent({
 				this.currentSiteInfo.customRandomSay.value == null ? "Aurora blog System" : this.siteSettingInfo.customRandomSay.value
 				this.initTyped(this.randomSawRes,() => {
 					setTimeout(() => {
-						this.fetchData()
+						this.fetchRandomSayData()
 					},this.intervalTime)
 				})
 			}else {
@@ -229,13 +229,13 @@ export default defineComponent({
 						this.randomSawRes = res;
 						this.initTyped(this.randomSawRes,() => {
 							setTimeout(() => {
-								this.fetchData()
+								this.fetchRandomSayData()
 							},this.intervalTime)
 						})
 					}catch (e) {
 						this.initTyped('Aurora',() => {
 							setTimeout(() => {
-								this.fetchData()
+								this.fetchRandomSayData()
 							},this.intervalTime)
 						})
 					}

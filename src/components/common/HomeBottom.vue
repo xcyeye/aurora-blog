@@ -3,15 +3,19 @@
   <div :style="$store.state.borderRadiusStyle +
        $store.state.opacityStyle + $store.state.fontColorStyle +
        $store.state.fontFamilyStyle + $store.state.filterBlurStyle" ref="home-bottom" class="home-bottom" id="home-bottom">
-    <div ref="home-bottom-scroll"></div>
-    <div class="home-page-tag" :style="getHomePageStyle" id="home-page-tag">
-      <home-page-item :index="index" :theme-property="themeProperty"
-											:data="item.articleUrl" :key="item.articleUrl"
-											v-for="(item,index) in showPageArr" :page-item="item"/>
-      <Pagination @changePage="handleCurrentChange"
-                  :total="allPageArr.length"
-                  :current-page="$store.state.currentPageNum"
-                  :page-size="pageSize"/>
+    <div ref="homeBottomScroll"></div>
+    <div class="home-page-tag" id="home-page-tag">
+      <home-page-item :index="index"
+											:user-uid="userUid"
+											:show-home-page-img="true"
+											:data="item.delete" :key="index"
+											v-for="(item,index) in articleArr" :page-item="item"/>
+			<n-space justify="center">
+				<n-pagination v-model:page="currentPage"
+											@update:page="handlePageChangeAction"
+											:item-count="pageTotal"
+											:default-page-size="10" :default-page="1" />
+			</n-space>
 
     </div>
     <div class="home-page-fun" id="home-page-fun">
@@ -21,159 +25,84 @@
   <slot name="home-footer"/>
 </template>
 
-<script>
+<script lang="ts" setup>
 
-import {computed} from "vue";
+import {computed, onBeforeMount, ref} from "vue";
 import {blogPageData} from "@/assets/config";
+import {ArticleVo} from "@/bean/vo/article/ArticleVo";
+import {articleApi} from "@/service";
+import {Condition} from "@/bean/core/bean";
+import smoothscroll from 'smoothscroll-polyfill'
 
-// interface Props {
-// 	userUid: string
-// }
-
-// const props = withDefaults(defineProps<Props>(), {})
-
-// const getHomePageStyle = computed(() => {
-// 	if (!this.themeProperty.isHomePageFollow) {
-// 		return "--opacity: 1;"
-// 	}
-// })
-
-export default {
-  name: "HomeBottom",
-  data() {
-    return {
-      themeProperty: blogPageData,
-      allPageMaps: [],
-      allPageArr: [],
-      showPageArr: [],
-      pageSize: 3,
-      currentPage: 1,
-    }
-  },
-  computed: {
-    getHomePageStyle() {
-      if (!this.themeProperty.isHomePageFollow) {
-        return "--opacity: 1;"
-      }
-    }
-  },
-  created() {
-		setTag(this, blogPageData)
-    const loadAllPageMap = setInterval(() => {
-      if (this.$store.state.allPageMap.length !== 0) {
-        clearInterval(loadAllPageMap)
-        this.setShowAllPage(this.$store.state.allPageMap)
-      }
-    },100)
-
-    if (this.themeProperty.pageSize === undefined) {
-      // 默认的分页数
-      this.pageSize = 3
-    }else {
-      this.pageSize = this.themeProperty.pageSize
-    }
-  },
-  methods: {
-    handleCurrentChange(currentPageNum) {
-      this.$store.commit("setCurrentPageNum", {
-        currentPageNum: currentPageNum
-      })
-
-      this.setImgDom()
-      let start = (currentPageNum -1) * this.pageSize
-      let end = start + this.pageSize
-      this.showPageArr = this.allPageArr.slice(start, end)
-      const smoothscroll = require('smoothscroll-polyfill');
-      smoothscroll.polyfill();
-      this.$refs["home-bottom-scroll"].scrollIntoView({behavior: "smooth"})
-    },
-    getLocalTime(time) {
-      if (time === undefined) {
-        //没有时间戳
-        return ''
-      }
-      let date = new Date(time);
-      let day = date.getDate()
-      let year = date.getFullYear()
-      let month = date.getMonth() + 1
-      let hours = date.getHours()
-      let min = date.getMinutes()
-      let sec = date.getSeconds()
-      return year + "-" + month + "-" + day + " " + hours + ":" + min
-    },
-    cutPageActive(e,index) {
-      this.cutPageIndex = index
-    },
-    compare(updatedTime) {
-      return  function( object1, object2) {
-        let value1  = object1.pageCreateTime;
-        let value2  = object2.pageCreateTime;
-        if (value2  < value1) {
-          return  1;
-        }  else  if (value2  > value1) {
-          return  - 1;
-        }  else {
-          return  0;
-        }
-      }
-    },
-    setImgDom() {
-      setTimeout(() => {
-        let contentHtmlImg = document.querySelectorAll(".home-page-tag-content img")
-        new Promise((resolve,rejcet) => {
-        for (let i = 0; i < contentHtmlImg.length; i++) {
-          contentHtmlImg[i].setAttribute("src","")
-        }
-        resolve()
-      }).then(() => {
-        let contentHtmlImgs = document.querySelectorAll(".home-page-tag-content img")
-        for (let i = 0; i < contentHtmlImgs.length; i++) {
-          let nodeParent = contentHtmlImgs[i].parentNode
-          nodeParent.removeChild(contentHtmlImgs[i])
-
-        }
-      })
-      },5)
-    },
-    setShowAllPage(allPageMaps) {
-      new Promise((resolve,reject) => {
-        this.allPageArr = []
-        //先判断是否置顶，置顶不参与时间排序
-        for (let i = 0; i < allPageMaps.length; i++) {
-          let isStick = allPageMaps[i].frontmatter.stick
-          if (isStick) {
-            this.allPageArr.push(allPageMaps[i])
-          }
-        }
-        resolve()
-      }).then(() => {
-        let tempPageArr = []
-        new Promise((resolve,reject) => {
-          for (let i = 0; i < allPageMaps.length; i++) {
-            let isStick = allPageMaps[i].frontmatter.stick
-            if (!isStick) {
-              // this.allPageArr.push(allPageMaps[i])
-              tempPageArr.push(allPageMaps[i])
-            }
-            if (i === allPageMaps.length -1) {
-              //全部完成
-              tempPageArr.sort(this.compare("updatedTime"))
-            }
-          }
-          resolve(tempPageArr)
-        }).then((tempPageArr) => {
-          new Promise((resolve,reject) => {
-            for (let i = tempPageArr.length; i >0; i--) {
-              this.allPageArr.push(tempPageArr[i -1])
-            }
-            resolve()
-          }).then(() => {
-            let num = (this.$store.state.currentPageNum -1) * this.pageSize
-            this.showPageArr = this.allPageArr.slice(num, num + this.pageSize)
-          })
-        })
-      })
-    }
-  },
+interface Props {
+	userUid: string
 }
+
+const props = withDefaults(defineProps<Props>(), {})
+
+const articleArr = ref<Array<ArticleVo>>([])
+const currentPage = ref<number>(1)
+const condition = ref<Condition>({
+	delete: false,
+	status: true,
+	pageSize: 10,
+	pageNum: 1,
+	orderBy: 'update_time desc'
+})
+const homeBottomScroll = ref<Element>()
+const pageTotal = ref<number>(0)
+
+const setImgDom = () => {
+	setTimeout(() => {
+		let contentHtmlImg = document.querySelectorAll(".home-page-tag-content img")
+		new Promise((resolve,rejcet) => {
+			for (let i = 0; i < contentHtmlImg.length; i++) {
+				contentHtmlImg[i].setAttribute("src","")
+			}
+			resolve(null)
+		}).then(() => {
+			let contentHtmlImgs = document.querySelectorAll(".home-page-tag-content img")
+			for (let i = 0; i < contentHtmlImgs.length; i++) {
+				let nodeParent = contentHtmlImgs[i].parentNode
+				if (nodeParent) {
+					nodeParent.removeChild(contentHtmlImgs[i])
+				}
+			}
+		})
+	},5)
+}
+
+const loadArticleData = async () => {
+  return new Promise((resolve, reject) => {
+		if (!props.userUid) {
+			console.error('请传入userUid');
+			resolve(null)
+			return
+		}
+		condition.value.otherField = props.userUid
+		articleApi.queryListDataByCondition(condition.value).then(result => {
+			if (result.data && result.data.result) {
+				articleArr.value = result.data.result
+				pageTotal.value = result.data.total!
+				resolve(null)
+			}else {
+				articleArr.value = []
+				pageTotal.value = 0
+				resolve(null)
+			}
+		})
+	})
+}
+
+const handlePageChangeAction = async (page: number) => {
+	condition.value.pageNum = page
+	await loadArticleData()
+	currentPage.value = page
+	smoothscroll.polyfill();
+	if (homeBottomScroll.value) {
+		homeBottomScroll.value.scrollIntoView({behavior: "smooth"})
+	}
+}
+
+onBeforeMount(() => loadArticleData())
 </script>

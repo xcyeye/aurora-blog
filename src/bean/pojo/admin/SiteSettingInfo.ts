@@ -20,5 +20,6 @@ interface SiteSettingInfo {
 		show: boolean,
 		value: string
 	},
-	randomColor?: Array<string>
+	randomColor?: Array<string>,
+	homePageLazyLoadingImg?: string
 }

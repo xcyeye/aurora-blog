@@ -53,6 +53,7 @@ declare module '@vue/runtime-core' {
     NLoadingBarProvider: typeof import('naive-ui')['NLoadingBarProvider']
     NMessageProvider: typeof import('naive-ui')['NMessageProvider']
     NNotificationProvider: typeof import('naive-ui')['NNotificationProvider']
+    NPagination: typeof import('naive-ui')['NPagination']
     NSpace: typeof import('naive-ui')['NSpace']
     Page: typeof import('./../components/common/Page.vue')['default']
     PageMeta: typeof import('./../components/common/PageMeta.vue')['default']

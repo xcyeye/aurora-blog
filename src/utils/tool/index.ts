@@ -40,3 +40,28 @@ export const getFileSize = (size: number | null | undefined): string => {
 
 	return (size / 1024 / 1024).toFixed(2) + " MB"
 }
+
+export const getLocalTime = (time: Date | number | string, isToDay: boolean = true) => {
+	if (time === undefined) {
+		//没有时间戳
+		return ''
+	}
+
+	if (time === 0) {
+		//没有时间戳
+		return ''
+	}
+
+	let date = new Date(time);
+	let day = date.getDate()
+	let year = date.getFullYear()
+	let month = date.getMonth() + 1
+	let hours = date.getHours()
+	let min = date.getMinutes()
+	let sec = date.getSeconds()
+	if (isToDay) {
+		return year + "-" + month + "-" + day + " "
+	}else {
+		return year + "-" + month + "-" + day + " " + hours + ":" + min + ":" + sec
+	}
+}
