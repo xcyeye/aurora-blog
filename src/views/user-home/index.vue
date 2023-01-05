@@ -1,6 +1,6 @@
 <template>
 	<home-content :theme-property="themeProperty" :show-random-say="true" :is-home="true"/>
-	<home-bottom/>
+	<!--<home-bottom/>-->
 </template>
 
 <script lang="ts" setup>
@@ -17,6 +17,7 @@ import $ from 'jquery'
 import {blogPageData} from "@/assets/config";
 import {StringUtil} from "@/utils";
 import {useRouterPush} from "@/composables";
+import {siteSettingApi} from "@/service/api/admin/siteSettingApi";
 
 const themeProperty = ref(blogPageData)
 const router = useRouter()
@@ -30,5 +31,9 @@ onMounted(() => {
 			name: 'home'
 		})
 	}
+	
+	siteSettingApi.queryOneDataByUserUid({userUid: '1522074993315815424'}).then(result => {
+		console.log(result);
+	})
 })
 </script>

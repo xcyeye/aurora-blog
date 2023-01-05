@@ -24,6 +24,7 @@
 <script>
 
 import {computed} from "vue";
+import {blogPageData} from "@/assets/config";
 
 // interface Props {
 // 	userUid: string

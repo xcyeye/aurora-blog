@@ -7,7 +7,6 @@ import type { ProxyOptions } from 'vite';
  */
 export function createViteProxy(isOpenProxy: boolean, envConfig: ServiceEnvConfig) {
   if (!isOpenProxy) return undefined;
-
   const proxy: Record<string, string | ProxyOptions> = {
     [envConfig.urlPattern]: {
       target: envConfig.url,
