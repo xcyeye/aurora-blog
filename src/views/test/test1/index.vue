@@ -1,43 +1,75 @@
 <template>
-	<n-tree
-		block-line
-		:data="data"
-		checkable
-		expand-on-click
-		selectable
-	/>
+	<n-form :model="model">
+		<n-dynamic-input
+			v-model:value="model.dynamicInputValue"
+			item-style="margin-bottom: 0;"
+			:on-create="onCreate"
+			#="{ index, value }"
+		>
+			<div style="display: flex">
+				<!--
+					通常，path 的变化会导致 form-item 验证内容或规则的改变，所以 naive-ui 会清理掉
+					表项已有的验证信息。但是这个例子是个特殊情况，我们明确的知道，path 的改变不会导致
+					form-item 验证内容和规则的变化，所以就 ignore-path-change
+				-->
+				<n-form-item
+					ignore-path-change
+					:show-label="false"
+					:path="`dynamicInputValue[${index}].name`"
+					:rule="dynamicInputRule"
+				>
+					<n-input
+						v-model:value="model.dynamicInputValue[index].name"
+						placeholder="Name"
+						@keydown.enter.prevent
+					/>
+					<!--
+						由于在 input 元素里按回车会导致 form 里面的 button 被点击，所以阻止了默认行为
+					-->
+				</n-form-item>
+				<div style="height: 34px; line-height: 34px; margin: 0 8px">
+					=
+				</div>
+				<n-form-item
+					ignore-path-change
+					:show-label="false"
+					:path="`dynamicInputValue[${index}].value`"
+					:rule="dynamicInputRule"
+				>
+					<n-input
+						v-model:value="model.dynamicInputValue[index].value"
+						placeholder="Value"
+						@keydown.enter.prevent
+					/>
+				</n-form-item>
+			</div>
+		</n-dynamic-input>
+	</n-form>
+	<pre>{{ JSON.stringify(model.dynamicInputValue, null, 2) }}</pre>
 </template>
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue'
-import { repeat } from 'seemly'
-import { TreeOption } from 'naive-ui'
-
-function createData (level = 4, baseKey = ''): TreeOption[] | undefined {
-	if (!level) return undefined
-	return repeat(6 - level, undefined).map((_, index) => {
-		const key = '' + baseKey + level + index
-		return {
-			label: key,
-			key,
-			children: createData(level - 1, key)
-		}
-	})
-}
-
-function createLabel (level: number): string {
-	if (level === 4) return '道生一'
-	if (level === 3) return '一生二'
-	if (level === 2) return '二生三'
-	if (level === 1) return '三生万物'
-	return ''
-}
 
 export default defineComponent({
 	setup () {
 		return {
-			data: createData(),
-			defaultExpandedKeys: ref(['40', '41'])
+			dynamicInputRule: {
+				trigger: 'input',
+				validator (rule: unknown, value: string) {
+					if (value.length >= 5) return new Error('最多输入四个字符')
+					return true
+				}
+			},
+			model: ref({
+				dynamicInputValue: [{ value: '', name: '' }]
+			}),
+			onCreate () {
+				return {
+					name: '',
+					value: ''
+				}
+			}
 		}
 	}
 })

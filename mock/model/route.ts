@@ -91,6 +91,19 @@ export const routeModel: Record<Auth.RoleType, AuthRoute.Route[]> = {
 			}
 		},
 		{
+			name: 'siteSetting',
+			path: '/siteSetting',
+			component: 'self',
+			meta: {
+				title: '站点设置',
+				requiresAuth: true,
+				hide: false,
+				singleLayout: 'basic',
+				icon: 'ic:sharp-brightness-1',
+				order: 0
+			}
+		},
+		{
 			name: 'article',
 			path: '/article',
 			component: 'basic',
