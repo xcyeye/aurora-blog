@@ -4,6 +4,7 @@
     "module": "ESNext",
     "target": "ESNext",
     "lib": ["DOM", "ESNext"],
+    "noImplicitThis": false,
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,

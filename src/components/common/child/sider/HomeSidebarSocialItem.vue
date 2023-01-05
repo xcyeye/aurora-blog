@@ -1,20 +1,21 @@
 <template>
-  <div v-if="socialItem.show" class="sidebar-social-single" :style="getBgColor">
-    <a target="_blank" :href="socialItem.aHref">
-      <div class="sidebar-social-single-item">
-        <svg class="home-sidebar-social-icon" aria-hidden="true">
-          <use :xlink:href="socialItem.symbol"></use>
-        </svg>
-      </div>
-    </a>
-    <div class="show-social-common" v-if="isShowSocialImg" id="show-img">
-      <!--<slot name="show-img" ></slot>-->
-      <img :src="socialItem.showImgSrc" alt="">
-    </div>
-  </div>
+	<div v-if="socialItem.show" class="sidebar-social-single" :style="getBgColor">
+		<a target="_blank" :href="socialItem.aHref">
+			<div class="sidebar-social-single-item">
+				<svg class="home-sidebar-social-icon" aria-hidden="true">
+					<use :xlink:href="socialItem.symbol"></use>
+				</svg>
+			</div>
+		</a>
+		<div class="show-social-common" v-if="isShowSocialImg" id="show-img">
+			<!--<slot name="show-img" ></slot>-->
+			<img :src="socialItem.showImgSrc" alt="">
+		</div>
+	</div>
 </template>
 
-<script>
+<script lang="ts">
+import {PropType} from 'vue'
 import {blogPageData} from "@/assets/config";
 
 export default {
@@ -27,12 +28,15 @@ export default {
   },
   props: {
     socialItem: {
-      type: Object
+      type: Object as PropType<SocialInfo>,
+			default() {
+				return {}
+			}
     },
     sidebarWidthVar: {
-      type: Number,
+      type: String,
       default() {
-        return 0.8
+        return '0.8'
       }
     },
     sidebarRowVar: {
@@ -98,12 +102,12 @@ export default {
     this.hexRgb = this.hexToRgb(bgColor)
   },
   methods:{
-    getRandomInt(min, max) {
+    getRandomInt(min: number, max: number) {
       min = Math.ceil(min);
       max = Math.floor(max);
       return Math.floor(Math.random() * (max - min)) + min; //不含最大值，含最小值
     },
-    hexToRgb(hex) {
+    hexToRgb(hex: string) {
       let result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
       return result ? {
         r: parseInt(result[1], 16),
@@ -111,7 +115,7 @@ export default {
         b: parseInt(result[3], 16)
       } : null;
     }
-  },
+  }
 }
 </script>
 

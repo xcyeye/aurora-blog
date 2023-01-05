@@ -1,15 +1,16 @@
 //import axios from "axios"
 import axios from "axios";
+import {CreateAxiosDefaults} from "axios/index";
 
-export function req(option) {
+export function req(option: CreateAxiosDefaults) {
     return new Promise((resolve, reject) => {
         let timeout = 0;
         let method = "GET"
         let baseURL = ""
         try {
-            timeout = option.timeout
-            method = option.method
-            baseURL = option.baseURL
+            timeout = option.timeout!
+            method = option.method!
+            baseURL = option.baseURL!
         }catch (e) {
 
         }
@@ -58,7 +59,7 @@ export function req(option) {
     })
 }
 
-export function cors(option) {
+export function cors(option: CreateAxiosDefaults) {
     return new Promise((resolve, reject) => {
         const instance = axios.create(option)
         //拦截器

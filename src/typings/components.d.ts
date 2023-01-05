@@ -43,6 +43,7 @@ declare module '@vue/runtime-core' {
     MobileSidebarNav: typeof import('./../components/common/child/sider/MobileSidebarNav.vue')['default']
     MoodItem: typeof import('./../components/common/child/shareSpace/MoodItem.vue')['default']
     NaiveProvider: typeof import('./../components/common/NaiveProvider.vue')['default']
+    NAvatar: typeof import('naive-ui')['NAvatar']
     Navbar: typeof import('./../components/common/Navbar.vue')['default']
     NavbarLinks: typeof import('./../components/common/NavbarLinks.vue')['default']
     NavLink: typeof import('./../components/common/NavLink.vue')['default']

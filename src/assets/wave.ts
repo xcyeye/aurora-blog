@@ -8,9 +8,9 @@ function wave1() {
         progress = 75,  //波浪位置的高度
         d2 = waveWidth / waveCount,
         d = d2 / 2,
-        hd = d / 2,
-        c = document.getElementById("home-wave-canvas1"),
-        ctx = c.getContext("2d");
+        hd = d / 2
+        const c = <HTMLCanvasElement> document.getElementById("home-wave-canvas1")
+        const ctx = <CanvasRenderingContext2D> c.getContext("2d");
     function tick() {
         offset -= 5;
         if (-1 * offset === d2) offset = 0;
@@ -46,8 +46,8 @@ function wave2() {
         d2B = waveWidthB / waveCountB,
         dB = d2B / 2,
         hdB = dB / 2,
-        cB = document.getElementById("home-wave-canvas2"),
-        ctxB = cB.getContext("2d");
+        cB = <HTMLCanvasElement> document.getElementById("home-wave-canvas2"),
+        ctxB = <CanvasRenderingContext2D> cB.getContext("2d");
     function tickB() {
         offsetB -= 5;
         if (-1 * offsetB === d2B) offsetB = 0;
@@ -72,9 +72,9 @@ function wave2() {
     tickB();
 }
 export function wave () {
-    let canvas1 = document.getElementById('home-wave-canvas1');
+    let canvas1 = <HTMLCanvasElement> document.getElementById('home-wave-canvas1');
     canvas1.width = window.innerWidth;
-    let canvas2 = document.getElementById('home-wave-canvas2');
+    let canvas2 = <HTMLCanvasElement> document.getElementById('home-wave-canvas2');
     canvas2.width = window.innerWidth;
     wave1()
     wave2()
