@@ -69,6 +69,7 @@ declare module '@vue/runtime-core' {
     TagCloud: typeof import('./../components/common/child/tag/TagCloud.vue')['default']
     TagItem: typeof import('./../components/common/child/tag/TagItem.vue')['default']
     TagPage: typeof import('./../components/common/child/tag/TagPage.vue')['default']
+    TestAd: typeof import('./../components/common/TestAd.vue')['default']
     ToggleDarkModeButton: typeof import('./../components/common/ToggleDarkModeButton.vue')['default']
     ToggleSidebarButton: typeof import('./../components/common/ToggleSidebarButton.vue')['default']
     TopImage: typeof import('./../components/common/TopImage.vue')['default']

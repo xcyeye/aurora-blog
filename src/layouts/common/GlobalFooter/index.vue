@@ -56,7 +56,7 @@ export default defineComponent({
 		let showThemeCopyright = blogPageData.isShowThemeCopyright
 		if (showThemeCopyright === undefined || showThemeCopyright == null || showThemeCopyright === true) {
 			//默认为TRUE，显示页脚主题版权
-			let themeCopyright = "theme&nbsp;<a href='https://github.com/vuepress-aurora/vuepress-theme-aurora' target='_blank'>Aurora</a>" +
+			let themeCopyright = "bean&nbsp;<a href='https://github.com/vuepress-aurora/vuepress-bean-aurora' target='_blank'>Aurora</a>" +
 				"&nbsp;by&nbsp;<a href='https://aurora.xcye.xyz/' target='_blank'>qsyyke</a>"
 			// this.footerArr.push(themeCopyright)
 			let set = new Set()

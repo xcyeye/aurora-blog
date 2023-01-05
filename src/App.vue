@@ -20,7 +20,7 @@ import BasicLayout from './layouts/BasicLayout/index.vue'
 // import { subscribeStore, useThemeStore } from '@/store';
 // import { useGlobalEvents } from '@/composables';
 
-// const theme = useThemeStore();
+// const bean = useThemeStore();
 //
 // subscribeStore();
 // useGlobalEvents();

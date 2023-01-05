@@ -22,8 +22,20 @@
 </template>
 
 <script>
-import {blogPageData} from "@/assets/config";
-import {setTag} from "@/assets/tag";
+
+import {computed} from "vue";
+
+// interface Props {
+// 	userUid: string
+// }
+
+// const props = withDefaults(defineProps<Props>(), {})
+
+// const getHomePageStyle = computed(() => {
+// 	if (!this.themeProperty.isHomePageFollow) {
+// 		return "--opacity: 1;"
+// 	}
+// })
 
 export default {
   name: "HomeBottom",

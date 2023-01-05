@@ -262,7 +262,7 @@ export default defineComponent({
 			
 			if (this.themeProperty.customRandomSay) {
 				this.randomSawRes = this.themeProperty.customRandomValue === undefined ||
-				this.themeProperty.customRandomValue == null ? "Aurora theme" : this.themeProperty.customRandomValue
+				this.themeProperty.customRandomValue == null ? "Aurora bean" : this.themeProperty.customRandomValue
 				this.initTyped(this.randomSawRes,() => {
 					setTimeout(() => {
 						this.fetchData()

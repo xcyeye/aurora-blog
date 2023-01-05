@@ -202,7 +202,7 @@ export default defineComponent({
 			let keyword = ''
 			let description = ''
 			
-			let content = document.querySelector("#theme-default-content").innerText
+			let content = document.querySelector("#bean-default-content").innerText
 			//截取220个字符作为描述和关键字信息
 			content = content.replace(/[\r\n]/g,"");
 			content = content.replace(" ","")

@@ -1,33 +1,58 @@
-import { fileURLToPath, URL } from 'node:url'
+import { defineConfig, loadEnv } from 'vite';
+import { createViteProxy, getRootPath, getSrcPath, setupVitePlugins, viteDefine } from './build';
+import { getServiceEnvConfig } from './.env-config';
 
-import { defineConfig } from 'vite'
-import vue from '@vitejs/plugin-vue'
-import Components from 'unplugin-vue-components/vite'
-import {
-  NaiveUiResolver
-} from 'unplugin-vue-components/resolvers'
+export default defineConfig(configEnv => {
+  const viteEnv = loadEnv(configEnv.mode, process.cwd()) as unknown as ImportMetaEnv;
 
-// https://vitejs.dev/config/
-export default defineConfig({
-  plugins: [
-    Components({
-      resolvers: [
-        NaiveUiResolver()
-      ],
-      dirs: ['src/components'],
-      extensions: ['vue'],
-      dts: 'src/typings/components.d.ts'
-    }),
-    vue(),
-  ],
-  resolve: {
-    alias: {
-      '@': fileURLToPath(new URL('./src', import.meta.url))
+  const rootPath = getRootPath();
+  const srcPath = getSrcPath();
+
+  const isOpenProxy = viteEnv.VITE_HTTP_PROXY === 'Y';
+  const envConfig = getServiceEnvConfig(viteEnv);
+
+  return {
+    base: viteEnv.VITE_BASE_URL,
+    resolve: {
+      alias: {
+        '~': rootPath,
+        '@': srcPath
+      }
+    },
+    define: viteDefine,
+    plugins: setupVitePlugins(viteEnv),
+    css: {
+      preprocessorOptions: {
+        scss: {
+          additionalData: `@use "./src/styles/scss/global.scss" as *;`
+        }
+      }
+    },
+    server: {
+      host: '0.0.0.0',
+      port: 7899,
+      open: false,
+      proxy: createViteProxy(isOpenProxy, envConfig)
+    },
+    optimizeDeps: {
+      include: [
+        '@antv/data-set',
+        '@antv/g2',
+        '@better-scroll/core',
+        'echarts',
+        'swiper',
+        'swiper/vue',
+        'vditor',
+        'wangeditor',
+        'xgplayer'
+      ]
+    },
+    build: {
+      reportCompressedSize: false,
+      sourcemap: false,
+      commonjsOptions: {
+        ignoreTryCatch: false
+      }
     }
-  },
-  server: {
-    port: 7899,
-    open: false,
-    host: '0.0.0.0'
-  },
-})
+  };
+});

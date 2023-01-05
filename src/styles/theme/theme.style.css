@@ -39,7 +39,7 @@
     --aurora-layout-main-content-height: 90vh;
     --aurora-layout-footer-height: 7vh;
 
-    /*//vuepress-theme-archive插件变量*/
+    /*//vuepress-bean-archive插件变量*/
     --archive-box-width: 90%;
 
 
@@ -121,7 +121,7 @@
 
 /*定义头部等*/
 .aurora-header {
-    min-height: calc(var(--aurora-layout-header-height));
+    /*min-height: calc(var(--aurora-layout-header-height));*/
     width: 100%;
     /*background-color: rebeccapurple;*/
 }
