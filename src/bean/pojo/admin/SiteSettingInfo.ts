@@ -6,6 +6,16 @@ interface SocialInfo {
 	symbol?: string,
 	showImgSrc?: string
 }
+
+interface FriendLinkSiteInformation {
+	title?: string,
+	url?: string,
+	logo?: string,
+	describe?: string,
+	cover?: string,
+	contact?: string,
+	otherDescribe?: Array<string>
+}
 interface SiteSettingInfo {
 	showRandomSay?: boolean,
 	showPrintText?: boolean,
@@ -21,5 +31,9 @@ interface SiteSettingInfo {
 		value: string
 	},
 	randomColor?: Array<string>,
-	homePageLazyLoadingImg?: string
+	homePageLazyLoadingImg?: string,
+	friendLinkSiteInformation?: FriendLinkSiteInformation,
+	// 手机端，是否在页面的底部显示侧边栏列表，默认开启，如果需要开启，请将此值设置为FALSE
+	mobilePageSidebar?: boolean,
+
 }

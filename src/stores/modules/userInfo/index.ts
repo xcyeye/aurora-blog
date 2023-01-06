@@ -13,7 +13,7 @@ export const useUserInfo = defineStore('userInfo', {
   getters: {
     getUserInfo: state => (userUid: string): UserVo => {
       if (!StringUtil.haveLength(userUid)) return {}
-      if (state.userInfoMap.get(userUid)) {
+      if (state.userInfoMap.get(userUid) && state.userInfoMap.get(userUid)!.uid) {
         return state.userInfoMap.get(userUid) as UserVo
       }
 

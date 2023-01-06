@@ -57,10 +57,9 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import { readingTime } from 'reading-time-estimator';
 import gsap from "gsap";
-import {blogPageData} from "@/assets/config";
 export default {
   name: "TopImage",
   data() {
@@ -74,7 +73,7 @@ export default {
       pageMap: '',
       contentLength: 0,
       tagArr: [],
-      topBackgroundUrl: 'https://picture.cco.vin/pic/rmimg',
+      topBackgroundUrl: 'https://picture.xcye.xyz/pic/rmimg',
       pathName: '',
       sugCountPerMin: 230,
       document: {},
@@ -86,6 +85,7 @@ export default {
     }
   },
   props: {
+		
     isShowTopImg: {
       type: Boolean,
       default() {

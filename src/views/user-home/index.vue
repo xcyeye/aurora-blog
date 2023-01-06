@@ -13,7 +13,7 @@ import {siteSettingApi} from "@/service/api/admin/siteSettingApi";
 import {defaultSiteSettingInfo} from "@/field";
 import {UserVo} from "@/bean/vo/admin/UserVo";
 import {userApi} from "@/service";
-import {useSiteInfo, useUserInfo} from "@/stores";
+import {useCurrentUser, useSiteInfo, useUserInfo} from "@/stores";
 import {setDefaultProperties} from "@/utils/business";
 
 const themeProperty = ref(blogPageData)
@@ -50,6 +50,8 @@ onBeforeMount(() => {
 	// 		}
 	// 	})
 	// }
+	
+	useCurrentUser().setCurrentUserInfo({uid: userUid.value})
 	
 	
 	if (!useSite.getSiteInfo(userUid.value)) {
