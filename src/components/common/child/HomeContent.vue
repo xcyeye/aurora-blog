@@ -1,7 +1,7 @@
 <template>
 	<div class="home" :style="getHomeHeight">
 		<div class="home-hero-img" :class="{'home-hero-img-custom ': isHome}" id="home-hero-img">
-			<img :src="currentUserInfo.avatar" alt="头像"/>
+			<img :src="useUserInfo().getUserInfo(userUid).avatar"/>
 		</div>
 		<slot name="home1"></slot>
 		<div v-if="randomSawRes" :class="{'home-random-say-custom': isHome}" class="home-random-say">
@@ -122,6 +122,7 @@ export default defineComponent({
 		window.addEventListener('scroll', this.handleScroll, true)
 		
 		this.currentUserInfo = useUser.getUserInfo(this.userUid)
+		console.log(this.currentUserInfo);
 		this.currentSiteInfo = useSite.getSiteInfo(this.userUid)
 		
 		if (this.currentSiteInfo.randomSayApi !== undefined) {
@@ -175,6 +176,7 @@ export default defineComponent({
 		// })
 	},
 	methods: {
+		useUserInfo,
 		loadSocialInfo(): void {
 			this.socialsArrTemp = []
 			if (this.currentSiteInfo.socialsArr) {

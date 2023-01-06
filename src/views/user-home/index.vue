@@ -14,7 +14,7 @@ import {defaultSiteSettingInfo} from "@/field";
 import {UserVo} from "@/bean/vo/admin/UserVo";
 import {userApi} from "@/service";
 import {useCurrentUser, useSiteInfo, useUserInfo} from "@/stores";
-import {setDefaultProperties} from "@/utils/business";
+import {isNotEmptyObject, setDefaultProperties} from "@/utils/business";
 
 const themeProperty = ref(blogPageData)
 const router = useRouter()
@@ -35,26 +35,25 @@ const setProperties = () => {
 }
 
 onBeforeMount(() => {
-	userUid.value = router.currentRoute.value.params.uid as string
+	userUid.value = router.currentRoute.value.params.userUid as string
 	if (!StringUtil.haveLength(userUid.value)) {
 		routerPush.routerPush({
 			name: 'home'
 		})
 	}
 	
-	// if (!useUser.getUserInfo(userUid.value) || !StringUtil.haveLength(useUser.getUserInfo(userUid.value).username)) {
-	// 	userApi.queryOneDataByUid({uid: userUid.value}).then(result => {
-	// 		if (result.data) {
-	// 			userInfo.value = result.data
-	// 			useUser.setUserInfo(userUid.value, result.data)
-	// 		}
-	// 	})
-	// }
+	if (!isNotEmptyObject(useUser.getUserInfo(userUid.value))) {
+		userApi.queryOneDataByUid({uid: userUid.value}).then(result => {
+			if (result.data) {
+				userInfo.value = result.data
+				useUser.setUserInfo(userUid.value, result.data)
+			}
+		})
+	}
 	
 	useCurrentUser().setCurrentUserInfo({uid: userUid.value})
 	
-	
-	if (!useSite.getSiteInfo(userUid.value)) {
+	if (!isNotEmptyObject(useSite.getSiteInfo(userUid.value))) {
 		siteSettingApi.queryOneDataByUserUid({userUid: userUid.value}).then(result => {
 			if (result.data) {
 				if (result.data.paramValue) {
