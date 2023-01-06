@@ -19,7 +19,7 @@
 
     </div>
     <div class="home-page-fun" id="home-page-fun">
-      <HomeSidebar></HomeSidebar>
+      <HomeSidebar :user-uid="userUid"></HomeSidebar>
     </div>
   </div>
   <slot name="home-footer"/>

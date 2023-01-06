@@ -5,7 +5,7 @@
 <script lang="ts" setup>
 import {defineComponent} from "vue";
 
-defineComponent({name: 'sharePage1'});
+defineComponent({name: 'sd'});
 </script>
 
 <style scoped>

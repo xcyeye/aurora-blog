@@ -12,34 +12,32 @@
                  :is-show-catalog="true">
       <template #sidebar-son2>
         <div class="divider">
-          <span></span><span>{{mobileCutText}}</span><span></span>
+          <span></span><span>Aurora</span><span></span>
         </div>
       </template>
     </HomeSidebar>
   </div>
 </template>
 
-<script>
-import {blogPageData} from "@/assets/config";
-
+<script lang="ts">
 export default {
   name: "MobileSidebar",
   data() {
     return {
       isShowMobileSidebar: false,
-      themeProperty: ''
+    }
+  },
+  props: {
+    showNavbar: {
+      type: Boolean,
+      default() {
+        return false
+      }
     }
   },
   computed: {
-    mobileCutText() {
-      if (this.themeProperty.mobileCutText !== undefined) {
-        return this.themeProperty.mobileCutText
-      }else {
-        return 'Aurora'
-      }
-    },
     setShowMobileSidebar() {
-      return (index) => {
+      return (index: number) => {
         if (2 === index) {
           if (this.$store.state.openMobileSidebar) {
             return 'mobileSidebar'
@@ -62,9 +60,6 @@ export default {
         openMobileSidebar: !this.$store.state.openMobileSidebar
       })
     }
-  },
-  created() {
-    this.themeProperty = blogPageData
   },
   mounted() {
     if (document.body.clientWidth <= 719) {

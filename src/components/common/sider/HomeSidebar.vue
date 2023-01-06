@@ -10,23 +10,24 @@
       <!--头像信息-->
       <div :id="customId" v-if="showPersonInfo" class="sidebar-single-common">
         <div class="home-sidebar-avatar">
-          <img id="home-sidebar-avatar-img" :src="getAvatar" alt="">
-        </div>
+          <!--<img id="home-sidebar-avatar-img" :src="useUserInfo().getUserInfo(userUid).avatar" alt="">-->
+        	<n-avatar :src="useUserInfo().getUserInfo(userUid).avatar" :size="60" round/>
+				</div>
         <div class="home-sidebar-info-desc">
           <span v-if="getLogoTitle !== ''" v-html="getLogoTitle"></span>
         </div>
         <div class="home-sidebar-info-page">
           <div class="sidebar-page-common">
             <div>文章</div>
-            <div>{{$store.state.pageNum}}</div>
+            <div>{{articleNumber}}</div>
           </div>
           <div class="sidebar-page-common">
             <div>标签</div>
-            <div>{{$store.state.tagArr.length}}</div>
+            <div>{{tagNumber}}</div>
           </div>
           <div class="sidebar-page-common">
             <div>类别</div>
-            <div>{{$store.state.categories.length}}</div>
+            <div>{{categoryNumber}}</div>
           </div>
         </div>
         <a target="_blank" :href="getGithubUrl">
@@ -57,13 +58,13 @@
       <!--侧边栏友情链接-->
       <div :id="customId" v-if="getShowSidebarLink" class="sidebar-single-common">
         <div class="sidebar-link">
-          <a :href="item.url" target="_blank" :data="item.url" :key="item.url" v-for="(item,index) in friendLinks">
+          <a :href="item.linkUrl" target="_blank" :data="item.linkTitle" :key="item.uid" v-for="(item,index) in friendLinks">
             <div class="sidebar-link-single">
               <div class="sidebar-link-avatar">
-                <img :origin-src="item.logo" :src="showFriendAvatar ? item.logo : homePageLazyLoadingImg" alt="">
+                <img :origin-src="item.linkLogo" :src="showFriendAvatar ? item.linkLogo : homePageLazyLoadingImg" alt="">
               </div>
-              <div :dat="item.title" class="sidebar-link-title">
-                <span>{{item.title}}</span>
+              <div :dat="item.linkTitle" class="sidebar-link-title">
+                <span>{{item.linkTitle}}</span>
               </div>
             </div>
           </a>
@@ -100,14 +101,14 @@
 
         <!--最新文章-->
         <div v-show="changePageIndex === '2'">
-          <div v-for="item in getLatestPage" :key="item.articleUrl" :data="item.articleUrl" class="sidebar-page-item sidebar-hover-bg-common">
+          <div v-for="item in articleArr" :key="item.uid" :data="item.uid" class="sidebar-page-item sidebar-hover-bg-common">
             <div class="sidebar-page-title">
-              <router-link :to="item.articleUrl">
-                <span>{{item.title === "" ? getRecommendNoTitle : item.title}}</span>
+              <router-link :to="`/article/${item.uid}`">
+                <span>{{item.title ? item.title :getRecommendNoTitle}}</span>
               </router-link>
             </div>
             <div class="sidebar-page-time">
-              <span>{{getLocalTime(item.pageCreateTime)}}</span>
+              <span>{{ item.createTime }}</span>
             </div>
           </div>
         </div>
@@ -116,14 +117,14 @@
       <slot name="sidebar5"></slot>
 
       <!--公告-->
-      <div :id="customId" v-if="getShowMessage" :class="{'sidebar-single-enter-animate': showEnterAnimate}" class="sidebar-single-common">
+      <div :id="customId" v-if="bulletinArr" :class="{'sidebar-single-enter-animate': showEnterAnimate}" class="sidebar-single-common">
         <div class="sidebar-page">
           <span class="aurora-iconfont-common aurora-sidebar-message"></span>
           <span>公告</span>
         </div>
         <div class="sidebar-message">
-          <li id="sidebar-message" :key="item" v-for="(item,index) in themeProperty.message" class="sidebar-hover-bg-common">
-            <span v-html="item"></span>
+          <li id="sidebar-message" :key="item" v-for="(item,index) in bulletinArr" class="sidebar-hover-bg-common">
+            <span v-html="item.content"></span>
           </li>
         </div>
         <slot name="sidebar-son6"/>
@@ -149,9 +150,9 @@
         </div>
 
         <div class="sidebar-tag-item">
-          <router-link :key="index" v-for="(item,index) in getSidebarTagArr" :to="'/tag?tag=' + item">
+          <router-link :key="index" v-for="(item,index) in tagArr" :to="'/tag?tag=' + item.uid">
             <div class="sidebar-tag-single">
-              <span class="home-sidebar-tag-hover" :key="index" :style="setTagItemStyle(index)">{{item}}</span>
+              <span class="home-sidebar-tag-hover" :key="index" :style="setTagItemStyle(index)">{{item.title}}</span>
             </div>
           </router-link>
         </div>
@@ -183,26 +184,54 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 
-import {blogPageData} from "@/assets/config";
+import {useSiteInfo, useUserInfo} from "@/stores";
+import {articleApi, bulletinApi, categoryApi, linkApi, tagApi} from "@/service";
+import {LinkVo} from "@/bean/vo/article/LinkVo";
+import {getRandomNum, StringUtil} from "@/utils";
+import blogConfig from '@/config/blogConfig.json';
+import {BulletinVo} from "@/bean/vo/article/BulletinVo";
+import {TagVo} from "@/bean/vo/article/TagVo";
+import {getLocalTime} from "@/utils";
+import {ArticleVo} from "@/bean/vo/article/ArticleVo";
+import {CategoryVo} from "@/bean/vo/article/CategoryVo";
+
+const currentSiteInfo: SiteSettingInfo = {}
+const friendLinks: Array<LinkVo> = []
+const socialsArr: Array<SocialInfo> = []
+const bulletinArr: Array<BulletinVo> = []
+const tagArr: Array<TagVo> = []
+const categoryArr: Array<CategoryVo> = []
+const articleArr: Array<ArticleVo> = []
 
 export default {
   name: "HomeSidebar",
+  components: {
+  },
   data() {
     return {
+			articleNumber: 0,
+			tagNumber: 0,
+			categoryNumber: 0,
+			articleArr,
+			categoryArr,
+			tagArr,
+			bulletinArr,
+			currentSiteInfo,
       showFriendAvatar: false,
-      themeProperty: '',
-      allSortPageArr: [],
       latestPageSize: 6,
       changePageIndex: '2',
       stickSidebar: false,
-      socialsArr: [],
-      friendLinks: [],
-      homePageLazyLoadingImg: 'https://ooszy.cco.vin/img/blog-public/ljz.gif'
+      socialsArr,
+			friendLinks,
+      homePageLazyLoadingImg: 'https://picture.xcye.xyz/img/blog-public/ljz.gif'
     }
   },
   props: {
+		userUid: {
+			type: String
+		},
     showEnterAnimate: {
       type: Boolean,
       default() {
@@ -301,6 +330,7 @@ export default {
     }
   },
   created() {
+		this.currentSiteInfo = useSiteInfo().getSiteInfo(this.userUid)
     if (this.isShowCatalog) {
       this.changePageIndex = '1'
     }
@@ -310,33 +340,52 @@ export default {
         this.setShowAllPage(this.$store.state.allPageMap)
       }
     },50)
+		
 
-    this.themeProperty = blogPageData
-
-    if (this.themeProperty.homePageLazyLoadingImg !== undefined) {
-      this.homePageLazyLoadingImg = this.themeProperty.homePageLazyLoadingImg
+    if (this.currentSiteInfo.homePageLazyLoadingImg !== undefined) {
+      this.homePageLazyLoadingImg = this.currentSiteInfo.homePageLazyLoadingImg
     }
 
-    if (this.themeProperty.latestPageSize !== undefined) {
-      this.latestPageSize = this.themeProperty.latestPageSize
+    if (this.currentSiteInfo.latestPageSize !== undefined) {
+      this.latestPageSize = this.currentSiteInfo.latestPageSize
     }
+		
+		tagApi.queryListDataByCondition({pageSize: 300, delete: false, otherUid: this.userUid}).then(result => {
+			if (result.data && result.data.result) {
+				this.tagArr = result.data.result
+				this.tagNumber = result.data.total
+			}
+		})
+		
+		bulletinApi.queryListDataByCondition({pageSize: 300, delete: false, show: true, otherUid: this.userUid}).then(result => {
+			if (result.data && result.data.result) {
+				this.bulletinArr = result.data.result
+			}
+		})
+		
+		linkApi.queryListDataByCondition({otherUid: this.userUid, status: true, pageSize: 300}).then(result => {
+			if (result.data && result.data.result) {
+				this.shuffleArray(result.data.result).then((arr: Array<LinkVo>) => {
+					this.friendLinks = arr
+				})
+			}
+		})
+		// latestPageSize
+		articleApi.queryListDataByCondition({otherUid: this.userUid, delete: false, status: true, pageSize: this.latestPageSize}).then(result => {
+			if (result.data && result.data.result) {
+				this.articleArr = result.data.result
+				this.articleNumber = result.data.total
+			}
+		})
+	
+		categoryApi.queryListDataByCondition({otherUid: this.userUid, delete: false, pageSize: 300}).then(result => {
+			if (result.data && result.data.result) {
+				this.categoryArr = result.data.result
+				this.categoryNumber = result.data.total
+			}
+		})
 
-    if (this.themeProperty.friendLinks !== undefined && this.themeProperty.friendLinks != null) {
-      let friendArrs = []
-      new Promise((resolve,reject) => {
-        for (let i = 0; i < this.themeProperty.friendLinks.length; i++) {
-          let links = this.themeProperty.friendLinks[i].links;
-          friendArrs = friendArrs.concat(links)
-        }
-        resolve()
-      }).then(() => {
-        this.shuffleArray(friendArrs).then((arr) => {
-          this.friendLinks = arr
-        })
-      })
-    }
-
-    let socials = this.themeProperty.socials
+    let socials = this.currentSiteInfo.socialsArr
     let setArr = new Set()
     if (socials !== undefined) {
       new Promise((resolve,reject) => {
@@ -344,8 +393,10 @@ export default {
           if (socials[i].sidebar) {
             setArr.add(socials[i])
           }
+					if (i === socials?.length - 1) {
+						resolve(null)
+					}
         }
-        resolve()
       }).then(() => {
         this.socialsArr = Array.from(setArr)
       })
@@ -368,9 +419,7 @@ export default {
         return false
       }
 
-      if (this.themeProperty.friendLinks === undefined) return false
-
-      return this.themeProperty.friendLinks.length !== 0;
+      return this.friendLinks.length > 0
     },
     getShowSidebarSocial() {
       if (!this.showSidebarSocial) {
@@ -380,36 +429,8 @@ export default {
       return this.socialsArr.length !== 0;
 
     },
-    getShowMessage() {
-      if (!this.showMessage) {
-        return false
-      }
-
-      if (this.themeProperty.message === undefined) {
-        return false
-      }
-
-      return this.themeProperty.message.length !== 0;
-
-    },
-    getSidebarTagArr() {
-      let sidebarTag = this.themeProperty.sidebarTag
-      if (sidebarTag === undefined || sidebarTag == null) {
-        return this.$store.state.tagArr
-      }
-
-      if (sidebarTag === "categories") {
-        return this.$store.state.categories
-      }else {
-        return this.$store.state.tagArr
-      }
-    },
     getRecommendNoTitle() {
-      let recommendNoTitle = '`╮(￣▽￣)╭`'
-      if (this.themeProperty.recommendNoTitle !== undefined && this.themeProperty.recommendNoTitle != null) {
-        recommendNoTitle = this.themeProperty.recommendNoTitle
-      }
-      return recommendNoTitle
+			return '`╮(￣▽￣)╭`'
     },
     setChangePageStyle() {
       if (!this.isShowCatalog) {
@@ -422,108 +443,55 @@ export default {
       }
     },
     getLogoTitle() {
-      if (this.themeProperty.sidebarDesc !== undefined) {
-        return this.themeProperty.sidebarDesc
+      if (this.currentSiteInfo.sidebarPersonDesc !== undefined) {
+        return this.currentSiteInfo.sidebarPersonDesc
       }
-    },
-    getAvatar() {
-
-      let sidebarAvatar = "https://ooszy.cco.vin/img/blog-public/avatar.jpg"
-      if (this.themeProperty.sidebarAvatar !== undefined) {
-        sidebarAvatar = this.themeProperty.sidebarAvatar
-      }else {
-        if (this.themeProperty.heroImg !== undefined) {
-          sidebarAvatar = this.themeProperty.heroImg
-        }
-      }
-      return sidebarAvatar
-    },
-    getLatestPage() {
-      return this.allSortPageArr.slice(0,this.latestPageSize)
     },
     isShow() {
-      return (item) => {
+      return (item: any) => {
       }
     },
     getGithubUrl() {
-      return this.themeProperty.githubUrl === undefined || this.themeProperty.githubUrl == null ?
-          "https://github.com/qsyyke" : this.themeProperty.githubUrl
+      return StringUtil.haveLength(this.currentSiteInfo.githubUrl) ? this.currentSiteInfo.githubUrl : "https://github.com/xcyeye"
     },
     setTagItemStyle() {
-      return (index) => {
-        let color = ''
-        if (this.themeProperty.randomColor !== undefined) {
-          color = this.themeProperty.randomColor[
-              this.getRandomInt(0,this.themeProperty.randomColor.length -1)]
-        }else {
-          color = this.$store.state.defaultRandomColors[
-              this.getRandomInt(0,this.$store.state.defaultRandomColors.length -1)]
-        }
-
-        let fontSize = this.getRandomInt(10,35)
+      return (index: number) => {
+        let color = blogConfig.randomColor[
+					getRandomNum(0,blogConfig.randomColor.length -1)]
+        let fontSize = getRandomNum(10,35)
         return "color: " + color + "; font-size: " + fontSize + "px;";
       }
     }
   },
   methods: {
-    shuffleArray(array) {
+		getLocalTime() {
+			return getLocalTime
+		},
+		useUserInfo,
+    shuffleArray(array: Array<LinkVo>) {
       return new Promise((resolve,reject) => {
-        for (var i = array.length - 1; i > 0; i--) {
-          var j = Math.floor(Math.random() * (i + 1));
-          var temp = array[i];
+        for (let i = array.length - 1; i > 0; i--) {
+          let j = Math.floor(Math.random() * (i + 1));
+          let temp = array[i];
           array[i] = array[j];
           array[j] = temp;
         }
         resolve(array)
       })
     },
-    shuffle(arr){
+    shuffle(arr: any){
       let _arr = arr.slice()
       for (let i = 0; i < _arr.length; i++) {
-        let j = this.getRandomInt(0, i)
+        let j = getRandomNum(0, i)
         let t = _arr[i]
         _arr[i] = _arr[j]
         _arr[j] = t
       }
       return _arr
     },
+		// @ts-ignore
     changePage(e) {
       this.changePageIndex = e.target.getAttribute("index")
-    },
-    getLocalTime(time) {
-      let date = new Date(time);
-      let day = date.getDate()
-      let year = date.getFullYear()
-      let month = date.getMonth() + 1
-      let hours = date.getHours()
-      let min = date.getMinutes()
-      let sec = date.getSeconds()
-      return year + "-" + month + "-" + day + " "
-    },
-    getRandomInt(min, max) {
-      min = Math.ceil(min);
-      max = Math.floor(max);
-      return Math.floor(Math.random() * (max - min)) + min; //不含最大值，含最小值
-    },
-    compare(updatedTime) {
-      return  function( object1, object2) {
-        var value1  = object1.pageCreateTime;
-        var value2  = object2.pageCreateTime;
-        if (value2  < value1) {
-          return  1;
-        }  else  if (value2  > value1) {
-          return  - 1;
-        }  else {
-          return  0;
-        }
-      }
-    },
-    setShowAllPage(allPageMaps) {
-      this.allSortPageArr = []
-      let tempArr = allPageMaps.sort(this.compare("updatedTime"))
-      for (let i = tempArr.length; i > 0; i--) {
-        this.allSortPageArr.push(tempArr[i - 1])
-      }
     },
     handleScroll() {
       let distance_top = 0

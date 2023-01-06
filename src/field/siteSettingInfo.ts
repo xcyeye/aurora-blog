@@ -107,6 +107,20 @@ export const defaultSiteSettingInfo: SiteSettingInfo = {
             '这是一个html的测试<a href="https://aurora.xcye.xyz" target="_blank">这是一个a标签</a>'
         ]
     },
-    mobilePageSidebar: true
+    mobilePageSidebar: true,
+    latestPageSize: 6,
+    sidebarPersonDesc: '喜欢动漫',
+    githubUrl: 'https://github.com',
+    footerInfo: {
+        enable: true,
+        footInfo: [
+            "Copyright © by qsyyke All Rights Reserved.",
+            "<a target='_blank' href='http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=53060202000142' style='display:inline-block;text-decoration:none;height:20px;line-height:20px;'><img src='' style='float:left;'/><p style='float:left;height:20px;line-height:20px;margin: 0px 0px 0px 5px;'>滇公网安备 53060202000142号</p></a>",
+        ],
+        isShowThemeCopyright: true,
+        isShowRunTime: true,
+        startRunTime: '2022-12-23 09:08:09',
+        prefixRuntime: '测试主题'
+    }
 
 }

@@ -17,6 +17,7 @@
 															 :sidebar-row-var="socialsIsHomeNum + 1"
 															 :show-social-img="true"
 															 :sidebar-cut-width="1"
+															 :current-site-info="currentSiteInfo"
 															 :sidebar-width-var="sidebarWidthVar"
 															 :social-item="item" v-for="(item, index) in socialsArrTemp"
 															 :key="index"/>

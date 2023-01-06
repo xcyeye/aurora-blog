@@ -31,7 +31,7 @@
           <div style="flex: 1" class="custom-bottom-span custom-common-span">
             <!--fontColor-->
             <li class="custom-li" v-for="(item,index) in fontFamilyArr">
-              <span :style="setFamilyBack(item)" :data-color="item" @click="setFont($event,item)">{{getShowFont}}</span>
+              <span :style="setFamilyBack(item)" :data-color="item" @click="setFont($event,item)">博</span>
             </li>
           </div>
         </div>
@@ -86,8 +86,9 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import $ from 'jquery'
+import blogConfig from '@/config/blogConfig.json'
 export default {
   name: "HomeWelcome",
   data() {
@@ -107,23 +108,11 @@ export default {
     }
   },
   created() {
-    if (this.themeProperty.maxFontColorArr !== undefined) {
-      this.maxFontColorArr = this.themeProperty.maxFontColorArr
-    }
-
-    if (this.themeProperty.fontFamily !== undefined && this.themeProperty.fontFamily != null) {
-      this.fontArr = this.themeProperty.fontFamily
-    }else {
-      this.fontArr = this.$store.state.defaultFont
-    }
-
-    if (this.themeProperty.fontColor !== undefined && this.themeProperty.fontColor != null) {
-      this.colorArr = this.themeProperty.fontColor
-    }else {
-      this.colorArr = this.$store.state.defaultFontColor
-    }
-
-    this.isFitter = this.themeProperty.isFitter === undefined ? true : this.themeProperty.isFitter
+		this.maxFontColorArr = blogConfig.maxFontColorArr
+	
+		this.fontArr = blogConfig.fontFamily
+		this.colorArr = blogConfig.fontColor
+    this.isFitter = blogConfig.isFitter
 
     if (this.colorArr.length < this.maxFontColorArr) {
       this.fontColorArr = this.colorArr
@@ -138,17 +127,9 @@ export default {
     }
 
     //获取主题配置默认圆角，模糊度，透明度
-    if (this.themeProperty.defaultBorderRadius !== undefined) {
-      this.borderRadius = this.themeProperty.defaultBorderRadius
-    }
-
-    if (this.themeProperty.defaultOpacity !== undefined) {
-      this.opacity = this.themeProperty.defaultOpacity
-    }
-
-    if (this.themeProperty.defaultBlur !== undefined) {
-      this.blur = this.themeProperty.defaultBlur
-    }
+		this.borderRadius = blogConfig.defaultBorderRadius
+		this.opacity = blogConfig.defaultOpacity
+		this.blur = blogConfig.defaultBlur
 
     this.$store.commit('setVarFilterBlur',{
       varFilterBlur: this.blur
@@ -162,19 +143,16 @@ export default {
     })
   },
   computed: {
-    getShowFont() {
-      return this.themeProperty.showFont === undefined ? "程" : this.themeProperty.showFont
-    },
     getColorStyle() {
       return this.setColorStyle
     },
     setColorBack() {
-      return (item) => {
+      return (item: string) => {
         return "background-color: " + item + ";";
       }
     },
     setFamilyBack() {
-      return (item) => {
+      return (item: string) => {
         return "font-family: " + item + ";";
       }
     }
@@ -208,6 +186,7 @@ export default {
         time: time
       })
     },
+		// @ts-ignore
     setColor(e,color) {
       this.currentColor = color
       this.$store.commit('setFontColorStyle',{
@@ -216,6 +195,7 @@ export default {
       })
       this.$emit('setBodyStyle')
     },
+		// @ts-ignore
     setFont(e,font) {
       this.currentFont = font
       this.$store.commit('setFontFamilyStyle',{
@@ -238,13 +218,15 @@ export default {
     }
   },
   props: {
+		userUid: {
+			type: String
+		},
     isShowIco: {
       type: Boolean,
       default() {
         return true
       }
     },
-    themeProperty: '',
     customClass: {
       type: String,
       default() {
@@ -253,6 +235,7 @@ export default {
     }
   },
   watch: {
+		// @ts-ignore
     blur(newBlur,oldBlur) {
       this.$store.commit('setVarFilterBlur',{
         varFilterBlur: newBlur
@@ -263,6 +246,7 @@ export default {
         time: time
       })
     },
+		// @ts-ignore
     opacity(newOpacity,oldOpacity) {
       this.$store.commit('setVarOpacity',{
         varOpacity: newOpacity
@@ -273,6 +257,7 @@ export default {
         time: time
       })
     },
+		// @ts-ignore
     borderRadius(newBorderRadius,oldBorderRadius) {
       this.$store.commit('setVarBorderRadius',{
         varBorderRadius: newBorderRadius

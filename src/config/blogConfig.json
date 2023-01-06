@@ -7,5 +7,34 @@
     "#8093f1", "#9ed8d8", "#7ea8be", "#ef90b3", "#b892ef", "#c0b9dd", "#c0d9dd",
     "#75c9c8", "#ded9e2", "#b5e2fa", "#62b6cb", "#5fa8d3", "#0fa3b1", "#b5e2fa",
     "#5fa8d3", "#62b6cb", "#b892ff"
-  ]
+  ],
+  "maxFontColorArr": 8,
+  "fontFamily": [
+    "-apple-system", "hlt", "tzt", "sst", "lf", "xsf", "lsf", "cgt"
+  ],
+  "fontColor": [
+    "#2c3e50", "#42a5f5", "#8093f1", "#FF6EC7", "#FF7F00", "#8FBC8F", "#EAADEA",
+    "#3299CC", "#CDCDCD", "#CC3299", "#FF7F00", "#2F4F4F"
+  ],
+  "isFitter": true,
+  "defaultBorderRadius": 10,
+  "defaultOpacity": 1,
+  "defaultBlur": 1,
+  "bubble": {
+    "show": true,
+
+    "bubbleNumber": 0.14,
+
+    "bubbleAlpha": 0.6,
+
+    "alphaChangeSpeed": 0.00001,
+
+    "size": 0.4,
+
+    "sizeChangeSpeed": 0.0002,
+
+    "riseSpeed": 0.4,
+
+    "color": "255,255,255"
+  }
 }

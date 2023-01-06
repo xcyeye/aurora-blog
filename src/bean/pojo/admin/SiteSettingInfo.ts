@@ -16,6 +16,15 @@ interface FriendLinkSiteInformation {
 	contact?: string,
 	otherDescribe?: Array<string>
 }
+
+interface FooterInfo {
+	enable?: boolean,
+	footInfo?: Array<string>,
+	isShowThemeCopyright?: boolean,
+	isShowRunTime?: boolean,
+	startRunTime?: string,
+	prefixRuntime?: string
+}
 interface SiteSettingInfo {
 	showRandomSay?: boolean,
 	showPrintText?: boolean,
@@ -35,5 +44,11 @@ interface SiteSettingInfo {
 	friendLinkSiteInformation?: FriendLinkSiteInformation,
 	// 手机端，是否在页面的底部显示侧边栏列表，默认开启，如果需要开启，请将此值设置为FALSE
 	mobilePageSidebar?: boolean,
+	// 最新文章数量，默认为6
+	latestPageSize?: number,
+	// 侧边栏的描述
+	sidebarPersonDesc?: string,
+	githubUrl?: string,
+	footerInfo?: FooterInfo
 
 }

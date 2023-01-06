@@ -12,9 +12,8 @@
   </div>
 </template>
 
-<script>
-
-import {blogPageData} from "@/assets/config";
+<script lang="ts">
+import {PropType} from "vue";
 
 export default {
   name: "Footer",
@@ -25,10 +24,12 @@ export default {
       startRunTime: '8/7/2021 12:22:00',
       runTime: '',
       prefixRuntime: '小破站已运行',
-      themeProperty: '',
     }
   },
   props: {
+		currentSiteInfo: {
+			type: Object as PropType<SiteSettingInfo>
+		},
     isShowFooter: {
       type: Boolean,
       default() {
@@ -43,41 +44,39 @@ export default {
     }
   },
   created() {
-    this.themeProperty = blogPageData
-    if (this.themeProperty.footer !== undefined) {
-      this.footerArr = this.themeProperty.footer
+    if (this.currentSiteInfo.footer !== undefined && this.currentSiteInfo.footerInfo.enable) {
+      this.footerArr = this.currentSiteInfo.footer
+			let showThemeCopyright = this.currentSiteInfo.footerInfo.isShowThemeCopyright
+			if (showThemeCopyright === undefined || showThemeCopyright == null || showThemeCopyright) {
+				//默认为TRUE，显示页脚主题版权
+				let themeCopyright = "theme&nbsp;<a href='https://github.com/vuepress-aurora/vuepress-theme-aurora' target='_blank'>Aurora</a>" +
+					"&nbsp;by&nbsp;<a href='https://aurora.xcye.xyz/' target='_blank'>qsyyke</a>"
+				// this.footerArr.push(themeCopyright)
+				let set = new Set()
+				for (let i = 0; i < this.footerArr.length; i++) {
+					set.add(this.footerArr[i])
+				}
+				set.add(themeCopyright)
+				let setArr = Array.from(set)
+				this.footerArr = setArr
+		
+			}
+	
+			if (this.currentSiteInfo.footerInfo.isShowRunTime !== undefined) {
+				this.isShowRunTime = this.currentSiteInfo.footerInfo.isShowRunTime
+			}
+			if (this.currentSiteInfo.footerInfo.startRunTime !== undefined) {
+				this.startRunTime = this.currentSiteInfo.footerInfo.startRunTime
+			}
+			if (this.currentSiteInfo.footerInfo.prefixRuntime !== undefined) {
+				this.prefixRuntime = this.currentSiteInfo.footerInfo.prefixRuntime
+			}
+			this.showRuntime()
     }else {
       this.footerArr = [
-          'Copyright © by qsyyke All Rights Reserved'
+          'Copyright © by xcye All Rights Reserved'
       ]
     }
-    let showThemeCopyright = this.themeProperty.isShowThemeCopyright
-    if (showThemeCopyright === undefined || showThemeCopyright == null || showThemeCopyright === true) {
-      //默认为TRUE，显示页脚主题版权
-      let themeCopyright = "bean&nbsp;<a href='https://github.com/vuepress-aurora/vuepress-bean-aurora' target='_blank'>Aurora</a>" +
-          "&nbsp;by&nbsp;<a href='https://aurora.xcye.xyz/' target='_blank'>qsyyke</a>"
-      // this.footerArr.push(themeCopyright)
-      let set = new Set()
-      for (let i = 0; i < this.footerArr.length; i++) {
-        set.add(this.footerArr[i])
-      }
-      set.add(themeCopyright)
-      let setArr = Array.from(set)
-      this.footerArr = setArr
-
-    }
-
-
-    if (this.themeProperty.isShowRunTime !== undefined) {
-      this.isShowRunTime = this.themeProperty.isShowRunTime
-    }
-    if (this.themeProperty.startRunTime !== undefined) {
-      this.startRunTime = this.themeProperty.startRunTime
-    }
-    if (this.themeProperty.prefixRuntime !== undefined) {
-      this.prefixRuntime = this.themeProperty.prefixRuntime
-    }
-    this.showRuntime()
   },
   methods: {
     showRuntime() {
@@ -98,7 +97,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-  /*@import "../../styles/bean.style.css";*/
-</style>

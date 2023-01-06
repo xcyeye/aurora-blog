@@ -13,6 +13,7 @@
     <slot name="top3"></slot>
     <slot name="top4"></slot>
     <slot name="top5"></slot>
+		<!--TODO 这一块需要重新做一下-->
     <div class="page-record-control" v-if="isShowHeadLine">
       <div class="page-top-record" id="page-top-record">
         <div class="page-record-bot-common page-record-top">
@@ -31,21 +32,21 @@
           <div class="page-record-center-left page-record-single-common">
             <span class="aurora-iconfont-common aurora-page-comment"></span>&nbsp;
             <span class="page-record-single-desc">评论数</span>
-            <span :id="pathName" class="waline-comment-count" />
+						<span class="waline-comment-count" >199</span>
             <!--<span>{{$store.state.commentCount}}</span>-->
           </div>
           <div class="page-record-center-right page-record-single-common">
             <span class="aurora-iconfont-common aurora-page-read"></span>&nbsp;
             <span class="page-record-single-desc">总阅读数</span>
-            <span :id="pathName" class="waline-visitor-count" />
+						<span class="waline-visitor-count" >3485</span>
             <!--<span>{{$store.state.readCount}}</span>-->
           </div>
         </div>
         <div v-if="tagArr.length !== 0" class="page-record-bot-common page-record-bot">
           <div class="page-record-bot-tag" id="page-record-bot-tag">
             <span class="aurora-iconfont-common aurora-page-tag"></span>&nbsp;
-            <router-link v-for="(item,index) in tagArr" :to="goTag(item)">
-              <span class="home-page-tag-span page-record-tag-span">{{item}}</span>
+            <router-link v-for="(item,index) in tagArr" :to="goTag(item.uid)">
+              <span class="home-page-tag-span page-record-tag-span">{{item.title}}</span>
             </router-link>
           </div>
         </div>
@@ -58,8 +59,12 @@
 </template>
 
 <script lang="ts">
-import { readingTime } from 'reading-time-estimator';
+import {readingTime} from 'reading-time-estimator';
+import blogConfig from '@/config/blogConfig.json';
 import gsap from "gsap";
+import {TagVo} from "@/bean/vo/article/TagVo";
+
+const tagArr:Array<TagVo> = []
 export default {
   name: "TopImage",
   data() {
@@ -72,12 +77,10 @@ export default {
       animeImg: '',
       pageMap: '',
       contentLength: 0,
-      tagArr: [],
+      tagArr,
       topBackgroundUrl: 'https://picture.xcye.xyz/pic/rmimg',
-      pathName: '',
       sugCountPerMin: 230,
       document: {},
-
       contentLengthTemp: 0,
       sugReadTimeTemp: 0,
       totalReadNumTemp: 0,
@@ -85,7 +88,6 @@ export default {
     }
   },
   props: {
-		
     isShowTopImg: {
       type: Boolean,
       default() {
@@ -103,20 +105,12 @@ export default {
       default() {
         return "aurora";
       }
-    },
-    themeProperty: {
-      type: Object
     }
   },
   created() {
-    if (this.themeProperty.sugCountPerMin !== undefined) {
-      this.sugCountPerMin = this.themeProperty.sugCountPerMin
-    }
-    this.setPathName(this.$route.path)
-    this.$router.beforeEach((to,from,next) => {
-      this.setPathName(to.path)
-      next()
-    })
+    // this.$router.beforeEach((to,from,next) => {
+    //   next()
+    // })
   },
   mounted() {
     let bubbleNumber = 0.15
@@ -126,37 +120,37 @@ export default {
     let sizeChangeSpeed = 0.002
     let riseSpeed = 0.9
     let color = '255,255,255'
-    if (this.themeProperty.bubble !== undefined) {
-      if (this.themeProperty.bubble.show !== undefined) {
-        this.showBubble = this.themeProperty.bubble.show
+    if (blogConfig.bubble !== undefined) {
+      if (blogConfig.bubble.show !== undefined) {
+      
       }
 
-      if (this.themeProperty.bubble.bubbleNumber !== undefined) {
-        bubbleNumber = this.themeProperty.bubble.bubbleNumber
+      if (blogConfig.bubble.bubbleNumber !== undefined) {
+        bubbleNumber = blogConfig.bubble.bubbleNumber
       }
 
-      if (this.themeProperty.bubble.bubbleAlpha !== undefined) {
-        bubbleAlpha = this.themeProperty.bubble.bubbleAlpha
+      if (blogConfig.bubble.bubbleAlpha !== undefined) {
+        bubbleAlpha = blogConfig.bubble.bubbleAlpha
       }
 
-      if (this.themeProperty.bubble.alphaChangeSpeed !== undefined) {
-        alphaChangeSpeed = this.themeProperty.bubble.alphaChangeSpeed
+      if (blogConfig.bubble.alphaChangeSpeed !== undefined) {
+        alphaChangeSpeed = blogConfig.bubble.alphaChangeSpeed
       }
 
-      if (this.themeProperty.bubble.size !== undefined) {
-        size = this.themeProperty.bubble.size
+      if (blogConfig.bubble.size !== undefined) {
+        size = blogConfig.bubble.size
       }
 
-      if (this.themeProperty.bubble.sizeChangeSpeed !== undefined) {
-        sizeChangeSpeed = this.themeProperty.bubble.sizeChangeSpeed
+      if (blogConfig.bubble.sizeChangeSpeed !== undefined) {
+        sizeChangeSpeed = blogConfig.bubble.sizeChangeSpeed
       }
 
-      if (this.themeProperty.bubble.riseSpeed !== undefined) {
-        riseSpeed = this.themeProperty.bubble.riseSpeed
+      if (blogConfig.bubble.riseSpeed !== undefined) {
+        riseSpeed = blogConfig.bubble.riseSpeed
       }
 
-      if (this.themeProperty.bubble.color !== undefined) {
-        color = this.themeProperty.bubble.color
+      if (blogConfig.bubble.color !== undefined) {
+        color = blogConfig.bubble.color
       }
     }
 
@@ -168,52 +162,18 @@ export default {
       }
     })
     this.document = document
-    this.pathName = window.location.pathname
-    setTimeout(() =>{
-      this.getPageMap()
-    },500)
   },
   computed: {
     animatedContentLength() {
       return this.contentLengthTemp.toFixed(0)
     },
     goTag() {
-      return (item) => {
+      return (item: string) => {
         return '/tag?tag=' + item
       }
     },
     setBackgroundUrl() {
-      let path = this.$route.path
-      let customTop = this.themeProperty.customTopImg
-
-      let imgPath = ""
-      if (customTop === undefined) {
-        return this.getRandomBg()
-      }
-
-      if (customTop.custom === undefined || !customTop.custom) {
-        //用户自定义
-        return this.getRandomBg()
-      }
-
-      //用户自定义 使用用户的图片
-      if (path.search("link") !== -1) {
-        let arr = this.themeProperty.customTopImg.friend
-        imgPath = this.getCustomTopImgPath(arr)
-      }else if (path.search("tag") !== -1) {
-        let arr = this.themeProperty.customTopImg.tag
-        imgPath = this.getCustomTopImgPath(arr)
-      }
-      else if (path.search("mood") !== -1) {
-
-        let arr = this.themeProperty.customTopImg.mood
-        imgPath = this.getCustomTopImgPath(arr)
-      }else {
-        let arr = this.themeProperty.customTopImg.page
-        imgPath = this.getCustomTopImgPath(arr)
-      }
-
-      return "background-image: url(" + imgPath + ");"
+      return "background-image: url(https://pic-tool.xcye.xyz/pic/rmimg);"
     },
     getWordLength() {
       let content = this.pageMap.content + ""
@@ -227,65 +187,8 @@ export default {
     getSugTime() {
       return this.sugReadTimeTemp.toFixed(0)
     },
-    getRandom() {
-      return this.getRandomInt(0,99999)
-    }
   },
   methods: {
-    setPathName(pathName) {
-      this.pathName = pathName
-    },
-    getRandomBg() {
-      if (this.pageMap !== "" && this.pageMap.data.frontmatter.coverUrl !== undefined) {
-        //return "background-image: url(" + this.pageMap.data.frontmatter.coverUrl + ");"
-        return "background-image: url(" + this.pageMap.data.frontmatter.coverUrl + ");"
-      }
-      //用户没有自定义图片，使用随机图片
-      let num1 = this.getRandomInt(-9999,999)
-      let num2 = this.getRandomInt(0,300)
-      let num3 = this.getRandomInt(0,30)
-      let num = num2 / num3 * num1 + num2
-
-      let homePageImgApi = blogPageData.homePageImgApi
-
-      if (homePageImgApi === undefined) {
-        homePageImgApi = this.$store.state.defaultHomePageImgApi
-      }
-
-      let path = homePageImgApi + "?time=" + num
-      return "background-image: url(" + path + ");"
-    },
-    getCustomTopImgPath(pathArr) {
-      if (pathArr.length === 0) {
-        try {
-          let path = pathArr[0]
-          return path
-        }catch (e) {
-          return pathArr
-        }
-      }
-      //随机选择一个
-      let path = pathArr[this.getRandomInt(0,pathArr.length - 1)]
-      return path
-    },
-    getPageMap() {
-      let allPageMap = this.$store.state.allPageMap
-      for (let i = 0; i < allPageMap.length; i++) {
-        if (this.pathName === allPageMap[i].articleUrl) {
-          this.pageMap = allPageMap[i]
-          if (this.pageMap.categories.length === 0) {
-            this.tagArr = this.pageMap.tag
-          }else {
-            this.tagArr = this.pageMap.categories
-          }
-        }
-      }
-    },
-    getRandomInt(min, max) {
-      min = Math.ceil(min);
-      max = Math.floor(max);
-      return Math.floor(Math.random() * (max - min)) + min; //不含最大值，含最小值
-    },
     countNum() {
       new Promise((resolve,reject) => {
         let allContent = ''
@@ -325,17 +228,6 @@ export default {
       gsap.to(this.$data, { duration: 0.5, sugReadTimeTemp: this.totalWordObj.minutes })
     },
     headLine(newValue,oldValue) {
-      setTimeout(() => {
-        this.pathName = window.location.pathname
-        this.getPageMap()
-      },500)
-      if (this.isShowHeadLine) {
-        setTimeout(() => {
-          this.countNum()
-        },1000)
-      }
-    },
-    pathName() {
       if (this.isShowHeadLine) {
         setTimeout(() => {
           this.countNum()
