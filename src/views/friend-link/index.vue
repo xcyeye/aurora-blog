@@ -19,30 +19,30 @@
 					</div>
 				</div>
 			</div>
-<!--			<aurora-center v-if="siteInformation !== ''">-->
-<!--				<template #page-center1>-->
-<!--					<div class="about-title link-title">-->
-<!--						<div class="about-title-single">-->
-<!--							<span class="about-title-single-value">友链申请</span>-->
-<!--						</div>-->
-<!--					</div>-->
-<!--					<div class="self-site">-->
-<!--						<div class="language-javascript ext-js line-numbers-mode"><pre class="language-javascript"><code><span class="token punctuation">{</span>-->
-<!--    title<span class="token operator">:</span> <span class="token string">"{{siteInformation.title}}"</span><span class="token punctuation">,</span><span class="token comment">//博客名称</span>-->
-<!--    url<span class="token operator">:</span> <span class="token string">"{{siteInformation.url}}"</span><span class="token punctuation">,</span><span class="token comment">//博客url</span>-->
-<!--    logo<span class="token operator">:</span> <span class="token string">"{{siteInformation.logo}}"</span><span class="token punctuation">,</span><span class="token comment">//博客logo</span>-->
-<!--    describe<span class="token operator">:</span> <span class="token string">"{{siteInformation.describe}}"</span><span class="token punctuation">,</span><span class="token comment">//博客描述</span>-->
-<!--    cover<span class="token operator">:</span> <span class="token string">"{{siteInformation.cover}}"</span><span class="token punctuation">,</span><span class="token comment">//博客截屏</span>-->
-<!--    <span class="token comment">//{{siteInformation.contact}}</span>-->
-<!--<span class="token punctuation">}</span><span class="token punctuation">,</span>-->
-<!--</code></pre><div class="line-numbers"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br></div></div>-->
-<!--						-->
-<!--						<ul class="link-info-desc">-->
-<!--							<li v-for="(linkItem,index) in siteInformation.otherDescribe" :key="linkItem" v-html="linkItem"></li>-->
-<!--						</ul>-->
-<!--					</div>-->
-<!--				</template>-->
-<!--			</aurora-center>-->
+			<aurora-center v-if="siteInformation !== ''">
+				<template #page-center1>
+					<div class="about-title link-title">
+						<div class="about-title-single">
+							<span class="about-title-single-value">友链申请</span>
+						</div>
+					</div>
+					<div class="self-site">
+						<div class="language-javascript ext-js line-numbers-mode"><pre class="language-javascript"><code><span class="token punctuation">{</span>
+    title<span class="token operator">:</span> <span class="token string">"{{friendLinkSiteInformation.title}}"</span><span class="token punctuation">,</span><span class="token comment">//博客名称</span>
+    url<span class="token operator">:</span> <span class="token string">"{{friendLinkSiteInformation.url}}"</span><span class="token punctuation">,</span><span class="token comment">//博客url</span>
+    logo<span class="token operator">:</span> <span class="token string">"{{friendLinkSiteInformation.logo}}"</span><span class="token punctuation">,</span><span class="token comment">//博客logo</span>
+    describe<span class="token operator">:</span> <span class="token string">"{{friendLinkSiteInformation.describe}}"</span><span class="token punctuation">,</span><span class="token comment">//博客描述</span>
+    cover<span class="token operator">:</span> <span class="token string">"{{friendLinkSiteInformation.cover}}"</span><span class="token punctuation">,</span><span class="token comment">//博客截屏</span>
+    <span class="token comment">//{{friendLinkSiteInformation.contact}}</span>
+<span class="token punctuation">}</span><span class="token punctuation">,</span>
+</code></pre><div class="line-numbers"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br></div></div>
+						
+						<ul class="link-info-desc">
+							<li v-for="(linkItem,index) in friendLinkSiteInformation.otherDescribe" :key="linkItem" v-html="linkItem"></li>
+						</ul>
+					</div>
+				</template>
+			</aurora-center>
 			<comment :path-name="$route.path" />
 		</template>
 	</aurora-common>
@@ -63,9 +63,9 @@ import {articleApi, linkApi} from "@/service";
 import {useRouter} from "vue-router";
 import {useRouterPush} from "@/composables";
 import {Condition} from "@/bean/core/bean";
+import {isNotEmptyObject} from "@/utils/business";
 
 const friendLinkArrMap = ref<Map<String, Array<LinkVo>>>(new Map<String, Array<LinkVo>>())
-const friendLinkSiteInformation = ref<FriendLinkSiteInformation>({})
 const color = ref<string>('')
 const currentSiteInfo = ref<SiteSettingInfo>({})
 const useSite = useSiteInfo()
@@ -73,6 +73,7 @@ const useUser = useUserInfo()
 const router = useRouter()
 const routerPush = useRouterPush()
 const userUid = ref<string>('')
+const friendLinkSiteInformation = ref<FriendLinkSiteInformation>({})
 
 const setSpanStyle = computed(() => {
 	return (index: number) => {
@@ -127,5 +128,9 @@ onBeforeMount(() => {
 		})
 	}
 	loadFriendInfo()
+	currentSiteInfo.value = useSite.getSiteInfo(userUid.value)
+	if (!isNotEmptyObject(currentSiteInfo.value)) {
+		friendLinkSiteInformation.value = currentSiteInfo.value.friendLinkSiteInformation!
+	}
 })
 </script>

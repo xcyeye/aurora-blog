@@ -66,7 +66,7 @@ export const getLocalTime = (time: Date | number | string, isToDay: boolean = tr
 	}
 }
 
-export const hexToRgb = (hex: string) => {
+export const hexToRgb = (hex: string): {r: number, g:number , b: number} | null => {
 	let result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
 	return result ? {
 		r: parseInt(result[1], 16),
