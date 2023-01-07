@@ -38,11 +38,11 @@ const router = createRouter({
       name: '说说1',
       component: () => import('../views/share-space/swiperShareSpace.vue')
     },
-    // {
-    //   path: '/shareSpace2/:userUid',
-    //   name: '说说2',
-    //   component: () => import('../views/share-space/sharePage2.vue')
-    // },
+    {
+      path: '/shareSpace-page/:userUid',
+      name: '说说2',
+      component: () => import('../views/share-space/commonShareSpace.vue')
+    },
     {
       path: '/article/:uid',
       name: '文章',
