@@ -3,6 +3,11 @@
     height: 4rem
 }
 
+body {
+    --aurora-coze-slide-bgImg: url("https://www.baidu.com");
+    --aurora-coze-slide-photo-bg: url("https://www.baidu.com");
+}
+
 .mood-edit {
     max-height: 2.5rem;
     height: 2.5rem;
@@ -953,4 +958,402 @@
     position: fixed;
     top: 0;
     right: 0
+}
+
+
+/*v1.13版本增加样式*/
+
+/* 这是幻灯片组件的样式 */
+.aurora-coze-slide-body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: calc(100vh);
+    width: 100%;
+    /* background-color: rgb(148, 85, 85); */
+}
+
+.aurora-coze-slide-body::before {
+    content: "";
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 100%;
+    z-index: -2;
+    width: 100%;
+    background-image: var(--aurora-coze-slide-bgImg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    transition: all 2s;
+    background-position: center;
+    background-attachment:fixed;
+
+}
+.aurora-coze-slide-body {
+    transition: all 2s;
+}
+
+.aurora-coze-slide-radius {
+    border-radius: var(--aurora-sliid-border-radius);
+}
+
+.aurora-coze-slide-shade {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 70%;
+    height: calc(100vh);
+    background-color: rgba(236, 228, 228,0);
+}
+
+.aurora-coze-slide-box {
+    position: relative;
+    z-index: 1;
+    width: 90%;
+    height: 80%;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 20px 25px -5px, rgba(0, 0, 0, 0.04) 0px 10px 10px -5px;
+}
+
+.aurora-coze-slide-box-style-box {
+    position: absolute;
+    z-index: 1;
+    width: 90%;
+    height: 80%;
+    border-radius: var(--aurora-sliid-border-radius);
+    overflow: hidden;
+    filter: drop-shadow(5px 10px 20px rgba(0,0,0,.3))
+}
+
+.aurora-coze-slide-box-style {
+    transition: all 500ms;
+    width: 100%;
+    height: 100%;
+    border-radius: var(--aurora-sliid-border-radius);
+    background-image: var(--aurora-coze-slide-bgImg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    filter: blur(10px);
+
+}
+
+.aurora-coze-slide-box:before {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 100%;
+    width: 100%;
+}
+
+.aurora-coze-slide-item {
+    width: 100%;
+    height: 100%;
+    /*background-image: linear-gradient(to right top, #fff1eb 0%, #ace0f9 100%);*/
+}
+
+.aurora-coze-slide-item-son {
+    width: 90%;
+    height: 100%;
+    margin: 0 auto;
+}
+
+.aurora-coze-slide-item-top {
+    cursor: default;
+    height: calc(14vh);
+    width: 100%;
+    /*padding-top: 1rem;*/
+    /*padding-bottom: 2rem;*/
+    margin-bottom: calc(2vh);
+    display: flex;
+}
+
+.aurora-coze-slide-item-top-left {
+    width: 8.5rem;
+    height: 7rem;
+    display: flex;
+    align-items: center;
+}
+
+.aurora-coze-slide-item-top-avatar img {
+    height: 5.5rem;
+    width: 5.5rem;
+    border-radius: 50rem;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    transition: all 500ms;
+}
+
+.aurora-coze-slide-item-top-avatar img:hover {
+    transform: rotate(360deg);
+}
+
+.aurora-coze-slide-item-top-right {
+    height: 7rem;
+    width: 100%;
+}
+
+.aurora-coze-slide-top-common {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    text-align: left;
+}
+
+.aurora-slide-operation-box {
+    width: 40%;
+    display: flex;
+    /*text-align: center;*/
+    transform: translateY(-600%);
+    transition: all 1s;
+}
+
+.aurora-coze-slide-item:hover .aurora-slide-operation-box {
+    transform: translateX(0%);
+}
+
+.aurora-slide-item-top-title {
+    min-height: 65%;
+    height: auto;
+    line-height: 4.55rem;
+}
+
+.aurora-slide-item-top-title span {
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+.aurora-slide-item-top-tag {
+    max-height: 35%;
+    height: auto;
+    line-height: 2.45rem;
+    overflow-x: scroll;
+}
+
+.aurora-slide-item-top-tag::-webkit-scrollbar {
+    display: none;
+}
+
+.aurora-slide-item-top-tag span {
+    font-size: 1.2rem;
+    margin-right: 1rem
+}
+
+.aurora-slide-item-top-tag span:last-child {
+    margin-right: 0;
+}
+
+
+.aurora-slide-top-common {
+    height: max-content;
+    max-height: 50%;
+}
+
+.aurora-coze-slide-item-bottom {
+    box-sizing: border-box;
+    overflow-y: scroll;
+    height: calc(60vh);
+    width: 100%;
+    padding-top: calc(2vh);
+    margin-bottom: calc(2vh);
+
+}
+
+.aurora-coze-slide-item-bottom::-webkit-scrollbar {
+    display: none;
+}
+
+.aurora-slide-item-photos {
+    /*height: 7rem;*/
+    width: 100%;
+    /*height: 100%;*/
+}
+
+.aurora-slide-item-desc-common {
+
+    /* background-color: red; */
+
+}
+
+/* 设置新版的关于页面bar条状样式 */
+
+.aurora-slide-item-bar-li {
+    padding-bottom: 10px;
+    list-style: none;
+    margin-left: 0;
+    margin-right: 0;
+}
+
+
+.aurora-slide-item-bar-li span:first-child {
+    display: inline-block;
+    width: 15%;
+    /* margin-right: 3px */
+}
+
+.aurora-slide-item-bar-li span:nth-child(2) {
+    display: inline-block;
+    height: .9rem;
+    background-color: red;
+    border-radius: 10px;
+    text-align: left;
+    line-height: .9rem;
+    width: 82%;
+    padding-left: 3%;
+    padding-top: 1px;
+    padding-bottom: 1px;
+}
+
+.aurora-slide-item-desc-text li {
+    margin-left: 0;
+    margin-right: 0;
+    margin-bottom: 10px;
+}
+
+.aurora-slide-item-font-common {
+    font-weight: var(--aurora-slide-font-weight);
+    color: var(--aurora-slide-font-color);
+    font-size: var(--aurora-slide-font-size);
+}
+
+.aurora-slide-item-desc-text li:last-child {
+    margin-bottom: 0;
+
+}
+
+/*设置新版关于页面，手机端样式*/
+@media screen and (max-width:719px) {
+    .aurora-coze-slide-shade {
+        width: 100%;
+    }
+
+    .aurora-coze-slide-box-style-box {
+        width: 93%;
+    }
+
+    .aurora-coze-slide-box {
+        width: 93%;
+    }
+
+    .aurora-coze-slide-item-top-right {
+        overflow: hidden;
+    }
+
+    .aurora-slide-item-top-title {
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+
+    .aurora-slide-item-top-title span {
+        font-size: var(--aurora-slide-mobile-font-size);
+    }
+
+    .aurora-slide-item-top-tag span {
+        font-size: 15px;
+    }
+
+    .aurora-slide-item-font-common {
+        font-size: 15px;
+    }
+}
+
+.aurora-slide-item-photos {
+    /*overflow-y: scroll;*/
+    /*white-space: nowrap;*/
+}
+
+.aurora-slide-item-photo-item {
+    display: inline-block;
+    margin-right: 1rem;
+    background: black;
+    width: calc(100% / 3);
+    height: 100%;
+    overflow: hidden;
+}
+
+.aurora-slide-item-photo-item:last-child {
+    margin-right: 0;
+}
+
+.aurora-slide-item-photo-item img {
+    width: 100%;
+    height: 100%;
+}
+
+
+.aurora-coze-slide-photo-box{
+    text-decoration: none;
+    list-style-type: none;
+    margin: 0;
+}
+
+
+.aurora-coze-slide-photo-box-li{
+    float: left;
+    width: calc(95.5% / 3);
+    height: 13rem;
+    margin-left: 0.75%;
+    margin-right: 0.75%;
+    margin-top: 1.5%;
+    border-radius: 12px;
+    background-image: var(--aurora-coze-slide-photo-bg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    cursor: default;
+}
+
+.aurora-coze-slide-photo-box img {
+    width: 0;
+    height: 0;
+}
+
+.aurora-slide-operation-no-need {
+    flex: 1;
+}
+
+.aurora-slide-operation-box {
+    flex: 1;
+}
+
+@media screen and (max-width:719px) {
+    .aurora-coze-slide-photo-box-li {
+        width: calc(96% / 2);
+        height: 13rem;
+        margin-left: 1%;
+        margin-right: 1%;
+    }
+
+    .aurora-slide-operation-box {
+        width: 100%;
+        height: 50%;
+        display: flex;
+        align-items: center;
+    }
+
+    .aurora-coze-slide-top-common {
+        display: block;
+    }
+    .aurora-slide-operation-no-need {
+        height: 50%;
+        display: flex;
+        align-items: center;
+    }
+
+    .aurora-slide-operation-no-need span {
+        font-size: 13px;
+    }
+
+    .aurora-coze-slide-body {
+        height: 100%;
+        position: relative;
+    }
+    .aurora-coze-slide-shade {
+        height: 100%;
+        position: fixed;
+        right: 0;
+        top: 0;
+    }
 }

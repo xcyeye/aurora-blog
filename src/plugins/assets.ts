@@ -1,6 +1,3 @@
-import 'swiper/css';
-import 'swiper/css/navigation';
-import 'swiper/css/pagination';
 import '../styles/theme/theme.style.css';
 import '../styles/theme/coverStyle.css';
 import '../styles/theme/aurora-archive.css';

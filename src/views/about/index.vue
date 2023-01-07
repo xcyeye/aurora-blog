@@ -1,11 +1,24 @@
 <template>
-	<div></div>
+	<div>
+		<button @click="test">sdf</button>
+	</div>
 </template>
 
-<script lang="ts" setup>
+<script lang="ts">
 import {defineComponent} from "vue";
+import {useRouter} from "vue-router";
 
-defineComponent({name: 'sd'});
+const router = useRouter()
+export default defineComponent({
+	methods:{
+		test() {
+			console.log(this.$route.params);
+		}
+	},
+	mounted() {
+		console.log(this.$route.params);
+	}
+})
 </script>
 
 <style scoped>

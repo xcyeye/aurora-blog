@@ -34,15 +34,15 @@ const router = createRouter({
       component: () => import('../views/about/index.vue')
     },
     {
-      path: '/shareSpace1/:userUid',
+      path: '/shareSpace/:userUid',
       name: '说说1',
-      component: () => import('../views/share-space/sharePage1.vue')
+      component: () => import('../views/share-space/swiperShareSpace.vue')
     },
-    {
-      path: '/shareSpace2/:userUid',
-      name: '说说2',
-      component: () => import('../views/share-space/sharePage2.vue')
-    },
+    // {
+    //   path: '/shareSpace2/:userUid',
+    //   name: '说说2',
+    //   component: () => import('../views/share-space/sharePage2.vue')
+    // },
     {
       path: '/article/:uid',
       name: '文章',

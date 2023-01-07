@@ -15,6 +15,7 @@
     -aurora-tag-opacity: 0.45;
     --hoverColor: red;
     --auroraActiveColor: #8186d5;
+    --aurora-sliid-border-radius: 20px;
 
     /*//主题全局背景色 包括hover*/
     --aurora-global-bg: blue;

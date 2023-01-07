@@ -22,12 +22,12 @@ interface TalkVo {
   /**
    * 最后更新时间
    */
-  updatedTime?: string | null;
+  updateTime?: string | null;
 
   /**
    * 此说说发布时间
    */
-  createdTime?: string | null;
+  createTime?: string | null;
 
   /**
    * 此说说的内容
