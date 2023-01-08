@@ -49,6 +49,7 @@ interface SiteSettingInfo {
 	// 侧边栏的描述
 	sidebarPersonDesc?: string,
 	githubUrl?: string,
-	footerInfo?: FooterInfo
+	footerInfo?: FooterInfo,
+	showAboutPageBubble?: boolean
 
 }

@@ -3,7 +3,8 @@
     <div class="coze-mood-item" id="coze-mood-item">
       <div class="mood-item-left mood-item-img-parent" id="mood-item-left">
         <div class="mood-item-img" id="coze-mood-item-img">
-          <img :src="useUserInfo().getUserInfo(userUid).avatar" alt="">
+          <!--<img :src="useUserInfo().getUserInfo(userUid).avatar" alt="">-->
+          <n-avatar :src="useUserInfo().getUserInfo(userUid).avatar" round :size="50"/>
         </div>
       </div>
       <div class="mood-item-right" id="mood-item-right">

@@ -121,6 +121,7 @@ export const defaultSiteSettingInfo: SiteSettingInfo = {
         isShowRunTime: true,
         startRunTime: '2022-12-23 09:08:09',
         prefixRuntime: '测试主题'
-    }
+    },
+    showAboutPageBubble: true
 
 }
