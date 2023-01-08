@@ -21,8 +21,8 @@
 				class="aurora-slide-box aurora-slide-radius"
 			>
 				<AuroraBubble v-if="showAboutPageBubble"/>
-				<swiper-slide v-slot="{ isActive }" v-for="(item,index) in abouts" :key="index" :style="setSlideItemStyle(index)" class="aurora-slide-item aurora-slide-radius">
-					<div :data="updateBgStyle(isActive,item.bgImg,index)" class="aurora-slide-item-son">
+				<swiper-slide v-slot="{ isActive }" v-for="(item,index) in aboutInfoArr" :key="index" :style="setSlideItemStyle(index)" class="aurora-slide-item aurora-slide-radius">
+					<div :data="updateBgStyle(isActive,undefined,index)" class="aurora-slide-item-son">
 						<div class="aurora-slide-item-top aurora-slide-radius">
 							<div class="aurora-slide-item-top-left aurora-slide-item-top-avatar">
 								<img :src="useUserInfo().getUserInfo(userUid).avatar" @click="goBackPage" alt="">
@@ -31,8 +31,8 @@
 								<div class="aurora-slide-item-top-title aurora-slide-item-top-common">
 									<span>{{item.title}}</span>
 								</div>
-								<div v-if="item.tag" class="aurora-slide-item-top-tag aurora-slide-item-top-common">
-									<span v-for="(tagItem,index) in item.tag" :key="index">{{tagItem}}</span>
+								<div v-if="item.tagArr" class="aurora-slide-item-top-tag aurora-slide-item-top-common">
+									<span v-for="(tagItem,index) in item.tagArr" :key="index">{{tagItem}}</span>
 								</div>
 							</div>
 						</div>
@@ -41,14 +41,14 @@
 							<!--              <div class="aurora-slide-item-bottom-box">-->
 							<!--                -->
 							<!--              </div>-->
-							<div v-if="item.bar" class="aurora-slide-item-desc-common aurora-slide-item-desc-bar">
-								<li class="aurora-slide-item-font-common aurora-slide-item-bar-li" v-for="(descItem,index) in item.describe" :key="index">
+							<div v-if="item.barDescArr" class="aurora-slide-item-desc-common aurora-slide-item-desc-bar">
+								<li class="aurora-slide-item-font-common aurora-slide-item-bar-li" v-for="(descItem,index) in item.barDescArr" :key="index">
 									<span class="about-bar-title aurora-slide-item-bar-title">{{descItem.name}}</span>
 									<span class="aurora-slide-item-bar-score" :style="setBarStyle(descItem.score)">{{descItem.score}}%</span>
 								</li>
 							</div>
 							<div v-else class="aurora-slide-item-desc-text aurora-slide-item-desc-common">
-								<li class="aurora-slide-item-font-common" v-for="(descItem,index) in item.describe" :key="index" v-html="descItem"></li>
+								<li class="aurora-slide-item-font-common" v-for="(descItem,index) in item.describeArr" :key="index" v-html="descItem"></li>
 							</div>
 						</div>
 					</div>
@@ -75,13 +75,14 @@ import {useSiteInfo, useUserInfo} from "@/stores";
 
 const routerPush = useRouterPush()
 const currentSiteInfo: SiteSettingInfo = {}
+const aboutInfoArr: Array<AboutInfo> = []
 export default {
 	name: "About",
 	data() {
 		return {
 			userUid: '',
 			currentSiteInfo,
-			abouts: blogConfig.about,
+			aboutInfoArr,
 			hexRgb: '',
 			slideBodyBg: '',
 			showAboutPageBubble: true
@@ -121,7 +122,7 @@ export default {
 		}
 		this.currentSiteInfo = useSiteInfo().getSiteInfo(this.userUid)
 		this.showAboutPageBubble = this.currentSiteInfo.showAboutPageBubble
-		
+		this.aboutInfoArr = this.currentSiteInfo.aboutInfoArr
 	},
 	methods: {
 		useUserInfo,
@@ -134,7 +135,7 @@ export default {
 			//let hexRgb2 = this.hexToRgb(this.randomColors[this.getRandomInt(0,this.randomColors.length -1)])
 			return "--aurora-slide-bgImg: linear-gradient(to right top, " + blogConfig.randomColor[getRandomNum(0,blogConfig.randomColor.length -1)] + " 0%, "+ blogConfig.randomColor[getRandomNum(0,blogConfig.randomColor.length -1)] +" 100%);"
 		},
-		updateBgStyle(isActive: boolean, bgImg: string , index: number) {
+		updateBgStyle(isActive: boolean, bgImg: string | undefined , index: number) {
 			if(isActive) {
 				if(bgImg !== undefined) {
 					//将图片设置为背景图片

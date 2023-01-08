@@ -25,6 +25,19 @@ interface FooterInfo {
 	startRunTime?: string,
 	prefixRuntime?: string
 }
+
+interface AboutInfo {
+	bar?: boolean,
+	title?: string,
+	describeArr?: Array<string>,
+	tagArr?: Array<string>,
+	showTag?: boolean,
+	barDescArr?: Array<{
+		name?: string,
+		score?: number
+	}>
+
+}
 interface SiteSettingInfo {
 	showRandomSay?: boolean,
 	showPrintText?: boolean,
@@ -50,6 +63,6 @@ interface SiteSettingInfo {
 	sidebarPersonDesc?: string,
 	githubUrl?: string,
 	footerInfo?: FooterInfo,
-	showAboutPageBubble?: boolean
-
+	showAboutPageBubble?: boolean,
+	aboutInfoArr?: Array<AboutInfo>
 }
