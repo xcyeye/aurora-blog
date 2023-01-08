@@ -191,7 +191,6 @@
 
 <script lang="ts" setup>
 import {defineComponent, onBeforeMount, ref, watch} from "vue";
-import {User} from "@/theme/pojo/admin/User";
 import {commentApi} from "@/service";
 import {Comment} from "@/theme/pojo/comment/Comment";
 import {StringUtil} from "@/utils";

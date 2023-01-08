@@ -44,6 +44,7 @@ import {EnumMittEventName} from "@/enum";
 import {emitter, StringUtil} from "@/utils";
 import {siteSettingApi} from "@/service/api/admin/siteSettingApi";
 import {useAuthStore} from "@/store";
+import {useRouterPush} from "@/composables";
 
 defineComponent({name: 'index'});
 

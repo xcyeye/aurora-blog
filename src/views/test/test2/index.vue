@@ -1,83 +1,80 @@
 <template>
-	<n-transfer
-		ref="transfer"
-		v-model:value="value"
+	<n-dropdown
 		:options="options"
-		:render-source-list="renderSourceList"
-		source-filterable
-	/>
+		placement="bottom-start"
+		trigger="click"
+		@select="handleSelect"
+	>
+		<n-button>人物和食物</n-button>
+	</n-dropdown>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, h } from 'vue'
-import { repeat } from 'seemly'
-import { NTree, TransferRenderSourceList } from 'naive-ui'
+import { h, defineComponent } from 'vue'
+import { NIcon, useMessage } from 'naive-ui'
+import { CashOutline as CashIcon } from '@vicons/ionicons5'
 
-function createLabel (level: number): string {
-	if (level === 4) return '道生一'
-	if (level === 3) return '一生二'
-	if (level === 2) return '二生三'
-	if (level === 1) return '三生万物'
-	return ''
-}
-
-type Option = {
-	label: string
-	value: string
-	children?: Option[]
-}
-
-function createData (level = 4, baseKey = ''): Option[] | undefined {
-	if (!level) return undefined
-	return repeat(6 - level, undefined).map((_, index) => {
-		const value = '' + baseKey + level + index
-		return {
-			label: createLabel(level),
-			value,
-			children: createData(level - 1, value)
-		}
-	})
-}
-
-function flattenTree (list: undefined | Option[]): Option[] {
-	const result: Option[] = []
-	function flatten (_list: Option[] = []) {
-		_list.forEach((item) => {
-			result.push(item)
-			flatten(item.children)
-		})
+const options = [
+	{
+		label: '杰·盖茨比',
+		key: 'jay gatsby'
+	},
+	{
+		label: '黛西·布坎南',
+		icon () {
+			return h(NIcon, null, {
+				default: () => h(CashIcon)
+			})
+		},
+		key: 'daisy buchanan'
+	},
+	{
+		type: 'divider',
+		key: 'd1'
+	},
+	{
+		label: '尼克·卡拉威',
+		key: 'nick carraway'
+	},
+	{
+		label: '其他',
+		key: 'others1',
+		children: [
+			{
+				label: '乔丹·贝克',
+				key: 'jordan baker'
+			},
+			{
+				label: '汤姆·布坎南',
+				key: 'tom buchanan'
+			},
+			{
+				label: '其他',
+				key: 'others2',
+				disabled: true,
+				children: [
+					{
+						label: '鸡肉',
+						key: 'chicken'
+					},
+					{
+						label: '牛肉',
+						key: 'beef'
+					}
+				]
+			}
+		]
 	}
-	flatten(list)
-	return result
-}
+]
 
 export default defineComponent({
 	setup () {
-		const treeData = createData()
-		const valueRef = ref<Array<string | number>>([])
-		const renderSourceList: TransferRenderSourceList = function ({
-																																	 onCheck,
-																																	 pattern
-																																 }) {
-			return h(NTree, {
-				style: 'margin: 0 4px;',
-				keyField: 'value',
-				checkable: true,
-				selectable: false,
-				blockLine: true,
-				checkOnClick: true,
-				data: treeData,
-				pattern,
-				checkedKeys: valueRef.value,
-				onUpdateCheckedKeys: (checkedKeys: Array<string | number>) => {
-					onCheck(checkedKeys)
-				}
-			})
-		}
+		const message = useMessage()
 		return {
-			options: flattenTree(createData()),
-			value: valueRef,
-			renderSourceList
+			options,
+			handleSelect (key: string | number) {
+				message.info(String(key))
+			}
 		}
 	}
 })
