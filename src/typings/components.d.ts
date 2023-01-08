@@ -9,8 +9,8 @@ declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     AddMood: typeof import('../components/common/shareSpace/AddMood.vue')['default']
     Archive: typeof import('./../components/common/Archive.vue')['default']
-    ArchiveItem: typeof import('../components/common/archive/ArchiveItem.vue')['default']
-    AuroraArchive: typeof import('./../components/common/AuroraArchive.vue')['default']
+    ArchiveItem: typeof import('./../components/common/archive/ArchiveItem.vue')['default']
+    AuroraArchive: typeof import('./../components/common/archive/AuroraArchive.vue')['default']
     AuroraCenter: typeof import('./../components/common/other/AuroraCenter.vue')['default']
     AuroraCommon: typeof import('./../components/common/AuroraCommon.vue')['default']
     AuroraCozeMood: typeof import('./../components/common/shareSpace/AuroraCozeMood.vue')['default']
