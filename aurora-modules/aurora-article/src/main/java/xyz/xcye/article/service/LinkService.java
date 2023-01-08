@@ -1,7 +1,6 @@
 package xyz.xcye.article.service;
 
 import io.seata.spring.annotation.GlobalTransactional;
-import org.checkerframework.checker.units.qual.C;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
@@ -16,7 +15,6 @@ import xyz.xcye.api.mail.sendmail.enums.SendHtmlMailTypeNameEnum;
 import xyz.xcye.api.mail.sendmail.service.SendMQMessageService;
 import xyz.xcye.api.mail.sendmail.util.StorageMailUtils;
 import xyz.xcye.article.api.service.ArticleUserFeignService;
-import xyz.xcye.article.po.Category;
 import xyz.xcye.article.po.Link;
 import xyz.xcye.article.pojo.CategoryPojo;
 import xyz.xcye.article.pojo.LinkPojo;
@@ -151,10 +149,10 @@ public class LinkService {
         AssertUtils.stateThrow(linkVO != null, () -> new LinkException("没有该条记录"));
         AssertUtils.stateThrow(linkVO.getPublish() != publish, () -> new LinkException("该条友情链接的发布状态并未改变"));
         // 修改
-        LinkPojo linkPojo = new LinkPojo();
-        linkPojo.setUid(uid);
-        linkPojo.setPublish(publish);
-        int updateNum = updateLink(linkPojo);
+        Link linkTemp = new Link();
+        linkTemp.setUid(uid);
+        linkTemp.setPublish(publish);
+        int updateNum = auroraLinkService.updateById(linkTemp);
         // 如果修改成功，发送消息通知对方
         linkVO.setPublish(publish);
         R r = userFeignService.queryUserByUid(new UserPojo(){{

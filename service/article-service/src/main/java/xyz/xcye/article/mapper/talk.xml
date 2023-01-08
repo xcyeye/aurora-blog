@@ -272,7 +272,7 @@
                 and is_delete=#{condition.delete}
             </if>
             <if test="condition.show != null">
-                is_show=#{condition.show}
+                and is_show=#{condition.show}
             </if>
         </where>
 	</select>
