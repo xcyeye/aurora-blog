@@ -31,6 +31,7 @@ import xyz.xcye.data.entity.PageData;
 import xyz.xcye.data.util.PageUtils;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @author qsyyke
@@ -71,6 +72,7 @@ public class CommentService {
             sendCommentEmail(true, comment, queriedRepliedCommentDO);
         }else {
             sendCommentEmail(false, comment, null);
+            comment.setReplyCommentUid(null);
         }
 
         //如果运行到这里，不能确保邮件发送成功，但还是修改一下邮件发送状态
@@ -138,9 +140,31 @@ public class CommentService {
         return auroraCommentService.updateById(comment);
     }
 
-    public ShowCommentVO queryListCommentByUidArr(Long[] arrayUid) {
+    public ShowCommentVO queryListCommentByUidArr(CommentPojo pojo) {
+        List<Long> arrayUid = pojo.getCommentUidArr();
+        if (StringUtils.hasLength(pojo.getPath())) {
+            Condition<Long> condition = new Condition<>();
+            condition.setKeyword(pojo.getPath());
+            condition.setPageSize(900);
+            condition.setOrderBy("create_time desc");
+            PageData<CommentVO> commentVOPageData = queryListCommentByCondition(condition);
+            if (commentVOPageData != null) {
+                if (pojo.getCommentUidArr() == null) {
+                    pojo.setCommentUidArr(new ArrayList<>());
+                }
+                commentVOPageData.getResult()
+                        .stream()
+                        .filter(v -> v.getReplyCommentUid() == null)
+                        .map(CommentVO::getUid)
+                        .collect(Collectors.toList())
+                        .forEach(v -> pojo.getCommentUidArr().add(v));
+            }
+        }
         // 获取arrayUid中可用的uid
         List<Long> effectiveCommentUidList = getEffectiveCommentUid(arrayUid);
+        Set<Long> set = new HashSet<>();
+        effectiveCommentUidList.forEach(v -> set.add(queryParentCommentUid(v)));
+        effectiveCommentUidList = new ArrayList<>(set);
 
         // 获取arrayUid所涉及的所有评论
         List<CommentDTO> allCommentDTOList = new ArrayList<>();
@@ -247,7 +271,7 @@ public class CommentService {
      * @param arrayUid
      * @return
      */
-    private List<Long> getEffectiveCommentUid(Long[] arrayUid) {
+    private List<Long> getEffectiveCommentUid(List<Long> arrayUid) {
         List<Long> listUid = new ArrayList<>();
         for (Long uid : arrayUid) {
             if (isExistsComment(uid)) {
@@ -367,6 +391,17 @@ public class CommentService {
             StorageSendMailInfo mailInfo = createReceiveCommentMailInfo(comment);
             sendMQMessageService.sendCommonMail(mailInfo, AmqpExchangeNameConstant.AURORA_SEND_MAIL_EXCHANGE,
                     "topic", AmqpQueueNameConstant.SEND_HTML_MAIL_ROUTING_KEY, createReceiveList(comment));
+        }
+    }
+
+    private Long queryParentCommentUid(Long commentUid) {
+        Comment queriedCommentInfo = auroraCommentService.queryById(commentUid);
+        if (queriedCommentInfo != null && queriedCommentInfo.getReplyCommentUid() == null) {
+            return queriedCommentInfo.getUid();
+        } else if (queriedCommentInfo == null || queriedCommentInfo.getReplyCommentUid() == 0L) {
+            return commentUid;
+        }else {
+            return queryParentCommentUid(queriedCommentInfo.getReplyCommentUid());
         }
     }
 }

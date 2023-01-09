@@ -6,9 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.validation.BindException;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import xyz.xcye.comment.dto.CommentDTO;
-import xyz.xcye.comment.po.Comment;
 import xyz.xcye.comment.pojo.CommentPojo;
 import xyz.xcye.comment.service.CommentService;
 import xyz.xcye.comment.vo.CommentVO;
@@ -76,7 +78,7 @@ public class CommentController {
     @SelectOperation
     @PostMapping("/queryListCommentByUidArr")
     public ShowCommentVO queryListCommentByUidArr(@RequestBody CommentPojo comment) {
-        return commentService.queryListCommentByUidArr(comment.getCommentUidArr());
+        return commentService.queryListCommentByUidArr(comment);
     }
 
     @Operation(summary = "根据自定义条件查询所有评论")

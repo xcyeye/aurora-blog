@@ -1,9 +1,8 @@
 package xyz.xcye.comment.pojo;
 
-import lombok.Data;
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import io.swagger.v3.oas.annotations.media.Schema;
 import org.hibernate.validator.constraints.Length;
 import xyz.xcye.core.constant.FieldLengthConstant;
 import xyz.xcye.core.constant.RegexConstant;
@@ -67,7 +66,6 @@ public class CommentPojo {
      * <p>length < 255</p>
      */
     @Length(max = FieldLengthConstant.URL)
-    @ValidateString(value = "评论-网站", max = FieldLengthConstant.URL ,groups = {Insert.class})
     private String site;
 
     /**
@@ -153,7 +151,7 @@ public class CommentPojo {
     @NotNull(groups = {Insert.class})
     private Long pageUid;
 
-    private Long[] commentUidArr;
+    private List<Long> commentUidArr;
 
     private List<Long> batchDeleteDataUidArr;
 }
