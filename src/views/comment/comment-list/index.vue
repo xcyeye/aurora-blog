@@ -29,7 +29,7 @@ import {Condition, PageData} from "@/theme/core/bean";
 import {commentApi,} from "@/service";
 import {DataTableColumn, NA, NAvatar, NButton, NSpace, NSwitch, NTag, TabsInst} from "naive-ui";
 import {EnumMittEventName} from "@/enum";
-import {emitter, getRandomTagType} from "@/utils";
+import {emitter, getRandomTagType, StringUtil} from "@/utils";
 import {useRouterPush} from "@/composables";
 import {CommentVo} from "@/theme/vo/comment/CommentVo";
 import {Comment} from "@/theme/pojo/comment/Comment";
@@ -157,6 +157,25 @@ const createColumns = (): Array<DataTableColumn> => {
 			titleColSpan: 1,
 			width: 120,
 			ellipsis: true
+		},
+		{
+			title: '父评论',
+			key: 'replyCommentUid',
+			titleColSpan: 1,
+			width: 90,
+			render(row: CommentVo) {
+				return h(
+					NTag,
+					{
+						bordered: false,
+						round: true,
+						type: StringUtil.haveLength(row.replyCommentUid) ? 'error' : 'success'
+					},
+					{
+						default: () => StringUtil.haveLength(row.replyCommentUid) ? '否' : '是'
+					}
+				)
+			}
 		},
 		{
 			title: '评论',
