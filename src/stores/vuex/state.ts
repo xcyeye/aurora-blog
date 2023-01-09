@@ -35,7 +35,7 @@ export const state = {
     openMobileSidebar: false,
     posterData: -2,
     //首页壁纸
-    homeWps: '',
+    homeWps: 'https://pic4.zhimg.com/v2-5523ed93593ee4c7fd97b972d0af92d3_r.jpg',
     currentCatalogObjectArr: [],
 
     //顶部默认图片地址

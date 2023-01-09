@@ -1,6 +1,10 @@
 <template>
 	<div>
-		<aurora-archive :article-arr="articleArr" />
+		<aurora-common :user-uid="userUid">
+			<template #center1>
+				<aurora-archive :article-arr="articleArr" />
+			</template>
+		</aurora-common>
 	</div>
 </template>
 

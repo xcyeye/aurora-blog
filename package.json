@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "vite",
-    "build": "run-p type-check build-only",
+    "build": "npm run typecheck && cross-env VITE_SERVICE_ENV=dev vite build",
+    "typecheck": "vue-tsc --noEmit --skipLibCheck",
     "preview": "vite preview",
     "test:unit": "vitest --environment jsdom --root src/",
     "build-only": "vite build",

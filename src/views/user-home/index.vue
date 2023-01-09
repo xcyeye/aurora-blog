@@ -1,6 +1,8 @@
 <template>
+	<navbar :user-uid="userUid"/>
 	<home-content :user-uid="userUid" :is-home="true"/>
 	<home-bottom :user-uid="userUid"/>
+	<set-bg/>
 </template>
 
 <script lang="ts" setup>

@@ -4,14 +4,7 @@
        $store.state.opacityStyle + $store.state.fontColorStyle +
        $store.state.fontFamilyStyle + $store.state.filterBlurStyle">
     <!-- TODO <Navbar :show-header-bg="showHeaderBg" :style="$store.state.opacityStyle" v-if="shouldShowNavbar">-->
-    <Navbar :show-header-bg="showHeaderBg" :style="$store.state.opacityStyle" v-if="true">
-      <template #before>
-        <slot name="navbar-before" />
-      </template>
-      <template #after>
-        <slot name="navbar-after" />
-      </template>
-    </Navbar>
+    <Navbar :user-uid="userUid" :show-header-bg="showHeaderBg" :style="$store.state.opacityStyle" v-if="true"></Navbar>
     <mobile-sidebar :show-navbar="isHomePage"/>
     <!--<social-spin/>-->
     <style-menu
@@ -81,14 +74,7 @@
               :is-show-footer="isShowFooter">
       </Footer>
     </div>
-    <div id="set-bg" class="set-bg-fitter"
-         :style="'--opacity: ' + $store.state.varOpacity +
-         '; --borderRadius: ' + $store.state.varBorderRadius +
-         'px; --backgroundImageUrl: url(' + $store.state.homeWps + ')'"
-    ></div>
-    <div id="posterShade" :class="{posterShade: $store.state.showPosterShadow}">
-      <span :class="{iconSpinner6: $store.state.showShadeLoad}"></span>
-    </div>
+    <set-bg/>
   </div>
 </template>
 <script lang="ts">

@@ -85,6 +85,10 @@ function _baseApi() {
     return request.post<viewBeanType>(`${apiPrefix}queryOneData`, data, baseAxiosRequestConfig);
   }
 
+  function queryUserByUsername(data: beanType) {
+    return request.post<viewBeanType>(`${apiPrefix}queryUserByUsername`, data, baseAxiosRequestConfig);
+  }
+
   /**
    * 绑定邮箱
    * @param data 邮箱号
@@ -126,7 +130,8 @@ function _baseApi() {
     bindingEmail,
     updatePassword,
     queryUserByUsernameContainPassword,
-		forgotPassword
+		forgotPassword,
+    queryUserByUsername
   };
 }
 
