@@ -259,7 +259,7 @@ const handleClickComment = (commentInfo: CommentDto, parentCommentDto: CommentDt
 const loadCommentInfo = () => {
 	showCommentInfo.value = {}
 	replyCommentData.value.content = ''
-	 commentApi.queryListCommentByUidArr({commentUidArr: props.parentCommentUidArr, path: `/friendLink/${props.userUid}`}).then(result => {
+	 commentApi.queryListCommentByUidArr({commentUidArr: props.parentCommentUidArr, path: props.pagePath}).then(result => {
 		 if (!result.error && result.data) {
 			 showCommentInfo.value = result.data
 		 }
@@ -284,8 +284,8 @@ const handleCancelReplyCommentAction = () => {
 
 const createNewUserInfo = (): Promise<null> => {
 	return new Promise((resolve, reject) => {
-		let pwd: string = (newCommenterUserInfo.value.username! + newCommenterUserInfo.value.email!)
-		if (pwd.length > 18) {
+		let pwd: string = (newCommenterUserInfo.value.username!.toUpperCase() + newCommenterUserInfo.value.email!.toLowerCase())
+		if (pwd.length > 16) {
 			pwd = pwd.substr(0, 15) + '*&'
 		}else {
 			pwd = pwd + '*&'
@@ -308,7 +308,7 @@ const createNewUserInfo = (): Promise<null> => {
 				const n = window.$notification?.create({
 					title: '请记住您的信息',
 					content: `系统已自动在该系统为您注册了身份，你可以使用该登录信息在后台管理界面查看评论或者回复评论以及体验其他的新东西o(￣▽￣)ｄ\n
-		\n username: ${newCommenterUserInfo.value.username} \n 密码: ${newCommenterUserInfo.value.username}${newCommenterUserInfo.value.email}*&\n后台地址: http://localhost/ `,
+		\n username: ${newCommenterUserInfo.value.username} \n 密码: ${pwd}\n后台地址: http://localhost/ `,
 					meta: getLocalTime(new Date(), true),
 					action: () =>
 						h(
@@ -352,8 +352,8 @@ const handleReplyCommentAction = async () => {
 		window.$message?.error('请输入正确邮箱')
 		return
 	}
-	newCommenterUserInfo.value.pagePath = `/friendLink/${props.userUid}`
-	newCommenterUserInfo.value.pageUid = props.userUid
+	newCommenterUserInfo.value.pagePath = props.pagePath
+	newCommenterUserInfo.value.pageUid = props.pageUid
 	if (!isAdminUser.value) {
 		await createNewUserInfo()
 	}
@@ -413,9 +413,9 @@ onBeforeMount(() => {
 	// 从本地存储中获取用户注册的信息，如果存在的话
 	const newCommenterUserInfoTemp: ReplyCommentUserInfo = getLocalStorage('newCommenterUserInfo')
 	newCommenterUserInfo.value = newCommenterUserInfoTemp
-	newCommenterUserInfo.value.pagePath = `/friendLink/${props.userUid}`
-	newCommenterUserInfo.value.pageUid = props.userUid
-	if (isNotEmptyObject(newCommenterUserInfoTemp)) {
+	newCommenterUserInfo.value.pagePath = props.pagePath
+	newCommenterUserInfo.value.pageUid = props.pageUid
+	if (isNotEmptyObject(newCommenterUserInfoTemp) && StringUtil.haveLength(newCommenterUserInfoTemp.username)) {
 		userApi.queryUserByUsername({username: newCommenterUserInfoTemp.username}).then(result => {
 			if (!result.error) {
 				newCommenterUserInfo.value.userUid = result.data.uid

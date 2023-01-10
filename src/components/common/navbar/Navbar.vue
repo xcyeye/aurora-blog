@@ -6,7 +6,7 @@
 						:class="{'header-bg-show': props.showHeaderBg}"
 						class="navbar">
 		<span ref="siteBrand">
-      <RouterLink to="/">
+      <RouterLink :to="`/user/${props.userUid}`">
         <img
 					style="border-radius: 30px"
 					class="logo"
@@ -34,7 +34,7 @@
 				<div><router-link to="/about/1522074993315815424">关于           </router-link></div>
 				<div><router-link to="/shareSpace/1522074993315815424">说说1     </router-link></div>
 				<div><router-link to="/shareSpace-page/1522074993315815424">说说2</router-link></div>
-				<div><router-link to="/article/1522074993315815424">文章         </router-link></div>
+				<div><router-link to="/article/1611023522247221248">文章         </router-link></div>
 			</div>
 		</header>
 	</div>
@@ -45,7 +45,7 @@ import {useUserInfo} from "@/stores";
 
 interface Props {
 	userUid: string,
-	showHeaderBg?: string
+	showHeaderBg?: boolean
 }
 
 const props = withDefaults(defineProps<Props>(), {

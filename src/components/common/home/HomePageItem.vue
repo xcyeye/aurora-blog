@@ -1,6 +1,6 @@
 <template>
   <div ref="pageItemTop" class="home-page-scroll home-page-tag-item sidebar-single-enter-animate" id="home-page-tag-item">
-    <div @click="goRead($event,pageItem.uid)" class="home-page-tag-img">
+    <div @click="goRead($event,pageItem)" class="home-page-tag-img">
       <div class="home-page-img-gradual">
         <div class="home-page-gradual-title-par">
           <div class="home-page-top" v-if="true">
@@ -11,7 +11,7 @@
           <div :class="getGradualClass" class="home-page-gradual-title-item-common">
             <div class="home-page-gradual-item">
               <div class="home-page-gradual-title home-page-gradual-common">
-                <router-link :to="pageItem.uid">
+                <router-link :to="`/article/${pageItem.uid}`">
                   <span>{{getPageItemTitle}}</span>
                 </router-link>
               </div>
@@ -47,6 +47,7 @@ import {computed, onMounted, ref} from "vue";
 import {ArticleVo} from "@/bean/vo/article/ArticleVo";
 import {StringUtil} from "@/utils";
 import {useSiteInfo} from "@/stores";
+import {useRouterPush} from "@/composables";
 
 interface Props {
 	pageItem: ArticleVo,
@@ -61,6 +62,7 @@ const props = withDefaults(defineProps<Props>(), {
 
 const currentSiteInfo = ref<SiteSettingInfo>({})
 const useSite = useSiteInfo()
+const routerPush = useRouterPush()
 
 const getGradualClass = computed(() => {
 	let num = props.index % 2
@@ -101,8 +103,10 @@ const handleScroll = () => {
 	}
 }
 
-const goRead = (e: any,url: string) => {
-
+const goRead = (e: any, articleInfo: ArticleVo) => {
+	routerPush.routerPush({
+		path: `/article/${articleInfo.uid}`
+	})
 }
 
 const getPageTag = computed(() => {

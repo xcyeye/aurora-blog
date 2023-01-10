@@ -19,6 +19,7 @@
     "easy-typer-js": "^2.1.0",
     "gsap": "^3.11.4",
     "jquery": "^3.6.3",
+    "markdown-it": "^13.0.1",
     "medium-zoom": "^1.0.8",
     "pinia": "^2.0.28",
     "qs": "^6.11.0",
@@ -33,6 +34,7 @@
   "devDependencies": {
     "@types/jquery": "^3.5.16",
     "@types/jsdom": "^20.0.1",
+    "@types/markdown-it": "^12.2.3",
     "@types/node": "^18.11.12",
     "@vitejs/plugin-vue": "^4.0.0",
     "@vue/test-utils": "^2.2.6",

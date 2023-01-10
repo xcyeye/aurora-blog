@@ -9,6 +9,7 @@ import '@/assets/icon/iconfont.woff'
 import '@/assets/icon/iconfont.woff2'
 import '@/assets/icon/iconfont.css'
 import '@/assets/icon/iconfont.json'
+import '@/styles/theme/page.css'
 
 /** import static assets: css, js , font and so on. - [引入静态资源，css、js和字体文件等] */
 export default function setupAssets() {}

@@ -104,7 +104,7 @@
           <div v-for="item in articleArr" :key="item.uid" :data="item.uid" class="sidebar-page-item sidebar-hover-bg-common">
             <div class="sidebar-page-title">
               <router-link :to="`/article/${item.uid}`">
-                <span>{{item.title ? item.title :getRecommendNoTitle}}</span>
+                <span @click="goRead($event,item)">{{item.title ? item.title :getRecommendNoTitle}}</span>
               </router-link>
             </div>
             <div class="sidebar-page-time">
@@ -196,6 +196,7 @@ import {TagVo} from "@/bean/vo/article/TagVo";
 import {getLocalTime} from "@/utils";
 import {ArticleVo} from "@/bean/vo/article/ArticleVo";
 import {CategoryVo} from "@/bean/vo/article/CategoryVo";
+import {useRouterPush} from "@/composables";
 
 const currentSiteInfo: SiteSettingInfo = {}
 const friendLinks: Array<LinkVo> = []
@@ -204,6 +205,7 @@ const bulletinArr: Array<BulletinVo> = []
 const tagArr: Array<TagVo> = []
 const categoryArr: Array<CategoryVo> = []
 const articleArr: Array<ArticleVo> = []
+const routerPush = useRouterPush()
 
 export default {
   name: "HomeSidebar",
@@ -464,6 +466,14 @@ export default {
     }
   },
   methods: {
+		goRead(e: any, articleInfo: ArticleVo) {
+			routerPush.routerPush({
+				path: '/article',
+				params: {
+					uid: articleInfo.uid
+				}
+			})
+		},
 		getLocalTime() {
 			return getLocalTime
 		},
