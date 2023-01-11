@@ -1,4 +1,21 @@
-wh-full {
+.wh-full {
 	width: 100%;
 	height: 100%;
+}
+
+.dragArea {
+	margin-top: .5rem;
+	margin-bottom: .5rem;
+	margin-left: 1rem;
+}
+
+.dragArea .list-group-item {
+	font-size: var(--n-font-size);
+	padding: .5rem;
+	margin-top: .5rem;
+}
+
+.dragArea .sortable-chosen {
+	border: 1px solid #9ca3af;
+	border-radius: 16px;
 }

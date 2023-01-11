@@ -1,76 +1,80 @@
 <template>
-	<n-form :model="model">
-		<n-dynamic-input
-			v-model:value="model.dynamicInputValue"
-			item-style="margin-bottom: 0;"
-			:on-create="onCreate"
-			#="{ index, value }"
-		>
-			<div style="display: flex">
-				<!--
-					通常，path 的变化会导致 form-item 验证内容或规则的改变，所以 naive-ui 会清理掉
-					表项已有的验证信息。但是这个例子是个特殊情况，我们明确的知道，path 的改变不会导致
-					form-item 验证内容和规则的变化，所以就 ignore-path-change
-				-->
-				<n-form-item
-					ignore-path-change
-					:show-label="false"
-					:path="`dynamicInputValue[${index}].name`"
-					:rule="dynamicInputRule"
-				>
-					<n-input
-						v-model:value="model.dynamicInputValue[index].name"
-						placeholder="Name"
-						@keydown.enter.prevent
-					/>
-					<!--
-						由于在 input 元素里按回车会导致 form 里面的 button 被点击，所以阻止了默认行为
-					-->
-				</n-form-item>
-				<div style="height: 34px; line-height: 34px; margin: 0 8px">
-					=
-				</div>
-				<n-form-item
-					ignore-path-change
-					:show-label="false"
-					:path="`dynamicInputValue[${index}].value`"
-					:rule="dynamicInputRule"
-				>
-					<n-input
-						v-model:value="model.dynamicInputValue[index].value"
-						placeholder="Value"
-						@keydown.enter.prevent
-					/>
-				</n-form-item>
-			</div>
-		</n-dynamic-input>
-	</n-form>
-	<pre>{{ JSON.stringify(model.dynamicInputValue, null, 2) }}</pre>
+	<div class="row">
+		<div class="col-3">
+			<h3>Draggable 1</h3>
+			<draggable
+				class="list-group"
+				:list="list1"
+				group="people"
+				@change="log"
+				itemKey="name"
+			>
+				<template #item="{ element, index }">
+					<div class="list-group-item">{{ element.name }} {{ index }}</div>
+				</template>
+			</draggable>
+		</div>
+
+		<div class="col-3">
+			<h3>Draggable 2</h3>
+			<draggable
+				class="list-group"
+				:list="list2"
+				group="people"
+				@change="log"
+				itemKey="name"
+			>
+				<template #item="{ element, index }">
+					<div class="list-group-item">{{ element.name }} {{ index }}</div>
+				</template>
+			</draggable>
+		</div>
+
+		<rawDisplayer class="col-3" :value="list1" title="List 1" />
+
+		<rawDisplayer class="col-3" :value="list2" title="List 2" />
+	</div>
 </template>
+<script>
+import draggable from "@/vuedraggable";
 
-<script lang="ts">
-import { defineComponent, ref } from 'vue'
-
-export default defineComponent({
-	setup () {
+export default {
+	name: "two-lists",
+	display: "Two Lists",
+	order: 1,
+	components: {
+		draggable
+	},
+	data() {
 		return {
-			dynamicInputRule: {
-				trigger: 'input',
-				validator (rule: unknown, value: string) {
-					if (value.length >= 5) return new Error('最多输入四个字符')
-					return true
-				}
-			},
-			model: ref({
-				dynamicInputValue: [{ value: '', name: '' }]
-			}),
-			onCreate () {
-				return {
-					name: '',
-					value: ''
-				}
-			}
+			list1: [
+				{ name: "John", id: 1 },
+				{ name: "Joao", id: 2 },
+				{ name: "Jean", id: 3 },
+				{ name: "Gerard", id: 4 }
+			],
+			list2: [
+				{ name: "Juan", id: 5 },
+				{ name: "Edgard", id: 6 },
+				{ name: "Johnson", id: 7 }
+			]
+		};
+	},
+	methods: {
+		add: function() {
+			this.list.push({ name: "Juan" });
+		},
+		replace: function() {
+			this.list = [{ name: "Edgard" }];
+		},
+		clone: function(el) {
+			return {
+				name: el.name + " cloned"
+			};
+		},
+		log: function(evt) {
+			window.console.log(evt);
 		}
 	}
-})
+};
 </script>

@@ -93,14 +93,33 @@ export const routeModel: Record<Auth.RoleType, AuthRoute.Route[]> = {
 		{
 			name: 'siteSetting',
 			path: '/siteSetting',
-			component: 'self',
+			component: 'basic',
+			children: [
+				{
+					name: 'siteSetting_list',
+					path: '/siteSetting/list',
+					component: 'self',
+					meta: {
+						title: '列表',
+						requiresAuth: true,
+						icon: 'ic:round-filter-vintage'
+					}
+				},
+				{
+					name: 'siteSetting_navbar',
+					path: '/siteSetting/navbar',
+					component: 'self',
+					meta: {
+						title: 'navbar',
+						requiresAuth: true,
+						icon: 'ic:baseline-mode-edit'
+					}
+				}
+			],
 			meta: {
 				title: '站点设置',
-				requiresAuth: true,
-				hide: false,
-				singleLayout: 'basic',
-				icon: 'ic:sharp-brightness-1',
-				order: 0
+				icon: 'ic:round-bookmarks',
+				order: 3
 			}
 		},
 		{

@@ -1,81 +1,80 @@
 <template>
-	<n-dropdown
-		:options="options"
-		placement="bottom-start"
-		trigger="click"
-		@select="handleSelect"
-	>
-		<n-button>人物和食物</n-button>
-	</n-dropdown>
+	<div class="row">
+		<div class="col-3">
+			<h3>Draggable 1</h3>
+			<draggable
+				class="list-group"
+				:list="list1"
+				group="people"
+				@change="log"
+				itemKey="name"
+			>
+				<template #item="{ element, index }">
+					<div class="list-group-item">{{ element.name }} {{ index }}</div>
+				</template>
+			</draggable>
+		</div>
+
+		<div class="col-3">
+			<h3>Draggable 2</h3>
+			<draggable
+				class="list-group"
+				:list="list2"
+				group="people"
+				@change="log"
+				itemKey="name"
+			>
+				<template #item="{ element, index }">
+					<div class="list-group-item">{{ element.name }} {{ index }}</div>
+				</template>
+			</draggable>
+		</div>
+
+		<rawDisplayer class="col-3" :value="list1" title="List 1" />
+
+		<rawDisplayer class="col-3" :value="list2" title="List 2" />
+	</div>
 </template>
+<script>
+import draggable from "@/vuedraggable";
 
-<script lang="ts">
-import { h, defineComponent } from 'vue'
-import { NIcon, useMessage } from 'naive-ui'
-import { CashOutline as CashIcon } from '@vicons/ionicons5'
-
-const options = [
-	{
-		label: '杰·盖茨比',
-		key: 'jay gatsby'
+export default {
+	name: "two-lists",
+	display: "Two Lists",
+	order: 1,
+	components: {
+		draggable
 	},
-	{
-		label: '黛西·布坎南',
-		icon () {
-			return h(NIcon, null, {
-				default: () => h(CashIcon)
-			})
-		},
-		key: 'daisy buchanan'
-	},
-	{
-		type: 'divider',
-		key: 'd1'
-	},
-	{
-		label: '尼克·卡拉威',
-		key: 'nick carraway'
-	},
-	{
-		label: '其他',
-		key: 'others1',
-		children: [
-			{
-				label: '乔丹·贝克',
-				key: 'jordan baker'
-			},
-			{
-				label: '汤姆·布坎南',
-				key: 'tom buchanan'
-			},
-			{
-				label: '其他',
-				key: 'others2',
-				disabled: true,
-				children: [
-					{
-						label: '鸡肉',
-						key: 'chicken'
-					},
-					{
-						label: '牛肉',
-						key: 'beef'
-					}
-				]
-			}
-		]
-	}
-]
-
-export default defineComponent({
-	setup () {
-		const message = useMessage()
+	data() {
 		return {
-			options,
-			handleSelect (key: string | number) {
-				message.info(String(key))
-			}
+			list1: [
+				{ name: "John", id: 1 },
+				{ name: "Joao", id: 2 },
+				{ name: "Jean", id: 3 },
+				{ name: "Gerard", id: 4 }
+			],
+			list2: [
+				{ name: "Juan", id: 5 },
+				{ name: "Edgard", id: 6 },
+				{ name: "Johnson", id: 7 }
+			]
+		};
+	},
+	methods: {
+		add: function() {
+			this.list.push({ name: "Juan" });
+		},
+		replace: function() {
+			this.list = [{ name: "Edgard" }];
+		},
+		clone: function(el) {
+			return {
+				name: el.name + " cloned"
+			};
+		},
+		log: function(evt) {
+			window.console.log(evt);
 		}
 	}
-})
+};
 </script>
