@@ -22,19 +22,9 @@
     </span>
 			
 			<div class="navbar-links-wrapper">
-				<div>
-					<router-link to="/">首页</router-link>
+				<div v-for="(item, index) in navbarInfoArr" :key="index">
+					<navbar-link :navbar-info="item"/>
 				</div>
-				<div>
-					<router-link to="/user/1522074993315815424">用户首页</router-link>
-				</div>
-		<div>		<router-link to="/friendLink/1522074993315815424">友情链接  </router-link></div>
-			<div>	<router-link to="/archive/1522074993315815424">时间轴       </router-link></div>
-				<div><router-link to="/tag-category/1522074993315815424">标签    </router-link></div>
-				<div><router-link to="/about/1522074993315815424">关于           </router-link></div>
-				<div><router-link to="/shareSpace/1522074993315815424">说说1     </router-link></div>
-				<div><router-link to="/shareSpace-page/1522074993315815424">说说2</router-link></div>
-				<div><router-link to="/article/1611023522247221248">文章         </router-link></div>
 			</div>
 		</header>
 	</div>
@@ -42,6 +32,8 @@
 
 <script setup lang="ts">
 import {useUserInfo} from "@/stores";
+import {onBeforeMount, ref} from "vue";
+import {siteSettingApi} from "@/service/api/admin/siteSettingApi";
 
 interface Props {
 	userUid: string,
@@ -50,5 +42,22 @@ interface Props {
 
 const props = withDefaults(defineProps<Props>(), {
 	showHeaderBg: true
+})
+
+const navbarInfoArr = ref<Array<NavbarInfo>>([])
+
+const loadSiteSetting = () => {
+	siteSettingApi.queryListDataByCondition({otherUid: props.userUid, keyword: `${props.userUid}NavbarInfo`}).then(result => {
+		if (result.data && result.data.result  && result.data.result.length > 0) {
+			const siteSetting: SiteSetting = result.data.result[0]
+			// 取出第一个
+			navbarInfoArr.value = JSON.parse(siteSetting.paramValue!)
+			console.log(navbarInfoArr.value);
+		}
+	})
+}
+
+onBeforeMount(() => {
+	loadSiteSetting()
 })
 </script>

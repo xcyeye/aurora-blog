@@ -29,6 +29,7 @@
     >
       <div class="page-sidebar">
         <top-image :is-show-top-img="isShowTopImg"
+									 :article-info="articleInfo"
                    :is-show-head-line="isShowHeadLine"
                    :show-mood-edit="showMoodEdit"
                    :head-line="headLine">
@@ -80,10 +81,11 @@
 <script lang="ts">
 
 //配置导入
-import {defineComponent, Transition,} from 'vue';
+import {defineComponent, PropType, Transition,} from 'vue';
 import {useSiteInfo} from "@/stores";
 import blogConfig from '@/config/blogConfig.json';
 import {getRandomNum} from "@/utils";
+import {ArticleVo} from "@/bean/vo/article/ArticleVo";
 
 const currentSiteInfo: SiteSettingInfo = {}
 const useSite = useSiteInfo()
@@ -122,6 +124,9 @@ export default defineComponent({
     }
   },
   props: {
+		articleInfo: {
+			type: Object as PropType<ArticleVo>
+		},
 		userUid: {
 			type: String
 		},

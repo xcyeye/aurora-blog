@@ -51,6 +51,14 @@ function _baseApi() {
     return request.post<number>(`${apiPrefix}updateArticle`, data, baseAxiosRequestConfig);
   }
 
+  function updateArticleLikeNum(data: beanType) {
+    return request.post<number>(`${apiPrefix}updateArticleLikeNum`, data, baseAxiosRequestConfig);
+  }
+
+  function updateArticleReadNum(data: beanType) {
+    return request.post<number>(`${apiPrefix}updateArticleReadNum`, data, baseAxiosRequestConfig);
+  }
+
   /**
    * 批量更新数据
    * @deprecated
@@ -98,7 +106,9 @@ function _baseApi() {
     logicDeleteData,
     physicalDeleteData,
     insertData,
-    batchInsertData
+    batchInsertData,
+    updateArticleReadNum,
+    updateArticleLikeNum
   };
 }
 

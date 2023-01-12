@@ -32,13 +32,13 @@
           <div class="page-record-center-left page-record-single-common">
             <span class="aurora-iconfont-common aurora-page-comment"></span>&nbsp;
             <span class="page-record-single-desc">评论数</span>
-						<span class="waline-comment-count" >199</span>
+						<span class="waline-comment-count" >{{articleCommentTotal}}</span>
             <!--<span>{{$store.state.commentCount}}</span>-->
           </div>
           <div class="page-record-center-right page-record-single-common">
             <span class="aurora-iconfont-common aurora-page-read"></span>&nbsp;
             <span class="page-record-single-desc">总阅读数</span>
-						<span class="waline-visitor-count" >3485</span>
+						<span class="waline-visitor-count" >{{articleInfo.readNumber ? articleInfo.readNumber : ''}}</span>
             <!--<span>{{$store.state.readCount}}</span>-->
           </div>
         </div>
@@ -53,7 +53,7 @@
       </div>
     </div>
     <div class="top-image" id="top-image" v-if="isShowHeadLine">
-      <h1>{{headLine}}</h1>
+      <h1>{{articleInfo.title}}</h1>
     </div>
   </div>
 </template>
@@ -63,12 +63,17 @@ import {readingTime} from 'reading-time-estimator';
 import blogConfig from '@/config/blogConfig.json';
 import gsap from "gsap";
 import {TagVo} from "@/bean/vo/article/TagVo";
+import {PropType} from "vue";
+import {ArticleVo} from "@/bean/vo/article/ArticleVo";
+import {StringUtil} from "@/utils";
+import {commentApi} from "@/service";
 
 const tagArr:Array<TagVo> = []
 export default {
   name: "TopImage",
   data() {
     return {
+			articleCommentTotal: 0,
       totalWordObj: {
         minutes: '',
         text: '',
@@ -105,7 +110,10 @@ export default {
       default() {
         return "aurora";
       }
-    }
+    },
+		articleInfo: {
+			type: Object as PropType<ArticleVo>
+		}
   },
   created() {
     // this.$router.beforeEach((to,from,next) => {
@@ -162,6 +170,14 @@ export default {
       }
     })
     this.document = document
+		if (this.articleInfo) {
+			// 查询总评论数
+			commentApi.queryListDataByCondition({keyword:`/article/${this.articleInfo.uid}`}).then(result => {
+				if (result.data) {
+					this.articleCommentTotal = result.data.total
+				}
+			})
+		}
   },
   computed: {
     animatedContentLength() {
@@ -173,6 +189,9 @@ export default {
       }
     },
     setBackgroundUrl() {
+			if (this.articleInfo && StringUtil.haveLength(this.articleInfo.coverPictureUrl)) {
+				return `background-image: url(${this.articleInfo.coverPictureUrl});`
+			}
       return "background-image: url(https://pic-tool.xcye.xyz/pic/rmimg);"
     },
     getWordLength() {

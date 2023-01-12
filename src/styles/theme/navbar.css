@@ -40,6 +40,24 @@
 
 .navbar .navbar-links-wrapper div a {
     padding-right: 2rem;
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+.navbar .navbar-links-wrapper div svg {
+    padding-right: .5rem;
+    cursor: pointer;
+}
+
+.navbar .navbar-links-wrapper div {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.navbar .navbar-links-wrapper div p {
+    padding-right: 2rem;
 }
 
 .navbar-box {

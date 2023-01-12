@@ -80,7 +80,7 @@
 
       <!--搜索-->
       <div :id="customId" v-if="showSearch" :class="{'sidebar-single-enter-animate': showEnterAnimate}" class="sidebar-single-common">
-        <SearchBox/>
+        <!--<SearchBox/>-->
         <slot name="sidebar-son4"/>
       </div>
       <slot name="sidebar4"></slot>

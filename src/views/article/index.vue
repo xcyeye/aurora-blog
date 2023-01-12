@@ -1,7 +1,8 @@
 <template>
 	<aurora-common :is-sticky-sidebar="true" :is-show-side-bar="false"
 								 :show-sidebar-link="false" :user-uid="userUid"
-								 :is-show-top-img="true" :is-show-head-line="false">
+								 :article-info="articleInfo"
+								 :is-show-top-img="true" :is-show-head-line="true">
 		<template #center1>
 			<main :style="$store.state.borderRadiusStyle + $store.state.opacityStyle"
 						class="page sidebar-single-enter-animate blog-article" id="article-page">
@@ -99,21 +100,26 @@ const loadArticleInfo = () => {
 				})
 			}
 		}
+		
+		// 修改文章的阅读数
+		articleApi.updateArticleReadNum({uid: result.data?.uid})
 	})
 }
 
 // onBeforeRouteUpdate(to => {
 // 	console.log(to);
 // })
+	
+	onBeforeMount(() => {
+		articleUid.value = router.currentRoute.value.params.uid as string
+		if (!StringUtil.haveLength(articleUid.value)) {
+			routerPush.routerBack()
+		}
+		
+		loadArticleInfo()
+	})
 
-onBeforeMount(() => {
-	articleUid.value = router.currentRoute.value.params.uid as string
-	if (!StringUtil.haveLength(articleUid.value)) {
-		routerPush.routerBack()
-	}
 
-	loadArticleInfo()
-})
 </script>
 <style lang="css">
 @import "@/styles/dyzj/dyzj-dark.css";
