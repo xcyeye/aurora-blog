@@ -18,8 +18,8 @@
 			</n-space>
 
     </div>
-    <div class="home-page-fun" id="home-page-fun">
-      <HomeSidebar :user-uid="userUid"></HomeSidebar>
+    <div v-if="showHomeSidebar" class="home-page-fun" id="home-page-fun">
+      <HomeSidebar :user-uid="userUid"/>
     </div>
   </div>
   <slot name="home-footer"/>
@@ -31,14 +31,24 @@ import {computed, onBeforeMount, ref} from "vue";
 import {blogPageData} from "@/assets/config";
 import {ArticleVo} from "@/bean/vo/article/ArticleVo";
 import {articleApi} from "@/service";
-import {Condition} from "@/bean/core/bean";
+import {Condition, PageData} from "@/bean/core/bean";
 import smoothscroll from 'smoothscroll-polyfill'
+import RequestResult = Service.RequestResult;
+import {layoutProps} from "naive-ui";
 
 interface Props {
-	userUid: string
+	userUid?: string,
+	condition?: Condition,
+	showHomeSidebar?: boolean,
+	queryArticleDataMethod: (condition: Condition) => Promise<RequestResult<PageData<ArticleVo>>>
 }
 
-const props = withDefaults(defineProps<Props>(), {})
+const props = withDefaults(defineProps<Props>(), {
+	condition: () => {
+		return {}
+	},
+	showHomeSidebar: true
+})
 
 const articleArr = ref<Array<ArticleVo>>([])
 const currentPage = ref<number>(1)
@@ -74,13 +84,13 @@ const setImgDom = () => {
 
 const loadArticleData = async () => {
   return new Promise((resolve, reject) => {
-		if (!props.userUid) {
-			console.error('请传入userUid');
-			resolve(null)
-			return
-		}
-		condition.value.otherField = props.userUid
-		articleApi.queryListDataByCondition(condition.value).then(result => {
+		// if (!props.userUid) {
+		// 	console.error('请传入userUid');
+		// 	resolve(null)
+		// 	return
+		// }
+		props.condition.orderBy = 'update_time desc, create_time desc'
+		props.queryArticleDataMethod(props.condition).then(result => {
 			if (result.data && result.data.result) {
 				articleArr.value = result.data.result
 				pageTotal.value = result.data.total!

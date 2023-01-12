@@ -52,7 +52,6 @@ const loadSiteSetting = () => {
 			const siteSetting: SiteSetting = result.data.result[0]
 			// 取出第一个
 			navbarInfoArr.value = JSON.parse(siteSetting.paramValue!)
-			console.log(navbarInfoArr.value);
 		}
 	})
 }

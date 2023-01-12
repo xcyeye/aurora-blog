@@ -1,7 +1,7 @@
 <template>
 	<navbar :user-uid="userUid"/>
 	<home-content :user-uid="userUid" :is-home="true"/>
-	<home-bottom :user-uid="userUid"/>
+	<home-bottom :condition="condition" :query-article-data-method="queryDataMethod" :user-uid="userUid"/>
 	<set-bg/>
 </template>
 
@@ -14,9 +14,12 @@ import {useRouterPush} from "@/composables";
 import {siteSettingApi} from "@/service/api/admin/siteSettingApi";
 import {defaultSiteSettingInfo} from "@/field";
 import {UserVo} from "@/bean/vo/admin/UserVo";
-import {userApi} from "@/service";
+import {articleApi, userApi} from "@/service";
 import {useCurrentUser, useSiteInfo, useUserInfo} from "@/stores";
 import {isNotEmptyObject, setDefaultProperties} from "@/utils/business";
+import {Condition, PageData} from "@/bean/core/bean";
+import RequestResult = Service.RequestResult;
+import {ArticleVo} from "@/bean/vo/article/ArticleVo";
 
 const themeProperty = ref(blogPageData)
 const router = useRouter()
@@ -26,6 +29,14 @@ const userInfo = ref<UserVo>({})
 const siteSettingInfo = ref<SiteSettingInfo>({})
 const useSite = useSiteInfo()
 const useUser = useUserInfo()
+const condition = ref<Condition>({
+	delete: false,
+	status: true
+})
+
+const queryDataMethod = (condition: Condition): Promise<RequestResult<PageData<ArticleVo>>> => {
+	return articleApi.queryListDataByCondition(condition);
+}
 
 const setProperties = () => {
 	Object.keys(defaultSiteSettingInfo).forEach(v => {
@@ -38,6 +49,7 @@ const setProperties = () => {
 
 onBeforeMount(() => {
 	userUid.value = router.currentRoute.value.params.userUid as string
+	condition.value.otherUid = userUid.value
 	if (!StringUtil.haveLength(userUid.value)) {
 		routerPush.routerPush({
 			name: 'home'
