@@ -44,8 +44,8 @@ export default {
     }
   },
   created() {
-    if (this.currentSiteInfo.footer !== undefined && this.currentSiteInfo.footerInfo.enable) {
-      this.footerArr = this.currentSiteInfo.footer
+    if (this.currentSiteInfo.footerInfo !== undefined && this.currentSiteInfo.footerInfo.enable) {
+      this.footerArr = this.currentSiteInfo.footerInfo
 			let showThemeCopyright = this.currentSiteInfo.footerInfo.isShowThemeCopyright
 			if (showThemeCopyright === undefined || showThemeCopyright == null || showThemeCopyright) {
 				//默认为TRUE，显示页脚主题版权

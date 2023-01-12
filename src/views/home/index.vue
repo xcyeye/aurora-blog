@@ -8,8 +8,6 @@
 							<div class="home-main-article-latest-article-info">
 								<div>
 									<span>{{item.title}}</span>
-									&nbsp;&nbsp;
-									<span>{{item.createTime}}</span>
 								</div>
 							</div>
 						</div>
@@ -90,6 +88,12 @@
 			<div class="home-main-bottom">
 				<home-bottom :show-home-sidebar="false" :condition="{delete: false, status: true}" :query-article-data-method="queryDataMethod"/>
 			</div>
+			<div class="home-main-footer">
+				<Footer :current-site-info="footerSiteInfo"
+								:is-home="false"
+								:is-show-footer="true">
+				</Footer>
+			</div>
 		</div>
 		<div>
 			<div id="set-bg" class="set-bg-fitter"
@@ -119,6 +123,15 @@ const articleArr = ref<Array<ArticleVo>>([])
 const userArr = ref<Array<UserVo>>([])
 const articleLatestArr = ref<Array<ArticleVo>>([])
 const routerPush = useRouterPush()
+const footerSiteInfo: SiteSettingInfo = {
+	footerInfo: {
+		enable: true,
+		isShowRunTime: false,
+		footInfo: [
+			'Copyright © by xcye All Rights Reserved'
+		]
+	}
+}
 
 const getArticleCover = computed(() => {
 	return (article: ArticleVo) => {
