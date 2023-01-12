@@ -6,12 +6,12 @@
 			@change="handleChangeDraggableAction"
 			:list="navbarInfo"
 			:animation="400"
-			:group="{pull: true,name: 'navbar', put: true}"
+			:group="{pull: true, name: 'navbar', put: true}"
 			item-key="name"
 		>
 			<template #item="{ element }">
 				<li class="list-group-item">
-					<p>{{ element.name }}</p>
+					<n-text>{{ element.name }} <n-tag :bordered="false" style="border-radius: 16px" type="warning" @click="handleDeleteNavbar(element)">移除</n-tag></n-text>
 					<aurora-draggable :navbar-info="element.children"/>
 				</li>
 			</template>
@@ -20,8 +20,9 @@
 </template>
 
 <script lang="ts" setup>
-import {defineComponent} from "vue";
+import {defineComponent, onBeforeMount} from "vue";
 import draggable from 'vuedraggable'
+import {siteSettingApi} from "@/service/api/admin/siteSettingApi";
 
 defineComponent({name: 'AuroraDraggable'});
 
@@ -30,10 +31,15 @@ interface Prop {
 }
 
 const props = withDefaults(defineProps<Prop>(), {})
-const emit = defineEmits(['handleFinallyNavbarData'])
+const emit = defineEmits(['handleFinallyNavbarData', 'handleDeleteNavbar'])
 
-const handleChangeDraggableAction = () => {
+const handleChangeDraggableAction = (evt) => {
+	console.log(evt);
 	emit('handleFinallyNavbarData', props.navbarInfo)
+}
+
+const handleDeleteNavbar = (element: NavbarInfo) => {
+	emit('handleDeleteNavbar', element)
 }
 </script>
 
