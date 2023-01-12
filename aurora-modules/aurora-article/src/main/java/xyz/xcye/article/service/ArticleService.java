@@ -15,6 +15,7 @@ import xyz.xcye.aurora.properties.AuroraProperties;
 import xyz.xcye.aurora.util.UserUtils;
 import xyz.xcye.core.dto.JwtUserInfo;
 import xyz.xcye.core.enums.ResponseStatusCodeEnum;
+import xyz.xcye.core.exception.article.ArticleException;
 import xyz.xcye.core.exception.user.UserException;
 import xyz.xcye.core.util.BeanUtils;
 import xyz.xcye.core.util.DateUtils;
@@ -95,6 +96,28 @@ public class ArticleService {
         record.setUserUid(null);
         setTimingPublishTime(record);
         return auroraArticleService.updateById(BeanUtils.copyProperties(record, Article.class));
+    }
+
+    public void updateArticleLikeNum(ArticlePojo pojo) {
+        Article article = auroraArticleService.queryById(pojo.getUid());
+        AssertUtils.stateThrow(article != null, () -> new ArticleException("此文章不存在"));
+        ArticlePojo articlePojo = BeanUtils.copyProperties(article, ArticlePojo.class);
+        if (articlePojo.getLikeNumber() == null) {
+            articlePojo.setLikeNumber(0);
+        }
+        articlePojo.setLikeNumber(articlePojo.getLikeNumber() + 1);
+        updateArticle(articlePojo);
+    }
+
+    public void updateArticleReadNum(ArticlePojo pojo) {
+        Article article = auroraArticleService.queryById(pojo.getUid());
+        AssertUtils.stateThrow(article != null, () -> new ArticleException("此文章不存在"));
+        ArticlePojo articlePojo = BeanUtils.copyProperties(article, ArticlePojo.class);
+        if (articlePojo.getReadNumber() == null) {
+            articlePojo.setReadNumber(0);
+        }
+        articlePojo.setReadNumber(articlePojo.getReadNumber() + 1);
+        updateArticle(articlePojo);
     }
 
     private void setCategory(ArticlePojo article) {

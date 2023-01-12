@@ -175,7 +175,7 @@
                 and user_uid=#{condition.otherUid}
             </if>
             <if test="condition.keyword != null">
-                and param_name#{condition.keyword}
+                and param_name=#{condition.keyword}
             </if>
             <if test="condition.startTime != null and condition.endTime != null">
                 and create_time between #{condition.startTime} and #{condition.endTime}

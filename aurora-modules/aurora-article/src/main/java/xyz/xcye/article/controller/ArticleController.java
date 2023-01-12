@@ -5,8 +5,10 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
-import xyz.xcye.article.po.Article;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import xyz.xcye.article.pojo.ArticlePojo;
 import xyz.xcye.article.service.ArticleService;
 import xyz.xcye.article.vo.ArticleVO;
@@ -59,6 +61,20 @@ public class ArticleController {
     @PostMapping("/updateArticle")
     public int updateArticle(@Validated({Update.class, Default.class}) @RequestBody ArticlePojo article) {
         return articleService.updateArticle(article);
+    }
+
+    @Operation(summary = "修改文章点赞数")
+    @ModifyOperation
+    @PostMapping("/updateArticleLikeNum")
+    public void updateArticleLikeNum(@Validated({Update.class, Default.class}) @RequestBody ArticlePojo article) {
+        articleService.updateArticleLikeNum(article);
+    }
+
+    @Operation(summary = "修改文章阅读数")
+    @ModifyOperation
+    @PostMapping("/updateArticleReadNum")
+    public void updateArticleReadNum(@Validated({Update.class, Default.class}) @RequestBody ArticlePojo article) {
+        articleService.updateArticleReadNum(article);
     }
 
     @SelectOperation

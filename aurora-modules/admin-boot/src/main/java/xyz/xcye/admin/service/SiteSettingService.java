@@ -8,7 +8,6 @@ import xyz.xcye.admin.pojo.SiteSettingPojo;
 import xyz.xcye.admin.vo.SiteSettingVO;
 import xyz.xcye.admin.vo.UserVO;
 import xyz.xcye.core.enums.ResponseStatusCodeEnum;
-import xyz.xcye.core.exception.setting.SettingException;
 import xyz.xcye.core.exception.user.UserException;
 import xyz.xcye.core.util.BeanUtils;
 import xyz.xcye.core.util.lambda.AssertUtils;
@@ -36,11 +35,10 @@ public class SiteSettingService {
     }
 
     public void insertSiteSetting(SiteSettingPojo pojo) {
-        // 每个用户只能有一条网站设置
-        SiteSetting siteSetting = new SiteSetting();
-        siteSetting.setUserUid(pojo.getUserUid());
-        SiteSetting queriedSiteSetting = auroraSiteSettingService.queryOne(siteSetting);
-        AssertUtils.stateThrow(queriedSiteSetting == null, () -> new SettingException("站点设置每个用户只能存在一条记录"));
+        // SiteSetting siteSetting = new SiteSetting();
+        // siteSetting.setUserUid(pojo.getUserUid());
+        // SiteSetting queriedSiteSetting = auroraSiteSettingService.queryOne(siteSetting);
+        // AssertUtils.stateThrow(queriedSiteSetting == null, () -> new SettingException("站点设置每个用户只能存在一条记录"));
         auroraSiteSettingService.insert(BeanUtils.copyProperties(pojo, SiteSetting.class));
     }
 
