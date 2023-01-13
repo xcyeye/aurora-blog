@@ -54,3 +54,38 @@
     color: #f5f5f5;
     background-color: #ef476f;
 }
+
+.aurora-article-tag {
+    margin-top: 1rem;
+}
+
+.aurora-article-tag svg {
+    margin-right: .3rem;
+    font-size: 1rem;
+}
+.aurora-article-tag-single {
+    margin-right: .5rem;
+}
+
+.aurora-article-info {
+    margin-top: 1rem;
+    border-radius: 16px;
+    padding: .5rem;
+    background-color: rgba(203, 243, 240, 0.93);
+    word-wrap: break-word;
+}
+
+.aurora-article-info-author svg {
+    margin-right: .5rem;
+}
+
+@media screen and (max-width:719px) {
+    .aurora-article-like {
+        height: 3rem;
+        font-size: 1rem;
+    }
+
+    .aurora-article-like-heart-svg {
+        padding: .5rem;
+    }
+}

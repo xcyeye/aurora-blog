@@ -28,6 +28,38 @@
 					</div>
 					<div class="aurora-article-like-heart-num">{{articleInfo.likeNumber}}</div>
 				</div>
+				
+				<div class="aurora-article-tag" v-if="getArticleTag">
+					<svg-icon icon="bi:tag-fill"/> <n-tag class="aurora-article-tag-single" v-for="(item, index) in getArticleTag" :type="getRandomTagType()" :bordered="false" style="border-radius: 16px" :key="index">{{item}}</n-tag>
+				</div>
+				
+				<div class="aurora-article-tag" v-if="getArticleCategory">
+					<svg-icon icon="material-symbols:content-copy-rounded"/> <n-tag class="aurora-article-tag-single" v-for="(item, index) in getArticleCategory" :type="getRandomTagType()" :bordered="false" style="border-radius: 16px" :key="index">{{item}}</n-tag>
+				</div>
+				
+				<div class="aurora-article-info">
+					<div class="aurora-article-info-author">
+						<svg-icon icon="material-symbols:copyright"/>
+						<span>版权归属: {{useUserInfo().getUserInfo(userUid).username}}</span>
+					</div>
+					<div class="aurora-article-info-author">
+						<svg-icon icon="ri:link-m"/>
+						<span>本文链接: </span>
+						<span @click="copyContent(`/article/${articleInfo.userUid}/${articleInfo.uid}`)">{{`/article/${articleInfo.userUid}/${articleInfo.uid}`}}</span>
+					</div>
+					<div class="aurora-article-info-author">
+						<svg-icon icon="ri:time-fill"/>
+						<span>发布时间: {{articleInfo.createTime}}</span>
+					</div>
+					<div class="aurora-article-info-author">
+						<svg-icon icon="mingcute:time-line"/>
+						<span>更新时间: {{articleInfo.updateTime}}</span>
+					</div>
+					<div class="aurora-article-info-author">
+						<svg-icon icon="bi:share"/>
+						<span>许可协议: 本文使用《署名-非商业性使用-相同方式共享4.0国际(CC BY-NC-SA 4.0)》协议授权</span>
+					</div>
+				</div>
 			</main>
 			
 			<blog-comment
@@ -40,9 +72,9 @@
 </template>
 
 <script lang="ts" setup>
-import {onBeforeMount, onMounted, ref} from 'vue';
+import {computed, onBeforeMount, onMounted, ref} from 'vue';
 import {useSiteInfo, useUserInfo} from "@/stores";
-import {StringUtil} from "@/utils";
+import {getRandomTagType, StringUtil} from "@/utils";
 import {useRouter, onBeforeRouteUpdate} from "vue-router";
 import {useRouterPush} from "@/composables";
 import {isNotEmptyObject} from "@/utils/business";
@@ -54,6 +86,7 @@ import hljs from 'highlight.js'
 import Token from "markdown-it/lib/token";
 import Renderer from "markdown-it/lib/renderer";
 import Vditor from 'vditor'
+import {copyContent} from "@/plugins";
 
 const currentSiteInfo = ref<SiteSettingInfo>({})
 const useSite = useSiteInfo()
@@ -66,6 +99,16 @@ const friendLinkSiteInformation = ref<FriendLinkSiteInformation>({})
 const articleInfo = ref<ArticleVo>({})
 const articleContent = ref<string>('')
 const isClickLikeBut = ref(false)
+
+const getArticleTag = computed((): Array<string> => {
+	if (!StringUtil.haveLength(articleInfo.value.tagNames)) return []
+	return articleInfo.value.tagNames!.split(",")
+})
+
+const getArticleCategory = computed((): Array<string> => {
+	if (!StringUtil.haveLength(articleInfo.value.categoryNames)) return []
+	return articleInfo.value.categoryNames!.split(",")
+})
 
 onMounted(() => {
 	//如果手机端侧边栏打开的，那么就关闭
