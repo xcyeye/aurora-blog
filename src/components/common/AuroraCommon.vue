@@ -5,7 +5,7 @@
        $store.state.fontFamilyStyle + $store.state.filterBlurStyle">
     <!-- TODO <Navbar :show-header-bg="showHeaderBg" :style="$store.state.opacityStyle" v-if="shouldShowNavbar">-->
     <Navbar :user-uid="userUid" :show-header-bg="showHeaderBg" :style="$store.state.opacityStyle" v-if="true"></Navbar>
-    <mobile-sidebar :show-navbar="isHomePage"/>
+    <!--<mobile-sidebar :show-navbar="isHomePage"/>-->
     <!--<social-spin/>-->
     <style-menu
         :user-uid="userUid"
@@ -51,8 +51,9 @@
             </div>
             <div id="page-sidebar-right" v-if="!isHomePage" v-show="showSidebar" class="page-sidebar-right">
               <div class="stickSidebar" v-if="mobilePageSidebar">
-                <HomeSidebar :show-navbar="false"
+                <HomeSidebar :show-navbar="showNavbar"
 														 :user-uid="userUid"
+														 :is-article-page="isArticlePage"
                              :sidebar-width-var="0.92"
                              :show-sidebar-social="true"
                              :show-sidebar-link="showSidebarLink"
@@ -124,6 +125,18 @@ export default defineComponent({
     }
   },
   props: {
+		isArticlePage: {
+			type: Boolean,
+			default() {
+				return false
+			}
+		},
+		showNavbar: {
+			type: Boolean,
+			default() {
+				return true
+			}
+		},
 		articleInfo: {
 			type: Object as PropType<ArticleVo>
 		},
@@ -251,6 +264,66 @@ export default defineComponent({
     }
   },
   methods: {
+		setDefaultInfo() {
+			this.currentSiteInfo = useSite.getSiteInfo(this.userUid)
+			if (this.$store.state.printRightIndex === 0) {
+				console.log("%c vuepress-theme-Aurora %c by qsyyke","font-weight: bold;color: white;display: inline-block;text-align: center;height: 1.5rem;line-height: 1.5rem;background-color: rgba(255,202,212,.8);padding: 10px;border-bottom-left-radius: 13px;border-top-left-radius: 13px;","font-weight: bold;color: white;display: inline-block;text-align: center;height: 1.5rem;line-height: 1.5rem;background-color: rgba(178,247,239,.85);padding: 10px;border-bottom-right-radius: 13px;border-top-right-radius: 13px;")
+				console.log("%c Version %c "+ this.$store.state.latestVersion + "","font-weight: bold;color: white;display: inline-block;text-align: center;height: 1.5rem;line-height: 1.5rem;background-color: rgba(255,202,212,.8);padding: 10px;border-bottom-left-radius: 13px;border-top-left-radius: 13px;","font-weight: bold;color: white;display: inline-block;text-align: center;height: 1.5rem;line-height: 1.5rem;background-color: rgba(178,247,239,.85);padding: 10px;border-bottom-right-radius: 13px;border-top-right-radius: 13px;")
+			}
+			
+			this.$store.state.printRightIndex = 1
+			//在v1.3.2之后，就已经移除通过docs/readme.md中配置favicon，转为在config中进行配置
+			// let metaKey = $('<link rel="shortcut icon" href=\"'+this.themeProperty.faviconIco+'\">')
+			// $("head").get(0).appendChild(metaKey.get(0))
+			
+			//从配置文件中，获取首页壁纸
+			// let homeWps = []
+			// if (this.themeProperty.homeWps === undefined || this.themeProperty.homeWps == null) {
+			//   homeWps.push("https://picoss.cco.vin/animate/wall/404901.png")
+			// }else {
+			//   homeWps = this.themeProperty.homeWps
+			// }
+			//
+			// if (homeWps.length === 0) {
+			//   homeWps.push("https://picoss.cco.vin/animate/wall/404901.png")
+			// }
+			//
+			// this.homeWps = homeWps
+			//
+			// if (this.aboutOption !== undefined) {
+			//   this.aboutOption = this.themeProperty.about
+			// }
+			//
+			// try {
+			//   this.ico = this.themeProperty.ico.aboutIco
+			// }catch (e) {
+			//   this.ico = "https://ooszy.cco.vin/img/ico/cat.svg"
+			// }
+			//
+			// setTag(this,this.themeProperty).then(() => {
+			//   this.$store.commit('setTagStatus',{
+			//     isSuccess:  true
+			//   })
+			// })
+			if (this.currentSiteInfo.footerInfo) {
+				this.isShowFooter = this.currentSiteInfo.footerInfo.enable
+			}
+			
+			let fontColorStyle = this.$store.state.fontColorStyle
+			let fontFamilyStyle = this.$store.state.fontFamilyStyle
+			if (fontColorStyle === undefined) {
+				this.colorStyle = '--fontColor: ""'
+			}else {
+				this.colorStyle = fontColorStyle
+			}
+			if (fontFamilyStyle === undefined) {
+				this.fontStyle = '-fontFamily: ""'
+			}else {
+				this.fontStyle = fontFamilyStyle
+			}
+			
+			this.colorFontStyle = this.colorStyle + " "+ this.fontStyle
+		},
     setHomeBg() {
 			// TODO 重做
       // let base = ""
@@ -332,65 +405,13 @@ export default defineComponent({
     },
   },
   created() {
-		this.currentSiteInfo = useSite.getSiteInfo(this.userUid)
-    if (this.$store.state.printRightIndex === 0) {
-      console.log("%c vuepress-theme-Aurora %c by qsyyke","font-weight: bold;color: white;display: inline-block;text-align: center;height: 1.5rem;line-height: 1.5rem;background-color: rgba(255,202,212,.8);padding: 10px;border-bottom-left-radius: 13px;border-top-left-radius: 13px;","font-weight: bold;color: white;display: inline-block;text-align: center;height: 1.5rem;line-height: 1.5rem;background-color: rgba(178,247,239,.85);padding: 10px;border-bottom-right-radius: 13px;border-top-right-radius: 13px;")
-      console.log("%c Version %c "+ this.$store.state.latestVersion + "","font-weight: bold;color: white;display: inline-block;text-align: center;height: 1.5rem;line-height: 1.5rem;background-color: rgba(255,202,212,.8);padding: 10px;border-bottom-left-radius: 13px;border-top-left-radius: 13px;","font-weight: bold;color: white;display: inline-block;text-align: center;height: 1.5rem;line-height: 1.5rem;background-color: rgba(178,247,239,.85);padding: 10px;border-bottom-right-radius: 13px;border-top-right-radius: 13px;")
-    }
-
-    this.$store.state.printRightIndex = 1
-    //在v1.3.2之后，就已经移除通过docs/readme.md中配置favicon，转为在config中进行配置
-    // let metaKey = $('<link rel="shortcut icon" href=\"'+this.themeProperty.faviconIco+'\">')
-    // $("head").get(0).appendChild(metaKey.get(0))
-
-    //从配置文件中，获取首页壁纸
-    // let homeWps = []
-    // if (this.themeProperty.homeWps === undefined || this.themeProperty.homeWps == null) {
-    //   homeWps.push("https://picoss.cco.vin/animate/wall/404901.png")
-    // }else {
-    //   homeWps = this.themeProperty.homeWps
-    // }
-		//
-    // if (homeWps.length === 0) {
-    //   homeWps.push("https://picoss.cco.vin/animate/wall/404901.png")
-    // }
-		//
-    // this.homeWps = homeWps
-		//
-    // if (this.aboutOption !== undefined) {
-    //   this.aboutOption = this.themeProperty.about
-    // }
-		//
-    // try {
-    //   this.ico = this.themeProperty.ico.aboutIco
-    // }catch (e) {
-    //   this.ico = "https://ooszy.cco.vin/img/ico/cat.svg"
-    // }
-		//
-    // setTag(this,this.themeProperty).then(() => {
-    //   this.$store.commit('setTagStatus',{
-    //     isSuccess:  true
-    //   })
-    // })
-		if (this.currentSiteInfo.footerInfo) {
-			this.isShowFooter = this.currentSiteInfo.footerInfo.enable
-		}
-
-    let fontColorStyle = this.$store.state.fontColorStyle
-    let fontFamilyStyle = this.$store.state.fontFamilyStyle
-    if (fontColorStyle === undefined) {
-      this.colorStyle = '--fontColor: ""'
-    }else {
-      this.colorStyle = fontColorStyle
-    }
-    if (fontFamilyStyle === undefined) {
-      this.fontStyle = '-fontFamily: ""'
-    }else {
-      this.fontStyle = fontFamilyStyle
-    }
-
-    this.colorFontStyle = this.colorStyle + " "+ this.fontStyle
+		this.setDefaultInfo()
   },
+	watch: {
+		userUid(nv, ov) {
+			this.setDefaultInfo()
+		}
+	},
   mounted() {
     this.width = document.body.clientWidth
 

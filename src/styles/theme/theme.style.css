@@ -2975,7 +2975,9 @@ body::-webkit-scrollbar-thumb {
         position: fixed;
         top: -2px;
         left: 0;
-        z-index: 30
+        z-index: 30;
+        background-color: #f5f5f5;
+        z-index: 100;
     }
 
     .mobile-sidebar-control {

@@ -1,7 +1,10 @@
 <template>
-	<aurora-common :is-sticky-sidebar="true" :is-show-side-bar="false"
-								 :show-sidebar-link="false" :user-uid="userUid"
+	<aurora-common :is-sticky-sidebar="true" :is-show-side-bar="true"
+								 :show-sidebar-link="true" :user-uid="userUid"
 								 :article-info="articleInfo"
+								 :show-navbar="true"
+								 :is-article-page="true"
+								 :is-home-page="false"
 								 :is-show-top-img="true" :is-show-head-line="true">
 		<template #center1>
 			<main :style="$store.state.borderRadiusStyle + $store.state.opacityStyle"
@@ -62,8 +65,6 @@ const loadArticleInfo = () => {
 	articleApi.queryOneDataByUid({uid: articleUid.value}).then(result => {
 		if (result.data) {
 			articleInfo.value = result.data
-			userUid.value = result.data.userUid!
-			
 			// 渲染markdown内容
 			const markdown = new MarkdownIt()
 			let defaultRender = markdown.renderer.rules.image!
@@ -106,19 +107,18 @@ const loadArticleInfo = () => {
 	})
 }
 
-// onBeforeRouteUpdate(to => {
-// 	console.log(to);
-// })
+onBeforeMount(() => {
+	userUid.value = router.currentRoute.value.params.userUid as string
+	articleUid.value = router.currentRoute.value.params.pageUid as string
+	if (!StringUtil.haveLength(articleUid.value)) {
+		routerPush.routerBack()
+	}
+	if (!StringUtil.haveLength(userUid.value)) {
+		routerPush.routerBack()
+	}
 	
-	onBeforeMount(() => {
-		articleUid.value = router.currentRoute.value.params.uid as string
-		if (!StringUtil.haveLength(articleUid.value)) {
-			routerPush.routerBack()
-		}
-		
-		loadArticleInfo()
-	})
-
+	loadArticleInfo()
+})
 
 </script>
 <style lang="css">

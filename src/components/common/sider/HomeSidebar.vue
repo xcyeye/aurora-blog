@@ -49,11 +49,25 @@
         <div class="sidebar-social">
           <HomeSidebarSocialItem :sidebar-row-var="sidebarRowVar"
                                  :sidebar-width-var="sidebarWidthVar"
-                                 :social-item="item" :data="item.aHref" :key="item.aHref" v-for="(item,index) in socialsArr"/>
+                                 :social-item="item" :data="item.aHref" :key="item.aHref"
+																 v-for="(item,index) in socialsArr"/>
           <slot name="sidebar-son2"/>
         </div>
       </div>
       <slot name="sidebar2"></slot>
+	
+			<div class="sidebar-single-common" v-if="talkArr.length > 0 && showTalk">
+				<div class="sidebar-social" @click="goTalk">
+					<div>
+						<n-ellipsis :line-clamp="3" :tooltip="false">
+							<svg-icon icon="mdi:message-fast"/> &nbsp;&nbsp;{{talkArr[0].content}}
+						</n-ellipsis>
+					</div>
+					<div style="font-size: .3rem" class="sidebar-page-time">
+						<span>{{talkArr[0].createTime}}</span>
+					</div>
+				</div>
+			</div>
 
       <!--侧边栏友情链接-->
       <div :id="customId" v-if="getShowSidebarLink" class="sidebar-single-common">
@@ -73,7 +87,7 @@
 
       <!--顶部导航-->
       <div :id="customId" v-if="showNavbar" :class="{'sidebar-single-enter-animate': showEnterAnimate}" class="sidebar-single-common">
-        <mobile-sidebar-nav />
+        <mobile-sidebar-nav :is-article-page="isArticlePage" :user-uid="userUid" />
         <slot name="sidebar-son3"/>
       </div>
       <slot name="sidebar3"></slot>
@@ -123,7 +137,7 @@
           <span>公告</span>
         </div>
         <div class="sidebar-message">
-          <li id="sidebar-message" :key="item" v-for="(item,index) in bulletinArr" class="sidebar-hover-bg-common">
+          <li id="sidebar-message" :key="item.uid" v-for="(item,index) in bulletinArr" class="sidebar-hover-bg-common">
             <span v-html="item.content"></span>
           </li>
         </div>
@@ -187,22 +201,23 @@
 <script lang="ts">
 
 import {useSiteInfo, useUserInfo} from "@/stores";
-import {articleApi, bulletinApi, categoryApi, linkApi, tagApi} from "@/service";
+import {articleApi, bulletinApi, categoryApi, linkApi, tagApi, talkApi} from "@/service";
 import {LinkVo} from "@/bean/vo/article/LinkVo";
-import {getRandomNum, StringUtil} from "@/utils";
+import {getLocalTime, getRandomNum, StringUtil} from "@/utils";
 import blogConfig from '@/config/blogConfig.json';
 import {BulletinVo} from "@/bean/vo/article/BulletinVo";
 import {TagVo} from "@/bean/vo/article/TagVo";
-import {getLocalTime} from "@/utils";
 import {ArticleVo} from "@/bean/vo/article/ArticleVo";
 import {CategoryVo} from "@/bean/vo/article/CategoryVo";
 import {useRouterPush} from "@/composables";
+import {TalkVo} from "@/bean/vo/article/TalkVo";
 
 const currentSiteInfo: SiteSettingInfo = {}
 const friendLinks: Array<LinkVo> = []
 const socialsArr: Array<SocialInfo> = []
 const bulletinArr: Array<BulletinVo> = []
 const tagArr: Array<TagVo> = []
+const talkArr: Array<TalkVo> = []
 const categoryArr: Array<CategoryVo> = []
 const articleArr: Array<ArticleVo> = []
 const routerPush = useRouterPush()
@@ -217,6 +232,7 @@ export default {
 			tagNumber: 0,
 			categoryNumber: 0,
 			articleArr,
+			talkArr,
 			categoryArr,
 			tagArr,
 			bulletinArr,
@@ -231,6 +247,12 @@ export default {
     }
   },
   props: {
+		isArticlePage: {
+			type: Boolean,
+			default() {
+				return false
+			}
+		},
 		userUid: {
 			type: String
 		},
@@ -240,6 +262,12 @@ export default {
         return true
       }
     },
+		showTalk: {
+			type: Boolean,
+			default() {
+				return true
+			}
+		},
     sidebarWidthVar: {
       type: Number,
       default() {
@@ -379,6 +407,12 @@ export default {
 				this.articleNumber = result.data.total
 			}
 		})
+		
+		talkApi.queryListDataByCondition({delete: false, show: true, orderBy: 'create_time desc'}).then(result => {
+			if (result.data && result.data.result) {
+				this.talkArr = result.data.result
+			}
+		})
 	
 		categoryApi.queryListDataByCondition({otherUid: this.userUid, delete: false, pageSize: 300}).then(result => {
 			if (result.data && result.data.result) {
@@ -466,6 +500,11 @@ export default {
     }
   },
   methods: {
+		goTalk() {
+			routerPush.routerPush({
+				path: `/shareSpace/${this.userUid}`
+			})
+		},
 		goRead(e: any, articleInfo: ArticleVo) {
 			routerPush.routerPush({
 				path: '/article',

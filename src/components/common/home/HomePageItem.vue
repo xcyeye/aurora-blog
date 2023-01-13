@@ -11,7 +11,7 @@
           <div :class="getGradualClass" class="home-page-gradual-title-item-common">
             <div class="home-page-gradual-item">
               <div class="home-page-gradual-title home-page-gradual-common">
-                <router-link :to="`/article/${pageItem.uid}`">
+                <router-link :to="`/article/${pageItem.userUid}/${pageItem.uid}`">
                   <span>{{getPageItemTitle}}</span>
                 </router-link>
               </div>
@@ -104,8 +104,11 @@ const handleScroll = () => {
 }
 
 const goRead = (e: any, articleInfo: ArticleVo) => {
+	// routerPush.routerPush({
+	// 	path: `/article/${articleInfo.userUid}?pageUid=${articleInfo.uid}`
+	// })
 	routerPush.routerPush({
-		path: `/article/${articleInfo.uid}`
+		path: `/article/${articleInfo.userUid}/${articleInfo.uid}`
 	})
 }
 

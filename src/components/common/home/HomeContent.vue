@@ -77,7 +77,7 @@ export default defineComponent({
 			},
 			intervalTime: 1500,
 			socialsIsHomeNum: 0,
-			sidebarWidthVar: 0,
+			sidebarWidthVar: 0.92,
 			sidebarRowVar: 0,
 			showHomeWaveStyle: false,
 		}

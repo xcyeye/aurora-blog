@@ -5,7 +5,8 @@
        $store.state.fontFamilyStyle + $store.state.filterBlurStyle"
 						:class="{'header-bg-show': props.showHeaderBg}"
 						class="navbar">
-		<span ref="siteBrand">
+			<toggle-sidebar-button/>
+			<span ref="siteBrand">
       <RouterLink :to="`/user/${props.userUid}`">
         <img
 					style="border-radius: 30px"
@@ -20,7 +21,6 @@
         </span>
       </RouterLink>
     </span>
-			
 			<div class="navbar-links-wrapper">
 				<div v-for="(item, index) in navbarInfoArr" :key="index">
 					<navbar-link :navbar-info="item"/>
@@ -28,6 +28,7 @@
 			</div>
 		</header>
 	</div>
+	<mobile-sidebar/>
 </template>
 
 <script setup lang="ts">
@@ -37,11 +38,13 @@ import {siteSettingApi} from "@/service/api/admin/siteSettingApi";
 
 interface Props {
 	userUid: string,
-	showHeaderBg?: boolean
+	showHeaderBg?: boolean,
+	isArticlePage?: boolean
 }
 
 const props = withDefaults(defineProps<Props>(), {
-	showHeaderBg: true
+	showHeaderBg: true,
+	isArticlePage: false
 })
 
 const navbarInfoArr = ref<Array<NavbarInfo>>([])

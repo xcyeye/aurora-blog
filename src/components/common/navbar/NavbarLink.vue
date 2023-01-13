@@ -2,7 +2,7 @@
 	<n-dropdown
 		v-if="navbarInfo.children && navbarInfo.children.length > 0"
 		placement="bottom-start"
-		trigger="click"
+		trigger="hover"
 		size="small"
 		:options="dropdownNavbarOption"
 	>

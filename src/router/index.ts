@@ -44,7 +44,7 @@ const router = createRouter({
       component: () => import('../views/share-space/commonShareSpace.vue')
     },
     {
-      path: '/article/:uid',
+      path: '/article/:userUid/:pageUid',
       name: 'article',
       component: () => import('../views/article/index.vue')
     }

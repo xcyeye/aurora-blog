@@ -94,3 +94,19 @@
         display: none;
     }
 }
+
+.toggle-sidebar-button {
+    position: absolute;
+    top: 0.6rem;
+    left: 1rem;
+    display: none;
+    padding: 0.6rem;
+    cursor: pointer;
+    font-size: 1.5rem;
+}
+
+@media screen and (max-width: 719px) {
+    .toggle-sidebar-button {
+        display: block;
+    }
+}

@@ -89,7 +89,7 @@ const loadArticleData = async () => {
 		// 	resolve(null)
 		// 	return
 		// }
-		props.condition.orderBy = 'update_time desc, create_time desc'
+		props.condition.orderBy = 'create_time desc, update_time desc'
 		props.queryArticleDataMethod(props.condition).then(result => {
 			if (result.data && result.data.result) {
 				articleArr.value = result.data.result
