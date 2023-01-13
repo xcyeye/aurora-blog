@@ -28,6 +28,7 @@
     "reading-time-estimator": "^1.7.2",
     "smoothscroll-polyfill": "^0.4.4",
     "swiper": "^8.4.5",
+    "vditor": "^3.8.18",
     "vite-plugin-progress": "^0.0.6",
     "vue": "^3.2.45",
     "vue-router": "^4.1.6",

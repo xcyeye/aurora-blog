@@ -38,18 +38,19 @@
           <div class="page-record-center-right page-record-single-common">
             <span class="aurora-iconfont-common aurora-page-read"></span>&nbsp;
             <span class="page-record-single-desc">总阅读数</span>
-						<span class="waline-visitor-count" >{{articleInfo.readNumber ? articleInfo.readNumber : ''}}</span>
+						<span class="waline-visitor-count" >{{articleInfo.readNumber ? articleInfo.readNumber : '0'}}</span>
             <!--<span>{{$store.state.readCount}}</span>-->
           </div>
         </div>
-        <div v-if="tagArr.length !== 0" class="page-record-bot-common page-record-bot">
-          <div class="page-record-bot-tag" id="page-record-bot-tag">
-            <span class="aurora-iconfont-common aurora-page-tag"></span>&nbsp;
-            <router-link v-for="(item,index) in tagArr" :to="goTag(item.uid)">
-              <span class="home-page-tag-span page-record-tag-span">{{item.title}}</span>
-            </router-link>
-          </div>
-        </div>
+        <!--<div v-if="tagArr.length !== 0" class="page-record-bot-common page-record-bot">-->
+        <!--  <div class="page-record-bot-tag" id="page-record-bot-tag">-->
+        <!--    <span class="aurora-iconfont-common aurora-page-tag"></span>&nbsp;-->
+        <!--    <router-link v-for="(item,index) in tagArr" :to="goTag(item.uid)">-->
+        <!--      &lt;!&ndash;<span class="home-page-tag-span page-record-tag-span">{{item.title}}</span>&ndash;&gt;-->
+				<!--			<n-tag :bordered="false" style="border-radius: 16px" :type="getRandomTagType()">{{item.title}}</n-tag>-->
+        <!--    </router-link>-->
+        <!--  </div>-->
+        <!--</div>-->
       </div>
     </div>
     <div class="top-image" id="top-image" v-if="isShowHeadLine">
@@ -65,7 +66,7 @@ import gsap from "gsap";
 import {TagVo} from "@/bean/vo/article/TagVo";
 import {PropType} from "vue";
 import {ArticleVo} from "@/bean/vo/article/ArticleVo";
-import {StringUtil} from "@/utils";
+import {getRandomTagType, StringUtil} from "@/utils";
 import {commentApi} from "@/service";
 
 const tagArr:Array<TagVo> = []
@@ -167,14 +168,6 @@ export default {
       }
     })
     this.document = document
-		if (this.articleInfo) {
-			// 查询总评论数
-			commentApi.queryListDataByCondition({keyword:`/article/${this.articleInfo.uid}`}).then(result => {
-				if (result.data) {
-					this.articleCommentTotal = result.data.total
-				}
-			})
-		}
   },
   computed: {
     animatedContentLength() {
@@ -196,54 +189,32 @@ export default {
     },
   },
   methods: {
-    countNum() {
-      new Promise((resolve,reject) => {
-        let allContent = ''
-        try {
-          allContent = this.document.querySelector(".medium-zoom-content").innerText;
-        }catch (e) {
-          return
-        }
-        let allCodeElement = this.document.querySelectorAll(".medium-zoom-content div[class*=language-]");
-        for (let i = 0; i < allCodeElement.length; i++) {
-          let codeContent = allCodeElement[i].innerText;
-          let indexOf = allContent.indexOf(codeContent);
-          if (indexOf === -1) {
-            continue
-          }
-          let startContent = allContent.substr(0,indexOf)
-          let endContent = allContent.substr((indexOf + codeContent.length), allContent.length)
-          startContent = startContent.replace("\n","")
-          endContent = endContent.replace("\n","")
-          allContent = startContent + endContent
-          allContent = allContent.replace("\n","")
-        }
-
-        allContent = allContent.substr(document.querySelector(".page-top-share").innerText.length,allContent.length)
-        resolve(allContent)
-      }).then((allContent) => {
-        const totalWordObj = readingTime(allContent, this.sugCountPerMin);
-        this.totalWordObj = totalWordObj
-        this.contentLength = totalWordObj.words
-      })
-    }
+		getRandomTagType
+		
   },
   watch: {
-		articleInfo(nv, ov) {
-			gsap.to(this.$data, { duration: 0.5, contentLengthTemp: nv })
+		articleInfo(nv: ArticleVo, ov: ArticleVo) {
+			this.tagArr = nv.tagNames?.split(",").map(v => {
+				const tag: TagVo = {
+					title: v
+				}
+				return tag
+			}).concat()
+			const totalWordObj = readingTime(nv.content!, this.sugCountPerMin);
+			this.totalWordObj = totalWordObj
+			this.contentLength = totalWordObj.words
+			gsap.to(this.$data, { duration: 0.5, contentLengthTemp: totalWordObj.words })
 			let sugReadTime = Math.floor(this.contentLength / this.sugCountPerMin) === 0 ? 1 : Math.ceil(this.contentLength / this.sugCountPerMin)
-			gsap.to(this.$data, { duration: 0.5, sugReadTimeTemp: this.totalWordObj.minutes })
-		},
-    contentLength(nv) {
-    
-    },
-    headLine(newValue,oldValue) {
-      if (this.isShowHeadLine) {
-        setTimeout(() => {
-          this.countNum()
-        },1000)
-      }
-    }
+			gsap.to(this.$data, { duration: 0.5, sugReadTimeTemp: sugReadTime })
+			if (this.articleInfo) {
+				// 查询总评论数
+				commentApi.queryListDataByCondition({keyword:`/article/${this.articleInfo.uid}`}).then(result => {
+					if (result.data) {
+						this.articleCommentTotal = result.data.total
+					}
+				})
+			}
+		}
   }
 }
 </script>

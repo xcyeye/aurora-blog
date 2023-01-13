@@ -19,6 +19,15 @@
 					</div>
 					<div v-html="articleContent"></div>
 				</div>
+				
+				<div class="aurora-article-like">
+					<div class="aurora-article-like-heart" @click="handleClickArticleLike">
+						<div class="aurora-article-like-heart-svg" :class="isClickLikeBut ? 'aurora-article-like-heart-active' : ''">
+							<svg-icon icon="bi:suit-heart-fill"/>
+						</div>
+					</div>
+					<div class="aurora-article-like-heart-num">{{articleInfo.likeNumber}}</div>
+				</div>
 			</main>
 			
 			<blog-comment
@@ -44,6 +53,7 @@ import MarkdownIt from 'markdown-it';
 import hljs from 'highlight.js'
 import Token from "markdown-it/lib/token";
 import Renderer from "markdown-it/lib/renderer";
+import Vditor from 'vditor'
 
 const currentSiteInfo = ref<SiteSettingInfo>({})
 const useSite = useSiteInfo()
@@ -55,6 +65,7 @@ const articleUid = ref<string>('')
 const friendLinkSiteInformation = ref<FriendLinkSiteInformation>({})
 const articleInfo = ref<ArticleVo>({})
 const articleContent = ref<string>('')
+const isClickLikeBut = ref(false)
 
 onMounted(() => {
 	//如果手机端侧边栏打开的，那么就关闭
@@ -63,6 +74,22 @@ onMounted(() => {
 	// 		openMobileSidebar: false
 	// 	})
 	// }
+	
+	let cookie = document.cookie;
+	new Promise((resolve,reject) => {
+		const cookieList = cookie.split(';')
+		for(let i = 0; i < cookieList.length; i++) {
+			const arr = cookieList[i].split('=')
+			let cookieName =  'article_like_status_' + articleUid.value
+			let cookieOriginName = arr[0].replace(" ","")
+			if (cookieName === cookieOriginName) {
+				if (arr[1] === '1') {
+					isClickLikeBut.value = true
+				}
+			}
+		}
+		resolve(null)
+	})
 })
 
 const wrap = (wrapped) => (...args) => {
@@ -133,7 +160,56 @@ const loadArticleInfo = () => {
 		}
 		
 		// 修改文章的阅读数
-		articleApi.updateArticleReadNum({uid: result.data?.uid})
+		articleApi.updateArticleReadNum({uid: result.data?.uid}).then(result => {
+			if (!result.error) {
+				articleInfo.value.readNumber = (articleInfo.value.readNumber ? articleInfo.value.readNumber : 0)  + 1
+			}
+		})
+	})
+}
+
+const handleClickArticleLike = () => {
+	let cookie = document.cookie;
+	let article_like_status = false
+	new Promise((resolve,reject) => {
+		const cookieList = cookie.split(';')
+		for(let i = 0; i < cookieList.length; i++) {
+			const arr = cookieList[i].split('=')
+			let cookieName =  'article_like_status_' + articleInfo.value.uid
+			let cookieOriginName = arr[0].replace(" ","")
+			if (cookieName === cookieOriginName) {
+				if (arr[1] === '1') {
+					article_like_status = true
+					resolve(null)
+				}
+			}
+			if (i === cookieList.length -1) {
+				resolve(null)
+			}
+		}
+	}).then(() => {
+		if (!article_like_status) {
+			//没有点赞
+			// TODO
+			articleApi.updateArticleLikeNum({uid: articleInfo.value.uid}).then(result => {
+				if (!result.error) {
+					articleInfo.value.likeNumber = (articleInfo.value.likeNumber ? articleInfo.value.likeNumber : 0) + 1
+					let expiresTime = new Date().getTime() + 864000000;
+					let expires = new Date(expiresTime);
+					document.cookie = "article_like_status_" + articleInfo.value.uid + "=1;expires=" + expires + ";";
+					isClickLikeBut.value = true
+				}
+			})
+		}else {
+			//减赞
+			// TODO
+			// let expiresTime = new Date().getTime() + 864000000;
+			// let expires = new Date(expiresTime);
+			// document.cookie = "mood_like_status_" + this.moodItem.id + "=0;expires=" + expires + ";";
+			// this.cozeLikeTemp = mood_like - 1
+			// this.moodLikeStatus = false
+			// this.setLikeSuccess = true
+		}
 	})
 }
 
