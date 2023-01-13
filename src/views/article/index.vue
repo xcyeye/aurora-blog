@@ -5,7 +5,8 @@
 								 :show-navbar="true"
 								 :is-article-page="true"
 								 :is-home-page="false"
-								 :is-show-top-img="true" :is-show-head-line="true">
+								 :is-show-top-img="true"
+								 :is-show-head-line="true">
 		<template #center1>
 			<main :style="$store.state.borderRadiusStyle + $store.state.opacityStyle"
 						class="page sidebar-single-enter-animate blog-article" id="article-page">
@@ -40,6 +41,9 @@ import {ArticleVo} from "@/bean/vo/article/ArticleVo";
 import {articleApi, userApi} from "@/service";
 import {siteSettingApi} from "@/service/api/admin/siteSettingApi";
 import MarkdownIt from 'markdown-it';
+import hljs from 'highlight.js'
+import Token from "markdown-it/lib/token";
+import Renderer from "markdown-it/lib/renderer";
 
 const currentSiteInfo = ref<SiteSettingInfo>({})
 const useSite = useSiteInfo()
@@ -61,12 +65,38 @@ onMounted(() => {
 	// }
 })
 
+const wrap = (wrapped) => (...args) => {
+	const [tokens, idx] = args
+	const token = tokens[idx]
+	const rawCode = wrapped(...args)
+	return `<!--beforebegin--><div class="language-${token.info.trim()} extra-class">`
+		+ `<!--afterbegin-->${rawCode}<!--beforeend--></div><!--afterend-->`
+}
+
 const loadArticleInfo = () => {
 	articleApi.queryOneDataByUid({uid: articleUid.value}).then(result => {
 		if (result.data) {
 			articleInfo.value = result.data
+			
 			// 渲染markdown内容
 			const markdown = new MarkdownIt()
+			markdown.set({
+				highlight: function (str, lang) {
+					if (lang && hljs.getLanguage(lang)) {
+						try {
+							return hljs.highlight(lang, str, true).value;
+						} catch (__) {}
+					}
+					return hljs.highlightAuto(str).value; // 使用额外的默认转义
+				}
+			})
+			
+			// 代码块增强
+			const { fence, code_block: codeBlock } = markdown.renderer.rules
+			markdown.renderer.rules.fence = wrap(fence)
+			markdown.renderer.rules.code_block = wrap(codeBlock)
+			
+			
 			let defaultRender = markdown.renderer.rules.image!
 			markdown.renderer.rules.image = function (tokens, idx, options, env, self) {
 				let token = tokens[idx]

@@ -19,6 +19,7 @@
     "dayjs": "^1.11.7",
     "easy-typer-js": "^2.1.0",
     "gsap": "^3.11.4",
+    "highlight.js": "^11.7.0",
     "jquery": "^3.6.3",
     "markdown-it": "^13.0.1",
     "medium-zoom": "^1.0.8",

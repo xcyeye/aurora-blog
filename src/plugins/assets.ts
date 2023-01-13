@@ -11,5 +11,10 @@ import '@/assets/icon/iconfont.css'
 import '@/assets/icon/iconfont.json'
 import '@/styles/theme/page.css'
 
+// 导入代码样式
+import 'highlight.js/styles/github.css'
+import '@/styles/theme/code.css'
+import '@/styles/theme/code-group.css'
+
 /** import static assets: css, js , font and so on. - [引入静态资源，css、js和字体文件等] */
 export default function setupAssets() {}

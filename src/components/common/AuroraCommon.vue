@@ -125,6 +125,9 @@ export default defineComponent({
     }
   },
   props: {
+		articleInfo: {
+			type: Object as PropType<ArticleVo>
+		},
 		isArticlePage: {
 			type: Boolean,
 			default() {
@@ -136,9 +139,6 @@ export default defineComponent({
 			default() {
 				return true
 			}
-		},
-		articleInfo: {
-			type: Object as PropType<ArticleVo>
 		},
 		userUid: {
 			type: String

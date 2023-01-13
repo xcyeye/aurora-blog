@@ -80,7 +80,6 @@ export default {
         words: 0
       },
       animeImg: '',
-      pageMap: '',
       contentLength: 0,
       tagArr,
       topBackgroundUrl: 'https://picture.xcye.xyz/pic/rmimg',
@@ -116,9 +115,7 @@ export default {
 		}
   },
   created() {
-    // this.$router.beforeEach((to,from,next) => {
-    //   next()
-    // })
+		
   },
   mounted() {
     let bubbleNumber = 0.15
@@ -194,15 +191,6 @@ export default {
 			}
       return "background-image: url(https://pic-tool.xcye.xyz/pic/rmimg);"
     },
-    getWordLength() {
-      let content = this.pageMap.content + ""
-      if (content.length === undefined || content.length === null) {
-        this.length = 0
-      }else {
-        this.length = content.length
-      }
-      return this.length
-    },
     getSugTime() {
       return this.sugReadTimeTemp.toFixed(0)
     },
@@ -241,10 +229,13 @@ export default {
     }
   },
   watch: {
+		articleInfo(nv, ov) {
+			gsap.to(this.$data, { duration: 0.5, contentLengthTemp: nv })
+			let sugReadTime = Math.floor(this.contentLength / this.sugCountPerMin) === 0 ? 1 : Math.ceil(this.contentLength / this.sugCountPerMin)
+			gsap.to(this.$data, { duration: 0.5, sugReadTimeTemp: this.totalWordObj.minutes })
+		},
     contentLength(nv) {
-      gsap.to(this.$data, { duration: 0.5, contentLengthTemp: nv })
-      let sugReadTime = Math.floor(this.contentLength / this.sugCountPerMin) === 0 ? 1 : Math.ceil(this.contentLength / this.sugCountPerMin)
-      gsap.to(this.$data, { duration: 0.5, sugReadTimeTemp: this.totalWordObj.minutes })
+    
     },
     headLine(newValue,oldValue) {
       if (this.isShowHeadLine) {
