@@ -266,7 +266,6 @@ const setReplyUserInfo = () => {
 			email: authStore.userInfo.emailInfo.email,
 			site: `https://aurora.xcye.xyz/${authStore.userInfo.username}`
 		}
-		console.log(replyUserInfo.value);
 	}
 }
 
