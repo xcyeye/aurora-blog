@@ -1,6 +1,6 @@
 ### sql-generator ###
-/auroraBackend/sql-generator
-/auroraBackend/sql-generator-ts
+/sql-generator
+/sql-generator-ts
 /typescript-bean
 
 HELP.md
@@ -54,12 +54,3 @@ log
 
 ### jrebel ###
 **/rebel.xml
-
-
-*/node_modules
-*/src/typings/components.d.ts
-*/package-lock.json
-*/yarn.lock
-
-# 排除测试页面
-*/src/views/test

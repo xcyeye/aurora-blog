@@ -1,0 +1,43 @@
+spring:
+  application:
+    name: aurora-message
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 192.168.158.120:8848
+      config:
+        server-addr: 192.168.158.120:8848
+        file-extension: yaml
+        namespace: a6b1905f-d8c6-4a43-8f21-fe662f62bdae
+        group: THEME-GROUP
+        shared-configs:
+          - data-id: share-seata-dev.yaml
+            group: THEME-GROUP
+            refresh: true
+          - data-id: share-redis-dev.yaml
+            group: THEME-GROUP
+            refresh: true
+          - data-id: share-sentinel-dev.yaml
+            group: THEME-GROUP
+            refresh: true
+          - data-id: share-actuator-dev.yaml
+            group: THEME-GROUP
+            refresh: true
+          - data-id: share-pagehelper-dev.yaml
+            group: THEME-GROUP
+            refresh: true
+          - data-id: share-mybatis-dev.yaml
+            group: THEME-GROUP
+            refresh: true
+          - data-id: share-feign-dev.yaml
+            group: THEME-GROUP
+            refresh: true
+          - data-id: share-aurora-oauth-dev.yaml
+            group: THEME-GROUP
+            refresh: true
+          - data-id: share-rabbitmq-dev.yaml
+            group: THEME-GROUP
+            refresh: true
+          - data-id: share-swagger-dev.yaml
+            group: THEME-GROUP
+            refresh: true
