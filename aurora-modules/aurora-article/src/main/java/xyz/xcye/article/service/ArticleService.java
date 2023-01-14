@@ -106,7 +106,7 @@ public class ArticleService {
             articlePojo.setLikeNumber(0);
         }
         articlePojo.setLikeNumber(articlePojo.getLikeNumber() + 1);
-        updateArticle(articlePojo);
+        auroraArticleService.updateById(BeanUtils.copyProperties(articlePojo, Article.class));
     }
 
     public void updateArticleReadNum(ArticlePojo pojo) {
@@ -117,7 +117,7 @@ public class ArticleService {
             articlePojo.setReadNumber(0);
         }
         articlePojo.setReadNumber(articlePojo.getReadNumber() + 1);
-        updateArticle(articlePojo);
+        auroraArticleService.updateById(BeanUtils.copyProperties(articlePojo, Article.class));
     }
 
     private void setCategory(ArticlePojo article) {
