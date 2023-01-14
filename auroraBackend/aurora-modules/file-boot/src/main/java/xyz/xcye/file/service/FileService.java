@@ -2,7 +2,6 @@ package xyz.xcye.file.service;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import xyz.xcye.aurora.properties.AuroraProperties;
@@ -13,13 +12,13 @@ import xyz.xcye.core.enums.ResponseStatusCodeEnum;
 import xyz.xcye.core.exception.file.FileException;
 import xyz.xcye.core.util.BeanUtils;
 import xyz.xcye.core.util.LogUtils;
+import xyz.xcye.core.util.NetWorkUtils;
 import xyz.xcye.core.util.id.GenerateInfoUtils;
 import xyz.xcye.core.util.lambda.AssertUtils;
 import xyz.xcye.data.entity.Condition;
 import xyz.xcye.data.entity.PageData;
 import xyz.xcye.data.util.PageUtils;
 import xyz.xcye.file.constant.FileStorageModeConstant;
-import xyz.xcye.file.dao.ext.FileExtDao;
 import xyz.xcye.file.dto.FileEntityDTO;
 import xyz.xcye.file.interfaces.FileStorageService;
 import xyz.xcye.file.interfaces.impl.LocalFileStorageServiceImpl;
@@ -33,9 +32,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.ExecutionException;
-import java.util.function.Consumer;
-import java.util.function.Function;
-import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 /**
@@ -56,6 +52,7 @@ public class FileService {
     private FileExtService fileExtService;
 
     public FileVO insertFile(FileEntityDTO fileEntity, FilePojo filePojo) throws FileException, IOException, ExecutionException, InterruptedException {
+        String localhost = NetWorkUtils.getLocalhost();
         Assert.notNull(fileEntity, "文件对象不能为null");
         AssertUtils.stateThrow(filePojo.getUserUid() != 0, () -> new FileException("必须要传入UserUid"));
         File file = BeanUtils.copyProperties(filePojo, File.class);

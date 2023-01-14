@@ -15,7 +15,7 @@ function createLocalStorage<T extends StorageInterface.Local = StorageInterface.
       expire: expire !== null ? new Date().getTime() + expire * 1000 : null
     };
     const json = encrypto(storageData);
-    window.localStorage.setItem(key as string, json);
+    window.localStorage.setItem(key as string, json as string);
   }
 
   function get<K extends keyof T>(key: K) {

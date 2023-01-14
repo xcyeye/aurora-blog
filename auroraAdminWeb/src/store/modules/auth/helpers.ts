@@ -9,6 +9,8 @@ export function getToken() {
 /** 获取用户信息 */
 export function getUserInfo() {
   const emptyInfo: UserInfo = {
+		userDetailInfo:{},
+		emailInfo: {},
     user_uid: '',
     username: '',
     userRole: 'user',

@@ -1,4 +1,5 @@
 import type { UserInfo } from '@/theme/vo/auth/OauthVo';
+import {SysSettingVo} from "@/theme/vo/admin/SysSettingVo";
 
 declare namespace StorageInterface {
   /** localStorage的存储数据的类型 */
@@ -20,5 +21,8 @@ declare namespace StorageInterface {
     themeSettings: Theme.Setting;
     /** 多页签路由信息 */
     multiTabRoutes: App.GlobalTabRoute[];
+
+		/** 存储系统设置 */
+		sysSetting: Map<string, SysSettingVo>
   }
 }

@@ -6,8 +6,11 @@ import eu.bitwalker.useragentutils.UserAgent;
 import eu.bitwalker.useragentutils.Version;
 
 import javax.servlet.http.HttpServletRequest;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
+import java.net.*;
+import java.util.Enumeration;
+import java.util.List;
+import java.util.Map;
+import java.util.Properties;
 
 /**
  * @author qsyyke
@@ -102,5 +105,36 @@ public class NetWorkUtils {
 
     public static String getOperationInfo(HttpServletRequest request) {
         return getOsName(request) + ";" + getBrowserName(request) + " version: " + getBrowserVersion(request);
+    }
+
+    // TODO 需要重做
+    public static String getLocalhost() {
+        Properties properties = System.getProperties();
+        Map<String, String> getenv = System.getenv();
+
+        Enumeration<NetworkInterface> networkInterfaces = null;
+        try {
+            networkInterfaces = NetworkInterface.getNetworkInterfaces();
+        } catch (SocketException e) {
+            throw new RuntimeException(e);
+        }
+        System.out.println(networkInterfaces);
+        while (networkInterfaces.hasMoreElements()) {
+            NetworkInterface networkInterface = networkInterfaces.nextElement();
+            String name = networkInterface.getName();
+            String displayName = networkInterface.getDisplayName();
+            List<InterfaceAddress> interfaceAddresses = networkInterface.getInterfaceAddresses();
+            for (InterfaceAddress interfaceAddress : interfaceAddresses) {
+                InetAddress address = interfaceAddress.getAddress();
+                InetAddress broadcast = interfaceAddress.getBroadcast();
+                System.out.println();
+            }
+            try {
+                byte[] hardwareAddress = networkInterface.getHardwareAddress();
+            } catch (SocketException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return "sdf";
     }
 }

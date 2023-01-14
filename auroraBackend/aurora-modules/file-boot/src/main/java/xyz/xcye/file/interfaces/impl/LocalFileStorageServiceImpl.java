@@ -108,7 +108,9 @@ public class LocalFileStorageServiceImpl implements FileStorageService {
             if (fileSplitPath.contains("\\")) {
                 fileSplitPath = fileSplitPath.replaceAll("\\\\", "/");
             }
-            String fileRemoteUrl = host + fileSplitPath;
+            // TODO 之前是直接将host写死，现在只返回uri部分，准确的连接由前端控制
+            // String fileRemoteUrl = host + fileSplitPath;
+            String fileRemoteUrl = fileSplitPath;
             FileEntityDTO fileEntityDTO = new FileEntityDTO(writeFile.getAbsolutePath(), writeFile.getName(), writeFile.length(), fileRemoteUrl);
             fileEntityDTO.setFilePathUri(fileSplitPath);
             return fileEntityDTO;
@@ -163,7 +165,9 @@ public class LocalFileStorageServiceImpl implements FileStorageService {
             nginxRootPath = nginxRootPath + File.separator;
         }
 
-        return host + FileUtils.getFileSplitPath(nginxRootPath,absolutePath);
+        // TODO 只返回uri部分，准确的连接由前端控制
+        // return host + FileUtils.getFileSplitPath(nginxRootPath,absolutePath);
+        return FileUtils.getFileSplitPath(nginxRootPath,absolutePath);
     }
 
     /**

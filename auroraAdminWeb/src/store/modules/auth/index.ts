@@ -1,15 +1,17 @@
-import { unref, nextTick } from 'vue';
-import { defineStore } from 'pinia';
-import { EnumAuthTokenType, EnumRoleName } from '@/enum';
-import { router } from '@/router';
+import {nextTick, unref} from 'vue';
+import {defineStore} from 'pinia';
+import {EnumAuthTokenType, EnumRoleName} from '@/enum';
+import {router} from '@/router';
 import {authApi, emailApi, userApi} from '@/service';
-import { useRouterPush } from '@/composables';
-import { localStg } from '@/utils';
-import type { OauthPasswordPo } from '@/theme/pojo/auth/oauthPassword';
-import type { OauthVo, UserInfo } from '@/theme/vo/auth/OauthVo';
-import { useTabStore } from '../tab';
-import { useRouteStore } from '../route';
-import { getToken, getUserInfo, clearAuthStorage } from './helpers';
+import {useRouterPush} from '@/composables';
+import {localStg} from '@/utils';
+import type {OauthPasswordPo} from '@/theme/pojo/auth/oauthPassword';
+import type {OauthVo, UserInfo} from '@/theme/vo/auth/OauthVo';
+import {useTabStore} from '../tab';
+import {useRouteStore} from '../route';
+import {clearAuthStorage, getToken, getUserInfo} from './helpers';
+import {sysSettingApi} from "@/service/api/admin/sysSettingApi";
+import {useSysSettingStore} from "@/store";
 
 interface AuthState {
   /** 用户信息 */
@@ -124,6 +126,13 @@ export const useAuthStore = defineStore('auth-store', {
 					}else {
 						localStg.set('userInfo', userInfo);
 					}
+				}
+			})
+
+			// 将系统设置存入本地
+			sysSettingApi.queryListDataByCondition({pageSize: 10000}).then(result => {
+				if (result.data && result.data.result) {
+					useSysSettingStore().setSysSetting(result.data.result)
 				}
 			})
       // 更新状态

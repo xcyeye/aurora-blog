@@ -7,8 +7,24 @@ const CryptoSecret = '__CryptoJS_Secret__';
  * @param data - 数据
  */
 export function encrypto(data: any) {
-  const newData = JSON.stringify(data);
-  return CryptoJS.AES.encrypt(newData, CryptoSecret).toString();
+	const dataTemp = data['value'];
+	if (dataTemp instanceof Map) {
+		const obj: object = {}
+		let num: number = 0
+		for (let[k,v] of dataTemp) {
+			// @ts-ignore
+			obj[k] = v
+			num = num + 1
+			if (num === dataTemp.size) {
+				data.value = obj
+				const newData = JSON.stringify(data);
+				return CryptoJS.AES.encrypt(newData, CryptoSecret).toString();
+			}
+		}
+	}else {
+		const newData = JSON.stringify(data);
+		return CryptoJS.AES.encrypt(newData, CryptoSecret).toString();
+	}
 }
 
 /**
