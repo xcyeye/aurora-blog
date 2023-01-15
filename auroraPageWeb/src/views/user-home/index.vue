@@ -2,6 +2,9 @@
 	<navbar :user-uid="userUid"/>
 	<home-content :user-uid="userUid" :is-home="true"/>
 	<home-bottom :condition="condition" :query-article-data-method="queryDataMethod" :user-uid="userUid"/>
+	<Footer :current-site-info="siteSettingInfo"
+					:is-home="true"
+					:is-show-footer="true"/>
 	<set-bg/>
 </template>
 
@@ -68,6 +71,7 @@ onBeforeMount(() => {
 	
 	if (!isNotEmptyObject(useSite.getSiteInfo(userUid.value))) {
 		useSite.setSiteInfo(userUid.value, defaultSiteSettingInfo)
+		siteSettingInfo.value = defaultSiteSettingInfo
 		// siteSettingApi.queryOneDataByUserUid({userUid: userUid.value}).then(result => {
 		// 	if (result.data) {
 		// 		if (result.data.paramValue) {
@@ -78,6 +82,9 @@ onBeforeMount(() => {
 		// 		}
 		// 	}
 		// })
+	}else {
+		siteSettingInfo.value = useSite.getSiteInfo(userUid.value)
+		console.log(siteSettingInfo.value);
 	}
 })
 </script>

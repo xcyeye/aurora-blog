@@ -1,10 +1,11 @@
 <template>
   <div :style="$store.state.borderRadiusStyle +
        $store.state.opacityStyle + $store.state.fontColorStyle +
-       $store.state.fontFamilyStyle + $store.state.filterBlurStyle" class="sidebar-single-enter-animate footer-layout-center" v-if="!isHome">
-    <div v-if="isShowFooter"
+       $store.state.fontFamilyStyle + $store.state.filterBlurStyle"
+			 class="sidebar-single-enter-animate footer-layout-center">
+		<div v-if="isShowFooter"
          class="footer box" id="footer">
-      <FooterItem v-for="(item,index) in footerArr" :key="index" :item="item"></FooterItem>
+      <FooterItem v-for="(item,index) in footerArr" :key="index" :item="item"/>
       <div class="footer-item" v-if="isShowRunTime" id="footer-item">
         <span >{{runTime}}</span>
       </div>
@@ -14,6 +15,7 @@
 
 <script lang="ts">
 import {PropType} from "vue";
+import {StringUtil} from "@/utils";
 
 export default {
   name: "Footer",
@@ -47,20 +49,21 @@ export default {
     if (this.currentSiteInfo.footerInfo !== undefined && this.currentSiteInfo.footerInfo.enable) {
       this.footerArr = this.currentSiteInfo.footerInfo
 			let showThemeCopyright = this.currentSiteInfo.footerInfo.isShowThemeCopyright
+			let themeCopyright: string = ''
 			if (showThemeCopyright === undefined || showThemeCopyright == null || showThemeCopyright) {
 				//默认为TRUE，显示页脚主题版权
-				let themeCopyright = "theme&nbsp;<a href='https://github.com/vuepress-aurora/vuepress-theme-aurora' target='_blank'>Aurora</a>" +
-					"&nbsp;by&nbsp;<a href='https://aurora.xcye.xyz/' target='_blank'>qsyyke</a>"
+				themeCopyright = "theme&nbsp;<a href='https://github.com/xcyeye/Aurora-blog-system' target='_blank'>AuroraBlogSystem</a>" +
+					"&nbsp;by&nbsp;<a href='https://xcye.xyz/' target='_blank'>xcye</a>"
 				// this.footerArr.push(themeCopyright)
-				let set = new Set()
-				for (let i = 0; i < this.footerArr.length; i++) {
-					set.add(this.footerArr[i])
-				}
-				set.add(themeCopyright)
-				let setArr = Array.from(set)
-				this.footerArr = setArr
-		
 			}
+			let set = new Set()
+			for (let i = 0; i < this.footerArr.length; i++) {
+				set.add(this.footerArr[i])
+			}
+			if (StringUtil.haveLength(themeCopyright)) {
+				set.add(themeCopyright)
+			}
+			this.footerArr = Array.from(set)
 	
 			if (this.currentSiteInfo.footerInfo.isShowRunTime !== undefined) {
 				this.isShowRunTime = this.currentSiteInfo.footerInfo.isShowRunTime
