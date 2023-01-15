@@ -5,8 +5,8 @@ import org.springframework.security.oauth2.common.DefaultOAuth2AccessToken;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
-import xyz.xcye.auth.model.SecurityUserDetails;
 import xyz.xcye.auth.constant.OauthJwtConstant;
+import xyz.xcye.auth.model.SecurityUserDetails;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -34,6 +34,7 @@ public class JwtAccessTokenEnhancer extends JwtAccessTokenConverter {
         // 添加userUid
         HashMap<String, Object> userinfoMap = new HashMap<>();
         userinfoMap.put(OauthJwtConstant.USER_UID, user.getUserUid() + "");
+        userinfoMap.put(OauthJwtConstant.AVATAR, user.getAvatar() + "");
         userinfoMap.put(OauthJwtConstant.NICKNAME, user.getNickname());
         userinfoMap.put(OauthJwtConstant.USERNAME, user.getUsername());
         userinfoMap.put(OauthJwtConstant.VERIFY_EMAIL, user.getVerifyEmail());

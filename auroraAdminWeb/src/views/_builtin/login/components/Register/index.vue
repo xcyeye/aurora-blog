@@ -70,6 +70,7 @@ async function handleSubmit() {
 			const oauthClientDetails: OauthClientDetails = {
 				clientId: model.username,
 				clientSecret: model.pwd,
+				scope: 'all',
 				authorizedGrantTypes: 'authorization_code,client_credentials,refresh_token,password'
 			}
 			oauthClientApi.insertData(oauthClientDetails).then(result => {

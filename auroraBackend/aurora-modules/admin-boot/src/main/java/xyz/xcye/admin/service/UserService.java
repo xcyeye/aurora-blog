@@ -90,7 +90,7 @@ public class UserService {
         // 插入成功之后，设置默认用户角色
 
         List<String> defaultRoleList = auroraProperties.getDefaultRoleList();
-        if (defaultRoleList.isEmpty()) {
+        if (defaultRoleList == null || defaultRoleList.isEmpty()) {
             return;
         }
 

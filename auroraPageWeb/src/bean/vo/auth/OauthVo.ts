@@ -1,14 +1,14 @@
-import RoleType = Auth.RoleType;
 import {EmailVo} from "@/bean/vo/message/EmailVo";
 import {UserVo} from "@/bean/vo/admin/UserVo";
 
 interface UserInfo {
   user_uid: string;
+  avatar: string,
   nickname: string;
   username: string;
   verify_email: boolean;
   authority: Array<string>;
-  userRole: RoleType;
+  userRole: string;
 	emailInfo: EmailVo;
 	userDetailInfo: UserVo
 }

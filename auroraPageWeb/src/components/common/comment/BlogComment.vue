@@ -1,5 +1,55 @@
 <template>
 	<div id="control-comment" class="aurora-control-comment-box" v-if="true">
+		<n-modal v-model:show="showLoginModal">
+			<n-card
+				style="width: 600px"
+				:bordered="false"
+				size="small"
+				role="dialog"
+				aria-modal="true"
+			>
+				<n-card :bordered="false">
+					<n-tabs
+						class="card-tabs"
+						default-value="signin"
+						size="large"
+						animated
+						style="margin: 0 -4px"
+						pane-style="padding-left: 4px; padding-right: 4px; box-sizing: border-box;"
+					>
+						<n-tab-pane name="signin" tab="请登录o(￣▽￣)ｄ">
+							<n-form>
+								<n-form-item-row label="用户名">
+									<n-input v-model:value="newCommenterLoginUserInfo.username" round size="medium" />
+								</n-form-item-row>
+								<n-form-item-row label="密码">
+									<n-input v-model:value="newCommenterLoginUserInfo.password" round size="medium" />
+								</n-form-item-row>
+							</n-form>
+							<n-button strong secondary tertiary round type="success" block @click="handleLoginAction(true)">
+								登录
+							</n-button>
+						</n-tab-pane>
+						<n-tab-pane name="signup" tab="请注册(￣┰￣*) ">
+							<n-form>
+								<n-form-item-row label="用户名">
+									<n-input v-model:value="newCommenterLoginUserInfo.username" round size="medium" />
+								</n-form-item-row>
+								<n-form-item-row label="密码">
+									<n-input v-model:value="newCommenterLoginUserInfo.password" round size="medium" />
+								</n-form-item-row>
+								<n-form-item-row label="邮箱">
+									<n-input v-model:value="loginUserEmailInfo.email" round size="medium" />
+								</n-form-item-row>
+							</n-form>
+							<n-button strong secondary tertiary round type="success" block @click="handleLoginAction(false)">
+								注册
+							</n-button>
+						</n-tab-pane>
+					</n-tabs>
+				</n-card>
+			</n-card>
+		</n-modal>
 		<div :style="$store.state.borderRadiusStyle + $store.state.opacityStyle" class="theme-comment-box" :class="{'show-theme-comment-box': showCommentAnimateClass}" @click="showCommentAnimate">
 			<span class="aurora-comment-common aurora-iconfont-common page-comment-icon" ></span>
 			<span class="aurora-comment-common aurora-comment-text">点击评论</span>
@@ -201,16 +251,21 @@
 
 <script lang="ts" setup>
 import {defineComponent, onBeforeMount, ref, watch, h} from "vue";
-import {commentApi, userApi} from "@/service";
+import {commentApi, emailApi, userApi} from "@/service";
 import {Comment} from "@/bean/pojo/comment/Comment";
 import {createLocalStorage, getLocalStorage, getLocalTime, StringUtil} from "@/utils";
 import {NButton, NGradientText, NTag, NText, UploadFileInfo} from "naive-ui";
 import {UserVo} from "@/bean/vo/admin/UserVo";
 import {useSiteInfo, useUserInfo} from "@/stores";
 import $ from "jquery";
-import {REGEXP_EMAIL, REGEXP_PWD, REGEXP_URL} from "@/config";
+import {REGEXP_EMAIL, REGEXP_PWD, REGEXP_URL, REGEXP_USERNAME} from "@/config";
 import {User} from "@/bean/pojo/admin/User";
 import {isNotEmptyObject} from "@/utils/business";
+import {Email} from "@/bean/pojo/message/Email";
+import {authApi} from "@/service/api/auth/auth";
+import {OauthPasswordPo} from "@/bean/pojo/auth/oauthPassword";
+import {OauthClientDetails} from "@/bean/pojo/auth/OauthClientDetails";
+import {oauthClientApi} from "@/service/api/auth/oauthClientApi";
 
 defineComponent({name: 'BlogComment'});
 
@@ -249,6 +304,9 @@ const newCommenterUserInfo = ref<ReplyCommentUserInfo>({})
 const currentUserInfo = ref<UserVo>({})
 const currentSiteInfo = ref<SiteSettingInfo>({})
 const showCommentAnimateClass = ref<boolean>(false)
+const showLoginModal = ref(true)
+const newCommenterLoginUserInfo = ref<User>({})
+const loginUserEmailInfo = ref<Email>({})
 
 
 const handleClickComment = (commentInfo: CommentDto, parentCommentDto: CommentDto) => {
@@ -264,6 +322,90 @@ const loadCommentInfo = () => {
 			 showCommentInfo.value = result.data
 		 }
 	 })
+}
+
+const loginByPwd = (isInsertEmailInfo: boolean = false) => {
+	const oauthPasswordInfo: OauthPasswordPo = {
+		username: newCommenterLoginUserInfo.value.username!,
+		password: newCommenterLoginUserInfo.value.password!,
+		client_id: newCommenterLoginUserInfo.value.username!,
+		client_secret: newCommenterLoginUserInfo.value.password!,
+		grant_type: 'password'
+	}
+	authApi.loginByPassword(oauthPasswordInfo).then(result => {
+		if (result.data) {
+			// 登录成功
+			newCommenterUserInfo.value.username = newCommenterLoginUserInfo.value.username
+			newCommenterUserInfo.value.userUid = result.data.userInfo.user_uid
+			newCommenterUserInfo.value.avatar = result.data.userInfo.avatar
+			isAdminUser.value = true
+			if (isInsertEmailInfo) {
+				// 尝试注册邮箱，如果邮箱注册失败，不影响
+				loginUserEmailInfo.value.userUid = result.data.userInfo.user_uid
+				emailApi.insertData(loginUserEmailInfo.value).then(result => {
+					if (!result.error) {
+						newCommenterUserInfo.value.email = loginUserEmailInfo.value.email
+					}
+				})
+			}
+		}else {
+			isAdminUser.value = false
+		}
+	})
+}
+
+const handleLoginAction = async (isLoginAction: boolean) => {
+  if (!REGEXP_USERNAME.test(newCommenterLoginUserInfo.value.username!)) {
+		window.$message?.error('用户名 5-15字符')
+		return
+	}
+	
+	if (!REGEXP_PWD.test(newCommenterLoginUserInfo.value.password!)) {
+		window.$message?.error('密码 密码为6-18位数字/字符/符号的组合')
+		return
+	}
+	
+	if (!isLoginAction) {
+		if (!REGEXP_EMAIL.test(loginUserEmailInfo.value.email!)) {
+			window.$message?.error('请输入有效邮箱')
+			return
+		}
+	}
+	if (isLoginAction) {
+		loginByPwd()
+	}else {
+		// 先查询邮箱是否有效
+		let effectiveEmailStatus = false
+		await emailApi.queryByEmailNumber({email: loginUserEmailInfo.value.email}).then(result => {
+			if (result.data) {
+				if (result.data.uid) {
+					window.$message?.error('此邮箱已被占用(⊙﹏⊙) ')
+				}else {
+					effectiveEmailStatus = true
+				}
+			}
+		})
+		if (effectiveEmailStatus) {
+			// 注册
+			userApi.insertData(newCommenterLoginUserInfo.value).then(result => {
+				if (!result.error) {
+					window.$message?.success('注册成功 o(￣▽￣)ｄ')
+					const oauthClientDetails: OauthClientDetails = {
+						scope: 'all',
+						clientId: newCommenterLoginUserInfo.value.username,
+						clientSecret: newCommenterLoginUserInfo.value.password,
+						authorizedGrantTypes: 'authorization_code,client_credentials,refresh_token,password'
+					}
+					oauthClientApi.insertData(oauthClientDetails).then(result => {
+						if (!result.error) {
+							window.$message?.success('秘钥注册成功')
+							loginByPwd(true)
+						}
+					})
+				}
+			})
+		}
+	}
 }
 
 const showCommentAnimate = () => {
@@ -340,6 +482,11 @@ const createNewUserInfo = (): Promise<null> => {
 }
 
 const handleReplyCommentAction = async () => {
+	
+	if (true) {
+		
+		return false
+	}
 	if (!StringUtil.haveLength(replyCommentData.value.content)) {
 		window.$message?.error('请输入评论信息')
 		return
