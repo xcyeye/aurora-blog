@@ -13,13 +13,13 @@ interface UserInfo {
 	userDetailInfo: UserVo
 }
 interface OauthVo {
-  access_token: string;
-  token_type: string;
-  refresh_token: string;
-  expires_in: string;
-  jti: string;
-  scope: string;
-  userInfo: UserInfo;
+  access_token?: string;
+  token_type?: string;
+  refresh_token?: string;
+  expires_in?: string;
+  jti?: string;
+  scope?: string;
+  userInfo?: UserInfo;
 }
 
 export { OauthVo, UserInfo };

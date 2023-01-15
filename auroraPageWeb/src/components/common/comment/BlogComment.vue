@@ -50,7 +50,9 @@
 				</n-card>
 			</n-card>
 		</n-modal>
-		<div :style="$store.state.borderRadiusStyle + $store.state.opacityStyle" class="theme-comment-box" :class="{'show-theme-comment-box': showCommentAnimateClass}" @click="showCommentAnimate">
+		<div :style="$store.state.borderRadiusStyle + $store.state.opacityStyle" class="theme-comment-box"
+				 :class="{'show-theme-comment-box': showCommentAnimateClass}"
+				 @click="showCommentAnimate">
 			<span class="aurora-comment-common aurora-iconfont-common page-comment-icon" ></span>
 			<span class="aurora-comment-common aurora-comment-text">点击评论</span>
 		</div>
@@ -65,10 +67,10 @@
 										<n-input v-model:value="newCommenterUserInfo.username" :disabled="isAdminUser" size="small" placeholder="用户名"/>
 									</div>
 									<div class="aurora-comment-reply-box-son">
-										<n-input v-model:value="newCommenterUserInfo.email" :disabled="isAdminUser" size="small" placeholder="邮箱"/>
+										<n-input v-model:value="newCommenterUserInfo.email" :disabled="newCommenterUserInfo.email && isAdminUser && authStore.authInfo.userInfo && authStore.authInfo.userInfo.verify_email" size="small" placeholder="邮箱"/>
 									</div>
 									<div class="aurora-comment-reply-box-son">
-										<n-input v-model:value="newCommenterUserInfo.site" :disabled="isAdminUser && newCommenterUserInfo.site" size="small" placeholder="站点"/>
+										<n-input v-model:value="newCommenterUserInfo.site" size="small" placeholder="站点"/>
 									</div>
 								</div>
 							</div>
@@ -196,10 +198,10 @@
 													<n-input v-model:value="newCommenterUserInfo.username" :disabled="isAdminUser" size="small" placeholder="用户名"/>
 												</div>
 												<div class="aurora-comment-reply-box-son">
-													<n-input v-model:value="newCommenterUserInfo.email" :disabled="isAdminUser" size="small" placeholder="邮箱"/>
+													<n-input v-model:value="newCommenterUserInfo.email" :disabled="newCommenterUserInfo.email && isAdminUser && authStore.authInfo.userInfo && authStore.authInfo.userInfo.verify_email" size="small" placeholder="邮箱"/>
 												</div>
 												<div class="aurora-comment-reply-box-son">
-													<n-input v-model:value="newCommenterUserInfo.site" :disabled="isAdminUser && newCommenterUserInfo.site" size="small" placeholder="站点"/>
+													<n-input v-model:value="newCommenterUserInfo.site" size="small" placeholder="站点"/>
 												</div>
 											</div>
 										</div>
@@ -256,7 +258,7 @@ import {Comment} from "@/bean/pojo/comment/Comment";
 import {createLocalStorage, getLocalStorage, getLocalTime, StringUtil} from "@/utils";
 import {NButton, NGradientText, NTag, NText, UploadFileInfo} from "naive-ui";
 import {UserVo} from "@/bean/vo/admin/UserVo";
-import {useSiteInfo, useUserInfo} from "@/stores";
+import {useAuthStore, useSiteInfo, useUserInfo} from "@/stores";
 import $ from "jquery";
 import {REGEXP_EMAIL, REGEXP_PWD, REGEXP_URL, REGEXP_USERNAME} from "@/config";
 import {User} from "@/bean/pojo/admin/User";
@@ -304,9 +306,11 @@ const newCommenterUserInfo = ref<ReplyCommentUserInfo>({})
 const currentUserInfo = ref<UserVo>({})
 const currentSiteInfo = ref<SiteSettingInfo>({})
 const showCommentAnimateClass = ref<boolean>(false)
-const showLoginModal = ref(true)
+const showLoginModal = ref(false)
 const newCommenterLoginUserInfo = ref<User>({})
 const loginUserEmailInfo = ref<Email>({})
+const isNoticeBindEmailStatus = ref(false)
+const authStore = useAuthStore()
 
 
 const handleClickComment = (commentInfo: CommentDto, parentCommentDto: CommentDto) => {
@@ -334,19 +338,46 @@ const loginByPwd = (isInsertEmailInfo: boolean = false) => {
 	}
 	authApi.loginByPassword(oauthPasswordInfo).then(result => {
 		if (result.data) {
+			showLoginModal.value = false
+			authStore.setAuthInfo(result.data)
 			// 登录成功
 			newCommenterUserInfo.value.username = newCommenterLoginUserInfo.value.username
-			newCommenterUserInfo.value.userUid = result.data.userInfo.user_uid
-			newCommenterUserInfo.value.avatar = result.data.userInfo.avatar
+			newCommenterUserInfo.value.userUid = result.data.userInfo!.user_uid
+			newCommenterUserInfo.value.avatar = result.data.userInfo!.avatar
 			isAdminUser.value = true
 			if (isInsertEmailInfo) {
 				// 尝试注册邮箱，如果邮箱注册失败，不影响
-				loginUserEmailInfo.value.userUid = result.data.userInfo.user_uid
-				emailApi.insertData(loginUserEmailInfo.value).then(result => {
-					if (!result.error) {
+				loginUserEmailInfo.value.userUid = result.data.userInfo!.user_uid
+				emailApi.insertData(loginUserEmailInfo.value).then(emailInsertResult => {
+					if (!emailInsertResult.error) {
 						newCommenterUserInfo.value.email = loginUserEmailInfo.value.email
+						
+						// 邮箱添加成功，尝试发送一条绑定邮箱的邮件到该用户邮箱
+						emailApi.queryByEmailNumber({email: loginUserEmailInfo.value.email}).then(emailResult => {
+							if (emailResult.data) {
+								// TODO 存在一个bug 用户权限不足
+								userApi.bindingEmail({uid: result.data.userInfo?.user_uid, emailNumber: loginUserEmailInfo.value.email}).then(result => {
+									if (result.data && result.data === 1) {
+										window.$message?.success(`邮箱添加成功， ${loginUserEmailInfo.value.email}，请到邮箱查看进行账户绑定`)
+									}
+								})
+							}
+						})
 					}
 				})
+			}else {
+				// 用户登录，如果账户已经验证了，则查询邮箱
+				if (result.data.userInfo?.verify_email) {
+					emailApi.queryEmailByUserUid({userUid:authStore.authInfo.userInfo?.user_uid}).then(result => {
+						if (result.data) {
+							newCommenterUserInfo.value.email = result.data.email
+						}else {
+							newCommenterUserInfo.value.email = ''
+						}
+					})
+				}else {
+					newCommenterUserInfo.value.email = ''
+				}
 			}
 		}else {
 			isAdminUser.value = false
@@ -359,12 +390,12 @@ const handleLoginAction = async (isLoginAction: boolean) => {
 		window.$message?.error('用户名 5-15字符')
 		return
 	}
-	
+
 	if (!REGEXP_PWD.test(newCommenterLoginUserInfo.value.password!)) {
 		window.$message?.error('密码 密码为6-18位数字/字符/符号的组合')
 		return
 	}
-	
+
 	if (!isLoginAction) {
 		if (!REGEXP_EMAIL.test(loginUserEmailInfo.value.email!)) {
 			window.$message?.error('请输入有效邮箱')
@@ -387,6 +418,7 @@ const handleLoginAction = async (isLoginAction: boolean) => {
 		})
 		if (effectiveEmailStatus) {
 			// 注册
+			newCommenterLoginUserInfo.value.userSummary = `新用户在${props.userUid}用户处评论系统创建的用户`,
 			userApi.insertData(newCommenterLoginUserInfo.value).then(result => {
 				if (!result.error) {
 					window.$message?.success('注册成功 o(￣▽￣)ｄ')
@@ -409,6 +441,19 @@ const handleLoginAction = async (isLoginAction: boolean) => {
 }
 
 const showCommentAnimate = () => {
+	if (!isNoticeBindEmailStatus.value && isAdminUser.value) {
+		// 查询用户邮箱
+		if (authStore.authInfo.userInfo?.verify_email) {
+			emailApi.queryEmailByUserUid({userUid: authStore.authInfo.userInfo?.user_uid}).then(result => {
+				if (result.data) {
+					newCommenterUserInfo.value.email = result.data.email
+				}
+			})
+		}else {
+			window.$message?.success('您的账户暂未绑定邮箱，请发布评论的时候，输入邮箱号，以便接收评论通知')
+		}
+		isNoticeBindEmailStatus.value = true
+	}
 	if (showCommentAnimateClass.value) {
 		setTimeout(() => {
 			showCommentAnimateClass.value = !showCommentAnimateClass.value
@@ -481,11 +526,13 @@ const createNewUserInfo = (): Promise<null> => {
 	})
 }
 
-const handleReplyCommentAction = async () => {
-	
-	if (true) {
-		
-		return false
+const handleReplyCommentAction = () => {
+	console.log(authStore.authInfo);
+	// 如果没有登录，需要先登录
+	if (!authStore.authInfo || !isNotEmptyObject(authStore.authInfo)) {
+		showLoginModal.value = true
+		window.$message?.error('需要先登录或者注册才能发布评论o(￣▽￣)ｄ')
+		return;
 	}
 	if (!StringUtil.haveLength(replyCommentData.value.content)) {
 		window.$message?.error('请输入评论信息')
@@ -501,9 +548,6 @@ const handleReplyCommentAction = async () => {
 	}
 	newCommenterUserInfo.value.pagePath = props.pagePath
 	newCommenterUserInfo.value.pageUid = props.pageUid
-	if (!isAdminUser.value) {
-		await createNewUserInfo()
-	}
 	
 	if (isAdminUser.value) {
 		replyCommentData.value.replyCommentUid = currentClickCommentDto.value.uid
@@ -537,12 +581,13 @@ const handleFinishUploadFile = (file: UploadFileInfo) => {
 }
 
 onBeforeMount(() => {
-	loadCommentInfo()
 	if (!StringUtil.haveLength(props.pagePath)) {
 		window.$message?.error('请传入pagePath')
 	}else {
 		newCommenterUserInfo.value.pagePath = props.pagePath
 	}
+	
+	loadCommentInfo()
 
 	if (!StringUtil.haveLength(props.pageUid)) {
 		window.$message?.error('请传入pageUid')
@@ -558,18 +603,26 @@ onBeforeMount(() => {
 	}
 	
 	// 从本地存储中获取用户注册的信息，如果存在的话
-	const newCommenterUserInfoTemp: ReplyCommentUserInfo = getLocalStorage('newCommenterUserInfo')
-	newCommenterUserInfo.value = newCommenterUserInfoTemp
-	newCommenterUserInfo.value.pagePath = props.pagePath
-	newCommenterUserInfo.value.pageUid = props.pageUid
-	if (isNotEmptyObject(newCommenterUserInfoTemp) && StringUtil.haveLength(newCommenterUserInfoTemp.username)) {
-		userApi.queryUserByUsername({username: newCommenterUserInfoTemp.username}).then(result => {
-			if (!result.error) {
-				newCommenterUserInfo.value.userUid = result.data.uid
-			}
-		})
+	if (authStore.authInfo && isNotEmptyObject(authStore.authInfo)) {
+		newCommenterUserInfo.value.username = authStore.authInfo.userInfo?.username
+		newCommenterUserInfo.value.userUid = authStore.authInfo.userInfo?.user_uid
+		newCommenterUserInfo.value.pagePath = props.pagePath
+		newCommenterUserInfo.value.pageUid = props.pageUid
+		newCommenterUserInfo.value.avatar = authStore.authInfo.userInfo?.avatar
 		isAdminUser.value = true
 	}
+	// const newCommenterUserInfoTemp: ReplyCommentUserInfo = getLocalStorage('newCommenterUserInfo')
+	// newCommenterUserInfo.value = newCommenterUserInfoTemp
+	// newCommenterUserInfo.value.pagePath = props.pagePath
+	// newCommenterUserInfo.value.pageUid = props.pageUid
+	// if (isNotEmptyObject(newCommenterUserInfoTemp) && StringUtil.haveLength(newCommenterUserInfoTemp.username)) {
+	// 	userApi.queryUserByUsername({username: newCommenterUserInfoTemp.username}).then(result => {
+	// 		if (!result.error) {
+	// 			newCommenterUserInfo.value.userUid = result.data.uid
+	// 		}
+	// 	})
+	// 	isAdminUser.value = true
+	// }
 })
 
 watch(() => props.parentCommentUidArr, () => {

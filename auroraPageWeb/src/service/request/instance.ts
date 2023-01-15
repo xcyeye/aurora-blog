@@ -9,6 +9,8 @@ import {
     transformRequestData
 } from '@/utils';
 import {handleRefreshToken} from './helpers';
+import {useAuthStore} from "@/stores";
+import {isNotEmptyObject} from "@/utils/business";
 
 /**
  * 封装axios请求类
@@ -43,14 +45,19 @@ export default class CustomAxiosInstance {
     setInterceptor() {
         this.instance.interceptors.request.use(
             async config => {
-                const handleConfig = { ...config };
-                if (handleConfig.headers) {
-                    // 数据转换
-                    // @ts-ignore
-                    const contentType = handleConfig.headers['Content-Type'] as string;
-                    handleConfig.data = await transformRequestData(handleConfig.data, contentType);
-                }
-                return handleConfig;
+              const handleConfig = { ...config };
+              if (handleConfig.headers) {
+                // 数据转换
+                // @ts-ignore
+                const contentType = handleConfig.headers['Content-Type'] as string;
+                handleConfig.data = await transformRequestData(handleConfig.data, contentType);
+              }
+              // 如果存在登录信息，则设置token
+              if (useAuthStore().authInfo && isNotEmptyObject(useAuthStore().authInfo)) {
+                // @ts-ignore
+                handleConfig.headers.Authorization = `bearer ${useAuthStore().authInfo.access_token}`;
+              }
+              return handleConfig;
             },
             (axiosError: AxiosError) => {
                 const error = handleAxiosError(axiosError);
