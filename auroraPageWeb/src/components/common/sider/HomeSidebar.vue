@@ -117,7 +117,7 @@
         <div v-show="changePageIndex === '2'">
           <div v-for="item in articleArr" :key="item.uid" :data="item.uid" class="sidebar-page-item sidebar-hover-bg-common">
             <div class="sidebar-page-title">
-              <router-link :to="`/article/${item.uid}`">
+              <router-link :to="`/article/${item.userUid}/${item.uid}`">
                 <span @click="goRead($event,item)">{{item.title ? item.title :getRecommendNoTitle}}</span>
               </router-link>
             </div>
