@@ -1,7 +1,7 @@
 <template>
 	<div class="h-full">
 		<n-card :bordered="bordered" class="h-full shadow-sm rounded-16px">
-			<div id="vditor"/>
+			<div ref="vditorRef" id="vditor"/>
 		</n-card>
 	</div>
 </template>
@@ -13,7 +13,7 @@ import 'vditor/dist/index.css';
 import {useAuthStore, useThemeStore} from "@/store";
 import {fileApi} from "@/service";
 import {FileVo} from "@/theme/vo/file/fileVo";
-import {isImage, StringUtil} from "@/utils";
+import {isImage} from "@/utils";
 
 defineComponent({name: 'MarkdownEditor'});
 
@@ -69,11 +69,13 @@ const props = withDefaults(defineProps<Props>(), {
 const theme = useThemeStore();
 const authStore = useAuthStore();
 const vditor = ref<Vditor>();
+const vditorRef = ref<HTMLElement>();
 const originContent = ref<string>('')
 const vditorRenderFinishFlag = ref(false)
 let vditorOptionConfig: IOptions = {
 	theme: theme.darkMode ? 'dark' : 'classic',
 	minHeight: 500,
+	// cdn: 'https://picture.xcye.xyz',
 	cache: {
 		enable: false
 	},
@@ -158,11 +160,6 @@ let vditorOptionConfig: IOptions = {
 	}
 }
 
-// 定义onMounted
-onMounted(() =>{
-	renderVditor();
-})
-
 const setVditorProperties = () => {
 	if (props.mode) {
 		vditorOptionConfig.mode = props.mode
@@ -204,7 +201,8 @@ const setVditorProperties = () => {
 // 定义方法
 const renderVditor = () => {
 	setVditorProperties()
-	vditor.value = new Vditor('vditor', vditorOptionConfig);
+	if (!vditorRef.value) return;
+	vditor.value = new Vditor(vditorRef.value, vditorOptionConfig);
 	setTimeout(() =>{
 		vditorRenderFinishFlag.value = true
 	}, 10)
@@ -252,6 +250,11 @@ watch(() => props.renderMdContent, () =>{
 // 监听模式
 // 监听icon
 // 监听tabKey
+
+// 定义onMounted
+onMounted(() =>{
+	renderVditor();
+})
 
 </script>
 

@@ -27,14 +27,11 @@
 
 <script lang="ts" setup>
 
-import {computed, onBeforeMount, ref} from "vue";
-import {blogPageData} from "@/assets/config";
+import {onBeforeMount, ref} from "vue";
 import {ArticleVo} from "@/bean/vo/article/ArticleVo";
-import {articleApi} from "@/service";
 import {Condition, PageData} from "@/bean/core/bean";
-import smoothscroll from 'smoothscroll-polyfill'
+import smoothscroll from 'smoothscroll-polyfill';
 import RequestResult = Service.RequestResult;
-import {layoutProps} from "naive-ui";
 
 interface Props {
 	userUid?: string,
@@ -57,7 +54,7 @@ const condition = ref<Condition>({
 	status: true,
 	pageSize: 10,
 	pageNum: 1,
-	orderBy: 'update_time desc'
+	orderBy: 'create_time desc, update_time desc'
 })
 const homeBottomScroll = ref<Element>()
 const pageTotal = ref<number>(0)

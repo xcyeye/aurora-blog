@@ -59,6 +59,8 @@ import {UploadCustomRequestOptions, UploadFileInfo, UploadInst} from "naive-ui";
 import {fileApi} from "@/service";
 import {AuroraFile} from "@/theme/pojo/file/file";
 import {FileVo} from "@/theme/vo/file/fileVo";
+import {useSysSettingStore} from "@/store";
+import {StringUtil} from "@/utils";
 
 defineComponent({name: 'UploadFile'})
 
@@ -103,6 +105,7 @@ const uploadFileInfoArr = reactive<UploadFileInfo[]>([]);
 let uploadFileInfoTempArr = reactive<UploadFileInfo[]>([]);
 const uploadFileRef = ref<UploadInst | null>(null);
 const uploadFileLength = ref(0);
+const sysSettingStore = useSysSettingStore()
 const acceptFileType = computed(() => {
 	if (props.acceptFileTypeStr.length === 0) {
 		return ''
@@ -212,12 +215,18 @@ const uploadFileChangeEven = (options: { file: UploadFileInfo,
 }
 
 const generateFileInfo = (file: UploadFileInfo, fileVoArr: FileVo[]): Promise<UploadFileInfo[]> => {
-  return new Promise((resolve, reject) => {
+	let host = ''
+	if (sysSettingStore.sysSettingMap.get('nginx_file_host')) {
+		if (StringUtil.haveLength(sysSettingStore.sysSettingMap.get('nginx_file_host')!.paramValue)) {
+			host = sysSettingStore.sysSettingMap.get('nginx_file_host')!.paramValue as string
+		}
+	}
+	return new Promise((resolve, reject) => {
 		const temp: UploadFileInfo[] = [];
 		fileVoArr.forEach(v => {
 			temp.push({
 				id: file.id,
-				url: v.path,
+				url: host + v.path,
 				fullPath: v.storagePath,
 				file: file.file,
 				type: file.type,

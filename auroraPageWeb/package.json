@@ -16,6 +16,7 @@
     "@vueuse/core": "^9.10.0",
     "axios": "^1.2.2",
     "colord": "^2.9.3",
+    "crypto-js": "^4.1.1",
     "dayjs": "^1.11.7",
     "easy-typer-js": "^2.1.0",
     "gsap": "^3.11.4",
@@ -35,6 +36,7 @@
     "vuex": "^4.1.0"
   },
   "devDependencies": {
+    "@types/crypto-js": "^4.1.1",
     "@types/jquery": "^3.5.16",
     "@types/jsdom": "^20.0.1",
     "@types/markdown-it": "^12.2.3",

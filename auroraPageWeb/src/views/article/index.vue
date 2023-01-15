@@ -11,12 +11,13 @@
 			<main :style="$store.state.borderRadiusStyle + $store.state.opacityStyle"
 						class="page sidebar-single-enter-animate blog-article" id="article-page">
 				
-				<div id="theme-default-content" :class="true ? 'hide-h1-tag' : 'show-h1-tag'" class="theme-default-content pageContent medium-zoom-content">
-					<div class="page-top-share">
-						<div class="page-top-share-next">
-							<!--<poster :title="originPageData.title" :content="posterContent"/>-->
-						</div>
-					</div>
+				<div id="theme-default-content" class="hide-h1-tag theme-default-content pageContent">
+					<!--TODO 分享这块暂时不做-->
+					<!--<div class="page-top-share">-->
+					<!--	<div class="page-top-share-next">-->
+					<!--		&lt;!&ndash;<poster :title="originPageData.title" :content="posterContent"/>&ndash;&gt;-->
+					<!--	</div>-->
+					<!--</div>-->
 					<div v-html="articleContent"></div>
 				</div>
 				

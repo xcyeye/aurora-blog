@@ -12,26 +12,12 @@ export function setupStore(app: App) {
     store.$subscribe((mutation, type) => {
       if (mutation.storeId === 'siteInfo') {
         const siteInfoMap: Map<string, SiteSettingInfo> = type.siteInfoMap
-        const obj: object = {}
-        for (let[k,v] of siteInfoMap) {
-          // @ts-ignore
-          obj[k] = v
-        }
-        setTimeout(() => {
-          createLocalStorage('userSiteInfoMap', obj)
-        }, 2000)
+        createLocalStorage('userSiteInfoMap', siteInfoMap)
       }
 
       if (mutation.storeId === 'userInfo') {
         const userInfoMap: Map<string, UserVo> = type.userInfoMap
-        const obj: object = {}
-        for (let[k,v] of userInfoMap) {
-          // @ts-ignore
-          obj[k] = v
-        }
-        setTimeout(() => {
-          createLocalStorage('userInfoMap', obj)
-        }, 2000)
+        createLocalStorage('userInfoMap', userInfoMap)
       }
     })
     return {

@@ -49,6 +49,7 @@ import {defineComponent, onMounted, ref} from "vue";
 import {EnumMittEventName} from "@/enum";
 import {emitter, StringUtil} from "@/utils";
 import {sysSettingApi} from "@/service/api/admin/sysSettingApi";
+import {useSysSettingStore} from "@/store";
 
 defineComponent({name: 'index'});
 
@@ -58,6 +59,14 @@ const modifySysSettingInfo = ref<SysSetting>({})
 const addStatus = ref(false)
 
 // 定义方法
+const restoreSysSetting = () => {
+	sysSettingApi.queryListDataByCondition({pageSize: 10000}).then(result => {
+		if (result.data && result.data.result) {
+			useSysSettingStore().setSysSetting(result.data.result)
+		}
+	})
+}
+
 const handleClickModifyAction = () => {
 	if (!StringUtil.haveLength(modifySysSettingInfo.value.paramCode)) {
 		window.$message?.error('参数编码不能为空')
@@ -75,6 +84,7 @@ const handleClickModifyAction = () => {
 				window.$message?.success('插入成功')
 				emitter.emit(EnumMittEventName.reloadData)
 				showDrawer.value = false
+				restoreSysSetting()
 			}
 		})
 	}else {
@@ -83,6 +93,7 @@ const handleClickModifyAction = () => {
 				window.$message?.success('操作成功')
 				showDrawer.value = false
 				emitter.emit(EnumMittEventName.reloadData)
+				restoreSysSetting()
 			}
 		})
 	}

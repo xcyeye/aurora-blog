@@ -1,6 +1,6 @@
-import { defineConfig, loadEnv } from 'vite';
-import { createViteProxy, getRootPath, getSrcPath, setupVitePlugins, viteDefine } from './build';
-import { getServiceEnvConfig } from './.env-config';
+import {defineConfig, loadEnv} from 'vite';
+import {createViteProxy, getRootPath, getSrcPath, setupVitePlugins, viteDefine} from './build';
+import {getServiceEnvConfig} from './.env-config';
 
 export default defineConfig(configEnv => {
   const viteEnv = loadEnv(configEnv.mode, process.cwd()) as unknown as ImportMetaEnv;

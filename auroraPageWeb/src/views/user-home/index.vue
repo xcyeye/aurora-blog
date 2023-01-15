@@ -11,15 +11,14 @@ import {useRouter} from 'vue-router';
 import {blogPageData} from "@/assets/config";
 import {StringUtil} from "@/utils";
 import {useRouterPush} from "@/composables";
-import {siteSettingApi} from "@/service/api/admin/siteSettingApi";
 import {defaultSiteSettingInfo} from "@/field";
 import {UserVo} from "@/bean/vo/admin/UserVo";
 import {articleApi, userApi} from "@/service";
 import {useCurrentUser, useSiteInfo, useUserInfo} from "@/stores";
-import {isNotEmptyObject, setDefaultProperties} from "@/utils/business";
+import {isNotEmptyObject} from "@/utils/business";
 import {Condition, PageData} from "@/bean/core/bean";
-import RequestResult = Service.RequestResult;
 import {ArticleVo} from "@/bean/vo/article/ArticleVo";
+import RequestResult = Service.RequestResult;
 
 const themeProperty = ref(blogPageData)
 const router = useRouter()
@@ -68,14 +67,17 @@ onBeforeMount(() => {
 	useCurrentUser().setCurrentUserInfo({uid: userUid.value})
 	
 	if (!isNotEmptyObject(useSite.getSiteInfo(userUid.value))) {
-		siteSettingApi.queryOneDataByUserUid({userUid: userUid.value}).then(result => {
-			if (result.data) {
-				if (result.data.paramValue) {
-					siteSettingInfo.value = JSON.parse(result.data.paramValue)
-					useSite.setSiteInfo(userUid.value, siteSettingInfo.value)
-				}
-			}
-		})
+		useSite.setSiteInfo(userUid.value, defaultSiteSettingInfo)
+		// siteSettingApi.queryOneDataByUserUid({userUid: userUid.value}).then(result => {
+		// 	if (result.data) {
+		// 		if (result.data.paramValue) {
+		// 			// TODO 临时解决
+		// 			// siteSettingInfo.value = JSON.parse(result.data.paramValue)
+		// 			siteSettingInfo.value = JSON.parse(result.data.paramValue)
+		// 			useSite.setSiteInfo(userUid.value, defaultSiteSettingInfo)
+		// 		}
+		// 	}
+		// })
 	}
 })
 </script>

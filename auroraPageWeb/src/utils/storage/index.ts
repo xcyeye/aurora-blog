@@ -1,7 +1,9 @@
+import {encrypto} from "@/utils/crypto";
+
 export const createLocalStorage = (key: string, value: any) => {
-  const valueStr = JSON.stringify(value, null, 2)
   // console.info(`存储值在本地 ${key} => ${valueStr}`);
-  localStorage.setItem(key, valueStr)
+  const json = encrypto(value);
+  localStorage.setItem(key, json as string)
 }
 
 export const cleanLocalStorage = (key: string) => {
