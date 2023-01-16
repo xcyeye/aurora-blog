@@ -153,8 +153,8 @@ export const useAuthStore = defineStore('auth-store', {
       const oauthPasswordType: OauthPasswordPo = {
         username: userName,
         password,
-        client_id: 'myjszl',
-        client_secret: '123456',
+        client_id: userName,
+        client_secret: password,
         grant_type: 'password'
       };
       const { data } = await authApi.loginByPassword(oauthPasswordType);
