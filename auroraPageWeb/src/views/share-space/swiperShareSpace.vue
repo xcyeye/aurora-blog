@@ -22,9 +22,11 @@
 				:modules="modules"
 				class="aurora-coze-slide-box aurora-coze-slide-radius"
 			>
-				<swiper-slide v-slot="{ isActive }" v-for="(item,index) in talkArr" :key="index" :style="setSlideItemStyle(index)" class="aurora-coze-slide-item aurora-coze-slide-radius">
+				<swiper-slide v-slot="{ isActive }" v-for="(item,index) in talkArr" :key="index" :style="setSlideItemStyle(index)"
+											class="aurora-coze-slide-item aurora-coze-slide-radius">
 					<slide-coze-mood-item @mood-comment="moodComment" @mood-love="moodLove" @mood-poster="moodPoster"
-																@mood-edit="moodEdit" @set-slide-bodyBg="setSlideBodyBg" :user-uid="userUid" :data="updateBgStyle(isActive,item)" :mood-item="item" :is-active="isActive" />
+																@mood-edit="moodEdit" @set-slide-bodyBg="setSlideBodyBg" :user-uid="userUid"
+																:mood-item="item" :is-active="isActive" :dataBg="updateBgStyle(isActive,item)" />
 				</swiper-slide>
 			</swiper>
 		</div>
@@ -89,7 +91,7 @@ export default defineComponent({
 				}
 			})
 		},
-		setSlideBodyBg(photoUrl: string) {
+		setSlideBodyBg(photoUrl: {photoUrl: string}) {
 			this.slideBodyBg = "--aurora-coze-slide-bgImg: url(" + photoUrl.photoUrl + ");"
 		},
 		moodComment(moodItem) {
@@ -126,17 +128,9 @@ export default defineComponent({
 		},
 		updateBgStyle(isActive: boolean, moodItem: TalkVo) {
 			if(isActive) {
-				if(StringUtil.haveLength(moodItem.pictureUids)) {
-					const pictureUidArr: Array<string> = moodItem.pictureUids?.split(",")!
-					for (let i = 0; i < pictureUidArr.length; i++) {
-						fileApi.queryOneDataByUid({uid: pictureUidArr[i]}).then(result => {
-							if (result.data && StringUtil.haveLength(result.data.path)) {
-								//将图片设置为背景图片
-								this.slideBodyBg = "--aurora-coze-slide-bgImg: url(" + result.data.path + ");"
-								return
-							}
-						})
-					}
+				if(StringUtil.haveLength(moodItem.pictureSrcList)) {
+					const pictureSrcArr: Array<string> = moodItem.pictureSrcList?.split(",")!
+					this.slideBodyBg = "--aurora-coze-slide-bgImg: url(" + pictureSrcArr[0] + ");"
 				}else {
 					//如果没有图片，那么则使用渐变颜色作为背景颜色
 					this.slideBodyBg = this.getInearGradientStyle()
@@ -154,6 +148,11 @@ export default defineComponent({
 		};
 	},
 	computed: {
+		getBgStyle() {
+			return (moodItem: TalkVo) => {
+				console.log(moodItem);
+			}
+		},
 		getUpdatedTime() {
 			let updatedAt = this.moodItem.createdAt;
 			let day = new Date(updatedAt).getDate();

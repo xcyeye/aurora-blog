@@ -1305,10 +1305,15 @@ body {
     cursor: default;
 }
 
-.aurora-coze-slide-photo-box img {
-    width: 0;
-    height: 0;
+.aurora-coze-slide-photo-box-li img {
+    height: 100%;
+    width: 100%;
 }
+
+/*.aurora-coze-slide-photo-box img {*/
+/*    width: 0;*/
+/*    height: 0;*/
+/*}*/
 
 .aurora-slide-operation-no-need {
     flex: 1;

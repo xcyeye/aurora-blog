@@ -38,12 +38,14 @@
           <li class="aurora-slide-item-font-common" v-html="moodItem.content"></li>
         </div>
 
-        <div class="aurora-slide-item-photos" v-if="photoArr">
+        <div class="aurora-slide-item-photos" v-if="getPictureArr">
           <ul class="aurora-coze-slide-photo-box">
-            <li class="aurora-coze-slide-photo-box-li" @click="setSlideBodyBg(item.path)" v-for="(item,index) in photoArr" :style="setBgUrl(item.path)" :key="index">
+            <li class="aurora-coze-slide-photo-box-li" @click="setSlideBodyBg(item)"
+								v-for="(item,index) in getPictureArr"
+								:style="setBgUrl(item)" :key="index">
               <!--<img id="aurora-coze-slide-photo-img" :src="item.path" alt="">-->
 							<!--<n-image :src="item.path" id="aurora-coze-slide-photo-img"/>-->
-							<n-image :src="item.path" :width="100"/>
+							<n-image :src="item" :width="100"/>
             </li>
           </ul>
         </div>
@@ -57,19 +59,13 @@ import gsap from "gsap";
 import {PropType} from "vue";
 import {TalkVo} from "@/bean/vo/article/TalkVo";
 import {useUserInfo} from "@/stores";
-import {useRouterPush} from "@/composables";
-import {FileVo} from "@/bean/vo/file/fileVo";
 import {StringUtil} from "@/utils";
 import {fileApi} from "@/service";
-
-const routerPush = useRouterPush()
-const photoArr: Array<FileVo> = []
 
 export default {
   name: "MoodItem",
   data() {
     return {
-			photoArr,
       hideMin: false,
       title: '',
       content: '',
@@ -95,17 +91,6 @@ export default {
   created() {
     let moodLike = this.moodItem.likeNumber
     gsap.to(this.$data, {duration: 1.5, cozeLikeTemp: moodLike, ease: 'sine'})
-		
-		// 查询图片
-		if (StringUtil.haveLength(this.moodItem.pictureUids)) {
-			this.moodItem.pictureUids.split(",").forEach((v: string) => {
-				fileApi.queryOneDataByUid({uid: v}).then(result => {
-					if (result.data) {
-						this.photoArr.push(result.data)
-					}
-				})
-			})
-		}
   },
   mounted() {
     if (document.body.clientWidth < 480) {
@@ -129,9 +114,15 @@ export default {
     })
   },
   computed: {
+		getPictureArr() {
+			if (!StringUtil.haveLength(this.moodItem.pictureSrcList)) return []
+			return this.moodItem.pictureSrcList.split(",")
+		},
+		StringUtil() {
+			return StringUtil
+		},
     setBgUrl() {
       return (photoUrl: string) => {
-				console.log(photoUrl);
         if (this.isActive) {
           return '--aurora-coze-slide-photo-bg: url("' + photoUrl + '");'
         }
@@ -213,7 +204,7 @@ export default {
     },
     updateBgStyle(isActive: string, bgImg: string) {
     },
-    moodComment(e,moodItem: TalkVo) {
+    moodComment(e: Event, moodItem: TalkVo) {
       this.$emit("moodComment", {
         moodItem
       })
@@ -261,7 +252,7 @@ export default {
         moodItem
       })
     },
-    moodLove(e,moodItem: TalkVo) {
+    moodLove(e: Event, moodItem: TalkVo) {
       new Promise((resolve,reject) => {
         if (!this.setLikeSuccess) {
           let loadingLikeStatus = setInterval(() =>{
@@ -277,17 +268,13 @@ export default {
         this.setLikeNum(moodItem)
       })
     },
-    moodPoster(e,moodItem: TalkVo) {
+    moodPoster(e: Event, moodItem: TalkVo) {
       this.$emit("moodPoster", {
         moodItem
       })
     },
-    moodEdit(e,moodItem: TalkVo) {
+    moodEdit(e: Event, moodItem: TalkVo) {
       this.$emit("moodEdit",moodItem)
-    },
-    openImg(e) {
-      const zoom = mediumZoom(document.querySelector("#aurora-coze-slide-photo-img"))
-      zoom.open()
     }
   }
 }
