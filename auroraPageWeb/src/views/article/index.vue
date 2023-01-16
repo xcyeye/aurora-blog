@@ -46,7 +46,7 @@
 					<div class="aurora-article-info-author">
 						<svg-icon icon="ri:link-m"/>
 						<span>本文链接: </span>
-						<span @click="copyContent(`/article/${articleInfo.userUid}/${articleInfo.uid}`, false)">{{`/article/${articleInfo.userUid}/${articleInfo.uid}`}}</span>
+						<span @click="copyContent(`${getHost()}/article/${articleInfo.userUid}/${articleInfo.uid}`, false)">{{`${getHost()}/article/${articleInfo.userUid}/${articleInfo.uid}`}}</span>
 					</div>
 					<div class="aurora-article-info-author">
 						<svg-icon icon="ri:time-fill"/>
@@ -75,7 +75,7 @@
 <script lang="ts" setup>
 import {computed, onBeforeMount, onMounted, ref} from 'vue';
 import {useSiteInfo, useUserInfo} from "@/stores";
-import {getRandomTagType, StringUtil} from "@/utils";
+import {getHost, getRandomTagType, StringUtil} from "@/utils";
 import {useRouter, onBeforeRouteUpdate} from "vue-router";
 import {useRouterPush} from "@/composables";
 import {isNotEmptyObject} from "@/utils/business";
