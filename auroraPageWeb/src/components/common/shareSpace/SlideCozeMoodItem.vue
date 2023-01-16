@@ -23,11 +23,18 @@
                 <span @click="moodComment($event,moodItem)" class="aurora-coze-font"></span>
               </div>
               <div :class="getMoodLike" class="mood-edit-single-common">
-								<svg-icon icon="mdi:heart-multiple"/>
-                <span :class="{'mood_like_love_active': moodLikeStatus}"
-											@click="moodLove($event,moodItem)"
-											class="aurora-coze-font"></span>&nbsp;
-                <span>{{getCozeMoodLink}}</span>
+								<!--<svg-icon icon="mdi:heart-multiple"/>-->
+                <!--<span :class="{'mood_like_love_active': moodLikeStatus}"-->
+								<!--			@click="moodLove($event,moodItem)"-->
+								<!--			class="aurora-coze-font"></span>&nbsp;-->
+                <!--<span>{{getCozeMoodLink}}</span>-->
+								<give-like :show-default-style="false"
+													 :give-like-info="moodItem"
+													 cookie-name="talk_give_like_status"
+													 :control-like-number="false"
+													 :update-like-num-request-method="updateTalkNumMethod"
+													 :like-number="moodItem.likeNumber"
+													 :show-like-num="true"/>
               </div>
             </div>
           </div>
@@ -65,6 +72,9 @@ import {PropType} from "vue";
 import {TalkVo} from "@/bean/vo/article/TalkVo";
 import {useUserInfo} from "@/stores";
 import {StringUtil} from "@/utils";
+import {ArticleVo} from "@/bean/vo/article/ArticleVo";
+import {articleApi, talkApi} from "@/service";
+import RequestResult = Service.RequestResult;
 
 export default {
   name: "MoodItem",
@@ -182,6 +192,12 @@ export default {
   },
   methods: {
 		useUserInfo,
+		finishGiveLikeAction () {
+			this.moodItem.likeNumber = this.moodItem.likeNumber ? (this.moodItem.likeNumber + 1) : 1
+		},
+		updateTalkNumMethod(talk: TalkVo): Promise<RequestResult<void>> {
+			return talkApi.updateTalkLikeNum(talk);
+		},
     setUpdatedTime() {
       let updatedAt = this.moodItem.createdAt;
       let minutes = new Date(updatedAt).getMinutes();
@@ -283,3 +299,27 @@ export default {
   }
 }
 </script>
+<style lang="css">
+.aurora-give-like-heart-svg-default {
+	color: #f5f5f5;
+}
+
+.aurora-give-like-heart-default-active {
+	color: #ef476f;
+}
+
+.aurora-give-like-heart-svg-default {
+	display: inline-block;
+}
+
+.aurora-give-like-heart-num-default {
+	display: inline-block;
+	margin-left: .5rem;
+}
+
+.aurora-give-like-heart-default {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+</style>

@@ -31,7 +31,14 @@ body {
 }
 
 .mood-edit-single-common {
-    flex: 1
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+    text-align: center
+}
+
+.mood-edit-single-common svg {
+    font-size: 1.5rem;
 }
 
 .aurora-coze-custom-edit:before {

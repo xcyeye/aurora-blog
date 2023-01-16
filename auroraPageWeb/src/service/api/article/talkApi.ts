@@ -51,6 +51,10 @@ function _baseApi() {
     return request.post<number>(`${apiPrefix}updateTalk`, data, baseAxiosRequestConfig);
   }
 
+  function updateTalkLikeNum(data: beanType) {
+    return request.post<void>(`${apiPrefix}updateTalkLikeNum`, data, baseAxiosRequestConfig);
+  }
+
   /**
    * 批量更新数据
    * @deprecated
@@ -94,7 +98,8 @@ function _baseApi() {
     logicDeleteData,
     physicalDeleteData,
     insertData,
-    batchInsertData
+    batchInsertData,
+    updateTalkLikeNum
   };
 }
 

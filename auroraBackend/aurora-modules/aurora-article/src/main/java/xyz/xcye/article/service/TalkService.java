@@ -11,6 +11,7 @@ import xyz.xcye.aurora.properties.AuroraProperties;
 import xyz.xcye.aurora.util.UserUtils;
 import xyz.xcye.core.dto.JwtUserInfo;
 import xyz.xcye.core.enums.ResponseStatusCodeEnum;
+import xyz.xcye.core.exception.article.ArticleException;
 import xyz.xcye.core.exception.user.UserException;
 import xyz.xcye.core.util.BeanUtils;
 import xyz.xcye.core.util.id.GenerateInfoUtils;
@@ -45,6 +46,17 @@ public class TalkService {
     public int physicalDeleteTalk(Long uid) {
         Assert.notNull(uid, "uid不能为null");
         return auroraTalkService.deleteById(uid);
+    }
+
+    public void updateTalkLikeNum(TalkPojo pojo) {
+        Talk talk = auroraTalkService.queryById(pojo.getUid());
+        AssertUtils.stateThrow(talk != null, () -> new ArticleException("此说说不存在"));
+        TalkPojo talkPojo = BeanUtils.copyProperties(talk, TalkPojo.class);
+        if (talkPojo.getLikeNumber() == null) {
+            talkPojo.setLikeNumber(0);
+        }
+        talkPojo.setLikeNumber(talkPojo.getLikeNumber() + 1);
+        auroraTalkService.updateById(BeanUtils.copyProperties(talkPojo, Talk.class));
     }
 
     @Transactional

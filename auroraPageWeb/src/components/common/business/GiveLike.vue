@@ -1,17 +1,18 @@
 <template>
-	<div class="aurora-give-like-heart" @click="handleClickLikeAction">
-		<div class="aurora-give-like-heart-svg" :class="giveLikeStatus ? 'aurora-give-like-heart-active' : ''">
+	<div :class="showDefaultStyle ? 'aurora-give-like-heart' : 'aurora-give-like-heart-default'" @click="handleClickLikeAction">
+		<div style="cursor: pointer" :class="getHeartSvgStyle">
 			<svg-icon icon="bi:suit-heart-fill"/>
 		</div>
-		<div v-if="showLikeNum" class="aurora-give-like-heart-num">{{likeNumber}}</div>
+		<div v-if="showLikeNum" :class="showDefaultStyle ? 'aurora-give-like-heart-num' : 'aurora-give-like-heart-num-default'">{{likeNumber}}</div>
 	</div>
 </template>
 
 <script lang="ts" setup>
-import {defineComponent, onMounted, ref, watch} from "vue";
+import {computed, defineComponent, onMounted, ref, watch} from "vue";
 import {isNotEmptyObject} from "@/utils/business";
 import {StringUtil} from "@/utils";
 import RequestResult = Service.RequestResult;
+import {getIcon} from "@iconify/vue";
 
 interface LikeInfo {
 	icon: string,
@@ -22,6 +23,7 @@ interface LikeInfo {
 	multiClickGiveLike?: boolean,
 	cookieName: string,
 	likeNumber?: number,
+	showDefaultStyle?: boolean,
 	updateLikeNumRequestMethod: (giveLikeInfo: any) => Promise<RequestResult<void>>
 }
 
@@ -30,13 +32,30 @@ defineComponent({name: 'GiveLike'});
 const props = withDefaults(defineProps<LikeInfo>(), {
 	icon: 'bi:suit-heart-fill',
 	showLikeNum: true,
-	multiClickGiveLike: false
+	multiClickGiveLike: false,
+	showDefaultStyle: true
 })
 
 const emits = defineEmits(['finishGiveLikeAction'])
 
 const effectiveGiveInfoStatus = ref(false)
 const giveLikeStatus = ref(false)
+
+const getHeartSvgStyle = computed(() => {
+	let className = ''
+	if (props.showDefaultStyle) {
+		className = 'aurora-give-like-heart-svg'
+	}else {
+		className = 'aurora-give-like-heart-svg-default'
+	}
+	if (giveLikeStatus.value && props.showDefaultStyle) {
+		className = className + " " + 'aurora-give-like-heart-active'
+	}
+	if (giveLikeStatus.value && !props.showDefaultStyle) {
+		className = className + " " + 'aurora-give-like-heart-default-active'
+	}
+	return className
+})
 
 const initGiveLikeStatus = () => {
 	if (!effectiveGiveInfoStatus.value) return
@@ -75,6 +94,7 @@ const updateLikeNum = () => {
 		props.updateLikeNumRequestMethod(props.giveLikeInfo).then(result => {
 			if (!result.error) {
 				storeGiveLikeStatus()
+				window.$message?.success('点赞成功 o(￣▽￣)ｄ')
 			}
 		})
 	}else {

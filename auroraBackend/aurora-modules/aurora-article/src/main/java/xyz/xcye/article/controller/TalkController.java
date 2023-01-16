@@ -5,8 +5,10 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
-import xyz.xcye.article.po.Talk;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import xyz.xcye.article.pojo.TalkPojo;
 import xyz.xcye.article.service.TalkService;
 import xyz.xcye.article.vo.TalkVO;
@@ -52,6 +54,13 @@ public class TalkController {
     @PostMapping("/physicalDeleteTalk")
     public int physicalDeleteTalk(@RequestBody TalkPojo talk) {
         return talkService.physicalDeleteTalk(talk.getUid());
+    }
+
+    @Operation(summary = "修改说说点赞数")
+    @ModifyOperation
+    @PostMapping("/updateTalkLikeNum")
+    public void updateTalkLikeNum(@Validated({Update.class, Default.class}) @RequestBody TalkPojo talkPojo) {
+        talkService.updateTalkLikeNum(talkPojo);
     }
 
     @Operation(summary = "根据条件查询说说")
