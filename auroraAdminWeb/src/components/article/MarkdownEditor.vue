@@ -13,7 +13,7 @@ import 'vditor/dist/index.css';
 import {useAuthStore, useThemeStore} from "@/store";
 import {fileApi} from "@/service";
 import {FileVo} from "@/theme/vo/file/fileVo";
-import {isImage} from "@/utils";
+import {isImage, StringUtil} from "@/utils";
 
 defineComponent({name: 'MarkdownEditor'});
 
@@ -198,6 +198,18 @@ const setVditorProperties = () => {
 	}
 }
 
+const setContent = () => {
+	console.debug("正在设置内容");
+	const time = setInterval(() => {
+		if (vditorRenderFinishFlag.value) {
+			if (vditor.value) {
+				vditor.value.setValue(props.renderMdContent as string)
+				clearInterval(time)
+			}
+		}
+	}, 2)
+}
+
 // 定义方法
 const renderVditor = () => {
 	setVditorProperties()
@@ -205,6 +217,9 @@ const renderVditor = () => {
 	vditor.value = new Vditor(vditorRef.value, vditorOptionConfig);
 	setTimeout(() =>{
 		vditorRenderFinishFlag.value = true
+		if (StringUtil.haveLength(props.renderMdContent)) {
+			setContent()
+		}
 	}, 10)
 }
 
@@ -225,15 +240,7 @@ const getAfterUploadFileContent = (fileVoInfoArr: FileVo[]): Promise<string> => 
 }
 
 watch(() => props.renderMdContent, () =>{
-	console.debug("正在设置内容");
-	const time = setInterval(() => {
-		if (vditorRenderFinishFlag.value) {
-			if (vditor.value) {
-				vditor.value.setValue(props.renderMdContent as string)
-				clearInterval(time)
-			}
-		}
-	}, 2)
+	setContent()
 })
 
 // 监听大纲

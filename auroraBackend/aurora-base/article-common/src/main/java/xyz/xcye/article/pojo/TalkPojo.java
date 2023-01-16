@@ -1,9 +1,9 @@
 package xyz.xcye.article.pojo;
 
-import lombok.Data;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
 import xyz.xcye.core.constant.FieldLengthConstant;
 import xyz.xcye.core.valid.Delete;
@@ -84,7 +84,7 @@ public class TalkPojo {
      * 此说说对应的图片uid集合
      */
     @Schema(title = "此说说对应的图片uid集合")
-    private String pictureUids;
+    private String pictureSrcList;
 
     /**
      * 1: 已删除

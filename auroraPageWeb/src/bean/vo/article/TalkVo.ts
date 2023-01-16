@@ -52,7 +52,7 @@ interface TalkVo {
   /**
    * 此说说对应的图片uid集合
    */
-  pictureUids?: string | null;
+  pictureSrcList?: string | null;
 
   /**
    * 1: 已删除

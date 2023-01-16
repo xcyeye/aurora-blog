@@ -1,13 +1,14 @@
 package xyz.xcye.article.po;
 
-import lombok.Data;
-import lombok.Builder;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-import java.io.Serializable;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.io.Serializable;
 
 /**
  * @table talk <br/>
@@ -91,7 +92,7 @@ private static final long serialVersionUID = 13247652346523L;
 	 * 此说说对应的图片uid集合
 	 */
 	@Schema(title = "此说说对应的图片uid集合")
-	private String pictureUids;
+	private String pictureSrcList;
 
 	/**
 	 * 1: 已删除

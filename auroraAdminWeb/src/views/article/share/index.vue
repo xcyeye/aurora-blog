@@ -26,7 +26,6 @@
 							</n-card>
 							<n-card hoverable class="rounded-16px">
 								<n-space vertical>
-									<n-text>内容</n-text>
 									<markdown-editor
 										:content-max-number="300"
 										:render-md-content="addStatus ? '' : currentTalkInfo.content"
@@ -137,15 +136,16 @@ const handleShowTalkInfoAction = (data: TalkVo) => {
 	showDrawer.value = true
 	addStatus.value = false
 
-	if (!StringUtil.haveLength(data.pictureUids)) return
-	data.pictureUids?.split(",").forEach(v => {
-		fileApi.queryOneDataByUid({uid: v}).then(result => {
-			if (!result.error && result.data) {
-				pictureInfoArr.value.push({
-					uid: result.data.uid!,
-					src: result.data.path!
-				})
-			}
+	if (!StringUtil.haveLength(data.pictureSrcList)) return
+	data.pictureSrcList?.split(",").forEach(v => {
+		// fileApi.queryOneDataByUid({uid: v}).then(result => {
+		// 	if (!result.error && result.data) {
+		//
+		// 	}
+		// })
+		pictureInfoArr.value.push({
+			uid: undefined,
+			src: v
 		})
 	})
 
@@ -355,10 +355,10 @@ const handleFinishUploadFile = (file: UploadFileInfo) => {
 		uid: file.thumbnailUrl!,
 		src: file.url!
 	})
-	if (!currentTalkInfo.value.pictureUids) {
-		currentTalkInfo.value.pictureUids = file.thumbnailUrl
+	if (!currentTalkInfo.value.pictureSrcList) {
+		currentTalkInfo.value.pictureSrcList = file.url
 	}else {
-		currentTalkInfo.value.pictureUids = currentTalkInfo.value.pictureUids + ',' + file.thumbnailUrl
+		currentTalkInfo.value.pictureSrcList = currentTalkInfo.value.pictureSrcList + ',' + file.url
 	}
 }
 
