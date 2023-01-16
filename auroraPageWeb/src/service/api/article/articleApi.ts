@@ -52,11 +52,11 @@ function _baseApi() {
   }
 
   function updateArticleLikeNum(data: beanType) {
-    return request.post<number>(`${apiPrefix}updateArticleLikeNum`, data, baseAxiosRequestConfig);
+    return request.post<void>(`${apiPrefix}updateArticleLikeNum`, data, baseAxiosRequestConfig);
   }
 
   function updateArticleReadNum(data: beanType) {
-    return request.post<number>(`${apiPrefix}updateArticleReadNum`, data, baseAxiosRequestConfig);
+    return request.post<void>(`${apiPrefix}updateArticleReadNum`, data, baseAxiosRequestConfig);
   }
 
   /**

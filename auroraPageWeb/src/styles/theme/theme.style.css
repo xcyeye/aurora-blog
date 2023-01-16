@@ -6038,3 +6038,31 @@ body::-webkit-scrollbar-thumb {
         height: calc(30vh);
     }
 }
+
+.aurora-give-like-box {
+    height: auto;
+    width: 100%;
+    /*background-color: red;*/
+}
+.aurora-give-like-common {
+    /*display: inline-block;*/
+}
+
+.aurora-give-like-heart-svg-box {
+    height: 2.5rem;
+    width: 2.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    padding: 1rem;
+    border-radius: 100px;
+    transition: all 1s;
+    background-color: palevioletred;
+    color: #ef476f;
+}
+
+.aurora-give-like-heart-svg {
+    font-size: 1.5rem;
+    padding: 1rem;
+}

@@ -1111,12 +1111,12 @@ body {
     width: 40%;
     display: flex;
     /*text-align: center;*/
-    transform: translateY(-600%);
+    /*transform: translateY(-600%);*/
     transition: all 1s;
 }
 
 .aurora-coze-slide-item:hover .aurora-slide-operation-box {
-    transform: translateX(0%);
+    /*transform: translateX(0%);*/
 }
 
 .aurora-slide-item-top-title {

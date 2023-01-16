@@ -19,14 +19,15 @@
             </div>
             <div class="aurora-slide-operation-box">
               <div class="mood-edit-single-common">
-                <span @click="moodComment($event,moodItem)" class="aurora-coze-font aurora-coze-custom-comment"></span>
+								<svg-icon icon="mdi:message-fast"/>
+                <span @click="moodComment($event,moodItem)" class="aurora-coze-font"></span>
               </div>
               <div :class="getMoodLike" class="mood-edit-single-common">
-                <span :class="{'mood_like_love_active': moodLikeStatus}" @click="moodLove($event,moodItem)" class="aurora-coze-font aurora-coze-custom-love"></span>&nbsp;
+								<svg-icon icon="mdi:heart-multiple"/>
+                <span :class="{'mood_like_love_active': moodLikeStatus}"
+											@click="moodLove($event,moodItem)"
+											class="aurora-coze-font"></span>&nbsp;
                 <span>{{getCozeMoodLink}}</span>
-              </div>
-              <div class="mood-edit-single-common">
-                <span @click="moodEdit($event,moodItem)" class="aurora-coze-font aurora-coze-custom-edit"></span>
               </div>
             </div>
           </div>

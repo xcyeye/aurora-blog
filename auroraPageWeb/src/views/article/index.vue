@@ -21,13 +21,23 @@
 					<div v-html="articleContent"></div>
 				</div>
 				
+				<!--<div class="aurora-article-like">-->
+				<!--	<div class="aurora-article-like-heart" @click="handleClickArticleLike">-->
+				<!--		<div class="aurora-article-like-heart-svg" :class="isClickLikeBut ? 'aurora-article-like-heart-active' : ''">-->
+				<!--			<svg-icon icon="bi:suit-heart-fill"/>-->
+				<!--		</div>-->
+				<!--	</div>-->
+				<!--	<div class="aurora-article-like-heart-num">{{articleInfo.likeNumber}}</div>-->
+				<!--</div>-->
 				<div class="aurora-article-like">
-					<div class="aurora-article-like-heart" @click="handleClickArticleLike">
-						<div class="aurora-article-like-heart-svg" :class="isClickLikeBut ? 'aurora-article-like-heart-active' : ''">
-							<svg-icon icon="bi:suit-heart-fill"/>
-						</div>
-					</div>
-					<div class="aurora-article-like-heart-num">{{articleInfo.likeNumber}}</div>
+					<give-like :like-number="articleInfo.likeNumber"
+										 :control-like-number="false"
+										 @finishGiveLikeAction="finishGiveLikeAction"
+										 :give-like-info="articleInfo"
+										 cookie-name="article_give_like"
+										 :show-like-num="true"
+										 :update-like-num-request-method="updateLikeNumMethod"
+										 :multi-click-give-like="false"/>
 				</div>
 				
 				<div class="aurora-article-tag" v-if="getArticleTag">
@@ -98,6 +108,7 @@ import Renderer from "markdown-it/lib/renderer";
 import Vditor from 'vditor'
 import {copyContent} from "@/plugins";
 import {Condition} from "@/bean/core/bean";
+import RequestResult = Service.RequestResult;
 
 const currentSiteInfo = ref<SiteSettingInfo>({})
 const useSite = useSiteInfo()
@@ -122,6 +133,10 @@ const getArticleCategory = computed((): Array<string> => {
 	if (!StringUtil.haveLength(articleInfo.value.categoryNames)) return []
 	return articleInfo.value.categoryNames!.split(",")
 })
+
+const updateLikeNumMethod = (article: ArticleVo): Promise<RequestResult<void>> => {
+	return articleApi.updateArticleLikeNum(article);
+}
 
 const wrap = (wrapped) => (...args) => {
 	const [tokens, idx] = args
@@ -273,6 +288,10 @@ const handleClickArticleLike = () => {
 			// this.setLikeSuccess = true
 		}
 	})
+}
+
+const finishGiveLikeAction = () => {
+	articleInfo.value.likeNumber = articleInfo.value.likeNumber ? (articleInfo.value.likeNumber + 1) : 1
 }
 
 const handleGoArticlePreviousAndNext = (isPreviousArticle: boolean) => {

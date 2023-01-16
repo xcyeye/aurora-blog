@@ -30,6 +30,7 @@ declare module '@vue/runtime-core' {
     DropdownTransition: typeof import('./../components/common/DropdownTransition.vue')['default']
     Footer: typeof import('./../components/common/footer/Footer.vue')['default']
     FooterItem: typeof import('./../components/common/footer/FooterItem.vue')['default']
+    GiveLike: typeof import('./../components/common/business/GiveLike.vue')['default']
     Home: typeof import('./../components/common/Home.vue')['default']
     HomeBottom: typeof import('./../components/common/home/HomeBottom.vue')['default']
     HomeContent: typeof import('./../components/common/home/HomeContent.vue')['default']

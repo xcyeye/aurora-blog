@@ -14,10 +14,10 @@
 }
 
 .aurora-article-like {
-    margin-top: 1rem;
-    width: 100%;
-    height: 5rem;
-    font-size: 2rem;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .aurora-article-like-heart {
