@@ -7,6 +7,9 @@
 								 :is-home-page="false"
 								 :is-show-top-img="true"
 								 :is-show-head-line="true">
+		<template #topImageSlot>
+			<div ref="articleTopScroll" style="width: 0; height: 0"></div>
+		</template>
 		<template #center1>
 			<main :style="$store.state.borderRadiusStyle + $store.state.opacityStyle"
 						class="page sidebar-single-enter-animate blog-article" id="article-page">
@@ -92,22 +95,20 @@
 </template>
 
 <script lang="ts" setup>
-import {computed, onBeforeMount, onMounted, ref, watch} from 'vue';
+import {computed, onBeforeMount, onMounted, ref} from 'vue';
 import {ArticleStoreBean, useArticleStore, useSiteInfo, useUserInfo} from "@/stores";
 import {getHost, getLocalTime, getRandomTagType, StringUtil} from "@/utils";
-import {useRouter, onBeforeRouteUpdate} from "vue-router";
+import {useRouter} from "vue-router";
 import {useRouterPush} from "@/composables";
 import {isNotEmptyObject} from "@/utils/business";
 import {ArticleVo} from "@/bean/vo/article/ArticleVo";
 import {articleApi, userApi} from "@/service";
 import {siteSettingApi} from "@/service/api/admin/siteSettingApi";
 import MarkdownIt from 'markdown-it';
-import hljs from 'highlight.js'
-import Token from "markdown-it/lib/token";
-import Renderer from "markdown-it/lib/renderer";
-import Vditor from 'vditor'
+import hljs from 'highlight.js';
 import {copyContent} from "@/plugins";
 import {Condition} from "@/bean/core/bean";
+import smoothscroll from 'smoothscroll-polyfill';
 import RequestResult = Service.RequestResult;
 
 const currentSiteInfo = ref<SiteSettingInfo>({})
@@ -123,6 +124,7 @@ const articleContent = ref<string>('')
 const isClickLikeBut = ref(false)
 const articleStore = useArticleStore()
 const articleStoreInfo = ref<ArticleStoreBean>({})
+const articleTopScroll = ref<Element>()
 
 const getArticleTag = computed((): Array<string> => {
 	if (!StringUtil.haveLength(articleInfo.value.tagNames)) return []
@@ -186,6 +188,11 @@ const renderMarkdownContent = (article: ArticleVo) => {
 		return defaultRender(tokens, idx, options, env, self)
 	}
 	articleContent.value = markdown.render(article.content!)
+	
+	smoothscroll.polyfill();
+	if (articleTopScroll.value) {
+		articleTopScroll.value.scrollIntoView({behavior: "smooth"})
+	}
 }
 
 const updateReadNum = (article: ArticleVo) => {

@@ -28,6 +28,7 @@
         :class="{'sidebar-single-enter-animate': showSidebarAnimateClass}"
     >
       <div class="page-sidebar">
+				<slot name="topImageSlot"/>
         <top-image :is-show-top-img="isShowTopImg"
 									 :article-info="articleInfo"
                    :is-show-head-line="isShowHeadLine"
