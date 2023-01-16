@@ -81,6 +81,32 @@
     margin-right: .5rem;
 }
 
+.aurora-article-next {
+    margin-top: 1rem;
+    height: auto;
+    width: 100%;
+    display: flex;
+}
+
+.aurora-article-next-common {
+    flex: 1;
+}
+
+.aurora-article-next-previous {
+    padding-left: 2rem;
+}
+
+.aurora-article-next-next {
+    text-align: right;
+    padding-right: 2rem;
+}
+
+.aurora-article-next-common span {
+    cursor: pointer;
+    color: #fe938c;
+    font-weight: bold;
+}
+
 @media screen and (max-width:719px) {
     .aurora-article-like {
         height: 3rem;

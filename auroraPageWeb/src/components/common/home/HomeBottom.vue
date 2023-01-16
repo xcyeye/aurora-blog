@@ -34,6 +34,7 @@ import {ArticleVo} from "@/bean/vo/article/ArticleVo";
 import {Condition, PageData} from "@/bean/core/bean";
 import smoothscroll from 'smoothscroll-polyfill';
 import RequestResult = Service.RequestResult;
+import {useArticleStore} from "@/stores";
 
 interface Props {
 	userUid?: string,
@@ -61,6 +62,7 @@ const condition = ref<Condition>({
 })
 const homeBottomScroll = ref<Element>()
 const pageTotal = ref<number>(0)
+const articleStore = useArticleStore()
 
 const setImgDom = () => {
 	setTimeout(() => {
@@ -82,6 +84,16 @@ const setImgDom = () => {
 	},5)
 }
 
+const resetArticleStore = () => {
+	articleStore.setArticleInfo({
+		condition: props.condition,
+		articleArr: articleArr.value,
+		currentPage: currentPage.value,
+		currentPageSize: currentSize.value,
+		queryArticleDataMethod: props.queryArticleDataMethod
+	})
+}
+
 const loadArticleData = async () => {
   return new Promise((resolve, reject) => {
 		// if (!props.userUid) {
@@ -97,10 +109,12 @@ const loadArticleData = async () => {
 				currentPage.value = result.data.pageNum!
 				currentSize.value = result.data.pageSize!
 				resolve(null)
+				resetArticleStore()
 			}else {
 				articleArr.value = []
 				pageTotal.value = 0
 				resolve(null)
+				resetArticleStore()
 			}
 		})
 	})
@@ -116,5 +130,7 @@ const handlePageChangeAction = async (page: number) => {
 	}
 }
 
-onBeforeMount(() => loadArticleData())
+onBeforeMount(() => {
+	loadArticleData()
+})
 </script>

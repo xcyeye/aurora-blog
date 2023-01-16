@@ -38,6 +38,15 @@
 					<svg-icon icon="material-symbols:content-copy-rounded"/> <n-tag class="aurora-article-tag-single" v-for="(item, index) in getArticleCategory" :type="getRandomTagType()" :bordered="false" style="border-radius: 16px" :key="index">{{item}}</n-tag>
 				</div>
 				
+				<div class="aurora-article-next">
+					<div class="aurora-article-next-previous aurora-article-next-common">
+						<span @click="handleGoArticlePreviousAndNext(true)">前一篇</span>
+					</div>
+					<div class="aurora-article-next-next aurora-article-next-common">
+						<span @click="handleGoArticlePreviousAndNext(false)">下一篇</span>
+					</div>
+				</div>
+				
 				<div class="aurora-article-info">
 					<div class="aurora-article-info-author">
 						<svg-icon icon="material-symbols:copyright"/>
@@ -73,9 +82,9 @@
 </template>
 
 <script lang="ts" setup>
-import {computed, onBeforeMount, onMounted, ref} from 'vue';
-import {useSiteInfo, useUserInfo} from "@/stores";
-import {getHost, getRandomTagType, StringUtil} from "@/utils";
+import {computed, onBeforeMount, onMounted, ref, watch} from 'vue';
+import {ArticleStoreBean, useArticleStore, useSiteInfo, useUserInfo} from "@/stores";
+import {getHost, getLocalTime, getRandomTagType, StringUtil} from "@/utils";
 import {useRouter, onBeforeRouteUpdate} from "vue-router";
 import {useRouterPush} from "@/composables";
 import {isNotEmptyObject} from "@/utils/business";
@@ -88,6 +97,7 @@ import Token from "markdown-it/lib/token";
 import Renderer from "markdown-it/lib/renderer";
 import Vditor from 'vditor'
 import {copyContent} from "@/plugins";
+import {Condition} from "@/bean/core/bean";
 
 const currentSiteInfo = ref<SiteSettingInfo>({})
 const useSite = useSiteInfo()
@@ -100,6 +110,8 @@ const friendLinkSiteInformation = ref<FriendLinkSiteInformation>({})
 const articleInfo = ref<ArticleVo>({})
 const articleContent = ref<string>('')
 const isClickLikeBut = ref(false)
+const articleStore = useArticleStore()
+const articleStoreInfo = ref<ArticleStoreBean>({})
 
 const getArticleTag = computed((): Array<string> => {
 	if (!StringUtil.haveLength(articleInfo.value.tagNames)) return []
@@ -111,31 +123,6 @@ const getArticleCategory = computed((): Array<string> => {
 	return articleInfo.value.categoryNames!.split(",")
 })
 
-onMounted(() => {
-	//如果手机端侧边栏打开的，那么就关闭
-	// if (this.$store.state.openMobileSidebar) {
-	// 	this.$store.commit("setOpenMobileSidebar",{
-	// 		openMobileSidebar: false
-	// 	})
-	// }
-	
-	let cookie = document.cookie;
-	new Promise((resolve,reject) => {
-		const cookieList = cookie.split(';')
-		for(let i = 0; i < cookieList.length; i++) {
-			const arr = cookieList[i].split('=')
-			let cookieName =  'article_like_status_' + articleUid.value
-			let cookieOriginName = arr[0].replace(" ","")
-			if (cookieName === cookieOriginName) {
-				if (arr[1] === '1') {
-					isClickLikeBut.value = true
-				}
-			}
-		}
-		resolve(null)
-	})
-})
-
 const wrap = (wrapped) => (...args) => {
 	const [tokens, idx] = args
 	const token = tokens[idx]
@@ -144,44 +131,62 @@ const wrap = (wrapped) => (...args) => {
 		+ `<!--afterbegin-->${rawCode}<!--beforeend--></div><!--afterend-->`
 }
 
+const updateRouterParam = () => {
+  // router.currentRoute.value.params.pageUid = articleInfo.value.uid!
+	router.push({
+		path: `/article/${userUid.value}/${articleInfo.value.uid}`
+	})
+}
+
+const renderMarkdownContent = (article: ArticleVo) => {
+	// 渲染markdown内容
+	const markdown = new MarkdownIt()
+	markdown.set({
+		highlight: function (str, lang) {
+			if (lang && hljs.getLanguage(lang)) {
+				try {
+					return hljs.highlight(lang, str, true).value;
+				} catch (__) {}
+			}
+			return hljs.highlightAuto(str).value; // 使用额外的默认转义
+		}
+	})
+	
+	// 代码块增强
+	const { fence, code_block: codeBlock } = markdown.renderer.rules
+	markdown.renderer.rules.fence = wrap(fence)
+	markdown.renderer.rules.code_block = wrap(codeBlock)
+	
+	
+	let defaultRender = markdown.renderer.rules.image!
+	markdown.renderer.rules.image = function (tokens, idx, options, env, self) {
+		let token = tokens[idx]
+		let picSrcIndex = token.attrIndex('src')
+		let picSrc = token.attrs![picSrcIndex][1]
+		let picAltIndex = token.attrIndex('alt')
+		let picAlt = token.attrs![picAltIndex]
+		if (/\.(png|jpg|gif|jpeg|webp)$/.test(picSrc)) {
+			return `<div role="none" class="n-image n-image--preview-disabled"><img src="${picSrc}" loading="eager" data-error="true" data-preview-src="${picSrc}" style="object-fit: fill;" data-group-id=""></div>`;
+		}
+		return defaultRender(tokens, idx, options, env, self)
+	}
+	articleContent.value = markdown.render(article.content!)
+}
+
+const updateReadNum = (article: ArticleVo) => {
+	// 修改文章的阅读数
+	articleApi.updateArticleReadNum({uid: article.uid}).then(result => {
+		if (!result.error) {
+			articleInfo.value.readNumber = (articleInfo.value.readNumber ? articleInfo.value.readNumber : 0)  + 1
+		}
+	})
+}
+
 const loadArticleInfo = () => {
 	articleApi.queryOneDataByUid({uid: articleUid.value}).then(result => {
 		if (result.data) {
 			articleInfo.value = result.data
-			
-			// 渲染markdown内容
-			const markdown = new MarkdownIt()
-			markdown.set({
-				highlight: function (str, lang) {
-					if (lang && hljs.getLanguage(lang)) {
-						try {
-							return hljs.highlight(lang, str, true).value;
-						} catch (__) {}
-					}
-					return hljs.highlightAuto(str).value; // 使用额外的默认转义
-				}
-			})
-			
-			// 代码块增强
-			const { fence, code_block: codeBlock } = markdown.renderer.rules
-			markdown.renderer.rules.fence = wrap(fence)
-			markdown.renderer.rules.code_block = wrap(codeBlock)
-			
-			
-			let defaultRender = markdown.renderer.rules.image!
-			markdown.renderer.rules.image = function (tokens, idx, options, env, self) {
-				let token = tokens[idx]
-				let picSrcIndex = token.attrIndex('src')
-				let picSrc = token.attrs![picSrcIndex][1]
-				let picAltIndex = token.attrIndex('alt')
-				let picAlt = token.attrs![picAltIndex]
-				if (/\.(png|jpg|gif|jpeg|webp)$/.test(picSrc)) {
-					return `<div role="none" class="n-image n-image--preview-disabled"><img src="${picSrc}" loading="eager" data-error="true" data-preview-src="${picSrc}" style="object-fit: fill;" data-group-id=""></div>`;
-				}
-				return defaultRender(tokens, idx, options, env, self)
-			}
-			articleContent.value = markdown.render(result.data.content!)
-			
+			renderMarkdownContent(result.data)
 			// 获取此用户的信息，如果没有，则加载
 			if (!isNotEmptyObject(useUser.getUserInfo(articleInfo.value.userUid!))) {
 				userApi.queryOneDataByUid({uid: result.data.userUid}).then(result => {
@@ -203,12 +208,25 @@ const loadArticleInfo = () => {
 			}
 		}
 		
-		// 修改文章的阅读数
-		articleApi.updateArticleReadNum({uid: result.data?.uid}).then(result => {
-			if (!result.error) {
-				articleInfo.value.readNumber = (articleInfo.value.readNumber ? articleInfo.value.readNumber : 0)  + 1
+		updateReadNum(result.data!)
+	})
+}
+
+const setLikeStatus = () => {
+	let cookie = document.cookie;
+	new Promise((resolve,reject) => {
+		const cookieList = cookie.split(';')
+		for(let i = 0; i < cookieList.length; i++) {
+			const arr = cookieList[i].split('=')
+			let cookieName =  'article_like_status_' + articleUid.value
+			let cookieOriginName = arr[0].replace(" ","")
+			if (cookieName === cookieOriginName) {
+				if (arr[1] === '1') {
+					isClickLikeBut.value = true
+				}
 			}
-		})
+		}
+		resolve(null)
 	})
 }
 
@@ -257,6 +275,89 @@ const handleClickArticleLike = () => {
 	})
 }
 
+const handleGoArticlePreviousAndNext = (isPreviousArticle: boolean) => {
+	// 如果articleStore中没有存储，则前一篇和下一篇便是该文章的前一篇或者是下一篇
+	if (!isNotEmptyObject(articleStoreInfo.value)) {
+		const conditionTemp: Condition = {
+			otherUid: userUid.value,
+			delete: false,
+			status: true
+		}
+		if (isPreviousArticle) {
+			conditionTemp.startTime = '1997-12-31 23:59:59'
+			conditionTemp.endTime = articleInfo.value.createTime
+			conditionTemp.orderBy = 'create_time asc'
+		}else {
+			conditionTemp.startTime = articleInfo.value.createTime
+			conditionTemp.endTime = getLocalTime(new Date(), false)
+			conditionTemp.orderBy = 'create_time desc'
+		}
+		articleApi.queryListDataByCondition(conditionTemp).then(result => {
+			if (result.data && result.data.result) {
+				articleStore.setArticleInfo({
+					condition: conditionTemp,
+					articleArr: result.data.result,
+					currentPage: result.data.pageNum!,
+					currentPageSize: result.data.pageSize!,
+					queryArticleDataMethod: articleApi.queryListDataByCondition
+				})
+				articleStoreInfo.value = articleStore.getArticleInfo()
+				articleInfo.value = result.data.result[0]
+				renderMarkdownContent(articleInfo.value)
+				setLikeStatus()
+				updateReadNum(articleInfo.value)
+				updateRouterParam()
+			}else {
+				window.$message?.success('没有更多文章啦┭┮﹏┭┮')
+			}
+		})
+	}else {
+		const index = articleStoreInfo.value.articleArr?.map(v => v.uid).indexOf(articleInfo.value.uid)
+		if (isPreviousArticle) {
+			// 如果是第一篇不执行操作，如果是最后一篇，则重新请求文章
+			if (index === 0 && articleStoreInfo.value.condition?.pageNum === 1) {
+				window.$message?.success('没有更多文章啦┭┮﹏┭┮')
+				return
+			}
+		}
+		// 如果是该数组中的最后一篇，则查询
+		if (index === articleStoreInfo.value.articleArr!.length - 1 && !isPreviousArticle) {
+			articleStoreInfo.value.condition!.pageNum = articleStoreInfo.value.currentPage! + 1
+			articleStoreInfo.value.queryArticleDataMethod!(articleStoreInfo.value.condition as Condition).then(result => {
+				if (result.data && result.data.result) {
+					const articleStoreInfoTemp = articleStore.getArticleInfo()
+					articleStoreInfoTemp.articleArr = result.data.result
+					articleStoreInfoTemp.currentPage = result.data.pageNum!
+					articleStoreInfoTemp.currentPageSize = result.data.pageSize!
+					articleStoreInfoTemp.articleArr = result.data.result
+					articleStore.setArticleInfo(articleStoreInfoTemp)
+					articleInfo.value = result.data.result[0]
+					articleStoreInfo.value = articleStore.getArticleInfo()
+					renderMarkdownContent(articleInfo.value)
+					setLikeStatus()
+					updateReadNum(articleInfo.value)
+					updateRouterParam()
+				}
+			})
+		}else {
+			// 前一篇和后一篇都在数组中
+			if (isPreviousArticle) {
+				articleInfo.value = articleStoreInfo.value.articleArr![index! - 1]
+				renderMarkdownContent(articleInfo.value)
+				setLikeStatus()
+				updateReadNum(articleInfo.value)
+				updateRouterParam()
+			}else {
+				articleInfo.value = articleStoreInfo.value.articleArr![index! + 1]
+				renderMarkdownContent(articleInfo.value)
+				setLikeStatus()
+				updateReadNum(articleInfo.value)
+				updateRouterParam()
+			}
+		}
+	}
+}
+
 onBeforeMount(() => {
 	userUid.value = router.currentRoute.value.params.userUid as string
 	articleUid.value = router.currentRoute.value.params.pageUid as string
@@ -268,6 +369,18 @@ onBeforeMount(() => {
 	}
 	
 	loadArticleInfo()
+	
+	articleStoreInfo.value = articleStore.getArticleInfo()
+})
+
+onMounted(() => {
+	//如果手机端侧边栏打开的，那么就关闭
+	// if (this.$store.state.openMobileSidebar) {
+	// 	this.$store.commit("setOpenMobileSidebar",{
+	// 		openMobileSidebar: false
+	// 	})
+	// }
+	setLikeStatus()
 })
 
 </script>
