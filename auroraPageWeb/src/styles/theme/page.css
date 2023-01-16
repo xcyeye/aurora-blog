@@ -116,4 +116,12 @@
     .aurora-article-like-heart-svg {
         padding: .5rem;
     }
+
+    .aurora-article-next-previous {
+        padding-left: 0;
+    }
+
+    .aurora-article-next-next {
+        padding-right: 0;
+    }
 }
