@@ -1,7 +1,9 @@
 <template>
 	<navbar :user-uid="userUid"/>
 	<home-content :user-uid="userUid" :is-home="true"/>
-	<home-bottom :condition="condition" :query-article-data-method="queryDataMethod" :user-uid="userUid"/>
+	<home-bottom :condition="condition"
+							 :query-article-data-method="queryDataMethod"
+							 :user-uid="userUid"/>
 	<Footer :current-site-info="siteSettingInfo"
 					:is-home="true"
 					:is-show-footer="true"/>
@@ -33,7 +35,10 @@ const useSite = useSiteInfo()
 const useUser = useUserInfo()
 const condition = ref<Condition>({
 	delete: false,
-	status: true
+	status: true,
+	pageSize: 2,
+	pageNum: 1,
+	orderBy: 'create_time desc, update_time desc'
 })
 
 const queryDataMethod = (condition: Condition): Promise<RequestResult<PageData<ArticleVo>>> => {

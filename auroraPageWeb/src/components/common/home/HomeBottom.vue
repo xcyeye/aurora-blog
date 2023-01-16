@@ -2,7 +2,8 @@
   <!--这是首页下面的文章模板-->
   <div :style="$store.state.borderRadiusStyle +
        $store.state.opacityStyle + $store.state.fontColorStyle +
-       $store.state.fontFamilyStyle + $store.state.filterBlurStyle" ref="home-bottom" class="home-bottom" id="home-bottom">
+       $store.state.fontFamilyStyle + $store.state.filterBlurStyle"
+			 ref="home-bottom" class="home-bottom" id="home-bottom">
     <div ref="homeBottomScroll"></div>
     <div class="home-page-tag" id="home-page-tag">
       <home-page-item :index="index"
@@ -13,8 +14,9 @@
 			<n-space justify="center">
 				<n-pagination v-model:page="currentPage"
 											@update:page="handlePageChangeAction"
+											:page-size="currentSize"
 											:item-count="pageTotal"
-											:default-page-size="10" :default-page="1" />
+											:default-page="1" />
 			</n-space>
 
     </div>
@@ -49,6 +51,7 @@ const props = withDefaults(defineProps<Props>(), {
 
 const articleArr = ref<Array<ArticleVo>>([])
 const currentPage = ref<number>(1)
+const currentSize = ref<number>(1)
 const condition = ref<Condition>({
 	delete: false,
 	status: true,
@@ -91,6 +94,8 @@ const loadArticleData = async () => {
 			if (result.data && result.data.result) {
 				articleArr.value = result.data.result
 				pageTotal.value = result.data.total!
+				currentPage.value = result.data.pageNum!
+				currentSize.value = result.data.pageSize!
 				resolve(null)
 			}else {
 				articleArr.value = []
@@ -102,7 +107,7 @@ const loadArticleData = async () => {
 }
 
 const handlePageChangeAction = async (page: number) => {
-	condition.value.pageNum = page
+	props.condition.pageNum = page
 	await loadArticleData()
 	currentPage.value = page
 	smoothscroll.polyfill();

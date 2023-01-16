@@ -54,6 +54,8 @@ interface SiteSettingInfo {
 	},
 	randomColor?: Array<string>,
 	homePageLazyLoadingImg?: string,
+	/** 默认请求接口方法 */
+	defaultCoverRequestInterface?: string,
 	friendLinkSiteInformation?: FriendLinkSiteInformation,
 	// 手机端，是否在页面的底部显示侧边栏列表，默认开启，如果需要开启，请将此值设置为FALSE
 	mobilePageSidebar?: boolean,

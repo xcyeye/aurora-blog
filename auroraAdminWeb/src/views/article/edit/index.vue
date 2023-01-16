@@ -110,7 +110,7 @@
 							</n-tabs>
 							<n-tabs type="line" animated>
 								<n-tab-pane name="category-dynamic-tag" tab="类别">
-									<n-dynamic-tags :render-tag="customRenderTag" size="medium" type="success" v-model:value="categoryArr" />
+									<n-dynamic-tags :render-tag="customRenderCategory" :bordered="false" size="medium" type="success" v-model:value="categoryArr" />
 								</n-tab-pane>
 								<n-tab-pane name="category-select" tab="选择">
 									<n-select size="small" v-model:value="categoryArr" multiple :options="allCategoryOptions" />
@@ -474,6 +474,26 @@ const customRenderTag = (tag: string, index: number) => {
 			closable: true,
 			onClose: () => {
 				tagArr.value.splice(index, 1)
+			},
+			bordered: false,
+			style: {
+				borderRadius: '5px'
+			}
+		},
+		{
+			default: () => tag
+		}
+	)
+}
+
+const customRenderCategory = (tag: string, index: number) => {
+	return h(
+		NTag,
+		{
+			type: 'warning',
+			closable: true,
+			onClose: () => {
+				categoryArr.value.splice(index, 1)
 			},
 			bordered: false,
 			style: {

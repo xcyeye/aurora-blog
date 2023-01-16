@@ -16,6 +16,7 @@
 <script lang="ts">
 import {PropType} from "vue";
 import {StringUtil} from "@/utils";
+import blogConfig from '@/config/blogConfig.json'
 
 export default {
   name: "Footer",
@@ -52,9 +53,14 @@ export default {
 			let themeCopyright: string = ''
 			if (showThemeCopyright === undefined || showThemeCopyright == null || showThemeCopyright) {
 				//默认为TRUE，显示页脚主题版权
-				themeCopyright = "theme&nbsp;<a href='https://github.com/xcyeye/Aurora-blog-system' target='_blank'>AuroraBlogSystem</a>" +
-					"&nbsp;by&nbsp;<a href='https://xcye.xyz/' target='_blank'>xcye</a>"
-				// this.footerArr.push(themeCopyright)
+				if (blogConfig.projectInfo.copyrightInfo) {
+					themeCopyright = blogConfig.projectInfo.copyrightInfo
+				}else {
+					themeCopyright = `theme&nbsp;<a href='${blogConfig.projectInfo.projectUrl}' target='_blank'>${blogConfig.projectInfo.projectName}</a>
+&nbsp;by&nbsp;<a href='${blogConfig.projectInfo.homePageUrl}' target='_blank'>
+${blogConfig.projectInfo.author}</a>`
+					// this.footerArr.push(themeCopyright)
+				}
 			}
 			let set = new Set()
 			for (let i = 0; i < this.footerArr.length; i++) {

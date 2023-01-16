@@ -82,6 +82,7 @@ export const defaultSiteSettingInfo: SiteSettingInfo = {
         "#5fa8d3", "#62b6cb", "#b892ff",
     ],
     homePageLazyLoadingImg: 'https://picture.xcye.xyz/image-20220328221012634.png',
+    defaultCoverRequestInterface: 'https://pic-tool.xcye.xyz/pic/rmimg',
     friendLinkSiteInformation: {
         //站点标题
         title: "Aurora-bean",

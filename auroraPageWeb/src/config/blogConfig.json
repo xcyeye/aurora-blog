@@ -1,4 +1,12 @@
 {
+  "projectInfo": {
+    "projectUrl": "https://github.com/xcyeye/Aurora-blog-system",
+    "homePageUrl": "https://aurora.xcye.xyz",
+    "version": "1.0.0",
+    "projectName": "auroraBlogSystem",
+    "author": "xcye",
+    "copyrightInfo": "project&nbsp;<a href='https://github.com/xcyeye/Aurora-blog-system' target='_blank'>auroraBlog</a>&nbsp;by&nbsp;<a href='https://xcye.xyz' target='_blank'>xcye</a>"
+  },
   "randomColor": [
     "#ffcad4",
     "#d8e2dc",

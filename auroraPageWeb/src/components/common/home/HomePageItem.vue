@@ -28,7 +28,7 @@
         </div>
       </div>
       <img id="home-page-img" class="home-page-img" ref="home-page-img"
-					 :data-src="pageItem.coverPictureUrl"
+					 :data-src="getCoverImg"
 					 :src="currentSiteInfo.homePageLazyLoadingImg" alt="">
     </div>
 
@@ -70,6 +70,16 @@ const getGradualClass = computed(() => {
 		return 'home-page-gradual-title-item-left'
 	}else {
 		return 'home-page-gradual-title-item-right'
+	}
+})
+
+const getCoverImg = computed(() => {
+	if (StringUtil.haveLength(props.pageItem.coverPictureUrl)) {
+		return props.pageItem.coverPictureUrl
+	}else if (StringUtil.haveLength(currentSiteInfo.value.defaultCoverRequestInterface)) {
+		return  currentSiteInfo.value.defaultCoverRequestInterface
+	}else {
+		return currentSiteInfo.value.homePageLazyLoadingImg
 	}
 })
 
