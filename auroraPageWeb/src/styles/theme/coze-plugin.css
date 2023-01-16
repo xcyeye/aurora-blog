@@ -761,7 +761,7 @@ body {
     width: 100%;
     height: 100vh;
     position: relative;
-    overflow-y: auto
+    overflow-y: auto;
 }
 
 .v-waterfall-content::-webkit-scrollbar {
@@ -777,7 +777,7 @@ body {
 }
 
 .v-waterfall-item img {
-    width: 98%;
+    /*width: 98%;*/
     height: auto;
     border-radius: 6px;
 }
@@ -813,7 +813,7 @@ body {
 
 @media screen and (max-width:550px) {
     .v-waterfall-item img {
-        width: 90%;
+        width: 100%;
     }
     .waterfull {
         margin-bottom: 1rem;
@@ -826,7 +826,7 @@ body {
         margin-bottom: 1rem;
     }
     .v-waterfall-item img {
-        width: 95%;
+        width: 100%;
     }
 }
 

@@ -12,19 +12,21 @@
        </div>
      </div>
    </div>
-   <div class="photo-bg" :class="showBgColor ? 'show-bg-color' : ''"></div>
-   <div class="photo-waterfull">
-     <div class="waterfull">
-       <div class="v-waterfall-content" id="v-waterfall">
-         <div :data="waterfallList.length" v-for="(img, index) in waterfallList" :key="img.src"
-              class="v-waterfall-item hover-fall hover-div"
-              :style="getStyle(img)">
-					 <n-image @click="handleClickImage(img.src)" id="v-waterfall-item-img" style="opacity: 1" class="hover-img hover-div medium-zoom-image" :src="img.src"/>
-           <!--<img style="opacity: 1" @mouseenter="imgEnter" @mouseleave="imgLeave" @click="openImg" class="medium-zoom-image hover-img hover-div" :src="img.src" alt="">-->
-         </div>
-       </div>
-     </div>
-   </div>
+   <div class="photo-bg" :class="showBgColor ? 'show-bg-color' : ''"/>
+	 <n-scrollbar>
+		 <div class="photo-waterfull">
+			 <div class="waterfull">
+				 <div class="v-waterfall-content" id="v-waterfall" :style="`margin-top: ${imageIntervalWidth / 2}px`">
+					 <div v-for="(img, index) in waterfallList" :key="img.src"
+								class="v-waterfall-item hover-fall hover-div"
+								:style="getStyle(img)">
+						 <n-image @click="handleClickImage(img.src)" id="v-waterfall-item-img" style="opacity: 1;" class="hover-img hover-div medium-zoom-image" :src="img.src"/>
+						 <!--<img style="opacity: 1" @mouseenter="imgEnter" @mouseleave="imgLeave" @click="openImg" class="medium-zoom-image hover-img hover-div" :src="img.src" alt="">-->
+					 </div>
+				 </div>
+			 </div>
+		 </div>
+	 </n-scrollbar>
  </template>
 
  <script lang="ts">
@@ -50,17 +52,17 @@
    name: "v-waterfall",
    data() {
      return {
+			 waterfallImgCol: 5,
        waterfallList,
        // waterfallImgWidth: 100,
        waterfallImgWidth: 200,// 每个盒子的宽度
-       // waterfallImgCol: 5,// 瀑布流的列数
-       waterfallImgCol: 5,// 瀑布流的列数
        waterfallImgRight: 0,// 每个盒子的右padding
        waterfallImgBottom: -45,// 每个盒子的下padding
        waterfallDeviationHeight: [],
        clientWidth: 500,
        height: 500,
-       loadingAnimateSuccess: false
+       loadingAnimateSuccess: false,
+			 imageIntervalWidth: 10
      }
    },
 	 props: {
@@ -72,26 +74,60 @@
 			 default() {
 				 return true
 			 }
+		 },
+		 pcWaterfallImgCol: {
+			 type: Number,
+			 default() {
+				 return 5
+			 }
+		 },
+		 mobileWaterfallImgCol: {
+			 type: Number,
+			 default() {
+				 return 2
+			 }
+		 },
+		 topHeight: {
+			 type: Number,
+			 default() {
+				 return 0
+			 }
+		 },
+		 leftWidth: {
+			 type: Number,
+			 default() {
+				 return 0
+			 }
 		 }
 	 },
 	 emits: ['handleClickImage'],
 	 mounted() {
      //$(".loadingAnimate").fadeOut(400)
-     setTimeout(() => {
-       this.clientWidth = document.body.offsetWidth
-       this.height = document.body.offsetHeight
-       //this.clientWidth = this.clientWidth  * 0.97
-
-       if (this.clientWidth < 550) {
-         this.waterfallImgCol = 2
-         this.waterfallImgWidth = (this.clientWidth - this.waterfallImgRight * 2) / 2
-       }else {
-         this.waterfallImgWidth =(this.clientWidth - this.waterfallImgRight * 5)  / this.waterfallImgCol
-       }
-			 this.setLoadAnimate()
-     },200)
+		 this.setWaterfallCol()
+		 
+		 window.addEventListener('resize', this.setWaterfallCol)
    },
    methods: {
+		 setWaterfallCol() {
+			 this.waterfallList = []
+			 const waterfallTime = setInterval(() => {
+				 if (document.getElementById("v-waterfall")) {
+					 clearInterval(waterfallTime)
+					 this.clientWidth = document.getElementById("v-waterfall")!.offsetWidth
+					 this.height = document.body.offsetHeight
+					 //this.clientWidth = this.clientWidth  * 0.97
+					 if (this.clientWidth < 550) {
+						 this.imageIntervalWidth = 10
+						 this.waterfallImgCol = this.mobileWaterfallImgCol
+					 }else {
+						 this.imageIntervalWidth = 15
+						 this.waterfallImgCol = this.pcWaterfallImgCol
+					 }
+					 this.waterfallImgWidth =(this.clientWidth - this.waterfallImgRight * this.waterfallImgCol)  / this.waterfallImgCol
+					 this.setLoadAnimate()
+				 }
+			 }, 10)
+		 },
 		 handleClickImage(pictureSrc: string) {
 			 this.$emit("handleClickImage",{
 				 photoUrl: pictureSrc
@@ -175,7 +211,7 @@
        imgData.top = waterfallDeviationHeight[minIndex];
        imgData.left = minIndex * (waterfallImgRight + waterfallImgWidth);
        // waterfallDeviationHeight[minIndex] += imgData.height + waterfallImgBottom;// 不加文字的盒子高度
-       waterfallDeviationHeight[minIndex] += imgData.height + waterfallImgBottom + 56;// 加了文字的盒子高度，留出文字的地方（这里设置56px)
+			 waterfallDeviationHeight[minIndex] += imgData.height;// 加了文字的盒子高度，留出文字的地方（这里设置56px)
        this.waterfallList.push(imgData);
      },
      filterMin() {
@@ -192,7 +228,9 @@
      getStyle() {
        return (img: ImageInfo) => {
          let interval = (this.clientWidth - this.waterfallImgWidth * this.waterfallImgCol) /2
-				 return {top:img.top! + 20 +'px', left:img.left! + interval + 10 +'px', width: this.waterfallImgWidth + 'px', height:img.height}
+				 // return {top:img.top! + 20 +'px', left:img.left! + interval + 10 +'px', width: this.waterfallImgWidth + 'px', height:img.height}
+				 return {top:img.top! +'px', left:img.left! + (this.imageIntervalWidth / 2) + interval +'px', width: this.waterfallImgWidth - this.imageIntervalWidth + 'px', height:img.height}
+				 // return {top:img.top! + this.topHeight +'px', left:img.left! + this.leftWidth +'px', width: this.waterfallImgWidth + 'px', height:img.height}
        }
      }
    }

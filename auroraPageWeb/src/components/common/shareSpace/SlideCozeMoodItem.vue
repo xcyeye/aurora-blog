@@ -39,15 +39,20 @@
         </div>
 
         <div class="aurora-slide-item-photos" v-if="getPictureArr">
-          <ul class="aurora-coze-slide-photo-box">
-            <li class="aurora-coze-slide-photo-box-li" @click="setSlideBodyBg(item)"
-								v-for="(item,index) in getPictureArr"
-								:style="setBgUrl(item)" :key="index">
-              <!--<img id="aurora-coze-slide-photo-img" :src="item.path" alt="">-->
-							<!--<n-image :src="item.path" id="aurora-coze-slide-photo-img"/>-->
-							<n-image :src="item" :width="100"/>
-            </li>
-          </ul>
+					<photo-waterfall :show-bg-color="false"
+													 :pc-waterfall-img-col="4"
+													 :mobile-waterfall-img-col="2"
+													 @handleClickImage="setSlideBodyBg"
+													 :picture-src-list="getPictureArr"/>
+          <!--<ul class="aurora-coze-slide-photo-box">-->
+          <!--  <li class="aurora-coze-slide-photo-box-li" @click="setSlideBodyBg(item)"-->
+					<!--			v-for="(item,index) in getPictureArr"-->
+					<!--			:style="setBgUrl(item)" :key="index">-->
+          <!--    &lt;!&ndash;<img id="aurora-coze-slide-photo-img" :src="item.path" alt="">&ndash;&gt;-->
+					<!--		&lt;!&ndash;<n-image :src="item.path" id="aurora-coze-slide-photo-img"/>&ndash;&gt;-->
+					<!--		<n-image :src="item" :width="100"/>-->
+          <!--  </li>-->
+          <!--</ul>-->
         </div>
       </div>
     </div>
@@ -191,9 +196,9 @@ export default {
       gsap.to(this.$data, {duration: 2, cozeSecondTemp: seconds, ease: 'sine'})
       gsap.to(this.$data, {duration: 2, cozeHourTemp: hour, ease: 'sine'})
     },
-    setSlideBodyBg(photoUrl: string) {
+    setSlideBodyBg(photoInfo:{photoUrl: string}) {
       this.$emit("setSlideBodyBg",{
-        photoUrl: photoUrl
+        photoUrl: photoInfo.photoUrl
       })
     },
     //点击头像回到上一步网页
