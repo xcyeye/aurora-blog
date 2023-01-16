@@ -47,6 +47,11 @@ const router = createRouter({
       path: '/article/:userUid/:pageUid',
       name: 'article',
       component: () => import('../views/article/index.vue')
+    },
+    {
+      path: '/photo/:userUid',
+      name: 'photo',
+      component: () => import('../views/photo/index.vue')
     }
   ]
 })

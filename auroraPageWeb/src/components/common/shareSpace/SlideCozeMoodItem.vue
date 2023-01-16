@@ -54,13 +54,11 @@
 </template>
 
 <script lang="ts">
-import mediumZoom from "medium-zoom";
 import gsap from "gsap";
 import {PropType} from "vue";
 import {TalkVo} from "@/bean/vo/article/TalkVo";
 import {useUserInfo} from "@/stores";
 import {StringUtil} from "@/utils";
-import {fileApi} from "@/service";
 
 export default {
   name: "MoodItem",
