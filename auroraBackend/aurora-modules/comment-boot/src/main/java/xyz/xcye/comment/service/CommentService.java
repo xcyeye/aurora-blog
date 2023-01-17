@@ -145,7 +145,6 @@ public class CommentService {
         if (StringUtils.hasLength(pojo.getPath())) {
             Condition<Long> condition = new Condition<>();
             condition.setKeyword(pojo.getPath());
-            condition.setPageSize(900);
             condition.setOrderBy("create_time desc");
             PageData<CommentVO> commentVOPageData = queryListCommentByCondition(condition);
             if (commentVOPageData != null) {

@@ -3,10 +3,10 @@
 					:is-show-side-bar="false" :user-uid="userUid" :is-show-top-img="true" :is-show-head-line="false">
 		<template #center1>
 			<!--<CozeLogin @coze-login="cozeLogin"></CozeLogin>-->
-			<CozeMood :user-uid="userUid" @coze-cancel-edit="cozeCancelEdit" @mood-edit="moodEdit" @coze-success="cozeSuccess"></CozeMood>
+			<CozeMood :user-uid="userUid" @coze-cancel-edit="cozeCancelEdit" @mood-edit="moodEdit" @coze-success="cozeSuccess"/>
 		</template>
 		<template #center2>
-			<comment v-show="showComment" :path-name="$route.path" />
+			<blog-comment/>
 		</template>
 	</aurora-common>
 </template>
