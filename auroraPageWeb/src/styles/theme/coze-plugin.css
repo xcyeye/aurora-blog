@@ -442,8 +442,8 @@ body {
 
     #coze-mood-item-img img {
         border-radius: 40px;
-        height: 3.8rem;
-        width: 3.8rem;
+        /*height: 3.8rem;*/
+        /*width: 3.8rem;*/
         cursor: pointer
     }
 
@@ -481,8 +481,8 @@ body {
 
 @media screen and (min-width:719px) {
     #coze-mood-item-img img {
-        height: 40%;
-        width: 40%;
+        /*height: 40%;*/
+        /*width: 40%;*/
         cursor: pointer
     }
 }

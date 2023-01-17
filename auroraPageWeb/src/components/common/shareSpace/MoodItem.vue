@@ -4,7 +4,7 @@
       <div class="mood-item-left mood-item-img-parent" id="mood-item-left">
         <div class="mood-item-img" id="coze-mood-item-img">
           <!--<img :src="useUserInfo().getUserInfo(userUid).avatar" alt="">-->
-          <n-avatar :src="useUserInfo().getUserInfo(userUid).avatar" round :size="50"/>
+          <n-avatar :src="useUserInfo().getUserInfo(userUid).avatar" :size="50" round/>
         </div>
       </div>
       <div class="mood-item-right" id="mood-item-right">
@@ -13,7 +13,7 @@
             <span v-html="moodItem.content"></span>
             <div class="coze-mood-time">
               <span>@{{useUserInfo().getUserInfo(userUid).username}}</span>
-              <span :data="getUpdatedTime">&nbsp;&nbsp;发布于: {{cozeYear}}-{{cozeMonth}}-{{cozeDay}}</span>
+              <span :data="getUpdatedTime">&nbsp;&nbsp;发布于: {{cozeYear}}-{{cozeMonth}}-{{cozeDay}} {{cozeHourTemp}}:{{cozeMinuteTemp}}:{{cozeSecondTemp}}</span>
             </div>
             <slot name="coze-mood-content"></slot>
           </div>
@@ -38,15 +38,23 @@
       <div class="mood-edit-right">
         <slot name="coze-mood-bottom-left"></slot>
         <div class="mood-edit-single-common">
-          <span @click="moodComment($event,moodItem)" class="aurora-coze-font aurora-coze-custom-comment"></span>
-        </div>
+          <!--<span @click="moodComment($event,moodItem)" class="aurora-coze-font aurora-coze-custom-comment"></span>-->
+        	<talk-comment :talk-info="moodItem"/>
+				</div>
         <div :class="getMoodLike" class="mood-edit-single-common">
-          <span :class="{'mood_like_love_active': moodLikeStatus}" @click="moodLove($event,moodItem)" class="aurora-coze-font aurora-coze-custom-love"></span>&nbsp;
-          <span>{{getCozeMoodLink}}</span>
+					<give-like :show-default-style="false"
+										 :give-like-info="moodItem"
+										 cookie-name="talk_give_like_status"
+										 :control-like-number="false"
+										 :update-like-num-request-method="updateTalkNumMethod"
+										 :like-number="moodItem.likeNumber"
+										 :show-like-num="false"/>
+          <!--<span :class="{'mood_like_love_active': moodLikeStatus}" @click="moodLove($event,moodItem)" class="aurora-coze-font aurora-coze-custom-love"></span>&nbsp;-->
+          <!--<span>{{getCozeMoodLink}}</span>-->
         </div>
-        <div class="mood-edit-single-common">
-          <span @click="moodEdit($event,moodItem)" class="aurora-coze-font aurora-coze-custom-edit"></span>
-        </div>
+        <!--<div class="mood-edit-single-common">-->
+        <!--  <span @click="moodEdit($event,moodItem)" class="aurora-coze-font aurora-coze-custom-edit"></span>-->
+        <!--</div>-->
         <slot name="coze-mood-bottom-right"></slot>
       </div>
     </div>
@@ -61,7 +69,8 @@ import {TalkVo} from "@/bean/vo/article/TalkVo";
 import {useUserInfo} from "@/stores";
 import {FileVo} from "@/bean/vo/file/fileVo";
 import {StringUtil} from "@/utils";
-import {fileApi} from "@/service";
+import {fileApi, talkApi} from "@/service";
+import RequestResult = Service.RequestResult;
 
 const pictureArr: Array<FileVo> = []
 export default {
@@ -76,6 +85,9 @@ export default {
       cozeYearTemp: 0,
       cozeMonthTemp: 0,
       cozeDayTemp: 0,
+      cozeHourTemp: 0,
+      cozeMinuteTemp: 0,
+      cozeSecondTemp: 0,
       cozeLikeTemp: 0,
       showImageHeight: false
     }
@@ -136,9 +148,15 @@ export default {
       let day = new Date(updatedAt).getDate();
       let month = new Date(updatedAt).getMonth() + 1;
       let year = new Date(updatedAt).getFullYear();
+      let hours = new Date(updatedAt).getHours();
+      let minutes = new Date(updatedAt).getMinutes();
+      let seconds = new Date(updatedAt).getSeconds();
       gsap.to(this.$data, {duration: 1.1, cozeYearTemp:year, ease: 'sine'})
       gsap.to(this.$data, {duration: 2, cozeMonthTemp: month, ease: 'sine'})
       gsap.to(this.$data, {duration: 2, cozeDayTemp: day, ease: 'sine'})
+      gsap.to(this.$data, {duration: 1, cozeHourTemp: hours, ease: 'sine'})
+      gsap.to(this.$data, {duration: 1, cozeMinuteTemp: minutes, ease: 'sine'})
+      gsap.to(this.$data, {duration: 1, cozeSecondTemp: seconds, ease: 'sine'})
     },
     getMoodLike() {
       if (this.moodLikeStatus) {
@@ -148,6 +166,9 @@ export default {
   },
   methods: {
 		useUserInfo,
+		updateTalkNumMethod(talk: TalkVo): Promise<RequestResult<void>> {
+			return talkApi.updateTalkLikeNum(talk);
+		},
     getLocalTime(time: string | number | Date) {
       let date = new Date(time);
       let day = date.getDate()
@@ -237,3 +258,12 @@ export default {
   }
 }
 </script>
+<style lang="css">
+.aurora-give-like-heart-svg-default {
+	color: #f5f5f5;
+}
+
+.aurora-give-like-heart-default-active {
+	color: #ef476f;
+}
+</style>

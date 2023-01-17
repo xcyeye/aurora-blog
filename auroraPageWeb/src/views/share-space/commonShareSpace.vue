@@ -6,7 +6,12 @@
 			<CozeMood :user-uid="userUid" @coze-cancel-edit="cozeCancelEdit" @mood-edit="moodEdit" @coze-success="cozeSuccess"/>
 		</template>
 		<template #center2>
-			<blog-comment/>
+			<blog-comment
+				:page-uid="userUid"
+				:page-path="`^/showSpace/${userUid}.*`"
+				:show-comment-but="true"
+				reply-page-type="TALK"
+				:user-uid="userUid"/>
 		</template>
 	</aurora-common>
 </template>

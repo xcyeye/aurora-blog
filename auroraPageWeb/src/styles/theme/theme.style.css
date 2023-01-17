@@ -848,7 +848,7 @@ li {
     position: relative;
     display: block;
     z-index: 2;
-    margin: 0 auto;
+    margin: 0 auto 3rem auto;
     border-radius: var(--borderRadius);
     overflow: hidden
 }
@@ -5454,7 +5454,7 @@ body::-webkit-scrollbar-thumb {
     cursor: pointer;
     width: 30%;
     margin: 0 auto;
-    margin-bottom: 1rem;
+    margin-bottom: 1.5rem;
     text-align: center;
     border-radius: var(--borderRadius);
     background-color: rgba(242, 242, 242, var(--opacity));
@@ -5630,10 +5630,6 @@ body::-webkit-scrollbar-thumb {
 
 .box-common {
     margin-bottom: 3rem
-}
-
-.box {
-    margin-bottom: 3rem;
 }
 
 #article-page {

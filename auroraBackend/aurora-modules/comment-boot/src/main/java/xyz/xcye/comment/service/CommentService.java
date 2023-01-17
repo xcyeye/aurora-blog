@@ -146,6 +146,8 @@ public class CommentService {
             Condition<Long> condition = new Condition<>();
             condition.setKeyword(pojo.getPath());
             condition.setOrderBy("create_time desc");
+            // TODO 暂时未做加载更多评论
+            condition.setPageSize(99999);
             PageData<CommentVO> commentVOPageData = queryListCommentByCondition(condition);
             if (commentVOPageData != null) {
                 if (pojo.getCommentUidArr() == null) {
