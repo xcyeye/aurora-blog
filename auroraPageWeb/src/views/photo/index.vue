@@ -5,13 +5,14 @@
 		<!--								 :mobile-waterfall-img-col="2"-->
 		<!--								 :pc-waterfall-img-col="2"-->
 		<!--								 :show-bg-color="false"/>-->
-		<give-like icon="mdi:cards-heart"
-							 cookie-name="article_cookie"
-							 :multi-click-give-like="false"
-							 like-number-field-name="likeNumber"
-							 :give-like-info="articleInfo"
-							 :control-like-number="true"
-							 :update-like-num-request-method="queryDataMethod"/>
+		<!--<give-like icon="mdi:cards-heart"-->
+		<!--					 cookie-name="article_cookie"-->
+		<!--					 :multi-click-give-like="false"-->
+		<!--					 like-number-field-name="likeNumber"-->
+		<!--					 :give-like-info="articleInfo"-->
+		<!--					 :control-like-number="true"-->
+		<!--					 :update-like-num-request-method="queryDataMethod"/>-->
+		<talk-comment/>
 	</div>
 </template>
 
@@ -23,6 +24,7 @@ import {ArticleVo} from "@/bean/vo/article/ArticleVo";
 import {articleApi, talkApi} from "@/service";
 import {TalkVo} from "@/bean/vo/article/TalkVo";
 import RequestResult = Service.RequestResult;
+import TalkComment from "@/components/common/shareSpace/TalkComment.vue";
 
 defineComponent({name: 'index'});
 

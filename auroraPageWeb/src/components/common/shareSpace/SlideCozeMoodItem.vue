@@ -19,8 +19,7 @@
             </div>
             <div class="aurora-slide-operation-box">
               <div class="mood-edit-single-common">
-								<svg-icon icon="mdi:message-fast"/>
-                <span @click="moodComment($event,moodItem)" class="aurora-coze-font"></span>
+								<talk-comment :talk-info="moodItem"/>
               </div>
               <div :class="getMoodLike" class="mood-edit-single-common">
 								<!--<svg-icon icon="mdi:heart-multiple"/>-->
