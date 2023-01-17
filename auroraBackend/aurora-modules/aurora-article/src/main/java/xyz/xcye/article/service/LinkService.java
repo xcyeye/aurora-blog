@@ -184,8 +184,11 @@ public class LinkService {
      */
     private void setCategory(Link link) {
         String categoryName = link.getCategoryName();
-        AssertUtils.stateThrow(StringUtils.hasLength(categoryName),
-                () -> new LinkException(ResponseStatusCodeEnum.PARAM_NOT_COMPLETE.getMessage() + " categoryName"));
+        if (!StringUtils.hasLength(categoryName)) {
+            return;
+        }
+        // AssertUtils.stateThrow(StringUtils.hasLength(categoryName),
+        //         () -> new LinkException(ResponseStatusCodeEnum.PARAM_NOT_COMPLETE.getMessage() + " categoryName"));
         CategoryVO categoryVO = categoryService.selectByTitle(categoryName);
         if (categoryVO == null) {
             // 插入
