@@ -1,32 +1,28 @@
  <template>
-   <div class="photo">
-     <div class="photo-center">
-       <div id="photo-li">
-       </div>
-     </div>
-     <div :style="getLoadingAnimate" :class="showBgColor ? 'loadingAnimateColor' : ''" class="loadingAnimate">
-       <div class="loader">
-         <div class="inner one"></div>
-         <div class="inner two"></div>
-         <div class="inner three"></div>
-       </div>
-     </div>
-   </div>
-   <div class="photo-bg" :class="showBgColor ? 'show-bg-color' : ''"/>
-	 <n-scrollbar>
-		 <div class="photo-waterfull">
-			 <div class="waterfull">
-				 <div class="v-waterfall-content" id="v-waterfall" :style="`margin-top: ${imageIntervalWidth / 2}px`">
-					 <div v-for="(img, index) in waterfallList" :key="img.src"
-								class="v-waterfall-item hover-fall hover-div"
-								:style="getStyle(img)">
-						 <n-image @click="handleClickImage(img.src)" id="v-waterfall-item-img" style="opacity: 1;" class="hover-img hover-div medium-zoom-image" :src="img.src"/>
-						 <!--<img style="opacity: 1" @mouseenter="imgEnter" @mouseleave="imgLeave" @click="openImg" class="medium-zoom-image hover-img hover-div" :src="img.src" alt="">-->
+   <div class="photo-box">
+		 <div :style="getLoadingAnimate" :class="showBgColor ? 'loadingAnimateColor' : ''" class="photo-loading-box loadingAnimate">
+			 <div class="loader">
+				 <div class="inner one"></div>
+				 <div class="inner two"></div>
+				 <div class="inner three"></div>
+			 </div>
+		 </div>
+		 <div class="photo-bg" :class="showBgColor ? 'show-bg-color' : ''"/>
+		 <n-scrollbar>
+			 <div class="photo-waterfull">
+				 <div class="waterfull">
+					 <div class="v-waterfall-content" id="v-waterfall" :style="`margin-top: ${imageIntervalWidth / 2}px`">
+						 <div v-for="(img, index) in waterfallList" :key="img.src"
+									class="v-waterfall-item hover-fall hover-div"
+									:style="getStyle(img)">
+							 <n-image @click="handleClickImage(img.src)" id="v-waterfall-item-img" style="opacity: 1;" class="hover-img hover-div medium-zoom-image" :src="img.src"/>
+							 <!--<img style="opacity: 1" @mouseenter="imgEnter" @mouseleave="imgLeave" @click="openImg" class="medium-zoom-image hover-img hover-div" :src="img.src" alt="">-->
+						 </div>
 					 </div>
 				 </div>
 			 </div>
-		 </div>
-	 </n-scrollbar>
+		 </n-scrollbar>
+	 </div>
  </template>
 
  <script lang="ts">

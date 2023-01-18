@@ -1,10 +1,10 @@
 <template>
 	<div class="test">
-		<!--<photo-waterfall @handleClickImage="handleClickImage"-->
-		<!--								 :picture-src-list="pictureSrcList"-->
-		<!--								 :mobile-waterfall-img-col="2"-->
-		<!--								 :pc-waterfall-img-col="2"-->
-		<!--								 :show-bg-color="false"/>-->
+		<photo-waterfall @handleClickImage="handleClickImage"
+										 :picture-src-list="pictureSrcList"
+										 :mobile-waterfall-img-col="2"
+										 :pc-waterfall-img-col="2"
+										 :show-bg-color="true"/>
 		<!--<give-like icon="mdi:cards-heart"-->
 		<!--					 cookie-name="article_cookie"-->
 		<!--					 :multi-click-give-like="false"-->
@@ -12,7 +12,7 @@
 		<!--					 :give-like-info="articleInfo"-->
 		<!--					 :control-like-number="true"-->
 		<!--					 :update-like-num-request-method="queryDataMethod"/>-->
-		<talk-comment/>
+		<!--<talk-comment/>-->
 	</div>
 </template>
 
@@ -44,5 +44,11 @@ const pictureSrcList: Array<string> = ['http://127.0.0.1/aurora-upload/png/2023/
 </script>
 
 <style scoped lang="css">
-
+.test {
+	width: calc(50vw);
+	height: calc(50vh);
+	position: fixed;
+	bottom: 0;
+	background-color: red;
+}
 </style>

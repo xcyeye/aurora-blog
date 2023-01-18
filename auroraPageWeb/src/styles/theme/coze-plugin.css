@@ -751,11 +751,9 @@ body {
 }
 
 .photo-bg {
-    position: fixed;
-    top: 0;
-    left: 0;
+    position: relative;
     z-index: -33;
-    height: 100vh;
+    height: 100%;
 }
 
 .show-bg-color {
@@ -793,8 +791,9 @@ body {
 }
 
 .loadingAnimate {
-    position: fixed;
-    height: 100vh;
+    /*position: fixed;*/
+    /*height: 100vh;*/
+    height: 100%;
     width: 100%;
     z-index: 19;
 }
@@ -803,13 +802,29 @@ body {
     background-image: linear-gradient(0deg, #fff1eb 0, #ace0f9)
 }
 
+.photo-box {
+    position: relative;
+    height: 100%;
+    width: 100%;
+}
+
 .photo {
+    /*top: 0;*/
+    /*right: 0;*/
+    /*position: absolute;*/
+    /*height: var(--navbar-height);*/
+    position: relative;
+    text-align: center;
+    height: 100%;
+    width: 100%
+}
+
+.photo-loading-box {
+    position: absolute;
     top: 0;
     right: 0;
-    position: absolute;
-    height: var(--navbar-height);
-    text-align: center;
-    width: 100%
+    height: 100%;
+    width: 100%;
 }
 
 .photo-center {
