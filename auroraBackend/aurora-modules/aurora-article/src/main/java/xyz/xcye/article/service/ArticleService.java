@@ -5,12 +5,15 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
+import xyz.xcye.article.dao.ext.AuroraArticleExtDao;
 import xyz.xcye.article.po.Article;
 import xyz.xcye.article.pojo.ArticlePojo;
 import xyz.xcye.article.pojo.CategoryPojo;
 import xyz.xcye.article.pojo.TagPojo;
 import xyz.xcye.article.util.TimeUtils;
 import xyz.xcye.article.vo.ArticleVO;
+import xyz.xcye.article.vo.CategoryVO;
+import xyz.xcye.article.vo.TagVO;
 import xyz.xcye.aurora.properties.AuroraProperties;
 import xyz.xcye.aurora.util.UserUtils;
 import xyz.xcye.core.dto.JwtUserInfo;
@@ -25,7 +28,7 @@ import xyz.xcye.data.entity.Condition;
 import xyz.xcye.data.entity.PageData;
 import xyz.xcye.data.util.PageUtils;
 
-import java.util.Arrays;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -44,6 +47,9 @@ public class ArticleService {
     private TagService tagService;
     @Autowired
     private CategoryService categoryService;
+
+    @Autowired
+    private AuroraArticleExtDao auroraArticleExtDao;
 
     public int logicDeleteArticle(Long uid) {
         Assert.notNull(uid, "uid不能为null");
@@ -82,6 +88,10 @@ public class ArticleService {
     public PageData<ArticleVO> queryListArticleByCondition(Condition<Long> condition) {
         Assert.notNull(condition, "查询条件不能为null");
         return PageUtils.copyPageDataResult(auroraArticleService.queryListByCondition(condition), ArticleVO.class);
+    }
+
+    public ArticleVO queryListArticleByTagOrCategory(ArticlePojo pojo) {
+        return queryArticleByTagInfo(pojo);
     }
 
     public ArticleVO queryArticleByUid(Long uid) {
@@ -196,5 +206,61 @@ public class ArticleService {
             return;
         }
         article.setTimingPublishTime(DateUtils.parse(article.getTimingPublishTime()));
+    }
+
+    /**
+     * 根据标签信息查询对应的文章
+     * @param pojo
+     * @return
+     */
+    private ArticleVO queryArticleByTagInfo(ArticlePojo pojo) {
+        if (pojo.getTagTitleList() == null) {
+            pojo.setTagTitleList(new ArrayList<>());
+        }
+        if (pojo.getCategoryTitleList() == null) {
+            pojo.setCategoryTitleList(new ArrayList<>());
+        }
+        if (pojo.getTagUidList() != null && !pojo.getTagUidList().isEmpty()) {
+            // 查询标签名
+            pojo.getTagUidList().forEach(v -> {
+                TagVO tagVO = tagService.queryTagByUid(v);
+                if (tagVO != null) {
+                    pojo.getTagTitleList().add(tagVO.getTitle());
+                }
+            });
+        }
+
+        if (pojo.getCategoryUidList() != null && !pojo.getCategoryUidList().isEmpty()) {
+            // 查询标签名
+            pojo.getCategoryUidList().forEach(v -> {
+                CategoryVO categoryVO = categoryService.queryCategoryByUid(v);
+                if (categoryVO != null) {
+                    pojo.getCategoryTitleList().add(categoryVO.getTitle());
+                }
+            });
+        }
+
+        ArticleVO articleVO = new ArticleVO();
+        List<Map<String, List<ArticleVO>>> tagArticleMapList = new ArrayList<>();
+        List<Map<String, List<ArticleVO>>> categoryArticleMapList = new ArrayList<>();
+        pojo.getTagTitleList().forEach(title -> {
+            List<Article> articleList = auroraArticleExtDao.queryListArticleByTagOrCategory(new ArticlePojo() {{
+                setTagTitleList(Collections.singletonList(title));
+            }});
+            Map<String, List<ArticleVO>> map = new HashMap<>();
+            map.put(title, BeanUtils.copyList(articleList, ArticleVO.class));
+            tagArticleMapList.add(map);
+        });
+        pojo.getCategoryTitleList().forEach(title -> {
+            List<Article> articleList = auroraArticleExtDao.queryListArticleByTagOrCategory(new ArticlePojo() {{
+                setTagTitleList(Collections.singletonList(title));
+            }});
+            Map<String, List<ArticleVO>> map = new HashMap<>();
+            map.put(title, BeanUtils.copyList(articleList, ArticleVO.class));
+            categoryArticleMapList.add(map);
+        });
+        articleVO.setTagArticleList(tagArticleMapList);
+        articleVO.setCategoryArticleList(categoryArticleMapList);
+        return articleVO;
     }
 }

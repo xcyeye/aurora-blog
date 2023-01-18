@@ -90,4 +90,11 @@ public class ArticleController {
     public PageData<ArticleVO> queryListArticleByCondition(@RequestBody Condition<Long> condition) {
         return articleService.queryListArticleByCondition(condition);
     }
+
+    @Operation(summary = "通过标签或者类别查询对应的文章")
+    @PostMapping("/queryListArticleByTagOrCategory")
+    @SelectOperation
+    public ArticleVO queryListArticleByTagOrCategory(@RequestBody ArticlePojo pojo) {
+        return articleService.queryListArticleByTagOrCategory(pojo);
+    }
 }

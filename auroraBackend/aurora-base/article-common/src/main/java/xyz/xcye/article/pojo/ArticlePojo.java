@@ -1,9 +1,9 @@
 package xyz.xcye.article.pojo;
 
-import lombok.Data;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
 import xyz.xcye.core.constant.FieldLengthConstant;
 import xyz.xcye.core.valid.Delete;
@@ -12,6 +12,7 @@ import xyz.xcye.core.valid.Update;
 import xyz.xcye.core.valid.validator.ValidateString;
 
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 /**
  * @description article数据表的POJO <br/>
@@ -157,5 +158,10 @@ public class ArticlePojo {
      */
     @Schema(title = "此篇文章对应的评论uid集合，只需要设置所有父评论的uid")
     private String commentUids;
+
+    private List<Long> tagUidList;
+    private List<String> tagTitleList;
+    private List<Long> categoryUidList;
+    private List<String> categoryTitleList;
 
 }

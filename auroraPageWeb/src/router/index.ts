@@ -24,9 +24,14 @@ const router = createRouter({
       component: () => import('../views/archive/index.vue')
     },
     {
-      path: '/tag-category/:userUid',
-      name: 'tagCategory',
-      component: () => import('../views/tagAndCategory/index.vue')
+      path: '/tag/:userUid/:uid?',
+      name: 'tag',
+      component: () => import('../views/tag/index.vue')
+    },
+    {
+      path: '/category/:userUid/:uid',
+      name: 'category',
+      component: () => import('../views/category/index.vue')
     },
     {
       path: '/about/:userUid',

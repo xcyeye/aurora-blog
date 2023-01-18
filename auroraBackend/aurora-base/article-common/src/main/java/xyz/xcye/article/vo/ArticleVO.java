@@ -1,9 +1,12 @@
 package xyz.xcye.article.vo;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import io.swagger.v3.oas.annotations.media.Schema;
 import xyz.xcye.article.po.Article;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * @description TODO <br/>
@@ -16,4 +19,6 @@ import xyz.xcye.article.po.Article;
 @Schema(title = "article数据表的VO")
 public class ArticleVO extends Article {
 
+    private List<Map<String, List<ArticleVO>>> tagArticleList;
+    private List<Map<String, List<ArticleVO>>> categoryArticleList;
 }
