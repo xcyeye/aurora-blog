@@ -10,7 +10,8 @@
       <div class="mood-item-right" id="mood-item-right">
         <div class="coze-mood-item-content">
           <div id="mood-item-content" class="mood-item-content mood-item-right-common">
-            <span v-html="moodItem.content"></span>
+            <!--<span v-html="moodItem.content"></span>-->
+						<render-markdown :markdown-content="moodItem.content"/>
             <div class="coze-mood-time">
               <span>@{{useUserInfo().getUserInfo(userUid).username}}</span>
               <span :data="getUpdatedTime">&nbsp;&nbsp;发布于: {{cozeYear}}-{{cozeMonth}}-{{cozeDay}} {{cozeHourTemp}}:{{cozeMinuteTemp}}:{{cozeSecondTemp}}</span>
@@ -71,10 +72,12 @@ import {FileVo} from "@/bean/vo/file/fileVo";
 import {StringUtil} from "@/utils";
 import {fileApi, talkApi} from "@/service";
 import RequestResult = Service.RequestResult;
+import RenderMarkdown from "@/components/common/content/RenderMarkdown.vue";
 
 const pictureArr: Array<FileVo> = []
 export default {
   name: "MoodItem",
+	components: {RenderMarkdown},
   data() {
     return {
       title: '',

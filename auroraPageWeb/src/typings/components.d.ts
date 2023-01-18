@@ -102,6 +102,7 @@ declare module '@vue/runtime-core' {
     Poster: typeof import('./../components/common/Poster.vue')['default']
     RecommendItem: typeof import('../components/common/article/RecommendItem.vue')['default']
     RecommendPage: typeof import('../components/common/article/RecommendPage.vue')['default']
+    RenderMarkdown: typeof import('./../components/common/content/RenderMarkdown.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     SetBg: typeof import('./../components/common/style/SetBg.vue')['default']

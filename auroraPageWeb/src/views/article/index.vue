@@ -22,6 +22,7 @@
 					<!--	</div>-->
 					<!--</div>-->
 					<div v-html="articleContent"></div>
+					<!--<render-markdown :markdown-content="articleInfo.content"/>-->
 				</div>
 				
 				<!--<div class="aurora-article-like">-->
@@ -110,6 +111,7 @@ import {copyContent} from "@/plugins";
 import {Condition} from "@/bean/core/bean";
 import smoothscroll from 'smoothscroll-polyfill';
 import RequestResult = Service.RequestResult;
+import RenderMarkdown from "@/components/common/content/RenderMarkdown.vue";
 
 const currentSiteInfo = ref<SiteSettingInfo>({})
 const useSite = useSiteInfo()

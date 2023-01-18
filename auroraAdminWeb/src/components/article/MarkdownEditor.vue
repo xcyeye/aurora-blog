@@ -10,7 +10,7 @@
 import {defineComponent, onMounted, ref, watch} from "vue";
 import Vditor from "vditor";
 import 'vditor/dist/index.css';
-import {useAuthStore, useThemeStore} from "@/store";
+import {useAuthStore, useSysSettingStore, useThemeStore} from "@/store";
 import {fileApi} from "@/service";
 import {FileVo} from "@/theme/vo/file/fileVo";
 import {isImage, StringUtil} from "@/utils";
@@ -67,6 +67,7 @@ const props = withDefaults(defineProps<Props>(), {
 
 // 定义data
 const theme = useThemeStore();
+const sysSettingStore = useSysSettingStore()
 const authStore = useAuthStore();
 const vditor = ref<Vditor>();
 const vditorRef = ref<HTMLElement>();
@@ -224,15 +225,21 @@ const renderVditor = () => {
 }
 
 const getAfterUploadFileContent = (fileVoInfoArr: FileVo[]): Promise<string> => {
+	let host = ''
+	if (sysSettingStore.sysSettingMap.get('nginx_file_host')) {
+		if (StringUtil.haveLength(sysSettingStore.sysSettingMap.get('nginx_file_host')!.paramValue)) {
+			host = sysSettingStore.sysSettingMap.get('nginx_file_host')!.paramValue as string
+		}
+	}
 	return new Promise((resolve, reject) => {
 		let pictureMdContent = "";
 		let otherFileMdContent = "";
 		fileVoInfoArr.filter(v => isImage(v.fileName!)).forEach(v => {
-			pictureMdContent = pictureMdContent + `\n ![${v.fileName}](${v.path})`
+			pictureMdContent = pictureMdContent + `\n ![${v.fileName}](${host}/${v.path})`
 		})
 
 		fileVoInfoArr.filter(v => !isImage(v.fileName!)).forEach(v => {
-			otherFileMdContent = otherFileMdContent + `\n [${v.fileName}](${v.path})`
+			otherFileMdContent = otherFileMdContent + `\n [${v.fileName}](${host}/${v.path})`
 		})
 		// resolve(pictureMdContent + otherFileMdContent)
 		resolve(pictureMdContent)
