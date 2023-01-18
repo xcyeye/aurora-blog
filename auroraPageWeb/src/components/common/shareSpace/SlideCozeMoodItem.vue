@@ -42,7 +42,11 @@
 
       <div class="aurora-coze-slide-item-bottom">
         <div class="aurora-slide-item-desc-text aurora-slide-item-desc-common">
-          <li class="aurora-slide-item-font-common" v-html="moodItem.content"></li>
+          <!--<li class="aurora-slide-item-font-common" v-html="moodItem.content"></li>-->
+					<div>
+						<render-markdown :markdown-content="moodItem.content"
+														 :scroll-behavior="false"/>
+					</div>
         </div>
 
         <div class="aurora-slide-item-photos" v-if="getPictureArr">

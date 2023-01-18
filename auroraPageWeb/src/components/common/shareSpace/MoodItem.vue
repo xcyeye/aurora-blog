@@ -1,12 +1,12 @@
 <template>
   <div class="coze-mood-item-parent">
     <div class="coze-mood-item" id="coze-mood-item">
-      <div class="mood-item-left mood-item-img-parent" id="mood-item-left">
-        <div class="mood-item-img" id="coze-mood-item-img">
-          <!--<img :src="useUserInfo().getUserInfo(userUid).avatar" alt="">-->
-          <n-avatar :src="useUserInfo().getUserInfo(userUid).avatar" :size="50" round/>
-        </div>
-      </div>
+      <!--<div class="mood-item-left mood-item-img-parent" id="mood-item-left">-->
+      <!--  <div class="mood-item-img" id="coze-mood-item-img">-->
+      <!--    &lt;!&ndash;<img :src="useUserInfo().getUserInfo(userUid).avatar" alt="">&ndash;&gt;-->
+      <!--    <n-avatar :src="useUserInfo().getUserInfo(userUid).avatar" :size="50" round/>-->
+      <!--  </div>-->
+      <!--</div>-->
       <div class="mood-item-right" id="mood-item-right">
         <div class="coze-mood-item-content">
           <div id="mood-item-content" class="mood-item-content mood-item-right-common">
@@ -22,21 +22,32 @@
       </div>
     </div>
     <div class="mood-img">
-      <div class="mood-img-left">
-        <slot name="coze-img"></slot>
-      </div>
+      <!--<div class="mood-img-left">-->
+      <!--  <slot name="coze-img"></slot>-->
+      <!--</div>-->
       <div class="mood-img-right" id="mood-img-right">
-        <div class="mood-li-control">
-          <li v-for="(item,index) in pictureArr" :data="item.path" :key="item.uid" id="mood-img-li">
-            <!--<img @click="openImg" class="medium-zoom-image" id="mood-bottom-img" :src="item.path" :alt="item.fileName">-->
-            <n-image :src="item.path" id="mood-bottom-img" />
-          </li>
-        </div>
+        <!--<div class="mood-li-control">-->
+        <!--  <li v-for="(item,index) in pictureArr" :data="item.path" :key="item.uid" id="mood-img-li">-->
+        <!--    &lt;!&ndash;<img @click="openImg" class="medium-zoom-image" id="mood-bottom-img" :src="item.path" :alt="item.fileName">&ndash;&gt;-->
+        <!--    <n-image :src="item.path" id="mood-bottom-img" />-->
+        <!--  </li>-->
+        <!--</div>-->
+				<photo-waterfall
+					:picture-src-list="moodItem.pictureSrcList.split(',')"
+					:mobile-waterfall-img-col="3"
+					:pc-waterfall-img-col="4"
+					:show-bg-color="false"/>
       </div>
     </div>
     <div class="mood-edit">
-      <div class="coze-mood-bottom-left"></div>
+      <!--<div class="coze-mood-bottom-left">-->
+			<!--	<n-avatar :src="useUserInfo().getUserInfo(userUid).avatar" round/>-->
+			<!--</div>-->
       <div class="mood-edit-right">
+				<div class="mood-edit-single-common">
+					<!--<span @click="moodComment($event,moodItem)" class="aurora-coze-font aurora-coze-custom-comment"></span>-->
+					<n-avatar :src="useUserInfo().getUserInfo(userUid).avatar" round/>
+				</div>
         <slot name="coze-mood-bottom-left"></slot>
         <div class="mood-edit-single-common">
           <!--<span @click="moodComment($event,moodItem)" class="aurora-coze-font aurora-coze-custom-comment"></span>-->

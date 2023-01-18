@@ -9,8 +9,7 @@ body {
 }
 
 .mood-edit {
-    max-height: 2.5rem;
-    height: 2.5rem;
+    height: 3.5rem;
     display: flex;
     justify-content: center;
     align-items: center
@@ -34,7 +33,8 @@ body {
     flex: 1;
     justify-content: center;
     align-items: center;
-    text-align: center
+    text-align: center;
+    display: flex;
 }
 
 .mood-edit-single-common svg {
@@ -307,7 +307,7 @@ body {
 
 .mood-img-right {
     flex: 5;
-    max-height: 8rem;
+    max-height: 15rem;
     height: -webkit-max-content;
     height: -moz-max-content;
     height: max-content;
@@ -343,11 +343,14 @@ body {
     object-fit: cover
 }
 
-.mood-item-common,
-.mood-item-img-parent {
+.mood-item-common {
     display: flex;
     justify-content: center;
     align-items: center
+}
+
+.mood-item-img-parent {
+    height: 100%;
 }
 
 .mood-item-left {
@@ -1118,12 +1121,12 @@ body {
     width: 40%;
     display: flex;
     /*text-align: center;*/
-    /*transform: translateY(-600%);*/
+    transform: translateY(-600%);
     transition: all 1s;
 }
 
 .aurora-coze-slide-item:hover .aurora-slide-operation-box {
-    /*transform: translateX(0%);*/
+    transform: translateX(0%);
 }
 
 .aurora-slide-item-top-title {

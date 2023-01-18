@@ -9,7 +9,6 @@
 			<blog-comment
 				:page-uid="userUid"
 				:page-path="`^/showSpace/${userUid}.*`"
-				:show-comment-but="true"
 				reply-page-type="TALK"
 				:user-uid="userUid"/>
 		</template>

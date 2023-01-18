@@ -62,7 +62,7 @@ const handleRenderMarkdownContent = (markdownContent: string) => {
 		let picAltIndex = token.attrIndex('alt')
 		let picAlt = token.attrs![picAltIndex]
 		if (/\.(png|jpg|gif|jpeg|webp)$/.test(picSrc)) {
-			return `<div role="none" class="n-image n-image--preview-disabled"><img src="${picSrc}" loading="eager" data-error="true" data-preview-src="${picSrc}" style="object-fit: fill;" data-group-id=""></div>`;
+			return `<div role="none" class="page-image-box n-image n-image--preview-disabled"><img src="${picSrc}" loading="eager" data-error="true" data-preview-src="${picSrc}" style="object-fit: fill;" data-group-id=""></div>`;
 		}
 		return defaultRender(tokens, idx, options, env, self)
 	}
