@@ -93,7 +93,9 @@ interface Comment {
 
 	commentUidArr?: Array<string> | null;
 
-	batchDeleteDataUidArr?: Array<string> | null
+	batchDeleteDataUidArr?: Array<string> | null;
+
+  queryRegexp?: string | null
 }
 
 export { Comment };

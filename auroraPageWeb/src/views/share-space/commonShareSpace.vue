@@ -8,7 +8,8 @@
 		<template #center2>
 			<blog-comment
 				:page-uid="userUid"
-				:page-path="`^/showSpace/${userUid}.*`"
+				:page-path="`/showSpace/${userUid}`"
+				:query-regexp="`^/showSpace/${userUid}.*`"
 				reply-page-type="TALK"
 				:user-uid="userUid"/>
 		</template>

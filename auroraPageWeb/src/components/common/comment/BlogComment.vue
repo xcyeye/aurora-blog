@@ -283,7 +283,8 @@ interface Props {
 	pagePath: string,
 	pageUid: string,
 	userUid: string,
-	showCommentBut?: boolean
+	showCommentBut?: boolean,
+	queryRegexp?: string
 }
 
 interface ReplyCommentUserInfo {
@@ -324,9 +325,15 @@ const handleClickComment = (commentInfo: CommentDto, parentCommentDto: CommentDt
 }
 
 const loadCommentInfo = () => {
+	if (!StringUtil.haveLength(props.queryRegexp) && props.parentCommentUidArr.length === 0) return
 	showCommentInfo.value = {}
+	let queryRegexp = props.queryRegexp
+	if (!StringUtil.haveLength(queryRegexp)) {
+		if (!StringUtil.haveLength(props.pagePath) && props.parentCommentUidArr.length === 0) return
+		queryRegexp = props.pagePath
+	}
 	replyCommentData.value.content = ''
-	 commentApi.queryListCommentByUidArr({commentUidArr: props.parentCommentUidArr, path: props.pagePath}).then(result => {
+	 commentApi.queryListCommentByUidArr({commentUidArr: props.parentCommentUidArr, queryRegexp: queryRegexp}).then(result => {
 		 if (!result.error && result.data) {
 			 showCommentInfo.value = result.data
 		 }
@@ -593,9 +600,8 @@ onBeforeMount(() => {
 	}
 	
 	loadCommentInfo()
-
 	if (!StringUtil.haveLength(props.pageUid)) {
-		window.$message?.error('请传入pageUid')
+		console.error('请传入pageUid')
 	}else {
 		newCommenterUserInfo.value.pageUid = props.pageUid
 	}
@@ -649,6 +655,10 @@ onMounted(() => {
 })
 
 watch(() => props.parentCommentUidArr, () => {
+	loadCommentInfo()
+})
+
+watch(() => props.queryRegexp, () => {
 	loadCommentInfo()
 })
 </script>

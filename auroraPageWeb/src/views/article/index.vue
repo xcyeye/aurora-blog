@@ -89,6 +89,7 @@
 			<blog-comment
 				:user-uid="userUid"
 				:page-uid="articleUid"
+				:query-regexp="`/article/${articleUid}`"
 				:page-path="`/article/${articleUid}`"
 				reply-page-type="ARTICLE"/>
 		</template>

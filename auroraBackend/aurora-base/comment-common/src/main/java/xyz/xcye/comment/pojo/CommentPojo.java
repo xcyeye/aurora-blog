@@ -154,4 +154,7 @@ public class CommentPojo {
     private List<Long> commentUidArr;
 
     private List<Long> batchDeleteDataUidArr;
+
+    private String queryRegexp;
+
 }

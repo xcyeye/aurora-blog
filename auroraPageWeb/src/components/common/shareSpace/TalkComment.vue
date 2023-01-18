@@ -9,6 +9,7 @@
 											:show-comment-but="false"
 											reply-page-type="TALK"
 											:page-uid="talkInfo.uid"
+											:query-regexp="`/showSpace/${talkInfo.userUid}/${talkInfo.uid}`"
 											:page-path="`/showSpace/${talkInfo.userUid}/${talkInfo.uid}`"/>
 			</n-drawer-content>
 		</n-drawer>

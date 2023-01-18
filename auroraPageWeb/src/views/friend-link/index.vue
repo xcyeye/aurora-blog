@@ -160,6 +160,7 @@
 				:user-uid="userUid"
 				:page-uid="userUid"
 				:page-path="`/friendLink/${userUid}`"
+				:query-regexp="`/friendLink/${userUid}`"
 				reply-page-type="FRIEND_LINK"/>
 		</template>
 	</aurora-common>

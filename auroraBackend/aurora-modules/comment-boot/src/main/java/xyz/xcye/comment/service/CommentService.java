@@ -142,9 +142,9 @@ public class CommentService {
 
     public ShowCommentVO queryListCommentByUidArr(CommentPojo pojo) {
         List<Long> arrayUid = pojo.getCommentUidArr();
-        if (StringUtils.hasLength(pojo.getPath())) {
+        if (StringUtils.hasLength(pojo.getQueryRegexp())) {
             Condition<Long> condition = new Condition<>();
-            condition.setKeyword(pojo.getPath());
+            condition.setKeyword(pojo.getQueryRegexp());
             condition.setOrderBy("create_time desc");
             // TODO 暂时未做加载更多评论
             condition.setPageSize(99999);

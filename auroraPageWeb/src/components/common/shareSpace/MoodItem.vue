@@ -22,24 +22,19 @@
         </div>
       </div>
     </div>
-    <div class="mood-img">
-      <!--<div class="mood-img-left">-->
-      <!--  <slot name="coze-img"></slot>-->
-      <!--</div>-->
-      <div class="mood-img-right" id="mood-img-right">
-        <!--<div class="mood-li-control">-->
-        <!--  <li v-for="(item,index) in pictureArr" :data="item.path" :key="item.uid" id="mood-img-li">-->
-        <!--    &lt;!&ndash;<img @click="openImg" class="medium-zoom-image" id="mood-bottom-img" :src="item.path" :alt="item.fileName">&ndash;&gt;-->
-        <!--    <n-image :src="item.path" id="mood-bottom-img" />-->
-        <!--  </li>-->
-        <!--</div>-->
-				<photo-waterfall
-					:picture-src-list="moodItem.pictureSrcList.split(',')"
-					:mobile-waterfall-img-col="3"
-					:pc-waterfall-img-col="4"
-					:show-bg-color="false"/>
-      </div>
-    </div>
+		<div class="mood-img-right" id="mood-img-right">
+			<!--<div class="mood-li-control">-->
+			<!--  <li v-for="(item,index) in pictureArr" :data="item.path" :key="item.uid" id="mood-img-li">-->
+			<!--    &lt;!&ndash;<img @click="openImg" class="medium-zoom-image" id="mood-bottom-img" :src="item.path" :alt="item.fileName">&ndash;&gt;-->
+			<!--    <n-image :src="item.path" id="mood-bottom-img" />-->
+			<!--  </li>-->
+			<!--</div>-->
+			<photo-waterfall
+				:picture-src-list="moodItem.pictureSrcList.split(',')"
+				:mobile-waterfall-img-col="3"
+				:pc-waterfall-img-col="4"
+				:show-bg-color="false"/>
+		</div>
     <div class="mood-edit">
       <!--<div class="coze-mood-bottom-left">-->
 			<!--	<n-avatar :src="useUserInfo().getUserInfo(userUid).avatar" round/>-->

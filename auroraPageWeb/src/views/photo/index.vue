@@ -1,24 +1,31 @@
 <template>
-	<div class="test">
-		<!--<div class="son"></div>-->
-		<photo-waterfall @handleClickImage="handleClickImage"
-										 :picture-src-list="pictureSrcList"
-										 :mobile-waterfall-img-col="2"
-										 :pc-waterfall-img-col="2"
-										 :show-bg-color="true"/>
-		<!--<give-like icon="mdi:cards-heart"-->
-		<!--					 cookie-name="article_cookie"-->
-		<!--					 :multi-click-give-like="false"-->
-		<!--					 like-number-field-name="likeNumber"-->
-		<!--					 :give-like-info="articleInfo"-->
-		<!--					 :control-like-number="true"-->
-		<!--					 :update-like-num-request-method="queryDataMethod"/>-->
-		<!--<talk-comment/>-->
+	<div>
+		<aurora-common :is-sticky-sidebar="true" :show-sidebar-animate-class="false"
+									 :is-show-side-bar="false" :user-uid="userUid" :is-show-top-img="true" :is-show-head-line="false">
+			<template #center1>
+				<div class="photo-list">
+					<n-scrollbar>
+						<photo-waterfall :picture-src-list="photoArr"
+														 :mobile-waterfall-img-col="2"
+														 :pc-waterfall-img-col="5"
+														 :show-bg-color="true"/>
+					</n-scrollbar>
+				</div>
+			</template>
+			<template #center2>
+				<blog-comment
+					:page-uid="userUid"
+					:page-path="`/photo/${userUid}`"
+					:query-regexp="`^/photo/${userUid}.*`"
+					reply-page-type="OTHER"
+					:user-uid="userUid"/>
+			</template>
+		</aurora-common>
 	</div>
 </template>
 
 <script lang="ts" setup>
-import {defineComponent} from "vue";
+import {defineComponent, onMounted, ref} from "vue";
 import GiveLike from "@/components/common/business/GiveLike.vue";
 import {Condition, PageData} from "@/bean/core/bean";
 import {ArticleVo} from "@/bean/vo/article/ArticleVo";
@@ -26,38 +33,50 @@ import {articleApi, talkApi} from "@/service";
 import {TalkVo} from "@/bean/vo/article/TalkVo";
 import RequestResult = Service.RequestResult;
 import TalkComment from "@/components/common/shareSpace/TalkComment.vue";
+import {StringUtil} from "@/utils";
+import {useRouter} from "vue-router";
+import {useRouterPush} from "@/composables";
+import {FileVo} from "@/bean/vo/file/fileVo";
 
 defineComponent({name: 'index'});
 
-const articleInfo: ArticleVo = {
-	uid: '1614602784120250368'
+const userUid = ref<string>('')
+const router = useRouter()
+const routerPush = useRouterPush()
+const photoFileArr = ref<Array<FileVo>>([])
+const photoArr = ref<Array<string>>([])
+
+const loadPhoto = () => {
+	photoArr.value = []
+	photoFileArr.value = []
+  // TODO 目前只使用说说部分的图片
+	talkApi.queryListDataByCondition({otherField: userUid.value, pageSize: 7000}).then(result => {
+		if (result.data && result.data.result) {
+			result.data.result.filter(v => StringUtil.haveLength(v.pictureSrcList)).forEach(v => {
+				v.pictureSrcList?.split(",").forEach(f => {
+					photoFileArr.value.push({
+						path: f,
+						userUid: v.userUid
+					})
+					photoArr.value.push(f)
+				})
+			})
+		}
+	})
 }
 
-const handleClickImage = (photoInfo:{photoUrl: string}) => {
+onMounted(() => {
+	userUid.value = router.currentRoute.value.params.userUid as string;
+	if (!StringUtil.haveLength(userUid.value)) {
+		routerPush.routerPush({
+			name: 'home'
+		});
+	}
+	loadPhoto()
+})
 
-}
-
-const queryDataMethod = (article: ArticleVo): Promise<RequestResult<void>> => {
-	return articleApi.updateArticleLikeNum(article);
-}
-
-const pictureSrcList: Array<string> = ['http://127.0.0.1/aurora-upload/png/2023/1/illust_88479853_20220906_081459.png','http://127.0.0.1/aurora-upload/png/2023/1/illust_88380383_20220717_200036.png','http://127.0.0.1/aurora-upload/png/2023/1/illust_88911364_20220928_080456.png','http://127.0.0.1/aurora-upload/png/2023/1/illust_88927530_20220928_081118.png','http://127.0.0.1/aurora-upload/jpg/2023/1/illust_88314013_20220928_080426.jpg']
 </script>
 
 <style scoped lang="css">
-.test {
-	width: calc(50vw);
-	height: auto;
-	position: relative;
-	bottom: 0;
-	background-color: red;
-	padding: 2rem;
-	box-sizing: border-box;
-}
 
-.son {
-	background-color: #008AC5;
-	width: 100%;
-	height: 100%;
-}
 </style>

@@ -5482,6 +5482,9 @@ body::-webkit-scrollbar-thumb {
 .aurora-comment-animate {
     display: none;
 }
+.aurora-control-comment-box {
+    margin-top: 1rem;
+}
 
 /*
 .aurora-control-comment-box {

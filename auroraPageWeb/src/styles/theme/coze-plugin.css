@@ -851,7 +851,7 @@ body {
         width: 100%;
     }
     .waterfull {
-        margin-bottom: 1rem;
+        /*margin-bottom: 1rem;*/
     }
 }
 
@@ -863,7 +863,7 @@ body {
 @media screen and (min-width:550px) {
     .photo-waterfull {
         margin: 0 auto;
-        margin-bottom: 1rem;
+        /*margin-bottom: 1rem;*/
     }
     .v-waterfall-item img {
         width: 100%;
@@ -1408,4 +1408,13 @@ body {
         right: 0;
         top: 0;
     }
+}
+
+.photo-list {
+    /*height: auto;*/
+    height: calc(100vh);
+    /*overflow: scroll;*/
+    box-sizing: border-box;
+    /*padding: 1rem;*/
+    width: 100%;
 }
