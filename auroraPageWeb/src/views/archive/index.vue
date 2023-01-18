@@ -16,7 +16,7 @@ import {useRouterPush} from "@/composables";
 import {articleApi} from "@/service";
 import {ArticleVo} from "@/bean/vo/article/ArticleVo";
 
-defineComponent({name: 'sd'});
+defineComponent({name: 'index'});
 
 const userUid = ref<string>('')
 const router = useRouter()

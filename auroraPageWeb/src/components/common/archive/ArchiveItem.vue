@@ -16,7 +16,7 @@
             </div>
             <div class="timeline-content">
               <div :data="item.title" class="timeline-title">
-                <span @click="goPage(`/article/${item.uid}`)">{{item.title === "" ? noTitle : item.title}}</span>
+                <span @click="goPage(`/article/${item.userUid}/${item.uid}`)">{{item.title === "" ? noTitle : item.title}}</span>
               </div>
               <div :data="item.title" class="timeline-create-page-time">
                 <span>{{item.createTime}}</span>
@@ -44,6 +44,7 @@ export default {
     }
   },
   created() {
+		this.currentMonthPageArr = []
     new Promise((resolve,reject) => {
       for (let i = 0; i < this.articleArr.length; i++) {
         if (this.getLocalTime(this.articleArr[i].createTime) === this.pageYear && this.getLocalTime(this.articleArr[i].createTime, true) === this.month) {

@@ -4,7 +4,10 @@
       <div class="timeline-year">
         <span class="timeline-year-title">{{item}}</span>
       </div>
-      <archive-item v-for="month in getAllMonthArr(item)" :month="month" :page-year="item" :article-arr="articleArrTemp"></archive-item>
+      <archive-item v-for="month in getAllMonthArr(item)"
+										:month="month"
+										:page-year="item"
+										:article-arr="articleArrTemp"></archive-item>
     </div>
   </div>
 </template>
@@ -15,13 +18,13 @@ import {ArticleVo} from "@/bean/vo/article/ArticleVo";
 import {removeDuplicateElement} from "@/utils";
 
 const articleArrTemp: Array<ArticleVo> = []
-
+const allYearArr: Array<string> = []
 export default {
   name: "AuroraArchive",
   data() {
     return {
 			articleArrTemp,
-      allYearArr: []
+      allYearArr,
     }
   },
 	props: {
@@ -30,8 +33,9 @@ export default {
 		}
 	},
   created() {
-		this.allYearArr = removeDuplicateElement(this.articleArr.map((v: ArticleVo) => this.getLocalTime(v.createTime as string)).concat())
-		this.articleArrTemp = this.articleArr.sort(this.compare("createTime"))
+		if (this.articleArr && this.articleArr.length > 0) {
+			this.loadShowData()
+		}
   },
   computed: {
       getAllMonthArr() {
@@ -50,6 +54,12 @@ export default {
       }
   },
   methods: {
+		loadShowData() {
+			this.allYearArr = []
+			this.articleArrTemp = []
+			this.allYearArr = removeDuplicateElement(this.articleArr.map((v: ArticleVo) => this.getLocalTime(v.createTime as string)).concat())
+			this.articleArrTemp = this.articleArr.sort(this.compare("createTime"))
+		},
     compareMonth(updatedTime) {
       return (value1, value2) => {
         if (value2  > value1) {
@@ -92,6 +102,11 @@ export default {
 			}
 			return date.getFullYear();
 		},
-  }
+  },
+	watch:{
+		articleArr() {
+			this.loadShowData()
+		}
+	}
 }
 </script>

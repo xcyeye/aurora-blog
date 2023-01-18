@@ -36,7 +36,7 @@ const useUser = useUserInfo()
 const condition = ref<Condition>({
 	delete: false,
 	status: true,
-	pageSize: 10,
+	pageSize: 5,
 	pageNum: 1,
 	orderBy: 'create_time desc, update_time desc'
 })
