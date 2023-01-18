@@ -13,7 +13,7 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 
 import {blogPageData} from "@/assets/config";
 export default {

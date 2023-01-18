@@ -16,8 +16,8 @@
 </template>
 
 <script lang="ts" setup>
-import type { DropdownOption } from 'naive-ui';
-import { useAuthStore, useThemeStore } from '@/store';
+import type {DropdownOption} from 'naive-ui';
+import {useAuthStore, useThemeStore} from '@/store';
 import {useIconRender, useRouterPush} from '@/composables';
 
 defineOptions({ name: 'UserAvatar' });
