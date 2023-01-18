@@ -30,7 +30,7 @@ const wrap = (wrapped) => (...args) => {
 	const [tokens, idx] = args
 	const token = tokens[idx]
 	const rawCode = wrapped(...args)
-	return `<!--beforebegin--><div class="language-${token.info.trim()} extra-class">`
+	return `<!--beforebegin--><div class="language-${token.info.trim()} ext-${token.info.trim()} line-numbers-mode">`
 		+ `<!--afterbegin-->${rawCode}<!--beforeend--></div><!--afterend-->`
 }
 

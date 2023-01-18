@@ -9,15 +9,16 @@
       <!--</div>-->
       <div class="mood-item-right" id="mood-item-right">
         <div class="coze-mood-item-content">
-          <div id="mood-item-content" class="mood-item-content mood-item-right-common">
-            <!--<span v-html="moodItem.content"></span>-->
-						<render-markdown :markdown-content="moodItem.content"/>
-            <div class="coze-mood-time">
-              <span>@{{useUserInfo().getUserInfo(userUid).username}}</span>
-              <span :data="getUpdatedTime">&nbsp;&nbsp;发布于: {{cozeYear}}-{{cozeMonth}}-{{cozeDay}} {{cozeHourTemp}}:{{cozeMinuteTemp}}:{{cozeSecondTemp}}</span>
-            </div>
-            <slot name="coze-mood-content"></slot>
-          </div>
+					<render-markdown :markdown-content="moodItem.content"/>
+					<div class="coze-mood-time">
+						<span>@{{useUserInfo().getUserInfo(userUid).username}}</span>
+						<span :data="getUpdatedTime">&nbsp;&nbsp;发布于: {{cozeYear}}-{{cozeMonth}}-{{cozeDay}} {{cozeHourTemp}}:{{cozeMinuteTemp}}:{{cozeSecondTemp}}</span>
+					</div>
+					<slot name="coze-mood-content"></slot>
+          <!--<div id="mood-item-content" class="mood-item-content mood-item-right-common">-->
+          <!--  &lt;!&ndash;<span v-html="moodItem.content"></span>&ndash;&gt;-->
+					<!--	-->
+          <!--</div>-->
         </div>
       </div>
     </div>

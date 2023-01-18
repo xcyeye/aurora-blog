@@ -1,5 +1,6 @@
 <template>
 	<div class="test">
+		<!--<div class="son"></div>-->
 		<photo-waterfall @handleClickImage="handleClickImage"
 										 :picture-src-list="pictureSrcList"
 										 :mobile-waterfall-img-col="2"
@@ -46,9 +47,17 @@ const pictureSrcList: Array<string> = ['http://127.0.0.1/aurora-upload/png/2023/
 <style scoped lang="css">
 .test {
 	width: calc(50vw);
-	height: calc(50vh);
-	position: fixed;
+	height: auto;
+	position: relative;
 	bottom: 0;
 	background-color: red;
+	padding: 2rem;
+	box-sizing: border-box;
+}
+
+.son {
+	background-color: #008AC5;
+	width: 100%;
+	height: 100%;
 }
 </style>

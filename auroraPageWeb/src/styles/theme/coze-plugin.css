@@ -308,6 +308,7 @@ body {
 .mood-img-right {
     flex: 5;
     max-height: 15rem;
+    padding: 1rem;
     height: -webkit-max-content;
     height: -moz-max-content;
     height: max-content;
@@ -358,7 +359,9 @@ body {
 }
 
 .mood-item-right {
-    flex: 5
+    flex: 5;
+    padding: 1rem;
+    box-sizing: border-box;
 }
 
 .file-upload-status {
@@ -416,7 +419,10 @@ body {
     border-radius: var(--coze-border-radius, 10px);
     box-shadow: -4px 9px 25px -6px rgba(0, 0, 0, .1);
     height: 100%;
-    width: 97%
+    /*width: 97%*/
+    width: 100%;
+    padding: 1rem;
+    box-sizing: border-box;
 }
 
 .mood-item-right-common {
@@ -460,7 +466,7 @@ body {
     }
 
     #mood-img-right {
-        display: flex;
+        /*display: flex;*/
         justify-content: center;
         align-items: center;
         position: relative
@@ -751,9 +757,12 @@ body {
 }
 
 .photo-bg {
-    position: relative;
+    position: absolute;
+    top: 0;
+    right: 0;
     z-index: -33;
     height: 100%;
+
 }
 
 .show-bg-color {
@@ -767,9 +776,10 @@ body {
 
 .v-waterfall-content {
     width: 100%;
-    height: 100vh;
+    height: auto;
+    /*height: 100vh;*/
     position: relative;
-    overflow-y: auto;
+    /*overflow-y: auto;*/
 }
 
 .v-waterfall-content::-webkit-scrollbar {
@@ -843,6 +853,11 @@ body {
     .waterfull {
         margin-bottom: 1rem;
     }
+}
+
+.photo-waterfull {
+    width: 100%;
+    height: auto;
 }
 
 @media screen and (min-width:550px) {
@@ -1198,6 +1213,7 @@ body {
 .aurora-slide-item-photos {
     /*height: 7rem;*/
     width: 100%;
+    height: auto;
     /*height: 100%;*/
 }
 
