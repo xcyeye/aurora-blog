@@ -28,7 +28,7 @@
 			</div>
 		</header>
 	</div>
-	<mobile-sidebar/>
+	<mobile-sidebar :user-uid="userUid"/>
 </template>
 
 <script setup lang="ts">

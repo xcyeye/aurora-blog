@@ -6,6 +6,7 @@
                  :show-sidebar-social="true"
                  :custom-id="'mobile-sidebar-custom'" :show-site="false"
                  :show-search="false"
+								 :user-uid="userUid"
                  v-if="isShowMobileSidebar"
                  :show-enter-animate="false"
                  :show-sidebar-link="false"
@@ -33,7 +34,10 @@ export default {
       default() {
         return false
       }
-    }
+    },
+		userUid: {
+			type: String
+		}
   },
   computed: {
     setShowMobileSidebar() {
