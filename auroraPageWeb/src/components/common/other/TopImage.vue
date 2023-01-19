@@ -15,7 +15,7 @@
     <slot name="top5"></slot>
 		<!--TODO 这一块需要重新做一下-->
     <div class="page-record-control" v-if="isShowHeadLine">
-      <div class="page-top-record" id="page-top-record">
+      <div class="page-top-record" id="page-top-record" v-if="articleInfo">
         <div class="page-record-bot-common page-record-top">
           <div class="page-record-top-left page-record-single-common">
             <span class="aurora-iconfont-common aurora-page-word"></span>&nbsp;
@@ -54,7 +54,7 @@
       </div>
     </div>
     <div class="top-image" id="top-image" v-if="isShowHeadLine">
-      <h1>{{articleInfo.title}}</h1>
+      <h1>{{getHeadLine}}</h1>
     </div>
   </div>
 </template>
@@ -68,6 +68,7 @@ import {PropType} from "vue";
 import {ArticleVo} from "@/bean/vo/article/ArticleVo";
 import {getRandomTagType, StringUtil} from "@/utils";
 import {commentApi} from "@/service";
+import {CategoryVo} from "@/bean/vo/article/CategoryVo";
 
 const tagArr:Array<TagVo> = []
 export default {
@@ -93,6 +94,12 @@ export default {
     }
   },
   props: {
+		backgroundImage: {
+			type: String
+		},
+		tagOrCategory: {
+			type: Object as PropType<TagVo> | Object as PropType<CategoryVo>
+		},
     isShowTopImg: {
       type: Boolean,
       default() {
@@ -106,13 +113,13 @@ export default {
       }
     },
     headLine: {
-      type: String,
-      default() {
-        return "aurora";
-      }
+      type: String
     },
 		articleInfo: {
 			type: Object as PropType<ArticleVo>
+		},
+		currentSiteInfo: {
+			type: Object as PropType<SiteSettingInfo>
 		}
   },
   created() {
@@ -170,6 +177,15 @@ export default {
     this.document = document
   },
   computed: {
+		getHeadLine() {
+			if (StringUtil.haveLength(this.headLine)) {
+				return this.headLine
+			}else if (this.articleInfo) {
+				return this.articleInfo.title
+			}else if (this.tagOrCategory) {
+				return this.tagOrCategory.title
+			}
+		},
     animatedContentLength() {
       return this.contentLengthTemp.toFixed(0)
     },
@@ -179,10 +195,21 @@ export default {
       }
     },
     setBackgroundUrl() {
-			if (this.articleInfo && StringUtil.haveLength(this.articleInfo.coverPictureUrl)) {
+			if (StringUtil.haveLength(this.backgroundImage)) {
+				return `background-image: url(${this.backgroundImage});`
+			}else if (this.articleInfo && StringUtil.haveLength(this.articleInfo.coverPictureUrl)) {
 				return `background-image: url(${this.articleInfo.coverPictureUrl});`
+			}else if (this.tagOrCategory && StringUtil.haveLength(this.tagOrCategory.coverUrl)) {
+				return `background-image: url(${this.tagOrCategory.coverUrl});`
+			}else if (StringUtil.haveLength(this.currentSiteInfo.randomPictureInterface)) {
+				if (/.*&.*=.*/.test(this.currentSiteInfo.randomPictureInterface)) {
+					return `background-image: url(${this.currentSiteInfo.randomPictureInterface}&aurora_time=${new Date().getTime()});`
+				}else if (/.*?.*=.*/.test(this.currentSiteInfo.randomPictureInterface)) {
+					return `background-image: url(${this.currentSiteInfo.randomPictureInterface}&aurora_time=${new Date().getTime()});`
+				}
+				return `background-image: url(${this.currentSiteInfo.randomPictureInterface}?aurora_time=${new Date().getTime()});`
 			}
-      return "background-image: url(https://pic-tool.xcye.xyz/pic/rmimg);"
+      return `background-image: url(https://pic-tool.xcye.xyz/pic/rmimg?aurora_time=${new Date().getTime()});`
     },
     getSugTime() {
       return this.sugReadTimeTemp.toFixed(0)

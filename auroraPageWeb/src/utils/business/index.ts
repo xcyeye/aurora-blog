@@ -1,3 +1,5 @@
+import {StringUtil} from "@/utils";
+
 export async function setDefaultProperties<T>(originObj: T, defaultObj: T) {
   return new Promise((resolve, reject) => {
     Object.keys(defaultObj).forEach((v, index) => {
@@ -18,4 +20,21 @@ export const isNotEmptyObject = (obj: any): boolean => {
     }
   }
   return false;
+}
+
+export const setRandomInterface = (randomInterface: string | null | undefined, isCache: boolean = true): string => {
+  if (!StringUtil.haveLength(randomInterface)) return ''
+  if (/.*&.*=.*/.test(randomInterface!)) {
+    return `${randomInterface}&aurora_time=${new Date().getTime()});`
+  }else if (/.*?.*=.*/.test(randomInterface!)) {
+    return `${randomInterface}&aurora_time=${new Date().getTime()}`
+  }
+  return randomInterface!
+}
+
+export const getPaginationStartAndEnd = (currentPageNum: number, pageSize: number, isStart: boolean): number => {
+  let start = (currentPageNum -1) * pageSize
+  let end = start + pageSize
+  if (isStart) return start
+  return end
 }

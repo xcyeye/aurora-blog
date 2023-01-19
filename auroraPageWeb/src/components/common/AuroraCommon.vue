@@ -30,6 +30,9 @@
       <div class="page-sidebar">
 				<slot name="topImageSlot"/>
         <top-image :is-show-top-img="isShowTopImg"
+									 :tag-or-category="tagOrCategory"
+									 :current-site-info="currentSiteInfo"
+									 :background-image="topBackgroundImage"
 									 :article-info="articleInfo"
                    :is-show-head-line="isShowHeadLine"
                    :show-mood-edit="showMoodEdit"
@@ -88,6 +91,8 @@ import {useSiteInfo} from "@/stores";
 import blogConfig from '@/config/blogConfig.json';
 import {getRandomNum} from "@/utils";
 import {ArticleVo} from "@/bean/vo/article/ArticleVo";
+import {TagVo} from "@/bean/vo/article/TagVo";
+import {CategoryVo} from "@/bean/vo/article/CategoryVo";
 
 const currentSiteInfo: SiteSettingInfo = {}
 const useSite = useSiteInfo()
@@ -126,6 +131,12 @@ export default defineComponent({
     }
   },
   props: {
+		tagOrCategory: {
+			type: Object as PropType<TagVo> | Object as PropType<CategoryVo>
+		},
+		topBackgroundImage: {
+			type: String
+		},
 		articleInfo: {
 			type: Object as PropType<ArticleVo>
 		},

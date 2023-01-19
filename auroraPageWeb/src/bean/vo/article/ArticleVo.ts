@@ -103,6 +103,9 @@ interface ArticleVo {
    * 是否删除 逻辑删除 1： 已删除
    */
   delete?: boolean | null;
+
+  tagArticleList?: Array<Map<string, Array<ArticleVo>>> | null;
+  categoryArticleList?: Array<Map<string, Array<ArticleVo>>> | [];
 }
 
 export { ArticleVo };

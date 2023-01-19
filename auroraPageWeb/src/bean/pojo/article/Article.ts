@@ -103,6 +103,11 @@ interface Article {
    * 是否删除 逻辑删除 1： 已删除
    */
   delete?: boolean | null;
+
+  tagUidList?: Array<string> | [];
+  tagTitleList?: Array<string> | [];
+  categoryUidList?: Array<string> | [];
+  categoryTitleList?: Array<string> | [];
 }
 
 export { Article };

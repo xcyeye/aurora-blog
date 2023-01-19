@@ -313,6 +313,7 @@ export const defaultSiteSettingInfo: SiteSettingInfo = {
                 "增加每日计划打卡功能",
             ],
         },
-    ]
+    ],
+    randomPictureInterface: 'https://cdn.seovx.com/ha/?mom=302'
 
 }

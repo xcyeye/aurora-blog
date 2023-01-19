@@ -66,5 +66,6 @@ interface SiteSettingInfo {
 	githubUrl?: string,
 	footerInfo?: FooterInfo,
 	showAboutPageBubble?: boolean,
-	aboutInfoArr?: Array<AboutInfo>
+	aboutInfoArr?: Array<AboutInfo>,
+	randomPictureInterface?: string
 }

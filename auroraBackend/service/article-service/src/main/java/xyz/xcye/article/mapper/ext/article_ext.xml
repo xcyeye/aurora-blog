@@ -122,6 +122,9 @@
         <include refid="Base_Column_List" />
         FROM au_article
         <where>
+            <if test="userUid != null">
+                AND user_uid=#{userUid}
+            </if>
             <if test="tagTitleList != null">
                 <foreach collection="tagTitleList" item="item">
                     AND tag_names REGEXP #{item}

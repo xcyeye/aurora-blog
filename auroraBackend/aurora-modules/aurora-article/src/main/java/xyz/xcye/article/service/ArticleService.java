@@ -244,17 +244,23 @@ public class ArticleService {
         List<Map<String, List<ArticleVO>>> tagArticleMapList = new ArrayList<>();
         List<Map<String, List<ArticleVO>>> categoryArticleMapList = new ArrayList<>();
         pojo.getTagTitleList().forEach(title -> {
-            List<Article> articleList = auroraArticleExtDao.queryListArticleByTagOrCategory(new ArticlePojo() {{
-                setTagTitleList(Collections.singletonList(title));
-            }});
+            ArticlePojo articlePojo = new ArticlePojo();
+            articlePojo.setTagTitleList(Collections.singletonList(title));
+            if (pojo.getUserUid() != null) {
+                articlePojo.setUserUid(pojo.getUserUid());
+            }
+            List<Article> articleList = auroraArticleExtDao.queryListArticleByTagOrCategory(articlePojo);
             Map<String, List<ArticleVO>> map = new HashMap<>();
             map.put(title, BeanUtils.copyList(articleList, ArticleVO.class));
             tagArticleMapList.add(map);
         });
         pojo.getCategoryTitleList().forEach(title -> {
-            List<Article> articleList = auroraArticleExtDao.queryListArticleByTagOrCategory(new ArticlePojo() {{
-                setTagTitleList(Collections.singletonList(title));
-            }});
+            ArticlePojo articlePojo = new ArticlePojo();
+            articlePojo.setCategoryTitleList(Collections.singletonList(title));
+            if (pojo.getUserUid() != null) {
+                articlePojo.setUserUid(pojo.getUserUid());
+            }
+            List<Article> articleList = auroraArticleExtDao.queryListArticleByTagOrCategory(articlePojo);
             Map<String, List<ArticleVO>> map = new HashMap<>();
             map.put(title, BeanUtils.copyList(articleList, ArticleVO.class));
             categoryArticleMapList.add(map);

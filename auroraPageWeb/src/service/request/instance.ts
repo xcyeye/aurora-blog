@@ -56,6 +56,8 @@ export default class CustomAxiosInstance {
               if (useAuthStore().authInfo && isNotEmptyObject(useAuthStore().authInfo)) {
                 // @ts-ignore
                 handleConfig.headers.Authorization = `bearer ${useAuthStore().authInfo.access_token}`;
+                // @ts-ignore
+                handleConfig.headers.set('aurora_page_web', new Date().getTime())
               }
               return handleConfig;
             },

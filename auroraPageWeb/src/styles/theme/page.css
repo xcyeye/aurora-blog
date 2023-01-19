@@ -137,3 +137,11 @@
     border-radius: 16px;
     background-color: rgba(255, 255, 255, 0.1);
 }
+
+.tag-select-icomoon svg {
+    font-size: 1.5rem;
+}
+
+.tagDataControl svg {
+    color: var(--aurora-global-active-color);
+}
