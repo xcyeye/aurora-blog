@@ -12,6 +12,7 @@ import xyz.xcye.core.valid.Update;
 import xyz.xcye.core.valid.validator.ValidateString;
 
 import javax.validation.constraints.NotNull;
+import java.io.File;
 import java.util.List;
 
 /**
@@ -164,4 +165,8 @@ public class ArticlePojo {
     private List<Long> categoryUidList;
     private List<String> categoryTitleList;
 
+    /**
+     * 文章数据文件集合，用于导入文章
+     */
+    private List<File> articleDataFileList;
 }

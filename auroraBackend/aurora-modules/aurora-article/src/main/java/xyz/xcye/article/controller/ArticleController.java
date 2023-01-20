@@ -97,4 +97,11 @@ public class ArticleController {
     public ArticleVO queryListArticleByTagOrCategory(@RequestBody ArticlePojo pojo) {
         return articleService.queryListArticleByTagOrCategory(pojo);
     }
+
+    @Operation(summary = "导入文章")
+    @PostMapping("/importArticle")
+    @SelectOperation
+    public void importArticle(@RequestBody ArticlePojo pojo) {
+        articleService.importArticle(pojo);
+    }
 }

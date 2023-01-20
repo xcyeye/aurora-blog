@@ -130,6 +130,18 @@ public class ArticleService {
         auroraArticleService.updateById(BeanUtils.copyProperties(articlePojo, Article.class));
     }
 
+    /**
+     * 处理导入文章
+     * @param pojo
+     */
+    public void importArticle(ArticlePojo pojo) {
+        if (pojo.getArticleDataFileList() == null || pojo.getArticleDataFileList().isEmpty()) {
+            return;
+        }
+
+
+    }
+
     private void setCategory(ArticlePojo article) {
         Long currentUserUid = UserUtils.getCurrentUserUid();
         if (currentUserUid == null) {
