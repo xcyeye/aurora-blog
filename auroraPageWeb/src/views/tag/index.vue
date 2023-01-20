@@ -51,6 +51,14 @@
 					</template>
 				</aurora-center>
 			</template>
+			<template #center2>
+				<blog-comment
+					:user-uid="userUid"
+					:query-regexp="`^/tag/${userUid}`"
+					:page-uid="userUid" reply-page-type="OTHER"
+					:show-comment-but="true"
+					:page-path="`/tag/${userUid}`"/>
+			</template>
 		</aurora-common>
 	</div>
 </template>

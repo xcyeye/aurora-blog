@@ -29,7 +29,7 @@ const router = createRouter({
       component: () => import('../views/tag/index.vue')
     },
     {
-      path: '/category/:userUid/:uid',
+      path: '/category/:userUid/:tagName?',
       name: 'category',
       component: () => import('../views/category/index.vue')
     },
