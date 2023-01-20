@@ -12,8 +12,8 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableFeignClients
 @EnableScheduling
 @SpringBootApplication
-public class AuroraMessageMain {
+public class AuroraMessageRun {
     public static void main(String[] args) {
-        SpringApplication.run(AuroraMessageMain.class, args);
+        SpringApplication.run(AuroraMessageRun.class, args);
     }
 }

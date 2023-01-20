@@ -11,8 +11,8 @@ import org.springframework.context.annotation.FilterType;
 
 @ComponentScan(excludeFilters = {@ComponentScan.Filter(type = FilterType.REGEX, pattern = {"xyz.xcye.aurora.exception.*", "xyz.xcye.aurora.interceptor.*","xyz.xcye.aurora.manager.advice.*"})})
 @SpringBootApplication
-public class AuroraGateWayMain {
+public class AuroraGateWayRun {
     public static void main(String[] args) {
-        SpringApplication.run(AuroraGateWayMain.class, args);
+        SpringApplication.run(AuroraGateWayRun.class, args);
     }
 }

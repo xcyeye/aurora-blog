@@ -14,9 +14,9 @@ import xyz.xcye.data.entity.Condition;
 
 @SpringBootApplication
 @EnableFeignClients
-public class AuroraAdminMain {
+public class AuroraAdminRun {
     public static void main(String[] args) {
-        ConfigurableApplicationContext run = SpringApplication.run(AuroraAdminMain.class, args);
+        ConfigurableApplicationContext run = SpringApplication.run(AuroraAdminRun.class, args);
 
         // 将角色权限信息和白名单存入redis
         Condition<Long> condition = new Condition<>();

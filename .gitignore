@@ -2,6 +2,7 @@
 /auroraBackend/sql-generator
 /auroraBackend/sql-generator-ts
 /typescript-bean
+/auroraBackend/runJarDirectory
 
 HELP.md
 target/

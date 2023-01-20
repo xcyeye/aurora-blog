@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>oauth-auth-server</artifactId>
+    <artifactId>article-boot</artifactId>
 
     <properties>
         <maven.compiler.source>11</maven.compiler.source>
@@ -17,29 +17,10 @@
     </properties>
 
     <dependencies>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
 
         <dependency>
-            <groupId>xyz.xcye.starter</groupId>
-            <artifactId>aurora-oauth2-starter</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>xyz.xcye.starter</groupId>
-            <artifactId>aurora-nacos-starter</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>xyz.xcye</groupId>
-            <artifactId>auth-server-service</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>xyz.xcye.api</groupId>
-            <artifactId>oauth-api</artifactId>
+            <groupId>xyz.xcye.article</groupId>
+            <artifactId>article-service</artifactId>
         </dependency>
 
         <dependency>
@@ -49,17 +30,32 @@
 
         <dependency>
             <groupId>xyz.xcye.starter</groupId>
-            <artifactId>aurora-spring-boot-starter</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>xyz.xcye.starter</groupId>
             <artifactId>aurora-swagger-starter</artifactId>
         </dependency>
 
         <dependency>
             <groupId>xyz.xcye.api</groupId>
-            <artifactId>amqp-api</artifactId>
+            <artifactId>article-api</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>xyz.xcye.starter</groupId>
+            <artifactId>aurora-amqp-starter</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>xyz.xcye.starter</groupId>
+            <artifactId>aurora-nacos-starter</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>xyz.xcye.starter</groupId>
+            <artifactId>aurora-seata-starter</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>xyz.xcye.starter</groupId>
+            <artifactId>aurora-spring-boot-starter</artifactId>
         </dependency>
 
         <dependency>
@@ -67,11 +63,15 @@
             <artifactId>aurora-sentinel-starter</artifactId>
         </dependency>
 
-        <!--<dependency>
-            <groupId>xyz.xcye.starter</groupId>
-            <artifactId>aurora-seata-starter</artifactId>
-        </dependency>-->
+        <dependency>
+            <groupId>xyz.xcye.api</groupId>
+            <artifactId>amqp-mail-api</artifactId>
+        </dependency>
 
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
     </dependencies>
 
     <build>

@@ -9,8 +9,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  */
 
 @SpringBootApplication
-public class SpringFileMain {
+public class AuroraFileRun {
     public static void main(String[] args) {
-        SpringApplication.run(SpringFileMain.class, args);
+        SpringApplication.run(AuroraFileRun.class, args);
     }
 }

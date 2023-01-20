@@ -20,12 +20,12 @@
 
     <modules>
         <module>admin-boot</module>
-        <module>aurora-gateway</module>
+        <module>gateway-boot</module>
         <module>file-boot</module>
         <module>comment-boot</module>
         <module>message-boot</module>
-        <module>oauth-auth-server</module>
-        <module>aurora-article</module>
+        <module>auth-server-boot</module>
+        <module>article-boot</module>
     </modules>
 
     <build>
@@ -38,5 +38,25 @@
                 <!-- <filtering>true</filtering> -->
             </resource>
         </resources>
+
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.3.0</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                        <configuration>
+                            <classifier>run</classifier>
+                            <outputDirectory>../../runJarDirectory</outputDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
     </build>
 </project>

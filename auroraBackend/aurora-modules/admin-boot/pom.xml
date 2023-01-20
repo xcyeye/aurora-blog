@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>admin-boot</artifactId>
+    <artifactId>aurora-admin</artifactId>
 
     <properties>
         <maven.compiler.source>11</maven.compiler.source>
@@ -76,6 +76,7 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
         </plugins>
+
     </build>
 
 </project>

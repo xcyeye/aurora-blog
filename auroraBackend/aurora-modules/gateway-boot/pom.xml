@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>aurora-gateway</artifactId>
+    <artifactId>gateway-boot</artifactId>
 
     <dependencies>
         <dependency>
