@@ -18,9 +18,8 @@ import {StringUtil} from "@/utils";
 import {useRouterPush} from "@/composables";
 import {defaultSiteSettingInfo} from "@/field";
 import {UserVo} from "@/bean/vo/admin/UserVo";
-import {articleApi, userApi} from "@/service";
-import {useCurrentUser, useSiteInfo, useUserInfo} from "@/stores";
-import {isNotEmptyObject} from "@/utils/business";
+import {articleApi} from "@/service";
+import {useSiteInfo, useUserInfo} from "@/stores";
 import {Condition, PageData} from "@/bean/core/bean";
 import {ArticleVo} from "@/bean/vo/article/ArticleVo";
 import RequestResult = Service.RequestResult;
@@ -63,33 +62,33 @@ onBeforeMount(() => {
 		})
 	}
 	
-	if (!isNotEmptyObject(useUser.getUserInfo(userUid.value))) {
-		userApi.queryOneDataByUid({uid: userUid.value}).then(result => {
-			if (result.data) {
-				userInfo.value = result.data
-				useUser.setUserInfo(userUid.value, result.data)
-			}
-		})
-	}
-	
-	useCurrentUser().setCurrentUserInfo({uid: userUid.value})
-	
-	if (!isNotEmptyObject(useSite.getSiteInfo(userUid.value))) {
-		useSite.setSiteInfo(userUid.value, defaultSiteSettingInfo)
-		siteSettingInfo.value = defaultSiteSettingInfo
-		// siteSettingApi.queryOneDataByUserUid({userUid: userUid.value}).then(result => {
-		// 	if (result.data) {
-		// 		if (result.data.paramValue) {
-		// 			// TODO 临时解决
-		// 			// siteSettingInfo.value = JSON.parse(result.data.paramValue)
-		// 			siteSettingInfo.value = JSON.parse(result.data.paramValue)
-		// 			useSite.setSiteInfo(userUid.value, defaultSiteSettingInfo)
-		// 		}
-		// 	}
-		// })
-	}else {
-		siteSettingInfo.value = useSite.getSiteInfo(userUid.value)
-		console.log(siteSettingInfo.value);
-	}
+	// if (!isNotEmptyObject(useUser.getUserInfo(userUid.value))) {
+	// 	userApi.queryOneDataByUid({uid: userUid.value}).then(result => {
+	// 		if (result.data) {
+	// 			userInfo.value = result.data
+	// 			useUser.setUserInfo(userUid.value, result.data)
+	// 		}
+	// 	})
+	// }
+	//
+	// useCurrentUser().setCurrentUserInfo({uid: userUid.value})
+	//
+	// if (!isNotEmptyObject(useSite.getSiteInfo(userUid.value))) {
+	// 	useSite.setSiteInfo(userUid.value, defaultSiteSettingInfo)
+	// 	siteSettingInfo.value = defaultSiteSettingInfo
+	// 	// siteSettingApi.queryOneDataByUserUid({userUid: userUid.value}).then(result => {
+	// 	// 	if (result.data) {
+	// 	// 		if (result.data.paramValue) {
+	// 	// 			// TODO 临时解决
+	// 	// 			// siteSettingInfo.value = JSON.parse(result.data.paramValue)
+	// 	// 			siteSettingInfo.value = JSON.parse(result.data.paramValue)
+	// 	// 			useSite.setSiteInfo(userUid.value, defaultSiteSettingInfo)
+	// 	// 		}
+	// 	// 	}
+	// 	// })
+	// }else {
+	// 	siteSettingInfo.value = useSite.getSiteInfo(userUid.value)
+	// 	console.log(siteSettingInfo.value);
+	// }
 })
 </script>

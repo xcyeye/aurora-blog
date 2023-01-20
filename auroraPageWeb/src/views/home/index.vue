@@ -144,7 +144,7 @@ const getArticleCover = computed(() => {
 
 const goRead = (article: ArticleVo) => {
 	routerPush.routerPush({
-		path: `/article/${article.uid}`
+		path: `/article/${article.userUid}/${article.uid}`
 	})
 }
 
