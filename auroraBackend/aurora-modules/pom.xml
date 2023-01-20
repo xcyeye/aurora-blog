@@ -52,7 +52,7 @@
                         </goals>
                         <configuration>
                             <classifier>run</classifier>
-                            <outputDirectory>../../runJarDirectory</outputDirectory>
+                            <outputDirectory>/auroraBlogSystem/jar</outputDirectory>
                         </configuration>
                     </execution>
                 </executions>
