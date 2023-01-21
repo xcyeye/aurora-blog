@@ -6,6 +6,7 @@
     --opacity: 0.5;
     --fontFamily: -apple-system;
     --fontColor: #2c3e50;
+    --fontSize: 2rem;
     --sidebarWidth: 80%;
     --sidebarRow: 5;
     --sidebarWidthPc: 20vw;
@@ -540,7 +541,7 @@ a {
 }
 
 .bg_color {
-    background-color: rgba(0, 0, 0, .2);
+    /*background-color: rgba(0, 0, 0, .2);*/
     border-radius: 100%
 }
 
@@ -552,10 +553,21 @@ a {
     right: 2.5rem;
     cursor: pointer;
     z-index: 9;
-    background-image: url(../public/fonts/style-menu/color-filling.svg);
-    background-repeat: no-repeat;
-    background-size: 70%;
-    background-position: 50%
+    display: flex;
+    justify-items: center;
+    align-items: center;
+}
+
+.setIco svg {
+    font-size: 2.2rem;
+    color: var(--fontColor);
+    -webkit-transform: rotate(360deg);
+    animation: rotation 3s linear infinite;
+}
+
+@-webkit-keyframes rotation{
+    from {-webkit-transform: rotate(0deg);}
+    to {-webkit-transform: rotate(360deg);}
 }
 
 #setIco img {
@@ -581,15 +593,19 @@ a {
     background-size: cover
 }
 
-#welcome {
-    height: auto;
-    position: fixed
-}
-
 .welcome {
     width: 24%;
     right: 5rem;
-    bottom: -1rem
+    bottom: -1rem;
+    transform: translateY(250%);
+    transition: all 1s;
+    height: auto;
+    position: fixed;
+    z-index: 88;
+}
+
+.style-menu-box {
+    transform: translateY(0%);
 }
 
 .bg-gray-800-mktg {
@@ -603,10 +619,6 @@ a {
 
 .m-4 {
     margin: 24px 12px 24px 24px
-}
-
-.rounded-2 {
-    border-radius: 6px !important
 }
 
 .show-on-focus,
@@ -2065,7 +2077,8 @@ body::-webkit-scrollbar-thumb {
 .custom-li span {
     display: inline-block;
     height: 1rem;
-    width: 1rem
+    width: 1rem;
+    border-radius: 100px;
 }
 
 .theme {
@@ -6077,4 +6090,48 @@ body::-webkit-scrollbar-thumb {
 .aurora-give-like-heart-svg {
     font-size: 1.5rem;
     padding: 1rem;
+}
+
+/* 组件公共样式 */
+.aurora-card {
+    width: 100%;
+    height: auto;
+    box-sizing: border-box;
+    border-radius: var(--borderRadius);
+    font-family: var(--fontFamily);
+    color: var(--fontColor);
+    font-size: var(--fontSize);
+    padding: 1rem;
+    transition: all 1s;
+}
+
+.aurora-card:hover {
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 50px;
+}
+
+.aurora-card-title {
+    font-weight: bold;
+    text-align: left;
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    line-clamp: 1;
+}
+
+.aurora-card-title-icon {
+    margin-right: .5rem;
+    height: 100%;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.aurora-card-content {
+    height: auto;
+    margin-top: .5rem;
+    width: 100%;
+}
+
+.global-common-animate {
+    transition: all 1s;
 }

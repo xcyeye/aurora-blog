@@ -1,12 +1,18 @@
-import { defineStore } from 'pinia';
-import { darkTheme } from 'naive-ui';
+import {defineStore} from 'pinia';
+import {darkTheme} from 'naive-ui';
 
-type ThemeState = Theme.Setting;
 
-// @ts-ignore
-const themeState: ThemeState = {}
+const themeState: Theme.Setting = {
+  borderRadius: 23,
+  fontColor: 'red',
+  fontSize: '1rem'
+}
 export const useThemeStore = defineStore('bean-store', {
-  state: (): ThemeState => themeState,
+  state: () => {
+    return {
+      themeState
+    }
+  },
   getters: {
     /** naiveUI的主题配置 */
     naiveThemeOverrides(state) {
@@ -14,17 +20,19 @@ export const useThemeStore = defineStore('bean-store', {
     },
     /** naive-ui暗黑主题 */
     naiveTheme(state) {
-      return state.darkMode ? darkTheme : undefined;
+      return state.themeState.darkMode ? darkTheme : undefined;
     },
-    /** 页面动画模式 */
-    pageAnimateMode(state) {
-      return state.page.animate ? state.page.animateMode : undefined;
+    currentTheme(state) {
+      return state.themeState
     }
   },
   actions: {
     /** 重置theme状态 */
     resetThemeStore() {
       this.$reset();
+    },
+    setCurrentThemeStore(themeSetting: Theme.Setting) {
+      this.themeState = themeSetting
     }
   }
 });

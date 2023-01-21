@@ -8,6 +8,7 @@
 					:is-home="true"
 					:is-show-footer="true"/>
 	<set-bg/>
+	<style-menu/>
 </template>
 
 <script lang="ts" setup>
