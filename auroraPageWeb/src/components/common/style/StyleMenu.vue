@@ -1,10 +1,11 @@
 <!--此组件是样式控制面板-->
 <template>
   <div class="setColor">
-    <div v-if="isShowIco"
-         @click="clickSetColor"
+    <div @click="clickSetColor"
          id="setIco" class="setIco bg_color">
-			<svg-icon class="global-common-animate" :style="`--fontColor: ${useThemeStore().currentTheme.fontColor}`" icon="bi:gear-fill"/>
+			<parcel-style>
+				<svg-icon class="global-common-animate" icon="bi:gear-fill"/>
+			</parcel-style>
     </div>
 
     <div class="welcome-parent" id="welcome-parent">
@@ -17,7 +18,6 @@
 							</li>
 						</div>
 					</div>
-					
 					<div class="custom-bottom custom-common">
 						<n-slider @update:value="handleChangeBorderRadius" v-model:value="borderRadius" :min="0" :max="45" :step="1" :tooltip="false" />
 					</div>
@@ -30,9 +30,11 @@
 <script lang="ts">
 import blogConfig from '@/config/blogConfig.json';
 import {useThemeStore} from "@/stores";
+import ParcelStyle from "@/components/common/other/ParcelStyle.vue";
 
 export default {
   name: "HomeWelcome",
+	components: {ParcelStyle},
   data() {
     return {
       setColorStyle: "display: none;",

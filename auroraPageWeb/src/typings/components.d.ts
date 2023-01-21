@@ -74,6 +74,7 @@ declare module '@vue/runtime-core' {
     NUpload: typeof import('naive-ui')['NUpload']
     NUploadDragger: typeof import('naive-ui')['NUploadDragger']
     Pagination: typeof import('./../components/common/other/Pagination.vue')['default']
+    ParcelStyle: typeof import('./../components/common/other/ParcelStyle.vue')['default']
     PhotoWaterfall: typeof import('./../components/common/shareSpace/PhotoWaterfall.vue')['default']
     RenderMarkdown: typeof import('./../components/common/content/RenderMarkdown.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
