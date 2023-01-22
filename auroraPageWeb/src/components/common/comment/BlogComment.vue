@@ -50,12 +50,14 @@
 				</n-card>
 			</n-card>
 		</n-modal>
-		<div v-if="showCommentBut" :style="$store.state.borderRadiusStyle + $store.state.opacityStyle" class="theme-comment-box"
-				 :class="{'show-theme-comment-box': showCommentAnimateClass}"
-				 @click="showCommentAnimate">
-			<svg-icon style="margin-right: .5rem;margin-left: .5rem; font-size: 18px" icon="mdi:comment-processing"/>
-			<span class="aurora-comment-common aurora-comment-text">点击评论</span>
-		</div>
+		<parcel-style>
+			<div v-if="showCommentBut" :style="$store.state.borderRadiusStyle + $store.state.opacityStyle" class="theme-comment-box"
+					 :class="{'show-theme-comment-box': showCommentAnimateClass}"
+					 @click="showCommentAnimate">
+				<svg-icon style="margin-right: .5rem;margin-left: .5rem; font-size: 18px" icon="mdi:comment-processing"/>
+				<span class="aurora-comment-common aurora-comment-text">点击评论</span>
+			</div>
+		</parcel-style>
 		<div :class="{'aurora-comment-animate' : showCommentBut}">
 			<div class="mobile-record" :class="{'aurora-show-comment-animate': showCommentAnimateClass}">
 				<div class="page box" :style="$store.state.borderRadiusStyle + $store.state.opacityStyle">
@@ -664,72 +666,5 @@ watch(() => props.queryRegexp, () => {
 </script>
 
 <style scoped lang="css">
-.aurora-comment-mouse {
-	cursor: pointer;
-}
 
-.aurora-comment-son-box {
-	/*border: 1px solid red;*/
-	height: 100%;
-	width: auto;
-	/*background-color: aquamarine;*/
-	margin-left: 4.3rem;
-}
-
-.aurora-comment-son-flex {
-
-}
-
-.aurora-comment-son-flex-avatar {
-
-}
-
-.aurora-comment-son-flex-input {
-	width: 35rem;
-	background-color: #F1F2F3;
-	border-radius: 10px;
-}
-
-.aurora-comment-son-flex-textarea {
-	width: 100%;
-}
-
-.aurora-comment-son-flex-input:focus {
-	background-color: rgba(1, 2, 4, 0);
-	outline: none;
-}
-
-.aurora-comment-son-flex-button {
-
-}
-
-.aurora-comment-reply-box {
-	display: inline-block;
-	width: 100%;
-}
-.aurora-comment-reply-box-son {
-	width: calc(100% / 3);
-	height: 1rem;
-	display: inline-block;
-	padding-left: 0.4rem;
-	padding-right: 0.4rem;
-}
-
-.aurora-comment-reply-input-box {
-	display: inline-block;
-	height: 2rem;
-	width: 100%;
-}
-.aurora-comment-reply-input-box-avatar {
-	display: inline-block;
-	width: 15%;
-	height: 1rem;
-}
-
-.aurora-comment-reply-input-box-input {
-	display: inline-block;
-	width: 85%;
-	background-color: red;
-	height: 1rem;
-}
 </style>

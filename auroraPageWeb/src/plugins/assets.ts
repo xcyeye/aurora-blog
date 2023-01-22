@@ -10,6 +10,7 @@ import '@/assets/icon/iconfont.woff2'
 import '@/assets/icon/iconfont.css'
 import '@/assets/icon/iconfont.json'
 import '@/styles/theme/page.css'
+import '@/styles/theme/comment.css'
 
 // 导入代码样式
 import 'highlight.js/styles/github.css'

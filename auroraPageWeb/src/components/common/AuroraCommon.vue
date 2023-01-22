@@ -59,6 +59,7 @@
 														 :user-uid="userUid"
 														 :is-article-page="isArticlePage"
                              :sidebar-width-var="0.92"
+														 :show-sidebar="showSidebar"
                              :show-sidebar-social="true"
                              :show-sidebar-link="showSidebarLink"
                              :sidebar-row-var="sidebarRowVar"
@@ -131,6 +132,12 @@ export default defineComponent({
     }
   },
   props: {
+		showSidebar: {
+			type: Boolean,
+			default() {
+				return true;
+			}
+		},
 		tagOrCategory: {
 			type: Object as PropType<TagVo> | Object as PropType<CategoryVo>
 		},

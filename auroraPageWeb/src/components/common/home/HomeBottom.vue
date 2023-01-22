@@ -1,30 +1,32 @@
 <template>
-  <!--这是首页下面的文章模板-->
-  <div :style="$store.state.borderRadiusStyle +
+  <parcel-style>
+		<!--这是首页下面的文章模板-->
+		<div :style="$store.state.borderRadiusStyle +
        $store.state.opacityStyle + $store.state.fontColorStyle +
        $store.state.fontFamilyStyle + $store.state.filterBlurStyle"
-			 ref="home-bottom" class="home-bottom" id="home-bottom">
-    <div ref="homeBottomScroll"></div>
-    <div class="home-page-tag" id="home-page-tag">
-      <home-page-item :index="index"
-											:user-uid="userUid"
-											:show-home-page-img="true"
-											:data="item.delete" :key="index"
-											v-for="(item,index) in articleArr" :page-item="item"/>
-			<n-space justify="center">
-				<n-pagination v-model:page="currentPage"
-											@update:page="handlePageChangeAction"
-											:page-size="currentSize"
-											:item-count="pageTotal"
-											:default-page="1" />
-			</n-space>
-
-    </div>
-    <div v-if="showHomeSidebar" class="home-page-fun" id="home-page-fun">
-      <HomeSidebar :user-uid="userUid"/>
-    </div>
-  </div>
-  <slot name="home-footer"/>
+				 ref="home-bottom" class="home-bottom" id="home-bottom">
+			<div ref="homeBottomScroll"></div>
+			<div class="home-page-tag" id="home-page-tag">
+				<home-page-item :index="index"
+												:user-uid="userUid"
+												:show-home-page-img="true"
+												:data="item.delete" :key="index"
+												v-for="(item,index) in articleArr" :page-item="item"/>
+				<n-space justify="center">
+					<n-pagination v-model:page="currentPage"
+												@update:page="handlePageChangeAction"
+												:page-size="currentSize"
+												:item-count="pageTotal"
+												:default-page="1" />
+				</n-space>
+		
+			</div>
+			<div v-if="showHomeSidebar" class="home-page-fun" id="home-page-fun">
+				<HomeSidebar :user-uid="userUid"/>
+			</div>
+		</div>
+		<slot name="home-footer"/>
+	</parcel-style>
 </template>
 
 <script lang="ts" setup>

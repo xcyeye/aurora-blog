@@ -17,6 +17,7 @@
     --hoverColor: red;
     --auroraActiveColor: #8186d5;
     --aurora-sliid-border-radius: 20px;
+    --linerGradient: linear-gradient(315deg, rgb(255, 255, 255) 100%, rgb(255, 255, 255) 100%, rgb(255, 255, 255) 100%, rgb(255, 255, 255) 100%);
 
     /*//主题全局背景色 包括hover*/
     --aurora-global-bg: blue;
@@ -1718,7 +1719,7 @@ body::-webkit-scrollbar-thumb {
 }
 
 .content {
-    margin-top: 3rem
+    margin-top: 2rem
 }
 
 .tag-div {
@@ -4351,7 +4352,7 @@ body::-webkit-scrollbar-thumb {
 .sidebar-catalog-item,
 .sidebar-page-item {
     padding-left: 10px;
-    width: 90%;
+    /*width: 90%;*/
     height: -webkit-max-content;
     height: -moz-max-content;
     height: max-content;
@@ -4398,16 +4399,17 @@ body::-webkit-scrollbar-thumb {
 }
 
 .sidebar-message {
-    width: 94%;
+    /*width: 94%;*/
     margin: 0 auto;
-    padding: 7px
+    /*padding: 7px*/
 }
 
 .sidebar-message li {
     text-align: left;
-    padding-left: 5px;
-    padding-right: 5px;
+    /*padding-left: 5px;*/
+    /*padding-right: 5px;*/
     list-style: none;
+    margin-left: 0;
     margin-top: .5rem;
     border-radius: 10px;
     font-weight: 200
@@ -4779,7 +4781,7 @@ body::-webkit-scrollbar-thumb {
 
 .sidebar-menu,
 .sidebar-nav {
-    width: 90%;
+    /*width: 90%;*/
     margin: 0 auto
 }
 
@@ -5087,7 +5089,11 @@ body::-webkit-scrollbar-thumb {
     width: 100%;
     height: -webkit-max-content;
     height: -moz-max-content;
-    height: max-content
+    height: max-content;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    line-clamp: 1;
 }
 
 #page-top h1 {
@@ -5159,7 +5165,7 @@ body::-webkit-scrollbar-thumb {
 .sidebar-link {
     overflow-x: scroll;
     white-space: nowrap;
-    width: 90%;
+    /*width: 90%;*/
     margin: 0 auto;
     height: -webkit-max-content;
     height: -moz-max-content;
@@ -6103,10 +6109,33 @@ body::-webkit-scrollbar-thumb {
     font-size: var(--fontSize);
     padding: 1rem;
     transition: all 1s;
+    margin-top: 1rem;
+    background-color: #f5f5f5;
 }
 
 .aurora-card:hover {
     box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 50px;
+}
+
+.bg-linear-gradient {
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    overflow: auto;
+    background: var(--linerGradient);
+    animation: linearGradient 15s ease infinite;
+    background-size: 400% 400%;
+    background-attachment: fixed;
+}
+
+@keyframes linearGradient {
+    0% {
+        background-position: 0% 0%;
+    }
+    50% {
+        background-position: 100% 100%;
+    }
+    100% {
+        background-position: 0% 0%;
+    }
 }
 
 .aurora-card-title {
@@ -6134,4 +6163,22 @@ body::-webkit-scrollbar-thumb {
 
 .global-common-animate {
     transition: all 1s;
+}
+
+.sidebar-aurora-card {
+    margin-left: auto;
+}
+
+@media screen and (min-width: 719px) {
+    .sidebar-aurora-card {
+        width: calc(20vw);
+    }
+}
+
+.latest-page {
+    vertical-align: middle;
+}
+
+.latest-page svg {
+    margin-right: .5rem;
 }

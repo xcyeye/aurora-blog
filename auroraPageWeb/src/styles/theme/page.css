@@ -145,3 +145,20 @@
 .tagDataControl svg {
     color: var(--aurora-global-active-color);
 }
+
+@media screen and (min-width: 719px) {
+    .article-page-card {
+        width: 85%;
+        margin: 0 auto;
+        padding-bottom: 2.5rem;
+        padding-left: 2.5rem;
+        padding-right: 2.5rem;
+    }
+}
+
+@media screen and (max-width: 719px) {
+    .article-page-card {
+        margin-top: 0;
+    }
+}
+

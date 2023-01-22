@@ -3,6 +3,7 @@
 								 :show-sidebar-link="true" :user-uid="userUid"
 								 :article-info="articleInfo"
 								 :show-navbar="true"
+								 :show-sidebar="false"
 								 :is-article-page="true"
 								 :is-home-page="false"
 								 :is-show-top-img="true"
@@ -11,9 +12,7 @@
 			<div ref="articleTopScroll" style="width: 0; height: 0"></div>
 		</template>
 		<template #center1>
-			<main :style="$store.state.borderRadiusStyle + $store.state.opacityStyle"
-						class="page sidebar-single-enter-animate blog-article" id="article-page">
-				
+			<aurora-card class="article-page-card">
 				<div id="theme-default-content" class="hide-h1-tag theme-default-content pageContent">
 					<!--TODO 分享这块暂时不做-->
 					<!--<div class="page-top-share">-->
@@ -84,7 +83,7 @@
 						<span>许可协议: 本文使用《署名-非商业性使用-相同方式共享4.0国际(CC BY-NC-SA 4.0)》协议授权</span>
 					</div>
 				</div>
-			</main>
+			</aurora-card>
 			
 			<blog-comment
 				:user-uid="userUid"

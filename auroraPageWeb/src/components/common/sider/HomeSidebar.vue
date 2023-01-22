@@ -1,201 +1,197 @@
 <!--侧边栏组件，手机端菜单组件为MobileSidebar.vue-->
 <template>
-  <!--这是页面右侧的侧边栏，和默认主题的侧边栏不同-->
-  <div ref="sidebar-top" class="sidebar-cqy"></div>
-  <div :style="getHomeSidebarStyle" id="stickSidebar"
-       :class="{'sidebar-single-enter-animate': showEnterAnimate}">
-    <!---->
-    <div :class="{sidebarScroll: isShowCatalog}" :style="setHomeSidebarStyle" class="home-sidebar" id="home-sidebar">
-
-      <!--头像信息-->
-      <div :id="customId" v-if="showPersonInfo" class="sidebar-single-common">
-        <div class="home-sidebar-avatar">
-          <!--<img id="home-sidebar-avatar-img" :src="useUserInfo().getUserInfo(userUid).avatar" alt="">-->
-        	<n-avatar :src="useUserInfo().getUserInfo(userUid).avatar" :size="60" round/>
-				</div>
-        <div class="home-sidebar-info-desc">
-          <span v-if="getLogoTitle !== ''" v-html="getLogoTitle"></span>
-        </div>
-        <div class="home-sidebar-info-page">
-          <div class="sidebar-page-common">
-            <div>文章</div>
-            <div>{{articleNumber}}</div>
-          </div>
-          <div class="sidebar-page-common">
-            <div>标签</div>
-            <div>{{tagNumber}}</div>
-          </div>
-          <div class="sidebar-page-common">
-            <div>类别</div>
-            <div>{{categoryNumber}}</div>
-          </div>
-        </div>
-        <a target="_blank" :href="getGithubUrl">
-          <div class="sidebar-github">Github</div>
-        </a>
-        <slot name="sidebar-son1"/>
-      </div>
-      <slot name="sidebar1"></slot>
-
-      <!--时间-->
-      <!--<div :id="customId" v-if="getShowSidebarSocial" class="sidebar-single-common">
-        <div class="sidebar-time">
-          <span>12:36:57</span>
-        </div>
-      </div>-->
-
-      <!--社交-->
-      <div :id="customId" v-if="getShowSidebarSocial" class="sidebar-single-common">
-        <div class="sidebar-social">
-          <HomeSidebarSocialItem :sidebar-row-var="sidebarRowVar"
-                                 :sidebar-width-var="sidebarWidthVar"
-                                 :social-item="item" :data="item.aHref" :key="item.aHref"
-																 v-for="(item,index) in socialsArr"/>
-          <slot name="sidebar-son2"/>
-        </div>
-      </div>
-      <slot name="sidebar2"></slot>
-	
-			<div class="sidebar-single-common" v-if="talkArr.length > 0 && showTalk">
-				<div class="sidebar-social" @click="goTalk">
-					<div>
-						<n-ellipsis :line-clamp="3" :tooltip="false">
-							<svg-icon icon="mdi:message-fast"/> &nbsp;&nbsp;{{talkArr[0].content}}
-						</n-ellipsis>
+  <div v-if="showSidebar">
+		<!--这是页面右侧的侧边栏，和默认主题的侧边栏不同-->
+		<div ref="sidebar-top" class="sidebar-cqy"></div>
+		<div :style="getHomeSidebarStyle" id="stickSidebar"
+				 :class="{'sidebar-single-enter-animate': showEnterAnimate}">
+			<!---->
+			<div :class="{sidebarScroll: isShowCatalog}" :style="setHomeSidebarStyle" class="home-sidebar" id="home-sidebar">
+			
+				<!--头像信息-->
+				<aurora-card :show-linear-gradient="false" class="sidebar-aurora-card" custom-style="margin-top: 0;" :id="customId" v-if="showPersonInfo">
+					<div class="home-sidebar-avatar">
+						<!--<img id="home-sidebar-avatar-img" :src="useUserInfo().getUserInfo(userUid).avatar" alt="">-->
+						<n-avatar :src="useUserInfo().getUserInfo(userUid).avatar" :size="60" round/>
 					</div>
-					<div style="font-size: .3rem" class="sidebar-page-time">
-						<span>{{talkArr[0].createTime}}</span>
+					<div class="home-sidebar-info-desc">
+						<span v-if="getLogoTitle !== ''" v-html="getLogoTitle"></span>
 					</div>
-				</div>
+					<div class="home-sidebar-info-page">
+						<div class="sidebar-page-common">
+							<div>文章</div>
+							<div>{{articleNumber}}</div>
+						</div>
+						<div class="sidebar-page-common">
+							<div>标签</div>
+							<div>{{tagNumber}}</div>
+						</div>
+						<div class="sidebar-page-common">
+							<div>类别</div>
+							<div>{{categoryNumber}}</div>
+						</div>
+					</div>
+					<a target="_blank" :href="getGithubUrl">
+						<div class="sidebar-github">Github</div>
+					</a>
+					<slot name="sidebar-son1"/>
+				</aurora-card>
+				<slot name="sidebar1"></slot>
+			
+				<!--&lt;!&ndash;时间&ndash;&gt;-->
+				<!--<div :id="customId" v-if="getShowSidebarSocial" class="sidebar-single-common">-->
+				<!--  <div class="sidebar-time">-->
+				<!--    <span>12:36:57</span>-->
+				<!--  </div>-->
+				<!--</div>-->
+			
+				<!--社交-->
+				<aurora-card custom-style="padding: 0rem;" class="sidebar-aurora-card" :id="customId" v-if="getShowSidebarSocial">
+					<div class="sidebar-social">
+						<HomeSidebarSocialItem :sidebar-row-var="sidebarRowVar"
+																	 :sidebar-width-var="sidebarWidthVar"
+																	 :social-item="item" :data="item.aHref" :key="item.aHref"
+																	 v-for="(item,index) in socialsArr"/>
+						<slot name="sidebar-son2"/>
+					</div>
+				</aurora-card>
+				<slot name="sidebar2"></slot>
+			
+				<aurora-card class="sidebar-aurora-card" v-if="talkArr.length > 0 && showTalk">
+					<div class="sidebar-social" @click="goTalk">
+						<div>
+							<n-ellipsis :line-clamp="3" :tooltip="false">
+								<svg-icon icon="mdi:message-fast"/> &nbsp;&nbsp;{{talkArr[0].content}}
+							</n-ellipsis>
+						</div>
+						<div style="font-size: .3rem" class="sidebar-page-time">
+							<span>{{talkArr[0].createTime}}</span>
+						</div>
+					</div>
+				</aurora-card>
+			
+				<!--侧边栏友情链接-->
+				<aurora-card class="sidebar-aurora-card" :id="customId" v-if="getShowSidebarLink">
+					<div class="sidebar-link">
+						<a :href="item.linkUrl" target="_blank" :data="item.linkTitle" :key="item.uid" v-for="(item,index) in friendLinks">
+							<div class="sidebar-link-single">
+								<div class="sidebar-link-avatar">
+									<img :origin-src="item.linkLogo" :src="showFriendAvatar ? item.linkLogo : homePageLazyLoadingImg" alt="">
+								</div>
+								<div :dat="item.linkTitle" class="sidebar-link-title">
+									<span>{{item.linkTitle}}</span>
+								</div>
+							</div>
+						</a>
+					</div>
+				</aurora-card>
+			
+				<!--顶部导航-->
+				<aurora-card class="sidebar-aurora-card" :id="customId" v-if="showNavbar" :class="{'sidebar-single-enter-animate': showEnterAnimate}">
+					<mobile-sidebar-nav :is-article-page="isArticlePage" :user-uid="userUid" />
+					<slot name="sidebar-son3"/>
+				</aurora-card>
+				<slot name="sidebar3"></slot>
+			
+				<!--搜索-->
+				<aurora-card class="sidebar-aurora-card" :id="customId" v-if="showSearch" :class="{'sidebar-single-enter-animate': showEnterAnimate}">
+					<!--<SearchBox/>-->
+					<slot name="sidebar-son4"/>
+				</aurora-card>
+				<slot name="sidebar4"></slot>
+			
+				<!--文章-->
+				<aurora-card :id="customId" v-if="showArticle" :class="{'sidebar-single-enter-animate': showEnterAnimate}" class="sidebar-single-page sidebar-aurora-card">
+					<template #header>
+						<div class="change-page">
+							<div v-if="isShowCatalog" class="catalog-page change-page-common">
+								<span :class="{changePageActive: changePageIndex === '1'}" index="1" @click="changePage">文章目录</span>
+							</div>
+							<div :style="getSinglePageStyle" class="latest-page change-page-common">
+								<svg-icon icon="ic:outline-access-time"/>
+								<span :style="setChangePageStyle" :class="{changePageActive: changePageIndex === '2'}" @click="changePage" index="2">最新文章</span>
+							</div>
+						</div>
+					</template>
+					<!--文章目录-->
+					<catalog :is-show-catalog="isShowCatalog" v-show="changePageIndex === '1'" />
+				
+					<!--最新文章-->
+					<div v-show="changePageIndex === '2'">
+						<div v-for="item in articleArr" :key="item.uid" :data="item.uid" class="sidebar-page-item sidebar-hover-bg-common">
+							<div class="sidebar-page-title">
+								<router-link :to="`/article/${item.userUid}/${item.uid}`">
+									<span @click="goRead($event,item)">{{item.title ? item.title :getRecommendNoTitle}}</span>
+								</router-link>
+							</div>
+							<div class="sidebar-page-time">
+								<span>{{ item.createTime }}</span>
+							</div>
+						</div>
+					</div>
+					<slot name="sidebar-son5"/>
+				</aurora-card>
+				<slot name="sidebar5"></slot>
+			
+				<!--公告-->
+				<aurora-card class="sidebar-aurora-card" :id="customId" v-if="bulletinArr" :class="{'sidebar-single-enter-animate': showEnterAnimate}" title="公告" icon="bi:messenger">
+					<div class="sidebar-message">
+						<li id="sidebar-message" :key="item.uid" v-for="(item,index) in bulletinArr" class="sidebar-hover-bg-common">
+							<span v-html="item.content"></span>
+						</li>
+					</div>
+					<slot name="sidebar-son6"/>
+				</aurora-card>
+				<slot name="sidebar6"></slot>
+			
+				<!--标签-->
+				<aurora-card class="sidebar-aurora-card" :id="customId" v-if="showTagCloud" :class="{'sidebar-single-enter-animate': showEnterAnimate}" title="标签" icon="bi:tag-fill">
+				
+					<div v-if="isMobileSidebar" class="change-page">
+						<div class="catalog-page change-page-common">
+							<span class="home-menu-ico" style="--homeIcoCode: '\e7b5'"></span>
+							<span>标签</span>
+						</div>
+						<div class="latest-page change-page-common">
+							<span></span>
+							<span></span>
+						</div>
+					</div>
+				
+					<div class="sidebar-tag-item">
+						<router-link :key="index" v-for="(item,index) in tagArr" :to="`/tag/${item.userUid}/${item.title}`">
+							<div class="sidebar-tag-single">
+								<span class="home-sidebar-tag-hover" :key="index" :style="setTagItemStyle(index)">{{item.title}}</span>
+							</div>
+						</router-link>
+					</div>
+					<slot name="sidebar-son7"/>
+				</aurora-card>
+				<slot name="sidebar7"></slot>
+			
+				<!--站点-->
+				<aurora-card class="sidebar-aurora-card" :id="customId" v-if="showSite" :class="{'sidebar-single-enter-animate': showEnterAnimate}">
+					<div class="sidebar-page">
+						<span class="aurora-iconfont-common aurora-sidebar-site"></span>
+						<span>site</span>
+					</div>
+				
+					<div class="sidebar-site">
+						<div class="sidebar-site-single" v-for="item in 5">
+							<div class="sidebar-site-name">
+								<span>访客</span>
+							</div>
+							<div class="sidebar-site-desc">
+								<span>1000</span>
+							</div>
+						</div>
+					</div>
+					<slot name="sidebar-son8"/>
+				</aurora-card>
+				<slot name="sidebar8"></slot>
 			</div>
-
-      <!--侧边栏友情链接-->
-      <div :id="customId" v-if="getShowSidebarLink" class="sidebar-single-common">
-        <div class="sidebar-link">
-          <a :href="item.linkUrl" target="_blank" :data="item.linkTitle" :key="item.uid" v-for="(item,index) in friendLinks">
-            <div class="sidebar-link-single">
-              <div class="sidebar-link-avatar">
-                <img :origin-src="item.linkLogo" :src="showFriendAvatar ? item.linkLogo : homePageLazyLoadingImg" alt="">
-              </div>
-              <div :dat="item.linkTitle" class="sidebar-link-title">
-                <span>{{item.linkTitle}}</span>
-              </div>
-            </div>
-          </a>
-        </div>
-      </div>
-
-      <!--顶部导航-->
-      <div :id="customId" v-if="showNavbar" :class="{'sidebar-single-enter-animate': showEnterAnimate}" class="sidebar-single-common">
-        <mobile-sidebar-nav :is-article-page="isArticlePage" :user-uid="userUid" />
-        <slot name="sidebar-son3"/>
-      </div>
-      <slot name="sidebar3"></slot>
-
-      <!--搜索-->
-      <div :id="customId" v-if="showSearch" :class="{'sidebar-single-enter-animate': showEnterAnimate}" class="sidebar-single-common">
-        <!--<SearchBox/>-->
-        <slot name="sidebar-son4"/>
-      </div>
-      <slot name="sidebar4"></slot>
-
-      <!--文章-->
-      <div :id="customId" v-if="showArticle" :class="{'sidebar-single-enter-animate': showEnterAnimate}" class="sidebar-single-page sidebar-single-common">
-        <div class="change-page">
-          <div v-if="isShowCatalog" class="catalog-page change-page-common">
-            <span :class="{changePageActive: changePageIndex === '1'}" index="1" @click="changePage">文章目录</span>
-          </div>
-          <div :style="getSinglePageStyle" class="latest-page change-page-common">
-            <span v-if="!isShowCatalog" class="aurora-iconfont-common aurora-sidebar-newest-page"></span>
-            <span :style="setChangePageStyle" :class="{changePageActive: changePageIndex === '2'}" @click="changePage" index="2">最新文章</span>
-          </div>
-        </div>
-        <!--文章目录-->
-        <catalog :is-show-catalog="isShowCatalog" v-show="changePageIndex === '1'" />
-
-        <!--最新文章-->
-        <div v-show="changePageIndex === '2'">
-          <div v-for="item in articleArr" :key="item.uid" :data="item.uid" class="sidebar-page-item sidebar-hover-bg-common">
-            <div class="sidebar-page-title">
-              <router-link :to="`/article/${item.userUid}/${item.uid}`">
-                <span @click="goRead($event,item)">{{item.title ? item.title :getRecommendNoTitle}}</span>
-              </router-link>
-            </div>
-            <div class="sidebar-page-time">
-              <span>{{ item.createTime }}</span>
-            </div>
-          </div>
-        </div>
-        <slot name="sidebar-son5"/>
-      </div>
-      <slot name="sidebar5"></slot>
-
-      <!--公告-->
-      <div :id="customId" v-if="bulletinArr" :class="{'sidebar-single-enter-animate': showEnterAnimate}" class="sidebar-single-common">
-        <div class="sidebar-page">
-          <span class="aurora-iconfont-common aurora-sidebar-message"></span>
-          <span>公告</span>
-        </div>
-        <div class="sidebar-message">
-          <li id="sidebar-message" :key="item.uid" v-for="(item,index) in bulletinArr" class="sidebar-hover-bg-common">
-            <span v-html="item.content"></span>
-          </li>
-        </div>
-        <slot name="sidebar-son6"/>
-      </div>
-      <slot name="sidebar6"></slot>
-
-      <!--标签-->
-      <div :id="customId" v-if="showTagCloud" :class="{'sidebar-single-enter-animate': showEnterAnimate}" class="sidebar-single-common">
-        <div v-if="!isMobileSidebar" id="home-tag-sidebar" class="sidebar-page">
-          <span class="aurora-iconfont-common aurora-sidebar-tag"></span>
-          <span>标签</span>
-        </div>
-
-        <div v-if="isMobileSidebar" class="change-page">
-          <div class="catalog-page change-page-common">
-            <span class="home-menu-ico" style="--homeIcoCode: '\e7b5'"></span>
-            <span>标签</span>
-          </div>
-          <div class="latest-page change-page-common">
-            <span></span>
-            <span></span>
-          </div>
-        </div>
-
-        <div class="sidebar-tag-item">
-          <router-link :key="index" v-for="(item,index) in tagArr" :to="'/tag?tag=' + item.uid">
-            <div class="sidebar-tag-single">
-              <span class="home-sidebar-tag-hover" :key="index" :style="setTagItemStyle(index)">{{item.title}}</span>
-            </div>
-          </router-link>
-        </div>
-        <slot name="sidebar-son7"/>
-      </div>
-      <slot name="sidebar7"></slot>
-
-      <!--站点-->
-      <div :id="customId" v-if="showSite" id="sidebar-single-common" :class="{'sidebar-single-enter-animate': showEnterAnimate}" class=" sidebar-single-common">
-        <div class="sidebar-page">
-          <span class="aurora-iconfont-common aurora-sidebar-site"></span>
-          <span>site</span>
-        </div>
-
-        <div class="sidebar-site">
-          <div class="sidebar-site-single" v-for="item in 5">
-            <div class="sidebar-site-name">
-              <span>访客</span>
-            </div>
-            <div class="sidebar-site-desc">
-              <span>1000</span>
-            </div>
-          </div>
-        </div>
-        <slot name="sidebar-son8"/>
-      </div>
-      <slot name="sidebar8"></slot>
-    </div>
-  </div>
+		</div>
+	</div>
 </template>
 
 <script lang="ts">
@@ -357,7 +353,13 @@ export default {
       default() {
         return false;
       }
-    }
+    },
+		showSidebar: {
+			type: Boolean,
+			default() {
+				return true;
+			}
+		}
   },
   created() {
 		this.currentSiteInfo = useSiteInfo().getSiteInfo(this.userUid)
