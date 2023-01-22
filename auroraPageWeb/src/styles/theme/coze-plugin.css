@@ -248,8 +248,8 @@ body {
     z-index: 2;
     display: flex;
     align-items: center;
-    margin-top: var(--coze-margin-top, 1.5rem);
-    margin-bottom: var(--coze-margin-bottom, 1.5rem);
+    /*margin-top: var(--coze-margin-top, 1.5rem);*/
+    /*margin-bottom: var(--coze-margin-bottom, 1.5rem);*/
     background: var(--coze-background, #fff);
     border-radius: var(--coze-border-radius, 10px)
 }
@@ -279,7 +279,7 @@ body {
 
 .coze-mood-item {
     min-height: 4rem;
-    margin-top: 1rem;
+    /*margin-top: 1rem;*/
     margin-bottom: 1rem;
     align-items: center
 }
@@ -307,11 +307,11 @@ body {
 
 .mood-img-right {
     flex: 5;
-    max-height: 15rem;
+    height: 13rem;
     padding: 1rem;
-    height: -webkit-max-content;
-    height: -moz-max-content;
-    height: max-content;
+    /*height: -webkit-max-content;*/
+    /*height: -moz-max-content;*/
+    /*height: max-content;*/
     overflow: scroll
 }
 
@@ -360,7 +360,7 @@ body {
 
 .mood-item-right {
     flex: 5;
-    padding: 1rem;
+    /*padding: 1rem;*/
     box-sizing: border-box;
 }
 
@@ -1417,4 +1417,8 @@ body {
     box-sizing: border-box;
     /*padding: 1rem;*/
     width: 100%;
+}
+
+.coze-mood-list .aurora-card:first-child {
+    margin-top: 0;
 }

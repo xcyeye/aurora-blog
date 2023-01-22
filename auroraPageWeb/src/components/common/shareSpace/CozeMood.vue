@@ -2,32 +2,30 @@
   <div class="coze-image-container" id="coze-image-container"></div>
   <div class="coze-box">
     <div class="coze-mood-list">
-      <div :key="item.uid" v-for="(item,index) in talkArr" class="coze-enter-animate">
-        <div class="coze-mood-control" v-if="item.show">
-          <mood-item @mood-comment="moodComment" @mood-love="moodLove" @mood-poster="moodPoster"
-                     @mood-edit="moodEdit" :user-uid="userUid" :mood-item="item">
-            <slot name="coze-mood-content-par"></slot>
-            <template #coze-mood-content>
-              <slot name="coze-mood-content"></slot>
-            </template>
-
-            <slot name="coze-img-par"></slot>
-            <template #coze-img>
-              <slot name="coze-img"></slot>
-            </template>
-
-            <slot name="coze-mood-bottom-left-par"></slot>
-            <template #coze-mood-bottom-left>
-              <slot name="coze-mood-bottom-left"></slot>
-            </template>
-
-            <slot name="coze-mood-bottom-right-par"></slot>
-            <template #coze-mood-bottom-right>
-              <slot name="coze-mood-bottom-right"></slot>
-            </template>
-          </mood-item>
-        </div>
-      </div>
+			<aurora-card :key="item.uid" v-for="(item,index) in talkArr" class="coze-enter-animate">
+				<mood-item @mood-comment="moodComment" @mood-love="moodLove" @mood-poster="moodPoster"
+									 @mood-edit="moodEdit" :user-uid="userUid" :mood-item="item">
+					<slot name="coze-mood-content-par"></slot>
+					<template #coze-mood-content>
+						<slot name="coze-mood-content"></slot>
+					</template>
+					
+					<slot name="coze-img-par"></slot>
+					<template #coze-img>
+						<slot name="coze-img"></slot>
+					</template>
+					
+					<slot name="coze-mood-bottom-left-par"></slot>
+					<template #coze-mood-bottom-left>
+						<slot name="coze-mood-bottom-left"></slot>
+					</template>
+					
+					<slot name="coze-mood-bottom-right-par"></slot>
+					<template #coze-mood-bottom-right>
+						<slot name="coze-mood-bottom-right"></slot>
+					</template>
+				</mood-item>
+			</aurora-card>
     </div>
   </div>
 </template>

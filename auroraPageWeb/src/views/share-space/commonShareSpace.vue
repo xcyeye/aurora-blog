@@ -81,8 +81,12 @@ export default defineComponent({
 	}
 })
 </script>
-<style>
-.coze-box {
-	margin-top: -1.5rem;
+<style lang="css">
+.aurora-give-like-heart-svg-default {
+	color: var(--fontColor);
+}
+
+.aurora-give-like-heart-default-active {
+	color: #ef476f;
 }
 </style>

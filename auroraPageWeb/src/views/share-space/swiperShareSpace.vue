@@ -1,5 +1,6 @@
 <template>
 	<div class="aurora-coze-slide-body" :style="slideBodyBg">
+		<aurora-bubble/>
 		<div class="coze-image-container" id="coze-image-container"></div>
 		
 		<div class="aurora-coze-slide-shade aurora-coze-slide-radius">
