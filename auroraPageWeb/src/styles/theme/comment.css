@@ -66,3 +66,12 @@
     background-color: red;
     height: 1rem;
 }
+
+.aurora-comment-data-info-box {
+    border-radius: var(--borderRadius);
+    background-color: rgba(255, 255, 255, var(--opacity));
+    position: relative;
+    display: block;
+    z-index: 2;
+    overflow: hidden;
+}

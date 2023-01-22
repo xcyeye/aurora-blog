@@ -1,5 +1,5 @@
 <template>
-	<div class="aurora-card global-common-animate bg-linear-gradient" :style="getCardStyle">
+	<div class="aurora-card global-common-animate" :class="{'bg-linear-gradient': showLinearGradient}" :style="getCardStyle">
 		<div class="aurora-card-title">
 			<div v-if="props.icon" class="aurora-card-title-icon">
 				<svg-icon :icon="props.icon"/>

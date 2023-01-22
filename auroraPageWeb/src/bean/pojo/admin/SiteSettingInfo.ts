@@ -23,7 +23,8 @@ interface FooterInfo {
 	isShowThemeCopyright?: boolean,
 	isShowRunTime?: boolean,
 	startRunTime?: string,
-	prefixRuntime?: string
+	prefixRuntime?: string,
+	backgroundImage?: string
 }
 
 interface AboutInfo {

@@ -23,7 +23,7 @@ const props = withDefaults(defineProps<Props>(), {
 	showBubble: true
 })
 
-onMounted(() => {
+const loadBubble = () => {
 	let bubbleNumber = 0.15
 	let bubbleAlpha = 0.7
 	let alphaChangeSpeed = 0.0005
@@ -38,6 +38,13 @@ onMounted(() => {
 			})
 		})
 	}
+}
+
+onMounted(() => {
+	loadBubble()
+	window.addEventListener('resize', () => {
+		loadBubble()
+	})
 })
 </script>
 

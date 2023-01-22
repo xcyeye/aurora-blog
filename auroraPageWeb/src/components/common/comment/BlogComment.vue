@@ -59,7 +59,7 @@
 			</div>
 			<div class="aurora-comment-data-box" :class="{'aurora-comment-animate' : showCommentBut}">
 				<div class="mobile-record" :class="{'aurora-show-comment-animate': showCommentAnimateClass}">
-					<div class="page box">
+					<div class="aurora-comment-data-info-box">
 						<div class="h-full">
 							<n-card :bordered="false" v-if="!currentClickParentCommentDto.username">
 								<n-space vertical>

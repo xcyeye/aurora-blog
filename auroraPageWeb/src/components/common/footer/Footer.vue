@@ -1,13 +1,13 @@
 <template>
-	<!--<aurora-card class="sidebar-single-enter-animate footer-layout-center">-->
-	<!--	<div v-if="isShowFooter"-->
-	<!--			 class="footer box" id="footer">-->
-	<!--		<FooterItem v-for="(item,index) in footerArr" :key="index" :item="item"/>-->
-	<!--		<div class="footer-item" v-if="isShowRunTime" id="footer-item">-->
-	<!--			<span >{{runTime}}</span>-->
-	<!--		</div>-->
-	<!--	</div>-->
-	<!--</aurora-card>-->
+	<aurora-card :style="getFooterStyle" :show-linear-gradient="showLinearGradient" class="footer-card sidebar-single-enter-animate">
+		<div v-if="isShowFooter"
+				 class="footer">
+			<FooterItem v-for="(item,index) in footerArr" :key="index" :item="item"/>
+			<div class="footer-item" v-if="isShowRunTime" id="footer-item">
+				<span >{{runTime}}</span>
+			</div>
+		</div>
+	</aurora-card>
 	<!--<div class="sidebar-single-enter-animate footer-layout-center">-->
 	<!--	<div v-if="isShowFooter"-->
 	<!--			 class="footer box" id="footer">-->
@@ -22,19 +22,31 @@
 <script lang="ts">
 import {PropType} from "vue";
 import {StringUtil} from "@/utils";
-import blogConfig from '@/config/blogConfig.json'
+import blogConfig from '@/config/blogConfig.json';
 
+const siteInfo: SiteSettingInfo = {}
 export default {
   name: "Footer",
   data() {
     return {
+			showLinearGradient: false,
       footerArr: [],
       isShowRunTime: true,
       startRunTime: '8/7/2021 12:22:00',
       runTime: '',
       prefixRuntime: '小破站已运行',
+			
     }
   },
+	computed: {
+		getFooterStyle() {
+			if (StringUtil.haveLength(this.currentSiteInfo?.footerInfo?.backgroundImage)) {
+				return `background-image: url("${this.currentSiteInfo?.footerInfo?.backgroundImage}");`
+			}else {
+				this.showLinearGradient = true
+			}
+		}
+	},
   props: {
 		currentSiteInfo: {
 			type: Object as PropType<SiteSettingInfo>
@@ -54,7 +66,7 @@ export default {
   },
   created() {
     if (this.currentSiteInfo.footerInfo !== undefined && this.currentSiteInfo.footerInfo.enable) {
-      this.footerArr = this.currentSiteInfo.footerInfo
+      this.footerArr = this.currentSiteInfo.footerInfo.footInfo
 			let showThemeCopyright = this.currentSiteInfo.footerInfo.isShowThemeCopyright
 			let themeCopyright: string = ''
 			if (showThemeCopyright === undefined || showThemeCopyright == null || showThemeCopyright) {
@@ -87,10 +99,6 @@ ${blogConfig.projectInfo.author}</a>`
 				this.prefixRuntime = this.currentSiteInfo.footerInfo.prefixRuntime
 			}
 			this.showRuntime()
-    }else {
-      this.footerArr = [
-          'Copyright © by xcye All Rights Reserved'
-      ]
     }
   },
   methods: {

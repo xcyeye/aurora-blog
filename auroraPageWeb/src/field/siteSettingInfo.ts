@@ -113,6 +113,7 @@ export const defaultSiteSettingInfo: SiteSettingInfo = {
     sidebarPersonDesc: '喜欢动漫',
     githubUrl: 'https://github.com',
     footerInfo: {
+        backgroundImage: 'https://picture.xcye.xyz/animate/1194.png',
         enable: true,
         footInfo: [
             "Copyright © by qsyyke All Rights Reserved.",
