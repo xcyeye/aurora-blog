@@ -264,3 +264,40 @@
         -webkit-box-orient: vertical;
     }
 }
+
+.aurora-article-summary {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem;
+    box-sizing: border-box;
+    border-radius: 16px;
+    box-shadow: 0 0 0 1px #f2f2f2;
+}
+.aurora-article-summary .summary-item {
+    width: 100%;
+    padding-right: 20px;
+}
+
+.aurora-article-summary h5 {
+    color: #999;
+}
+
+.aurora-article-summary p {
+    margin-top: 12px;
+    font-size: 1.5rem;
+}
+
+@media screen and (max-width: 719px) {
+    .aurora-article-summary-item-desc {
+        display: none;
+    }
+
+    .summary-item h5 {
+        font-size: 10px;
+    }
+
+    .aurora-article-summary .summary-item {
+        padding-right: 0;
+    }
+}

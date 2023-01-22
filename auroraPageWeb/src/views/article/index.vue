@@ -14,12 +14,37 @@
 		<template #center1>
 			<aurora-card class="article-page-card">
 				<div id="theme-default-content" class="hide-h1-tag theme-default-content pageContent">
-					<!--TODO 分享这块暂时不做-->
-					<!--<div class="page-top-share">-->
-					<!--	<div class="page-top-share-next">-->
-					<!--		&lt;!&ndash;<poster :title="originPageData.title" :content="posterContent"/>&ndash;&gt;-->
-					<!--	</div>-->
-					<!--</div>-->
+					<div class="aurora-article-summary">
+						<div class="summary-item">
+							<h5 class="item-title">时长</h5>
+							<p class="item-text">
+								<span class="item-data">{{sugReadTime}}</span>
+								<span class="aurora-article-summary-item-desc"> Mins</span>
+							</p>
+						</div>
+						<div class="summary-item">
+							<h5 class="item-title">阅读</h5>
+							<p class="item-text">
+								<span class="item-data">{{articleInfo.readNumber}}</span>
+								<span class="aurora-article-summary-item-desc"> Views</span>
+							</p>
+						</div>
+						<div class="summary-item">
+							<h5 class="item-title">字数</h5>
+							<p class="item-text">
+								<span class="item-data">{{totalWord}}</span>
+								<span class="aurora-article-summary-item-desc"> Words</span>
+							</p>
+						</div>
+						<div class="summary-item">
+							<h5 class="item-title">评论</h5>
+							<p class="item-text">
+								<span class="item-data">{{totalComment}}</span>
+								<span class="aurora-article-summary-item-desc"> Items</span>
+							</p>
+						</div>
+					</div>
+					
 					<div v-html="articleContent"></div>
 					<!--<render-markdown :markdown-content="articleInfo.content"/>-->
 				</div>
@@ -103,7 +128,7 @@ import {useRouter} from "vue-router";
 import {useRouterPush} from "@/composables";
 import {isNotEmptyObject} from "@/utils/business";
 import {ArticleVo} from "@/bean/vo/article/ArticleVo";
-import {articleApi, userApi} from "@/service";
+import {articleApi, commentApi, userApi} from "@/service";
 import {siteSettingApi} from "@/service/api/admin/siteSettingApi";
 import MarkdownIt from 'markdown-it';
 import hljs from 'highlight.js';
@@ -112,6 +137,8 @@ import {Condition} from "@/bean/core/bean";
 import smoothscroll from 'smoothscroll-polyfill';
 import RequestResult = Service.RequestResult;
 import RenderMarkdown from "@/components/common/content/RenderMarkdown.vue";
+import {readingTime} from "reading-time-estimator";
+import gsap from "gsap";
 
 const currentSiteInfo = ref<SiteSettingInfo>({})
 const useSite = useSiteInfo()
@@ -127,11 +154,29 @@ const isClickLikeBut = ref(false)
 const articleStore = useArticleStore()
 const articleStoreInfo = ref<ArticleStoreBean>({})
 const articleTopScroll = ref<Element>()
+const totalWord = ref(0)
+const sugReadTime = ref(0)
+const totalComment = ref(0)
 
 const getArticleTag = computed((): Array<string> => {
 	if (!StringUtil.haveLength(articleInfo.value.tagNames)) return []
 	return articleInfo.value.tagNames!.split(",")
 })
+
+const calculateReadTime = () => {
+	const sugCountPerMin = 230
+	const totalWordObj = readingTime(articleInfo.value.content!, sugCountPerMin);
+	totalWord.value = totalWordObj.words
+	sugReadTime.value = Math.floor(totalWordObj.words / sugCountPerMin) === 0 ? 1 : Math.ceil(totalWordObj.words / sugCountPerMin)
+}
+
+const calculateComment = () => {
+	commentApi.queryListDataByCondition({pageSize: 9999, otherUid: userUid.value, keyword: `/article/${articleUid.value}`}).then(result => {
+		if (result.data && result.data.result) {
+			totalComment.value = result.data.total!
+		}
+	})
+}
 
 const getArticleCategory = computed((): Array<string> => {
 	if (!StringUtil.haveLength(articleInfo.value.categoryNames)) return []
@@ -211,6 +256,8 @@ const loadArticleInfo = () => {
 		if (result.data) {
 			articleInfo.value = result.data
 			renderMarkdownContent(result.data)
+			calculateReadTime()
+			calculateComment()
 			// 获取此用户的信息，如果没有，则加载
 			if (!isNotEmptyObject(useUser.getUserInfo(articleInfo.value.userUid!))) {
 				userApi.queryOneDataByUid({uid: result.data.userUid}).then(result => {
