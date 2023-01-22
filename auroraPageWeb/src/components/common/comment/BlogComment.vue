@@ -243,7 +243,7 @@
 										</n-card>
 									</n-space>
 								</div>
-								<n-divider v-if="index < showCommentInfo.parentNodeNum - 2" />
+								<!--<n-divider v-if="index < showCommentInfo.parentNodeNum - 2" />-->
 							</n-card>
 							
 							<!--另一个父评论开始，使用分割线隔开-->
