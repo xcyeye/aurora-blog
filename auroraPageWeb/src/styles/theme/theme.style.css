@@ -6322,3 +6322,23 @@ body::-webkit-scrollbar-thumb {
 .content .aurora-card:first-child {
     margin-top: 0;
 }
+
+.n-pagination-item--active {
+    color: var(--aurora-pagination-active-color) !important;
+    background-color: var(--aurora-pagination-active-bg) !important;
+}
+
+.n-pagination .n-pagination-item {
+    border: 0 solid red !important;
+    background-color: var(--aurora-pagination-bg);
+    color: var(--fontColor);
+    border-radius: 7px !important;
+}
+
+.n-pagination .n-pagination-item:hover {
+    background-color: var(--aurora-pagination-bg) !important;
+}
+
+.n-pagination-item--button {
+    background-color: var(--aurora-pagination-bg) !important;
+}
