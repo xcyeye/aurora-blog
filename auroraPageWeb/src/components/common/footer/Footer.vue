@@ -1,16 +1,22 @@
 <template>
-  <div :style="$store.state.borderRadiusStyle +
-       $store.state.opacityStyle + $store.state.fontColorStyle +
-       $store.state.fontFamilyStyle + $store.state.filterBlurStyle"
-			 class="sidebar-single-enter-animate footer-layout-center">
-		<div v-if="isShowFooter"
-         class="footer box" id="footer">
-      <FooterItem v-for="(item,index) in footerArr" :key="index" :item="item"/>
-      <div class="footer-item" v-if="isShowRunTime" id="footer-item">
-        <span >{{runTime}}</span>
-      </div>
-    </div>
-  </div>
+	<!--<aurora-card class="sidebar-single-enter-animate footer-layout-center">-->
+	<!--	<div v-if="isShowFooter"-->
+	<!--			 class="footer box" id="footer">-->
+	<!--		<FooterItem v-for="(item,index) in footerArr" :key="index" :item="item"/>-->
+	<!--		<div class="footer-item" v-if="isShowRunTime" id="footer-item">-->
+	<!--			<span >{{runTime}}</span>-->
+	<!--		</div>-->
+	<!--	</div>-->
+	<!--</aurora-card>-->
+	<!--<div class="sidebar-single-enter-animate footer-layout-center">-->
+	<!--	<div v-if="isShowFooter"-->
+	<!--			 class="footer box" id="footer">-->
+	<!--		<FooterItem v-for="(item,index) in footerArr" :key="index" :item="item"/>-->
+	<!--		<div class="footer-item" v-if="isShowRunTime" id="footer-item">-->
+	<!--			<span >{{runTime}}</span>-->
+	<!--		</div>-->
+	<!--	</div>-->
+	<!--</div>-->
 </template>
 
 <script lang="ts">

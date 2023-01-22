@@ -9,6 +9,7 @@ declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     ArchiveItem: typeof import('./../components/common/archive/ArchiveItem.vue')['default']
     AuroraArchive: typeof import('./../components/common/archive/AuroraArchive.vue')['default']
+    AuroraBubble: typeof import('./../components/common/other/AuroraBubble.vue')['default']
     AuroraCard: typeof import('./../components/common/other/AuroraCard.vue')['default']
     AuroraCenter: typeof import('./../components/common/other/AuroraCenter.vue')['default']
     AuroraCommon: typeof import('./../components/common/AuroraCommon.vue')['default']

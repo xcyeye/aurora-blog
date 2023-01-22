@@ -51,207 +51,207 @@
 			</n-card>
 		</n-modal>
 		<parcel-style>
-			<div v-if="showCommentBut" :style="$store.state.borderRadiusStyle + $store.state.opacityStyle" class="theme-comment-box"
+			<div v-if="showCommentBut" class="theme-comment-box"
 					 :class="{'show-theme-comment-box': showCommentAnimateClass}"
 					 @click="showCommentAnimate">
 				<svg-icon style="margin-right: .5rem;margin-left: .5rem; font-size: 18px" icon="mdi:comment-processing"/>
 				<span class="aurora-comment-common aurora-comment-text">点击评论</span>
 			</div>
-		</parcel-style>
-		<div :class="{'aurora-comment-animate' : showCommentBut}">
-			<div class="mobile-record" :class="{'aurora-show-comment-animate': showCommentAnimateClass}">
-				<div class="page box" :style="$store.state.borderRadiusStyle + $store.state.opacityStyle">
-					<div class="h-full">
-						<n-card :bordered="false" v-if="!currentClickParentCommentDto.username">
-							<n-space vertical>
-								<div>
-									<div class="aurora-comment-reply-box">
-										<div class="aurora-comment-reply-box-son">
-											<n-input v-model:value="newCommenterUserInfo.username" :disabled="isAdminUser" size="small" placeholder="用户名"/>
-										</div>
-										<div class="aurora-comment-reply-box-son">
-											<n-input v-model:value="newCommenterUserInfo.email" :disabled="newCommenterUserInfo.email && isAdminUser && authStore.authInfo.userInfo && authStore.authInfo.userInfo.verify_email" size="small" placeholder="邮箱"/>
-										</div>
-										<div class="aurora-comment-reply-box-son">
-											<n-input v-model:value="newCommenterUserInfo.site" size="small" placeholder="站点"/>
+			<div class="aurora-comment-data-box" :class="{'aurora-comment-animate' : showCommentBut}">
+				<div class="mobile-record" :class="{'aurora-show-comment-animate': showCommentAnimateClass}">
+					<div class="page box">
+						<div class="h-full">
+							<n-card :bordered="false" v-if="!currentClickParentCommentDto.username">
+								<n-space vertical>
+									<div>
+										<div class="aurora-comment-reply-box">
+											<div class="aurora-comment-reply-box-son">
+												<n-input v-model:value="newCommenterUserInfo.username" :disabled="isAdminUser" size="small" placeholder="用户名"/>
+											</div>
+											<div class="aurora-comment-reply-box-son">
+												<n-input v-model:value="newCommenterUserInfo.email" :disabled="newCommenterUserInfo.email && isAdminUser && authStore.authInfo.userInfo && authStore.authInfo.userInfo.verify_email" size="small" placeholder="邮箱"/>
+											</div>
+											<div class="aurora-comment-reply-box-son">
+												<n-input v-model:value="newCommenterUserInfo.site" size="small" placeholder="站点"/>
+											</div>
 										</div>
 									</div>
-								</div>
-								<n-space></n-space>
-								<n-input rounded-16px type="textarea" v-model:value="replyCommentData.content" :autosize="{minRows: 3}"
-												 :placeholder="currentClickCommentDto.uid ? `回复@ ${currentClickCommentDto.username}` : '发布一条友善的评论(○｀ 3′○)' "
-												 class="aurora-comment-son-flex-textarea h-full"/>
-								<n-space justify="space-between">
-									<n-space justify="start">
-										<upload-file v-if="!newCommenterUserInfo.avatar" :control-upload-file="false"
-																 @handleFinishUploadFile="handleFinishUploadFile"
-																 :accept-file-type-str="['.jpg','.jpeg','.png']"
-																 :show-file-list="false"
-																 :parameter-data="{userUid: props.userUid, summary: `评论者在${props.userUid}用户处创建评论时上传的头像`}">
-											<template #uploadDraggerContent>
-												<n-avatar
-													class="aurora-comment-son-flex-avatar"
-													round
-													:size="45"
-													:src="newCommenterUserInfo.avatar"
-												/>
-											</template>
-										</upload-file>
-										<n-avatar
-											v-else
-											round
-											:size="45"
-											:src="newCommenterUserInfo.avatar"
-										/>
-									</n-space>
-									<n-space justify="end">
-										<n-button strong secondary tertiary round type="success" @click="handleReplyCommentAction">发布</n-button>
-									</n-space>
-								</n-space>
-							</n-space>
-						</n-card>
-						<n-card v-for="(item, index) in showCommentInfo.commentList" :key="index" class="h-full shadow-sm rounded-16px">
-							<template #header>
-								<n-space justify="start">
-									<n-avatar
-										round
-										:size="55"
-										:src="item.avatar"
-									/>
-									<n-space vertical>
+									<n-space></n-space>
+									<n-input rounded-16px type="textarea" v-model:value="replyCommentData.content" :autosize="{minRows: 3}"
+													 :placeholder="currentClickCommentDto.uid ? `回复@ ${currentClickCommentDto.username}` : '发布一条友善的评论(○｀ 3′○)' "
+													 class="aurora-comment-son-flex-textarea h-full"/>
+									<n-space justify="space-between">
 										<n-space justify="start">
-											<a :href="item.site" target="_blank">
-												<n-text>{{item.username}}</n-text>
-											</a>
-										</n-space>
-										<n-space vertical>
-											<n-space justify="start">
-												<n-text>{{item.content}}</n-text>
-											</n-space>
-											<n-space justify="start">
-												<n-gradient-text :gradient="{from: '#9499A0',to: '#9499A0'}" :size="13" type="success">
-													{{item.createTime}}
-												</n-gradient-text>
-												<n-gradient-text class="aurora-comment-mouse" @click="handleClickComment(item, item)" :gradient="{from: '#9499A0',to: '#9499A0'}" :size="13" type="success">
-													回复
-												</n-gradient-text>
-											</n-space>
-										</n-space>
-									</n-space>
-								</n-space>
-							</template>
-							<!--下面的都是子评论-->
-							<div class="aurora-comment-son-box">
-								<n-space vertical>
-									<!--子评论开始-->
-									<n-space v-for="(sonItem, sonIndex) in item.sonCommentList" :key="sonIndex" vertical>
-										<!--头像 评论内容-->
-										<n-space justify="start">
-											<a :href="sonItem.site" target="_blank">
-												<n-avatar
-													round
-													:size="35"
-													:src="sonItem.avatar"
-												/>
-											</a>
-											<n-space vertical>
-												<!--这是用户名和评论信息，或者回复某某-->
-												<n-space justify="start">
-													<n-gradient-text :gradient="{from: '#61666D',to: '#61666D'}" :size="13" type="success">
-														{{sonItem.username}}
-													</n-gradient-text>
-													<n-text v-if="sonItem.replyCommentUid" style="color: #18191C">回复</n-text>
-													<a v-if="sonItem.replyCommentUid" href="https://baidu.com" target="_blank">
-														<n-text style="color: #008AC5">@{{sonItem.replyCommentInfo.username}}</n-text>
-													</a>
-													<n-text style="color: #18191C">: {{sonItem.content}}</n-text>
-												</n-space>
-												
-												<!--评论发布的日期 回复操作-->
-												<n-space justify="start">
-													<n-gradient-text :gradient="{from: '#9499A0',to: '#9499A0'}" :size="13" type="success">
-														{{sonItem.createTime}}
-													</n-gradient-text>
-													<n-gradient-text class="aurora-comment-mouse" @click="handleClickComment(sonItem, item)" :gradient="{from: '#9499A0',to: '#9499A0'}" :size="13" type="success">
-														回复
-													</n-gradient-text>
-												</n-space>
-											</n-space>
-										
-										</n-space>
-									</n-space>
-									
-									
-									<!--在所有子评论后面显示该父评论下共有多少条子评论-->
-									<!--<n-gradient-text :gradient="{from: '#9499A0',to: '#9499A0'}" :size="13" type="success">-->
-									<!--	共{{item.sonCommentList.length}}条回复，-->
-									<!--	<n-gradient-text class="aurora-comment-mouse" :gradient="{from: '#9499A0',to: '#9499A0'}" :size="13" type="success">-->
-									<!--		点击查看-->
-									<!--	</n-gradient-text>-->
-									<!--</n-gradient-text>-->
-									
-									<!--如果点击回复之后，在多少条回复后面展示回复框-->
-									<p v-if="currentClickParentCommentDto.uid === item.uid"></p>
-									<p v-if="currentClickParentCommentDto.uid === item.uid"></p>
-									<n-card v-if="currentClickParentCommentDto.uid === item.uid">
-										<n-space vertical>
-											<div>
-												<div class="aurora-comment-reply-box">
-													<div class="aurora-comment-reply-box-son">
-														<n-input v-model:value="newCommenterUserInfo.username" :disabled="isAdminUser" size="small" placeholder="用户名"/>
-													</div>
-													<div class="aurora-comment-reply-box-son">
-														<n-input v-model:value="newCommenterUserInfo.email" :disabled="newCommenterUserInfo.email && isAdminUser && authStore.authInfo.userInfo && authStore.authInfo.userInfo.verify_email" size="small" placeholder="邮箱"/>
-													</div>
-													<div class="aurora-comment-reply-box-son">
-														<n-input v-model:value="newCommenterUserInfo.site" size="small" placeholder="站点"/>
-													</div>
-												</div>
-											</div>
-											<n-space></n-space>
-											<n-input rounded-16px type="textarea" v-model:value="replyCommentData.content" :autosize="{minRows: 3}"
-															 :placeholder="currentClickCommentDto.uid ? `回复@ ${currentClickCommentDto.username}` : '发布一条友善的评论(○｀ 3′○)' "
-															 class="aurora-comment-son-flex-textarea h-full"/>
-											<n-space justify="space-between">
-												<n-space justify="start">
-													<upload-file v-if="!newCommenterUserInfo.avatar" :control-upload-file="false"
-																			 @handleFinishUploadFile="handleFinishUploadFile"
-																			 :accept-file-type-str="['.jpg','.jpeg','.png']"
-																			 :show-file-list="false"
-																			 :parameter-data="{userUid: props.userUid, summary: `评论者在${props.userUid}用户处创建评论时上传的头像`}">
-														<template #uploadDraggerContent>
-															<n-avatar
-																class="aurora-comment-son-flex-avatar"
-																round
-																:size="45"
-																:src="newCommenterUserInfo.avatar"
-															/>
-														</template>
-													</upload-file>
+											<upload-file v-if="!newCommenterUserInfo.avatar" :control-upload-file="false"
+																	 @handleFinishUploadFile="handleFinishUploadFile"
+																	 :accept-file-type-str="['.jpg','.jpeg','.png']"
+																	 :show-file-list="false"
+																	 :parameter-data="{userUid: props.userUid, summary: `评论者在${props.userUid}用户处创建评论时上传的头像`}">
+												<template #uploadDraggerContent>
 													<n-avatar
-														v-else
+														class="aurora-comment-son-flex-avatar"
 														round
 														:size="45"
 														:src="newCommenterUserInfo.avatar"
 													/>
+												</template>
+											</upload-file>
+											<n-avatar
+												v-else
+												round
+												:size="45"
+												:src="newCommenterUserInfo.avatar"
+											/>
+										</n-space>
+										<n-space justify="end">
+											<n-button strong secondary tertiary round type="success" @click="handleReplyCommentAction">发布</n-button>
+										</n-space>
+									</n-space>
+								</n-space>
+							</n-card>
+							<n-card v-for="(item, index) in showCommentInfo.commentList" :key="index" class="h-full shadow-sm rounded-16px">
+								<template #header>
+									<n-space justify="start">
+										<n-avatar
+											round
+											:size="55"
+											:src="item.avatar"
+										/>
+										<n-space vertical>
+											<n-space justify="start">
+												<a :href="item.site" target="_blank">
+													<n-text>{{item.username}}</n-text>
+												</a>
+											</n-space>
+											<n-space vertical>
+												<n-space justify="start">
+													<n-text>{{item.content}}</n-text>
 												</n-space>
-												<n-space justify="end">
-													<n-button strong secondary tertiary round type="warning" @click="handleCancelReplyCommentAction">取消</n-button>
-													<n-button strong secondary tertiary round type="success" @click="handleReplyCommentAction">发布</n-button>
+												<n-space justify="start">
+													<n-gradient-text :gradient="{from: '#9499A0',to: '#9499A0'}" :size="13" type="success">
+														{{item.createTime}}
+													</n-gradient-text>
+													<n-gradient-text class="aurora-comment-mouse" @click="handleClickComment(item, item)" :gradient="{from: '#9499A0',to: '#9499A0'}" :size="13" type="success">
+														回复
+													</n-gradient-text>
 												</n-space>
 											</n-space>
 										</n-space>
-									</n-card>
-								</n-space>
-							</div>
-							<n-divider v-if="index < showCommentInfo.parentNodeNum - 2" />
-						</n-card>
-						
-						<!--另一个父评论开始，使用分割线隔开-->
+									</n-space>
+								</template>
+								<!--下面的都是子评论-->
+								<div class="aurora-comment-son-box">
+									<n-space vertical>
+										<!--子评论开始-->
+										<n-space v-for="(sonItem, sonIndex) in item.sonCommentList" :key="sonIndex" vertical>
+											<!--头像 评论内容-->
+											<n-space justify="start">
+												<a :href="sonItem.site" target="_blank">
+													<n-avatar
+														round
+														:size="35"
+														:src="sonItem.avatar"
+													/>
+												</a>
+												<n-space vertical>
+													<!--这是用户名和评论信息，或者回复某某-->
+													<n-space justify="start">
+														<n-gradient-text :gradient="{from: '#61666D',to: '#61666D'}" :size="13" type="success">
+															{{sonItem.username}}
+														</n-gradient-text>
+														<n-text v-if="sonItem.replyCommentUid" style="color: #18191C">回复</n-text>
+														<a v-if="sonItem.replyCommentUid" href="https://baidu.com" target="_blank">
+															<n-text style="color: #008AC5">@{{sonItem.replyCommentInfo.username}}</n-text>
+														</a>
+														<n-text style="color: #18191C">: {{sonItem.content}}</n-text>
+													</n-space>
+													
+													<!--评论发布的日期 回复操作-->
+													<n-space justify="start">
+														<n-gradient-text :gradient="{from: '#9499A0',to: '#9499A0'}" :size="13" type="success">
+															{{sonItem.createTime}}
+														</n-gradient-text>
+														<n-gradient-text class="aurora-comment-mouse" @click="handleClickComment(sonItem, item)" :gradient="{from: '#9499A0',to: '#9499A0'}" :size="13" type="success">
+															回复
+														</n-gradient-text>
+													</n-space>
+												</n-space>
+											
+											</n-space>
+										</n-space>
+										
+										
+										<!--在所有子评论后面显示该父评论下共有多少条子评论-->
+										<!--<n-gradient-text :gradient="{from: '#9499A0',to: '#9499A0'}" :size="13" type="success">-->
+										<!--	共{{item.sonCommentList.length}}条回复，-->
+										<!--	<n-gradient-text class="aurora-comment-mouse" :gradient="{from: '#9499A0',to: '#9499A0'}" :size="13" type="success">-->
+										<!--		点击查看-->
+										<!--	</n-gradient-text>-->
+										<!--</n-gradient-text>-->
+										
+										<!--如果点击回复之后，在多少条回复后面展示回复框-->
+										<p v-if="currentClickParentCommentDto.uid === item.uid"></p>
+										<p v-if="currentClickParentCommentDto.uid === item.uid"></p>
+										<n-card v-if="currentClickParentCommentDto.uid === item.uid">
+											<n-space vertical>
+												<div>
+													<div class="aurora-comment-reply-box">
+														<div class="aurora-comment-reply-box-son">
+															<n-input v-model:value="newCommenterUserInfo.username" :disabled="isAdminUser" size="small" placeholder="用户名"/>
+														</div>
+														<div class="aurora-comment-reply-box-son">
+															<n-input v-model:value="newCommenterUserInfo.email" :disabled="newCommenterUserInfo.email && isAdminUser && authStore.authInfo.userInfo && authStore.authInfo.userInfo.verify_email" size="small" placeholder="邮箱"/>
+														</div>
+														<div class="aurora-comment-reply-box-son">
+															<n-input v-model:value="newCommenterUserInfo.site" size="small" placeholder="站点"/>
+														</div>
+													</div>
+												</div>
+												<n-space></n-space>
+												<n-input rounded-16px type="textarea" v-model:value="replyCommentData.content" :autosize="{minRows: 3}"
+																 :placeholder="currentClickCommentDto.uid ? `回复@ ${currentClickCommentDto.username}` : '发布一条友善的评论(○｀ 3′○)' "
+																 class="aurora-comment-son-flex-textarea h-full"/>
+												<n-space justify="space-between">
+													<n-space justify="start">
+														<upload-file v-if="!newCommenterUserInfo.avatar" :control-upload-file="false"
+																				 @handleFinishUploadFile="handleFinishUploadFile"
+																				 :accept-file-type-str="['.jpg','.jpeg','.png']"
+																				 :show-file-list="false"
+																				 :parameter-data="{userUid: props.userUid, summary: `评论者在${props.userUid}用户处创建评论时上传的头像`}">
+															<template #uploadDraggerContent>
+																<n-avatar
+																	class="aurora-comment-son-flex-avatar"
+																	round
+																	:size="45"
+																	:src="newCommenterUserInfo.avatar"
+																/>
+															</template>
+														</upload-file>
+														<n-avatar
+															v-else
+															round
+															:size="45"
+															:src="newCommenterUserInfo.avatar"
+														/>
+													</n-space>
+													<n-space justify="end">
+														<n-button strong secondary tertiary round type="warning" @click="handleCancelReplyCommentAction">取消</n-button>
+														<n-button strong secondary tertiary round type="success" @click="handleReplyCommentAction">发布</n-button>
+													</n-space>
+												</n-space>
+											</n-space>
+										</n-card>
+									</n-space>
+								</div>
+								<n-divider v-if="index < showCommentInfo.parentNodeNum - 2" />
+							</n-card>
+							
+							<!--另一个父评论开始，使用分割线隔开-->
+						</div>
 					</div>
 				</div>
 			</div>
-		</div>
+		</parcel-style>
 		
 	</div>
 </template>

@@ -3,10 +3,11 @@
     <div class="top-mask" :style="setBackgroundUrl"></div>
 
     <div v-if="showBubble" class="aurora-top-bubble">
-      <div class="aurora-top-bubble-par">
-        <div class="aurora-top-bubble-box" id="aurora-top-bubble-box"></div>
-        <canvas class="aurora-top-bubble-canvas" id="aurora-top-bubble-canvas"></canvas>
-      </div>
+      <!--<div class="aurora-top-bubble-par">-->
+      <!--  <div class="aurora-top-bubble-box" id="aurora-top-bubble-box"></div>-->
+      <!--  <canvas class="aurora-top-bubble-canvas" id="aurora-top-bubble-canvas"></canvas>-->
+      <!--</div>-->
+			<aurora-bubble/>
     </div>
 		
 		<div class="aurora-top-image-public-time" v-if="isShowHeadLine">
