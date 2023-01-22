@@ -1,8 +1,10 @@
 <template>
 	<div>
-		<aurora-common :user-uid="userUid">
+		<aurora-common :is-show-top-img="true" :user-uid="userUid">
 			<template #center1>
-				<aurora-archive :article-arr="articleArr" />
+				<aurora-card>
+					<aurora-archive :article-arr="articleArr" />
+				</aurora-card>
 			</template>
 		</aurora-common>
 	</div>

@@ -1,6 +1,6 @@
 .timeline-box {
-    margin: 0 auto;
-    width: var(--archive-box-width, 80%)
+    /*margin: 0 auto;*/
+    width: var(--archive-box-width, 100%)
 }
 
 .timeline-box,
@@ -116,6 +116,10 @@
     list-style: none;
     margin-bottom: 1.7rem;
     display: flex
+}
+
+.timeline-create-link-single ul li:last-child {
+    margin-bottom: 0;
 }
 
 .timeline-create-link-single ul li .timeline-title span {
@@ -267,5 +271,5 @@
 }
 
 .timeline-item {
-    margin-bottom: 1.5rem
+    /*margin-bottom: 1.5rem*/
 }
