@@ -5097,7 +5097,7 @@ body::-webkit-scrollbar-thumb {
 }
 
 #page-top h1 {
-    text-align: center
+    /*text-align: center*/
 }
 
 .page-record-control {
@@ -5154,12 +5154,8 @@ body::-webkit-scrollbar-thumb {
     color: #f5f5f5
 }
 
-#page-top {
-    color: #cae9ff
-}
-
 #page-top h1 {
-    font-weight: 750
+    /*font-weight: 750*/
 }
 
 .sidebar-link {

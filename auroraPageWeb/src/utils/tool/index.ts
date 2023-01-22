@@ -1,3 +1,5 @@
+import {StringUtil} from "@/utils";
+
 export const isImage = (fileName: string): boolean => {
 	return /\.(png|jpg|jpeg|gif|webp)$/.test(fileName);
 }
@@ -64,6 +66,11 @@ export const getLocalTime = (time: Date | number | string, isToDay: boolean = tr
 	}else {
 		return year + "-" + month + "-" + day + " " + hours + ":" + min + ":" + sec
 	}
+}
+
+export const parseTime = (time: string): Date => {
+	if (!StringUtil.haveLength(time)) new Date()
+	return new Date(time)
 }
 
 export const hexToRgb = (hex: string): {r: number, g:number , b: number} | null => {

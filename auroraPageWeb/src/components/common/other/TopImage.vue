@@ -8,54 +8,18 @@
         <canvas class="aurora-top-bubble-canvas" id="aurora-top-bubble-canvas"></canvas>
       </div>
     </div>
-    <slot name="top1"></slot>
-    <slot name="top2"></slot>
-    <slot name="top3"></slot>
-    <slot name="top4"></slot>
-    <slot name="top5"></slot>
-		<!--TODO 这一块需要重新做一下-->
-    <div class="page-record-control" v-if="isShowHeadLine">
-      <div class="page-top-record" id="page-top-record" v-if="articleInfo">
-        <div class="page-record-bot-common page-record-top">
-          <div class="page-record-top-left page-record-single-common">
-            <span class="aurora-iconfont-common aurora-page-word"></span>&nbsp;
-            <span class="page-record-single-desc">总字数</span>
-            <span>{{animatedContentLength}}</span>
-          </div>
-          <div class="page-record-top-right page-record-single-common">
-            <span class="aurora-iconfont-common aurora-page-time"></span>&nbsp;
-            <span class="page-record-single-desc">时长</span>
-            <span>{{getSugTime}}</span>
-          </div>
-        </div>
-        <div class="page-record-bot-common page-record-center">
-          <div class="page-record-center-left page-record-single-common">
-            <span class="aurora-iconfont-common aurora-page-comment"></span>&nbsp;
-            <span class="page-record-single-desc">评论数</span>
-						<span class="waline-comment-count" >{{articleCommentTotal}}</span>
-            <!--<span>{{$store.state.commentCount}}</span>-->
-          </div>
-          <div class="page-record-center-right page-record-single-common">
-            <span class="aurora-iconfont-common aurora-page-read"></span>&nbsp;
-            <span class="page-record-single-desc">总阅读数</span>
-						<span class="waline-visitor-count" >{{articleInfo.readNumber ? articleInfo.readNumber : '0'}}</span>
-            <!--<span>{{$store.state.readCount}}</span>-->
-          </div>
-        </div>
-        <!--<div v-if="tagArr.length !== 0" class="page-record-bot-common page-record-bot">-->
-        <!--  <div class="page-record-bot-tag" id="page-record-bot-tag">-->
-        <!--    <span class="aurora-iconfont-common aurora-page-tag"></span>&nbsp;-->
-        <!--    <router-link v-for="(item,index) in tagArr" :to="goTag(item.uid)">-->
-        <!--      &lt;!&ndash;<span class="home-page-tag-span page-record-tag-span">{{item.title}}</span>&ndash;&gt;-->
-				<!--			<n-tag :bordered="false" style="border-radius: 16px" :type="getRandomTagType()">{{item.title}}</n-tag>-->
-        <!--    </router-link>-->
-        <!--  </div>-->
-        <!--</div>-->
-      </div>
-    </div>
-    <div class="top-image" id="top-image" v-if="isShowHeadLine">
-      <h1>{{getHeadLine}}</h1>
-    </div>
+		
+		<div class="aurora-top-image-public-time" v-if="isShowHeadLine">
+			<span>{{getPublicTime}}</span>
+			<svg-icon icon="bi:hourglass-split"/>
+		</div>
+		
+		<div class="aurora-top-image-article-info" v-if="isShowHeadLine">
+			<div class="aurora-top-image-article-title">
+				<h1>{{getHeadLine}}</h1>
+			</div>
+			<div class="aurora-top-image-article-summary">{{getSummary}}</div>
+		</div>
   </div>
 </template>
 
@@ -66,7 +30,7 @@ import gsap from "gsap";
 import {TagVo} from "@/bean/vo/article/TagVo";
 import {PropType} from "vue";
 import {ArticleVo} from "@/bean/vo/article/ArticleVo";
-import {getRandomTagType, StringUtil} from "@/utils";
+import {getRandomTagType, parseTime, StringUtil} from "@/utils";
 import {commentApi} from "@/service";
 import {CategoryVo} from "@/bean/vo/article/CategoryVo";
 
@@ -177,6 +141,16 @@ export default {
     this.document = document
   },
   computed: {
+		getPublicTime() {
+			let createTime = this.articleInfo ? this.articleInfo.createTime : this.tagOrCategory.createTime
+			const createData: Date = parseTime(createTime)
+			const timeNumber = new Date().getTime() - createData.getTime()
+			let day: number = Number.parseInt((timeNumber / 1000 / 60 / 60 / 24).toFixed(0))
+			if (day < 1) {
+				return 'today'
+			}
+			return day + ' days ago'
+		},
 		getHeadLine() {
 			if (StringUtil.haveLength(this.headLine)) {
 				return this.headLine
@@ -184,6 +158,13 @@ export default {
 				return this.articleInfo.title
 			}else if (this.tagOrCategory) {
 				return this.tagOrCategory.title
+			}
+		},
+		getSummary() {
+			if (this.articleInfo) {
+				return this.articleInfo.summary
+			}else if (this.tagOrCategory) {
+				return this.tagOrCategory.summary
 			}
 		},
     animatedContentLength() {
