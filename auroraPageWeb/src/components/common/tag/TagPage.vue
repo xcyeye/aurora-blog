@@ -10,11 +10,14 @@
 					</router-link>
 				</div>
 				<div id="tag-page-right-center" class="tag-page-right-center">
-					<span class="tag-page-content">{{ tagContent }}</span>
+					<span class="tag-page-content">{{ article.content }}</span>
 				</div>
 				<div id="tag-page-right-bottom" v-if="allCategories.length !== 0" class="tag-page-right-bottom">
-					<span class="home-menu-ico" style="--homeIcoCode: '\e7b5';color: rgba(98, 182, 203, 0.48);"></span>&nbsp;
-					<span :style="setBackgroundStyle(888)" v-for="(item,index) in allCategories">{{ item }}</span>
+					<n-ellipsis :line-clamp="1" :tooltip="false">
+						<n-tag :bordered="false" style="border-radius: 8px; margin-right: .5rem;" :type="getRandomTagType()" :key="index" v-for="(item,index) in allCategories">
+							{{item}}
+						</n-tag>
+					</n-ellipsis>
 				</div>
 			</div>
 		</div>
@@ -26,7 +29,7 @@
 import {PropType} from "vue";
 import {ArticleVo} from "@/bean/vo/article/ArticleVo";
 import blogConfig from '@/config/blogConfig.json';
-import {getRandomNum, StringUtil} from "@/utils";
+import {getRandomNum, getRandomTagType, StringUtil} from "@/utils";
 import {useRouter} from "vue-router";
 import {useSiteInfo} from "@/stores";
 import {setRandomInterface} from "@/utils/business";
@@ -129,6 +132,7 @@ export default {
 		});
 	},
 	methods: {
+		getRandomTagType,
 		getRandomInt(min, max) {
 			min = Math.ceil(min);
 			max = Math.floor(max);

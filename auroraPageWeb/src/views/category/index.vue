@@ -5,51 +5,47 @@
 									 :is-show-top-img="true"
 									 :tag-or-category="currentTagInfo">
 			<template #center1>
-				<aurora-center>
-					<template #page-center1>
-						<div class="tag tag-list" id="tag">
-							<!--这里是显示标签-->
-							<div class="tag-top">
-								<div id="tag-select" class="tag-center-title">
-									<div id="tag-select-common" class="tag-select-common"></div>
-									<div class="tag-select-icomoon">
+				<aurora-card>
+					<div class="tag tag-list" id="tag">
+						<!--这里是显示标签-->
+						<div class="tag-top">
+							<div id="tag-select" class="tag-center-title">
+								<div id="tag-select-common" class="tag-select-common"></div>
+								<div class="tag-select-icomoon">
 										<span :class="{tagDataControl: tagIndex === 0}" @click="showTagCloud(0)">
 											<svg-icon icon="bi:text-left"/>
 										</span>
-										<span :class="{tagDataControl: tagIndex === 1}" @click="showTagCloud(1)">
+									<span :class="{tagDataControl: tagIndex === 1}" @click="showTagCloud(1)">
 											<svg-icon icon="bi:text-paragraph"/>
 										</span>
-									</div>
 								</div>
-								<!--<div class="tag-no-show-common">-->
-								<!--	<TagItem-->
-								<!--		v-for="(item,index) in tagInfoArr"-->
-								<!--		@click="setIsActive($event,index,item)"-->
-								<!--		:key="index" :tag="item"/>-->
-								<!--</div>-->
-								<TagCloud @click-cloud-tag="clickCloudTag"
-													:tag-arr="tagInfoArr"/>
 							</div>
-							<div style="clear: both"></div>
-							<div class="tag-bottom">
-								<div ref="articleTopScroll" style="width: 0; height: 0"></div>
-								<TagPage v-for="(item,index) in showArticleArr"
-												 :article="item"
-												 :is-tag="false"
-												 :user-uid="userUid"
-												 :key="item.uid"
-								/>
-							</div>
+							<!--<div class="tag-no-show-common">-->
+							<!--	<TagItem-->
+							<!--		v-for="(item,index) in tagInfoArr"-->
+							<!--		@click="setIsActive($event,index,item)"-->
+							<!--		:key="index" :tag="item"/>-->
+							<!--</div>-->
+							<TagCloud @click-cloud-tag="clickCloudTag"
+												:tag-arr="tagInfoArr"/>
 						</div>
-						<div class="tag-cloud"></div>
-					</template>
-					<template #page-center3>
-						<n-pagination v-model:page="currentPage"
-													:page-size="5"
-													@update:page="handleChangePage"
-													:item-count="articleArr.length" />
-					</template>
-				</aurora-center>
+						<div style="clear: both"></div>
+						<div class="tag-bottom">
+							<div ref="articleTopScroll" style="width: 0; height: 0"></div>
+							<TagPage v-for="(item,index) in showArticleArr"
+											 :article="item"
+											 :is-tag="false"
+											 :user-uid="userUid"
+											 :key="item.uid"
+							/>
+						</div>
+					</div>
+					<div class="tag-cloud"></div>
+					<n-pagination v-model:page="currentPage"
+												:page-size="5"
+												@update:page="handleChangePage"
+												:item-count="articleArr.length" />
+				</aurora-card>
 			</template>
 			<template #center2>
 				<blog-comment

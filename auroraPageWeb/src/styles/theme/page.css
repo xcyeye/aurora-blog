@@ -173,9 +173,9 @@
 }
 
 .aurora-top-image-article-info {
-    width: 100%;
+    width: 97%;
     position: absolute;
-    left: 3rem;
+    left: 3%;
     top: 50%;
 }
 
@@ -228,9 +228,9 @@
     }
 
     .aurora-top-image-article-info {
-        width: 100%;
+        width: 95%;
         position: absolute;
-        left: 1rem;
+        left: 5%;
         bottom: 50%;
     }
 
@@ -300,4 +300,10 @@
     .aurora-article-summary .summary-item {
         padding-right: 0;
     }
+}
+
+.tag-page-left {
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
 }

@@ -1386,6 +1386,7 @@ a {
 }
 
 .tag-page-right {
+    border-radius: 0;
     position: relative;
     margin-right: 10px;
     flex: 4;
@@ -1393,13 +1394,17 @@ a {
 }
 
 .tag-page-right-top {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
+    /*display: flex;*/
+    /*justify-content: left;*/
+    /*align-items: center;*/
+    /*text-align: center;*/
+    /*overflow: hidden;*/
+    /*white-space: nowrap;*/
+    /*text-overflow: ellipsis;*/
+    line-height: 2rem;
+    text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
-    text-overflow: ellipsis;
     height: 2rem;
 }
 
@@ -1419,9 +1424,11 @@ a {
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
-    -webkit-line-clamp: 5;
+    -webkit-line-clamp: 4;
     -webkit-box-orient: vertical;
-    padding-left: 10px
+    /*padding-left: 10px*/
+    line-height: 1.5rem;
+    height: 6rem;
 }
 
 .tag-page-right-bottom {
@@ -6310,4 +6317,8 @@ body::-webkit-scrollbar-thumb {
     position: absolute;
     height: 100%;
     width: 100%;
+}
+
+.content .aurora-card:first-child {
+    margin-top: 0;
 }
