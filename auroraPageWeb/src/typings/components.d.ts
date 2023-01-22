@@ -10,6 +10,7 @@ declare module '@vue/runtime-core' {
     ArchiveItem: typeof import('./../components/common/archive/ArchiveItem.vue')['default']
     AuroraArchive: typeof import('./../components/common/archive/AuroraArchive.vue')['default']
     AuroraBubble: typeof import('./../components/common/other/AuroraBubble.vue')['default']
+    AuroraButtonFlower: typeof import('./../components/common/other/AuroraButtonFlower.vue')['default']
     AuroraCard: typeof import('./../components/common/other/AuroraCard.vue')['default']
     AuroraCenter: typeof import('./../components/common/other/AuroraCenter.vue')['default']
     AuroraCommon: typeof import('./../components/common/AuroraCommon.vue')['default']

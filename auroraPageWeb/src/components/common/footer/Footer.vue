@@ -1,22 +1,16 @@
 <template>
-	<aurora-card :style="getFooterStyle" :show-linear-gradient="showLinearGradient" class="footer-card sidebar-single-enter-animate">
-		<div v-if="isShowFooter"
-				 class="footer">
-			<FooterItem v-for="(item,index) in footerArr" :key="index" :item="item"/>
-			<div class="footer-item" v-if="isShowRunTime" id="footer-item">
-				<span >{{runTime}}</span>
+	<div class="aurora-footer-box">
+		<aurora-card :style="getFooterStyle" v-if="isShowFooter && footerArr" :show-linear-gradient="showLinearGradient" class="footer-card sidebar-single-enter-animate">
+			<div v-if="isShowFooter"
+					 class="footer">
+				<FooterItem v-for="(item,index) in footerArr" :key="index" :item="item"/>
+				<div class="footer-item" v-if="isShowRunTime" id="footer-item">
+					<span >{{runTime}}</span>
+				</div>
 			</div>
-		</div>
-	</aurora-card>
-	<!--<div class="sidebar-single-enter-animate footer-layout-center">-->
-	<!--	<div v-if="isShowFooter"-->
-	<!--			 class="footer box" id="footer">-->
-	<!--		<FooterItem v-for="(item,index) in footerArr" :key="index" :item="item"/>-->
-	<!--		<div class="footer-item" v-if="isShowRunTime" id="footer-item">-->
-	<!--			<span >{{runTime}}</span>-->
-	<!--		</div>-->
-	<!--	</div>-->
-	<!--</div>-->
+		</aurora-card>
+		<aurora-bubble/>
+	</div>
 </template>
 
 <script lang="ts">
@@ -24,7 +18,6 @@ import {PropType} from "vue";
 import {StringUtil} from "@/utils";
 import blogConfig from '@/config/blogConfig.json';
 
-const siteInfo: SiteSettingInfo = {}
 export default {
   name: "Footer",
   data() {

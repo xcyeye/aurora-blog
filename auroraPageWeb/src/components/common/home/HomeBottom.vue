@@ -12,7 +12,7 @@
 												:show-home-page-img="true"
 												:data="item.delete" :key="index"
 												v-for="(item,index) in articleArr" :page-item="item"/>
-				<n-space justify="center">
+				<n-space justify="center" class="aurora-home-page-pagination">
 					<n-pagination v-model:page="currentPage"
 												@update:page="handlePageChangeAction"
 												:page-size="currentSize"

@@ -15,7 +15,7 @@
 						<n-avatar :src="useUserInfo().getUserInfo(userUid).avatar" :size="60" round/>
 					</div>
 					<div class="home-sidebar-info-desc">
-						<span v-if="getLogoTitle !== ''" v-html="getLogoTitle"></span>
+						<span>{{useUserInfo().getUserInfo(userUid).userSummary}}</span>
 					</div>
 					<div class="home-sidebar-info-page">
 						<div class="sidebar-page-common">

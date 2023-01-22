@@ -63,6 +63,8 @@ onBeforeMount(() => {
 		})
 	}
 	
+	siteSettingInfo.value = useSite.getSiteInfo(userUid.value)
+	
 	// if (!isNotEmptyObject(useUser.getUserInfo(userUid.value))) {
 	// 	userApi.queryOneDataByUid({uid: userUid.value}).then(result => {
 	// 		if (result.data) {

@@ -1720,7 +1720,7 @@ body::-webkit-scrollbar-thumb {
 }
 
 .content {
-    margin-top: 2rem
+    margin-top: var(--globalMarginTop)
 }
 
 .tag-div {
@@ -3723,7 +3723,8 @@ body::-webkit-scrollbar-thumb {
     height: -moz-max-content;
     height: max-content;
     margin: 0 auto;
-    margin-bottom: 3rem;
+    margin-top: var(--globalMarginTop);
+    /*margin-bottom: 3rem;*/
     width: 90%;
     border-radius: var(--borderRadius);
 }
@@ -3734,9 +3735,9 @@ body::-webkit-scrollbar-thumb {
 
 .home-page-tag-img {
     position: relative;
-    width: 98%;
+    /*width: 98%;*/
     margin: 0 auto;
-    margin-top: 1%;
+    /*margin-top: 1%;*/
     border-top-left-radius: var(--borderRadius);
     border-top-right-radius: var(--borderRadius);
     overflow: hidden
@@ -3774,7 +3775,7 @@ body::-webkit-scrollbar-thumb {
     border-bottom-left-radius: var(--borderRadius);
     border-bottom-right-radius: var(--borderRadius);
     background-color: rgba(255, 255, 255, var(--opacity));
-    margin-bottom: 1rem;
+    /*margin-bottom: 1rem;*/
     margin-top: 1rem;
 }
 
@@ -3974,12 +3975,13 @@ body::-webkit-scrollbar-thumb {
 }
 
 .home-page-tag-content {
+    box-sizing: border-box;
     padding: 10px;
     height: -webkit-max-content;
     height: -moz-max-content;
     height: max-content;
     overflow-y: scroll;
-    background-image: linear-gradient(-180deg, hsla(0, 0%, 100%, 0), #fff 120%)
+    /*background-image: linear-gradient(-180deg, hsla(0, 0%, 100%, 0), #fff 120%)*/
 }
 
 .home-page-tag-content .custom-container,
@@ -4213,7 +4215,7 @@ body::-webkit-scrollbar-thumb {
 }
 
 .home-sidebar-avatar {
-    height: 5rem;
+    /*height: 5rem;*/
     text-align: center
 }
 
@@ -4223,8 +4225,8 @@ body::-webkit-scrollbar-thumb {
 }
 
 .home-sidebar-info-desc {
-    width: 90%;
-    margin: 0 auto;
+    /*width: 90%;*/
+    /*margin: 0 auto;*/
     margin-top: 1rem;
     /*height: 2rem;*/
     text-align: left
@@ -4244,9 +4246,10 @@ body::-webkit-scrollbar-thumb {
 
 .sidebar-page-common {
     flex: 1;
-    margin-right: 1rem;
-    margin-left: 1rem;
-    text-align: center
+    /*margin-right: 1rem;*/
+    /*margin-left: 1rem;*/
+    text-align: center;
+    width: 100%;
 }
 
 .sidebar-page-common div:first-child {
@@ -4260,8 +4263,8 @@ body::-webkit-scrollbar-thumb {
 }
 
 .sidebar-page-common:nth-child(2) {
-    border-left: 1px solid #3e3b3b;
-    border-right: 1px solid #000
+    border-left: 1px solid #eee;
+    border-right: 1px solid #eee
 }
 
 .home-sidebar-info-social {
@@ -4804,7 +4807,7 @@ body::-webkit-scrollbar-thumb {
 .menu-item-right {
     flex: 6;
     text-align: left;
-    padding-left: 5px
+    /*padding-left: 5px*/
 }
 
 .sidebar-menu-item:hover {
@@ -5218,7 +5221,7 @@ body::-webkit-scrollbar-thumb {
     text-overflow: ellipsis;
     overflow: hidden;
     margin-top: 2px;
-    margin-bottom: 2px
+    /*margin-bottom: 2px*/
 }
 
 .sidebar-link-title span {
@@ -5441,9 +5444,11 @@ body::-webkit-scrollbar-thumb {
     width: 100%
 }
 .aurora-top-bubble-par {
-    position: relative;
+    position: absolute;
     height: 100%;
-    width: 100%
+    width: 100%;
+    bottom: 0;
+    right: 0;
 }
 
 .aurora-top-bubble-box,
@@ -6098,6 +6103,7 @@ body::-webkit-scrollbar-thumb {
 /* 组件公共样式 */
 .aurora-card {
     width: 100%;
+    /*position: relative;*/
     height: auto;
     box-sizing: border-box;
     border-radius: var(--borderRadius);
@@ -6143,6 +6149,8 @@ body::-webkit-scrollbar-thumb {
     text-overflow: ellipsis;
     white-space: nowrap;
     line-clamp: 1;
+    margin-bottom: .5rem;
+    height: 100%;
 }
 
 .aurora-card-title-icon {
@@ -6154,7 +6162,8 @@ body::-webkit-scrollbar-thumb {
 
 .aurora-card-content {
     height: auto;
-    margin-top: .5rem;
+    /*margin-top: .5rem;*/
+    position: relative;
     width: 100%;
 }
 
@@ -6181,11 +6190,10 @@ body::-webkit-scrollbar-thumb {
 }
 
 .aurora-bubble-box {
-    z-index: -1;
+    /*z-index: -1;*/
 }
 
 .aurora-bubble-content {
-    z-index: 2;
     width: 100%;
     height: 100%;
 }
@@ -6277,3 +6285,29 @@ body::-webkit-scrollbar-thumb {
 /*    display:none;*/
 /*}*/
 
+.aurora-footer-box {
+    position: relative;
+    height: 10rem;
+    width: 100%;
+}
+
+.aurora-card-bottom-page {
+    padding: .7rem;
+}
+
+.aurora-home-page-pagination {
+    margin-top: var(--globalMarginTop);
+}
+
+.aurora-flower-box {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    z-index: -99;
+}
+
+.aurora-flower-canvas {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+}

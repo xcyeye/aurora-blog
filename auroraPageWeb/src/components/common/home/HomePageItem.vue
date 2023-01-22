@@ -1,44 +1,44 @@
 <template>
-  <div ref="pageItemTop" class="home-page-scroll home-page-tag-item sidebar-single-enter-animate" id="home-page-tag-item">
-    <div @click="goRead($event,pageItem)" class="home-page-tag-img">
-      <div class="home-page-img-gradual">
-        <div class="home-page-gradual-title-par">
-          <div class="home-page-top" v-if="true">
-            <div>
-              <span>置顶</span>
-            </div>
-          </div>
-          <div :class="getGradualClass" class="home-page-gradual-title-item-common">
-            <div class="home-page-gradual-item">
-              <div class="home-page-gradual-title home-page-gradual-common">
-                <router-link :to="`/article/${pageItem.userUid}/${pageItem.uid}`">
-                  <span>{{getPageItemTitle}}</span>
-                </router-link>
-              </div>
-              <div class="home-page-gradual-other-info home-page-gradual-common">
-                <div class="home-page-gradual-other-info-common home-page-gradual-other-time">
-                  <span>{{pageItem.createTime}}&nbsp;&nbsp;</span>
-                </div>
-                <div class="home-page-gradual-other-info-common home-page-gradual-other-tag">
-                  <span :key="index" v-for="(item,index) in getPageTag(pageItem)">{{item}}{{index !== getPageTag(pageItem).length -1? '、': ''}}</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <img id="home-page-img" class="home-page-img" ref="home-page-img"
+  <aurora-card ref="pageItemTop" class="aurora-card-bottom-page home-page-scroll home-page-tag-item sidebar-single-enter-animate" id="home-page-tag-item">
+		<div @click="goRead($event,pageItem)" class="home-page-tag-img">
+			<div class="home-page-img-gradual global-common-animate">
+				<div class="home-page-gradual-title-par">
+					<div class="home-page-top" v-if="true">
+						<div>
+							<span>置顶</span>
+						</div>
+					</div>
+					<div :class="getGradualClass" class="home-page-gradual-title-item-common">
+						<div class="home-page-gradual-item">
+							<div class="home-page-gradual-title home-page-gradual-common">
+								<router-link :to="`/article/${pageItem.userUid}/${pageItem.uid}`">
+									<span>{{getPageItemTitle}}</span>
+								</router-link>
+							</div>
+							<div class="home-page-gradual-other-info home-page-gradual-common">
+								<div class="home-page-gradual-other-info-common home-page-gradual-other-time">
+									<span>{{pageItem.createTime}}&nbsp;&nbsp;</span>
+								</div>
+								<div class="home-page-gradual-other-info-common home-page-gradual-other-tag">
+									<span :key="index" v-for="(item,index) in getPageTag(pageItem)">{{item}}{{index !== getPageTag(pageItem).length -1? '、': ''}}</span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<img id="home-page-img" class="home-page-img" ref="home-page-img"
 					 :data-src="getCoverImg"
 					 :src="currentSiteInfo.homePageLazyLoadingImg" alt="">
-    </div>
-
-    <div class="home-page-tag-con">
-      <div ref="homePageDom" :class="getPageClass" class="home-page-tag-content">
-        <div class="home-page-tag-content-rendered" style="display: block" v-html="pageItem.content"></div>
-      </div>
-      <!--<div class="home-page-tag-bottom"></div>-->
-    </div>
-  </div>
+		</div>
+	
+		<div class="home-page-tag-con global-common-animate">
+			<div ref="homePageDom" :class="getPageClass" class="home-page-tag-content">
+				<div class="home-page-tag-content-rendered" style="display: block" v-html="pageItem.content"></div>
+			</div>
+			<!--<div class="home-page-tag-bottom"></div>-->
+		</div>
+	</aurora-card>
 </template>
 
 <script lang="ts" setup>

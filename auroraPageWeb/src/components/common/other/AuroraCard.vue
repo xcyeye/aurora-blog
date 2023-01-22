@@ -1,6 +1,6 @@
 <template>
 	<div class="aurora-card global-common-animate" :class="{'bg-linear-gradient': showLinearGradient}" :style="getCardStyle">
-		<div class="aurora-card-title">
+		<div class="aurora-card-title" v-if="showHeader">
 			<div v-if="props.icon" class="aurora-card-title-icon">
 				<svg-icon :icon="props.icon"/>
 			</div>
@@ -14,10 +14,10 @@
 </template>
 
 <script lang="ts" setup>
-import {computed, defineComponent} from "vue";
+import {computed, defineComponent, onMounted, ref, useSlots} from "vue";
 import {useThemeStore} from "@/stores";
 import blogConfig from '@/config/blogConfig.json'
-import {getRandomNum, hexToRgb} from "@/utils";
+import {getRandomNum, hexToRgb, StringUtil} from "@/utils";
 
 interface Props {
 	customStyle?: string,
@@ -31,6 +31,8 @@ defineComponent({name: 'AuroraCard'});
 const props = withDefaults(defineProps<Props>(), {
 	showLinearGradient: false
 })
+
+const showHeader = ref(true)
 
 const themeStore = useThemeStore()
 
@@ -47,6 +49,13 @@ const getCardStyle = computed(() => {
 		style = bg + style
 	}
 	return style
+})
+
+onMounted(() => {
+	const slotHeader = !!useSlots().header;
+	if (!StringUtil.haveLength(props.title) && !StringUtil.haveLength(props.icon) && !slotHeader) {
+		showHeader.value = false
+	}
 })
 </script>
 
