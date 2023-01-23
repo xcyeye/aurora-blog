@@ -14,6 +14,7 @@ declare module '@vue/runtime-core' {
     AuroraCard: typeof import('./../components/common/other/AuroraCard.vue')['default']
     AuroraCenter: typeof import('./../components/common/other/AuroraCenter.vue')['default']
     AuroraCommon: typeof import('./../components/common/AuroraCommon.vue')['default']
+    AuroraEnvelope: typeof import('./../components/common/other/AuroraEnvelope.vue')['default']
     AuroraSliderPicture: typeof import('./../components/common/other/AuroraSliderPicture.vue')['default']
     BlogComment: typeof import('./../components/common/comment/BlogComment.vue')['default']
     Catalog: typeof import('./../components/common/other/Catalog.vue')['default']

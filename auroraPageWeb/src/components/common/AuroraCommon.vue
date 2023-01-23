@@ -1,10 +1,7 @@
 <template>
-  <div class="common"
-       :style="$store.state.borderRadiusStyle +
-       $store.state.opacityStyle + $store.state.fontColorStyle +
-       $store.state.fontFamilyStyle + $store.state.filterBlurStyle">
+  <div class="common">
     <!-- TODO <Navbar :show-header-bg="showHeaderBg" :style="$store.state.opacityStyle" v-if="shouldShowNavbar">-->
-    <Navbar :user-uid="userUid" :show-header-bg="showHeaderBg" :style="$store.state.opacityStyle" v-if="true"></Navbar>
+    <Navbar :user-uid="userUid" :show-header-bg="showHeaderBg" v-if="true"></Navbar>
     <!--<mobile-sidebar :show-navbar="isHomePage"/>-->
     <!--<social-spin/>-->
     <style-menu
@@ -132,12 +129,6 @@ export default defineComponent({
     }
   },
   props: {
-		showSidebar: {
-			type: Boolean,
-			default() {
-				return true;
-			}
-		},
 		tagOrCategory: {
 			type: Object as PropType<TagVo> | Object as PropType<CategoryVo>
 		},
@@ -455,6 +446,7 @@ export default defineComponent({
     }
 
     this.setHomeBg()
+		this.setDefaultInfo()
 
     if (document.body.clientWidth < 550 && this.currentSiteInfo.mobilePageSidebar !== undefined) {
       this.mobilePageSidebar = this.currentSiteInfo.mobilePageSidebar

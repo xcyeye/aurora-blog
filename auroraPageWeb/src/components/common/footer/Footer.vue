@@ -1,6 +1,6 @@
 <template>
-	<div class="aurora-footer-box">
-		<aurora-card :style="getFooterStyle" v-if="isShowFooter && footerArr" :show-linear-gradient="showLinearGradient" class="footer-card sidebar-single-enter-animate">
+	<div class="aurora-footer-box" v-if="isShowFooter && footerArr && footerArr.length > 0">
+		<aurora-card :style="getFooterStyle" :show-linear-gradient="true" class="footer-card sidebar-single-enter-animate">
 			<div v-if="isShowFooter"
 					 class="footer">
 				<FooterItem v-for="(item,index) in footerArr" :key="index" :item="item"/>

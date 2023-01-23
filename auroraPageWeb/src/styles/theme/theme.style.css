@@ -3,7 +3,7 @@
     --poster-back-img: url(http://h2.ioliu.cn/bing/GiantManta_ZH-CN0594951444_640x480.jpg?imageslim);
     --fitter-blue: 5px;
     --borderRadius: 20px;
-    --opacity: 0.5;
+    --opacity: 1;
     --fontFamily: -apple-system;
     --fontColor: #2c3e50;
     --fontSize: 2rem;
@@ -13,7 +13,7 @@
     --sidebarRowPC: 5;
     --homeHeight: 100vh;
     --sidebarCutWidth: 0.9;
-    -aurora-tag-opacity: 0.45;
+    --aurora-tag-opacity: 0.45;
     --cardPadding: 1rem;
     --globalMarginTop: 1rem;
     --hoverColor: red;
@@ -46,6 +46,9 @@
 
     /*//vuepress-bean-archive插件变量*/
     --archive-box-width: 100%;
+
+    /*信封*/
+    --contact-envelope-paper-content-height: 500px;
 
 
     /*//iconfont变量*/
@@ -680,7 +683,7 @@ a {
 }
 
 .about-title {
-    margin-top: 1rem;
+    /*margin-top: 1rem;*/
     margin-bottom: 1rem;
     height: -webkit-max-content;
     height: -moz-max-content;
@@ -1109,12 +1112,16 @@ a {
     height: 13rem;
     border-radius: var(--borderRadius);
     margin-top: 0;
-    margin-bottom: 2rem;
+    margin-bottom: var(--globalMarginTop);
     padding-left: 0;
     margin-left: 2.5%;
     margin-right: 2.5%;
     padding-bottom: 10px;
     box-shadow: inset 0 30px 60px -12px rgba(50, 50, 93, .25), inset 0 18px 36px -18px rgba(0, 0, 0, .3)
+}
+
+.link-item:nth-last-of-type(-n + 2) {
+    margin-bottom: 0;
 }
 
 .link-self-item {
@@ -6341,4 +6348,163 @@ body::-webkit-scrollbar-thumb {
 
 .n-pagination-item--button {
     background-color: var(--aurora-pagination-bg) !important;
+}
+
+.aurora-photo-card {
+    width: 85%;
+    margin: 0 auto;
+}
+
+@media screen and (max-width: 719px) {
+    .aurora-photo-card {
+        width: 95%;
+        margin: 0 auto;
+    }
+}
+
+.contact-envelope {
+    position: relative;
+    width: 530px;
+    /*height: max-content;*/
+    height: 446px;
+    transition: all .4s ease;
+}
+
+.contact-envelope-head {
+    position: absolute;
+    /*top: 28px;*/
+    width: 100%;
+    height: 316px;
+    background: url(/envelope-head.png);
+    transition: all .4s ease;
+}
+
+.contact-envelope .contact-envelope-body {
+    position: absolute;
+    top: 184px;
+    width: 100%;
+    height: 260px;
+    transition: all .4s ease;
+    background: url(/envelope-body.png);
+}
+
+.contact-envelope .contact-envelope-paper {
+    position: absolute;
+    top: 170px;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    height: 260px;
+    overflow: hidden;
+    width: 490px;
+    /*min-height: 130px;*/
+    background: #fff;
+    box-sizing: border-box;
+    /*padding: 16px;*/
+    padding-left: 16px;
+    padding-right: 16px;
+    padding-top: 16px;
+    border-radius: 4px;
+    border: 1px solid #eee;
+    box-shadow: 0 2px 4px #0000001f, 0 0 6px #0000000a;
+    transition: all .4s ease;
+}
+
+.contact-envelope-bottom {
+    height: 130px;
+    width: 100%;
+    background-color: #00cfc8;
+    /*top: 300px;*/
+}
+
+.contact-envelope-active .contact-envelope-head, .contact-envelope-active .contact-envelope-body {
+    transform: translateY(calc(var(--contact-envelope-paper-content-height) + 130px - 260px + 5px - 170px));
+}
+
+.contact-envelope-active .contact-envelope-paper {
+    top: 0;
+    height: calc(var(--contact-envelope-paper-content-height) + 16px + 130px);
+}
+
+.contact-envelope-active {
+    height: calc(var(--contact-envelope-paper-content-height) + 16px + 130px);
+}
+
+
+.centered {
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin: 1rem auto;
+}
+
+.wrapper {
+    width: 35rem;
+    background-color: white;
+}
+
+.letter {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    width: 30rem;
+    margin: auto;
+    perspective: 60rem;
+}
+
+.envelope.front {
+    width: 10rem;
+    height: 6rem;
+    border-radius: 0 0 1rem 1rem;
+    overflow: hidden;
+    z-index: 9999;
+    opacity: 0;
+}
+
+.envelope {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    margin: auto;
+}
+
+.side:nth-of-type(1) {
+    padding: 2rem 2rem 0;
+    border-radius: 1rem 1rem 0 0;
+    box-shadow: inset 0 0.75rem 2rem rgb(229 225 187 / 50%);
+}
+
+.side {
+    height: 12rem;
+    background-color: #fcfcf8;
+    outline: 1px solid transparent;
+}
+
+.side.side:nth-of-type(2) {
+    padding: 2rem;
+    border-radius: 0 0 1rem 1rem;
+    box-shadow: 0 0.3rem 0.3rem rgb(0 0 0 / 5%), inset 0 -0.57rem 2rem rgb(229 225 187 / 50%);
+    text-align: right;
+}
+
+.side input {
+    width: 50%;
+    margin-bottom: 1rem;
+}
+
+.side textarea, .side input {
+    color: #4e5e72;
+    background-color: transparent;
+    /*background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='24'><rect fill='rgb(229, 225, 187)' x='0' y='23' width='10' height='1'/></svg>")' x='0' y='23' width='10' height='1'/></svg>;*/
+}
+.side textarea, .side input, .side button {
+    line-height: 1.5rem;
+    border: 0;
+    outline: none;
+    font-family: inherit;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
 }

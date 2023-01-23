@@ -3,159 +3,149 @@
 								 :show-sidebar-link="false" :user-uid="userUid"
 								 :is-show-top-img="true" :is-show-head-line="false">
 		<template #center1>
-			<div class="link" :key="index" v-for="(category,index) in friendLinkArrMap.keys()">
-				<div :style="$store.state.borderRadiusStyle + $store.state.opacityStyle"
-						 class="box link-common" id="c-link">
-					<div>
-						<div class="about-title link-title">
-							<div class="about-title-single">
-								<span class="about-title-single-value">{{ category }}</span>
-							</div>
-						</div>
-						<div v-for="(item,index) in friendLinkArrMap.get(category)" :data="item" :key="item">
-							<LinkItem
-								:item="item"/>
+			<aurora-card class="link" :key="index" v-for="(category,index) in friendLinkArrMap.keys()">
+				<div>
+					<div class="about-title link-title">
+						<div class="about-title-single">
+							<span class="about-title-single-value">{{ category }}</span>
 						</div>
 					</div>
+					<div v-for="(item,index) in friendLinkArrMap.get(category)" :data="item" :key="item">
+						<LinkItem
+							:item="item"/>
+					</div>
 				</div>
-			</div>
-			<aurora-center v-if="siteInformation !== ''">
-				<template #page-center1>
-					<n-tabs type="line" animated>
-						<n-tab-pane name="oasis" :tab="useUserInfo().getUserInfo(userUid).username">
-							<div class="self-site">
-								<div class="language-javascript ext-js line-numbers-mode"><pre class="language-javascript"><code><span
-									class="token punctuation">{</span>
+			</aurora-card>
+			<aurora-card>
+				<n-tabs type="line" animated>
+					<n-tab-pane name="oasis" :tab="useUserInfo().getUserInfo(userUid).username">
+						<div class="self-site">
+							<div class="language-javascript ext-js line-numbers-mode"><pre class="language-javascript"><code><span
+								class="token punctuation">{</span>
     title<span class="token operator">:</span> <span class="token string">"{{ friendLinkSiteInformation.title }}"</span><span
-										class="token punctuation">,</span><span class="token comment">//博客名称</span>
+									class="token punctuation">,</span><span class="token comment">//博客名称</span>
     url<span class="token operator">:</span> <span
-										class="token string">"{{ friendLinkSiteInformation.url }}"</span><span
-										class="token punctuation">,</span><span class="token comment">//博客url</span>
+									class="token string">"{{ friendLinkSiteInformation.url }}"</span><span
+									class="token punctuation">,</span><span class="token comment">//博客url</span>
     logo<span class="token operator">:</span> <span
-										class="token string">"{{ friendLinkSiteInformation.logo }}"</span><span
-										class="token punctuation">,</span><span class="token comment">//博客logo</span>
+									class="token string">"{{ friendLinkSiteInformation.logo }}"</span><span
+									class="token punctuation">,</span><span class="token comment">//博客logo</span>
     describe<span class="token operator">:</span> <span
-										class="token string">"{{ friendLinkSiteInformation.describe }}"</span><span
-										class="token punctuation">,</span><span class="token comment">//博客描述</span>
+									class="token string">"{{ friendLinkSiteInformation.describe }}"</span><span
+									class="token punctuation">,</span><span class="token comment">//博客描述</span>
     cover<span class="token operator">:</span> <span class="token string">"{{ friendLinkSiteInformation.cover }}"</span><span
-										class="token punctuation">,</span><span class="token comment">//博客截屏</span>
+									class="token punctuation">,</span><span class="token comment">//博客截屏</span>
     <span class="token comment">//{{ friendLinkSiteInformation.contact }}</span>
 <span class="token punctuation">}</span><span class="token punctuation">,</span>
 </code></pre>
-									<div class="line-numbers"><span class="line-number">1</span><br><span class="line-number">2</span><br><span
-										class="line-number">3</span><br><span class="line-number">4</span><br><span
-										class="line-number">5</span><br><span class="line-number">6</span><br><span
-										class="line-number">7</span><br><span class="line-number">8</span><br></div>
-								</div>
-								
-								<ul class="link-info-desc">
-									<li v-for="(linkItem,index) in friendLinkSiteInformation.otherDescribe" :key="linkItem"
-											v-html="linkItem"></li>
-								</ul>
+								<div class="line-numbers"><span class="line-number">1</span><br><span class="line-number">2</span><br><span
+									class="line-number">3</span><br><span class="line-number">4</span><br><span
+									class="line-number">5</span><br><span class="line-number">6</span><br><span
+									class="line-number">7</span><br><span class="line-number">8</span><br></div>
 							</div>
-						</n-tab-pane>
-						<n-tab-pane name="the beatles" tab="申请">
-							<n-space vertical>
-								<n-card hoverable class="rounded-16px shadow-sm" size="small" title="基本信息(必填)">
+							
+							<ul class="link-info-desc">
+								<li v-for="(linkItem,index) in friendLinkSiteInformation.otherDescribe" :key="linkItem"
+										v-html="linkItem"></li>
+							</ul>
+						</div>
+					</n-tab-pane>
+					<n-tab-pane name="the beatles" tab="申请">
+						<n-space vertical>
+							<n-card hoverable class="rounded-16px shadow-sm" size="small" title="基本信息(必填)">
+								<n-space vertical>
+									<n-space justify="center">
+										<upload-file
+											@handleFinishUploadFile="handleFinishSiteLogoUploadFile"
+											:show-file-list="false"
+											:parameter-data="{userUid: userUid, summary: `其他人向${useUserInfo().getUserInfo(userUid).username}申请友情链接时上传的logo`, storageMode: 0}"
+											:control-upload-file="false">
+											<template #uploadDraggerContent>
+												<n-avatar
+													round
+													:size="100"
+													:src="applyForFriendLink.linkLogo"
+												/>
+											</template>
+										</upload-file>
+									</n-space>
 									<n-space vertical>
-										<n-space justify="center">
-											<upload-file
-												@handleFinishUploadFile="handleFinishSiteLogoUploadFile"
-												:show-file-list="false"
-												:parameter-data="{userUid: userUid, summary: `其他人向${useUserInfo().getUserInfo(userUid).username}申请友情链接时上传的logo`, storageMode: 0}"
-												:control-upload-file="false">
-												<template #uploadDraggerContent>
-													<n-avatar
-														round
-														:size="100"
-														:src="applyForFriendLink.linkLogo"
-													/>
-												</template>
-											</upload-file>
-										</n-space>
-										<n-space vertical>
-											<n-text>站点地址</n-text>
-											<n-input placeholder="站点地址" round v-model:value="applyForFriendLink.linkUrl" type="text"/>
-										</n-space>
-										<n-space vertical>
-											<n-text>站点名称</n-text>
-											<n-input placeholder="站点名称" round v-model:value="applyForFriendLink.linkTitle" type="text"/>
-										</n-space>
-										<n-space vertical>
-											<n-text>邮箱</n-text>
-											<n-input placeholder="邮箱" round v-model:value="applyForFriendLink.email" type="text"/>
-										</n-space>
-										<n-tabs type="line" animated>
-											<n-tab-pane name="oasis" tab="站点描述">
-												<n-input type="textarea"
-																 placeholder="站点描述"
-																 v-model:value="applyForFriendLink.linkDescription"
-																 :autosize="true" maxlength="500" show-count/>
-											</n-tab-pane>
-											<n-tab-pane name="the beatles" tab="主页截屏">
-												<n-space vertical>
-													<n-image
-														v-if="applyForFriendLink.linkCover"
-														:src="applyForFriendLink.linkCover"
-													/>
-													<upload-file
-														@handleFinishUploadFile="handleFinishSiteCoverUploadFile"
-														:accept-file-type-str="['.png','.jpg','.jpeg']"
-														:parameter-data="{
+										<n-text>站点地址</n-text>
+										<n-input placeholder="站点地址" round v-model:value="applyForFriendLink.linkUrl" type="text"/>
+									</n-space>
+									<n-space vertical>
+										<n-text>站点名称</n-text>
+										<n-input placeholder="站点名称" round v-model:value="applyForFriendLink.linkTitle" type="text"/>
+									</n-space>
+									<n-space vertical>
+										<n-text>邮箱</n-text>
+										<n-input placeholder="邮箱" round v-model:value="applyForFriendLink.email" type="text"/>
+									</n-space>
+									<n-tabs type="line" animated>
+										<n-tab-pane name="oasis" tab="站点描述">
+											<n-input type="textarea"
+															 placeholder="站点描述"
+															 v-model:value="applyForFriendLink.linkDescription"
+															 :autosize="true" maxlength="500" show-count/>
+										</n-tab-pane>
+										<n-tab-pane name="the beatles" tab="主页截屏">
+											<n-space vertical>
+												<n-image
+													v-if="applyForFriendLink.linkCover"
+													:src="applyForFriendLink.linkCover"
+												/>
+												<upload-file
+													@handleFinishUploadFile="handleFinishSiteCoverUploadFile"
+													:accept-file-type-str="['.png','.jpg','.jpeg']"
+													:parameter-data="{
 									userUid: userUid,
 									summary: `其他人向${useUserInfo().getUserInfo(userUid).username}申请友情链接时上传的封面`,
 									storageMode: 0
 									}"
-														:show-upload-dragger="true"
-													>
-														<template #extraButton>
-															<n-button v-if="applyForFriendLink.linkCover" round type="success"
-																				@click="handleRemoveLinkCoverAction">移除封面
-															</n-button>
-														</template>
-													</upload-file>
-												</n-space>
-											</n-tab-pane>
-										</n-tabs>
+													:show-upload-dragger="true"
+												>
+													<template #extraButton>
+														<n-button v-if="applyForFriendLink.linkCover" round type="success"
+																			@click="handleRemoveLinkCoverAction">移除封面
+														</n-button>
+													</template>
+												</upload-file>
+											</n-space>
+										</n-tab-pane>
+									</n-tabs>
+								</n-space>
+							</n-card>
+							<n-card hoverable class="rounded-16px shadow-sm" size="small">
+								<n-space vertical>
+									<n-grid x-gap="12" :cols="2">
+										<n-gi>
+											<n-p>希望在哪个类别</n-p>
+										</n-gi>
+										<n-gi>
+											<n-input v-model:value="hopeLinkCategoryName" type="text" placeholder="输入一个类别"/>
+										</n-gi>
+									</n-grid>
+									<n-grid x-gap="12" :cols="2">
+										<n-gi>
+											<n-p>QQ</n-p>
+										</n-gi>
+										<n-gi>
+											<n-input v-model:value="applyForFriendLink.qqNumber" type="number" placeholder="QQ号"/>
+										</n-gi>
+									</n-grid>
+								</n-space>
+								
+								<template #footer>
+									<n-space justify="end">
+										<n-button strong secondary tertiary round type="success" @click="handleApplyLinkAction">申请
+										</n-button>
 									</n-space>
-								</n-card>
-								<n-card hoverable class="rounded-16px shadow-sm" size="small">
-									<n-space vertical>
-										<n-grid x-gap="12" :cols="2">
-											<n-gi>
-												<n-p>希望在哪个类别</n-p>
-											</n-gi>
-											<n-gi>
-												<n-input v-model:value="hopeLinkCategoryName" type="text" placeholder="输入一个类别"/>
-											</n-gi>
-										</n-grid>
-										<n-grid x-gap="12" :cols="2">
-											<n-gi>
-												<n-p>QQ</n-p>
-											</n-gi>
-											<n-gi>
-												<n-input v-model:value="applyForFriendLink.qqNumber" type="number" placeholder="QQ号"/>
-											</n-gi>
-										</n-grid>
-									</n-space>
-									
-									<template #footer>
-										<n-space justify="end">
-											<n-button strong secondary tertiary round type="success" @click="handleApplyLinkAction">申请
-											</n-button>
-										</n-space>
-									</template>
-								</n-card>
-							</n-space>
-						</n-tab-pane>
-					</n-tabs>
-					<!--<div class="about-title link-title">-->
-					<!--	<div class="about-title-single">-->
-					<!--		<span class="about-title-single-value">友链申请</span>-->
-					<!--	</div>-->
-					<!--</div>-->
-				</template>
-			</aurora-center>
+								</template>
+							</n-card>
+						</n-space>
+					</n-tab-pane>
+				</n-tabs>
+			</aurora-card>
 			<blog-comment
 				:user-uid="userUid"
 				:page-uid="userUid"

@@ -1,16 +1,25 @@
 <template>
 	<div>
-		<aurora-common :is-sticky-sidebar="true" :show-sidebar-animate-class="false"
-									 :is-show-side-bar="false" :user-uid="userUid" :is-show-top-img="true" :is-show-head-line="false">
+		<aurora-common :is-sticky-sidebar="true"
+									 :show-navbar="false"
+									 :show-tag-cloud="false"
+									 :show-sidebar-animate-class="false"
+									 :is-show-side-bar="false"
+									 :user-uid="userUid"
+									 :show-sidebar="false"
+									 :is-show-top-img="true"
+									 :is-show-head-line="false">
 			<template #center1>
-				<div class="photo-list">
-					<n-scrollbar>
-						<photo-waterfall :picture-src-list="photoArr"
-														 :mobile-waterfall-img-col="2"
-														 :pc-waterfall-img-col="5"
-														 :show-bg-color="true"/>
-					</n-scrollbar>
-				</div>
+				<aurora-card class="aurora-photo-card">
+					<div class="photo-list">
+						<n-scrollbar>
+							<photo-waterfall :picture-src-list="photoArr"
+															 :mobile-waterfall-img-col="2"
+															 :pc-waterfall-img-col="5"
+															 :show-bg-color="true"/>
+						</n-scrollbar>
+					</div>
+				</aurora-card>
 			</template>
 			<template #center2>
 				<blog-comment
