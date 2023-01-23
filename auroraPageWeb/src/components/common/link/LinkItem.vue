@@ -8,10 +8,10 @@
       </div>
       <div class="link-bottom" :style="setLinkColor(item.linkCover)">
         <div class="link-bottom-title link-bottom-common">
-          <span :key="item.linkTitle" :data="item.linkTitle">{{getLinkTitle(item.linkTitle,getRandomIntNum)}}</span>
+          <span :key="item.linkTitle">{{getLinkTitle(item.linkTitle,getRandomIntNum)}}</span>
         </div>
         <div class="link-bottom-describe link-bottom-common">
-          <span id="link-bottom-describe" :data="item.linkDescription" :key="item.linkDescription">{{getLinkDescribe(item.linkDescription,getRandomIntNum)}}</span>
+          <span id="link-bottom-describe" :key="item.linkDescription">{{getLinkDescribe(item.linkDescription,getRandomIntNum)}}</span>
         </div>
       </div>
     </div>
@@ -73,7 +73,9 @@ export default {
       return (cover: string) => {
         //return 'color: rgb(' + this.hexRgb.r +"," + this.hexRgb.g + "," + this.hexRgb.b + "); background-image: url("+ cover +");"
         if (!StringUtil.haveLength(cover)) {
-          return "background-color: white;" + 'color: rgb(' + this.hexRgb.r +"," + this.hexRgb.g + "," + this.hexRgb.b + ");"
+					let bgColor = blogConfig.randomColor[getRandomNum(0,blogConfig.randomColor.length -1)]
+					let hexRgb = hexToRgb(bgColor)
+          return `background-color: white;` + 'color: rgb(' + this.hexRgb.r +"," + this.hexRgb.g + "," + this.hexRgb.b + ");"
         }else {
           let randomNum1 = getRandomNum(0,9999999999)
           let randomNum2 = getRandomNum(0,9999999999)
