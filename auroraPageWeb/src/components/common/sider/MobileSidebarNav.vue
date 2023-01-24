@@ -305,7 +305,6 @@ export default {
 					const siteSetting: SiteSetting = result.data.result[0]
 					// 取出第一个
 					this.navbarInfoArr = JSON.parse(siteSetting.paramValue!)
-					console.log(this.navbarInfoArr);
 				}
 			})
 		},

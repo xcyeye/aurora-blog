@@ -3,7 +3,8 @@ interface SocialInfo {
 	isHome?: boolean,
 	show?: boolean,
 	sidebar?: boolean,
-	symbol?: string,
+	icon?: string,
+	color?: string,
 	showImgSrc?: string
 }
 

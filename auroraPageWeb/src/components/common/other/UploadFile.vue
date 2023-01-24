@@ -18,9 +18,7 @@
 			>
 				<n-upload-dragger v-if="computedShowUploadDragger(1)">
 					<div style="margin-bottom: 12px">
-						<n-icon size="48" :depth="3">
-							<FileUploadOutlined-icon/>
-						</n-icon>
+						<svg-icon icon="bi:upload" style="font-size: 2rem"/>
 					</div>
 					<n-text style="font-size: 16px"> 点击或者拖动文件到该区域来上传 </n-text>
 					<n-p depth="3" style="margin: 8px 0 0 0">

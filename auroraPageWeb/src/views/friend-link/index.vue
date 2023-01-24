@@ -186,7 +186,6 @@ const setSpanStyle = computed(() => {
 });
 
 const getFriendLinkApplyForBg = computed(() => {
-	console.log(currentSiteInfo.value);
 	if (StringUtil.haveLength(currentSiteInfo.value.randomPictureInterface)) {
 		return `background-image: url("${currentSiteInfo.value.randomPictureInterface}");`
 	}else if (StringUtil.haveLength(currentSiteInfo.value.defaultCoverRequestInterface)) {

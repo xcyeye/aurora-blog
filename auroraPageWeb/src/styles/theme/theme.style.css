@@ -185,34 +185,7 @@ li {
 
 a {
     text-decoration: none;
-}
-
-#waline {
-    --waline-white: #fff;
-    --waline-light-grey: #999;
-    --waline-dark-grey: #666;
-    --waline-theme-color: #00cfc8;
-    --waline-active-color: #00cfc8;
-    --waline-text-color: #444;
-    --waline-bgcolor: hsla(0, 0%, 100%, 0.35);
-    --waline-bgcolor-light: #f8f8f8;
-    --waline-bgcolor-hover: #f0f0f0;
-    --waline-border-color: #ddd;
-    --waline-disable-bgcolor: #f8f8f8;
-    --waline-disable-color: #bbb;
-    --waline-code-bgcolor: #282c34;
-    --waline-bq-color: #f0f0f0;
-    --waline-avatar-size: 3.25rem;
-    --waline-mobile-avatar-size: calc(var(--waline-avatar-size)*9/13);
-    --waline-badge-color: #3498db;
-    --waline-badge-font-size: 0.775em;
-    --waline-info-bgcolor: #f8f8f8;
-    --waline-info-color: #999;
-    --waline-info-font-size: 0.625em;
-    --waline-border: 1px solid var(--waline-border-color);
-    --waline-avatar-radius: 50%;
-    --waline-box-shadow: none;
-    --waline-font-size: 16px
+    color: var(--fontColor);
 }
 
 .sidebar-menu-item span {
@@ -6665,3 +6638,13 @@ body {
 /*    }*/
 /*}*/
 /*!*css typing end*!*/
+
+.sidebar-social-single svg {
+    font-size: calc(1.5vw);
+}
+
+@media screen and (max-width: 719px) {
+    .sidebar-social-single svg {
+        font-size: calc(6vw);
+    }
+}

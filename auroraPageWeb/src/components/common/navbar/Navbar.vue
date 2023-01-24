@@ -1,8 +1,6 @@
 <template>
 	<div class="navbar-box">
-		<header ref="navbar" :style="$store.state.borderRadiusStyle +
-       $store.state.opacityStyle + $store.state.fontColorStyle +
-       $store.state.fontFamilyStyle + $store.state.filterBlurStyle"
+		<header ref="navbar"
 						:class="{'header-bg-show': props.showHeaderBg}"
 						class="navbar">
 			<toggle-sidebar-button/>
@@ -15,14 +13,13 @@
 				/>
         <span
 					class="site-name"
-					style="color: #2c3e50;"
 				>
           {{useUserInfo().getUserInfo(props.userUid).username}}
         </span>
       </RouterLink>
     </span>
 			<div class="navbar-links-wrapper">
-				<div v-for="(item, index) in navbarInfoArr" :key="index">
+				<div v-for="(item, index) in navbarInfoArr" class="navbar-links-wrapper-single" :key="index">
 					<navbar-link :navbar-info="item"/>
 				</div>
 			</div>

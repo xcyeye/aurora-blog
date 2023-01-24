@@ -22,13 +22,9 @@
 								<talk-comment :talk-info="moodItem"/>
               </div>
               <div :class="getMoodLike" class="mood-edit-single-common">
-								<!--<svg-icon icon="mdi:heart-multiple"/>-->
-                <!--<span :class="{'mood_like_love_active': moodLikeStatus}"-->
-								<!--			@click="moodLove($event,moodItem)"-->
-								<!--			class="aurora-coze-font"></span>&nbsp;-->
-                <!--<span>{{getCozeMoodLink}}</span>-->
 								<give-like :show-default-style="false"
 													 :give-like-info="moodItem"
+													 like-number-field-name="likeNumber"
 													 cookie-name="talk_give_like_status"
 													 :control-like-number="false"
 													 :update-like-num-request-method="updateTalkNumMethod"

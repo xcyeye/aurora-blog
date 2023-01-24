@@ -95,6 +95,13 @@ public class CommentController {
         return commentService.queryCommentByUid(comment.getUid());
     }
 
+    @Operation(summary = "查询评论的数量")
+    @SelectOperation
+    @PostMapping("/queryCommentCount")
+    public Long queryCommentCount(@RequestBody CommentPojo comment) {
+        return commentService.queryCommentCount(comment);
+    }
+
     @Operation(summary = "重新发送评论的邮件通知")
     @ModifyOperation
     @PostMapping("/resendEmail")

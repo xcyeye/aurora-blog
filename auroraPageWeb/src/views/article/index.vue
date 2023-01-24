@@ -60,6 +60,7 @@
 				<div class="aurora-article-like">
 					<give-like :like-number="articleInfo.likeNumber"
 										 :control-like-number="false"
+										 like-number-field-name="likeNumber"
 										 @finishGiveLikeAction="finishGiveLikeAction"
 										 :give-like-info="articleInfo"
 										 cookie-name="article_give_like"
@@ -171,9 +172,9 @@ const calculateReadTime = () => {
 }
 
 const calculateComment = () => {
-	commentApi.queryListDataByCondition({pageSize: 9999, otherUid: userUid.value, keyword: `/article/${articleUid.value}`}).then(result => {
-		if (result.data && result.data.result) {
-			totalComment.value = result.data.total!
+	commentApi.queryCommentCount({userUid: userUid.value, queryRegexp: `/article/${articleUid.value}`}).then(result => {
+		if (result.data) {
+			totalComment.value = result.data
 		}
 	})
 }

@@ -21,7 +21,7 @@
 .navbar .site-name {
     font-size: 1.3rem;
     font-weight: 600;
-    color: var(--c-text);
+    color: var(--fontColor);
     position: relative;
 }
 
@@ -38,10 +38,16 @@
     font-size: 0.9rem;
 }
 
+.navbar .navbar-links-wrapper svg {
+    font-size: 1.5rem;
+    color: var(--fontColor);
+}
+
 .navbar .navbar-links-wrapper div a {
     padding-right: 2rem;
     font-size: 1rem;
     font-weight: 500;
+    color: var(--fontColor);
 }
 
 .navbar .navbar-links-wrapper div svg {

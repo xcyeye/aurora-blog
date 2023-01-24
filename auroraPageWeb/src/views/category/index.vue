@@ -96,9 +96,11 @@ const setPaginationData = () => {
 	}else {
 		showArticleArr.value = articleArr.value.slice(getPaginationStartAndEnd(currentPage.value, pageSize.value, true), getPaginationStartAndEnd(currentPage.value, pageSize.value, false))
 	}
-	smoothscroll.polyfill();
-	if (articleTopScroll.value) {
-		articleTopScroll.value.scrollIntoView({behavior: "smooth"})
+	if (showArticleArr.value.length > 0) {
+		smoothscroll.polyfill();
+		if (articleTopScroll.value) {
+			articleTopScroll.value.scrollIntoView({behavior: "smooth"})
+		}
 	}
 }
 

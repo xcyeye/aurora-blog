@@ -17,7 +17,8 @@ export const defaultSiteSettingInfo: SiteSettingInfo = {
             sidebar: true,
 
             //使用阿里图标 使用的是阿里图标库，我也挑选部分图标，请进入http://ico.cco.vin/theme查看
-            symbol: '#icon-qq',
+            icon: 'fa:qq',
+            color: 'red'
 
             //鼠标移入此图标时，显示的图片，适用于微信等通过二维码添加好友
             // showImgSrc: "/aurora/wechat.jpg",
@@ -28,7 +29,8 @@ export const defaultSiteSettingInfo: SiteSettingInfo = {
             showImgSrc: "/wechat.jpg",
             isHome: true,
             show: true,
-            symbol: '#icon-weixin',
+            color: 'green',
+            icon: 'fa:wechat',
             sidebar: true
         },
         {
@@ -36,13 +38,13 @@ export const defaultSiteSettingInfo: SiteSettingInfo = {
             isHome: true,
             show: true,
             sidebar: true,
-            symbol: '#icon-github-fill'
+            icon: 'fa:github'
         },
         {
             aHref: "https://stackoverflow.com/",
             isHome: true,
             show: true,
-            symbol: '#icon-stackoverflow',
+            icon: 'fa:stack-overflow',
             sidebar: true
         },
         {
@@ -50,13 +52,13 @@ export const defaultSiteSettingInfo: SiteSettingInfo = {
             isHome: true,
             show: true,
             sidebar: true,
-            symbol: '#icon-bilibili-1'
+            icon: 'fa:wpbeginner'
         },
         {
             aHref: "https://music.163.com/#/user/home?id=1411050784",
             isHome: true,
             show: true,
-            symbol: '#icon-wangyiyunyinle',
+            icon: 'fa:music',
             sidebar: true
         },
         {
@@ -64,7 +66,7 @@ export const defaultSiteSettingInfo: SiteSettingInfo = {
             isHome: true,
             show: true,
             sidebar: true,
-            symbol: '#icon-email'
+            icon: 'fa:eercast'
         },
     ],
     showWave: true,

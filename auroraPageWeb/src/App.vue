@@ -17,6 +17,10 @@
 <script setup lang="ts">
 import { dateZhCN, zhCN } from 'naive-ui';
 import BasicLayout from './layouts/BasicLayout/index.vue'
+import {computed} from "vue";
+import {getRandomNum, hexToRgb} from "@/utils";
+import blogConfig from "@/config/blogConfig.json";
+import {useThemeStore} from "@/stores";
 // import { subscribeStore, useThemeStore } from '@/store';
 // import { useGlobalEvents } from '@/composables';
 

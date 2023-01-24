@@ -196,6 +196,20 @@ public class CommentService {
                 auroraCommentService.queryById(uid),CommentDTO.class);
     }
 
+    public Long queryCommentCount(CommentPojo pojo) {
+        Condition<Long> condition = new Condition<>();
+        condition.setPageSize(999999);
+        condition.setKeyword(pojo.getQueryRegexp());
+        condition.setDelete(false);
+        condition.setUid(pojo.getUid());
+        condition.setOtherUid(pojo.getUserUid());
+        PageData<Comment> commentPageData = auroraCommentService.queryListByCondition(condition);
+        if (commentPageData != null) {
+            return commentPageData.getTotal();
+        }
+        return 0L;
+    }
+
     private void setDefaultProperty(Comment comment) {
         // 初始化值
         comment.setUid(GenerateInfoUtils.generateUid(auroraProperties.getSnowFlakeWorkerId(),auroraProperties.getSnowFlakeDatacenterId()));

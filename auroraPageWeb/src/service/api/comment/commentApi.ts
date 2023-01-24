@@ -80,6 +80,10 @@ function _baseApi() {
     return request.post<viewBeanType>(`${apiPrefix}queryCommentByUid`, data, baseAxiosRequestConfig);
   }
 
+  function queryCommentCount(data: beanType) {
+    return request.post<number>(`${apiPrefix}queryCommentCount`, data, baseAxiosRequestConfig);
+  }
+
   /**
    * 根据条件查询一条数据
    * @deprecated
@@ -108,7 +112,8 @@ function _baseApi() {
     insertData,
     batchInsertData,
     queryListCommentByUidArr,
-    resendEmailNotice
+    resendEmailNotice,
+    queryCommentCount
   };
 }
 

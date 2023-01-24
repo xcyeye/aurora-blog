@@ -30,6 +30,10 @@
 							<div>类别</div>
 							<div>{{categoryNumber}}</div>
 						</div>
+						<div class="sidebar-page-common">
+							<div>评论</div>
+							<div>{{totalCommentNumber}}</div>
+						</div>
 					</div>
 					<a target="_blank" :href="getGithubUrl">
 						<div class="sidebar-github">Github</div>
@@ -197,7 +201,7 @@
 <script lang="ts">
 
 import {useSiteInfo, useUserInfo} from "@/stores";
-import {articleApi, bulletinApi, categoryApi, linkApi, tagApi, talkApi} from "@/service";
+import {articleApi, bulletinApi, categoryApi, commentApi, linkApi, tagApi, talkApi} from "@/service";
 import {LinkVo} from "@/bean/vo/article/LinkVo";
 import {getLocalTime, getRandomNum, StringUtil} from "@/utils";
 import blogConfig from '@/config/blogConfig.json';
@@ -224,6 +228,7 @@ export default {
   },
   data() {
     return {
+			totalCommentNumber: 0,
 			articleNumber: 0,
 			tagNumber: 0,
 			categoryNumber: 0,
@@ -407,6 +412,12 @@ export default {
 			if (result.data && result.data.result) {
 				this.articleArr = result.data.result
 				this.articleNumber = result.data.total
+			}
+		})
+		
+		commentApi.queryCommentCount({userUid: this.userUid}).then(result => {
+			if (result.data) {
+				this.totalCommentNumber = result.data
 			}
 		})
 		

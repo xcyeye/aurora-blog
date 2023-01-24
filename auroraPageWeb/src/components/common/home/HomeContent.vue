@@ -19,7 +19,8 @@
 															 :sidebar-cut-width="1"
 															 :current-site-info="currentSiteInfo"
 															 :sidebar-width-var="sidebarWidthVar"
-															 :social-item="item" v-for="(item, index) in socialsArrTemp"
+															 :social-item="item"
+															 v-for="(item, index) in socialsArrTemp"
 															 :key="index"/>
 			</div>
 		</div>
@@ -126,7 +127,6 @@ export default defineComponent({
 		window.addEventListener('scroll', this.handleScroll, true)
 		
 		this.currentUserInfo = useUser.getUserInfo(this.userUid)
-		console.log(this.currentUserInfo);
 		this.currentSiteInfo = useSite.getSiteInfo(this.userUid)
 		
 		if (this.currentSiteInfo.randomSayApi !== undefined) {

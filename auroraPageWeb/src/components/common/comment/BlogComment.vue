@@ -280,7 +280,7 @@ defineComponent({name: 'BlogComment'});
 // 用户需要回复评论的话，直接到管理后台进行回复即可
 
 interface Props {
-	parentCommentUidArr: string[]
+	parentCommentUidArr?: string[]
 	replyPageType: 'ARTICLE' | 'TALK' | 'FRIEND_LINK' | 'OTHER',
 	pagePath: string,
 	pageUid: string,

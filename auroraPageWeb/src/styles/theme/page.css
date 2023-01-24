@@ -272,7 +272,7 @@
     padding: 1rem;
     box-sizing: border-box;
     border-radius: 16px;
-    box-shadow: 0 0 0 1px #f2f2f2;
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px;
 }
 .aurora-article-summary .summary-item {
     width: 100%;

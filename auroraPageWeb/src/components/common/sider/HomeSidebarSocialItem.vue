@@ -2,9 +2,7 @@
   <div v-if="socialItem.show" class="sidebar-social-single" :style="getBgColor">
     <a target="_blank" :href="socialItem.aHref">
       <div class="sidebar-social-single-item">
-        <svg class="home-sidebar-social-icon" aria-hidden="true">
-          <use :xlink:href="socialItem.symbol"></use>
-        </svg>
+				<svg-icon :icon="socialItem.icon" :style="socialItem.color ? `color: ${socialItem.color}` : ''"/>
       </div>
     </a>
     <div class="show-social-common" v-if="isShowSocialImg" id="show-img">
@@ -32,7 +30,7 @@ export default {
 			type: Object as PropType<SiteSettingInfo>
 		},
     socialItem: {
-      type: Object
+      type: Object as PropType<SocialInfo>
     },
     sidebarWidthVar: {
       type: Number,

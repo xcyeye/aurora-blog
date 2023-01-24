@@ -15,7 +15,7 @@ import RequestResult = Service.RequestResult;
 import {getIcon} from "@iconify/vue";
 
 interface LikeInfo {
-	icon: string,
+	icon?: string,
 	showLikeNum?: boolean,
 	giveLikeInfo: any,
 	controlLikeNumber: boolean,
