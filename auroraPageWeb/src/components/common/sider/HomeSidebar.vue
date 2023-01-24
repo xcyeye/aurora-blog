@@ -9,14 +9,14 @@
 			<div :class="{sidebarScroll: isShowCatalog}" :style="setHomeSidebarStyle" class="home-sidebar" id="home-sidebar">
 			
 				<!--头像信息-->
-				<aurora-card :show-linear-gradient="false" class="sidebar-aurora-card" custom-style="margin-top: 0;" :id="customId" v-if="showPersonInfo">
-					<div class="home-sidebar-avatar">
-						<!--<img id="home-sidebar-avatar-img" :src="useUserInfo().getUserInfo(userUid).avatar" alt="">-->
-						<n-avatar :src="useUserInfo().getUserInfo(userUid).avatar" :size="60" round/>
-					</div>
-					<div class="home-sidebar-info-desc">
-						<span>{{useUserInfo().getUserInfo(userUid).userSummary}}</span>
-					</div>
+				<aurora-card :show-linear-gradient="false" class="sidebar-aurora-card" :id="customId" v-if="showPersonInfo">
+					<!--<div class="home-sidebar-avatar">-->
+					<!--	&lt;!&ndash;<img id="home-sidebar-avatar-img" :src="useUserInfo().getUserInfo(userUid).avatar" alt="">&ndash;&gt;-->
+					<!--	<n-avatar :src="useUserInfo().getUserInfo(userUid).avatar" :size="60" round/>-->
+					<!--</div>-->
+					<aurora-random-picture :pc-height="10" :mobile-height="10" custom-picture-class="aurora-sidebar-random-picture" :user-uid="userUid">
+						<aurora-typing :typing-content="useUserInfo().getUserInfo(userUid).userSummary" class="aurora-sidebar-random-picture-summary"/>
+					</aurora-random-picture>
 					<div class="home-sidebar-info-page">
 						<div class="sidebar-page-common">
 							<div>文章</div>
@@ -147,16 +147,16 @@
 				<!--标签-->
 				<aurora-card class="sidebar-aurora-card" :id="customId" v-if="showTagCloud" :class="{'sidebar-single-enter-animate': showEnterAnimate}" title="标签" icon="bi:tag-fill">
 				
-					<div v-if="isMobileSidebar" class="change-page">
-						<div class="catalog-page change-page-common">
-							<span class="home-menu-ico" style="--homeIcoCode: '\e7b5'"></span>
-							<span>标签</span>
-						</div>
-						<div class="latest-page change-page-common">
-							<span></span>
-							<span></span>
-						</div>
-					</div>
+					<!--<div v-if="isMobileSidebar" class="change-page">-->
+					<!--	<div class="catalog-page change-page-common">-->
+					<!--		<span class="home-menu-ico" style="&#45;&#45;homeIcoCode: '\e7b5'"></span>-->
+					<!--		<span>标签</span>-->
+					<!--	</div>-->
+					<!--	<div class="latest-page change-page-common">-->
+					<!--		<span></span>-->
+					<!--		<span></span>-->
+					<!--	</div>-->
+					<!--</div>-->
 				
 					<div class="sidebar-tag-item">
 						<router-link :key="index" v-for="(item,index) in tagArr" :to="`/tag/${item.userUid}/${item.title}`">

@@ -9,16 +9,15 @@
     </div>
 
     <div class="welcome-parent" id="welcome-parent">
-			<aurora-card custom-style="width: 24%;" :class="{'style-menu-box': styleMenuActiveStatus}" class="m-4 p-4 f4 color-shadow-small bg-gray-800-mktg rounded-2 signup-content-container welcome">
+			<aurora-card :class="{'style-menu-box': styleMenuActiveStatus}"
+									 class="welcome style-menu-card">
 				<div class="custom-bottom custom-common">
-					<div style="flex: 1" class="custom-bottom-span custom-common-span">
-						<li class="custom-li" v-for="(item,index) in fontColorArr">
-							<span :style="setColorBack(item)" :data-color="item" @click="setColor($event,item)"></span>
-						</li>
-					</div>
+					<li class="custom-li" v-for="(item,index) in fontColorArr">
+						<span :style="setColorBack(item)" :data-color="item" @click="setColor($event,item)"></span>
+					</li>
 				</div>
 				<div class="custom-bottom custom-common">
-					<n-slider @update:value="handleChangeBorderRadius" v-model:value="borderRadius" :min="0" :max="45" :step="1" :tooltip="false" />
+					<n-slider class="aurora-style-menu-slider" @update:value="handleChangeBorderRadius" v-model:value="borderRadius" :min="0" :max="45" :step="1" :tooltip="false" />
 				</div>
 			</aurora-card>
     </div>

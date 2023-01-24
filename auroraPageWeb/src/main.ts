@@ -6,6 +6,7 @@ import router from './router'
 import {setupAssets} from "@/plugins";
 import {vuexStore} from "@/stores/vuex";
 import {setupStore} from "@/stores";
+// import smoothscroll from 'smoothscroll-polyfill';
 
 /** 导入静态文件 css */
 setupAssets();
@@ -18,3 +19,5 @@ app.use(vuexStore)
 setupStore(app);
 
 app.mount('#app')
+
+// smoothscroll.polyfill();

@@ -24,7 +24,9 @@
 			</div>
 		</div>
 		<div v-if="isHome" class="home-click-down">
-			<span @click="clickDown" class="aurora-iconfont-common home-click-down-icon"></span>
+			<span @click="clickDown">
+				<svg-icon icon="entypo:chevron-down"/>
+			</span>
 		</div>
 		<div v-if="currentSiteInfo.showWave && isHome" :class="showHomeWaveStyle ? 'home-wave-show': 'home-wave-hide'" class="home-wave-box" ref="home-wave">
 			<div class="home-wave">
@@ -38,6 +40,7 @@
 <script lang="ts">
 import {defineComponent} from 'vue';
 import EasyTyper from "easy-typer-js";
+import smoothscroll from 'smoothscroll-polyfill';
 
 import {req} from "@/assets/network";
 import {UserVo} from "@/bean/vo/admin/UserVo";
@@ -192,15 +195,8 @@ export default defineComponent({
 			}
 		},
 		clickDown() {
-			// @ts-ignore
-			import("smoothscroll-polyfill").then(module => {
-				module.polyfill()
-			})
-			if (document.querySelector(".home-bottom")) {
-				document.querySelector(".home-bottom")!.scrollIntoView({behavior: "smooth"})
-			}else {
-				console.error('没有home-bottom结点')
-			}
+			smoothscroll.polyfill();
+			document.getElementById('home-bottom')!.scrollIntoView({behavior: "smooth", block: 'start'})
 		},
 		
 		handleScroll() {

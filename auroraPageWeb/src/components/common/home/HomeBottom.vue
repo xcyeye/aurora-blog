@@ -1,10 +1,7 @@
 <template>
   <parcel-style>
 		<!--这是首页下面的文章模板-->
-		<div :style="$store.state.borderRadiusStyle +
-       $store.state.opacityStyle + $store.state.fontColorStyle +
-       $store.state.fontFamilyStyle + $store.state.filterBlurStyle"
-				 ref="home-bottom" class="home-bottom" id="home-bottom">
+		<div class="home-bottom" id="home-bottom">
 			<div ref="homeBottomScroll"></div>
 			<div class="home-page-tag" id="home-page-tag">
 				<home-page-item :index="index"

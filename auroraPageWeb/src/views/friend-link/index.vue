@@ -7,7 +7,7 @@
 				<aurora-envelope @click="handleClickEnvelop"
 												 :contact-envelope-active="contactEnvelopeActive"
 												 class="aurora-friend-link-envelope">
-					<div :style="getFriendLinkApplyForBg" class="aurora-friend-link-apply-for-bg"/>
+					<div :style="getFriendLinkApplyForBg" class="aurora-random-picture-box"/>
 					<n-tabs type="line" animated>
 						<template #suffix>
 							<n-gradient-text type="success" style="cursor: pointer" @click="handleApplyLinkAction">Send</n-gradient-text>

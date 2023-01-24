@@ -54,6 +54,10 @@
     --contact-envelope-paper-top: 170px;
     --contact-envelope-body-top: 184px;
 
+    --aurora-random-picture-interface: url('https://api.ixiaowai.cn/api/api.php');
+    --aurora-random-picture-pc-height: 12rem;
+    --aurora-random-picture-mobile-height: 10rem;
+
 
     /*//iconfont变量*/
 
@@ -152,6 +156,10 @@
 
 /* 新版本样式 */
 /*这是主题默认样式*/
+* {
+    box-sizing: border-box;
+}
+
 #app {
     font-family: Avenir, Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
@@ -606,7 +614,7 @@ a {
 .welcome {
     width: 24%;
     right: 5rem;
-    bottom: -1rem;
+    bottom: 1rem;
     transform: translateY(250%);
     transition: all 1s;
     height: auto;
@@ -1547,8 +1555,8 @@ a {
 
 .custom-common {
     width: 100%;
-    height: 2.5rem;
-    display: flex
+    height: 2rem;
+    /*display: flex*/
 }
 
 .custom-common-span {
@@ -2086,11 +2094,14 @@ body::-webkit-scrollbar-thumb {
 }
 
 .custom-li {
-    flex: 1;
+    /*flex: 1;*/
     list-style: none;
-    display: flex;
-    justify-content: center;
-    align-items: center
+    /*display: flex;*/
+    /*justify-content: center;*/
+    /*align-items: center*/
+    display: inline-block;
+    line-height: 2rem;
+    margin: 0 10px;
 }
 
 .custom-li span {
@@ -2845,7 +2856,7 @@ body::-webkit-scrollbar-thumb {
     }
 
     .content:last-child {
-        margin-bottom: 3rem
+        /*margin-bottom: 3rem*/
     }
 
     #poster-page-avatar {
@@ -3363,7 +3374,7 @@ body::-webkit-scrollbar-thumb {
     }
 
     #home-page-tag-item {
-        margin-bottom: 2.5rem
+        /*margin-bottom: 2.5rem*/
     }
 
     #mobile-search-show {
@@ -5404,7 +5415,12 @@ body::-webkit-scrollbar-thumb {
     bottom: 13%;
     text-align: center;
     -webkit-animation: home-down 1.7s ease-in-out;
-    animation: home-down 1.7s infinite
+    animation: home-down 1.7s infinite;
+}
+.home-click-down svg {
+    font-size: 2rem;
+    color: #fff;
+    cursor: pointer;
 }
 
 .home-click-down-icon {
@@ -5509,11 +5525,11 @@ body::-webkit-scrollbar-thumb {
 @media screen and (max-width:719px) {
     .theme-comment-box {
         width: 100%;
-        margin-bottom: 1rem;
+        /*margin-bottom: 1rem;*/
     }
 
     .show-theme-comment-box {
-        margin-bottom: 3rem;
+        /*margin-bottom: 3rem;*/
     }
 }
 
@@ -6542,19 +6558,110 @@ body::-webkit-scrollbar-thumb {
     margin: 0 auto;
 }
 
-.aurora-friend-link-apply-for-bg {
-    background-size: 100% 100%;
-    background-repeat: no-repeat;
+.aurora-random-picture-box {
+    position: relative;
     width: 100%;
-    height: 15rem;
+    height: var(--aurora-random-picture-pc-height);
+}
+
+.aurora-random-picture-content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.aurora-random-picture-box-bg:after {
+    display: inline-block;
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-size: 100% 100%;
+    width: 100%;
+    height: var(--aurora-random-picture-pc-height);
+    background-repeat: no-repeat;
+    background-image: var(--aurora-random-picture-interface);
 }
 
 @media screen and (max-width: 719px) {
-    .aurora-friend-link-apply-for-bg {
-        height: 10rem;
+    .aurora-random-picture-box {
+        height: var(--aurora-random-picture-mobile-height);
     }
+
+    .aurora-random-picture-box-bg:after {
+        height: var(--aurora-random-picture-mobile-height);
+    }
+}
+
+.aurora-sidebar-random-picture:after {
+    transition: all .4s ease;
+}
+
+.aurora-random-picture-box:hover .aurora-sidebar-random-picture:after {
+    filter: blur(1.8px);
+}
+
+.aurora-sidebar-random-picture-summary {
+    padding: 1rem;
+    color: #fff;
+    position: absolute;
+    bottom: 0;
 }
 
 .friend-link-me {
     font-weight: unset;
 }
+
+body {
+    scroll-behavior: smooth;
+}
+
+.style-menu-card {
+    /*width: 24%;*/
+    width: auto;
+}
+
+.home-page-fun .home-sidebar .aurora-card:first-child {
+    margin-top: 0;
+}
+
+@media screen and (max-width: 719px) {
+    .style-menu-card {
+        width: 90%;
+    }
+    .custom-li {
+        /*margin-left: 5px;*/
+        /*margin-right: 5px;*/
+    }
+    .welcome {
+        right: 2.5rem;
+    }
+
+    .home-sidebar .aurora-card:first-child {
+        margin-top: var(--globalMarginTop);
+    }
+}
+
+/*!*css typing start*!*/
+/*.aurora-typing-css {*/
+/*    width: 22ch;*/
+/*    animation: typingCss 2s steps(22), blinkTypingCss .5s step-end infinite alternate;*/
+/*    white-space: nowrap;*/
+/*    overflow: hidden;*/
+/*    border-right: 3px solid;*/
+/*}*/
+
+/*@keyframes typingCss {*/
+/*    from {*/
+/*        width: 0*/
+/*    }*/
+/*}*/
+
+/*@keyframes blinkTypingCss {*/
+/*    50% {*/
+/*        border-color: transparent*/
+/*    }*/
+/*}*/
+/*!*css typing end*!*/
