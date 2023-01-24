@@ -290,5 +290,10 @@
         "增加每日计划打卡功能"
       ]
     }
-  ]
+  ],
+  "defaultMetaInfo": {
+    "title": "Aurora博客系统",
+    "description": "这是默认的描述",
+    "keywords": "博客 微服务"
+  }
 }

@@ -12,10 +12,10 @@
 </template>
 
 <script lang="ts" setup>
-import {onBeforeMount, ref,} from 'vue';
+import {onBeforeMount, onMounted, ref,} from 'vue';
 import {useRouter} from 'vue-router';
 import {blogPageData} from "@/assets/config";
-import {StringUtil} from "@/utils";
+import {setMetaDescription, setMetaKeywords, setMetaTitle, StringUtil} from "@/utils";
 import {useRouterPush} from "@/composables";
 import {defaultSiteSettingInfo} from "@/field";
 import {UserVo} from "@/bean/vo/admin/UserVo";
@@ -24,6 +24,7 @@ import {useSiteInfo, useUserInfo} from "@/stores";
 import {Condition, PageData} from "@/bean/core/bean";
 import {ArticleVo} from "@/bean/vo/article/ArticleVo";
 import RequestResult = Service.RequestResult;
+import { useMeta, useActiveMeta } from 'vue-meta'
 
 const themeProperty = ref(blogPageData)
 const router = useRouter()
@@ -54,7 +55,7 @@ const setProperties = () => {
 	})
 }
 
-onBeforeMount(() => {
+const getRouterParams = () => {
 	userUid.value = router.currentRoute.value.params.userUid as string
 	condition.value.otherUid = userUid.value
 	if (!StringUtil.haveLength(userUid.value)) {
@@ -64,6 +65,15 @@ onBeforeMount(() => {
 	}
 	
 	siteSettingInfo.value = useSite.getSiteInfo(userUid.value)
+	userInfo.value = useUser.getUserInfo(userUid.value)
+	setMetaTitle(`${userInfo.value.username} - ${userInfo.value.userSummary ? userInfo.value.userSummary : ''}`)
+	setMetaDescription(userInfo.value.userSummary)
+	setMetaKeywords(`${userInfo.value.nickname} ${userInfo.value.username}`)
+}
+getRouterParams()
+
+onBeforeMount(() => {
+	
 	
 	// if (!isNotEmptyObject(useUser.getUserInfo(userUid.value))) {
 	// 	userApi.queryOneDataByUid({uid: userUid.value}).then(result => {

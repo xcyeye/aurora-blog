@@ -62,7 +62,7 @@
 
 <script lang="ts" setup>
 import {defineComponent, onBeforeMount, ref, watch} from "vue";
-import {StringUtil} from "@/utils";
+import {setMetaDescription, setMetaKeywords, setMetaTitle, StringUtil} from "@/utils";
 import {useRouter} from "vue-router";
 import {useRouterPush} from "@/composables";
 import {articleApi, categoryApi} from "@/service";
@@ -187,7 +187,7 @@ const handleChangePage = (page: number) => {
 	setPaginationData()
 }
 
-onBeforeMount(() => {
+const getRouterParams = () => {
 	userUid.value = router.currentRoute.value.params.userUid as string
 	tagName.value = router.currentRoute.value.params.tagName as string
 	if (!StringUtil.haveLength(userUid.value)) {
@@ -203,7 +203,13 @@ onBeforeMount(() => {
 		})
 	}
 	loadTagInfo()
-})
+	
+	// setMetaTitle(`${userInfo.value.username} - ${userInfo.value.userSummary ? userInfo.value.userSummary : ''}`)
+	// setMetaDescription(userInfo.value.userSummary)
+	// setMetaKeywords(`${userInfo.value.nickname} ${userInfo.value.username}`)
+}
+getRouterParams()
+
 
 const showTagCloud = (tagIndexTemp: number) => {
 	tagIndex.value = tagIndexTemp

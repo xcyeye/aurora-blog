@@ -7,6 +7,9 @@
 		<naive-provider>
 			<BasicLayout>
 				<template #content>
+					<metainfo>
+						<template v-slot:title="{ content }">{{ content }}</template>
+					</metainfo>
 					<router-view />
 				</template>
 			</BasicLayout>

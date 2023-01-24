@@ -152,7 +152,7 @@ import {blogPageData} from "@/assets/config";
 import {LinkVo} from "@/bean/vo/article/LinkVo";
 import {useAuthStore, useSiteInfo, useUserInfo} from "@/stores";
 import blogConfig from '@/config/blogConfig.json';
-import {getRandomNum, StringUtil} from "@/utils";
+import {getRandomNum, setMetaDescription, setMetaKeywords, setMetaTitle, StringUtil} from "@/utils";
 import {articleApi, linkApi} from "@/service";
 import {useRouter} from "vue-router";
 import {useRouterPush} from "@/composables";
@@ -331,8 +331,8 @@ onMounted(() => {
 	}
 });
 
-onBeforeMount(() => {
-	userUid.value = router.currentRoute.value.params.userUid as string;
+const getRouterParams = () => {
+	userUid.value = router.currentRoute.value.params.userUid as string
 	if (!StringUtil.haveLength(userUid.value)) {
 		routerPush.routerPush({
 			name: 'home'
@@ -343,5 +343,9 @@ onBeforeMount(() => {
 	if (!isNotEmptyObject(currentSiteInfo.value)) {
 		friendLinkSiteInformation.value = currentSiteInfo.value.friendLinkSiteInformation!;
 	}
-});
+	// setMetaTitle(`${userInfo.value.username} - ${userInfo.value.userSummary ? userInfo.value.userSummary : ''}`)
+	// setMetaDescription(userInfo.value.userSummary)
+	// setMetaKeywords(`${userInfo.value.nickname} ${userInfo.value.username}`)
+}
+getRouterParams()
 </script>

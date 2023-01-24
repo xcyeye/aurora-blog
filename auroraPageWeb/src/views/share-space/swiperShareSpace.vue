@@ -175,9 +175,6 @@ export default defineComponent({
 				return "background-color:" + blogConfig.randomColor[getRandomNum(0,blogConfig.randomColor.length -1)] + "; width: " + score * 0.85 + "%"
 			}
 		}
-	},
-	mounted() {
-
 	}
 	
 });

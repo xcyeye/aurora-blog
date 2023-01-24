@@ -122,9 +122,6 @@ export default defineComponent({
 				openMobileSidebar: false
 			})
 		}
-	},
-	mounted() {
-		window.addEventListener('scroll', this.handleScroll, true)
 		
 		this.currentUserInfo = useUser.getUserInfo(this.userUid)
 		this.currentSiteInfo = useSite.getSiteInfo(this.userUid)
@@ -137,6 +134,9 @@ export default defineComponent({
 			}
 		}
 		this.loadSocialInfo()
+	},
+	mounted() {
+		window.addEventListener('scroll', this.handleScroll, true)
 		this.fetchRandomSayData()
 		
 		this.showHomeWaveStyle = window.pageYOffset <= 0;

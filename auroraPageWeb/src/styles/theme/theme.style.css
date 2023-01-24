@@ -6648,3 +6648,45 @@ body {
         font-size: calc(6vw);
     }
 }
+
+.aurora-style-menu-cache {
+    display: flex;
+    justify-items: center;
+    align-items: center;
+}
+
+.aurora-style-menu-cache div {
+    flex: 1;
+    justify-items: center;
+    align-items: center;
+    display: flex;
+}
+
+.aurora-style-menu-cache div svg {
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+.aurora-tooltip {
+    position: relative;
+    display: inline-block;
+}
+
+.aurora-tooltip .tooltipText {
+    visibility: hidden;
+    width: auto;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 0 5px;
+    /* 定位工具提示 */
+    position: absolute;
+    top: 0;
+    right: 0px;
+    z-index: 1;
+}
+
+.aurora-tooltip:hover .tooltipText {
+    visibility: visible;
+}

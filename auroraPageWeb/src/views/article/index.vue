@@ -70,11 +70,11 @@
 				</div>
 				
 				<div class="aurora-article-tag" v-if="getArticleTag">
-					<svg-icon icon="bi:tag-fill"/> <n-tag class="aurora-article-tag-single" v-for="(item, index) in getArticleTag" :type="getRandomTagType()" :bordered="false" style="border-radius: 16px" :key="index">{{item}}</n-tag>
+					<svg-icon icon="fa:tag"/> <n-tag class="aurora-article-tag-single" v-for="(item, index) in getArticleTag" :type="getRandomTagType()" :bordered="false" style="border-radius: 16px" :key="index">{{item}}</n-tag>
 				</div>
 				
 				<div class="aurora-article-tag" v-if="getArticleCategory">
-					<svg-icon icon="material-symbols:content-copy-rounded"/> <n-tag class="aurora-article-tag-single" v-for="(item, index) in getArticleCategory" :type="getRandomTagType()" :bordered="false" style="border-radius: 16px" :key="index">{{item}}</n-tag>
+					<svg-icon icon="fa:tags"/> <n-tag class="aurora-article-tag-single" v-for="(item, index) in getArticleCategory" :type="getRandomTagType()" :bordered="false" style="border-radius: 16px" :key="index">{{item}}</n-tag>
 				</div>
 				
 				<div class="aurora-article-next">
@@ -124,7 +124,15 @@
 <script lang="ts" setup>
 import {computed, onBeforeMount, onMounted, ref} from 'vue';
 import {ArticleStoreBean, useArticleStore, useSiteInfo, useUserInfo} from "@/stores";
-import {getHost, getLocalTime, getRandomTagType, StringUtil} from "@/utils";
+import {
+	getHost,
+	getLocalTime,
+	getRandomTagType,
+	setMetaDescription,
+	setMetaKeywords,
+	setMetaTitle,
+	StringUtil
+} from "@/utils";
 import {useRouter} from "vue-router";
 import {useRouterPush} from "@/composables";
 import {isNotEmptyObject} from "@/utils/business";
@@ -278,9 +286,12 @@ const loadArticleInfo = () => {
 					}
 				})
 			}
+			
+			// setMetaTitle(`${userInfo.value.username} - ${userInfo.value.userSummary ? userInfo.value.userSummary : ''}`)
+			// setMetaDescription(userInfo.value.userSummary)
+			// setMetaKeywords(`${userInfo.value.nickname} ${userInfo.value.username}`)
+			updateReadNum(result.data!)
 		}
-		
-		updateReadNum(result.data!)
 	})
 }
 
@@ -434,7 +445,7 @@ const handleGoArticlePreviousAndNext = (isPreviousArticle: boolean) => {
 	}
 }
 
-onBeforeMount(() => {
+const getRouterParams = () => {
 	userUid.value = router.currentRoute.value.params.userUid as string
 	articleUid.value = router.currentRoute.value.params.pageUid as string
 	if (!StringUtil.haveLength(articleUid.value)) {
@@ -445,9 +456,9 @@ onBeforeMount(() => {
 	}
 	
 	loadArticleInfo()
-	
 	articleStoreInfo.value = articleStore.getArticleInfo()
-})
+}
+getRouterParams()
 
 onMounted(() => {
 	//如果手机端侧边栏打开的，那么就关闭

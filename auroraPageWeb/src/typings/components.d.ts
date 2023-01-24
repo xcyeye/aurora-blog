@@ -17,6 +17,7 @@ declare module '@vue/runtime-core' {
     AuroraEnvelope: typeof import('./../components/common/other/AuroraEnvelope.vue')['default']
     AuroraRandomPicture: typeof import('./../components/common/other/AuroraRandomPicture.vue')['default']
     AuroraSliderPicture: typeof import('./../components/common/other/AuroraSliderPicture.vue')['default']
+    AuroraTooltip: typeof import('./../components/common/other/AuroraTooltip.vue')['default']
     AuroraTyping: typeof import('./../components/common/other/AuroraTyping.vue')['default']
     AuroraTypingCss: typeof import('./../components/common/other/AuroraTypingCss.vue')['default']
     BlogComment: typeof import('./../components/common/comment/BlogComment.vue')['default']
@@ -80,6 +81,7 @@ declare module '@vue/runtime-core' {
     NTabs: typeof import('naive-ui')['NTabs']
     NTag: typeof import('naive-ui')['NTag']
     NText: typeof import('naive-ui')['NText']
+    NTooltip: typeof import('naive-ui')['NTooltip']
     NUpload: typeof import('naive-ui')['NUpload']
     NUploadDragger: typeof import('naive-ui')['NUploadDragger']
     Pagination: typeof import('./../components/common/other/Pagination.vue')['default']
@@ -100,5 +102,6 @@ declare module '@vue/runtime-core' {
     ToggleSidebarButton: typeof import('./../components/common/navbar/ToggleSidebarButton.vue')['default']
     TopImage: typeof import('./../components/common/other/TopImage.vue')['default']
     UploadFile: typeof import('./../components/common/other/UploadFile.vue')['default']
+    VueMeta: typeof import('./../components/common/vueMeta/VueMeta.vue')['default']
   }
 }

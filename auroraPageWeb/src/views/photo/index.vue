@@ -42,7 +42,7 @@ import {articleApi, talkApi} from "@/service";
 import {TalkVo} from "@/bean/vo/article/TalkVo";
 import RequestResult = Service.RequestResult;
 import TalkComment from "@/components/common/shareSpace/TalkComment.vue";
-import {StringUtil} from "@/utils";
+import {setMetaDescription, setMetaKeywords, setMetaTitle, StringUtil} from "@/utils";
 import {useRouter} from "vue-router";
 import {useRouterPush} from "@/composables";
 import {FileVo} from "@/bean/vo/file/fileVo";
@@ -74,15 +74,19 @@ const loadPhoto = () => {
 	})
 }
 
-onMounted(() => {
-	userUid.value = router.currentRoute.value.params.userUid as string;
+const getRouterParams = () => {
+	userUid.value = router.currentRoute.value.params.userUid as string
 	if (!StringUtil.haveLength(userUid.value)) {
 		routerPush.routerPush({
 			name: 'home'
 		});
 	}
 	loadPhoto()
-})
+	// setMetaTitle(`${userInfo.value.username} - ${userInfo.value.userSummary ? userInfo.value.userSummary : ''}`)
+	// setMetaDescription(userInfo.value.userSummary)
+	// setMetaKeywords(`${userInfo.value.nickname} ${userInfo.value.username}`)
+}
+getRouterParams()
 
 </script>
 

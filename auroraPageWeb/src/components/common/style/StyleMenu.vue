@@ -19,6 +19,14 @@
 				<div class="custom-bottom custom-common">
 					<n-slider class="aurora-style-menu-slider" @update:value="handleChangeBorderRadius" v-model:value="borderRadius" :min="0" :max="45" :step="1" :tooltip="false" />
 				</div>
+				<div class="aurora-style-menu-cache">
+					<div @click="handleClearCache(true)">
+						<svg-icon icon="bi:record-fill" style="color: white"/>
+					</div>
+					<div @click="handleClearCache(false)">
+						<svg-icon icon="bi:record-fill" style="color: #555555"/>
+					</div>
+				</div>
 			</aurora-card>
     </div>
   </div>
@@ -28,6 +36,7 @@
 import blogConfig from '@/config/blogConfig.json';
 import {useThemeStore} from "@/stores";
 import ParcelStyle from "@/components/common/other/ParcelStyle.vue";
+import {cleanLocalStorage, getLocalStorage} from "@/utils";
 
 export default {
   name: "HomeWelcome",
@@ -101,6 +110,15 @@ export default {
   },
   methods: {
 		useThemeStore,
+		handleClearCache(clearOne: boolean) {
+			localStorage.clear()
+			window.$message?.success('本地缓存已全部清除')
+			if (clearOne) {
+			
+			}else {
+				// 清除所有用户
+			}
+		},
 		handleChangeBorderRadius(value: number) {
 			const themeTemp: Theme.Setting = useThemeStore().currentTheme
 			themeTemp.borderRadius = value
