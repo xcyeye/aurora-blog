@@ -99,8 +99,12 @@
 			<div id="set-bg" class="set-bg-fitter"
 					 style="background-image: url(https://pic-tool.xcye.xyz/pic/rmimg)"
 			></div>
-			<div id="posterShade" :class="{posterShade: $store.state.showPosterShadow}">
-				<span :class="{iconSpinner6: $store.state.showShadeLoad}"></span>
+			<!--TODO 临时改的-->
+			<!--<div id="posterShade" :class="{posterShade: true}">-->
+			<!--	<span :class="{iconSpinner6: true}"></span>-->
+			<!--</div>-->
+			<div id="posterShade" :class="{posterShade: false}">
+				<span :class="{iconSpinner6: false}"></span>
 			</div>
 		</div>
 	</div>

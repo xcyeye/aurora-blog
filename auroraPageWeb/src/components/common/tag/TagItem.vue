@@ -89,35 +89,6 @@ export default {
     let bgColor = ''
 		bgColor = blogConfig.randomColor[getRandomNum(0,blogConfig.randomColor.length -1)]
     this.hexRgb = this.hexToRgb(bgColor)
-
-    let allPages = this.$store.state.allPageMap
-    new Promise((resolve,reject) => {
-      let temPage = []
-      for (let i = 0; i < allPages.length; i++) {
-        let tagArr = []
-        if (!this.isCategories) {
-          tagArr = allPages[i].tag
-        }else {
-          tagArr = allPages[i].categories
-        }
-        for (let j = 0; j < tagArr.length; j++) {
-          let pageTag = tagArr[j]
-          if (this.tag === pageTag) {
-            temPage.push(allPages[i])
-          }
-          continue
-        }
-      }
-      resolve(temPage)
-    }).then((temPage) => {
-      if (temPage.length >0) {
-        if (this.showTagLength) {
-          this.tagPageLength = temPage.length
-        }else {
-          this.tagPageLength = ""
-        }
-      }
-    })
   },
 }
 </script>

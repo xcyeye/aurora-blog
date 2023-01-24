@@ -1,12 +1,8 @@
 <template>
 	<div>
-		<div id="set-bg" class="set-bg-fitter"
-				 :style="'--opacity: ' + $store.state.varOpacity +
-         '; --borderRadius: ' + $store.state.varBorderRadius +
-         'px; --backgroundImageUrl: url(' + $store.state.homeWps + ')'"
-		></div>
-		<div id="posterShade" :class="{posterShade: $store.state.showPosterShadow}">
-			<span :class="{iconSpinner6: $store.state.showShadeLoad}"></span>
+		<div id="set-bg" class="set-bg-fitter"></div>
+		<div id="posterShade" :class="{posterShade: false}">
+			<span :class="{iconSpinner6: false}"></span>
 		</div>
 	</div>
 </template>

@@ -1,6 +1,5 @@
 <template>
   <div class="common">
-    <!-- TODO <Navbar :show-header-bg="showHeaderBg" :style="$store.state.opacityStyle" v-if="shouldShowNavbar">-->
     <Navbar :user-uid="userUid" :show-header-bg="showHeaderBg" v-if="true"></Navbar>
     <!--<mobile-sidebar :show-navbar="isHomePage"/>-->
     <!--<social-spin/>-->
@@ -267,21 +266,11 @@ export default defineComponent({
       return 'background-image: url('+this.ico+');'
     },
     setBodyStyle() {
-      if (this.fontStyle === "") {
-        return ""
-      }
-      return this.$store.state.fontColorStyle + ";"+ this.$store.state.fontFamilyStyle
     }
   },
   methods: {
 		setDefaultInfo() {
 			this.currentSiteInfo = useSite.getSiteInfo(this.userUid)
-			if (this.$store.state.printRightIndex === 0) {
-				console.log("%c vuepress-theme-Aurora %c by qsyyke","font-weight: bold;color: white;display: inline-block;text-align: center;height: 1.5rem;line-height: 1.5rem;background-color: rgba(255,202,212,.8);padding: 10px;border-bottom-left-radius: 13px;border-top-left-radius: 13px;","font-weight: bold;color: white;display: inline-block;text-align: center;height: 1.5rem;line-height: 1.5rem;background-color: rgba(178,247,239,.85);padding: 10px;border-bottom-right-radius: 13px;border-top-right-radius: 13px;")
-				console.log("%c Version %c "+ this.$store.state.latestVersion + "","font-weight: bold;color: white;display: inline-block;text-align: center;height: 1.5rem;line-height: 1.5rem;background-color: rgba(255,202,212,.8);padding: 10px;border-bottom-left-radius: 13px;border-top-left-radius: 13px;","font-weight: bold;color: white;display: inline-block;text-align: center;height: 1.5rem;line-height: 1.5rem;background-color: rgba(178,247,239,.85);padding: 10px;border-bottom-right-radius: 13px;border-top-right-radius: 13px;")
-			}
-			
-			this.$store.state.printRightIndex = 1
 			//在v1.3.2之后，就已经移除通过docs/readme.md中配置favicon，转为在config中进行配置
 			// let metaKey = $('<link rel="shortcut icon" href=\"'+this.themeProperty.faviconIco+'\">')
 			// $("head").get(0).appendChild(metaKey.get(0))
@@ -317,19 +306,6 @@ export default defineComponent({
 			// })
 			if (this.currentSiteInfo.footerInfo) {
 				this.isShowFooter = this.currentSiteInfo.footerInfo.enable
-			}
-			
-			let fontColorStyle = this.$store.state.fontColorStyle
-			let fontFamilyStyle = this.$store.state.fontFamilyStyle
-			if (fontColorStyle === undefined) {
-				this.colorStyle = '--fontColor: ""'
-			}else {
-				this.colorStyle = fontColorStyle
-			}
-			if (fontFamilyStyle === undefined) {
-				this.fontStyle = '-fontFamily: ""'
-			}else {
-				this.fontStyle = fontFamilyStyle
 			}
 			
 			this.colorFontStyle = this.colorStyle + " "+ this.fontStyle
@@ -369,46 +345,8 @@ export default defineComponent({
       this.pageYOffset = window.pageYOffset
     },
     getBodyStyle() {
-      let fontColorStyle = this.$store.state.fontColorStyle
-      let fontFamilyStyle = this.$store.state.fontFamilyStyle
-
-      if (fontColorStyle === undefined) {
-        this.colorStyle = '--fontColor: ""'
-      }else {
-        this.colorStyle = fontColorStyle
-      }
-      if (fontFamilyStyle === undefined) {
-        this.fontStyle = '--fontFamily: ""'
-      }else {
-        this.fontStyle = fontFamilyStyle
-      }
-
-      this.colorFontStyle = this.colorStyle + " "+ this.fontStyle
     },
     setBodyWallpaper() {
-      //切换首页壁纸
-      if (this.homeWps.length === 1) {
-        this.$store.commit("setHomeWps",{
-          homeWps: this.homeWps[0]
-        })
-        return
-      }
-
-      for (let i = 0; i < this.homeWps.length; i++) {
-        if (this.$store.state.homeWps.search(this.homeWps[i]) !== -1) {
-          if (i === this.homeWps.length -1) {
-            this.$store.commit("setHomeWps",{
-              homeWps: this.homeWps[0]
-            })
-            return;
-          }else {
-            this.$store.commit("setHomeWps",{
-              homeWps: this.homeWps[i + 1]
-            })
-            return;
-          }
-        }
-      }
     },
     setIsFitter(isFitter: boolean) {
       this.isFitter = isFitter

@@ -5,7 +5,8 @@ import {darkTheme} from 'naive-ui';
 const themeState: Theme.Setting = {
   borderRadius: 23,
   fontColor: '#2c3e50',
-  fontSize: '1rem'
+  fontSize: '1rem',
+  mobileOpenStatus: false
 }
 export const useThemeStore = defineStore('bean-store', {
   state: () => {

@@ -37,13 +37,6 @@ export default {
       this.openEditStatus = openEditStatus.openEditStatus
     },
     openEdit() {
-      /*this.openEditStatus = !this.openEditStatus
-      if (this.$store.state.verifyStatus) {
-        //密码验证成功，直接显示
-        $("#add-mood").slideDown(200)
-      }else {
-        $("#add-mood-pwd").slideToggle(200)
-      }*/
     },
   },
   computed: {

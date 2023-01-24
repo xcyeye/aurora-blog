@@ -1,6 +1,6 @@
 <template>
   <div :id="setShowMobileSidebar(1)" class="mobile-sidebar-control" @click="showMobileSidebar"></div>
-  <div :id="setShowMobileSidebar(2)" :class="{mobileAnimate: !$store.state.openMobileSidebar}" class="mobile-sidebar">
+  <div :id="setShowMobileSidebar(2)" :class="{mobileAnimate: true}" class="mobile-sidebar">
     <HomeSidebar :show-article="false" :show-message="false"
                  :is-mobile-sidebar="true"
                  :show-sidebar-social="true"
@@ -21,6 +21,9 @@
 </template>
 
 <script lang="ts">
+import {useThemeStore} from "@/stores";
+
+const themeStore = useThemeStore()
 export default {
   name: "MobileSidebar",
   data() {
@@ -43,13 +46,13 @@ export default {
     setShowMobileSidebar() {
       return (index: number) => {
         if (2 === index) {
-          if (this.$store.state.openMobileSidebar) {
+          if (themeStore.currentTheme.mobileOpenStatus) {
             return 'mobileSidebar'
           }else {
             return ''
           }
         }else {
-          if (this.$store.state.openMobileSidebar) {
+          if (themeStore.currentTheme.mobileOpenStatus) {
             return 'mobile-sidebar-control'
           }else {
             return ''
@@ -60,9 +63,9 @@ export default {
   },
   methods: {
     showMobileSidebar() {
-      this.$store.commit("setOpenMobileSidebar",{
-        openMobileSidebar: !this.$store.state.openMobileSidebar
-      })
+			const currentTheme = themeStore.currentTheme
+			currentTheme.mobileOpenStatus = !currentTheme.mobileOpenStatus
+			themeStore.setCurrentThemeStore(currentTheme)
     }
   },
   mounted() {

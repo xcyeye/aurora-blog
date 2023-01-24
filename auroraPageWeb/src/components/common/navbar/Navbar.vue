@@ -5,19 +5,19 @@
 						class="navbar">
 			<toggle-sidebar-button/>
 			<span ref="siteBrand">
-      <RouterLink :to="`/user/${props.userUid}`">
-        <img
-					style="border-radius: 30px"
-					class="logo"
-					:src="useUserInfo().getUserInfo(props.userUid).avatar"
-				/>
-        <span
-					class="site-name"
-				>
+				<RouterLink :to="`/user/${props.userUid}`">
+					<img
+						style="border-radius: 30px"
+						class="logo"
+						:src="useUserInfo().getUserInfo(props.userUid).avatar"
+					/>
+					<span
+						class="site-name"
+					>
           {{useUserInfo().getUserInfo(props.userUid).username}}
-        </span>
-      </RouterLink>
-    </span>
+        	</span>
+      	</RouterLink>
+			</span>
 			<div class="navbar-links-wrapper">
 				<div v-for="(item, index) in navbarInfoArr" class="navbar-links-wrapper-single" :key="index">
 					<navbar-link :navbar-info="item"/>

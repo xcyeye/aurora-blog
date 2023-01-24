@@ -6,6 +6,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
+import {useThemeStore} from "@/stores";
 
 export default defineComponent({
   name: 'ToggleSidebarButton',
@@ -18,11 +19,10 @@ export default defineComponent({
   },
   methods: {
     openMobileSidebar() {
-      this.$store.state.mobileOpenStatus = !this.$store.state.mobileOpenStatus
       this.mobileOpenStatus = !this.mobileOpenStatus
-      this.$store.commit("setOpenMobileSidebar",{
-        openMobileSidebar: !this.$store.state.openMobileSidebar
-      })
+			const currentTheme = useThemeStore().currentTheme
+			currentTheme.mobileOpenStatus = this.mobileOpenStatus
+			useThemeStore().setCurrentThemeStore(currentTheme)
     }
   }
 })

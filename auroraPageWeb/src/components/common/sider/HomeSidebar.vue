@@ -371,13 +371,6 @@ export default {
     if (this.isShowCatalog) {
       this.changePageIndex = '1'
     }
-    const loadAllPageMap = setInterval(() => {
-      if (this.$store.state.allPageMap.length !== 0) {
-        clearInterval(loadAllPageMap)
-        this.setShowAllPage(this.$store.state.allPageMap)
-      }
-    },50)
-		
 
     if (this.currentSiteInfo.homePageLazyLoadingImg !== undefined) {
       this.homePageLazyLoadingImg = this.currentSiteInfo.homePageLazyLoadingImg
@@ -458,11 +451,8 @@ export default {
       }
     },
     getHomeSidebarStyle() {
-      if (!this.isMobileSidebar) {
-        return this.$store.state.borderRadiusStyle + this.$store.state.opacityStyle
-      }
-      return this.$store.state.opacityStyle
-    },
+    
+		},
     getShowSidebarLink() {
       if (!this.showSidebarLink) {
         return false

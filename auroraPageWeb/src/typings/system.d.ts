@@ -125,7 +125,8 @@ declare namespace Theme {
     /** 全局字体 */
     fontFamily?: string,
 
-    fontSize?: string
+    fontSize?: string,
+    mobileOpenStatus?: boolean
   }
 }
 

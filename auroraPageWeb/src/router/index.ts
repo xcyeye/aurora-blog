@@ -1,5 +1,5 @@
 import {createRouter, createWebHistory} from 'vue-router';
-import {useCurrentUser, useSiteInfo, useUserInfo} from "@/stores";
+import {useCurrentUser, useSiteInfo, useThemeStore, useUserInfo} from "@/stores";
 import {isNotEmptyObject} from "@/utils/business";
 import {userApi} from "@/service";
 import {defaultSiteSettingInfo} from "@/field";
@@ -72,9 +72,19 @@ const router = createRouter({
   ]
 })
 
+const setMobileOpenStatus = () => {
+  // 如果手机端侧边栏打开，则关闭
+  const currentTheme = useThemeStore().currentTheme
+  if (currentTheme.mobileOpenStatus) {
+    currentTheme.mobileOpenStatus = !currentTheme.mobileOpenStatus
+    useThemeStore().setCurrentThemeStore(currentTheme)
+  }
+}
+
 router.beforeEach((to, from, next) => {
   // 从路由中查询userUid，如果不存在siteInfo,userInfo的话，则获取
   const userUid: string = to.params.userUid as string;
+  setMobileOpenStatus()
   if (StringUtil.haveLength(userUid)) {
     const userSiteInfo = useSiteInfo().getSiteInfo(userUid)
     if (!userSiteInfo || !isNotEmptyObject(userSiteInfo)) {

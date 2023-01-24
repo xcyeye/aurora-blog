@@ -40,7 +40,6 @@ import {cleanLocalStorage, getLocalStorage} from "@/utils";
 
 export default {
   name: "HomeWelcome",
-	components: {ParcelStyle},
   data() {
     return {
       setColorStyle: "display: none;",
@@ -81,17 +80,6 @@ export default {
 		this.borderRadius = blogConfig.defaultBorderRadius
 		this.opacity = blogConfig.defaultOpacity
 		this.blur = blogConfig.defaultBlur
-
-    this.$store.commit('setVarFilterBlur',{
-      varFilterBlur: this.blur
-    })
-    this.$store.commit('setVarBorderRadius',{
-      varBorderRadius: this.borderRadius
-    })
-
-    this.$store.commit('setVarOpacity',{
-      varOpacity: this.opacity
-    })
   },
   computed: {
     getColorStyle() {
@@ -134,10 +122,6 @@ export default {
     },
     setFont(e: Event,font: string) {
       this.currentFont = font
-      this.$store.commit('setFontFamilyStyle',{
-        fontFamily: this.currentFont,
-        color: this.currentColor
-      })
       this.$emit('setBodyStyle')
     },
     setImg() {
@@ -148,9 +132,6 @@ export default {
       //设置是否要毛玻璃特性，通过类名控制
       this.$emit('setIsFitter',!this.isFitter)
       this.isFitter = !this.isFitter
-      this.$store.commit('setIsFitter',{
-        isFitter: this.isFitter
-      })
     }
   },
   props: {

@@ -45,18 +45,9 @@
 						</div>
 					</div>
 					
-					<div v-html="articleContent"></div>
-					<!--<render-markdown :markdown-content="articleInfo.content"/>-->
+					<render-markdown :markdown-content="articleInfo.content"/>
 				</div>
 				
-				<!--<div class="aurora-article-like">-->
-				<!--	<div class="aurora-article-like-heart" @click="handleClickArticleLike">-->
-				<!--		<div class="aurora-article-like-heart-svg" :class="isClickLikeBut ? 'aurora-article-like-heart-active' : ''">-->
-				<!--			<svg-icon icon="bi:suit-heart-fill"/>-->
-				<!--		</div>-->
-				<!--	</div>-->
-				<!--	<div class="aurora-article-like-heart-num">{{articleInfo.likeNumber}}</div>-->
-				<!--</div>-->
 				<div class="aurora-article-like">
 					<give-like :like-number="articleInfo.likeNumber"
 										 :control-like-number="false"
@@ -122,7 +113,7 @@
 </template>
 
 <script lang="ts" setup>
-import {computed, onBeforeMount, onMounted, ref} from 'vue';
+import {computed, onBeforeMount, onMounted, ref, watch} from 'vue';
 import {ArticleStoreBean, useArticleStore, useSiteInfo, useUserInfo} from "@/stores";
 import {
 	getHost,
@@ -313,51 +304,6 @@ const setLikeStatus = () => {
 	})
 }
 
-const handleClickArticleLike = () => {
-	let cookie = document.cookie;
-	let article_like_status = false
-	new Promise((resolve,reject) => {
-		const cookieList = cookie.split(';')
-		for(let i = 0; i < cookieList.length; i++) {
-			const arr = cookieList[i].split('=')
-			let cookieName =  'article_like_status_' + articleInfo.value.uid
-			let cookieOriginName = arr[0].replace(" ","")
-			if (cookieName === cookieOriginName) {
-				if (arr[1] === '1') {
-					article_like_status = true
-					resolve(null)
-				}
-			}
-			if (i === cookieList.length -1) {
-				resolve(null)
-			}
-		}
-	}).then(() => {
-		if (!article_like_status) {
-			//没有点赞
-			// TODO
-			articleApi.updateArticleLikeNum({uid: articleInfo.value.uid}).then(result => {
-				if (!result.error) {
-					articleInfo.value.likeNumber = (articleInfo.value.likeNumber ? articleInfo.value.likeNumber : 0) + 1
-					let expiresTime = new Date().getTime() + 864000000;
-					let expires = new Date(expiresTime);
-					document.cookie = "article_like_status_" + articleInfo.value.uid + "=1;expires=" + expires + ";";
-					isClickLikeBut.value = true
-				}
-			})
-		}else {
-			//减赞
-			// TODO
-			// let expiresTime = new Date().getTime() + 864000000;
-			// let expires = new Date(expiresTime);
-			// document.cookie = "mood_like_status_" + this.moodItem.id + "=0;expires=" + expires + ";";
-			// this.cozeLikeTemp = mood_like - 1
-			// this.moodLikeStatus = false
-			// this.setLikeSuccess = true
-		}
-	})
-}
-
 const finishGiveLikeAction = () => {
 	articleInfo.value.likeNumber = articleInfo.value.likeNumber ? (articleInfo.value.likeNumber + 1) : 1
 }
@@ -461,14 +407,10 @@ const getRouterParams = () => {
 getRouterParams()
 
 onMounted(() => {
-	//如果手机端侧边栏打开的，那么就关闭
-	// if (this.$store.state.openMobileSidebar) {
-	// 	this.$store.commit("setOpenMobileSidebar",{
-	// 		openMobileSidebar: false
-	// 	})
-	// }
 	setLikeStatus()
 })
+
+watch(() => articleInfo.value.uid, () => calculateReadTime())
 
 </script>
 <style lang="css">

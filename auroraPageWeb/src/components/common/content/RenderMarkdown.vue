@@ -35,6 +35,7 @@ const wrap = (wrapped) => (...args) => {
 }
 
 const handleRenderMarkdownContent = (markdownContent: string) => {
+	if (markdownContent === null || markdownContent === undefined) return
 	// 渲染markdown内容
 	const markdown = new MarkdownIt()
 	markdown.set({
