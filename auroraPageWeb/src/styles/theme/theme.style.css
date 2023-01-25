@@ -58,6 +58,8 @@
     --aurora-random-picture-pc-height: 12rem;
     --aurora-random-picture-mobile-height: 10rem;
 
+    /*侧边栏*/
+    --aurora-sidebar-title-color: rgb(130, 192, 204);
 
     /*//iconfont变量*/
 
@@ -4391,8 +4393,8 @@ body::-webkit-scrollbar-thumb {
 }
 
 .sidebar-tag-item {
-    margin: 0 auto;
-    width: 94%
+    /*margin: 0 auto;*/
+    /*width: 94%*/
 }
 
 .sidebar-tag-single {
@@ -4534,7 +4536,7 @@ body::-webkit-scrollbar-thumb {
 }
 
 .change-page {
-    height: 3rem;
+    /*height: 3rem;*/
     display: flex;
     justify-content: center;
     align-items: center
@@ -6689,4 +6691,12 @@ body {
 
 .aurora-tooltip:hover .tooltipText {
     visibility: visible;
+}
+
+.home-sidebar .aurora-card-title {
+    color: var(--aurora-sidebar-title-color);
+}
+
+.home-sidebar .aurora-card-title .change-page {
+    display: inline-block;
 }

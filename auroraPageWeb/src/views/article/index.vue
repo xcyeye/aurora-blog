@@ -61,11 +61,13 @@
 				</div>
 				
 				<div class="aurora-article-tag" v-if="getArticleTag">
-					<svg-icon icon="fa:tag"/> <n-tag class="aurora-article-tag-single" v-for="(item, index) in getArticleTag" :type="getRandomTagType()" :bordered="false" style="border-radius: 16px" :key="index">{{item}}</n-tag>
+					<svg-icon icon="fa:tag"/>
+					<n-tag class="aurora-article-tag-single" @click="goTag($event, item, true)" v-for="(item, index) in getArticleTag" :type="getRandomTagType()" :bordered="false" style="border-radius: 16px" :key="index">{{item}}</n-tag>
 				</div>
 				
 				<div class="aurora-article-tag" v-if="getArticleCategory">
-					<svg-icon icon="fa:tags"/> <n-tag class="aurora-article-tag-single" v-for="(item, index) in getArticleCategory" :type="getRandomTagType()" :bordered="false" style="border-radius: 16px" :key="index">{{item}}</n-tag>
+					<svg-icon icon="fa:tags"/>
+					<n-tag class="aurora-article-tag-single" @click="goTag($event, item, false)" v-for="(item, index) in getArticleCategory" :type="getRandomTagType()" :bordered="false" style="border-radius: 16px" :key="index">{{item}}</n-tag>
 				</div>
 				
 				<div class="aurora-article-next">
@@ -139,6 +141,7 @@ import RequestResult = Service.RequestResult;
 import RenderMarkdown from "@/components/common/content/RenderMarkdown.vue";
 import {readingTime} from "reading-time-estimator";
 import gsap from "gsap";
+import {TagVo} from "@/bean/vo/article/TagVo";
 
 const currentSiteInfo = ref<SiteSettingInfo>({})
 const useSite = useSiteInfo()
@@ -162,6 +165,18 @@ const getArticleTag = computed((): Array<string> => {
 	if (!StringUtil.haveLength(articleInfo.value.tagNames)) return []
 	return articleInfo.value.tagNames!.split(",")
 })
+
+const goTag = (e: Event, tagOrCategory: string, isTag: boolean) => {
+	if (isTag) {
+		routerPush.routerPush({
+			path: `/tag/${userUid.value}/${tagOrCategory}`
+		})
+	}else {
+		routerPush.routerPush({
+			path: `/category/${userUid.value}/${tagOrCategory}`
+		})
+	}
+}
 
 const calculateReadTime = () => {
 	const sugCountPerMin = 230

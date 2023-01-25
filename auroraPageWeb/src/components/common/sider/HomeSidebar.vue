@@ -50,7 +50,7 @@
 				<!--</div>-->
 			
 				<!--社交-->
-				<aurora-card custom-style="padding: 0rem;" class="sidebar-aurora-card" :id="customId" v-if="getShowSidebarSocial">
+				<aurora-card  custom-style="padding: 0rem;" class="sidebar-aurora-card" :id="customId" v-if="getShowSidebarSocial">
 					<div class="sidebar-social">
 						<HomeSidebarSocialItem :sidebar-row-var="sidebarRowVar"
 																	 :sidebar-width-var="sidebarWidthVar"
@@ -61,21 +61,19 @@
 				</aurora-card>
 				<slot name="sidebar2"></slot>
 			
-				<aurora-card class="sidebar-aurora-card" v-if="talkArr.length > 0 && showTalk">
-					<div class="sidebar-social" @click="goTalk">
-						<div>
-							<n-ellipsis :line-clamp="3" :tooltip="false">
-								<svg-icon icon="mdi:message-fast"/> &nbsp;&nbsp;{{talkArr[0].content}}
-							</n-ellipsis>
-						</div>
-						<div style="font-size: .3rem" class="sidebar-page-time">
-							<span>{{talkArr[0].createTime}}</span>
-						</div>
+				<aurora-card :title="showTalkInfo.title" icon="fa:comments" class="sidebar-aurora-card" v-if="talkArr.length > 0 && showTalk">
+					<div @click="goTalk($event, showTalkInfo)">
+						<n-ellipsis :line-clamp="3" :tooltip="false">
+							<aurora-typing :typing-content="showTalkInfo.content"/>
+						</n-ellipsis>
+					</div>
+					<div style="font-size: .3rem" class="sidebar-page-time">
+						<span>{{showTalkInfo.createTime}}</span>
 					</div>
 				</aurora-card>
 			
 				<!--侧边栏友情链接-->
-				<aurora-card class="sidebar-aurora-card" :id="customId" v-if="getShowSidebarLink">
+				<aurora-card icon="fa:paper-plane" title="朋友圈" class="sidebar-aurora-card" :id="customId" v-if="getShowSidebarLink">
 					<div class="sidebar-link">
 						<a :href="item.linkUrl" target="_blank" :data="item.linkTitle" :key="item.uid" v-for="(item,index) in friendLinks">
 							<div class="sidebar-link-single">
@@ -105,15 +103,14 @@
 				<slot name="sidebar4"></slot>
 			
 				<!--文章-->
-				<aurora-card :id="customId" v-if="showArticle" :class="{'sidebar-single-enter-animate': showEnterAnimate}" class="sidebar-single-page sidebar-aurora-card">
+				<aurora-card icon="fa:history" :id="customId" v-if="showArticle" :class="{'sidebar-single-enter-animate': showEnterAnimate}" class="sidebar-single-page sidebar-aurora-card">
 					<template #header>
 						<div class="change-page">
 							<div v-if="isShowCatalog" class="catalog-page change-page-common">
 								<span :class="{changePageActive: changePageIndex === '1'}" index="1" @click="changePage">文章目录</span>
 							</div>
 							<div :style="getSinglePageStyle" class="latest-page change-page-common">
-								<svg-icon icon="ic:outline-access-time"/>
-								<span :style="setChangePageStyle" :class="{changePageActive: changePageIndex === '2'}" @click="changePage" index="2">最新文章</span>
+								<span :class="{changePageActive: 'changePageIndex' === '2'}" @click="changePage" index="2">最新文章</span>
 							</div>
 						</div>
 					</template>
@@ -138,12 +135,15 @@
 				<slot name="sidebar5"></slot>
 			
 				<!--公告-->
-				<aurora-card class="sidebar-aurora-card" :id="customId" v-if="bulletinArr" :class="{'sidebar-single-enter-animate': showEnterAnimate}" title="公告" icon="bi:messenger">
-					<div class="sidebar-message">
-						<li id="sidebar-message" :key="item.uid" v-for="(item,index) in bulletinArr" class="sidebar-hover-bg-common">
-							<span v-html="item.content"></span>
-						</li>
-					</div>
+				<aurora-card class="sidebar-aurora-card"
+										 :id="customId"
+										 @click="goBulletin(bulletinArr[0])"
+										 v-if="bulletinArr.length > 0"
+										 :class="{'sidebar-single-enter-animate': showEnterAnimate}"
+										 :title="bulletinArr[0].title ? bulletinArr[0].title : '公告'" icon="bi:messenger">
+					<n-ellipsis :line-clamp="3" :tooltip="false">
+						<span>{{bulletinArr[0].content}}</span>
+					</n-ellipsis>
 					<slot name="sidebar-son6"/>
 				</aurora-card>
 				<slot name="sidebar6"></slot>
@@ -211,6 +211,7 @@ import {ArticleVo} from "@/bean/vo/article/ArticleVo";
 import {CategoryVo} from "@/bean/vo/article/CategoryVo";
 import {useRouterPush} from "@/composables";
 import {TalkVo} from "@/bean/vo/article/TalkVo";
+import {useRouter} from "vue-router";
 
 const currentSiteInfo: SiteSettingInfo = {}
 const friendLinks: Array<LinkVo> = []
@@ -218,6 +219,7 @@ const socialsArr: Array<SocialInfo> = []
 const bulletinArr: Array<BulletinVo> = []
 const tagArr: Array<TagVo> = []
 const talkArr: Array<TalkVo> = []
+const showTalkInfo: TalkVo = {}
 const categoryArr: Array<CategoryVo> = []
 const articleArr: Array<ArticleVo> = []
 const routerPush = useRouterPush()
@@ -233,6 +235,7 @@ export default {
 			tagNumber: 0,
 			categoryNumber: 0,
 			articleArr,
+			showTalkInfo,
 			talkArr,
 			categoryArr,
 			tagArr,
@@ -417,6 +420,7 @@ export default {
 		talkApi.queryListDataByCondition({delete: false, show: true, orderBy: 'create_time desc'}).then(result => {
 			if (result.data && result.data.result) {
 				this.talkArr = result.data.result
+				this.showTalkInfo = this.talkArr[getRandomNum(0, this.talkArr.length)]
 			}
 		})
 	
@@ -503,9 +507,15 @@ export default {
     }
   },
   methods: {
-		goTalk() {
-			routerPush.routerPush({
-				path: `/shareSpace/${this.userUid}`
+		goBulletin(bulletin: BulletinVo) {
+			this.$router.push({
+				path: `/bulletin/${this.userUid}/${bulletin.uid}`
+			})
+		},
+		goTalk(e: Event, talk: TalkVo) {
+			this.$router.push({
+				path: `/shareSpace/${this.userUid}/${talk.uid}`
+				// path: `/shareSpace-page/${this.userUid}/1614847608245198848`
 			})
 		},
 		goRead(e: any, articleInfo: ArticleVo) {

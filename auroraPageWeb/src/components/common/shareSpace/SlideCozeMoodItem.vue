@@ -1,5 +1,5 @@
 <template>
-    <div class="aurora-coze-slide-item-son">
+    <div class="aurora-coze-slide-item-son" :data="isActive">
       <div class="aurora-coze-slide-item-top aurora-coze-slide-radius">
         <div class="aurora-coze-slide-item-top-left aurora-coze-slide-item-top-avatar">
           <img :src="useUserInfo().getUserInfo(userUid).avatar" @click="goBackPage" alt="">
@@ -45,7 +45,7 @@
 					</div>
         </div>
 
-        <div class="aurora-slide-item-photos" v-if="getPictureArr">
+        <div class="aurora-slide-item-photos" v-if="getPictureArr && isActive">
 					<photo-waterfall :show-bg-color="false"
 													 :pc-waterfall-img-col="4"
 													 :mobile-waterfall-img-col="2"
@@ -95,7 +95,8 @@ export default {
     }
   },
   props: {
-		userUid: {},
+		talkUid: '',
+		userUid: '',
     moodItem: {
 			type: Object as PropType<TalkVo>
 		},

@@ -8,6 +8,7 @@
 				<div class="aurora-coze-slide-box-style"></div>
 			</div>
 			<swiper
+				@swiper="onSwiper"
 				:grabCursor="true"
 				:effect="'creative'"
 				:creativeEffect="{
@@ -26,8 +27,8 @@
 				<swiper-slide v-slot="{ isActive }" v-for="(item,index) in talkArr" :key="index" :style="setSlideItemStyle(index)"
 											class="aurora-coze-slide-item aurora-coze-slide-radius">
 					<slide-coze-mood-item @mood-comment="moodComment" @mood-love="moodLove" @mood-poster="moodPoster"
-																@mood-edit="moodEdit" @set-slide-bodyBg="setSlideBodyBg" :user-uid="userUid"
-																:mood-item="item" :is-active="isActive" :dataBg="updateBgStyle(isActive,item)" />
+																:talk-uid="talkUid" @mood-edit="moodEdit" @set-slide-bodyBg="setSlideBodyBg"
+																:user-uid="userUid" :mood-item="item" :is-active="isActive" :dataBg="updateBgStyle(isActive,item)" />
 				</swiper-slide>
 			</swiper>
 		</div>
@@ -51,15 +52,19 @@ import {getRandomNum, StringUtil} from "~/src/utils";
 import {useRouterPush} from "@/composables";
 import {fileApi, talkApi} from "@/service";
 import {defineComponent} from "vue";
+import {Swiper as SwiperClass} from "swiper/types";
 
 const talkArr: Array<TalkVo> = []
 const routerPush = useRouterPush()
-
+// @ts-ignore
+const swiperInstance:SwiperClass = {}
 export default defineComponent({
 	name: "AuroraCozeMood",
 	data() {
 		return {
+			swiperInstance,
 			userUid: '',
+			talkUid: '',
 			talkArr,
 			abouts: [],
 			hexRgb: '',
@@ -77,6 +82,7 @@ export default defineComponent({
 	},
 	created() {
 		this.userUid = this.$route.params.userUid as string
+		this.talkUid = this.$route.params.talkUid as string
 		if (!StringUtil.haveLength(this.userUid)) {
 			routerPush.routerPush({
 				name: 'home'
@@ -85,10 +91,20 @@ export default defineComponent({
 		this.loadTalkData()
 	},
 	methods: {
+		onSwiper(swiper: SwiperClass) {
+			this.swiperInstance = swiper
+		},
 		loadTalkData() {
 			talkApi.queryListDataByCondition({delete: false, show: true, otherUid: this.userUid,pageSize: 300}).then(result => {
 				if (result.data && result.data.result) {
 					this.talkArr = result.data.result
+					if (StringUtil.haveLength(this.talkUid)) {
+						this.talkArr.forEach((v: TalkVo, index: number) => {
+							if (v.uid === this.talkUid) {
+								this.swiperInstance.slideTo(index)
+							}
+						})
+					}
 				}
 			})
 		},

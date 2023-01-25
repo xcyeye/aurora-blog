@@ -2,9 +2,9 @@
 	<div class="aurora-card global-common-animate" :class="{'bg-linear-gradient': showLinearGradient}" :style="getCardStyle">
 		<div class="aurora-card-title" v-if="showHeader">
 			<div v-if="props.icon" class="aurora-card-title-icon">
-				<svg-icon :icon="props.icon"/>
+				<svg-icon :style="customTitleStyle" :icon="props.icon"/>
 			</div>
-			<span v-if="props.title">{{props.title}}</span>
+			<span :style="customTitleStyle" v-if="props.title">{{props.title}}</span>
 			<slot name="header"/>
 		</div>
 		<div class="aurora-card-content">
@@ -21,6 +21,7 @@ import {getRandomNum, hexToRgb, StringUtil} from "@/utils";
 
 interface Props {
 	customStyle?: string,
+	customTitleStyle?: string,
 	title?: string,
 	icon?: string,
 	showLinearGradient?: boolean

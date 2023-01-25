@@ -2,7 +2,7 @@
   <div class="coze-image-container" id="coze-image-container"></div>
   <div class="coze-box">
     <div class="coze-mood-list">
-			<aurora-card :key="item.uid" v-for="(item,index) in talkArr" class="coze-enter-animate">
+			<aurora-card :id="item.uid" :key="item.uid" v-for="(item,index) in talkArr" class="coze-enter-animate">
 				<mood-item @mood-comment="moodComment" @mood-love="moodLove" @mood-poster="moodPoster"
 									 @mood-edit="moodEdit" :user-uid="userUid" :mood-item="item">
 					<slot name="coze-mood-content-par"></slot>
@@ -35,12 +35,17 @@
 import {defineComponent} from "vue";
 import {TalkVo} from "@/bean/vo/article/TalkVo";
 import {talkApi} from "@/service";
+import {StringUtil} from "@/utils";
+import smoothscroll from 'smoothscroll-polyfill';
 
 const talkArr: Array<TalkVo> = []
 export default defineComponent({
   name: 'Mood',
 	props: {
 		userUid: {
+			type: String
+		},
+		talkUid: {
 			type: String
 		}
 	},
@@ -66,6 +71,24 @@ export default defineComponent({
 		})
   },
   methods: {
+		jumpTargetTalk() {
+			let number = 1
+			if (StringUtil.haveLength(this.talkUid)) {
+				if (document) {
+					smoothscroll.polyfill();
+					const time = setInterval(() => {
+						if (number === 15) {
+							clearInterval(time)
+						}
+						if (document.getElementById(this.talkUid)) {
+							document.getElementById(this.talkUid)!.scrollIntoView({behavior: "smooth", block: 'start'})
+							clearInterval(time)
+						}
+						number = number + 1
+					}, 10)
+				}
+			}
+		},
     moodComment(moodItem) {
 
     },
@@ -89,6 +112,14 @@ export default defineComponent({
       })
     }
   },
+	mounted() {
+		this.jumpTargetTalk()
+	},
+	watch: {
+		talkUid() {
+			this.jumpTargetTalk()
+		}
+	}
 })
 </script>
 <style lang="css">

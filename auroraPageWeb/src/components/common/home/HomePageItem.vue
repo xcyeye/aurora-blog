@@ -114,9 +114,6 @@ const handleScroll = () => {
 }
 
 const goRead = (e: any, articleInfo: ArticleVo) => {
-	// routerPush.routerPush({
-	// 	path: `/article/${articleInfo.userUid}?pageUid=${articleInfo.uid}`
-	// })
 	routerPush.routerPush({
 		path: `/article/${articleInfo.userUid}/${articleInfo.uid}`
 	})

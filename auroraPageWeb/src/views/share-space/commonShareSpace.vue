@@ -3,7 +3,7 @@
 					:is-show-side-bar="false" :user-uid="userUid" :is-show-top-img="true" :is-show-head-line="false">
 		<template #center1>
 			<!--<CozeLogin @coze-login="cozeLogin"></CozeLogin>-->
-			<CozeMood :user-uid="userUid" @coze-cancel-edit="cozeCancelEdit" @mood-edit="moodEdit" @coze-success="cozeSuccess"/>
+			<CozeMood :talk-uid="talkUid" :user-uid="userUid" @coze-cancel-edit="cozeCancelEdit" @mood-edit="moodEdit" @coze-success="cozeSuccess"/>
 		</template>
 		<template #center2>
 			<blog-comment
@@ -34,6 +34,7 @@ export default defineComponent({
 	},
 	data() {
 		return {
+			talkUid: '',
 			userUid: '',
 			//这是一个数组对象
 			color: '',
@@ -43,6 +44,7 @@ export default defineComponent({
 	},
 	created() {
 		this.userUid = this.$route.params.userUid as string
+		this.talkUid = this.$route.params.talkUid as string
 		if (!StringUtil.haveLength(this.userUid)) {
 			routerPush.routerPush({
 				name: 'home'

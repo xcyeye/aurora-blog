@@ -1,9 +1,10 @@
-import {createRouter, createWebHistory} from 'vue-router';
+import {createRouter, createWebHistory, Router} from 'vue-router';
 import {useCurrentUser, useSiteInfo, useThemeStore, useUserInfo} from "@/stores";
 import {isNotEmptyObject} from "@/utils/business";
 import {userApi} from "@/service";
 import {defaultSiteSettingInfo} from "@/field";
 import {StringUtil} from "@/utils";
+import {App} from "vue";
 
 
 const router = createRouter({
@@ -45,14 +46,19 @@ const router = createRouter({
       component: () => import('../views/about/index.vue')
     },
     {
-      path: '/shareSpace/:userUid',
+      path: '/shareSpace/:userUid/:talkUid?',
       name: '说说1',
       component: () => import('../views/share-space/swiperShareSpace.vue')
     },
     {
-      path: '/shareSpace-page/:userUid',
+      path: '/shareSpace-page/:userUid/:talkUid?',
       name: '说说2',
       component: () => import('../views/share-space/commonShareSpace.vue')
+    },
+    {
+      path: '/bulletin/:userUid/:bulletinUid?',
+      name: '公告',
+      component: () => import('../views/bulletin/index.vue')
     },
     {
       path: '/article/:userUid/:pageUid',
@@ -81,40 +87,86 @@ const setMobileOpenStatus = () => {
   }
 }
 
-router.beforeEach((to, from, next) => {
-  // 从路由中查询userUid，如果不存在siteInfo,userInfo的话，则获取
-  const userUid: string = to.params.userUid as string;
-  setMobileOpenStatus()
-  if (StringUtil.haveLength(userUid)) {
-    const userSiteInfo = useSiteInfo().getSiteInfo(userUid)
-    if (!userSiteInfo || !isNotEmptyObject(userSiteInfo)) {
-      useSiteInfo().setSiteInfo(userUid, defaultSiteSettingInfo)
-      next()
-      // siteSettingApi.queryOneDataByUserUid({userUid: userUid.value}).then(result => {
-      //   if (result.data) {
-      //     if (result.data.paramValue) {
-      //       // TODO 临时解决
-      //       // siteSettingInfo.value = JSON.parse(result.data.paramValue)
-      //       siteSettingInfo.value = JSON.parse(result.data.paramValue)
-      //       useSite.setSiteInfo(userUid.value, defaultSiteSettingInfo)
-      //     }
-      //   }
-      // })
+// router.beforeEach((to, from, next) => {
+//   // 从路由中查询userUid，如果不存在siteInfo,userInfo的话，则获取
+//   const userUid: string = to.params.userUid as string;
+//   setMobileOpenStatus()
+//   if (StringUtil.haveLength(userUid)) {
+//     const userSiteInfo = useSiteInfo().getSiteInfo(userUid)
+//     if (!userSiteInfo || !isNotEmptyObject(userSiteInfo)) {
+//       useSiteInfo().setSiteInfo(userUid, defaultSiteSettingInfo)
+//       next()
+//       // siteSettingApi.queryOneDataByUserUid({userUid: userUid.value}).then(result => {
+//       //   if (result.data) {
+//       //     if (result.data.paramValue) {
+//       //       // TODO 临时解决
+//       //       // siteSettingInfo.value = JSON.parse(result.data.paramValue)
+//       //       siteSettingInfo.value = JSON.parse(result.data.paramValue)
+//       //       useSite.setSiteInfo(userUid.value, defaultSiteSettingInfo)
+//       //     }
+//       //   }
+//       // })
+//     }else {
+//       next()
+//     }
+//     if (!isNotEmptyObject(useUserInfo().getUserInfo(userUid))) {
+//       userApi.queryOneDataByUid({uid: userUid}).then(result => {
+//         if (result.data) {
+//           useUserInfo().setUserInfo(userUid, result.data)
+//         }
+//       })
+//     }
+//
+//     useCurrentUser().setCurrentUserInfo({uid: userUid})
+//   }else {
+//     next()
+//   }
+// })
+
+function createRouterGuard(router: Router) {
+  router.beforeEach((to, from, next) => {
+    // 从路由中查询userUid，如果不存在siteInfo,userInfo的话，则获取
+    const userUid: string = to.params.userUid as string;
+    setMobileOpenStatus()
+    if (StringUtil.haveLength(userUid)) {
+      const userSiteInfo = useSiteInfo().getSiteInfo(userUid)
+      if (!userSiteInfo || !isNotEmptyObject(userSiteInfo)) {
+        useSiteInfo().setSiteInfo(userUid, defaultSiteSettingInfo)
+        next()
+        // siteSettingApi.queryOneDataByUserUid({userUid: userUid.value}).then(result => {
+        //   if (result.data) {
+        //     if (result.data.paramValue) {
+        //       // TODO 临时解决
+        //       // siteSettingInfo.value = JSON.parse(result.data.paramValue)
+        //       siteSettingInfo.value = JSON.parse(result.data.paramValue)
+        //       useSite.setSiteInfo(userUid.value, defaultSiteSettingInfo)
+        //     }
+        //   }
+        // })
+      }else {
+        next()
+      }
+      if (!isNotEmptyObject(useUserInfo().getUserInfo(userUid))) {
+        userApi.queryOneDataByUid({uid: userUid}).then(result => {
+          if (result.data) {
+            useUserInfo().setUserInfo(userUid, result.data)
+          }
+        })
+      }
+
+      useCurrentUser().setCurrentUserInfo({uid: userUid})
     }else {
       next()
     }
-    if (!isNotEmptyObject(useUserInfo().getUserInfo(userUid))) {
-      userApi.queryOneDataByUid({uid: userUid}).then(result => {
-        if (result.data) {
-          useUserInfo().setUserInfo(userUid, result.data)
-        }
-      })
-    }
+  })
+}
 
-    useCurrentUser().setCurrentUserInfo({uid: userUid})
-  }else {
-    next()
-  }
-})
+/** setup vue router. - [安装vue路由] */
+export async function setupRouter(app: App) {
+  app.use(router);
+  createRouterGuard(router);
+  await router.isReady();
+}
 
-export default router
+
+// export default router
