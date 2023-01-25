@@ -208,6 +208,10 @@ public class UserService {
     public int bindingEmail(UserPojo pojo) throws BindException, EmailException {
         String email = pojo.getEmailNumber();
         Long userUid = pojo.getUid();
+        User queriedUserInfo = auroraUserService.queryById(userUid);
+        // 查看密码是否匹配
+        boolean matches = passwordEncoder.matches(pojo.getPassword(), queriedUserInfo.getPassword());
+        AssertUtils.stateThrow(matches, () -> new UserException("密码错误"));
         AssertUtils.stateThrow(StringUtils.hasLength(email), () -> new EmailException(ResponseStatusCodeEnum.PARAM_IS_INVALID));
         // 远程调用aurora-message服务，判断此email的uid是否存在
         EmailPojo emailPojo = new EmailPojo();

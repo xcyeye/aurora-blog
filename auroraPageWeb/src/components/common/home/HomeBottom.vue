@@ -2,7 +2,7 @@
   <parcel-style>
 		<!--这是首页下面的文章模板-->
 		<div class="home-bottom" id="home-bottom">
-			<div ref="homeBottomScroll"></div>
+			<div ref="homeBottomScroll" id="homeBottomScroll"></div>
 			<div class="home-page-tag" id="home-page-tag">
 				<home-page-item :index="index"
 												:user-uid="userUid"

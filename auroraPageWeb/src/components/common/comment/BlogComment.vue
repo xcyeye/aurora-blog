@@ -69,7 +69,7 @@
 												<n-input v-model:value="newCommenterUserInfo.username" :disabled="isAdminUser" size="small" placeholder="用户名"/>
 											</div>
 											<div class="aurora-comment-reply-box-son">
-												<n-input v-model:value="newCommenterUserInfo.email" :disabled="newCommenterUserInfo.email && isAdminUser && authStore.authInfo.userInfo && authStore.authInfo.userInfo.verify_email" size="small" placeholder="邮箱"/>
+												<n-input v-model:value="newCommenterUserInfo.email" :disabled="disableEditEmailStatus" size="small" placeholder="邮箱"/>
 											</div>
 											<div class="aurora-comment-reply-box-son">
 												<n-input v-model:value="newCommenterUserInfo.site" size="small" placeholder="站点"/>
@@ -200,7 +200,7 @@
 															<n-input v-model:value="newCommenterUserInfo.username" :disabled="isAdminUser" size="small" placeholder="用户名"/>
 														</div>
 														<div class="aurora-comment-reply-box-son">
-															<n-input v-model:value="newCommenterUserInfo.email" :disabled="newCommenterUserInfo.email && isAdminUser && authStore.authInfo.userInfo && authStore.authInfo.userInfo.verify_email" size="small" placeholder="邮箱"/>
+															<n-input v-model:value="newCommenterUserInfo.email" :disabled="disableEditEmailStatus" size="small" placeholder="邮箱"/>
 														</div>
 														<div class="aurora-comment-reply-box-son">
 															<n-input v-model:value="newCommenterUserInfo.site" size="small" placeholder="站点"/>
@@ -273,6 +273,9 @@ import {authApi} from "@/service/api/auth/auth";
 import {OauthPasswordPo} from "@/bean/pojo/auth/oauthPassword";
 import {OauthClientDetails} from "@/bean/pojo/auth/OauthClientDetails";
 import {oauthClientApi} from "@/service/api/auth/oauthClientApi";
+import {useRouter} from "vue-router";
+import {useRouterPush} from "@/composables";
+import {OauthVo} from "@/bean/vo/auth/OauthVo";
 
 defineComponent({name: 'BlogComment'});
 
@@ -319,7 +322,8 @@ const newCommenterLoginUserInfo = ref<User>({})
 const loginUserEmailInfo = ref<Email>({})
 const isNoticeBindEmailStatus = ref(false)
 const authStore = useAuthStore()
-
+const routerPush = useRouterPush()
+const disableEditEmailStatus = ref(false)
 
 const handleClickComment = (commentInfo: CommentDto, parentCommentDto: CommentDto) => {
 	currentClickCommentDto.value = commentInfo
@@ -352,8 +356,8 @@ const loginByPwd = (isInsertEmailInfo: boolean = false) => {
 	}
 	authApi.loginByPassword(oauthPasswordInfo).then(result => {
 		if (result.data) {
-			showLoginModal.value = false
 			authStore.setAuthInfo(result.data)
+			showLoginModal.value = false
 			// 登录成功
 			newCommenterUserInfo.value.username = newCommenterLoginUserInfo.value.username
 			newCommenterUserInfo.value.userUid = result.data.userInfo!.user_uid
@@ -362,36 +366,32 @@ const loginByPwd = (isInsertEmailInfo: boolean = false) => {
 			if (isInsertEmailInfo) {
 				// 尝试注册邮箱，如果邮箱注册失败，不影响
 				loginUserEmailInfo.value.userUid = result.data.userInfo!.user_uid
+				newCommenterUserInfo.value.email = loginUserEmailInfo.value.email
 				emailApi.insertData(loginUserEmailInfo.value).then(emailInsertResult => {
 					if (!emailInsertResult.error) {
-						newCommenterUserInfo.value.email = loginUserEmailInfo.value.email
-						
+						disableEditEmailStatus.value = true
 						// 邮箱添加成功，尝试发送一条绑定邮箱的邮件到该用户邮箱
 						emailApi.queryByEmailNumber({email: loginUserEmailInfo.value.email}).then(emailResult => {
 							if (emailResult.data) {
-								// TODO 存在一个bug 用户权限不足
-								userApi.bindingEmail({uid: result.data.userInfo?.user_uid, emailNumber: loginUserEmailInfo.value.email}).then(result => {
-									if (result.data && result.data === 1) {
-										window.$message?.success(`邮箱添加成功， ${loginUserEmailInfo.value.email}，请到邮箱查看进行账户绑定`)
+								const time = setInterval(() => {
+									if (localStorage.getItem('auth_info')) {
+										clearInterval(time)
+										userApi.bindingEmail({uid: result.data.userInfo?.user_uid, emailNumber: loginUserEmailInfo.value.email, password: oauthPasswordInfo.password}).then(result => {
+											if (result.data && result.data === 1) {
+												window.$message?.success(`邮箱添加成功， ${loginUserEmailInfo.value.email}，请到邮箱查看进行账户绑定`)
+											}
+										})
 									}
-								})
+								}, 10)
 							}
 						})
+					}else {
+						disableEditEmailStatus.value = false
 					}
 				})
 			}else {
 				// 用户登录，如果账户已经验证了，则查询邮箱
-				if (result.data.userInfo?.verify_email) {
-					emailApi.queryEmailByUserUid({userUid:authStore.authInfo.userInfo?.user_uid}).then(result => {
-						if (result.data) {
-							newCommenterUserInfo.value.email = result.data.email
-						}else {
-							newCommenterUserInfo.value.email = ''
-						}
-					})
-				}else {
-					newCommenterUserInfo.value.email = ''
-				}
+				loadUserEmailInfo(result.data)
 			}
 		}else {
 			isAdminUser.value = false
@@ -454,19 +454,44 @@ const handleLoginAction = async (isLoginAction: boolean) => {
 	}
 }
 
+const loadUserEmailInfo = (oauthInfo: OauthVo = {}) => {
+	// 查询用户邮箱
+	if (!isNotEmptyObject(oauthInfo)) {
+		oauthInfo = authStore.authInfo
+	}
+	if (oauthInfo.userInfo?.verify_email) {
+		emailApi.queryEmailByUserUid({userUid: oauthInfo.userInfo?.user_uid}).then(result => {
+			if (result.data) {
+				newCommenterUserInfo.value.email = result.data.email
+				disableEditEmailStatus.value = true
+			}else {
+				disableEditEmailStatus.value = true
+			}
+		})
+	}else {
+		// 重新查询用户信息
+		userApi.queryOneDataByUid({uid: oauthInfo.userInfo?.user_uid}).then(result => {
+			if (result.data && result.data.verifyEmail) {
+				emailApi.queryEmailByUserUid({userUid: oauthInfo.userInfo?.user_uid}).then(result => {
+					if (result.data) {
+						newCommenterUserInfo.value.email = result.data.email
+						disableEditEmailStatus.value = true
+					}else {
+						disableEditEmailStatus.value = true
+					}
+				})
+			}else {
+				disableEditEmailStatus.value = false
+				window.$message?.success('您的账户暂未绑定邮箱，请发布评论的时候，输入邮箱号，以便接收评论通知')
+			}
+		})
+	}
+	isNoticeBindEmailStatus.value = true
+}
+
 const showCommentAnimate = () => {
 	if (!isNoticeBindEmailStatus.value && isAdminUser.value) {
-		// 查询用户邮箱
-		if (authStore.authInfo.userInfo?.verify_email) {
-			emailApi.queryEmailByUserUid({userUid: authStore.authInfo.userInfo?.user_uid}).then(result => {
-				if (result.data) {
-					newCommenterUserInfo.value.email = result.data.email
-				}
-			})
-		}else {
-			window.$message?.success('您的账户暂未绑定邮箱，请发布评论的时候，输入邮箱号，以便接收评论通知')
-		}
-		isNoticeBindEmailStatus.value = true
+		loadUserEmailInfo()
 	}
 	if (showCommentAnimateClass.value) {
 		setTimeout(() => {
@@ -541,7 +566,6 @@ const createNewUserInfo = (): Promise<null> => {
 }
 
 const handleReplyCommentAction = () => {
-	console.log(authStore.authInfo);
 	// 如果没有登录，需要先登录
 	if (!authStore.authInfo || !isNotEmptyObject(authStore.authInfo)) {
 		showLoginModal.value = true
@@ -642,16 +666,7 @@ onMounted(() => {
 	if (!props.showCommentBut) {
 		if (!isNoticeBindEmailStatus.value && isAdminUser.value) {
 			// 查询用户邮箱
-			if (authStore.authInfo.userInfo?.verify_email) {
-				emailApi.queryEmailByUserUid({userUid: authStore.authInfo.userInfo?.user_uid}).then(result => {
-					if (result.data) {
-						newCommenterUserInfo.value.email = result.data.email
-					}
-				})
-			}else {
-				window.$message?.success('您的账户暂未绑定邮箱，请发布评论的时候，输入邮箱号，以便接收评论通知')
-			}
-			isNoticeBindEmailStatus.value = true
+			loadUserEmailInfo()
 		}
 	}
 })

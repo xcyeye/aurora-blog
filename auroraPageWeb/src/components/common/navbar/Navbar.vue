@@ -1,5 +1,5 @@
 <template>
-	<div class="navbar-box">
+	<div class="navbar-box" :style="`--borderRadius: ${useThemeStore().currentTheme.borderRadius}px; --fontColor: ${useThemeStore().currentTheme.fontColor}; --fontFamily: ${useThemeStore().currentTheme.fontFamily}; --fontSize: ${useThemeStore().currentTheme.fontSize};`">
 		<header ref="navbar"
 						:class="{'header-bg-show': props.showHeaderBg}"
 						class="navbar">
@@ -22,6 +22,12 @@
 				<div v-for="(item, index) in navbarInfoArr" class="navbar-links-wrapper-single" :key="index">
 					<navbar-link :navbar-info="item"/>
 				</div>
+				<div class="navbar-links-wrapper-single">
+					<div class="aurora-navbar-item">
+						<svg-icon icon="fa:user"/>
+						<a target="_blank" :href="blogConfig.adminWebUrl">Login</a>
+					</div>
+				</div>
 			</div>
 		</header>
 	</div>
@@ -29,9 +35,10 @@
 </template>
 
 <script setup lang="ts">
-import {useUserInfo} from "@/stores";
+import {useThemeStore, useUserInfo} from "@/stores";
 import {onBeforeMount, ref} from "vue";
 import {siteSettingApi} from "@/service/api/admin/siteSettingApi";
+import blogConfig from '@/config/blogConfig.json'
 
 interface Props {
 	userUid: string,

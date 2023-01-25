@@ -189,7 +189,7 @@ export default defineComponent({
 		},
 		clickDown() {
 			smoothscroll.polyfill();
-			document.getElementById('home-bottom')!.scrollIntoView({behavior: "smooth", block: 'start'})
+			document.getElementById('homeBottomScroll')!.scrollIntoView({behavior: "smooth", block: 'start'})
 		},
 		
 		handleScroll() {

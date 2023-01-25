@@ -46,8 +46,7 @@
 .navbar .navbar-links-wrapper div a {
     padding-right: 2rem;
     font-size: 1rem;
-    font-weight: 500;
-    color: var(--fontColor);
+    font-weight: 510;
 }
 
 .navbar .navbar-links-wrapper div svg {
@@ -115,4 +114,16 @@
     .toggle-sidebar-button {
         display: block;
     }
+}
+
+.n-dropdown-menu .n-dropdown-option a {
+    color: var(--fontColor);
+}
+
+.navbar-links-wrapper-single:hover a, .navbar-links-wrapper-single:hover svg{
+    color: var(--aurora-global-active-color);
+}
+
+.n-dropdown-option-body:hover a {
+    color: var(--aurora-global-active-color);
 }

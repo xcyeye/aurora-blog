@@ -87,7 +87,20 @@ public class AuroraReactiveAuthorizationManager implements ReactiveAuthorization
             // 如果redis中没有角色权限关系信息，可能是缓存失效，则调用feign重新获取缓存信息，对于此次请求，直接返回鉴权失败 为了保护系统
             rabbitTemplate.send(AmqpExchangeNameConstant.AURORA_SEND_OPERATE_USER_EXCHANGE,
                     AmqpQueueNameConstant.UPDATE_ROLE_PERMISSION_CACHE_ROUTING_KEY, new Message("更新角色权限缓存".getBytes(StandardCharsets.UTF_8)));
-            return Mono.just(new AuthorizationDecision(false));
+            while (redisTemplate.opsForValue().get(RedisConstant.STORAGE_ROLE_PERMISSION_INFO) == null) {
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException e) {
+
+                }
+            }
+            try {
+                allRolePermissionList = (List<RolePermissionDTO>) redisTemplate.opsForValue().get(RedisConstant.STORAGE_ROLE_PERMISSION_INFO);
+            } catch (Exception e) {
+                // 如果redis中没有角色权限关系信息，直接返回鉴权失败 为了保护系统
+                return Mono.just(new AuthorizationDecision(false));
+            }
+            // return Mono.just(new AuthorizationDecision(false));
         }
 
         // 获取访问该路径，所需要的权限

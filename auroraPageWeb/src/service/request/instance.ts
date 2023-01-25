@@ -2,15 +2,16 @@ import type {AxiosError, AxiosInstance, AxiosRequestConfig} from 'axios';
 import axios from 'axios';
 import {REFRESH_TOKEN_CODE, REGEXP_SWAGGER_CONFIG_INTERFACE, REGEXP_SWAGGER_INTERFACE_INFO} from '@/config';
 import {
-    handleAxiosError,
-    handleBackendError,
-    handleResponseError,
-    handleServiceResult,
-    transformRequestData
+  getLocalStorage,
+  handleAxiosError,
+  handleBackendError,
+  handleResponseError,
+  handleServiceResult,
+  transformRequestData
 } from '@/utils';
 import {handleRefreshToken} from './helpers';
-import {useAuthStore} from "@/stores";
 import {isNotEmptyObject} from "@/utils/business";
+import {OauthVo} from "@/bean/vo/auth/OauthVo";
 
 /**
  * 封装axios请求类
@@ -52,10 +53,12 @@ export default class CustomAxiosInstance {
                 const contentType = handleConfig.headers['Content-Type'] as string;
                 handleConfig.data = await transformRequestData(handleConfig.data, contentType);
               }
-              // 如果存在登录信息，则设置token
-              if (useAuthStore().authInfo && isNotEmptyObject(useAuthStore().authInfo)) {
+              // 如果存在登录信息，则设置token TODO 解决评论部分的bug，token存入本地，需要刷新才会获取到的问题
+              // if (useAuthStore().authInfo && isNotEmptyObject(useAuthStore().authInfo)) {
+              if (getLocalStorage('auth_info') && isNotEmptyObject(getLocalStorage('auth_info'))) {
+                const authInfo: OauthVo = getLocalStorage('auth_info')
                 // @ts-ignore
-                handleConfig.headers.Authorization = `bearer ${useAuthStore().authInfo.access_token}`;
+                handleConfig.headers.Authorization = `bearer ${authInfo.access_token}`;
                 // @ts-ignore
                 handleConfig.headers.set('aurora_page_web', new Date().getTime())
               }

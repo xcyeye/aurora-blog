@@ -4,14 +4,15 @@
 		placement="bottom-start"
 		trigger="hover"
 		size="small"
+		:style="`--borderRadius: ${useThemeStore().currentTheme.borderRadius}px; --fontColor: ${useThemeStore().currentTheme.fontColor}; --fontFamily: ${useThemeStore().currentTheme.fontFamily}; --fontSize: ${useThemeStore().currentTheme.fontSize};`"
 		:options="dropdownNavbarOption"
 	>
-		<div>
+		<div class="aurora-navbar-item">
 			<svg-icon v-if="navbarInfo.icon" :icon="navbarInfo.icon"/>
 			<a>{{ navbarInfo.name }}</a>
 		</div>
 	</n-dropdown>
-	<div v-else>
+	<div class="aurora-navbar-item" v-else>
 		<svg-icon v-if="navbarInfo.icon" :icon="navbarInfo.icon"/>
 		<a v-if="navbarInfo.outLink" target="_blank" :href="navbarInfo.url">{{ navbarInfo.name }}</a>
 		<router-link v-else :to="navbarInfo.url">{{ navbarInfo.name }}</router-link>
@@ -26,6 +27,7 @@ import {MenuOption} from "naive-ui/es/menu/src/interface";
 import SvgIcon from '@/components/icons/SvgIcon.vue'
 import {RouterLink} from "vue-router";
 import {StringUtil} from "@/utils";
+import {useThemeStore} from "@/stores";
 
 defineComponent({name: 'NavbarLinks'});
 
