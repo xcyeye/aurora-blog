@@ -317,6 +317,7 @@ export const defaultSiteSettingInfo: SiteSettingInfo = {
             ],
         },
     ],
-    randomPictureInterface: 'https://cdn.seovx.com/ha/?mom=302'
+    randomPictureInterface: 'https://cdn.seovx.com/ha/?mom=302',
+    readme: '# 关于我 \naskdjfhasdfjhadsf'
 
 }

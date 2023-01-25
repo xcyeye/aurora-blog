@@ -46,6 +46,11 @@ const router = createRouter({
       component: () => import('../views/about/index.vue')
     },
     {
+      path: '/about-old/:userUid',
+      name: 'about-old',
+      component: () => import('../views/about-old/index.vue')
+    },
+    {
       path: '/shareSpace/:userUid/:talkUid?',
       name: '说说1',
       component: () => import('../views/share-space/swiperShareSpace.vue')
@@ -86,42 +91,6 @@ const setMobileOpenStatus = () => {
     useThemeStore().setCurrentThemeStore(currentTheme)
   }
 }
-
-// router.beforeEach((to, from, next) => {
-//   // 从路由中查询userUid，如果不存在siteInfo,userInfo的话，则获取
-//   const userUid: string = to.params.userUid as string;
-//   setMobileOpenStatus()
-//   if (StringUtil.haveLength(userUid)) {
-//     const userSiteInfo = useSiteInfo().getSiteInfo(userUid)
-//     if (!userSiteInfo || !isNotEmptyObject(userSiteInfo)) {
-//       useSiteInfo().setSiteInfo(userUid, defaultSiteSettingInfo)
-//       next()
-//       // siteSettingApi.queryOneDataByUserUid({userUid: userUid.value}).then(result => {
-//       //   if (result.data) {
-//       //     if (result.data.paramValue) {
-//       //       // TODO 临时解决
-//       //       // siteSettingInfo.value = JSON.parse(result.data.paramValue)
-//       //       siteSettingInfo.value = JSON.parse(result.data.paramValue)
-//       //       useSite.setSiteInfo(userUid.value, defaultSiteSettingInfo)
-//       //     }
-//       //   }
-//       // })
-//     }else {
-//       next()
-//     }
-//     if (!isNotEmptyObject(useUserInfo().getUserInfo(userUid))) {
-//       userApi.queryOneDataByUid({uid: userUid}).then(result => {
-//         if (result.data) {
-//           useUserInfo().setUserInfo(userUid, result.data)
-//         }
-//       })
-//     }
-//
-//     useCurrentUser().setCurrentUserInfo({uid: userUid})
-//   }else {
-//     next()
-//   }
-// })
 
 function createRouterGuard(router: Router) {
   router.beforeEach((to, from, next) => {

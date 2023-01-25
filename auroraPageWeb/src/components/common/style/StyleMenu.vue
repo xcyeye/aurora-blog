@@ -36,7 +36,7 @@
 import blogConfig from '@/config/blogConfig.json';
 import {useThemeStore} from "@/stores";
 import ParcelStyle from "@/components/common/other/ParcelStyle.vue";
-import {cleanLocalStorage, getLocalStorage} from "@/utils";
+import {cleanLocalStorage, deleteCookie, getLocalStorage} from "@/utils";
 
 export default {
   name: "HomeWelcome",
@@ -99,10 +99,12 @@ export default {
   methods: {
 		useThemeStore,
 		handleClearCache(clearOne: boolean) {
+			deleteCookie(null)
 			localStorage.clear()
 			window.$message?.success('本地缓存已全部清除')
+			location.reload()
 			if (clearOne) {
-			
+
 			}else {
 				// 清除所有用户
 			}

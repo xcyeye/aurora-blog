@@ -69,5 +69,6 @@ interface SiteSettingInfo {
 	footerInfo?: FooterInfo,
 	showAboutPageBubble?: boolean,
 	aboutInfoArr?: Array<AboutInfo>,
-	randomPictureInterface?: string
+	randomPictureInterface?: string,
+	readme?: string
 }

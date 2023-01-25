@@ -6295,9 +6295,18 @@ body::-webkit-scrollbar-thumb {
 
 .aurora-footer-box {
     position: relative;
+    /*bottom: 0;*/
+    /*right: 0;*/
     height: 10rem;
     width: 100%;
 }
+
+/*.aurora-footer-box:before {*/
+/*    display: inline-block;*/
+/*    content: '';*/
+/*    height: 10rem;*/
+/*    width: 100%;*/
+/*}*/
 
 .aurora-card-bottom-page {
     padding: .7rem;

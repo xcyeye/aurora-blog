@@ -308,6 +308,10 @@
     background-size: cover;
 }
 
+.aurora-page-card {
+    margin: 0 auto;
+}
+
 @media screen and (min-width: 719px) {
     .aurora-page-card {
         width: 85%;
