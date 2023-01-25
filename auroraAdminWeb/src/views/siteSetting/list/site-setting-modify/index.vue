@@ -1,38 +1,13 @@
 <template>
 	<div>
-		<n-drawer :width="502" :native-scrollbar="true" v-model:show="showDrawer" placement="left">
+		<n-drawer :width="502" :native-scrollbar="true" v-model:show="showDrawer" placement="right">
 			<n-drawer-content :title="!addStatus ? `编辑 ${modifySiteSettingInfo.paramName}` : '新增站点设置'">
-				<n-space vertical hoverable>
-					<n-card hoverable class="rounded-16px shadow-sm" title="参数名称" size="small">
-						<n-input
-							:round="true"
-							v-model:value="modifySiteSettingInfo.paramName"
-							type="text"
-							@keydown.enter.prevent
-						/>
-					</n-card>
-					<n-card hoverable class="rounded-16px shadow-sm" size="small">
-						<n-space vertical>
-							<n-space vertical>
-								<n-text>logo</n-text>
-								<n-input size="small" round v-model:value="model.logo" placeholder="输入姓名" />
-							</n-space>
-							<n-space vertical>
-								<n-text>name</n-text>
-								<n-input size="small" round v-model:value="model.name" placeholder="输入姓名" />
-							</n-space>
-							<n-row :gutter="[0, 24]">
-								<n-col :span="24">
-									<div style="display: flex; justify-content: flex-end">
-										<n-button round type="primary" @click="handleClickModifyAction">
-											{{ !addStatus ? '更新' : '添加' }}
-										</n-button>
-									</div>
-								</n-col>
-							</n-row>
-						</n-space>
-					</n-card>
-				</n-space>
+				<n-code
+					:hljs="hljs"
+					:word-wrap="true"
+					:code="JSON.stringify(JSON.parse(modifySiteSettingInfo.paramValue), null, 4)"
+					language="json"
+				/>
 			</n-drawer-content>
 		</n-drawer>
 	</div>
@@ -41,12 +16,14 @@
 <script lang="ts" setup>
 import {defineComponent, onMounted, ref} from "vue";
 import {EnumMittEventName} from "@/enum";
-import {emitter, StringUtil} from "@/utils";
+import {emitter} from "@/utils";
 import {siteSettingApi} from "@/service/api/admin/siteSettingApi";
 import {useAuthStore} from "@/store";
-import {useRouterPush} from "@/composables";
+import hljs from 'highlight.js/lib/core';
+import json from 'highlight.js/lib/languages/json';
 
 defineComponent({name: 'index'});
+hljs.registerLanguage('json', json);
 
 const model = ref<SiteSettingInfo>({})
 const authStore = useAuthStore()

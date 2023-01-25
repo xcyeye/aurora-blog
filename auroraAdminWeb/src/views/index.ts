@@ -85,6 +85,7 @@ export const views: Record<RouterPage.LastDegreeRouteKey, RouteComponent | (() =
   'siteSetting_list_site-setting-list': () => import('./siteSetting/list/site-setting-list/index.vue'),
   'siteSetting_list_site-setting-modify': () => import('./siteSetting/list/site-setting-modify/index.vue'),
   siteSetting_navbar: () => import('./siteSetting/navbar/index.vue'),
+  siteSetting_setting: () => import('./siteSetting/setting/index.vue'),
   system: () => import('./system/index.vue'),
   'system_sys-setting-list': () => import('./system/sys-setting-list/index.vue'),
   'system_sys-setting-modify': () => import('./system/sys-setting-modify/index.vue'),

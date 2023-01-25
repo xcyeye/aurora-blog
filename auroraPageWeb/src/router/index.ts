@@ -6,6 +6,7 @@ import {defaultSiteSettingInfo} from "@/field";
 import {StringUtil} from "@/utils";
 import {App} from "vue";
 import {siteSettingApi} from "@/service/api/admin/siteSettingApi";
+import {copyContent} from "@/plugins";
 
 
 const router = createRouter({

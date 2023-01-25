@@ -124,7 +124,7 @@ const createColumns = (): Array<DataTableColumn> => {
 									ghost: true,
 									onClick: () => handleModifyAction(row)
 								},
-								{ default: () => '编辑' }
+								{ default: () => '查看' }
 							)
 						)
 					}

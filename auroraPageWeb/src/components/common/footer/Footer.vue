@@ -74,8 +74,10 @@ ${blogConfig.projectInfo.author}</a>`
 				}
 			}
 			let set = new Set()
-			for (let i = 0; i < this.footerArr.length; i++) {
-				set.add(this.footerArr[i])
+			if (this.footerArr) {
+				for (let i = 0; i < this.footerArr.length; i++) {
+					set.add(this.footerArr[i])
+				}
 			}
 			if (StringUtil.haveLength(themeCopyright)) {
 				set.add(themeCopyright)

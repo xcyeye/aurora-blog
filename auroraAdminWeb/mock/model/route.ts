@@ -106,6 +106,16 @@ export const routeModel: Record<Auth.RoleType, AuthRoute.Route[]> = {
 					}
 				},
 				{
+					name: 'siteSetting_setting',
+					path: '/siteSetting/setting',
+					component: 'self',
+					meta: {
+						title: '站点设置',
+						requiresAuth: true,
+						icon: 'fa:flickr'
+					}
+				},
+				{
 					name: 'siteSetting_navbar',
 					path: '/siteSetting/navbar',
 					component: 'self',

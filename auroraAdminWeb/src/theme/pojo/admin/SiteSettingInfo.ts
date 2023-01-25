@@ -41,11 +41,35 @@ interface AboutInfo {
 
 }
 interface SiteSettingInfo {
-	showRandomSay?: boolean,
-	showPrintText?: boolean,
+	showWave?: boolean,
+	// 不要
+	showAboutPageBubble?: boolean,
+	// 新增
+	showTopImgBubble?: boolean,
+
+	// 手机端，是否在页面的底部显示侧边栏列表，默认开启，如果需要开启，请将此值设置为FALSE
+	mobilePageSidebar?: boolean,
+
+	// 最新文章数量，默认为6
+	latestPageSize?: number,
+
+	githubUrl?: string,
+
+	homePageLazyLoadingImg?: string,
+
+	randomPictureInterface?: string,
+
+	/** 默认请求接口方法 */
+	defaultCoverRequestInterface?: string,
+
+	footerInfo?: FooterInfo,
+
+
 	socialsArr?: Array<SocialInfo>,
 	/** pc端侧边栏最大宽度 */
-	showWave?: boolean,
+	showRandomSay?: boolean,
+	// 不要的
+	showPrintText?: boolean,
 	randomSayApi?: {
 		requestMethod: 'GET' | 'POST' | 'DELETE' | 'UPDATE',
 		urlApi: string
@@ -54,21 +78,11 @@ interface SiteSettingInfo {
 		show: boolean,
 		value: string
 	},
+
+	// 不要的
 	randomColor?: Array<string>,
-	homePageLazyLoadingImg?: string,
-	/** 默认请求接口方法 */
-	defaultCoverRequestInterface?: string,
 	friendLinkSiteInformation?: FriendLinkSiteInformation,
-	// 手机端，是否在页面的底部显示侧边栏列表，默认开启，如果需要开启，请将此值设置为FALSE
-	mobilePageSidebar?: boolean,
-	// 最新文章数量，默认为6
-	latestPageSize?: number,
-	// 侧边栏的描述
-	sidebarPersonDesc?: string,
-	githubUrl?: string,
-	footerInfo?: FooterInfo,
-	showAboutPageBubble?: boolean,
+	// 不要的
 	aboutInfoArr?: Array<AboutInfo>,
-	randomPictureInterface?: string,
 	readme?: string
 }
