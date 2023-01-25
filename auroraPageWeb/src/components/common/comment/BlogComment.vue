@@ -257,15 +257,15 @@
 </template>
 
 <script lang="ts" setup>
-import {defineComponent, onBeforeMount, ref, watch, h, onMounted} from "vue";
+import {defineComponent, h, onBeforeMount, onMounted, ref, watch} from "vue";
 import {commentApi, emailApi, userApi} from "@/service";
 import {Comment} from "@/bean/pojo/comment/Comment";
-import {createLocalStorage, getLocalStorage, getLocalTime, StringUtil} from "@/utils";
-import {NButton, NGradientText, NTag, NText, UploadFileInfo} from "naive-ui";
+import {createLocalStorage, getLocalTime, StringUtil} from "@/utils";
+import {NButton, NGradientText, NText, UploadFileInfo} from "naive-ui";
 import {UserVo} from "@/bean/vo/admin/UserVo";
 import {useAuthStore, useSiteInfo, useUserInfo} from "@/stores";
 import $ from "jquery";
-import {REGEXP_EMAIL, REGEXP_PWD, REGEXP_URL, REGEXP_USERNAME} from "@/config";
+import {REGEXP_EMAIL, REGEXP_PWD, REGEXP_USERNAME} from "@/config";
 import {User} from "@/bean/pojo/admin/User";
 import {isNotEmptyObject} from "@/utils/business";
 import {Email} from "@/bean/pojo/message/Email";
@@ -273,7 +273,6 @@ import {authApi} from "@/service/api/auth/auth";
 import {OauthPasswordPo} from "@/bean/pojo/auth/oauthPassword";
 import {OauthClientDetails} from "@/bean/pojo/auth/OauthClientDetails";
 import {oauthClientApi} from "@/service/api/auth/oauthClientApi";
-import {useRouter} from "vue-router";
 import {useRouterPush} from "@/composables";
 import {OauthVo} from "@/bean/vo/auth/OauthVo";
 
@@ -289,7 +288,8 @@ interface Props {
 	pageUid: string,
 	userUid: string,
 	showCommentBut?: boolean,
-	queryRegexp?: string
+	queryRegexp?: string,
+	queryByUserUid?: boolean
 }
 
 interface ReplyCommentUserInfo {
@@ -305,7 +305,8 @@ interface ReplyCommentUserInfo {
 const props = withDefaults(defineProps<Props>(), {
 	parentCommentUidArr: () => [],
 	replyPageType: 'OTHER',
-	showCommentBut: true
+	showCommentBut: true,
+	queryByUserUid: false
 })
 
 const currentClickCommentDto = ref<CommentDto>({})
@@ -331,19 +332,27 @@ const handleClickComment = (commentInfo: CommentDto, parentCommentDto: CommentDt
 }
 
 const loadCommentInfo = () => {
-	if (!StringUtil.haveLength(props.queryRegexp) && props.parentCommentUidArr.length === 0) return
-	showCommentInfo.value = {}
-	let queryRegexp = props.queryRegexp
-	if (!StringUtil.haveLength(queryRegexp)) {
-		if (!StringUtil.haveLength(props.pagePath) && props.parentCommentUidArr.length === 0) return
-		queryRegexp = props.pagePath
+	if (props.queryByUserUid) {
+		commentApi.queryListCommentByUidArr({userUid: props.userUid}).then(result => {
+			if (!result.error && result.data) {
+				showCommentInfo.value = result.data
+			}
+		})
+	}else {
+		if (!StringUtil.haveLength(props.queryRegexp) && props.parentCommentUidArr.length === 0) return
+		showCommentInfo.value = {}
+		let queryRegexp = props.queryRegexp
+		if (!StringUtil.haveLength(queryRegexp)) {
+			if (!StringUtil.haveLength(props.pagePath) && props.parentCommentUidArr.length === 0) return
+			queryRegexp = props.pagePath
+		}
+		replyCommentData.value.content = ''
+		commentApi.queryListCommentByUidArr({commentUidArr: props.parentCommentUidArr, queryRegexp: queryRegexp}).then(result => {
+			if (!result.error && result.data) {
+				showCommentInfo.value = result.data
+			}
+		})
 	}
-	replyCommentData.value.content = ''
-	 commentApi.queryListCommentByUidArr({commentUidArr: props.parentCommentUidArr, queryRegexp: queryRegexp}).then(result => {
-		 if (!result.error && result.data) {
-			 showCommentInfo.value = result.data
-		 }
-	 })
 }
 
 const loginByPwd = (isInsertEmailInfo: boolean = false) => {
@@ -676,6 +685,10 @@ watch(() => props.parentCommentUidArr, () => {
 })
 
 watch(() => props.queryRegexp, () => {
+	loadCommentInfo()
+})
+
+watch(() => props.userUid, () => {
 	loadCommentInfo()
 })
 </script>

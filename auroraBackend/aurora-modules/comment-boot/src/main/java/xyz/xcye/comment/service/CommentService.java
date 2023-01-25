@@ -140,8 +140,12 @@ public class CommentService {
         return auroraCommentService.updateById(comment);
     }
 
+    /**
+     * 根据条件查询，目前只支持uid，path，如果前两个为null，并且存在userUid的话，则通过userUid查询
+     * @param pojo
+     * @return
+     */
     public ShowCommentVO queryListCommentByUidArr(CommentPojo pojo) {
-        List<Long> arrayUid = pojo.getCommentUidArr();
         if (StringUtils.hasLength(pojo.getQueryRegexp())) {
             Condition<Long> condition = new Condition<>();
             condition.setKeyword(pojo.getQueryRegexp());
@@ -161,6 +165,25 @@ public class CommentService {
                         .forEach(v -> pojo.getCommentUidArr().add(v));
             }
         }
+        if (pojo.getCommentUidArr() == null || pojo.getCommentUidArr().isEmpty() && !StringUtils.hasLength(pojo.getQueryRegexp()) && pojo.getUserUid() != null) {
+            // 通过userUid进行查询
+            Condition<Long> condition = new Condition<>();
+            condition.setOtherUid(pojo.getUserUid());
+            condition.setPageSize(99999);
+            PageData<CommentVO> commentVOPageData = queryListCommentByCondition(condition);
+            if (commentVOPageData != null) {
+                if (pojo.getCommentUidArr() == null) {
+                    pojo.setCommentUidArr(new ArrayList<>());
+                }
+                commentVOPageData.getResult()
+                        .stream()
+                        .filter(v -> v.getReplyCommentUid() == null)
+                        .map(CommentVO::getUid)
+                        .collect(Collectors.toList())
+                        .forEach(v -> pojo.getCommentUidArr().add(v));
+            }
+        }
+        List<Long> arrayUid = pojo.getCommentUidArr();
         // 获取arrayUid中可用的uid
         List<Long> effectiveCommentUidList = getEffectiveCommentUid(arrayUid);
         Set<Long> set = new HashSet<>();

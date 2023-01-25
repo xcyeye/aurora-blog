@@ -30,7 +30,7 @@
 							<div>类别</div>
 							<div>{{categoryNumber}}</div>
 						</div>
-						<div class="sidebar-page-common">
+						<div @click="goComment" class="sidebar-page-common">
 							<div>评论</div>
 							<div>{{totalCommentNumber}}</div>
 						</div>
@@ -211,7 +211,6 @@ import {ArticleVo} from "@/bean/vo/article/ArticleVo";
 import {CategoryVo} from "@/bean/vo/article/CategoryVo";
 import {useRouterPush} from "@/composables";
 import {TalkVo} from "@/bean/vo/article/TalkVo";
-import {useRouter} from "vue-router";
 
 const currentSiteInfo: SiteSettingInfo = {}
 const friendLinks: Array<LinkVo> = []
@@ -417,7 +416,7 @@ export default {
 			}
 		})
 		
-		talkApi.queryListDataByCondition({delete: false, show: true, orderBy: 'create_time desc'}).then(result => {
+		talkApi.queryListDataByCondition({otherUid: this.userUid, delete: false, show: true, orderBy: 'create_time desc'}).then(result => {
 			if (result.data && result.data.result) {
 				this.talkArr = result.data.result
 				this.showTalkInfo = this.talkArr[getRandomNum(0, this.talkArr.length)]
@@ -507,6 +506,11 @@ export default {
     }
   },
   methods: {
+		goComment() {
+			this.$router.push({
+				path: `/comment/${this.userUid}`
+			})
+		},
 		goBulletin(bulletin: BulletinVo) {
 			this.$router.push({
 				path: `/bulletin/${this.userUid}/${bulletin.uid}`

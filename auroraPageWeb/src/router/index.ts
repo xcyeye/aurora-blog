@@ -5,6 +5,7 @@ import {userApi} from "@/service";
 import {defaultSiteSettingInfo} from "@/field";
 import {StringUtil} from "@/utils";
 import {App} from "vue";
+import {siteSettingApi} from "@/service/api/admin/siteSettingApi";
 
 
 const router = createRouter({
@@ -76,6 +77,11 @@ const router = createRouter({
       component: () => import('../views/photo/index.vue')
     },
     {
+      path: '/comment/:userUid',
+      name: 'comment',
+      component: () => import('../views/comment/index.vue')
+    },
+    {
       path: '/test',
       name: 'test',
       component: () => import('../views/test/index.vue')
@@ -98,23 +104,7 @@ function createRouterGuard(router: Router) {
     const userUid: string = to.params.userUid as string;
     setMobileOpenStatus()
     if (StringUtil.haveLength(userUid)) {
-      const userSiteInfo = useSiteInfo().getSiteInfo(userUid)
-      if (!userSiteInfo || !isNotEmptyObject(userSiteInfo)) {
-        useSiteInfo().setSiteInfo(userUid, defaultSiteSettingInfo)
-        next()
-        // siteSettingApi.queryOneDataByUserUid({userUid: userUid.value}).then(result => {
-        //   if (result.data) {
-        //     if (result.data.paramValue) {
-        //       // TODO 临时解决
-        //       // siteSettingInfo.value = JSON.parse(result.data.paramValue)
-        //       siteSettingInfo.value = JSON.parse(result.data.paramValue)
-        //       useSite.setSiteInfo(userUid.value, defaultSiteSettingInfo)
-        //     }
-        //   }
-        // })
-      }else {
-        next()
-      }
+      // 存储用户信息
       if (!isNotEmptyObject(useUserInfo().getUserInfo(userUid))) {
         userApi.queryOneDataByUid({uid: userUid}).then(result => {
           if (result.data) {
@@ -122,8 +112,38 @@ function createRouterGuard(router: Router) {
           }
         })
       }
-
       useCurrentUser().setCurrentUserInfo({uid: userUid})
+
+      // 存储用户站点信息
+      const userSiteInfo = useSiteInfo().getSiteInfo(userUid)
+      if (!userSiteInfo || !isNotEmptyObject(userSiteInfo)) {
+        // useSiteInfo().setSiteInfo(userUid, defaultSiteSettingInfo)
+        // next()
+        siteSettingApi.queryListDataByCondition({otherUid: userUid, keyword: `${userUid}SiteInfo`}).then(result => {
+          if (result.data && result.data.result) {
+            const siteInfo = result.data.result[0]
+            if (siteInfo && StringUtil.haveLength(siteInfo.paramValue)) {
+              useSiteInfo().setSiteInfo(userUid, JSON.parse(siteInfo.paramValue!))
+              next()
+              // siteSettingInfo.value = JSON.parse(result.data.paramValue)
+              // siteSettingInfo.value = JSON.parse(result.data.paramValue)
+              // useSite.setSiteInfo(userUid.value, defaultSiteSettingInfo)
+            }else {
+              // 用户没有任何信息，则使用默认的
+              console.error('该用户没有配置任何站点信息，将使用默认值')
+              useSiteInfo().setSiteInfo(userUid, defaultSiteSettingInfo)
+              next()
+            }
+          }else {
+            // 用户没有任何信息，则使用默认的
+            console.error('该用户没有配置任何站点信息，将使用默认值')
+            useSiteInfo().setSiteInfo(userUid, defaultSiteSettingInfo)
+            next()
+          }
+        })
+      }else {
+        next()
+      }
     }else {
       next()
     }
