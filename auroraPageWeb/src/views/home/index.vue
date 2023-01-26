@@ -24,14 +24,10 @@
 								</div>
 								<div class="home-main-top-right-user-single-right">
 									<div class="home-main-top-right-user-single-right-username">
-										<n-gradient-text :type="getRandomTagType()">
-											{{item.username}}
-										</n-gradient-text>
+										<span>{{item.username}}</span>
 									</div>
 									<div class="home-main-top-right-user-single-right-userSummary">
-										<n-gradient-text :type="getRandomTagType()">
-											{{item.userSummary}}
-										</n-gradient-text>
+										<span>{{item.userSummary}}</span>
 									</div>
 								</div>
 							</div>
@@ -40,44 +36,60 @@
 					<div class="home-main-top-right-info">
 						<n-row>
 							<n-col :span="12">
-								<n-statistic label="活跃用户">
+								<n-statistic >
+									<template #label>
+										<span class="home-main-top-right-info-title">活跃用户</span>
+									</template>
 									<template #prefix>
-										<svg-icon icon="ic:round-hourglass-bottom"/>
+										<span class="home-main-top-right-info-color-common">
+											<svg-icon icon="fa:user"/>
+										</span>
 									</template>
 									<template #suffix>
-										{{userArr.length}}
+										<span class="home-main-top-right-info-color-common">{{userArr.length}}</span>
 									</template>
 								</n-statistic>
 							</n-col>
 							<n-col :span="12">
-								<n-statistic label="总文章">
+								<n-statistic>
+									<template #label>
+										<span class="home-main-top-right-info-title">总文章</span>
+									</template>
 									<template #prefix>
-										<svg-icon icon="ion:planet-sharp"/>
+										<span class="home-main-top-right-info-color-common">
+											<svg-icon icon="fa:envira"/>
+										</span>
 									</template>
 									<template #suffix>
-										{{articleArr.length}}
+										<span class="home-main-top-right-info-color-common">{{articleArr.length}}</span>
 									</template>
 								</n-statistic>
 							</n-col>
 						</n-row>
 						<n-row>
 							<n-col :span="12">
-								<n-statistic label="总评论数">
+								<n-statistic>
+									<template #label>
+										<span class="home-main-top-right-info-title">总评论</span>
+									</template>
 									<template #prefix>
-										<svg-icon icon="ion:ios-cube"/>
+										<span class="home-main-top-right-info-color-common"><svg-icon icon="fa:commenting"/></span>
 									</template>
 									<template #suffix>
-										{{userArr.length}}
+										<span class="home-main-top-right-info-color-common">{{totalCommentNumber}}</span>
 									</template>
 								</n-statistic>
 							</n-col>
 							<n-col :span="12">
-								<n-statistic label="总文章">
+								<n-statistic>
+									<template #label>
+										<span class="home-main-top-right-info-title">总说说</span>
+									</template>
 									<template #prefix>
-										<svg-icon icon="ion:planet-sharp"/>
+										<span class="home-main-top-right-info-color-common"><svg-icon icon="fa:comments"/></span>
 									</template>
 									<template #suffix>
-										{{articleArr.length}}
+										<span class="home-main-top-right-info-color-common">{{totalTalkNumber}}</span>
 									</template>
 								</n-statistic>
 							</n-col>
@@ -97,7 +109,7 @@
 		</div>
 		<div>
 			<div id="set-bg" class="set-bg-fitter"
-					 style="background-image: url(https://pic-tool.xcye.xyz/pic/rmimg)"
+					 style="background-image: url(https://api.paugram.com/bing)"
 			></div>
 			<!--TODO 临时改的-->
 			<!--<div id="posterShade" :class="{posterShade: true}">-->
@@ -113,7 +125,7 @@
 <script lang="ts" setup>
 import {computed, defineComponent, onBeforeMount, ref} from "vue";
 import {ArticleVo} from "@/bean/vo/article/ArticleVo";
-import {articleApi, userApi} from "@/service";
+import {articleApi, commentApi, talkApi, userApi} from "@/service";
 import {Condition, PageData} from "@/bean/core/bean";
 import RequestResult = Service.RequestResult;
 import {useRouterPush} from "@/composables";
@@ -126,6 +138,8 @@ defineComponent({name: 'index'});
 
 const articleArr = ref<Array<ArticleVo>>([])
 
+const totalCommentNumber = ref(0)
+const totalTalkNumber = ref(0)
 const userArr = ref<Array<UserVo>>([])
 const articleLatestArr = ref<Array<ArticleVo>>([])
 const routerPush = useRouterPush()
@@ -195,6 +209,25 @@ const loadSysSetting = () => {
 		})
 	}
 }
+
+const loadAllComment = () => {
+  commentApi.queryTotalCount({}).then(result => {
+		if (result.data) {
+			totalCommentNumber.value = result.data
+		}
+	})
+}
+
+const loadAllTalk = () => {
+	talkApi.queryTotalCount({}).then(result => {
+		if (result.data) {
+			totalTalkNumber.value = result.data
+		}
+	})
+}
+
+loadAllTalk()
+loadAllComment()
 
 onBeforeMount(() => {
 	loadAllArticle()
