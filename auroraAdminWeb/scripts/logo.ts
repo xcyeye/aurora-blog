@@ -7,7 +7,7 @@ async function generatePngLogoFromSvg(svgPath: string, color: string) {
   const svgStrWithColor = svgStr.replace(/currentColor/g, color);
 
   nodeHtmlToImage({
-    output: './public/logo1.png',
+    output: './public/logo.png',
     html: svgStrWithColor,
     transparent: true
   });

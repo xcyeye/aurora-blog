@@ -1,8 +1,8 @@
 import { baseAxiosRequestConfig } from '@/constants';
 import { request } from '@/service/request';
-import type { Condition, PageData } from '@/theme/core/bean';
-import type { EmailLog } from '@/theme/pojo/message/EmailLog';
-import type { EmailLogVo } from '@/theme/vo/message/EmailLogVo';
+import type { Condition, PageData } from '@/bean/core/bean';
+import type { EmailLog } from '@/bean/pojo/message/EmailLog';
+import type { EmailLogVo } from '@/bean/vo/message/EmailLogVo';
 
 /** 接口前缀 */
 const apiPrefix = '/message/emailLog/';
@@ -91,7 +91,12 @@ function _baseApi() {
     return request.post<viewBeanType>(`${apiPrefix}`, data, baseAxiosRequestConfig);
   }
 
+  function queryTotalCount(data: beanType) {
+    return request.post<number>(`${apiPrefix}queryTotalEmailLogCount`, data, baseAxiosRequestConfig)
+  }
+
   return {
+    queryTotalCount,
     queryOneData,
     queryOneDataByUid,
     queryListDataByCondition,

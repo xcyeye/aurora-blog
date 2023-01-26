@@ -94,6 +94,10 @@ public class ArticleService {
         return queryArticleByTagInfo(pojo);
     }
 
+    public int queryTotalArticleCount(ArticlePojo pojo) {
+        return auroraArticleService.countByWhere(BeanUtils.copyProperties(pojo, Article.class));
+    }
+
     public ArticleVO queryArticleByUid(Long uid) {
         return BeanUtils.copyProperties(auroraArticleService.queryById(uid), ArticleVO.class);
     }

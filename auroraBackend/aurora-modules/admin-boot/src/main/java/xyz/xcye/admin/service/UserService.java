@@ -169,6 +169,10 @@ public class UserService {
         return auroraUserService.deleteById(uid);
     }
 
+    public Integer queryTotalUserCount(UserPojo user) {
+        return auroraUserService.countByWhere(BeanUtils.copyProperties(user, User.class));
+    }
+
     public Integer logicDeleteUser(long uid) {
         UserPojo pojo = new UserPojo();
         pojo.setDelete(true);

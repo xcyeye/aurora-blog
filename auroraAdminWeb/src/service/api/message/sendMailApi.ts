@@ -1,6 +1,6 @@
 import { baseAxiosRequestConfig } from '@/constants';
 import { request } from '@/service/request';
-import type { Condition, PageData } from '@/theme/core/bean';
+import type { Condition, PageData } from '@/bean/core/bean';
 
 /** 接口前缀 */
 const apiPrefix = '/message/sendMail/';

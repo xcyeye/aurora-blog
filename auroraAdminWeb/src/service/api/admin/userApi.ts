@@ -1,8 +1,8 @@
 import { baseAxiosRequestConfig } from '@/constants';
 import { request } from '@/service/request';
-import type { Condition, PageData } from '@/theme/core/bean';
-import type { User } from '@/theme/pojo/admin/User';
-import type { UserVo } from '@/theme/vo/admin/UserVo';
+import type { Condition, PageData } from '@/bean/core/bean';
+import type { User } from '@/bean/pojo/admin/User';
+import type { UserVo } from '@/bean/vo/admin/UserVo';
 
 /** 接口前缀 */
 const apiPrefix = '/admin/user/';
@@ -85,6 +85,10 @@ function _baseApi() {
     return request.post<viewBeanType>(`${apiPrefix}queryOneData`, data, baseAxiosRequestConfig);
   }
 
+  function queryUserByUsername(data: beanType) {
+    return request.post<viewBeanType>(`${apiPrefix}queryUserByUsername`, data, baseAxiosRequestConfig);
+  }
+
   /**
    * 绑定邮箱
    * @param data 邮箱号
@@ -113,7 +117,12 @@ function _baseApi() {
 		return request.post<number>(`${apiPrefix}forgotPassword`, data, baseAxiosRequestConfig);
 	}
 
+  function queryTotalCount(data: beanType) {
+    return request.post<number>(`${apiPrefix}queryTotalUserCount`, data, baseAxiosRequestConfig)
+  }
+
   return {
+    queryTotalCount,
     queryOneData,
     queryOneDataByUid,
     queryListDataByCondition,
@@ -126,7 +135,8 @@ function _baseApi() {
     bindingEmail,
     updatePassword,
     queryUserByUsernameContainPassword,
-		forgotPassword
+		forgotPassword,
+    queryUserByUsername
   };
 }
 

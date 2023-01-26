@@ -160,3 +160,9 @@ body {
   border: 10px solid #dd4040;
   border-radius: 4px 4px 20px 20px;
 }
+
+@media screen and (max-width: 719px) {
+  .main-text h1 {
+    font-size: 2rem;
+  }
+}

@@ -1,5 +1,5 @@
-import type { UserInfo } from '@/theme/vo/auth/OauthVo';
-import {SysSettingVo} from "@/theme/vo/admin/SysSettingVo";
+import type { UserInfo } from '@/bean/vo/auth/OauthVo';
+import {SysSettingVo} from "@/bean/vo/admin/SysSettingVo";
 
 declare namespace StorageInterface {
   /** localStorage的存储数据的类型 */

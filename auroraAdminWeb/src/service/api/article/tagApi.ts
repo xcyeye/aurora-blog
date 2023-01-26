@@ -1,8 +1,8 @@
 import { baseAxiosRequestConfig } from '@/constants';
 import { request } from '@/service/request';
-import type { Condition, PageData } from '@/theme/core/bean';
-import type { Tag } from '@/theme/pojo/article/Tag';
-import type { TagVo } from '@/theme/vo/article/TagVo';
+import type { Condition, PageData } from '@/bean/core/bean';
+import type { Tag } from '@/bean/pojo/article/Tag';
+import type { TagVo } from '@/bean/vo/article/TagVo';
 
 /** 接口前缀 */
 const apiPrefix = '/blog/tag/';

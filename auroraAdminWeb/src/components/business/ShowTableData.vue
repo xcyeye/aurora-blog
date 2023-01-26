@@ -43,7 +43,7 @@
 import {DataTableSortState, PaginationProps, PaginationSizeOption} from "naive-ui";
 import {RowData, TableColumn} from "naive-ui/es/data-table/src/interface";
 import {onBeforeMount, onMounted, ref, VNode} from "vue";
-import {Condition, PageData} from "@/theme/core/bean";
+import {Condition, PageData} from "@/bean/core/bean";
 import {EnumMittEventName} from "@/enum";
 import {emitter} from "@/utils";
 import RequestResult = Service.RequestResult;

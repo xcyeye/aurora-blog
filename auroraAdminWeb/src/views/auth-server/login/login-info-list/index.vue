@@ -17,13 +17,13 @@
 
 <script lang="ts" setup>
 import {defineComponent, h, onMounted, ref} from "vue";
-import {UserVo} from "@/theme/vo/admin/UserVo";
-import {Condition, PageData} from "@/theme/core/bean";
+import {UserVo} from "@/bean/vo/admin/UserVo";
+import {Condition, PageData} from "@/bean/core/bean";
 import {loginInfoApi} from "@/service";
 import {DataTableColumn, NButton, NSpace, NTag} from "naive-ui";
 import {EnumMittEventName} from "@/enum";
 import RequestResult = Service.RequestResult;
-import {LoginInfoVo} from "@/theme/vo/auth/LoginInfoVo";
+import {LoginInfoVo} from "@/bean/vo/auth/LoginInfoVo";
 import {emitter} from "@/utils";
 
 defineComponent({name: 'index'});

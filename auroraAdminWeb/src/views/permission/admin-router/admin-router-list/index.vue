@@ -14,19 +14,19 @@
 
 <script lang="ts" setup>
 import {defineComponent, h, onMounted, ref} from "vue";
-import {Condition, PageData} from "@/theme/core/bean";
+import {Condition, PageData} from "@/bean/core/bean";
 import {DataTableColumn, NA, NButton, NSpace, NSwitch, NTag, NText} from "naive-ui";
 import {EnumMittEventName} from "@/enum";
 import {emitter, getRandomTagType, StringUtil, transformRouteNameToRoutePath} from "@/utils";
 import {useRouterPush} from "@/composables";
 import RequestResult = Service.RequestResult;
 import {bulletinApi, roleApi} from "@/service";
-import {RoleVo} from "@/theme/vo/admin/RoleVo";
-import {BulletinVo} from "@/theme/vo/article/BulletinVo";
-import {Role} from "@/theme/pojo/admin/Role";
+import {RoleVo} from "@/bean/vo/admin/RoleVo";
+import {BulletinVo} from "@/bean/vo/article/BulletinVo";
+import {Role} from "@/bean/pojo/admin/Role";
 import {adminRouterApi} from "@/service/api/admin/adminRouterApi";
-import {AdminRouterVo} from "@/theme/vo/admin/AdminRouterVo";
-import {AdminRouter} from "@/theme/pojo/admin/AdminRouter";
+import {AdminRouterVo} from "@/bean/vo/admin/AdminRouterVo";
+import {AdminRouter} from "@/bean/pojo/admin/AdminRouter";
 import { useIconRender } from '@/composables';
 
 defineComponent({name: 'index'});

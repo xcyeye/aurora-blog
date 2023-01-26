@@ -188,7 +188,7 @@ export function createHookRequest(axiosConfig: AxiosRequestConfig, backendConfig
   };
 }
 
-async function getRequestResponse(params: {
+export async function getRequestResponse(params: {
   instance: AxiosInstance;
   method: RequestMethod;
   url: string;

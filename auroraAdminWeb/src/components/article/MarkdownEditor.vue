@@ -12,7 +12,7 @@ import Vditor from "vditor";
 import 'vditor/dist/index.css';
 import {useAuthStore, useSysSettingStore, useThemeStore} from "@/store";
 import {fileApi} from "@/service";
-import {FileVo} from "@/theme/vo/file/fileVo";
+import {FileVo} from "@/bean/vo/file/fileVo";
 import {isImage, StringUtil} from "@/utils";
 
 defineComponent({name: 'MarkdownEditor'});

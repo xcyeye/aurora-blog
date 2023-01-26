@@ -38,7 +38,7 @@ import {permissionApi} from "@/service/api/admin/permissionApi";
 import InterfaceList from './interface-list/index.vue';
 import InterfaceModify from './interface-modify/index.vue';
 import {emitter} from "@/utils";
-import {Permission} from "@/theme/pojo/admin/Permission";
+import {Permission} from "@/bean/pojo/admin/Permission";
 import {EnumMittEventName} from "@/enum";
 
 defineComponent({name: 'index'});

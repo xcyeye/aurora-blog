@@ -98,6 +98,13 @@ public class ArticleController {
         return articleService.queryListArticleByTagOrCategory(pojo);
     }
 
+    @PostMapping("/queryTotalArticleCount")
+    @ModifyOperation
+    @Operation(summary = "查询用户数")
+    public Integer queryTotalArticleCount(@RequestBody ArticlePojo articlePojo) {
+        return articleService.queryTotalArticleCount(articlePojo);
+    }
+
     @Operation(summary = "导入文章")
     @PostMapping("/importArticle")
     @SelectOperation

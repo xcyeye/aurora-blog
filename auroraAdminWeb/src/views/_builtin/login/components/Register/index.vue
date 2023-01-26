@@ -27,9 +27,9 @@ import { useRouterPush } from '@/composables';
 import { useSmsCode } from '@/hooks';
 import { formRules, getConfirmPwdRule } from '@/utils';
 import {userApi} from "@/service";
-import {User} from "@/theme/pojo/admin/User";
+import {User} from "@/bean/pojo/admin/User";
 import {oauthClientApi} from "@/service/api/auth/oauthClientApi";
-import {OauthClientDetails} from "@/theme/pojo/auth/OauthClientDetails";
+import {OauthClientDetails} from "@/bean/pojo/auth/OauthClientDetails";
 import {useAuthStore} from "@/store";
 
 const { login } = useAuthStore();

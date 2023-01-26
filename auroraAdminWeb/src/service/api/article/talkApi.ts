@@ -1,8 +1,8 @@
 import { baseAxiosRequestConfig } from '@/constants';
 import { request } from '@/service/request';
-import type { Condition, PageData } from '@/theme/core/bean';
-import type { Talk } from '@/theme/pojo/article/Talk';
-import type { TalkVo } from '@/theme/vo/article/TalkVo';
+import type { Condition, PageData } from '@/bean/core/bean';
+import type { Talk } from '@/bean/pojo/article/Talk';
+import type { TalkVo } from '@/bean/vo/article/TalkVo';
 
 /** 接口前缀 */
 const apiPrefix = '/blog/talk/';
@@ -51,6 +51,10 @@ function _baseApi() {
     return request.post<number>(`${apiPrefix}updateTalk`, data, baseAxiosRequestConfig);
   }
 
+  function updateTalkLikeNum(data: beanType) {
+    return request.post<void>(`${apiPrefix}updateTalkLikeNum`, data, baseAxiosRequestConfig);
+  }
+
   /**
    * 批量更新数据
    * @deprecated
@@ -85,7 +89,12 @@ function _baseApi() {
     return request.post<viewBeanType>(`${apiPrefix}`, data, baseAxiosRequestConfig);
   }
 
+  function queryTotalCount(data: beanType) {
+    return request.post<number>(`${apiPrefix}queryTotalTalkCount`, data, baseAxiosRequestConfig)
+  }
+
   return {
+    queryTotalCount,
     queryOneData,
     queryOneDataByUid,
     queryListDataByCondition,
@@ -94,7 +103,8 @@ function _baseApi() {
     logicDeleteData,
     physicalDeleteData,
     insertData,
-    batchInsertData
+    batchInsertData,
+    updateTalkLikeNum
   };
 }
 

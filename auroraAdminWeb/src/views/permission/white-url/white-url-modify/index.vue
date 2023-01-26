@@ -34,7 +34,7 @@
 import {defineComponent, onMounted, ref} from "vue";
 import {EnumMittEventName} from "@/enum";
 import {emitter, StringUtil} from "@/utils";
-import {WhiteUrl} from "@/theme/pojo/admin/WhiteUrl";
+import {WhiteUrl} from "@/bean/pojo/admin/WhiteUrl";
 import {whiteUrlApi} from "@/service";
 
 defineComponent({name: 'index'});

@@ -24,14 +24,14 @@
 
 <script lang="ts" setup>
 import {defineComponent, h, onMounted, ref} from "vue";
-import {Condition, PageData} from "@/theme/core/bean";
+import {Condition, PageData} from "@/bean/core/bean";
 import {tagApi} from "@/service";
 import {DataTableColumn, NButton, NSpace} from "naive-ui";
 import {EnumMittEventName} from "@/enum";
 import {emitter} from "@/utils";
 import {useRouterPush} from "@/composables";
-import {TagVo} from "@/theme/vo/article/TagVo";
-import {Tag} from "@/theme/pojo/article/Tag";
+import {TagVo} from "@/bean/vo/article/TagVo";
+import {Tag} from "@/bean/pojo/article/Tag";
 import RequestResult = Service.RequestResult;
 import TagChart from '../chart/index.vue'
 

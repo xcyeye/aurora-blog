@@ -1,8 +1,8 @@
 import { baseAxiosRequestConfig } from '@/constants';
 import { request } from '@/service/request';
-import type { Condition, PageData } from '@/theme/core/bean';
-import {RouterPermission} from "@/theme/pojo/admin/RouterPermission";
-import {AdminRouterDto} from "@/theme/dto/AdminRouterDto";
+import type { Condition, PageData } from '@/bean/core/bean';
+import type {RouterPermission} from "@/bean/pojo/admin/RouterPermission";
+import type {AdminRouterDto} from "@/bean/dto/AdminRouterDto";
 
 /** 接口前缀 */
 const apiPrefix = '/admin/routerPermission/';

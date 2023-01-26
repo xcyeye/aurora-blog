@@ -178,6 +178,10 @@ public class LinkService {
         return updateNum;
     }
 
+    public int queryTotalLinkCount(LinkPojo pojo) {
+        return auroraLinkService.countByWhere(BeanUtils.copyProperties(pojo, Link.class));
+    }
+
     /**
      * 设置类别，如果不存在，则插入
      * @param link

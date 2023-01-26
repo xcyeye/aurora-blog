@@ -1,12 +1,12 @@
 import {baseAxiosRequestConfig} from '@/constants';
 import {request} from '@/service/request';
-import type {Condition, PageData} from '@/theme/core/bean';
-import {
+import type {Condition, PageData} from '@/bean/core/bean';
+import type {SwaggerConfigVo} from "@/bean/vo/auth/SwaggerConfigVo";
+import type {
 	InterfaceRequestPathInfo,
 	InterfaceTag,
 	SwaggerRequestInterfaceInfo
-} from "@/theme/vo/auth/SwaggerRequestInterfaceInfo";
-import {SwaggerConfigVo} from "@/theme/vo/auth/SwaggerConfigVo";
+} from "@/bean/vo/auth/SwaggerRequestInterfaceInfo";
 
 /** 接口前缀 */
 const apiPrefix = '/admin/user/';

@@ -128,10 +128,10 @@
 <script lang="ts" setup>
 import {defineComponent, onBeforeMount, ref} from "vue";
 import {useAuthStore} from "@/store";
-import {User} from "@/theme/pojo/admin/User";
+import {User} from "@/bean/pojo/admin/User";
 import {emailApi, loginInfoApi, userApi} from "@/service";
 import {FormInst, FormRules, UploadFileInfo} from "naive-ui";
-import {LoginInfoVo} from "@/theme/vo/auth/LoginInfoVo";
+import {LoginInfoVo} from "@/bean/vo/auth/LoginInfoVo";
 import {formRules, localStg} from "@/utils";
 
 defineComponent({name: 'index'});

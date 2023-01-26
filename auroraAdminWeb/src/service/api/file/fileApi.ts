@@ -1,9 +1,9 @@
 import { EnumContentType } from '@/enum';
 import { baseAxiosRequestConfig } from '@/constants';
 import { request } from '@/service/request';
-import type { Condition, PageData } from '@/theme/core/bean';
-import type { FileVo } from '@/theme/vo/file/fileVo';
-import type { AuroraFile } from '@/theme/pojo/file/file';
+import type { Condition, PageData } from '@/bean/core/bean';
+import type { FileVo } from '@/bean/vo/file/fileVo';
+import type { AuroraFile } from '@/bean/pojo/file/file';
 
 /** 接口前缀 */
 const apiPrefix = '/file/';
@@ -144,7 +144,12 @@ function _baseApi() {
     );
   }
 
+  function queryTotalCount(data: beanType) {
+    return request.post<number>(`${apiPrefix}queryTotalFileCount`, data, baseAxiosRequestConfig)
+  }
+
   return {
+    queryTotalCount,
     downloadFile,
     deleteFile,
     typoraUploadFile,

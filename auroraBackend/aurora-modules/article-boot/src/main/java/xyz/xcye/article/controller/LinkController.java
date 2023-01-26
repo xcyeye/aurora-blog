@@ -6,8 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.validation.BindException;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
-import xyz.xcye.article.po.Link;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import xyz.xcye.article.pojo.LinkPojo;
 import xyz.xcye.article.service.LinkService;
 import xyz.xcye.article.vo.LinkVO;
@@ -74,5 +76,12 @@ public class LinkController {
     @Operation(summary = "修改友情链接的发布状态")
     public int updateLinkPublishStatus(@RequestBody LinkPojo link) throws BindException {
         return linkService.updateLinkPublishStatus(link);
+    }
+
+    @PostMapping("/queryTotalLinkCount")
+    @ModifyOperation
+    @Operation(summary = "查询友情链接数")
+    public Integer queryTotalLinkCount(@RequestBody LinkPojo linkPojo) {
+        return linkService.queryTotalLinkCount(linkPojo);
     }
 }

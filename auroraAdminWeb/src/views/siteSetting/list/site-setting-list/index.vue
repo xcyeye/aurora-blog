@@ -14,13 +14,13 @@
 
 <script lang="ts" setup>
 import {defineComponent, h, onMounted, ref} from "vue";
-import {Condition, PageData} from "@/theme/core/bean";
+import {Condition, PageData} from "@/bean/core/bean";
 import {DataTableColumn, NButton, NSpace} from "naive-ui";
 import {EnumMittEventName} from "@/enum";
 import {emitter} from "@/utils";
 import {useRouterPush} from "@/composables";
 import RequestResult = Service.RequestResult;
-import {SiteSettingVo} from "@/theme/vo/admin/SiteSettingVo";
+import {SiteSettingVo} from "@/bean/vo/admin/SiteSettingVo";
 import {siteSettingApi} from "@/service/api/admin/siteSettingApi";
 
 defineComponent({name: 'index'});

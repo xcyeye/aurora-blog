@@ -117,7 +117,12 @@ function _baseApi() {
 		return request.post<number>(`${apiPrefix}forgotPassword`, data, baseAxiosRequestConfig);
 	}
 
+  function queryTotalCount(data: beanType) {
+    return request.post<number>(`${apiPrefix}queryTotalUserCount`, data, baseAxiosRequestConfig)
+  }
+
   return {
+    queryTotalCount,
     queryOneData,
     queryOneDataByUid,
     queryListDataByCondition,

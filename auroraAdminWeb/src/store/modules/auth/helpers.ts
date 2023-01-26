@@ -1,5 +1,5 @@
 import { localStg } from '@/utils';
-import type { UserInfo } from '@/theme/vo/auth/OauthVo';
+import type { UserInfo } from '@/bean/vo/auth/OauthVo';
 
 /** 获取token */
 export function getToken() {

@@ -16,12 +16,12 @@
 
 <script lang="ts" setup>
 import {defineComponent, h, onMounted, ref} from "vue";
-import {Condition, PageData} from "@/theme/core/bean";
+import {Condition, PageData} from "@/bean/core/bean";
 import {fileApi, loginInfoApi} from "@/service";
 import {DataTableColumn, NAvatar, NButton, NSpace, NTag, NText} from "naive-ui";
 import {EnumMittEventName} from "@/enum";
 import {emitter, getFileFormat, getRandomTagType, isImage} from "@/utils";
-import {FileVo} from "@/theme/vo/file/fileVo";
+import {FileVo} from "@/bean/vo/file/fileVo";
 import {copyContent} from "@/plugins";
 import RequestResult = Service.RequestResult;
 

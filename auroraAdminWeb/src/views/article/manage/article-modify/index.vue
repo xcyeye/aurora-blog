@@ -117,10 +117,10 @@ import {UploadFileInfo} from "naive-ui";
 import {categoryApi, linkApi} from "@/service";
 import {EnumMittEventName} from "@/enum";
 import {emitter, StringUtil} from "@/utils";
-import {Link} from "@/theme/pojo/article/Link";
+import {Link} from "@/bean/pojo/article/Link";
 import {useAuthStore} from "@/store";
 import {REGEXP_EMAIL, REGEXP_URL} from "@/config";
-import {Category} from "@/theme/pojo/article/Category";
+import {Category} from "@/bean/pojo/article/Category";
 
 defineComponent({name: 'index'});
 

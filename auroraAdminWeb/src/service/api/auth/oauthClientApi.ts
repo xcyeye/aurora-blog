@@ -1,8 +1,8 @@
 import { baseAxiosRequestConfig } from '@/constants';
 import { request } from '@/service/request';
-import type { Condition, PageData } from '@/theme/core/bean';
-import {OauthClientDetails} from "@/theme/pojo/auth/OauthClientDetails";
-import {OauthClientDetailsVo} from "@/theme/vo/auth/OauthClientDetailsVo";
+import type { Condition, PageData } from '@/bean/core/bean';
+import type {OauthClientDetails} from "@/bean/pojo/auth/OauthClientDetails";
+import type {OauthClientDetailsVo} from "@/bean/vo/auth/OauthClientDetailsVo";
 
 /** 接口前缀 */
 const apiPrefix = '/auth/oauthClient/';

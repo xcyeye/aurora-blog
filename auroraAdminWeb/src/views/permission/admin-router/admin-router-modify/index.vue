@@ -76,7 +76,7 @@
 import {defineComponent, onBeforeMount, onMounted, ref} from "vue";
 import {EnumMittEventName} from "@/enum";
 import {emitter, StringUtil, transformRouteNameToRoutePath, transformRoutePathToRouteName} from "@/utils";
-import {AdminRouter} from "@/theme/pojo/admin/AdminRouter";
+import {AdminRouter} from "@/bean/pojo/admin/AdminRouter";
 import {adminRouterApi} from "@/service/api/admin/adminRouterApi";
 import {TreeSelectOption} from "naive-ui/es/tree-select/src/interface";
 import {SelectMixedOption} from "naive-ui/es/select/src/interface";

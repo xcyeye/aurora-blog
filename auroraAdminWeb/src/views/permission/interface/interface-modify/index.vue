@@ -48,7 +48,7 @@
 import {defineComponent, onMounted, ref} from "vue";
 import {EnumMittEventName} from "@/enum";
 import {emitter, StringUtil} from "@/utils";
-import {Permission} from "@/theme/pojo/admin/Permission";
+import {Permission} from "@/bean/pojo/admin/Permission";
 import {permissionApi} from "@/service";
 
 defineComponent({name: 'index'});

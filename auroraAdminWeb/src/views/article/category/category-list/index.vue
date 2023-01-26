@@ -24,15 +24,15 @@
 
 <script lang="ts" setup>
 import {defineComponent, h, onMounted, ref} from "vue";
-import {Condition, PageData} from "@/theme/core/bean";
+import {Condition, PageData} from "@/bean/core/bean";
 import {DataTableColumn, NButton, NSpace} from "naive-ui";
 import {EnumMittEventName} from "@/enum";
 import {emitter} from "@/utils";
 import {useRouterPush} from "@/composables";
 import CategoryChart from '../chart/index.vue';
 import {categoryApi} from "@/service";
-import {Category} from "@/theme/pojo/article/Category";
-import {CategoryVo} from "@/theme/vo/article/CategoryVo";
+import {Category} from "@/bean/pojo/article/Category";
+import {CategoryVo} from "@/bean/vo/article/CategoryVo";
 import RequestResult = Service.RequestResult;
 
 defineComponent({name: 'index'});

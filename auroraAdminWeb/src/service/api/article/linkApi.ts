@@ -1,8 +1,8 @@
 import { baseAxiosRequestConfig } from '@/constants';
 import { request } from '@/service/request';
-import type { Condition, PageData } from '@/theme/core/bean';
-import type { Link } from '@/theme/pojo/article/Link';
-import type { LinkVo } from '@/theme/vo/article/LinkVo';
+import type { Condition, PageData } from '@/bean/core/bean';
+import type { Link } from '@/bean/pojo/article/Link';
+import type { LinkVo } from '@/bean/vo/article/LinkVo';
 
 /** 接口前缀 */
 const apiPrefix = '/blog/link/';
@@ -94,7 +94,12 @@ function _baseApi() {
     return request.post<number>(`${apiPrefix}updateLinkPublishStatus`, data, baseAxiosRequestConfig);
   }
 
+  function queryTotalCount(data: beanType) {
+    return request.post<number>(`${apiPrefix}queryTotalLinkCount`, data, baseAxiosRequestConfig)
+  }
+
   return {
+    queryTotalCount,
     queryOneData,
     queryOneDataByUid,
     queryListDataByCondition,

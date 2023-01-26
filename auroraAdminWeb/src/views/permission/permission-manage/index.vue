@@ -99,10 +99,10 @@ import type {TransferRenderSourceList} from 'naive-ui';
 import {NSpace, NTag, NTree} from 'naive-ui';
 import type {SelectBaseOption} from 'naive-ui/es/select/src/interface';
 import {permissionApi, roleApi, userApi} from '@/service';
-import type {UserVo} from '@/theme/vo/admin/UserVo';
+import type {UserVo} from '@/bean/vo/admin/UserVo';
 import {rolePermissionRelApi} from '@/service/api/admin/RolePermissionRelApi';
-import type {PermissionVo} from '@/theme/vo/admin/PermissionVo';
-import type {RoleVo} from '@/theme/vo/admin/RoleVo';
+import type {PermissionVo} from '@/bean/vo/admin/PermissionVo';
+import type {RoleVo} from '@/bean/vo/admin/RoleVo';
 import {getRandomTagType, removeDuplicateElement} from "@/utils";
 import {interfaceInfoApi} from "@/service/api/auth/interfaceInfoApi";
 

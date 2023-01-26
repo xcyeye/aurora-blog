@@ -1,5 +1,5 @@
 import {defineStore} from "pinia";
-import {SysSettingVo} from "@/theme/vo/admin/SysSettingVo";
+import {SysSettingVo} from "@/bean/vo/admin/SysSettingVo";
 import {getSysSetting} from "@/store/modules/sysSetting/helpers";
 import {localStg} from "@/utils";
 

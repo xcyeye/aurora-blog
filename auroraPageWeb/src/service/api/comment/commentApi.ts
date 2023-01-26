@@ -80,10 +80,6 @@ function _baseApi() {
     return request.post<viewBeanType>(`${apiPrefix}queryCommentByUid`, data, baseAxiosRequestConfig);
   }
 
-  function queryCommentCount(data: beanType) {
-    return request.post<number>(`${apiPrefix}queryCommentCount`, data, baseAxiosRequestConfig);
-  }
-
   /**
    * 根据条件查询一条数据
    * @deprecated
@@ -101,7 +97,12 @@ function _baseApi() {
     return request.post<number>(`${apiPrefix}resendEmail`, data, baseAxiosRequestConfig);
   }
 
+  function queryTotalCount(data: beanType) {
+    return request.post<number>(`${apiPrefix}queryTotalCommentCount`, data, baseAxiosRequestConfig)
+  }
+
   return {
+    queryTotalCount,
     queryOneData,
     queryOneDataByUid,
     queryListDataByCondition,
@@ -113,7 +114,6 @@ function _baseApi() {
     batchInsertData,
     queryListCommentByUidArr,
     resendEmailNotice,
-    queryCommentCount
   };
 }
 

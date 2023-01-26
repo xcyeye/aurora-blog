@@ -6,14 +6,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.validation.BindException;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import xyz.xcye.core.annotaion.controller.ModifyOperation;
 import xyz.xcye.core.annotaion.controller.SelectOperation;
 import xyz.xcye.core.valid.Insert;
 import xyz.xcye.core.valid.Update;
 import xyz.xcye.data.entity.Condition;
 import xyz.xcye.data.entity.PageData;
-import xyz.xcye.message.po.EmailLog;
 import xyz.xcye.message.pojo.EmailLogPojo;
 import xyz.xcye.message.service.EmailLogService;
 import xyz.xcye.message.vo.EmailLogVO;
@@ -60,5 +62,12 @@ public class EmailLogController {
     @PostMapping("/queryListEmailLogByCondition")
     public PageData<EmailLogVO> queryListEmailLogByCondition(@RequestBody Condition<Long> condition) {
         return emailLogService.queryListEmailLogByCondition(condition);
+    }
+
+    @Operation(summary = "查询邮件数量")
+    @SelectOperation
+    @PostMapping("/queryTotalEmailLogCount")
+    public Integer queryCommentCount(@RequestBody EmailLogPojo pojo) {
+        return emailLogService.queryTotalEmailLogCount(pojo);
     }
 }

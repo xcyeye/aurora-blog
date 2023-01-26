@@ -1,8 +1,8 @@
 import { baseAxiosRequestConfig } from '@/constants';
 import { request } from '@/service/request';
-import type { Condition, PageData } from '@/theme/core/bean';
-import type { Category } from '@/theme/pojo/article/Category';
-import type { CategoryVo } from '@/theme/vo/article/CategoryVo';
+import type { Condition, PageData } from '@/bean/core/bean';
+import type { Category } from '@/bean/pojo/article/Category';
+import type { CategoryVo } from '@/bean/vo/article/CategoryVo';
 
 /** 接口前缀 */
 const apiPrefix = '/blog/category/';

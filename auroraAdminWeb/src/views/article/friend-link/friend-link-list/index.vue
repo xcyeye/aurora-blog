@@ -27,14 +27,14 @@
 
 <script lang="ts" setup>
 import {defineComponent, h, onMounted, ref} from "vue";
-import {Condition, PageData} from "@/theme/core/bean";
+import {Condition, PageData} from "@/bean/core/bean";
 import {linkApi} from "@/service";
 import {DataTableColumn, NA, NAvatar, NButton, NSpace, NSwitch, NText} from "naive-ui";
 import {EnumMittEventName} from "@/enum";
 import {emitter, StringUtil} from "@/utils";
-import {LinkVo} from "@/theme/vo/article/LinkVo";
+import {LinkVo} from "@/bean/vo/article/LinkVo";
 import {useRouterPush} from "@/composables";
-import {Link} from "@/theme/pojo/article/Link";
+import {Link} from "@/bean/pojo/article/Link";
 import RequestResult = Service.RequestResult;
 
 defineComponent({name: 'index'});

@@ -25,14 +25,14 @@
 
 <script lang="ts" setup>
 import {defineComponent, h, onMounted, ref} from "vue";
-import {Condition, PageData} from "@/theme/core/bean";
+import {Condition, PageData} from "@/bean/core/bean";
 import {commentApi,} from "@/service";
 import {DataTableColumn, NA, NAvatar, NButton, NSpace, NSwitch, NTag, TabsInst} from "naive-ui";
 import {EnumMittEventName} from "@/enum";
 import {emitter, getRandomTagType, StringUtil} from "@/utils";
 import {useRouterPush} from "@/composables";
-import {CommentVo} from "@/theme/vo/comment/CommentVo";
-import {Comment} from "@/theme/pojo/comment/Comment";
+import {CommentVo} from "@/bean/vo/comment/CommentVo";
+import {Comment} from "@/bean/pojo/comment/Comment";
 import {useAuthStore} from "@/store";
 import RequestResult = Service.RequestResult;
 

@@ -81,7 +81,7 @@ import {EnumMittEventName} from "@/enum";
 import {emitter, StringUtil} from "@/utils";
 import {useAuthStore} from "@/store";
 import {REGEXP_EMAIL, REGEXP_URL} from "@/config";
-import {Tag} from "@/theme/pojo/article/Tag";
+import {Tag} from "@/bean/pojo/article/Tag";
 
 defineComponent({name: 'index'});
 

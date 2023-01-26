@@ -144,7 +144,12 @@ function _baseApi() {
     );
   }
 
+  function queryTotalCount(data: beanType) {
+    return request.post<number>(`${apiPrefix}queryTotalFileCount`, data, baseAxiosRequestConfig)
+  }
+
   return {
+    queryTotalCount,
     downloadFile,
     deleteFile,
     typoraUploadFile,

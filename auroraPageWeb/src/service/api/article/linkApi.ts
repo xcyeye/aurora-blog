@@ -94,7 +94,12 @@ function _baseApi() {
     return request.post<number>(`${apiPrefix}updateLinkPublishStatus`, data, baseAxiosRequestConfig);
   }
 
+  function queryTotalCount(data: beanType) {
+    return request.post<number>(`${apiPrefix}queryTotalLinkCount`, data, baseAxiosRequestConfig)
+  }
+
   return {
+    queryTotalCount,
     queryOneData,
     queryOneDataByUid,
     queryListDataByCondition,

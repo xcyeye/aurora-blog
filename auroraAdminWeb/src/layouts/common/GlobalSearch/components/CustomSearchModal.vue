@@ -135,7 +135,7 @@ import {onKeyStroke, useDebounceFn} from '@vueuse/core';
 import {EnumMittEventName} from '@/enum';
 import {useBasicLayout} from '@/composables';
 import {emitter, formatTime} from '@/utils';
-import type {Condition} from '@/theme/core/bean';
+import type {Condition} from '@/bean/core/bean';
 import SearchFooter from './SearchFooter.vue';
 
 defineOptions({ name: 'SearchModal' });

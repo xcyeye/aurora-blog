@@ -28,14 +28,14 @@
 
 <script lang="ts" setup>
 import {defineComponent, h, onMounted, ref} from "vue";
-import {Condition, PageData} from "@/theme/core/bean";
+import {Condition, PageData} from "@/bean/core/bean";
 import {articleApi} from "@/service";
 import {DataTableColumn, NButton, NSpace, NSwitch, NTag} from "naive-ui";
 import {EnumMittEventName} from "@/enum";
 import {emitter, getRandomTagType, StringUtil} from "@/utils";
 import {useRouterPush} from "@/composables";
-import {Article} from "@/theme/pojo/article/Article";
-import {ArticleVo} from "@/theme/vo/article/ArticleVo";
+import {Article} from "@/bean/pojo/article/Article";
+import {ArticleVo} from "@/bean/vo/article/ArticleVo";
 import {REGEXP_URL} from "@/config";
 import RequestResult = Service.RequestResult;
 

@@ -1,8 +1,8 @@
 import type {AxiosRequestConfig} from 'axios';
 import {EnumContentType} from '@/enum';
 import {request} from '@/service/request';
-import type {Condition, PageData} from '@/theme/core/bean';
-import {RolePermission} from "@/theme/pojo/admin/RolePermission";
+import type {Condition, PageData} from '@/bean/core/bean';
+import type {RolePermission} from "@/bean/pojo/admin/RolePermission";
 
 /** 接口前缀 */
 const apiPrefix = '/admin/permissionRelation/';

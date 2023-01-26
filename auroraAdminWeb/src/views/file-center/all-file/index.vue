@@ -48,7 +48,7 @@ import AllFileList from './all-file-list/index.vue'
 import AllFileShow from './all-file-show/index.vue'
 import {fileApi} from "@/service";
 import {useAuthStore} from "@/store";
-import {Condition} from "@/theme/core/bean";
+import {Condition} from "@/bean/core/bean";
 import {emitter} from "@/utils";
 import {EnumFileStorageModeConstant, EnumMittEventName} from "@/enum";
 

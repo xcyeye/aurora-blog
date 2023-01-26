@@ -3,19 +3,18 @@
     <n-grid-item span="0:24 640:24 1024:16">
       <n-card :bordered="false" class="rounded-16px shadow-sm">
         <div class="flex w-full h-360px">
-          <div class="w-200px h-full py-12px">
-            <h3 class="text-16px font-bold">Dashboard</h3>
-            <p class="text-[#aaa]">Overview Of Lasted Month</p>
-            <h3 class="pt-36px text-24px font-bold">
-              <count-to prefix="$" :start-value="0" :end-value="7754" />
-            </h3>
-            <p class="text-[#aaa]">Current Month Earnings</p>
-            <h3 class="pt-36px text-24px font-bold">
-              <count-to :start-value="0" :end-value="1234" />
-            </h3>
-            <p class="text-[#aaa]">Current Month Sales</p>
-            <n-button class="mt-24px" type="primary">Last Month Summary</n-button>
-          </div>
+          <!--<div class="w-200px h-full py-12px">-->
+          <!--  <h3 class="text-16px font-bold">Dashboard</h3>-->
+          <!--  <p class="text-[#aaa]">Overview Of Lasted Month</p>-->
+          <!--  <h3 class="pt-36px text-24px font-bold">-->
+          <!--    <count-to prefix="$" :start-value="0" :end-value="7754" />-->
+          <!--  </h3>-->
+          <!--  <p class="text-[#aaa]">Current Month Earnings</p>-->
+          <!--  <h3 class="pt-36px text-24px font-bold">-->
+          <!--    <count-to :start-value="0" :end-value="1234" />-->
+          <!--  </h3>-->
+          <!--  <p class="text-[#aaa]">Current Month Sales</p>-->
+          <!--</div>-->
           <div class="flex-1-hidden h-full">
             <div ref="lineRef" class="wh-full"></div>
           </div>
@@ -48,7 +47,7 @@ const lineOptions = ref<ECOption>({
     }
   },
   legend: {
-    data: ['下载量', '注册数']
+    data: ['文章', '评论', '友情链接', '说说', '用户']
   },
   grid: {
     left: '3%',
@@ -71,7 +70,7 @@ const lineOptions = ref<ECOption>({
   series: [
     {
       color: '#8e9dff',
-      name: '下载量',
+      name: '文章',
       type: 'line',
       smooth: true,
       stack: 'Total',
@@ -101,7 +100,7 @@ const lineOptions = ref<ECOption>({
     },
     {
       color: '#26deca',
-      name: '注册数',
+      name: '评论',
       type: 'line',
       smooth: true,
       stack: 'Total',
@@ -128,7 +127,97 @@ const lineOptions = ref<ECOption>({
         focus: 'series'
       },
       data: [2208, 2016, 2916, 4512, 8281, 2008, 1963, 2367, 2956, 678]
-    }
+    },
+		{
+			color: '#f0a6ca',
+			name: '说说',
+			type: 'line',
+			smooth: true,
+			stack: 'Total',
+			areaStyle: {
+				color: {
+					type: 'linear',
+					x: 0,
+					y: 0,
+					x2: 0,
+					y2: 1,
+					colorStops: [
+						{
+							offset: 0.25,
+							color: '#f0a6ca'
+						},
+						{
+							offset: 1,
+							color: '#fff'
+						}
+					]
+				}
+			},
+			emphasis: {
+				focus: 'series'
+			},
+			data: [2208, 2016, 2916, 4512, 8281, 2008, 1963, 2367, 2956, 678]
+		},
+		{
+			color: '#fbc4ab',
+			name: '友情链接',
+			type: 'line',
+			smooth: true,
+			stack: 'Total',
+			areaStyle: {
+				color: {
+					type: 'linear',
+					x: 0,
+					y: 0,
+					x2: 0,
+					y2: 1,
+					colorStops: [
+						{
+							offset: 0.25,
+							color: '#fbc4ab'
+						},
+						{
+							offset: 1,
+							color: '#fff'
+						}
+					]
+				}
+			},
+			emphasis: {
+				focus: 'series'
+			},
+			data: [2208, 2016, 2916, 4512, 8281, 2008, 1963, 2367, 2956, 678]
+		},
+		{
+			color: '#b298dc',
+			name: '用户',
+			type: 'line',
+			smooth: true,
+			stack: 'Total',
+			areaStyle: {
+				color: {
+					type: 'linear',
+					x: 0,
+					y: 0,
+					x2: 0,
+					y2: 1,
+					colorStops: [
+						{
+							offset: 0.25,
+							color: '#b298dc'
+						},
+						{
+							offset: 1,
+							color: '#fff'
+						}
+					]
+				}
+			},
+			emphasis: {
+				focus: 'series'
+			},
+			data: [2208, 2016, 2916, 4512, 8281, 2008, 1963, 2367, 2956, 678]
+		}
   ]
 }) as Ref<ECOption>;
 const { domRef: lineRef } = useEcharts(lineOptions);

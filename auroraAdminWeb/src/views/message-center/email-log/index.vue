@@ -32,14 +32,14 @@
 
 <script lang="ts" setup>
 import {defineComponent, h, onMounted, ref} from "vue";
-import {Condition, PageData} from "@/theme/core/bean";
+import {Condition, PageData} from "@/bean/core/bean";
 import {emailLogApi, sendMailApi} from "@/service";
 import {DataTableColumn, NButton, NSpace, NTag, useLoadingBar} from "naive-ui";
 import {EnumMittEventName} from "@/enum";
-import {LoginInfoVo} from "@/theme/vo/auth/LoginInfoVo";
+import {LoginInfoVo} from "@/bean/vo/auth/LoginInfoVo";
 import {emitter} from "@/utils";
-import {EmailLogVo} from "@/theme/vo/message/EmailLogVo";
-import {EmailLog} from "@/theme/pojo/message/EmailLog";
+import {EmailLogVo} from "@/bean/vo/message/EmailLogVo";
+import {EmailLog} from "@/bean/pojo/message/EmailLog";
 import RequestResult = Service.RequestResult;
 import {useLoading} from "@/hooks";
 

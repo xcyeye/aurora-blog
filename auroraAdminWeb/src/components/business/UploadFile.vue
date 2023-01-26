@@ -57,8 +57,8 @@
 import {computed, defineComponent, reactive, ref, useSlots} from "vue";
 import {UploadCustomRequestOptions, UploadFileInfo, UploadInst} from "naive-ui";
 import {fileApi} from "@/service";
-import {AuroraFile} from "@/theme/pojo/file/file";
-import {FileVo} from "@/theme/vo/file/fileVo";
+import {AuroraFile} from "@/bean/pojo/file/file";
+import {FileVo} from "@/bean/vo/file/fileVo";
 import {useSysSettingStore} from "@/store";
 import {StringUtil} from "@/utils";
 

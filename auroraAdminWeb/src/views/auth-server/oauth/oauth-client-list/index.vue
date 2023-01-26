@@ -15,15 +15,15 @@
 
 <script lang="ts" setup>
 import {defineComponent, h, onMounted, ref} from "vue";
-import {UserVo} from "@/theme/vo/admin/UserVo";
-import {Condition, PageData} from "@/theme/core/bean";
+import {UserVo} from "@/bean/vo/admin/UserVo";
+import {Condition, PageData} from "@/bean/core/bean";
 import {userApi} from "@/service";
 import {DataTableColumn, NButton, NSpace, NTag} from "naive-ui";
 import {emitter} from "@/utils";
 import {EnumMittEventName} from "@/enum";
-import {User} from "@/theme/pojo/admin/User";
+import {User} from "@/bean/pojo/admin/User";
 import {oauthClientApi} from "@/service/api/auth/oauthClientApi";
-import {OauthClientDetailsVo} from "@/theme/vo/auth/OauthClientDetailsVo";
+import {OauthClientDetailsVo} from "@/bean/vo/auth/OauthClientDetailsVo";
 import RequestResult = Service.RequestResult;
 import {authorizedGrantTypes} from "@/constants";
 import {copyContent} from "@/plugins";

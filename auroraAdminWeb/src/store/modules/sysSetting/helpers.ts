@@ -1,5 +1,5 @@
 import {localStg} from '@/utils';
-import {SysSettingVo} from "@/theme/vo/admin/SysSettingVo";
+import {SysSettingVo} from "@/bean/vo/admin/SysSettingVo";
 
 /** 获取sysSetting */
 export function getSysSetting(): Map<string, SysSettingVo> {

@@ -1,8 +1,8 @@
 import { baseAxiosRequestConfig } from '@/constants';
 import { request } from '@/service/request';
-import type { Condition, PageData } from '@/theme/core/bean';
-import type { WhiteUrl } from '@/theme/pojo/admin/WhiteUrl';
-import type { WhiteUrlVo } from '@/theme/vo/admin/WhiteUrlVo';
+import type { Condition, PageData } from '@/bean/core/bean';
+import type { WhiteUrl } from '@/bean/pojo/admin/WhiteUrl';
+import type { WhiteUrlVo } from '@/bean/vo/admin/WhiteUrlVo';
 
 /** 接口前缀 */
 const apiPrefix = '/admin/whiteUrl/';

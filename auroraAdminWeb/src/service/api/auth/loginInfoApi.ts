@@ -1,8 +1,8 @@
 import { baseAxiosRequestConfig } from '@/constants';
 import { request } from '@/service/request';
-import type { Condition, PageData } from '@/theme/core/bean';
-import type { LoginInfo } from '@/theme/pojo/auth/LoginInfo';
-import type { LoginInfoVo } from '@/theme/vo/auth/LoginInfoVo';
+import type { Condition, PageData } from '@/bean/core/bean';
+import type { LoginInfo } from '@/bean/pojo/auth/LoginInfo';
+import type { LoginInfoVo } from '@/bean/vo/auth/LoginInfoVo';
 
 /** 接口前缀 */
 const apiPrefix = '/login/loginInfo/';

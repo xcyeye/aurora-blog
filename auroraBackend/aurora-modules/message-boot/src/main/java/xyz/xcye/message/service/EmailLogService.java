@@ -46,6 +46,10 @@ public class EmailLogService {
         return PageUtils.copyPageDataResult(auroraEmailLogService.queryListByCondition(condition),EmailLogVO.class);
     }
 
+    public int queryTotalEmailLogCount(EmailLogPojo pojo) {
+        return auroraEmailLogService.countByWhere(BeanUtils.copyProperties(pojo, EmailLog.class));
+    }
+
     public EmailLogVO queryByUid(long uid) {
         return BeanUtils.copyProperties(auroraEmailLogService.queryById(uid), EmailLogVO.class);
     }

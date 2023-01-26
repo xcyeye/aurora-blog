@@ -228,14 +228,14 @@ import {NTag, UploadFileInfo} from 'naive-ui';
 import 'vditor/dist/index.css';
 import {useAppStore, useAuthStore, useThemeStore} from '@/store';
 import {removeDuplicateElement, StringUtil} from '@/utils';
-import {Article} from "@/theme/pojo/article/Article";
+import {Article} from "@/bean/pojo/article/Article";
 import {useRouter} from "vue-router";
 import {REGEXP_URL} from "@/config";
 import {articleApi, categoryApi, tagApi} from "@/service";
-import {Tag} from "@/theme/pojo/article/Tag";
-import {TagVo} from "@/theme/vo/article/TagVo";
-import {CategoryVo} from "@/theme/vo/article/CategoryVo";
-import {Category} from "@/theme/pojo/article/Category";
+import {Tag} from "@/bean/pojo/article/Tag";
+import {TagVo} from "@/bean/vo/article/TagVo";
+import {CategoryVo} from "@/bean/vo/article/CategoryVo";
+import {Category} from "@/bean/pojo/article/Category";
 import {useRouterPush} from "@/composables";
 
 interface VditorPropsProperties {

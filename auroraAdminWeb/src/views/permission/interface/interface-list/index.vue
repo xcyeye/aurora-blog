@@ -11,14 +11,14 @@
 
 <script lang="ts" setup>
 import {defineComponent, h, onMounted, ref} from "vue";
-import {Condition, PageData} from "@/theme/core/bean";
+import {Condition, PageData} from "@/bean/core/bean";
 import {permissionApi} from "@/service";
 import {DataTableColumn, NButton, NSpace, NTag, NText} from "naive-ui";
 import {EnumMittEventName} from "@/enum";
 import {emitter, getRandomTagType} from "@/utils";
 import {useRouterPush} from "@/composables";
-import {PermissionVo} from "@/theme/vo/admin/PermissionVo";
-import {Permission} from "@/theme/pojo/admin/Permission";
+import {PermissionVo} from "@/bean/vo/admin/PermissionVo";
+import {Permission} from "@/bean/pojo/admin/Permission";
 import RequestResult = Service.RequestResult;
 
 defineComponent({name: 'index'});

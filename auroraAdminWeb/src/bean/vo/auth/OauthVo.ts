@@ -1,6 +1,6 @@
 import RoleType = Auth.RoleType;
-import {EmailVo} from "@/theme/vo/message/EmailVo";
-import {UserVo} from "@/theme/vo/admin/UserVo";
+import {EmailVo} from "@/bean/vo/message/EmailVo";
+import {UserVo} from "@/bean/vo/admin/UserVo";
 
 interface UserInfo {
   user_uid: string;

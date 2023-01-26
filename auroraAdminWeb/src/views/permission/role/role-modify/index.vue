@@ -45,7 +45,7 @@
 import {defineComponent, onMounted, ref} from "vue";
 import {EnumMittEventName} from "@/enum";
 import {emitter, getRandomTagType, StringUtil} from "@/utils";
-import {Role} from "@/theme/pojo/admin/Role";
+import {Role} from "@/bean/pojo/admin/Role";
 import {roleApi} from "@/service";
 import {rolePermissionRelApi} from "@/service/api/admin/RolePermissionRelApi";
 

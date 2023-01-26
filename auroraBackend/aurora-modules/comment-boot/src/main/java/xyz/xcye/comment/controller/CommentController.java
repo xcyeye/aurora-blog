@@ -97,9 +97,9 @@ public class CommentController {
 
     @Operation(summary = "查询评论的数量")
     @SelectOperation
-    @PostMapping("/queryCommentCount")
-    public Long queryCommentCount(@RequestBody CommentPojo comment) {
-        return commentService.queryCommentCount(comment);
+    @PostMapping("/queryTotalCommentCount")
+    public Integer queryCommentCount(@RequestBody CommentPojo comment) {
+        return commentService.queryTotalCommentCount(comment);
     }
 
     @Operation(summary = "重新发送评论的邮件通知")

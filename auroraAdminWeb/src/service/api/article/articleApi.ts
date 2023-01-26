@@ -1,8 +1,8 @@
 import { baseAxiosRequestConfig } from '@/constants';
 import { request } from '@/service/request';
-import type { Condition, PageData } from '@/theme/core/bean';
-import type { Article } from '@/theme/pojo/article/Article';
-import type { ArticleVo } from '@/theme/vo/article/ArticleVo';
+import type { Condition, PageData } from '@/bean/core/bean';
+import type { Article } from '@/bean/pojo/article/Article';
+import type { ArticleVo } from '@/bean/vo/article/ArticleVo';
 
 /** 接口前缀 */
 const apiPrefix = '/blog/article/';
@@ -51,6 +51,14 @@ function _baseApi() {
     return request.post<number>(`${apiPrefix}updateArticle`, data, baseAxiosRequestConfig);
   }
 
+  function updateArticleLikeNum(data: beanType) {
+    return request.post<void>(`${apiPrefix}updateArticleLikeNum`, data, baseAxiosRequestConfig);
+  }
+
+  function updateArticleReadNum(data: beanType) {
+    return request.post<void>(`${apiPrefix}updateArticleReadNum`, data, baseAxiosRequestConfig);
+  }
+
   /**
    * 批量更新数据
    * @deprecated
@@ -80,6 +88,10 @@ function _baseApi() {
     return request.post<viewBeanType>(`${apiPrefix}queryArticleByUid`, data, baseAxiosRequestConfig);
   }
 
+  function queryListArticleByTagOrCategory(data: beanType) {
+    return request.post<viewBeanType>(`${apiPrefix}queryListArticleByTagOrCategory`, data, baseAxiosRequestConfig);
+  }
+
   /**
    * 根据条件查询一条数据
    * @deprecated
@@ -89,7 +101,12 @@ function _baseApi() {
     return request.post<viewBeanType>(`${apiPrefix}`, data, baseAxiosRequestConfig);
   }
 
+  function queryTotalCount(data: beanType) {
+    return request.post<number>(`${apiPrefix}queryTotalArticleCount`, data, baseAxiosRequestConfig)
+  }
+
   return {
+    queryTotalCount,
     queryOneData,
     queryOneDataByUid,
     queryListDataByCondition,
@@ -98,7 +115,10 @@ function _baseApi() {
     logicDeleteData,
     physicalDeleteData,
     insertData,
-    batchInsertData
+    batchInsertData,
+    updateArticleReadNum,
+    updateArticleLikeNum,
+    queryListArticleByTagOrCategory
   };
 }
 

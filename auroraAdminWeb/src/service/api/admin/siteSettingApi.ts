@@ -1,7 +1,7 @@
 import { baseAxiosRequestConfig } from '@/constants';
 import { request } from '@/service/request';
-import type { Condition, PageData } from '@/theme/core/bean';
-import {SiteSettingVo} from "@/theme/vo/admin/SiteSettingVo";
+import type { Condition, PageData } from '@/bean/core/bean';
+import {SiteSettingVo} from "@/bean/vo/admin/SiteSettingVo";
 
 /** 接口前缀 */
 const apiPrefix = '/admin/siteSetting/';

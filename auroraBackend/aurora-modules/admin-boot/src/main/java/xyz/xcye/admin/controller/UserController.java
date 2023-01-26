@@ -80,6 +80,13 @@ public class UserController {
         return userService.physicalDeleteUser(user.getUid());
     }
 
+    @PostMapping("/queryTotalUserCount")
+    @ModifyOperation
+    @Operation(summary = "查询用户数")
+    public Integer queryTotalUserCount(@RequestBody UserPojo user) {
+        return userService.queryTotalUserCount(user);
+    }
+
     @PostMapping("/queryUserByUid")
     @SelectOperation
     @Operation(summary = "通过uid查询用户信息")

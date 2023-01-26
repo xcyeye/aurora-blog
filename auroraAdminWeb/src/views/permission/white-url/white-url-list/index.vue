@@ -18,18 +18,18 @@
 
 <script lang="ts" setup>
 import {defineComponent, h, onMounted, ref} from "vue";
-import {Condition, PageData} from "@/theme/core/bean";
+import {Condition, PageData} from "@/bean/core/bean";
 import {DataTableColumn, NButton, NSpace, NSwitch, NTag, NText} from "naive-ui";
 import {EnumMittEventName} from "@/enum";
 import {emitter, getRandomTagType, StringUtil} from "@/utils";
 import {useRouterPush} from "@/composables";
 import RequestResult = Service.RequestResult;
 import {bulletinApi, roleApi, whiteUrlApi} from "@/service";
-import {RoleVo} from "@/theme/vo/admin/RoleVo";
-import {BulletinVo} from "@/theme/vo/article/BulletinVo";
-import {Role} from "@/theme/pojo/admin/Role";
-import {WhiteUrlVo} from "@/theme/vo/admin/WhiteUrlVo";
-import {WhiteUrl} from "@/theme/pojo/admin/WhiteUrl";
+import {RoleVo} from "@/bean/vo/admin/RoleVo";
+import {BulletinVo} from "@/bean/vo/article/BulletinVo";
+import {Role} from "@/bean/pojo/admin/Role";
+import {WhiteUrlVo} from "@/bean/vo/admin/WhiteUrlVo";
+import {WhiteUrl} from "@/bean/pojo/admin/WhiteUrl";
 
 defineComponent({name: 'index'});
 

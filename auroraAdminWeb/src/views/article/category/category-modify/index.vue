@@ -80,7 +80,7 @@ import {EnumMittEventName} from "@/enum";
 import {emitter, StringUtil} from "@/utils";
 import {useAuthStore} from "@/store";
 import {REGEXP_URL} from "@/config";
-import {Category} from "@/theme/pojo/article/Category";
+import {Category} from "@/bean/pojo/article/Category";
 import {categoryApi} from "@/service";
 
 defineComponent({name: 'index'});

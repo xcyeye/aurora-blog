@@ -186,7 +186,7 @@ const calculateReadTime = () => {
 }
 
 const calculateComment = () => {
-	commentApi.queryCommentCount({userUid: userUid.value, queryRegexp: `/article/${articleUid.value}`}).then(result => {
+	commentApi.queryTotalCount({path: `/article/${articleUid.value}`}).then(result => {
 		if (result.data) {
 			totalComment.value = result.data
 		}

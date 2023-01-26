@@ -1,8 +1,8 @@
 import { baseAxiosRequestConfig } from '@/constants';
 import { request } from '@/service/request';
-import type { Condition, PageData } from '@/theme/core/bean';
-import type { Bulletin } from '@/theme/pojo/article/Bulletin';
-import type { BulletinVo } from '@/theme/vo/article/BulletinVo';
+import type { Condition, PageData } from '@/bean/core/bean';
+import type { Bulletin } from '@/bean/pojo/article/Bulletin';
+import type { BulletinVo } from '@/bean/vo/article/BulletinVo';
 
 /** 接口前缀 */
 const apiPrefix = '/blog/bulletin/';

@@ -67,14 +67,14 @@
 
 <script lang="ts" setup>
 import {defineComponent, h, onMounted, ref} from "vue";
-import {Condition, PageData} from "@/theme/core/bean";
+import {Condition, PageData} from "@/bean/core/bean";
 import {bulletinApi, fileApi, talkApi} from "@/service";
 import {DataTableColumn, NButton, NSpace, NSwitch, NTag, UploadFileInfo} from "naive-ui";
 import {EnumMittEventName} from "@/enum";
 import {emitter, StringUtil} from "@/utils";
-import {EmailLogVo} from "@/theme/vo/message/EmailLogVo";
-import {TalkVo} from "@/theme/vo/article/TalkVo";
-import {Talk} from "@/theme/pojo/article/Talk";
+import {EmailLogVo} from "@/bean/vo/message/EmailLogVo";
+import {TalkVo} from "@/bean/vo/article/TalkVo";
+import {Talk} from "@/bean/pojo/article/Talk";
 import RequestResult = Service.RequestResult;
 import {useAuthStore} from "@/store";
 

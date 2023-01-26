@@ -77,7 +77,7 @@
 import {defineComponent, onBeforeMount, ref} from "vue";
 import {useAuthStore} from "@/store";
 import {articleApi} from "@/service";
-import {ArticleVo} from "@/theme/vo/article/ArticleVo";
+import {ArticleVo} from "@/bean/vo/article/ArticleVo";
 import {removeDuplicateElement, StringUtil} from "@/utils";
 import {siteSettingApi} from "@/service/api/admin/siteSettingApi";
 import draggable from 'vuedraggable'

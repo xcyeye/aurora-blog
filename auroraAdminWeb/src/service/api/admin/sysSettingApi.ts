@@ -1,8 +1,8 @@
 import type {AxiosRequestConfig} from 'axios';
 import {EnumContentType} from '@/enum';
 import {request} from '@/service/request';
-import type {Condition, PageData} from '@/theme/core/bean';
-import {SysSettingVo} from "@/theme/vo/admin/SysSettingVo";
+import type {Condition, PageData} from '@/bean/core/bean';
+import type {SysSettingVo} from "@/bean/vo/admin/SysSettingVo";
 
 /** 接口前缀 */
 const apiPrefix = '/admin/sysSetting/';

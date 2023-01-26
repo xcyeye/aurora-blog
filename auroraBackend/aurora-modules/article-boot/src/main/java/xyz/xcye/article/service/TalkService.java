@@ -89,4 +89,8 @@ public class TalkService {
         record.setUserUid(null);
         return auroraTalkService.updateById(BeanUtils.copyProperties(record, Talk.class));
     }
+
+    public int queryTotalTalkCount(TalkPojo pojo) {
+        return auroraTalkService.countByWhere(BeanUtils.copyProperties(pojo, Talk.class));
+    }
 }

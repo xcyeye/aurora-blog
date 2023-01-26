@@ -99,7 +99,7 @@
 import {defineComponent, onMounted, ref} from "vue";
 import {removeDuplicateElement, StringUtil, emitter} from "@/utils";
 import {EnumMittEventName} from "@/enum";
-import {OauthClientDetails} from "@/theme/pojo/auth/OauthClientDetails";
+import {OauthClientDetails} from "@/bean/pojo/auth/OauthClientDetails";
 import {authorizedGrantTypes} from "@/constants";
 import {REGEXP_PWD} from "@/config";
 import {oauthClientApi} from "@/service/api/auth/oauthClientApi";

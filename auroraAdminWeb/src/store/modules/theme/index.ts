@@ -5,7 +5,7 @@ import { getNaiveThemeOverrides, initThemeSettings } from './helpers';
 
 type ThemeState = Theme.Setting;
 
-export const useThemeStore = defineStore('theme-store', {
+export const useThemeStore = defineStore('bean-store', {
   state: (): ThemeState => initThemeSettings(),
   getters: {
     /** naiveUI的主题配置 */

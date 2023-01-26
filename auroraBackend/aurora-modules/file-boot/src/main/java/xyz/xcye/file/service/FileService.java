@@ -129,6 +129,10 @@ public class FileService {
         return auroraFileService.deleteById(uid);
     }
 
+    public int queryTotalFileCount(FilePojo pojo) {
+        return auroraFileService.countByWhere(BeanUtils.copyProperties(pojo, File.class));
+    }
+
     public PageData<FileVO> queryListFileByCondition(Condition<Long> condition) {
         // 如果是超级管理员，则查询所有的数据
         JwtUserInfo jwtUserInfo = UserUtils.getCurrentUser();

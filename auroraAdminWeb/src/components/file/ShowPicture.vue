@@ -108,8 +108,8 @@
 
 <script lang="ts" setup>
 import {defineComponent, ref} from "vue";
-import {AuroraFile} from "@/theme/pojo/file/file";
-import {FileVo} from "@/theme/vo/file/fileVo";
+import {AuroraFile} from "@/bean/pojo/file/file";
+import {FileVo} from "@/bean/vo/file/fileVo";
 import {StringUtil, getFileSize} from "@/utils";
 import {fileApi} from "@/service";
 import {copyContent} from "@/plugins";

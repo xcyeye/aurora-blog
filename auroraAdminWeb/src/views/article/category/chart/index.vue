@@ -12,12 +12,12 @@ import * as echarts from 'echarts';
 import {ECharts} from 'echarts';
 import {rand} from '@vueuse/core';
 import {useAuthStore} from '@/store';
-import {Condition} from "@/theme/core/bean";
+import {Condition} from "@/bean/core/bean";
 import {articleApi, categoryApi, linkApi} from "@/service";
 import {ECBasicOption} from "echarts/types/dist/shared";
-import {CategoryVo} from "@/theme/vo/article/CategoryVo";
-import {ArticleVo} from "@/theme/vo/article/ArticleVo";
-import {LinkVo} from "@/theme/vo/article/LinkVo";
+import {CategoryVo} from "@/bean/vo/article/CategoryVo";
+import {ArticleVo} from "@/bean/vo/article/ArticleVo";
+import {LinkVo} from "@/bean/vo/article/LinkVo";
 
 let myChart: ECharts;
 

@@ -403,14 +403,13 @@ export default {
 			}
 		})
 		// latestPageSize
-		articleApi.queryListDataByCondition({otherUid: this.userUid, delete: false, status: true, pageSize: this.latestPageSize}).then(result => {
-			if (result.data && result.data.result) {
-				this.articleArr = result.data.result
-				this.articleNumber = result.data.total
+		articleApi.queryTotalCount({userUid: this.userUid, delete: false}).then(result => {
+			if (result.data) {
+				this.articleNumber = result.data
 			}
 		})
 		
-		commentApi.queryCommentCount({userUid: this.userUid}).then(result => {
+		commentApi.queryTotalCount({userUid: this.userUid}).then(result => {
 			if (result.data) {
 				this.totalCommentNumber = result.data
 			}

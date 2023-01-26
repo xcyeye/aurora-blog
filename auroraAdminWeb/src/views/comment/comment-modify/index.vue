@@ -54,13 +54,13 @@
 
 <script lang="ts" setup>
 import {defineComponent, onMounted, ref, watch} from "vue";
-import {User} from "@/theme/pojo/admin/User";
+import {User} from "@/bean/pojo/admin/User";
 import {FormInst, FormItemRule, FormRules, MentionOption, UploadFileInfo} from "naive-ui";
 import {emailApi, userApi} from "@/service";
 import {EnumMittEventName} from "@/enum";
 import {emitter, StringUtil} from "@/utils";
-import {Email} from "@/theme/pojo/message/Email";
-import {EmailVo} from "@/theme/vo/message/EmailVo";
+import {Email} from "@/bean/pojo/message/Email";
+import {EmailVo} from "@/bean/vo/message/EmailVo";
 import {REGEXP_EMAIL} from "@/config";
 
 defineComponent({name: 'index'});

@@ -192,7 +192,7 @@
 <script lang="ts" setup>
 import {defineComponent, onBeforeMount, ref, watch} from "vue";
 import {commentApi} from "@/service";
-import {Comment} from "@/theme/pojo/comment/Comment";
+import {Comment} from "@/bean/pojo/comment/Comment";
 import {StringUtil} from "@/utils";
 import {useAuthStore} from "@/store";
 import {UploadFileInfo} from "naive-ui";

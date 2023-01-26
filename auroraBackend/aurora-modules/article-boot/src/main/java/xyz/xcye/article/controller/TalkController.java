@@ -83,4 +83,11 @@ public class TalkController {
     public int updateTalk(@Validated({Update.class, Default.class}) @RequestBody TalkPojo talk) {
         return talkService.updateTalk(talk);
     }
+
+    @PostMapping("/queryTotalTalkCount")
+    @ModifyOperation
+    @Operation(summary = "查询说说数")
+    public Integer queryTotalTalkCount(@RequestBody TalkPojo pojo) {
+        return talkService.queryTotalTalkCount(pojo);
+    }
 }

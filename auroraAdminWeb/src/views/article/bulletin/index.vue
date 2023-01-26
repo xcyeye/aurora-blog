@@ -61,14 +61,14 @@
 
 <script lang="ts" setup>
 import {defineComponent, h, onMounted, ref} from "vue";
-import {Condition, PageData} from "@/theme/core/bean";
+import {Condition, PageData} from "@/bean/core/bean";
 import {bulletinApi} from "@/service";
 import {DataTableColumn, NButton, NSpace, NSwitch, NTag, useLoadingBar} from "naive-ui";
 import {EnumMittEventName} from "@/enum";
 import {emitter, StringUtil} from "@/utils";
-import {EmailLogVo} from "@/theme/vo/message/EmailLogVo";
-import {BulletinVo} from "@/theme/vo/article/BulletinVo";
-import {Bulletin} from "@/theme/pojo/article/Bulletin";
+import {EmailLogVo} from "@/bean/vo/message/EmailLogVo";
+import {BulletinVo} from "@/bean/vo/article/BulletinVo";
+import {Bulletin} from "@/bean/pojo/article/Bulletin";
 import RequestResult = Service.RequestResult;
 
 defineComponent({name: 'index'});

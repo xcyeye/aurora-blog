@@ -160,6 +160,13 @@ public class FileController {
         return fileService.physicalDeleteFileInfo(fileInfo.getUid());
     }
 
+    @Operation(summary = "查询文件数量")
+    @SelectOperation
+    @PostMapping("/queryTotalFileCount")
+    public Integer queryCommentCount(@RequestBody FilePojo pojo) {
+        return fileService.queryTotalFileCount(pojo);
+    }
+
     @Operation(summary = "根据uid下载文件")
     @GetMapping("/download/{uid}")
     public void downloadFile(@PathVariable("uid") long uid, HttpServletResponse response)

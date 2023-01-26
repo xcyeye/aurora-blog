@@ -1,8 +1,8 @@
 import { baseAxiosRequestConfig } from '@/constants';
 import { request } from '@/service/request';
-import type { Condition, PageData } from '@/theme/core/bean';
-import type { CommentVo } from '@/theme/vo/comment/CommentVo';
-import type { Comment } from '@/theme/pojo/comment/Comment';
+import type { Condition, PageData } from '@/bean/core/bean';
+import type { CommentVo } from '@/bean/vo/comment/CommentVo';
+import type { Comment } from '@/bean/pojo/comment/Comment';
 
 /** 接口前缀 */
 const apiPrefix = '/comment/';
@@ -97,7 +97,12 @@ function _baseApi() {
     return request.post<number>(`${apiPrefix}resendEmail`, data, baseAxiosRequestConfig);
   }
 
+  function queryTotalCount(data: beanType) {
+    return request.post<number>(`${apiPrefix}queryTotalCommentCount`, data, baseAxiosRequestConfig)
+  }
+
   return {
+    queryTotalCount,
     queryOneData,
     queryOneDataByUid,
     queryListDataByCondition,
@@ -108,7 +113,7 @@ function _baseApi() {
     insertData,
     batchInsertData,
     queryListCommentByUidArr,
-    resendEmailNotice
+    resendEmailNotice,
   };
 }
 

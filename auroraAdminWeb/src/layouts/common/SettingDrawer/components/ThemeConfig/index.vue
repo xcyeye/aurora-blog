@@ -37,7 +37,7 @@ function clipboardEventListener() {
   copy.on('success', () => {
     window.$dialog?.success({
       title: '操作成功',
-      content: '复制成功,请替换 src/settings/theme.json的内容！',
+      content: '复制成功,请替换 src/settings/bean.json的内容！',
       positiveText: '确定'
     });
   });

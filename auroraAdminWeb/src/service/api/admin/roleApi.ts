@@ -1,9 +1,9 @@
 import type { AxiosRequestConfig } from 'axios';
 import { EnumContentType } from '@/enum';
 import { request } from '@/service/request';
-import type { Condition, PageData } from '@/theme/core/bean';
-import type { Role } from '@/theme/pojo/admin/Role';
-import type { RoleVo } from '@/theme/vo/admin/RoleVo';
+import type { Condition, PageData } from '@/bean/core/bean';
+import type { Role } from '@/bean/pojo/admin/Role';
+import type { RoleVo } from '@/bean/vo/admin/RoleVo';
 
 /** 接口前缀 */
 const apiPrefix = '/admin/role/';

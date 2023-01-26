@@ -16,13 +16,13 @@
 
 <script lang="ts" setup>
 import {defineComponent, h, onMounted, ref} from "vue";
-import {Condition, PageData} from "@/theme/core/bean";
+import {Condition, PageData} from "@/bean/core/bean";
 import {emailApi, userApi} from "@/service";
 import {DataTableColumn, NButton, NSpace} from "naive-ui";
 import {EnumMittEventName} from "@/enum";
 import {emitter} from "@/utils";
-import {EmailVo} from "@/theme/vo/message/EmailVo";
-import {Email} from "@/theme/pojo/message/Email";
+import {EmailVo} from "@/bean/vo/message/EmailVo";
+import {Email} from "@/bean/pojo/message/Email";
 import RequestResult = Service.RequestResult;
 import {useRouterPush} from "@/composables";
 import {useRouter} from "vue-router";

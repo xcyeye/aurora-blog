@@ -1,8 +1,8 @@
 import { baseAxiosRequestConfig } from '@/constants';
 import { request } from '@/service/request';
-import type { Condition, PageData } from '@/theme/core/bean';
-import type { Email } from '@/theme/pojo/message/Email';
-import type { EmailVo } from '@/theme/vo/message/EmailVo';
+import type { Condition, PageData } from '@/bean/core/bean';
+import type { Email } from '@/bean/pojo/message/Email';
+import type { EmailVo } from '@/bean/vo/message/EmailVo';
 
 /** 接口前缀 */
 const apiPrefix = '/message/email/';

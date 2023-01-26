@@ -1,8 +1,8 @@
 import { baseAxiosRequestConfig } from '@/constants';
 import { request } from '@/service/request';
-import type { Condition, PageData } from '@/theme/core/bean';
-import type { MessageLog } from '@/theme/pojo/message/MessageLog';
-import type { MessageLogVo } from '@/theme/vo/message/MessageLogVo';
+import type { Condition, PageData } from '@/bean/core/bean';
+import type { MessageLog } from '@/bean/pojo/message/MessageLog';
+import type { MessageLogVo } from '@/bean/vo/message/MessageLogVo';
 
 /** 接口前缀 */
 const apiPrefix = '/message/messageLog/';
