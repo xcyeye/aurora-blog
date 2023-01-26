@@ -7,6 +7,7 @@ import {setupStore} from "@/stores";
 // import vueMetaManager from '@/global/vue-meta'
 import { createMetaManager, defaultConfig, deepestResolver } from 'vue-meta'
 import {setupRouter} from "@/router";
+import AppLoading from "@/components/common/other/AppLoading.vue";
 
 /** 导入静态文件 css */
 // setupAssets();
@@ -24,6 +25,11 @@ import {setupRouter} from "@/router";
 async function setupApp() {
 // import assets: js、css
   setupAssets();
+
+  // app loading
+  const appLoading = createApp(AppLoading);
+
+  appLoading.mount('#appLoading');
 
   const app = createApp(App);
 

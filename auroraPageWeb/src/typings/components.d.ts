@@ -7,6 +7,7 @@ export {}
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
+    AppLoading: typeof import('./../components/common/other/AppLoading.vue')['default']
     ArchiveItem: typeof import('./../components/common/archive/ArchiveItem.vue')['default']
     AuroraArchive: typeof import('./../components/common/archive/AuroraArchive.vue')['default']
     AuroraBubble: typeof import('./../components/common/other/AuroraBubble.vue')['default']

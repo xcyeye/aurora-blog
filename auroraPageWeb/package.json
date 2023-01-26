@@ -29,6 +29,7 @@
     "qs": "^6.11.0",
     "reading-time-estimator": "^1.7.2",
     "smoothscroll-polyfill": "^0.4.4",
+    "splitting": "^1.0.6",
     "swiper": "^8.4.5",
     "vditor": "^3.8.18",
     "vite-plugin-progress": "^0.0.6",
