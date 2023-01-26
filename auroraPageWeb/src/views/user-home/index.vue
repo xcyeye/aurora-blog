@@ -7,7 +7,7 @@
 	<Footer :current-site-info="siteSettingInfo"
 					:is-home="true"
 					:is-show-footer="true"/>
-	<set-bg/>
+	<set-bg :user-uid="userUid"/>
 	<style-menu/>
 </template>
 

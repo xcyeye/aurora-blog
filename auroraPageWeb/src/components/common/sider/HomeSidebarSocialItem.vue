@@ -15,7 +15,7 @@
 <script lang="ts">
 import {PropType} from "vue";
 import blogConfig from '@/config/blogConfig.json'
-import {getRandomNum} from "@/utils";
+import {getRandomNum, StringUtil} from "@/utils";
 
 export default {
   name: "HomeSidebarSocialItem",
@@ -72,12 +72,7 @@ export default {
   computed: {
     isShowSocialImg() {
       if (this.showSocialImg) {
-        let showImg = this.socialItem.showImgSrc
-        if (showImg === undefined) {
-          return false
-        }else {
-          return true
-        }
+        return StringUtil.haveLength(this.socialItem.showImgSrc)
       }else {
         return false
       }

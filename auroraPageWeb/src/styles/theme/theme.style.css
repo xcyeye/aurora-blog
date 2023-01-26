@@ -1,5 +1,5 @@
 :root {
-    --backgroundImageUrl: url(https://pic4.zhimg.com/v2-5523ed93593ee4c7fd97b972d0af92d3_r.jpg);
+    --backgroundImageUrl: url(https);
     --poster-back-img: url(http://h2.ioliu.cn/bing/GiantManta_ZH-CN0594951444_640x480.jpg?imageslim);
     --fitter-blue: 5px;
     --borderRadius: 20px;
@@ -473,13 +473,15 @@ a {
 }
 
 .show-social-common {
+    box-sizing: border-box;
+    padding: 5px;
     z-index: 16;
     display: none;
     position: absolute;
     margin-top: 1rem;
     left: -50%;
-    width: 95px;
-    height: 95px;
+    /*width: 78px;*/
+    /*height: 78px;*/
     background-color: rgba(0, 0, 0, .4);
     border-radius: 15px
 }
@@ -526,7 +528,7 @@ a {
     border-radius: 15px;
     width: 78px;
     height: 78px;
-    padding-top: 8px
+    /*padding-top: 8px*/
 }
 
 .setColor {

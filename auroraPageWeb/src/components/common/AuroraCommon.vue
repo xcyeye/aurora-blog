@@ -77,7 +77,7 @@
               :is-show-footer="isShowFooter">
       </Footer>
     </div>
-    <set-bg/>
+    <set-bg :user-uid="userUid"/>
   </div>
 </template>
 <script lang="ts">

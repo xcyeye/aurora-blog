@@ -11,6 +11,7 @@
 import {computed, defineComponent, onMounted, ref} from "vue";
 import {useSiteInfo} from "@/stores";
 import {StringUtil} from "@/utils";
+import {setRandomInterface} from "@/utils/business";
 
 interface Props {
 	userUid: string,
@@ -29,7 +30,7 @@ const siteInfo = ref<SiteSettingInfo>({})
 const randomPictureInterface = ref<string>('')
 
 const setRandomPicture = computed(() => {
-	return `--aurora-random-picture-interface: url("${randomPictureInterface.value}");`
+	return `--aurora-random-picture-interface: url("${setRandomInterface(randomPictureInterface.value)}");`
 })
 
 onMounted(() => {
