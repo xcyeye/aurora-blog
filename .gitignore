@@ -60,6 +60,7 @@ log
 
 **/**/node_modules
 **/src/typings/components.d.ts
+**/src/typings/router-page.d.ts
 **/package-lock.json
 **/yarn.lock
 
