@@ -64,7 +64,6 @@ log
 **/yarn.lock
 
 # 排除测试页面
-**/src/views/test
 
 # Logs
 logs
