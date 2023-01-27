@@ -9,12 +9,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.BindException;
+import xyz.xcye.admin.api.feign.ArticleFeignService;
 import xyz.xcye.admin.api.feign.EmailFeignService;
 import xyz.xcye.admin.dto.EmailVerifyAccountDTO;
 import xyz.xcye.admin.enums.GenderEnum;
 import xyz.xcye.admin.po.User;
 import xyz.xcye.admin.pojo.RolePermissionRelationshipPojo;
 import xyz.xcye.admin.pojo.RolePojo;
+import xyz.xcye.admin.pojo.SiteSettingPojo;
 import xyz.xcye.admin.pojo.UserPojo;
 import xyz.xcye.admin.properties.AdminDefaultProperties;
 import xyz.xcye.admin.vo.RoleVO;
@@ -26,8 +28,11 @@ import xyz.xcye.api.mail.sendmail.enums.SendHtmlMailTypeNameEnum;
 import xyz.xcye.api.mail.sendmail.service.SendMQMessageService;
 import xyz.xcye.api.mail.sendmail.util.AccountInfoUtils;
 import xyz.xcye.api.mail.sendmail.util.StorageEmailVerifyUrlUtil;
+import xyz.xcye.article.pojo.ArticlePojo;
 import xyz.xcye.aurora.properties.AuroraProperties;
+import xyz.xcye.aurora.util.UserUtils;
 import xyz.xcye.auth.constant.AuthRedisConstant;
+import xyz.xcye.core.dto.JwtUserInfo;
 import xyz.xcye.core.entity.R;
 import xyz.xcye.core.enums.ResponseStatusCodeEnum;
 import xyz.xcye.core.exception.email.EmailException;
@@ -72,11 +77,18 @@ public class UserService {
     private AuroraUserService auroraUserService;
     @Autowired
     private AuroraSettingService auroraSettingService;
+    @Autowired
+    private SiteSettingService siteSettingService;
 
     @Autowired
     private PermissionRelationService permissionRelationService;
     @Autowired
     private RoleService roleService;
+    @Autowired
+    private ArticleFeignService articleFeignService;
+
+    @Autowired
+    private AuroraProperties.AuroraDefaultUserInfoProperties auroraDefaultUserInfoProperties;
 
     @Transactional(rollbackFor = Exception.class)
     public void insertUser(UserPojo user)
@@ -106,6 +118,48 @@ public class UserService {
             relationshipPojo.setRoleUidArr(Collections.singletonList(roleVO.getUid()));
             permissionRelationService.insertUserRoleBatch(relationshipPojo);
         });
+
+        // 用户插入成功，则插入用户的默认信息
+        if (auroraDefaultUserInfoProperties != null) {
+
+            if (StringUtils.hasLength(auroraDefaultUserInfoProperties.getSiteInfo())) {
+                // 插入站点信息
+                SiteSettingPojo siteSettingPojo = new SiteSettingPojo();
+                siteSettingPojo.setUserUid(user.getUid());
+                siteSettingPojo.setParamName(user.getUid() + "SiteInfo");
+                siteSettingPojo.setParamValue(auroraDefaultUserInfoProperties.getSiteInfo());
+                siteSettingService.insertSiteSetting(siteSettingPojo);
+            }
+
+            if (StringUtils.hasLength(auroraDefaultUserInfoProperties.getNavbarInfo())) {
+                SiteSettingPojo navbarInfoPojo = new SiteSettingPojo();
+                navbarInfoPojo.setUserUid(user.getUid());
+                navbarInfoPojo.setParamName(user.getUid() + "NavbarInfo");
+                navbarInfoPojo.setParamValue(auroraDefaultUserInfoProperties.getNavbarInfo().replaceAll("auUserUidua", user.getUid() + ""));
+                siteSettingService.insertSiteSetting(navbarInfoPojo);
+            }
+
+            if (StringUtils.hasLength(auroraDefaultUserInfoProperties.getPageInfo())) {
+                SiteSettingPojo pagePojo = new SiteSettingPojo();
+                pagePojo.setUserUid(user.getUid());
+                pagePojo.setParamName(user.getUid() + "AllPageInfo");
+                pagePojo.setParamValue(auroraDefaultUserInfoProperties.getPageInfo().replaceAll("auUserUidua", user.getUid() + ""));
+                siteSettingService.insertSiteSetting(pagePojo);
+            }
+
+            // 插入欢迎文章
+            if (StringUtils.hasLength(auroraDefaultUserInfoProperties.getWelcomeArticle())) {
+                ArticlePojo articlePojo = new ArticlePojo();
+                articlePojo.setUserUid(user.getUid());
+                articlePojo.setDelete(false);
+                articlePojo.setPublish(true);
+                articlePojo.setOriginalArticle(true);
+                // articlePojo.setCategoryNames("欢迎页");
+                articlePojo.setTitle("HI " + user.getUsername());
+                articlePojo.setContent(auroraDefaultUserInfoProperties.getWelcomeArticle());
+                articleFeignService.insertArticle(articlePojo);
+            }
+        }
     }
 
     @Transactional
@@ -208,14 +262,21 @@ public class UserService {
         return BeanUtils.copyProperties(auroraUserService.queryOne(user), UserVO.class);
     }
 
+    /**
+     * 绑定邮箱，必须得登录之后才能绑定
+     * @param pojo
+     * @return
+     * @throws BindException
+     * @throws EmailException
+     */
     @GlobalTransactional(rollbackFor = Exception.class)
     public int bindingEmail(UserPojo pojo) throws BindException, EmailException {
         String email = pojo.getEmailNumber();
         Long userUid = pojo.getUid();
-        User queriedUserInfo = auroraUserService.queryById(userUid);
-        // 查看密码是否匹配
-        boolean matches = passwordEncoder.matches(pojo.getPassword(), queriedUserInfo.getPassword());
-        AssertUtils.stateThrow(matches, () -> new UserException("密码错误"));
+        JwtUserInfo currentUser = UserUtils.getCurrentUser();
+        AssertUtils.stateThrow(currentUser != null, () -> new UserException(ResponseStatusCodeEnum.PERMISSION_USER_NOT_LOGIN));
+        // 当前绑定邮箱的用户的uid必须和登录的用户uid一样
+        AssertUtils.stateThrow(currentUser.getUserUid().equals(pojo.getUid()), () -> new UserException(ResponseStatusCodeEnum.PERMISSION_USER_ILLEGAL_ACCESS));
         AssertUtils.stateThrow(StringUtils.hasLength(email), () -> new EmailException(ResponseStatusCodeEnum.PARAM_IS_INVALID));
         // 远程调用aurora-message服务，判断此email的uid是否存在
         EmailPojo emailPojo = new EmailPojo();

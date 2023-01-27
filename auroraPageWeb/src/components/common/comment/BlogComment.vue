@@ -260,7 +260,7 @@
 import {defineComponent, h, onBeforeMount, onMounted, ref, watch} from "vue";
 import {commentApi, emailApi, userApi} from "@/service";
 import {Comment} from "@/bean/pojo/comment/Comment";
-import {createLocalStorage, getLocalTime, StringUtil} from "@/utils";
+import {createLocalStorage, getLocalStorage, getLocalTime, StringUtil} from "@/utils";
 import {NButton, NGradientText, NText, UploadFileInfo} from "naive-ui";
 import {UserVo} from "@/bean/vo/admin/UserVo";
 import {useAuthStore, useSiteInfo, useUserInfo} from "@/stores";
@@ -576,7 +576,7 @@ const createNewUserInfo = (): Promise<null> => {
 
 const handleReplyCommentAction = () => {
 	// 如果没有登录，需要先登录
-	if (!authStore.authInfo || !isNotEmptyObject(authStore.authInfo)) {
+	if (!getLocalStorage('auth_info') || !isNotEmptyObject(getLocalStorage('auth_info'))) {
 		showLoginModal.value = true
 		window.$message?.error('需要先登录或者注册才能发布评论o(￣▽￣)ｄ')
 		return;
@@ -599,7 +599,7 @@ const handleReplyCommentAction = () => {
 	if (isAdminUser.value) {
 		replyCommentData.value.replyCommentUid = currentClickCommentDto.value.uid
 		replyCommentData.value.avatar = newCommenterUserInfo.value.avatar
-		replyCommentData.value.userUid = newCommenterUserInfo.value.userUid ? newCommenterUserInfo.value.userUid : props.userUid
+		replyCommentData.value.userUid = props.userUid
 		replyCommentData.value.username = newCommenterUserInfo.value.username
 		replyCommentData.value.site = newCommenterUserInfo.value.site
 		replyCommentData.value.email = newCommenterUserInfo.value.email

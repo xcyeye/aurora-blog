@@ -15,11 +15,7 @@ import xyz.xcye.article.vo.ArticleVO;
 import xyz.xcye.article.vo.CategoryVO;
 import xyz.xcye.article.vo.TagVO;
 import xyz.xcye.aurora.properties.AuroraProperties;
-import xyz.xcye.aurora.util.UserUtils;
-import xyz.xcye.core.dto.JwtUserInfo;
-import xyz.xcye.core.enums.ResponseStatusCodeEnum;
 import xyz.xcye.core.exception.article.ArticleException;
-import xyz.xcye.core.exception.user.UserException;
 import xyz.xcye.core.util.BeanUtils;
 import xyz.xcye.core.util.DateUtils;
 import xyz.xcye.core.util.id.GenerateInfoUtils;
@@ -147,10 +143,10 @@ public class ArticleService {
     }
 
     private void setCategory(ArticlePojo article) {
-        Long currentUserUid = UserUtils.getCurrentUserUid();
-        if (currentUserUid == null) {
-            throw new UserException(ResponseStatusCodeEnum.PERMISSION_USER_NOT_LOGIN);
-        }
+        // Long currentUserUid = UserUtils.getCurrentUserUid();
+        // if (currentUserUid == null) {
+        //     throw new UserException(ResponseStatusCodeEnum.PERMISSION_USER_NOT_LOGIN);
+        // }
         // 如果文章中的某个标签或者类别不存在，则添加
         if (!StringUtils.hasLength(article.getCategoryNames())) {
             return;
@@ -162,7 +158,7 @@ public class ArticleService {
                     // 如果不存在，则添加
                     CategoryPojo categoryPojo = new CategoryPojo();
                     categoryPojo.setTitle(categoryName);
-                    categoryPojo.setUserUid(currentUserUid);
+                    categoryPojo.setUserUid(article.getUserUid());
                     if (categoryService.selectByTitle(categoryName) == null) {
                         // 不存在，添加
                         categoryService.insertCategory(categoryPojo);
@@ -175,10 +171,10 @@ public class ArticleService {
     }
 
     private void setTag(ArticlePojo article) {
-        Long currentUserUid = UserUtils.getCurrentUserUid();
-        if (currentUserUid == null) {
-            throw new UserException(ResponseStatusCodeEnum.PERMISSION_USER_NOT_LOGIN);
-        }
+        // Long currentUserUid = UserUtils.getCurrentUserUid();
+        // if (currentUserUid == null) {
+        //     throw new UserException(ResponseStatusCodeEnum.PERMISSION_USER_NOT_LOGIN);
+        // }
         if (!StringUtils.hasLength(article.getTagNames())) {
             return;
         }
@@ -189,7 +185,7 @@ public class ArticleService {
                     // 如果不存在，则添加
                     TagPojo tagPojo = new TagPojo();
                     tagPojo.setTitle(tagName);
-                    tagPojo.setUserUid(currentUserUid);
+                    tagPojo.setUserUid(article.getUserUid());
                     if (tagService.selectByTitle(tagName) == null) {
                         // 不存在，添加
                         tagService.insertTag(tagPojo);
@@ -201,10 +197,12 @@ public class ArticleService {
     }
 
     private void setUserUid(ArticlePojo article) {
-        JwtUserInfo jwtUserInfo = UserUtils.getCurrentUser();
-        AssertUtils.stateThrow(jwtUserInfo != null,
-                () -> new UserException(ResponseStatusCodeEnum.PERMISSION_USER_NOT_LOGIN));
-        article.setUserUid(jwtUserInfo.getUserUid());
+        // TODO bug
+        // JwtUserInfo jwtUserInfo = UserUtils.getCurrentUser();
+        // AssertUtils.stateThrow(jwtUserInfo != null,
+        //         () -> new UserException(ResponseStatusCodeEnum.PERMISSION_USER_NOT_LOGIN));
+        // article.setUserUid(jwtUserInfo.getUserUid());
+        article.setUserUid(article.getUserUid());
     }
 
     /**

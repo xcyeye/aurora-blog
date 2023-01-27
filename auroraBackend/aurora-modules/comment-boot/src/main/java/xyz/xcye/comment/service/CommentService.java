@@ -128,7 +128,11 @@ public class CommentService {
         Assert.notNull(pojo, "评论信息不能为null");
         Comment comment = BeanUtils.copyProperties(pojo, Comment.class);
         setPageType(comment, true);
-        Optional.ofNullable(UserUtils.getCurrentUserUid()).ifPresent(comment::setUserUid);
+        if (pojo.getUserUid() == null) {
+            if (UserUtils.getCurrentUser() != null) {
+                comment.setUserUid(UserUtils.getCurrentUser().getUserUid());
+            }
+        }
         return auroraCommentService.updateById(comment);
     }
 

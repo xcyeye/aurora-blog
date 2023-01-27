@@ -14,6 +14,7 @@ import xyz.xcye.aurora.properties.AuroraProperties;
         AuroraProperties.AuroraFileProperties.class,
         AuroraProperties.AuroraPaginationProperties.class,
         AuroraProperties.AuroraAccountProperties.class,
+        AuroraProperties.AuroraDefaultUserInfoProperties.class,
         AuroraProperties.AuroraAuthProperties.class})
 public class AuroraAutoConfiguration {
 

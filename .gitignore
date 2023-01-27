@@ -3,6 +3,7 @@
 /auroraBackend/sql-generator-ts
 /typescript-bean
 /auroraBackend/runJarDirectory
+/test
 
 HELP.md
 target/

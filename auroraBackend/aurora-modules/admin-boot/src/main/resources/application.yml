@@ -7,7 +7,6 @@ spring:
     active: dev
   main:
     allow-circular-references: true
-
 #aurora:
 #  amqp:
 #    exchanges:
@@ -74,7 +73,11 @@ spring:
 #            dead-letter-routing-key: aurora.PAGE.comment.dead.letter.routingKey
 #    default-max-length: 25
 #    default-ttl: 6000
-
-
+#aurora:
+#  default:
+#    user:
+#      navbar-info: '[{"name":"首页","url":"/user/1522074993315815424","icon":"fa:home","children":[]},{"name":"友情链接","url":"/friendLink/1522074993315815424","icon":"fa:paper-plane","children":[]},{"name":"关于","url":"/about/1522074993315815424","icon":"fa:pagelines","outLink":false,"children":[]},{"name":"说说1","url":"/shareSpace/1522074993315815424","icon":"fa:comments-o","children":[]},{"name":"说说2","url":"/shareSpace-page/1522074993315815424","icon":"fa:comments-o","children":[]},{"name":"时间轴","url":"/archive/1522074993315815424","icon":"fa:hourglass-3","children":[]},{"name":"相册","url":"/photo/1522074993315815424","icon":"fa:image","children":[]},{"name":"标签","url":"/tag/1522074993315815424/","icon":"mdi:abugida-thai","children":[]},{"name":"分类","url":"/category/1522074993315815424","icon":"mdi:alarm-bell","outLink":false,"children":[]},{"name":"评论","url":"/comment/1522074993315815424","icon":"fa:comments","outLink":false,"children":[]},{"name":"说说","url":"","icon":"fa:comments","outLink":false,"children":[]}]'
+#      page-info: '[{"name":"首页","url":"/user/1522074993315815424","icon":"fa:home","children":[]},{"name":"友情链接","url":"/friendLink/1522074993315815424","icon":"fa:paper-plane","children":[]},{"name":"关于","url":"/about/1522074993315815424","icon":"fa:pagelines","outLink":false,"children":[]},{"name":"说说1","url":"/shareSpace/1522074993315815424","icon":"fa:comments-o","children":[]},{"name":"说说2","url":"/shareSpace-page/1522074993315815424","icon":"fa:comments-o","children":[]},{"name":"时间轴","url":"/archive/1522074993315815424","icon":"fa:hourglass-3","children":[]},{"name":"相册","url":"/photo/1522074993315815424","icon":"fa:image","children":[]},{"name":"标签","url":"/tag/1522074993315815424/","icon":"mdi:abugida-thai","children":[]},{"name":"分类","url":"/category/1522074993315815424","icon":"mdi:alarm-bell","outLink":false,"children":[]},{"name":"评论","url":"/comment/1522074993315815424","icon":"fa:comments","outLink":false,"children":[]},{"name":"说说","url":"","icon":"fa:comments","outLink":false,"children":[]}]'
+#      welcome-article: '# 这是欢迎页'
 
 

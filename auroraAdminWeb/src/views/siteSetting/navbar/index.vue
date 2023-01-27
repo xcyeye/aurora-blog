@@ -204,7 +204,7 @@ const handleSaveAllPageAction = () => {
 	const siteSetting: SiteSetting = {}
 	siteSetting.paramName = `${authStore.userInfo.user_uid}AllPageInfo`
 	setChildrenInfo(navbarInfoArr.value)
-	siteSetting.paramValue = JSON.stringify(navbarInfoArr.value, null, 2)
+	siteSetting.paramValue = JSON.stringify(navbarInfoArr.value, null, 0).replaceAll(" ", "")
 	if (navbarAddStatus.value) {
 		// 是添加新页面
 		siteSetting.userUid = authStore.userInfo.user_uid
@@ -237,7 +237,7 @@ const handleUpdateNavbarAction = () => {
 	const siteSetting: SiteSetting = {}
 	siteSetting.paramName = `${authStore.userInfo.user_uid}NavbarInfo`
 	setChildrenInfo(draggableNavbarInfoArr.value)
-	siteSetting.paramValue = JSON.stringify(draggableNavbarInfoArr.value, null, 2)
+	siteSetting.paramValue = JSON.stringify(draggableNavbarInfoArr.value, null, 0).replaceAll(" ", "")
 	if (draggableNavbarAddStatus.value) {
 		// 是添加导航
 		siteSetting.userUid = authStore.userInfo.user_uid

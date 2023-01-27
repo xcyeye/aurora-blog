@@ -31,6 +31,20 @@ public class AuroraProperties {
     private List<String> defaultRoleList;
 
     @Data
+    @ConfigurationProperties(prefix = AuroraDefaultUserInfoProperties.AURORA_DEFAULT_USER_INFO_PREFIX)
+    public static class AuroraDefaultUserInfoProperties {
+        public static final String AURORA_DEFAULT_USER_INFO_PREFIX = "aurora.default.user";
+
+        private String siteInfo;
+
+        private String navbarInfo;
+
+        private String pageInfo;
+
+        private String welcomeArticle;
+    }
+
+    @Data
     @ConfigurationProperties(prefix = AuroraFileProperties.AURORA_FILE_PREFIX)
     public static class AuroraFileProperties {
         public static final String AURORA_FILE_PREFIX = "aurora.file";
