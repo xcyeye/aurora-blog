@@ -28,7 +28,6 @@
 import {defineComponent, nextTick} from "vue";
 import AuroraCard from "@/components/common/other/AuroraCard.vue";
 import AuroraBubble from "@/components/common/other/AuroraBubble.vue";
-import AuroraTypingCss from "@/components/common/other/AuroraTypingCss.vue";
 
 defineComponent({name: 'index'});
 
