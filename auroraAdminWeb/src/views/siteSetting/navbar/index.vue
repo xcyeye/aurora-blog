@@ -3,10 +3,48 @@
 		<n-card title="站点设置" class="h-full shadow-sm rounded-16px">
 			<n-space vertical>
 				<n-card :bordered="false" hoverable class="shadow-sm rounded-16px">
-					<n-space vertical>
-						<n-p>友情链接、用户首页、说说、关于页面等绝大多数页面的的规则为 /pageName/userUid，如/user/{{authStore.userInfo.user_uid}}便表示您的用户首页</n-p>
-						<n-p>对于文章等部分特殊的页面规则为/pageName/uid，如/article/{{articleInfo.uid}} 链接便是文章 “{{articleInfo.title}}”的文章详情页面</n-p>
-					</n-space>
+					<n-descriptions label-placement="left" :column="2" title="系统内置页面">
+						<n-descriptions-item :label="`${authStore.userInfo.username}的主页`">
+							<span @click="copyContent(`/article/${authStore.userInfo.user_uid}/${articleInfo.uid}`, false)">/article/{{authStore.userInfo.user_uid}}/{{articleInfo.uid}}</span>
+						</n-descriptions-item>
+						<n-descriptions-item label="友情链接">
+							<span @click="copyContent(`/friendLink/${authStore.userInfo.user_uid}`, false)">/friendLink/{{authStore.userInfo.user_uid}}</span>
+						</n-descriptions-item>
+						<n-descriptions-item label="关于">
+							<span @click="copyContent(`/about/${authStore.userInfo.user_uid}`, false)">/about/{{authStore.userInfo.user_uid}}</span>
+						</n-descriptions-item>
+						<n-descriptions-item label="评论">
+							<span @click="copyContent(`/comment/${authStore.userInfo.user_uid}`, false)">/comment/{{authStore.userInfo.user_uid}}</span>
+						</n-descriptions-item>
+						<n-descriptions-item label="相册">
+							<span @click="copyContent(`/photo/${authStore.userInfo.user_uid}`, false)">/photo/{{authStore.userInfo.user_uid}}</span>
+						</n-descriptions-item>
+						<n-descriptions-item label="时间轴">
+							<span @click="copyContent(`/archive/${authStore.userInfo.user_uid}`, false)">/archive/{{authStore.userInfo.user_uid}}</span>
+						</n-descriptions-item>
+						<n-descriptions-item label="说说1">
+							<span @click="copyContent(`/shareSpace/${authStore.userInfo.user_uid}`, false)">/shareSpace/{{authStore.userInfo.user_uid}}</span>
+						</n-descriptions-item>
+						<n-descriptions-item label="说说2">
+							<span @click="copyContent(`/shareSpace-page/${authStore.userInfo.user_uid}`, false)">/shareSpace-page/{{authStore.userInfo.user_uid}}</span>
+						</n-descriptions-item>
+						<n-descriptions-item label="类别">
+							<span @click="copyContent(`/category/${authStore.userInfo.user_uid}`, false)">/category/{{authStore.userInfo.user_uid}}</span>
+						</n-descriptions-item>
+						<n-descriptions-item label="标签">
+							<span @click="copyContent(`/tag/${authStore.userInfo.user_uid}`, false)">/tag/{{authStore.userInfo.user_uid}}</span>
+						</n-descriptions-item>
+					</n-descriptions>
+					<n-p>
+						<n-space justify="start">
+						以上这些便是系统内置的页面，如果你需要为导航链接添加icon，目前系统使用的是<a href="https://icones.js.org/" target="_blank">icones</a>，你只需要进入他们官网
+						找到自己喜欢的图标，然后点击该图标，复制图标的名称便可以了，例如<a href="https://icones.js.org/collection/fa" target="_blank"><svg-icon icon="fa:at"/></a>图标的名称为<span style="color: red">fa:at</span>
+						</n-space>
+						<n-p>
+							添加前台导航的步骤为: 1.添加页面 2.点击更新所有页面(为了将你添加的页面先保存到数据库，防止丢失) 3.从左边的《页面》部分将你
+							需要的导航按住鼠标键拖动到右侧 4.设置好了之后，需要点击更新导航信息(防止丢失)
+						</n-p>
+					</n-p>
 				</n-card>
 				<n-card :bordered="false" hoverable class="shadow-sm rounded-16px">
 					<n-grid x-gap="12" :cols="2">
@@ -81,6 +119,7 @@ import {ArticleVo} from "@/bean/vo/article/ArticleVo";
 import {removeDuplicateElement, StringUtil} from "@/utils";
 import {siteSettingApi} from "@/service/api/admin/siteSettingApi";
 import draggable from 'vuedraggable'
+import {copyContent} from "@/plugins";
 const authStore = useAuthStore()
 
 defineComponent({name: 'index'});

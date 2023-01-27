@@ -127,12 +127,10 @@ import {computed, defineComponent, onBeforeMount, ref} from "vue";
 import {ArticleVo} from "@/bean/vo/article/ArticleVo";
 import {articleApi, commentApi, talkApi, userApi} from "@/service";
 import {Condition, PageData} from "@/bean/core/bean";
-import RequestResult = Service.RequestResult;
 import {useRouterPush} from "@/composables";
 import {UserVo} from "@/bean/vo/admin/UserVo";
-import {getRandomTagType} from "@/utils";
-import {useSysSettingStore} from "@/stores";
 import {sysSettingApi} from "@/service/api/admin/sysSettingApi";
+import RequestResult = Service.RequestResult;
 
 defineComponent({name: 'index'});
 
@@ -152,7 +150,6 @@ const footerSiteInfo: SiteSettingInfo = {
 		]
 	}
 }
-const sysSettingStore = useSysSettingStore()
 
 const getArticleCover = computed(() => {
 	return (article: ArticleVo) => {
@@ -197,19 +194,6 @@ const loadAllArticle = () => {
 	})
 }
 
-const loadSysSetting = () => {
-	// 获取系统配置
-	if (!sysSettingStore.sysSettingMap || sysSettingStore.sysSettingMap.size === 0) {
-		sysSettingApi.queryListDataByCondition({pageSize: 999}).then(result => {
-			if (result.data && result.data.result) {
-				sysSettingStore.setSysSetting(result.data.result)
-			}else {
-				sysSettingStore.setSysSetting([])
-			}
-		})
-	}
-}
-
 const loadAllComment = () => {
   commentApi.queryTotalCount({}).then(result => {
 		if (result.data) {
@@ -232,8 +216,6 @@ loadAllComment()
 onBeforeMount(() => {
 	loadAllArticle()
 	loadAllUser()
-	loadSysSetting()
-	
 })
 </script>
 

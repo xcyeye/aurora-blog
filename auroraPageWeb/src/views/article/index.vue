@@ -60,12 +60,12 @@
 										 :multi-click-give-like="false"/>
 				</div>
 				
-				<div class="aurora-article-tag" v-if="getArticleTag">
+				<div class="aurora-article-tag" v-if="getArticleTag && getArticleTag.length > 0">
 					<svg-icon icon="fa:tag"/>
 					<n-tag class="aurora-article-tag-single" @click="goTag($event, item, true)" v-for="(item, index) in getArticleTag" :type="getRandomTagType()" :bordered="false" style="border-radius: 16px" :key="index">{{item}}</n-tag>
 				</div>
 				
-				<div class="aurora-article-tag" v-if="getArticleCategory">
+				<div class="aurora-article-tag" v-if="getArticleCategory && getArticleCategory.length > 0">
 					<svg-icon icon="fa:tags"/>
 					<n-tag class="aurora-article-tag-single" @click="goTag($event, item, false)" v-for="(item, index) in getArticleCategory" :type="getRandomTagType()" :bordered="false" style="border-radius: 16px" :key="index">{{item}}</n-tag>
 				</div>
@@ -107,8 +107,8 @@
 			<blog-comment
 				:user-uid="userUid"
 				:page-uid="articleUid"
-				:query-regexp="`/article/${articleUid}`"
-				:page-path="`/article/${articleUid}`"
+				:query-regexp="`/article/${userUid}/${articleUid}`"
+				:page-path="`/article/${userUid}/${articleUid}`"
 				reply-page-type="ARTICLE"/>
 		</template>
 	</aurora-common>
@@ -429,7 +429,5 @@ watch(() => articleInfo.value.uid, () => calculateReadTime())
 
 </script>
 <style lang="css">
-@import "@/styles/dyzj/dyzj-dark.css";
-/*@import "@/styles/dyzj/darkcode.css";*/
-/*@import "@/styles/dyzj/dyzj.css";*/
+
 </style>

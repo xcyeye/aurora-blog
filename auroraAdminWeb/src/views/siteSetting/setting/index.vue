@@ -45,6 +45,18 @@
 						</n-card>
 						<n-card hoverable class="rounded-16px shadow-sm" size="small">
 							<n-space vertical>
+								<n-statistic label="pc端壁纸">
+									<n-dynamic-input
+										v-model:value="siteSettingInfo.pcBackgroundImageList"
+										placeholder="请输入pc端壁纸"
+									/>
+								</n-statistic>
+								<n-statistic label="手机端壁纸">
+									<n-dynamic-input
+										v-model:value="siteSettingInfo.mobileBackgroundImageList"
+										placeholder="请输入手机端壁纸"
+									/>
+								</n-statistic>
 								<n-statistic label="全局懒加载图片地址">
 									<n-input size="small" type="text" v-model:value="siteSettingInfo.homePageLazyLoadingImg"/>
 									<n-image width="300" :src="siteSettingInfo.homePageLazyLoadingImg" v-if="siteSettingInfo.homePageLazyLoadingImg"/>
@@ -258,7 +270,17 @@ const handleUpdateOrInsertAction = () => {
 	siteSettingInfo.value.footerInfo = footerInfo.value
 	siteSettingInfo.value.friendLinkSiteInformation = friendLinkSiteInformation.value
 	siteSettingInfo.value.socialsArr = socialInfoArr.value
-	siteSetting.value.paramValue = JSON.stringify(siteSettingInfo.value, null, 2)
+	let readmeStr = siteSettingInfo.value.readme
+	siteSettingInfo.value.readme = 'auReadMeua'
+	const obj: object = {
+		readme: readmeStr
+	}
+	let objJson = JSON.stringify(obj, null, 0)
+	objJson = objJson.substring('{"readme":"'.length, (objJson.length - ('};'.length)))
+	let siteInfoJson = JSON.stringify(siteSettingInfo.value, null, 0).replaceAll(' ', '')
+	siteInfoJson = siteInfoJson.replaceAll('auReadMeua', objJson)
+	siteSetting.value.paramValue = siteInfoJson
+	// siteSetting.value.paramValue = JSON.stringify(siteSettingInfo.value, null, 0)
 	if (addInfoStatus.value) {
 		siteSetting.value.paramName = `${authStore.userInfo.user_uid}SiteInfo`
 		siteSetting.value.userUid = authStore.userInfo.user_uid

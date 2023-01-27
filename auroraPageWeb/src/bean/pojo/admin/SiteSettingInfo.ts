@@ -70,5 +70,7 @@ interface SiteSettingInfo {
 	showAboutPageBubble?: boolean,
 	aboutInfoArr?: Array<AboutInfo>,
 	randomPictureInterface?: string,
-	readme?: string
+	readme?: string,
+	pcBackgroundImageList?: Array<string>,
+	mobileBackgroundImageList?: Array<string>
 }

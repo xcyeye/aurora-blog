@@ -50,6 +50,26 @@
 													 placeholder="站点描述"
 													 v-model:value="applyForFriendLink.linkDescription"
 													 :autosize="{minRows: 3}"  maxlength="500" show-count/>
+									<n-card :bordered="false" class="rounded-16px shadow-sm" size="small">
+										<n-space vertical>
+											<n-grid x-gap="12" :cols="2">
+												<n-gi>
+													<n-p>希望在哪个类别</n-p>
+												</n-gi>
+												<n-gi>
+													<n-input v-model:value="hopeLinkCategoryName" type="text" placeholder="输入一个类别"/>
+												</n-gi>
+											</n-grid>
+											<n-grid x-gap="12" :cols="2">
+												<n-gi>
+													<n-p>QQ</n-p>
+												</n-gi>
+												<n-gi>
+													<n-input v-model:value="applyForFriendLink.qqNumber" type="number" placeholder="QQ号"/>
+												</n-gi>
+											</n-grid>
+										</n-space>
+									</n-card>
 								</n-tab-pane>
 								<n-tab-pane name="the beatles" tab="主页截屏">
 									<n-space vertical>
@@ -76,26 +96,6 @@
 									</n-space>
 								</n-tab-pane>
 							</n-tabs>
-							<n-card :bordered="false" class="rounded-16px shadow-sm" size="small">
-								<n-space vertical>
-									<n-grid x-gap="12" :cols="2">
-										<n-gi>
-											<n-p>希望在哪个类别</n-p>
-										</n-gi>
-										<n-gi>
-											<n-input v-model:value="hopeLinkCategoryName" type="text" placeholder="输入一个类别"/>
-										</n-gi>
-									</n-grid>
-									<n-grid x-gap="12" :cols="2">
-										<n-gi>
-											<n-p>QQ</n-p>
-										</n-gi>
-										<n-gi>
-											<n-input v-model:value="applyForFriendLink.qqNumber" type="number" placeholder="QQ号"/>
-										</n-gi>
-									</n-grid>
-								</n-space>
-							</n-card>
 						</n-tab-pane>
 						<n-tab-pane name="my" :tab="`${useUserInfo().getUserInfo(userUid).username}の信息`">
 							<n-space vertical>

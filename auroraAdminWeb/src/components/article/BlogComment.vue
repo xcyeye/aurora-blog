@@ -8,7 +8,7 @@
 							<n-input v-model:value="replyUserInfo.username" :disabled="isAdminUser" size="small" placeholder="用户名"/>
 						</div>
 						<div class="aurora-comment-reply-box-son">
-							<n-input v-model:value="replyUserInfo.email" :disabled="isAdminUser" size="small" placeholder="邮箱"/>
+							<n-input v-model:value="replyUserInfo.email" :disabled="disableEditEmailStatus" size="small" placeholder="邮箱"/>
 						</div>
 						<div class="aurora-comment-reply-box-son">
 							<n-input v-model:value="replyUserInfo.site" :disabled="isAdminUser" size="small" placeholder="站点"/>
@@ -139,7 +139,7 @@
 										<n-input v-model:value="replyUserInfo.username" :disabled="isAdminUser" size="small" placeholder="用户名"/>
 									</div>
 									<div class="aurora-comment-reply-box-son">
-										<n-input v-model:value="replyUserInfo.email" :disabled="isAdminUser" size="small" placeholder="邮箱"/>
+										<n-input v-model:value="replyUserInfo.email" :disabled="disableEditEmailStatus" size="small" placeholder="邮箱"/>
 									</div>
 									<div class="aurora-comment-reply-box-son">
 										<n-input v-model:value="replyUserInfo.site" :disabled="isAdminUser" size="small" placeholder="站点"/>
@@ -191,10 +191,10 @@
 
 <script lang="ts" setup>
 import {defineComponent, onBeforeMount, ref, watch} from "vue";
-import {commentApi} from "@/service";
+import {commentApi, emailApi, emailLogApi} from "@/service";
 import {Comment} from "@/bean/pojo/comment/Comment";
 import {StringUtil} from "@/utils";
-import {useAuthStore} from "@/store";
+import {useAuthStore, useSysSettingStore} from "@/store";
 import {UploadFileInfo} from "naive-ui";
 
 defineComponent({name: 'BlogComment'});
@@ -228,6 +228,8 @@ const replyCommentData = ref<Comment>({})
 const authStore = useAuthStore()
 const isAdminUser = ref(false)
 const replyUserInfo = ref<ReplyCommentUserInfo>({})
+const disableEditEmailStatus = ref(false)
+const sysSetting = useSysSettingStore()
 
 const handleClickComment = (commentInfo: CommentDto, parentCommentDto: CommentDto) => {
 	currentClickCommentDto.value = commentInfo
@@ -235,6 +237,18 @@ const handleClickComment = (commentInfo: CommentDto, parentCommentDto: CommentDt
 }
 
 const loadCommentInfo = () => {
+	if (!authStore.userInfo.verify_email) {
+		disableEditEmailStatus.value = false
+	}else {
+		emailApi.queryEmailByUserUid({userUid: authStore.userInfo.user_uid}).then(result => {
+			if (result.data) {
+				disableEditEmailStatus.value = true
+			}else {
+				disableEditEmailStatus.value = false
+			}
+		})
+	}
+
 	showCommentInfo.value = {}
 	replyCommentData.value.content = ''
  	if (props.parentCommentUidArr.length === 0) {
@@ -263,8 +277,18 @@ const setReplyUserInfo = () => {
 			avatar: authStore.userInfo.userDetailInfo.avatar,
 			username: authStore.userInfo.userDetailInfo.username,
 			userUid: authStore.userInfo.user_uid,
-			email: authStore.userInfo.emailInfo.email,
 			site: `https://aurora.xcye.xyz/${authStore.userInfo.username}`
+		}
+		if (authStore.userInfo.verify_email) {
+			emailApi.queryEmailByUserUid({userUid: authStore.userInfo.user_uid}).then(result => {
+				if (result.data) {
+					replyUserInfo.value.email = result.data.email
+				}else {
+					window.$message?.error('尚未在系统中查询到您的邮箱信息')
+				}
+			})
+		}else {
+			window.$message?.error('您的账户尚未绑定邮箱，为了正常使用，请尽快绑定')
 		}
 	}
 }
@@ -296,6 +320,7 @@ const handleReplyCommentAction = () => {
 	commentApi.insertData(replyCommentData.value).then(result => {
 		if (!result.error) {
 			window.$message?.success(`回复成功o(￣▽￣)ｄ `)
+			replyCommentData.value.content = ''
 			loadCommentInfo()
 		}
 	})
@@ -321,6 +346,12 @@ onBeforeMount(() => {
 		window.$message?.error('请传入pageUid')
 	}else {
 		replyUserInfo.value.pageUid = props.pageUid
+	}
+
+	if (sysSetting.sysSettingMap.get('page-web-url') && StringUtil.haveLength(sysSetting.sysSettingMap.get('page-web-url')!.paramValue)) {
+		let pageWeb = sysSetting.sysSettingMap.get('page-web-url')!.paramValue
+		pageWeb = pageWeb?.endsWith('/') ? `${pageWeb}user/${authStore.userInfo.user_uid}` : `${pageWeb}/user/${authStore.userInfo.user_uid}`
+		replyUserInfo.value.site = pageWeb
 	}
 })
 

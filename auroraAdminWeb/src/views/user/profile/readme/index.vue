@@ -37,13 +37,24 @@ const vditorInput = (input: string) => {
 }
 
 const handleUpdateReadmeAction = () => {
-	siteSetting.value.paramValue = JSON.stringify(siteInfo.value, null, 2)
+	let readmeStr = siteInfo.value.readme
+	siteInfo.value.readme = 'auReadMeua'
+	const obj: object = {
+		readme: readmeStr
+	}
+	let objJson = JSON.stringify(obj, null, 0)
+	objJson = objJson.substring('{"readme":"'.length, (objJson.length - ('};'.length)))
+	let siteInfoJson = JSON.stringify(siteInfo.value, null, 0).replaceAll(' ', '')
+	siteInfoJson = siteInfoJson.replaceAll('auReadMeua', objJson)
+	siteSetting.value.paramValue = siteInfoJson
+	// siteSetting.value.paramValue = JSON.stringify(siteInfo.value, null, 0).replaceAll(" ", "")
 	if (addInfoStatus.value) {
 		siteSetting.value.paramName = `${autoStore.userInfo.user_uid}SiteInfo`
 		siteSetting.value.userUid = autoStore.userInfo.user_uid
 		siteSettingApi.insertData(siteSetting.value).then(result => {
 			if (!result.error) {
 				window.$message?.success('添加成功')
+				loadSiteInfo()
 			}
 		})
 	}else {
@@ -51,6 +62,7 @@ const handleUpdateReadmeAction = () => {
 		siteSettingApi.updateData(siteSetting.value).then(result => {
 			if (!result.error) {
 				window.$message?.success('操作成功')
+				loadSiteInfo()
 			}
 		})
 	}

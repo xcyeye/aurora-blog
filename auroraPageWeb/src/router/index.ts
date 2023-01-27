@@ -1,11 +1,12 @@
 import {createRouter, createWebHistory, Router} from 'vue-router';
-import {useCurrentUser, useSiteInfo, useThemeStore, useUserInfo} from "@/stores";
+import {useCurrentUser, useSiteInfo, useSysSettingStore, useThemeStore, useUserInfo} from "@/stores";
 import {isNotEmptyObject} from "@/utils/business";
 import {userApi} from "@/service";
 import {defaultSiteSettingInfo} from "@/field";
 import {StringUtil} from "@/utils";
 import {App} from "vue";
 import {siteSettingApi} from "@/service/api/admin/siteSettingApi";
+import {sysSettingApi} from "@/service/api/admin/sysSettingApi";
 
 
 const router = createRouter({
@@ -103,11 +104,29 @@ const setMobileOpenStatus = () => {
   }
 }
 
+const loadSysSetting = () => {
+  const sysSettingStore = useSysSettingStore()
+  // 获取系统配置
+  if (!sysSettingStore.sysSettingMap || sysSettingStore.sysSettingMap.size === 0) {
+    sysSettingApi.queryListDataByCondition({pageSize: 999}).then(result => {
+      if (result.data && result.data.result) {
+        sysSettingStore.setSysSetting(result.data.result)
+      }else {
+        sysSettingStore.setSysSetting([])
+      }
+    })
+  }
+}
+
 function createRouterGuard(router: Router) {
   router.beforeEach((to, from, next) => {
     // 从路由中查询userUid，如果不存在siteInfo,userInfo的话，则获取
     const userUid: string = to.params.userUid as string;
     setMobileOpenStatus()
+
+    // 查询系统配置
+    loadSysSetting()
+
     if (StringUtil.haveLength(userUid)) {
       // 存储用户信息
       if (!isNotEmptyObject(useUserInfo().getUserInfo(userUid))) {

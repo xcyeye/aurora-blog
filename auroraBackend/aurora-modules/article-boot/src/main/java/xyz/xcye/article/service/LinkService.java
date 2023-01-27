@@ -95,8 +95,11 @@ public class LinkService {
         record.setUid(GenerateInfoUtils.generateUid(auroraProperties.getSnowFlakeWorkerId(), auroraProperties.getSnowFlakeDatacenterId()));
 
         // 查看是否存在相似的链接
-        List<LinkVO> result = queryListLinkByCondition(Condition.instant(record.getLinkUrl())).getResult();
-        AssertUtils.stateThrow(result.isEmpty(), () -> new LinkException("已存在相同友情链接，不能重复提交"));
+        Link link = new Link();
+        link.setUserUid(pojo.getUserUid());
+        link.setLinkUrl(pojo.getLinkUrl());
+        Link queriedLink = auroraLinkService.queryOne(link);
+        AssertUtils.stateThrow(queriedLink == null, () -> new LinkException("已存在相同友情链接，不能重复提交"));
 
         // 审核应该通过用户进行控制
         record.setPublish(false);

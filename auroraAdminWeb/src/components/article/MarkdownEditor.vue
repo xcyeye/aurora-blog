@@ -76,7 +76,7 @@ const vditorRenderFinishFlag = ref(false)
 let vditorOptionConfig: IOptions = {
 	theme: theme.darkMode ? 'dark' : 'classic',
 	minHeight: 500,
-	// cdn: 'https://picture.xcye.xyz',
+	cdn: 'https://gcore.jsdelivr.net/gh/xcyeye/cdn@main/js/vditor',
 	cache: {
 		enable: false
 	},

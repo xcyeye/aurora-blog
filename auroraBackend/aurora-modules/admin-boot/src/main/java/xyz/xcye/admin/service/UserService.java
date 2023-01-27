@@ -127,7 +127,7 @@ public class UserService {
                 SiteSettingPojo siteSettingPojo = new SiteSettingPojo();
                 siteSettingPojo.setUserUid(user.getUid());
                 siteSettingPojo.setParamName(user.getUid() + "SiteInfo");
-                siteSettingPojo.setParamValue(auroraDefaultUserInfoProperties.getSiteInfo());
+                siteSettingPojo.setParamValue(auroraDefaultUserInfoProperties.getSiteInfo().replaceAll("auUsernameua", user.getUsername()));
                 siteSettingService.insertSiteSetting(siteSettingPojo);
             }
 

@@ -58,7 +58,7 @@
 				<span class="aurora-comment-common aurora-comment-text">点击评论</span>
 			</div>
 			<div class="aurora-comment-data-box" :class="{'aurora-comment-animate' : showCommentBut}">
-				<div class="mobile-record" :class="{'aurora-show-comment-animate': showCommentAnimateClass}">
+				<div class="mobile-record aurora-show-comment-animate" :class="{'aurora-show-comment-active-animate': showCommentAnimateClass}">
 					<div class="aurora-comment-data-info-box">
 						<div class="h-full">
 							<n-card :bordered="false" v-if="!currentClickParentCommentDto.username">
@@ -66,7 +66,7 @@
 									<div>
 										<div class="aurora-comment-reply-box">
 											<div class="aurora-comment-reply-box-son">
-												<n-input v-model:value="newCommenterUserInfo.username" :disabled="isAdminUser" size="small" placeholder="用户名"/>
+												<n-input v-model:value="newCommenterUserInfo.username" :disabled="loginStatus" size="small" placeholder="用户名"/>
 											</div>
 											<div class="aurora-comment-reply-box-son">
 												<n-input v-model:value="newCommenterUserInfo.email" :disabled="disableEditEmailStatus" size="small" placeholder="邮箱"/>
@@ -104,7 +104,7 @@
 											/>
 										</n-space>
 										<n-space justify="end">
-											<n-button strong secondary tertiary round type="success" @click="handleReplyCommentAction">发布</n-button>
+											<n-button strong secondary tertiary round type="success" @click="handleReplyCommentAction">{{loginStatus ? '发布' : '登录'}}</n-button>
 										</n-space>
 									</n-space>
 								</n-space>
@@ -197,7 +197,7 @@
 												<div>
 													<div class="aurora-comment-reply-box">
 														<div class="aurora-comment-reply-box-son">
-															<n-input v-model:value="newCommenterUserInfo.username" :disabled="isAdminUser" size="small" placeholder="用户名"/>
+															<n-input v-model:value="newCommenterUserInfo.username" :disabled="loginStatus" size="small" placeholder="用户名"/>
 														</div>
 														<div class="aurora-comment-reply-box-son">
 															<n-input v-model:value="newCommenterUserInfo.email" :disabled="disableEditEmailStatus" size="small" placeholder="邮箱"/>
@@ -236,7 +236,7 @@
 													</n-space>
 													<n-space justify="end">
 														<n-button strong secondary tertiary round type="warning" @click="handleCancelReplyCommentAction">取消</n-button>
-														<n-button strong secondary tertiary round type="success" @click="handleReplyCommentAction">发布</n-button>
+														<n-button strong secondary tertiary round type="success" @click="handleReplyCommentAction">{{loginStatus ? '发布' : '登录'}}</n-button>
 													</n-space>
 												</n-space>
 											</n-space>
@@ -275,6 +275,7 @@ import {OauthClientDetails} from "@/bean/pojo/auth/OauthClientDetails";
 import {oauthClientApi} from "@/service/api/auth/oauthClientApi";
 import {useRouterPush} from "@/composables";
 import {OauthVo} from "@/bean/vo/auth/OauthVo";
+import blogConfig from '@/config/blogConfig.json'
 
 defineComponent({name: 'BlogComment'});
 
@@ -313,11 +314,11 @@ const currentClickCommentDto = ref<CommentDto>({})
 const currentClickParentCommentDto = ref<CommentDto>({})
 const showCommentInfo = ref<ShowCommentVo>({})
 const replyCommentData = ref<Comment>({})
-const isAdminUser = ref(false)
+const loginStatus = ref(false)
 const newCommenterUserInfo = ref<ReplyCommentUserInfo>({})
 const currentUserInfo = ref<UserVo>({})
 const currentSiteInfo = ref<SiteSettingInfo>({})
-const showCommentAnimateClass = ref<boolean>(true)
+const showCommentAnimateClass = ref<boolean>(false)
 const showLoginModal = ref(false)
 const newCommenterLoginUserInfo = ref<User>({})
 const loginUserEmailInfo = ref<Email>({})
@@ -371,7 +372,7 @@ const loginByPwd = (isInsertEmailInfo: boolean = false) => {
 			newCommenterUserInfo.value.username = newCommenterLoginUserInfo.value.username
 			newCommenterUserInfo.value.userUid = result.data.userInfo!.user_uid
 			newCommenterUserInfo.value.avatar = result.data.userInfo!.avatar
-			isAdminUser.value = true
+			loginStatus.value = true
 			if (isInsertEmailInfo) {
 				// 尝试注册邮箱，如果邮箱注册失败，不影响
 				loginUserEmailInfo.value.userUid = result.data.userInfo!.user_uid
@@ -403,7 +404,7 @@ const loginByPwd = (isInsertEmailInfo: boolean = false) => {
 				loadUserEmailInfo(result.data)
 			}
 		}else {
-			isAdminUser.value = false
+			loginStatus.value = false
 		}
 	})
 }
@@ -444,7 +445,34 @@ const handleLoginAction = async (isLoginAction: boolean) => {
 			newCommenterLoginUserInfo.value.userSummary = `新用户在${props.userUid}用户处评论系统创建的用户`,
 			userApi.insertData(newCommenterLoginUserInfo.value).then(result => {
 				if (!result.error) {
-					window.$message?.success('注册成功 o(￣▽￣)ｄ')
+					
+					let markAsRead = false
+					const n = window.$notification?.create({
+						title: `Hi ${newCommenterUserInfo.value.username} o(￣▽￣)ｄ`,
+						content: `你已注册成功\n用户名: ${newCommenterLoginUserInfo.value.username}\n密码: ${newCommenterLoginUserInfo.value.password}\n后台登录地址: ${blogConfig.adminWebUrl}`,
+						meta: getLocalTime(new Date(), true),
+						action: () =>
+							h(
+								NButton,
+								{
+									text: true,
+									type: 'primary',
+									onClick: () => {
+										markAsRead = true
+										n!.destroy()
+									}
+								},
+								{
+									default: () => '已读'
+								}
+							),
+						onClose: () => {
+							if (!markAsRead) {
+								window.$message?.warning('请置为已读')
+								return false
+							}
+						}
+					})
 					const oauthClientDetails: OauthClientDetails = {
 						scope: 'all',
 						clientId: newCommenterLoginUserInfo.value.username,
@@ -499,79 +527,23 @@ const loadUserEmailInfo = (oauthInfo: OauthVo = {}) => {
 }
 
 const showCommentAnimate = () => {
-	if (!isNoticeBindEmailStatus.value && isAdminUser.value) {
+	if (!isNoticeBindEmailStatus.value && loginStatus.value) {
 		loadUserEmailInfo()
 	}
-	if (showCommentAnimateClass.value) {
-		setTimeout(() => {
-			showCommentAnimateClass.value = !showCommentAnimateClass.value
-		},500)
-	}else {
-		showCommentAnimateClass.value = !showCommentAnimateClass.value
-	}
+	// if (showCommentAnimateClass.value) {
+	// 	setTimeout(() => {
+	// 		showCommentAnimateClass.value = !showCommentAnimateClass.value
+	// 	},500)
+	// }else {
+	// 	showCommentAnimateClass.value = !showCommentAnimateClass.value
+	// }
+	// showCommentAnimateClass.value = !showCommentAnimateClass.value
 	$(".aurora-comment-animate").slideToggle(500)
 }
 
 const handleCancelReplyCommentAction = () => {
   currentClickParentCommentDto.value = {}
 	currentClickCommentDto.value = {}
-}
-
-const createNewUserInfo = (): Promise<null> => {
-	return new Promise((resolve, reject) => {
-		let pwd: string = (newCommenterUserInfo.value.username!.toUpperCase() + newCommenterUserInfo.value.email!.toLowerCase())
-		if (pwd.length > 16) {
-			pwd = pwd.substr(0, 15) + '*&'
-		}else {
-			pwd = pwd + '*&'
-		}
-		// 先创建此用户，密码为username + email + *&
-		const generatorUserInfo: User = {
-			username: newCommenterUserInfo.value.username,
-			password: pwd,
-			avatar: newCommenterUserInfo.value.avatar,
-			userSummary: `新用户在${props.userUid}用户处评论系统创建的用户`,
-			nickname: newCommenterUserInfo.value.username
-		}
-		let markAsRead = false
-		
-		userApi.insertData(generatorUserInfo).then(result => {
-			if (!result.error) {
-				resolve(null)
-				createLocalStorage('newCommenterUserInfo', newCommenterUserInfo.value)
-				isAdminUser.value = true
-				const n = window.$notification?.create({
-					title: '请记住您的信息',
-					content: `系统已自动在该系统为您注册了身份，你可以使用该登录信息在后台管理界面查看评论或者回复评论以及体验其他的新东西o(￣▽￣)ｄ\n
-		\n username: ${newCommenterUserInfo.value.username} \n 密码: ${pwd}\n后台地址: http://localhost/ `,
-					meta: getLocalTime(new Date(), true),
-					action: () =>
-						h(
-							NButton,
-							{
-								text: true,
-								type: 'primary',
-								onClick: () => {
-									markAsRead = true
-									n!.destroy()
-								}
-							},
-							{
-								default: () => '已读'
-							}
-						),
-					onClose: () => {
-						if (!markAsRead) {
-							window.$message?.warning('请置为已读')
-							return false
-						}
-					}
-				})
-			}else {
-				reject(null)
-			}
-		})
-	})
 }
 
 const handleReplyCommentAction = () => {
@@ -596,7 +568,7 @@ const handleReplyCommentAction = () => {
 	newCommenterUserInfo.value.pagePath = props.pagePath
 	newCommenterUserInfo.value.pageUid = props.pageUid
 	
-	if (isAdminUser.value) {
+	if (loginStatus.value) {
 		replyCommentData.value.replyCommentUid = currentClickCommentDto.value.uid
 		replyCommentData.value.avatar = newCommenterUserInfo.value.avatar
 		replyCommentData.value.userUid = props.userUid
@@ -614,6 +586,7 @@ const handleReplyCommentAction = () => {
 		commentApi.insertData(replyCommentData.value).then(result => {
 			if (!result.error) {
 				window.$message?.success(`新建评论成功o(￣▽￣)ｄ `)
+				replyCommentData.value.content = ''
 				loadCommentInfo()
 			}
 		})
@@ -655,7 +628,7 @@ onBeforeMount(() => {
 		newCommenterUserInfo.value.pagePath = props.pagePath
 		newCommenterUserInfo.value.pageUid = props.pageUid
 		newCommenterUserInfo.value.avatar = authStore.authInfo.userInfo?.avatar
-		isAdminUser.value = true
+		loginStatus.value = true
 	}
 	// const newCommenterUserInfoTemp: ReplyCommentUserInfo = getLocalStorage('newCommenterUserInfo')
 	// newCommenterUserInfo.value = newCommenterUserInfoTemp
@@ -673,7 +646,7 @@ onBeforeMount(() => {
 
 onMounted(() => {
 	if (!props.showCommentBut) {
-		if (!isNoticeBindEmailStatus.value && isAdminUser.value) {
+		if (!isNoticeBindEmailStatus.value && loginStatus.value) {
 			// 查询用户邮箱
 			loadUserEmailInfo()
 		}

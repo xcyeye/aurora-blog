@@ -78,6 +78,7 @@
       </Footer>
     </div>
     <set-bg :user-uid="userUid"/>
+		<!--<aurora-snow/>-->
   </div>
 </template>
 <script lang="ts">

@@ -84,5 +84,7 @@ interface SiteSettingInfo {
 	friendLinkSiteInformation?: FriendLinkSiteInformation,
 	// 不要的
 	aboutInfoArr?: Array<AboutInfo>,
-	readme?: string
+	readme?: string,
+	pcBackgroundImageList?: Array<string>,
+	mobileBackgroundImageList?: Array<string>
 }

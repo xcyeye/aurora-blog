@@ -29,7 +29,7 @@
 			</div>
 			<img id="home-page-img" class="home-page-img" ref="home-page-img"
 					 :data-src="getCoverImg"
-					 :src="currentSiteInfo.homePageLazyLoadingImg" alt="">
+					 :src="getLazyLoadImg" alt="">
 		</div>
 	
 		<div class="home-page-tag-con global-common-animate">
@@ -46,7 +46,7 @@
 import {computed, onMounted, ref} from "vue";
 import {ArticleVo} from "@/bean/vo/article/ArticleVo";
 import {StringUtil} from "@/utils";
-import {useSiteInfo} from "@/stores";
+import {useSiteInfo, useSysSettingStore} from "@/stores";
 import {useRouterPush} from "@/composables";
 
 interface Props {
@@ -71,6 +71,16 @@ const getGradualClass = computed(() => {
 	}else {
 		return 'home-page-gradual-title-item-right'
 	}
+})
+
+const getLazyLoadImg = computed(() => {
+	const sysLazyInfo = useSysSettingStore().sysSettingMap.get('lazy-loading-img')
+	if (currentSiteInfo.value && StringUtil.haveLength(currentSiteInfo.value.homePageLazyLoadingImg)) {
+		return currentSiteInfo.value.homePageLazyLoadingImg
+	}else if (sysLazyInfo && StringUtil.haveLength(sysLazyInfo.paramValue)) {
+		return sysLazyInfo.paramValue
+	}
+	return props.pageItem.coverPictureUrl
 })
 
 const getCoverImg = computed(() => {

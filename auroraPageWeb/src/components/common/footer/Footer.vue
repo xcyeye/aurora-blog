@@ -9,7 +9,7 @@
 				</div>
 			</div>
 		</aurora-card>
-		<aurora-bubble/>
+		<!--<aurora-bubble/>-->
 	</div>
 </template>
 

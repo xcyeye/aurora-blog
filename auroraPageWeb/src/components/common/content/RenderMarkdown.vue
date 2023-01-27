@@ -83,6 +83,8 @@ watch(() => props.markdownContent, (nv: string) => handleRenderMarkdownContent(n
 
 </script>
 
-<style scoped>
-
+<style scoped lang="css">
+@import "@/styles/dyzj/dyzj-dark.css";
+/*@import "@/styles/dyzj/darkcode.css";*/
+/*@import "@/styles/dyzj/dyzj.css";*/
 </style>
