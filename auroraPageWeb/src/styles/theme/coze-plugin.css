@@ -787,6 +787,7 @@ body {
 }
 
 .v-waterfall-item {
+    overflow: hidden;
     float: left;
     position: absolute;
     display: flex;
@@ -1421,4 +1422,24 @@ body {
 
 .coze-mood-list .aurora-card:first-child {
     margin-top: 0;
+}
+
+.hover-fall {
+
+}
+
+.waterfall-img-desc {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    height: auto;
+    /*height: 2rem;*/
+    width: 100%;
+    /*background-color: red;*/
+    transition: all .5s;
+    transform: translateY(100%);
+}
+
+.v-waterfall-item:hover .waterfall-img-desc {
+    transform: translateY(0);
 }

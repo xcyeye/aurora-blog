@@ -3,11 +3,12 @@
 		<show-table-data
 			:data-table-info="{rowKey: 'uid', striped: true, scrollX: 1800, bordered: false}"
 			:data-table-columns="columns"
+			@handleCheckedRowKeys="handleCheckedRowKeys"
 			:query-data-method="queryDataMethod"
 			:page-sizes="[10, 20, 30]">
 			<template #cardHeader1>
-				<n-space v-if="batchDeleteLoginInfoUidArr.length !== 0">
-					<n-button strong secondary tertiary round type="error" @click="handleBatchDeleteLoginInfo">删除</n-button>
+				<n-space v-if="batchDeleteFileUidArr.length !== 0">
+					<n-button strong secondary tertiary round type="error" @click="handleBatchDeleteFileInfo">删除</n-button>
 				</n-space>
 			</template>
 		</show-table-data>
@@ -20,7 +21,7 @@ import {Condition, PageData} from "@/bean/core/bean";
 import {fileApi, loginInfoApi} from "@/service";
 import {DataTableColumn, NAvatar, NButton, NSpace, NTag, NText} from "naive-ui";
 import {EnumMittEventName} from "@/enum";
-import {emitter, getFileFormat, getRandomTagType, isImage} from "@/utils";
+import {emitter, getFileFormat, getRandomTagType, isImage, StringUtil} from "@/utils";
 import {FileVo} from "@/bean/vo/file/fileVo";
 import {copyContent} from "@/plugins";
 import RequestResult = Service.RequestResult;
@@ -32,8 +33,7 @@ defineComponent({name: 'index'});
 const condition = ref<Condition>({
 	delete: null,
 })
-const batchDeleteLoginInfoUidArr = ref<Array<string>>([])
-const sysSettingStore = useSysSettingStore()
+const batchDeleteFileUidArr = ref<Array<string>>([])
 
 const queryDataMethod = (condition: Condition): Promise<RequestResult<PageData<FileVo>>> => {
 	return fileApi.queryListDataByCondition(condition);
@@ -61,8 +61,16 @@ const handleOpenFileAction = (data: FileVo) => {
 	window.open(data.path!, '_blank');
 }
 
+const nginxInfo = useSysSettingStore().sysSettingMap.get('nginx_file_host')
+let host = ''
+if (nginxInfo && StringUtil.haveLength(nginxInfo.paramValue)) {
+	host = nginxInfo.paramValue!
+}
 const createColumns = (): Array<DataTableColumn> => {
 	return [
+		{
+			type: 'selection'
+		},
 		{
 			title: '文件',
 			key: 'path',
@@ -76,7 +84,7 @@ const createColumns = (): Array<DataTableColumn> => {
 						NAvatar,
 						{
 							size: 'small',
-							src: row.path
+							src: `${host}/${row.path}`
 						}
 					)
 				}else {
@@ -130,7 +138,7 @@ const createColumns = (): Array<DataTableColumn> => {
 						checkable: true,
 						bordered: false,
 						onUpdateChecked() {
-							copyContent(row.path)
+							copyContent(`${host}/${row.path}`, false)
 						}
 					},
 					{
@@ -275,27 +283,31 @@ const createColumns = (): Array<DataTableColumn> => {
 
 const columns = ref<Array<DataTableColumn>>(createColumns())
 
-const handleBatchDeleteLoginInfo = () => {
-	window.$dialog?.info({
-		title: `删除 ${batchDeleteLoginInfoUidArr.value.length}条登录信息◔ ‸◔?`,
-		positiveText: '删除',
-		negativeText: '取消',
-		onPositiveClick: () => {
-			loginInfoApi.batchDeleteLoginInfoByUid({uids: batchDeleteLoginInfoUidArr.value}).then(result => {
-				if (result.data) {
-					window.$message?.success(`成功删除 ${result.data}条登录信息o(￣▽￣)ｄ`)
-					emitter.emit(EnumMittEventName.reloadData)
-				}
-			})
-		}
-	})
+const handleBatchDeleteFile = () => {
+	// window.$dialog?.info({
+	// 	title: `删除 ${batchDeleteFileUidArr.value.length}条登录信息◔ ‸◔?`,
+	// 	positiveText: '删除',
+	// 	negativeText: '取消',
+	// 	onPositiveClick: () => {
+	// 		fileApi.batch({uids: batchDeleteLoginInfoUidArr.value}).then(result => {
+	// 			if (result.data) {
+	// 				window.$message?.success(`成功删除 ${result.data}条登录信息o(￣▽￣)ｄ`)
+	// 				emitter.emit(EnumMittEventName.reloadData)
+	// 			}
+	// 		})
+	// 	}
+	// })
+}
+
+const handleCheckedRowKeys = (keys: Array<string>) => {
+	batchDeleteFileUidArr.value = keys
 }
 
 // 挂载emit
 onMounted(() => {
 	emitter.emit(EnumMittEventName.resetGlobalSearchCondition, condition.value);
 
-	emitter.on('fileCenterSetQueryCondition', e => {
+	emitter.on('file-center-change-format', e => {
 		if (e) {
 			condition.value = e as Condition
 			emitter.emit(EnumMittEventName.reloadData)

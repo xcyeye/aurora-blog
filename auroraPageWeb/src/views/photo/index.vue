@@ -16,7 +16,9 @@
 							<photo-waterfall :picture-src-list="photoArr"
 															 :mobile-waterfall-img-col="2"
 															 :pc-waterfall-img-col="5"
-															 :show-bg-color="true"/>
+															 :show-bg-color="true">
+								<!--<div style="height: 4rem;background-color: red"></div>-->
+							</photo-waterfall>
 						</n-scrollbar>
 					</div>
 				</aurora-card>

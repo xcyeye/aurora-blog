@@ -28,7 +28,7 @@
 
  <script lang="ts">
  import {PropType} from "vue";
- 
+
  interface ImageInfo {
 	 height: number,
 	 originHeight: number,
@@ -42,7 +42,7 @@
 	 right?: number,
 	 bottom?: number
  }
- 
+
  const waterfallList: Array<ImageInfo> = []
 
  export default {
@@ -101,7 +101,7 @@
 	 mounted() {
      //$(".loadingAnimate").fadeOut(400)
 		 this.setWaterfallCol()
-		 
+
 		 window.addEventListener('resize', this.setWaterfallCol)
    },
    methods: {
@@ -223,7 +223,7 @@
        }
      },
      getStyle() {
-       return (img: ImageInfo) => {
+       return (img: ImageInfo): object => {
          let interval = (this.clientWidth - this.waterfallImgWidth * this.waterfallImgCol) /2
 				 // return {top:img.top! + 20 +'px', left:img.left! + interval + 10 +'px', width: this.waterfallImgWidth + 'px', height:img.height}
 				 return {top:img.top! +'px', left:img.left! + (this.imageIntervalWidth / 2) + interval +'px', width: this.waterfallImgWidth - this.imageIntervalWidth + 'px', height:img.height}

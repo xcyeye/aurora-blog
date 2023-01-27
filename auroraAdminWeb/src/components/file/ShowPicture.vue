@@ -76,43 +76,47 @@
 				</n-space>
 			</n-drawer-content>
 		</n-drawer>
-		<n-grid
-			ref="picture-grid"
-			:collapsed="false"
-			cols="4 s:3 m:4 l:5 xl:4 2xl:7"
-			:x-gap="20"
-			:y-gap="20"
-			:item-responsive="true"
-			responsive="self"
-		>
-			<n-grid-item v-for="(item, index) in pictureSrcArr" ref="picture-grid-item" :key="index">
-				<n-card class="h-full shadow-sm rounded-16px" :bordered="false">
-					<n-space vertical>
-						<n-image :key="index" :show-toolbar-tooltip="true" :src="item.src" />
-						<div class="picture-description" v-if="showDrawerOperation">
-							<n-button text @click="handleShowFileDetails(item)">
-								<template #icon>
-									<n-icon>
-										<icon-ic:baseline-all-inclusive />
-									</n-icon>
-								</template>
-								详情
-							</n-button>
-						</div>
-					</n-space>
-				</n-card>
-			</n-grid-item>
-		</n-grid>
+		<photo-waterfall class="aurora-all-picture-box" :picture-src-list="getWaterFallPictureArr">
+			<div class="picture-description" v-if="showDrawerOperation">
+				<n-button text @click="handleShowFileDetails($event)">
+					<template #icon>
+						<n-icon>
+							<icon-ic:baseline-all-inclusive />
+						</n-icon>
+					</template>
+					详情
+				</n-button>
+			</div>
+		</photo-waterfall>
+		<!--<n-grid-->
+		<!--	ref="picture-grid"-->
+		<!--	:collapsed="false"-->
+		<!--	cols="4 s:3 m:4 l:5 xl:4 2xl:7"-->
+		<!--	:x-gap="20"-->
+		<!--	:y-gap="20"-->
+		<!--	:item-responsive="true"-->
+		<!--	responsive="self"-->
+		<!--&gt;-->
+		<!--	<n-grid-item v-for="(item, index) in pictureSrcArr" ref="picture-grid-item" :key="index">-->
+		<!--		<n-card class="h-full shadow-sm rounded-16px" :bordered="false">-->
+		<!--			<n-space vertical>-->
+		<!--				<n-image :key="index" :show-toolbar-tooltip="true" :src="item.src" />-->
+		<!--				-->
+		<!--			</n-space>-->
+		<!--		</n-card>-->
+		<!--	</n-grid-item>-->
+		<!--</n-grid>-->
 	</div>
 </template>
 
 <script lang="ts" setup>
-import {defineComponent, ref} from "vue";
+import {computed, defineComponent, ref} from "vue";
 import {AuroraFile} from "@/bean/pojo/file/file";
 import {FileVo} from "@/bean/vo/file/fileVo";
 import {StringUtil, getFileSize} from "@/utils";
 import {fileApi} from "@/service";
 import {copyContent} from "@/plugins";
+import {useSysSettingStore} from "@/store";
 
 defineComponent({name: 'ShowPicture'});
 
@@ -135,9 +139,24 @@ const props = withDefaults(defineProps<Props>(), {
 const showDrawer = ref(false)
 const currentFileInfo = ref<FileVo>({})
 
-const handleShowFileDetails = (pictureInfo: PictureProperties) => {
+const nginxInfo = useSysSettingStore().sysSettingMap.get('nginx_file_host')
+let host = ''
+if (nginxInfo && StringUtil.haveLength(nginxInfo.paramValue)) {
+	host = nginxInfo.paramValue!
+}
+
+const getWaterFallPictureArr = computed(() => {
+	if (!props.pictureSrcArr || props.pictureSrcArr.length === 0) return []
+	return props.pictureSrcArr.map(v => {
+		if (v.src.startsWith('http')) return v.src
+		return `${host}/${v.src}`
+	}).concat()
+})
+
+const handleShowFileDetails = (e: Event) => {
+	const pictureInfo: PictureProperties = {}
 	currentFileInfo.value = {}
-	// 查询此文件是否是系统的
+	// 查询此文件是否是系统的pictureInfo: PictureProperties
 	if (!StringUtil.haveLength(pictureInfo.uid)) {
 		window.$message?.info('此文件并未存储在系统')
 		return
@@ -183,6 +202,16 @@ const handleUpdateFileInfo = () => {
 }
 </script>
 
-<style scoped>
+<style scoped lang="css">
+.aurora-all-picture-box {
+	height: calc(100vh);
+}
 
+.picture-description {
+	margin: 0 auto;
+	text-align: right;
+	box-sizing: border-box;
+	padding-left: 1rem;
+	padding-right: 1rem;
+}
 </style>
