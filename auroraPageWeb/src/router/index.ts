@@ -133,6 +133,12 @@ function createRouterGuard(router: Router) {
         userApi.queryOneDataByUid({uid: userUid}).then(result => {
           if (result.data) {
             useUserInfo().setUserInfo(userUid, result.data)
+          }else {
+            // 用户不存在
+            // window.$message?.error('此用户不存在')
+            // router.push({
+            //   name: 'home'
+            // })
           }
         })
       }

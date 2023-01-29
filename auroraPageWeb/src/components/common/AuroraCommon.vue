@@ -18,8 +18,6 @@
     <slot name="top6"></slot>
     <div
         class="theme-container"
-        @touchstart="onTouchStart"
-        @touchend="onTouchEnd"
         :style="colorFontStyle"
         :class="{'sidebar-single-enter-animate': showSidebarAnimateClass}"
     >

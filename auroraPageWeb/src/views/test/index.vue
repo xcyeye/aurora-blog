@@ -1,69 +1,42 @@
 <template>
-	<!--<div class="test">-->
-	<!--	&lt;!&ndash;<aurora-slider-picture></aurora-slider-picture>&ndash;&gt;-->
-	<!--	&lt;!&ndash;<aurora-bubble>&ndash;&gt;-->
-	<!--	&lt;!&ndash;	asdfkhasdf&ndash;&gt;-->
-	<!--	&lt;!&ndash;	<div>lajdfh</div>&ndash;&gt;-->
-	<!--	&lt;!&ndash;</aurora-bubble>&ndash;&gt;-->
-	<!--	&lt;!&ndash;<aurora-card custom-style="background-color: rebeccapurple">&ndash;&gt;-->
-	<!--	&lt;!&ndash;	<div>&ndash;&gt;-->
-	<!--	&lt;!&ndash;		asdflhasd&ndash;&gt;-->
-	<!--	&lt;!&ndash;	</div>&ndash;&gt;-->
-	<!--	&lt;!&ndash;	<aurora-bubble/>&ndash;&gt;-->
-	<!--	&lt;!&ndash;</aurora-card>&ndash;&gt;-->
-	<!--	&lt;!&ndash;<aurora-bubble/>&ndash;&gt;-->
-	<!--	&lt;!&ndash;<div class="flower">&ndash;&gt;-->
-	<!--	&lt;!&ndash;	<aurora-button-flower/>&ndash;&gt;-->
-	<!--	&lt;!&ndash;</div>&ndash;&gt;-->
-	<!--	&lt;!&ndash;<aurora-envelope>&ndash;&gt;-->
-	<!--	&lt;!&ndash;	<div class="par"></div>&ndash;&gt;-->
-	<!--	&lt;!&ndash;</aurora-envelope>&ndash;&gt;-->
-	<!--	<aurora-typing-css>-->
-	<!--	</aurora-typing-css>-->
-	<!--</div>-->
-	<app-loading/>
+	<div class="test-parent">
+		<div class="son1">我是son1</div>
+		<span>我是son1和son2中间的元素</span>
+		<div class="son2">我是son2</div>
+	</div>
 </template>
 
 <script lang="ts" setup>
-import {defineComponent, nextTick} from "vue";
-import AuroraCard from "@/components/common/other/AuroraCard.vue";
-import AuroraBubble from "@/components/common/other/AuroraBubble.vue";
+import {defineComponent} from "vue";
 
 defineComponent({name: 'index'});
-
-const click = () => {
-	nextTick(() => {
-		import('@/assets/flowers-less').then(result => {
-			result.initBurst()
-		})
-	})
-}
 </script>
 
 <style scoped lang="css">
-.test {
-	width: 10rem;
-	/*height:40rem;*/
-	height: auto;
-	background-color: rgba(12, 22, 45, 0.91);
+.test-parent {
 	position: relative;
+	width: 70%;
 	margin: 0 auto;
-	vertical-align: middle;
+	height: 20rem;
+	background-color: black;
+	overflow: scroll;
 }
-
-.flower {
+.son1 {
 	height: 10rem;
-	width: 10rem;
-	background-color: #008AC5;
-	position: relative;
+	background-color: red;
 }
-
-.par {
-	height: 500px;
-	background-color: rebeccapurple;
+.son2 {
+	height: 15rem;
+	background-color: palevioletred;
+	position: absolute;
+	bottom: 0;
+	right: 0;
 	width: 100%;
-	/*height: 30rem;*/
-	/*width: 100%;*/
-	/*background-color: red;*/
+}
+.son2:after {
+	content: '';
+	display: block;
+	clear: both;
+	width: 100%;
 }
 </style>
