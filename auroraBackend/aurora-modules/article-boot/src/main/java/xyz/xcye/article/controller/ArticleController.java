@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 import xyz.xcye.article.pojo.ArticlePojo;
 import xyz.xcye.article.service.ArticleService;
 import xyz.xcye.article.vo.ArticleVO;
@@ -20,6 +21,8 @@ import xyz.xcye.data.entity.Condition;
 import xyz.xcye.data.entity.PageData;
 
 import javax.validation.groups.Default;
+import java.io.IOException;
+import java.util.List;
 
 /**
  * @author qsyyke
@@ -108,7 +111,7 @@ public class ArticleController {
     @Operation(summary = "导入文章")
     @PostMapping("/importArticle")
     @SelectOperation
-    public void importArticle(@RequestBody ArticlePojo pojo) {
-        articleService.importArticle(pojo);
+    public void importArticle(ArticlePojo pojo, List<MultipartFile> articleDataFileList) throws IOException {
+        articleService.importArticle(pojo, articleDataFileList);
     }
 }

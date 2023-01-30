@@ -1,15 +1,16 @@
 package xyz.xcye.article.service;
 
 import xyz.xcye.article.pojo.ArticlePojo;
-import xyz.xcye.article.pojo.CategoryPojo;
-import xyz.xcye.article.vo.TagVO;
 
 import java.io.IOException;
-import java.util.List;
 
 public interface ParseArticleFile {
-    List<CategoryPojo> parseCategory();
-    List<TagVO> parseTag();
+    // List<CategoryPojo> parseCategory(String frontmatterCategoryName, boolean folderAsCategoryName) throws IOException;
+    // List<TagVO> parseTag(String frontmatterTagName) throws IOException;
 
-    ArticlePojo parseArticle() throws IOException;
+    ArticlePojo parseArticle(boolean reservedFrontMatter,
+                             String frontmatterCategoryName,
+                             boolean folderAsCategoryName,
+                             String frontmatterTagName,
+                             boolean useFileNameAsTitle) throws IOException;
 }

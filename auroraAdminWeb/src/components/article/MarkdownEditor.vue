@@ -247,7 +247,7 @@ const getAfterUploadFileContent = (fileVoInfoArr: FileVo[]): Promise<string> => 
 }
 
 watch(() => props.renderMdContent, () =>{
-	setContent()
+	// setContent()
 })
 
 // 监听大纲

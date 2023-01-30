@@ -7,6 +7,7 @@
 				:multiple="multipleUploadFile"
 				:show-file-list="showFileList"
 				:max="maxUploadFileNumber"
+				:directory="directory"
 				:data="parameterData"
 				:accept="acceptFileType"
 				:default-upload="!controlUploadFile"
@@ -78,7 +79,8 @@ interface Props {
 	maxUploadFileNumber?: number,
 	uploadFileInterface?: 'single' | 'typora' | 'multi',
 	multipleUploadFile?: boolean,
-	uploadDraggerDescriptionText?: string
+	uploadDraggerDescriptionText?: string,
+	directory?: boolean
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -97,7 +99,8 @@ const props = withDefaults(defineProps<Props>(), {
 		}
 	},
 	multipleUploadFile: false,
-	uploadDraggerDescriptionText: '请不要上传敏感数据，比如你的银行卡号和密码，信用卡号有效期和安全码'
+	uploadDraggerDescriptionText: '请不要上传敏感数据，比如你的银行卡号和密码，信用卡号有效期和安全码',
+	directory: false
 });
 
 // 定义data

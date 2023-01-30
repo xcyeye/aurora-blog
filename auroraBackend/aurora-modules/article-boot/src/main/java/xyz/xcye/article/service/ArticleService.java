@@ -1,29 +1,38 @@
 package xyz.xcye.article.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
 import xyz.xcye.article.dao.ext.AuroraArticleExtDao;
 import xyz.xcye.article.po.Article;
 import xyz.xcye.article.pojo.ArticlePojo;
 import xyz.xcye.article.pojo.CategoryPojo;
 import xyz.xcye.article.pojo.TagPojo;
+import xyz.xcye.article.service.impl.ParseMarkdownArticleFileImpl;
 import xyz.xcye.article.util.TimeUtils;
 import xyz.xcye.article.vo.ArticleVO;
 import xyz.xcye.article.vo.CategoryVO;
 import xyz.xcye.article.vo.TagVO;
 import xyz.xcye.aurora.properties.AuroraProperties;
+import xyz.xcye.aurora.util.UserUtils;
+import xyz.xcye.core.enums.ResponseStatusCodeEnum;
 import xyz.xcye.core.exception.article.ArticleException;
+import xyz.xcye.core.exception.user.UserException;
 import xyz.xcye.core.util.BeanUtils;
 import xyz.xcye.core.util.DateUtils;
+import xyz.xcye.core.util.LogUtils;
 import xyz.xcye.core.util.id.GenerateInfoUtils;
 import xyz.xcye.core.util.lambda.AssertUtils;
 import xyz.xcye.data.entity.Condition;
 import xyz.xcye.data.entity.PageData;
 import xyz.xcye.data.util.PageUtils;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -134,11 +143,30 @@ public class ArticleService {
      * 处理导入文章
      * @param pojo
      */
-    public void importArticle(ArticlePojo pojo) {
-        if (pojo.getArticleDataFileList() == null || pojo.getArticleDataFileList().isEmpty()) {
-            return;
+    public void importArticle(ArticlePojo pojo, List<MultipartFile> articleDataFileList) {
+        AssertUtils.stateThrow(UserUtils.getCurrentUser() != null, () -> new UserException(ResponseStatusCodeEnum.PERMISSION_TOKEN_EXPIRATION));
+        if (articleDataFileList == null || articleDataFileList.isEmpty()) {
+            throw new ArticleException("没有需要导入的文件信息");
         }
 
+        for (MultipartFile articleFile : articleDataFileList) {
+            String articleFileContentType = articleFile.getContentType();
+            ArticlePojo articlePojo = null;
+            Resource resource = articleFile.getResource();
+            if ("text/markdown".equals(articleFileContentType)) {
+                // 使用markdown进行解析
+                ParseArticleFile parseArticleFile = new ParseMarkdownArticleFileImpl(articleFile);
+                try {
+                    articlePojo = parseArticleFile.parseArticle(pojo.isReservedFrontMatter(), pojo.getFrontmatterCategoryName(), pojo.isFolderAsCategoryName(), pojo.getFrontmatterTagName(), pojo.isUseFileNameAsTitle());
+                } catch (IOException e) {
+                    LogUtils.logExceptionInfo(e);
+                    continue;
+                }
+            }else {
+                continue;
+            }
+            insertArticle(articlePojo);
+        }
 
     }
 
@@ -282,5 +310,18 @@ public class ArticleService {
         articleVO.setTagArticleList(tagArticleMapList);
         articleVO.setCategoryArticleList(categoryArticleMapList);
         return articleVO;
+    }
+
+    private void manyFolderToSingleFile(List<File> fileList, File file) {
+        if (fileList == null) {
+            fileList = new ArrayList<>();
+        }
+        if (!file.isDirectory()) {
+            fileList.add(file);
+        }else {
+            for (File listFile : file.listFiles()) {
+                manyFolderToSingleFile(fileList, listFile);
+            }
+        }
     }
 }

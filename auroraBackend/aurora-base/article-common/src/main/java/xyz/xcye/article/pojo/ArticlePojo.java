@@ -12,7 +12,6 @@ import xyz.xcye.core.valid.Update;
 import xyz.xcye.core.valid.validator.ValidateString;
 
 import javax.validation.constraints.NotNull;
-import java.io.File;
 import java.util.List;
 
 /**
@@ -166,7 +165,18 @@ public class ArticlePojo {
     private List<String> categoryTitleList;
 
     /**
-     * 文章数据文件集合，用于导入文章
+     * 在解析markdown的内容时，是否保留frontmatter内容
      */
-    private List<File> articleDataFileList;
+    private boolean reservedFrontMatter;
+    private String frontmatterCategoryName;
+    /**
+     * 是否将目录的最后一级文件夹作为类别名称
+     */
+    private boolean folderAsCategoryName;
+    private String frontmatterTagName;
+
+    /**
+     * 是否使用文件名作为标题
+     */
+    private boolean useFileNameAsTitle;
 }

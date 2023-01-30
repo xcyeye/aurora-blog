@@ -1,9 +1,9 @@
 package xyz.xcye.core.util.file;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 
 /**
  * @author xcye
@@ -12,14 +12,16 @@ import java.io.IOException;
  */
 
 public class StringFileUtils {
-    public static String getFileContent(File file) throws IOException {
-        if (file == null) {
+    public static String getFileContent(InputStream stream) throws IOException {
+        if (stream == null) {
             return "";
         }
-        BufferedReader reader = new BufferedReader(new FileReader(file));
+        InputStreamReader inputStreamReader = new InputStreamReader(stream);
+        BufferedReader reader = new BufferedReader(inputStreamReader);
         StringBuilder builder = new StringBuilder();
-        while (reader.readLine() != null) {
-            builder.append(reader.readLine()).append("\n");
+        String readLine = "";
+        while ((readLine = reader.readLine()) != null) {
+            builder.append(readLine).append("\n");
         }
         String content = builder.toString();
         reader.close();
