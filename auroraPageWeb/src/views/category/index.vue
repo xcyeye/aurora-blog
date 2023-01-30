@@ -109,12 +109,12 @@ const setArticleArr = (articleInfoTemp: ArticleVo) => {
 	showArticleArr.value = []
 	currentPage.value = 1
 	const set: Set<ArticleVo> = new Set();
-	articleInfoTemp.tagArticleList!.forEach((v, index1) => {
+	articleInfoTemp.categoryArticleList!.forEach((v, index1) => {
 		const map = new Map<string, Array<ArticleVo>>(Object.entries(v))
 		map.forEach((articleList, key) => {
 			articleList.forEach((articleInfo, index2) => {
 				set.add(articleInfo)
-				if (index1 === articleInfoTemp.tagArticleList!.length - 1 && index2 === articleList.length - 1) {
+				if (index1 === articleInfoTemp.categoryArticleList!.length - 1 && index2 === articleList.length - 1) {
 					articleArr.value = Array.from(set)
 					setPaginationData()
 				}
@@ -136,7 +136,7 @@ const loadArticleData = () => {
 		})
 		const tagTitleList: Array<string> = loadArticleTagArr.value.map(v => v.title).concat() as string[];
 		const userUidTemp = showAllUserData.value ? null : userUid.value
-		articleApi.queryListArticleByTagOrCategory({tagTitleList: tagTitleList, userUid: userUidTemp}).then(result => {
+		articleApi.queryListArticleByTagOrCategory({categoryTitleList: tagTitleList, userUid: userUidTemp}).then(result => {
 			if (result.data) {
 				setArticleArr(result.data)
 			}
@@ -149,7 +149,7 @@ const loadArticleData = () => {
 		
 		// 查询第一次标签的文章
 		currentTagInfo.value = tagInfoArr.value[0]
-		articleApi.queryListArticleByTagOrCategory({tagTitleList: Array.of(tagInfoArr.value[0].title) as string[]}).then(result => {
+		articleApi.queryListArticleByTagOrCategory({categoryTitleList: Array.of(tagInfoArr.value[0].title) as string[]}).then(result => {
 			if (result.data) {
 				setArticleArr(result.data)
 			}
