@@ -48,6 +48,7 @@ import {ArticleVo} from "@/bean/vo/article/ArticleVo";
 import {StringUtil} from "@/utils";
 import {useSiteInfo, useSysSettingStore} from "@/stores";
 import {useRouterPush} from "@/composables";
+import {setRandomInterface} from "@/utils/business";
 
 interface Props {
 	pageItem: ArticleVo,
@@ -80,7 +81,7 @@ const getLazyLoadImg = computed(() => {
 	}else if (sysLazyInfo && StringUtil.haveLength(sysLazyInfo.paramValue)) {
 		return sysLazyInfo.paramValue
 	}
-	return props.pageItem.coverPictureUrl
+	return setRandomInterface(props.pageItem.coverPictureUrl)
 })
 
 const getCoverImg = computed(() => {

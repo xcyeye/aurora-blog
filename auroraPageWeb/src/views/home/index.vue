@@ -164,6 +164,7 @@ const goRead = (article: ArticleVo) => {
 }
 
 const goUserPage = (userInfo: UserVo) => {
+	console.log(userInfo);
 	routerPush.routerPush({
 		path: `/user/${userInfo.uid}`
 	})

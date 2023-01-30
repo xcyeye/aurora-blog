@@ -130,45 +130,50 @@ function createRouterGuard(router: Router) {
     if (StringUtil.haveLength(userUid)) {
       // 存储用户信息
       if (!isNotEmptyObject(useUserInfo().getUserInfo(userUid))) {
+        useCurrentUser().setCurrentUserInfo({uid: userUid})
         userApi.queryOneDataByUid({uid: userUid}).then(result => {
-          if (result.data) {
+          if (result.data && isNotEmptyObject(result.data)) {
             useUserInfo().setUserInfo(userUid, result.data)
-          }else {
-            // 用户不存在
-            // window.$message?.error('此用户不存在')
-            // router.push({
-            //   name: 'home'
-            // })
-          }
-        })
-      }
-      useCurrentUser().setCurrentUserInfo({uid: userUid})
 
-      // 存储用户站点信息
-      const userSiteInfo = useSiteInfo().getSiteInfo(userUid)
-      if (!userSiteInfo || !isNotEmptyObject(userSiteInfo)) {
-        // useSiteInfo().setSiteInfo(userUid, defaultSiteSettingInfo)
-        // next()
-        siteSettingApi.queryListDataByCondition({otherUid: userUid, keyword: `${userUid}SiteInfo`}).then(result => {
-          if (result.data && result.data.result) {
-            const siteInfo = result.data.result[0]
-            if (siteInfo && StringUtil.haveLength(siteInfo.paramValue)) {
-              useSiteInfo().setSiteInfo(userUid, JSON.parse(siteInfo.paramValue!))
-              next()
-              // siteSettingInfo.value = JSON.parse(result.data.paramValue)
-              // siteSettingInfo.value = JSON.parse(result.data.paramValue)
-              // useSite.setSiteInfo(userUid.value, defaultSiteSettingInfo)
+            // 查询该用户的站点信息
+            // 存储用户站点信息
+            const userSiteInfo = useSiteInfo().getSiteInfo(userUid)
+            if (!userSiteInfo || !isNotEmptyObject(userSiteInfo)) {
+              // useSiteInfo().setSiteInfo(userUid, defaultSiteSettingInfo)
+              // next()
+              siteSettingApi.queryListDataByCondition({otherUid: userUid, keyword: `${userUid}SiteInfo`}).then(result => {
+                if (result.data && result.data.result) {
+                  const siteInfo = result.data.result[0]
+                  if (siteInfo && StringUtil.haveLength(siteInfo.paramValue)) {
+                    useSiteInfo().setSiteInfo(userUid, JSON.parse(siteInfo.paramValue!))
+                    next()
+                    // siteSettingInfo.value = JSON.parse(result.data.paramValue)
+                    // siteSettingInfo.value = JSON.parse(result.data.paramValue)
+                    // useSite.setSiteInfo(userUid.value, defaultSiteSettingInfo)
+                  }else {
+                    // 用户没有任何信息，则使用默认的
+                    console.error('该用户没有配置任何站点信息，将使用默认值')
+                    useSiteInfo().setSiteInfo(userUid, defaultSiteSettingInfo)
+                    next()
+                  }
+                }else {
+                  // 用户没有任何信息，则使用默认的
+                  console.error('该用户没有配置任何站点信息，将使用默认值')
+                  useSiteInfo().setSiteInfo(userUid, defaultSiteSettingInfo)
+                  next()
+                }
+              })
             }else {
-              // 用户没有任何信息，则使用默认的
-              console.error('该用户没有配置任何站点信息，将使用默认值')
-              useSiteInfo().setSiteInfo(userUid, defaultSiteSettingInfo)
               next()
             }
           }else {
-            // 用户没有任何信息，则使用默认的
-            console.error('该用户没有配置任何站点信息，将使用默认值')
-            useSiteInfo().setSiteInfo(userUid, defaultSiteSettingInfo)
+            // 用户不存在
+            console.log("此用户不存在");
+            window.$message?.error('此用户不存在')
             next()
+            router.push({
+              path: '/notFound'
+            })
           }
         })
       }else {

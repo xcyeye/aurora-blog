@@ -268,7 +268,7 @@ const updateReadNum = (article: ArticleVo) => {
 
 const loadArticleInfo = () => {
 	articleApi.queryOneDataByUid({uid: articleUid.value}).then(result => {
-		if (result.data) {
+		if (result.data && isNotEmptyObject(result.data)) {
 			articleInfo.value = result.data
 			renderMarkdownContent(result.data)
 			calculateReadTime()
@@ -297,6 +297,11 @@ const loadArticleInfo = () => {
 			// setMetaDescription(userInfo.value.userSummary)
 			// setMetaKeywords(`${userInfo.value.nickname} ${userInfo.value.username}`)
 			updateReadNum(result.data!)
+		}else {
+			window.$message?.error('无效的文章id')
+			router.push({
+				path: '/notFound'
+			})
 		}
 	})
 }
