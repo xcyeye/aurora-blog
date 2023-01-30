@@ -18,10 +18,7 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -46,17 +43,25 @@ public class ParseMarkdownArticleFileImpl implements ParseArticleFile {
         if (!StringUtils.hasLength(frontmatterCategoryName)) {
             return categoryPojoList;
         }
-        // if (folderAsCategoryName) {
-        //     // TODO 将此文件的目录作为类别 目前是使用该文件的上一级目录
-        //     String parentFolderPath = this.articleFile.getParent();
-        //     if (StringUtils.hasLength(parentFolderPath) && parentFolderPath.lastIndexOf(File.separator) != parentFolderPath.length() - 1) {
-        //         CategoryPojo categoryPojo = new CategoryPojo();
-        //         categoryPojo.setTitle(parentFolderPath.substring(parentFolderPath.lastIndexOf(File.separator) + 1));
-        //         categoryPojo.setUserUid(UserUtils.getCurrentUserUid());
-        //         categoryPojo.setDelete(false);
-        //         categoryPojoList.add(categoryPojo);
-        //     }
-        // }
+        if (folderAsCategoryName) {
+            // TODO 将此文件的目录作为类别 目前是使用该文件的上一级目录
+            String originalFilename = this.articleFile.getOriginalFilename();
+            if (StringUtils.hasLength(originalFilename)) {
+                String[] folderArr = originalFilename.split("/");
+                if (folderArr.length > 1) {
+                    // 如果等于1的话，只有一级
+                    List<String> folderList = Arrays.stream(folderArr).collect(Collectors.toList());
+                    folderList.remove(folderArr.length - 1);
+                    folderList.forEach(v -> {
+                        CategoryPojo categoryPojo = new CategoryPojo();
+                        categoryPojo.setTitle(v);
+                        categoryPojo.setUserUid(UserUtils.getCurrentUserUid());
+                        categoryPojo.setDelete(false);
+                        categoryPojoList.add(categoryPojo);
+                    });
+                }
+            }
+        }
         String markdownArticleContent = StringFileUtils.getFileContent(this.articleFile.getInputStream());
         Map<String, Object> frontMatterInfo = getFrontMatterInfo(markdownArticleContent, true);
         if (frontMatterInfo == null) {
@@ -182,7 +187,13 @@ public class ParseMarkdownArticleFileImpl implements ParseArticleFile {
         reader.close();
 
         Yaml yaml = new Yaml();
-        yamlMap = yaml.loadAs(frontMatterContent, Map.class);
+        try {
+            yamlMap = yaml.loadAs(frontMatterContent, Map.class);
+        } catch (Exception e) {
+            LogUtils.logExceptionInfo(e);
+            // 解析yaml可能出问题
+            return yamlMap;
+        }
         if (yamlMap != null && !reservedFrontMatter) {
             // 将frontmatter替换掉
             markdownContent = markdownContent.substring(frontMatterArticleContent.length());
@@ -196,7 +207,9 @@ public class ParseMarkdownArticleFileImpl implements ParseArticleFile {
         // 使用文件名作为标题
         String originalFilename = this.articleFile.getOriginalFilename();
         if (StringUtils.hasLength(originalFilename)) {
-            return originalFilename.substring(0, originalFilename.lastIndexOf("."));
+            String[] titleSplits = originalFilename.split("/");
+            String fileName = titleSplits[titleSplits.length - 1];
+            return fileName.substring(0, fileName.lastIndexOf("."));
         }else {
             return getTitleFromContent(markdownArticleContent);
         }

@@ -167,16 +167,16 @@ public class ArticlePojo {
     /**
      * 在解析markdown的内容时，是否保留frontmatter内容
      */
-    private boolean reservedFrontMatter;
+    private Boolean reservedFrontMatter;
     private String frontmatterCategoryName;
     /**
      * 是否将目录的最后一级文件夹作为类别名称
      */
-    private boolean folderAsCategoryName;
+    private Boolean folderAsCategoryName;
     private String frontmatterTagName;
 
     /**
      * 是否使用文件名作为标题
      */
-    private boolean useFileNameAsTitle;
+    private Boolean useFileNameAsTitle;
 }

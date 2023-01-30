@@ -1,5 +1,61 @@
 <template>
 	<div>
+		<n-drawer v-model:show="showImportOrExportArticleModal" :width="600" placement="right">
+			<n-drawer-content :title="importArticleStatus ? '执行导入向导' : '执行导出向导'">
+				<n-steps vertical :current="currentImportOrExportStepNumber" :status="importOrExportStepStatus">
+					<n-step
+						title="FrontMatter设置"
+					>
+						<n-descriptions label-placement="left" :column="1">
+							<n-descriptions-item label="保留frontmatter">
+								<n-switch size="small" v-model:value="importOrExportArticleInfo.reservedFrontMatter"/>
+							</n-descriptions-item>
+							<n-descriptions-item label="将文件路径最后一级文件夹作为类别">
+								<n-switch size="small" v-model:value="importOrExportArticleInfo.folderAsCategoryName"/>
+							</n-descriptions-item>
+							<n-descriptions-item label="使用文件名作为标题">
+								<n-switch size="small" v-model:value="importOrExportArticleInfo.useFileNameAsTitle"/>
+							</n-descriptions-item>
+							<n-descriptions-item label="frontmatter中类别的名称">
+								<n-input size="small" v-model:value="importOrExportArticleInfo.frontmatterCategoryName" type="text"/>
+							</n-descriptions-item>
+							<n-descriptions-item label="frontmatter中标签的名称">
+								<n-input size="small" v-model:value="importOrExportArticleInfo.frontmatterTagName" type="text"/>
+							</n-descriptions-item>
+						</n-descriptions>
+					</n-step>
+					<n-step title="导入文章">
+						<n-upload
+							multiple
+							directory-dnd
+							directory
+							show-file-list
+							:max="1000"
+							@update-file-list="handleUpdateFileList"
+						>
+							<n-upload-dragger>
+								<div style="margin-bottom: 12px">
+									<n-icon size="48" :depth="3">
+										<icon-uiw:cloud-upload/>
+									</n-icon>
+								</div>
+								<n-text style="font-size: 16px">
+									点击或者拖动文章文件到该区域来上传
+								</n-text>
+								<n-p depth="3" style="margin: 8px 0 0 0">
+									支持目录上传
+								</n-p>
+							</n-upload-dragger>
+						</n-upload>
+					</n-step>
+				</n-steps>
+				<template #footer>
+					<n-space justify="end">
+						<n-button strong secondary tertiary round type="success" @click="handleImportOrExportArticle">{{importArticleStatus ? '导入' : '导出'}}</n-button>
+					</n-space>
+				</template>
+			</n-drawer-content>
+		</n-drawer>
 		<n-layout has-sider sider-placement="right">
 			<n-layout-content content-style="padding: 24px;">
 				<n-space vertical :size="50">
@@ -43,6 +99,7 @@
 											{{ !addArticleStatus ? '更新' : '发布' }}
 										</n-button>
 										<n-button round type="info" @click="handleSaveArticleAction"> 保存 </n-button>
+										<n-button round type="success" @click="showImportOrExportArticleModal = true"> 导入 </n-button>
 										<n-button v-if="!addArticleStatus" round type="warning" @click="handleNewArticleAction"> 新建 </n-button>
 									</n-space>
 								</div>
@@ -237,6 +294,7 @@ import {TagVo} from "@/bean/vo/article/TagVo";
 import {CategoryVo} from "@/bean/vo/article/CategoryVo";
 import {Category} from "@/bean/pojo/article/Category";
 import {useRouterPush} from "@/composables";
+import {ArticleVo} from "@/bean/vo/article/ArticleVo";
 
 interface VditorPropsProperties {
 	tabKey?: string,
@@ -279,6 +337,18 @@ const vditorConfig = ref<VditorPropsProperties>({
 	mode: 'ir',
 	icon: 'material'
 })
+const showImportOrExportArticleModal = ref(false)
+const importArticleStatus = ref(true)
+const importOrExportStepStatus = ref<'error' | 'process' | 'wait' | 'finish'>('process')
+const currentImportOrExportStepNumber = ref<number>(1)
+const importOrExportArticleInfo = ref<Article>({
+	frontmatterCategoryName: 'category',
+	frontmatterTagName: 'tag',
+	useFileNameAsTitle: true,
+	folderAsCategoryName: true,
+	reservedFrontMatter: false,
+	articleDataFileList: []
+})
 
 // computed
 const getOriginArticleStatus = computed(() =>{
@@ -294,6 +364,32 @@ const setArticleShowTitle = () => {
 		originTitle.value = currentArticle.value.title!
 		currentArticle.value.title = currentArticle.value.title!.substring(0, 17) + "..."
 	}
+}
+
+const handleImportOrExportArticle = () => {
+  if (!importOrExportArticleInfo.value.articleDataFileList || importOrExportArticleInfo.value.articleDataFileList.length === 0) {
+		window.$message?.error('请上传博客文章数据')
+		return
+	}
+	importOrExportArticleInfo.value.userUid = authStore.userInfo.user_uid
+	articleApi.importArticle(importOrExportArticleInfo.value).then(result => {
+		if (!result.error) {
+			window.$message?.success('导入成功')
+			showImportOrExportArticleModal.value = false
+			importOrExportArticleInfo.value = {
+				frontmatterCategoryName: 'category',
+				frontmatterTagName: 'tag',
+				useFileNameAsTitle: true,
+				folderAsCategoryName: true,
+				reservedFrontMatter: false,
+				articleDataFileList: []
+			}
+		}
+	})
+}
+
+const handleUpdateFileList = (fileList: UploadFileInfo[]) => {
+	importOrExportArticleInfo.value.articleDataFileList = fileList.map(v => v.file).concat() as Array<File>
 }
 
 const loadCurrentArticleInfo = (uid: string) => {
@@ -331,6 +427,10 @@ const loadAllCategory = () => {
 			})
 		}
 	})
+}
+
+const handleClickImportNegativeBut = () => {
+  showImportOrExportArticleModal.value = false
 }
 
 const loadAllTag = () => {

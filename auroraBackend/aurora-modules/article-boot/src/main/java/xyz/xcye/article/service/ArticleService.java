@@ -1,7 +1,6 @@
 package xyz.xcye.article.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
@@ -143,6 +142,7 @@ public class ArticleService {
      * 处理导入文章
      * @param pojo
      */
+    @Transactional(rollbackFor = Exception.class)
     public void importArticle(ArticlePojo pojo, List<MultipartFile> articleDataFileList) {
         AssertUtils.stateThrow(UserUtils.getCurrentUser() != null, () -> new UserException(ResponseStatusCodeEnum.PERMISSION_TOKEN_EXPIRATION));
         if (articleDataFileList == null || articleDataFileList.isEmpty()) {
@@ -150,14 +150,17 @@ public class ArticleService {
         }
 
         for (MultipartFile articleFile : articleDataFileList) {
-            String articleFileContentType = articleFile.getContentType();
+            String originalFilename = articleFile.getOriginalFilename();
+            String extName = "";
+            if (StringUtils.hasLength(originalFilename)) {
+                extName = originalFilename.substring(originalFilename.lastIndexOf(".") + 1);
+            }
             ArticlePojo articlePojo = null;
-            Resource resource = articleFile.getResource();
-            if ("text/markdown".equals(articleFileContentType)) {
+            if ("md".equals(extName)) {
                 // 使用markdown进行解析
                 ParseArticleFile parseArticleFile = new ParseMarkdownArticleFileImpl(articleFile);
                 try {
-                    articlePojo = parseArticleFile.parseArticle(pojo.isReservedFrontMatter(), pojo.getFrontmatterCategoryName(), pojo.isFolderAsCategoryName(), pojo.getFrontmatterTagName(), pojo.isUseFileNameAsTitle());
+                    articlePojo = parseArticleFile.parseArticle(pojo.getReservedFrontMatter(), pojo.getFrontmatterCategoryName(), pojo.getFolderAsCategoryName(), pojo.getFrontmatterTagName(), pojo.getUseFileNameAsTitle());
                 } catch (IOException e) {
                     LogUtils.logExceptionInfo(e);
                     continue;
@@ -165,7 +168,9 @@ public class ArticleService {
             }else {
                 continue;
             }
-            insertArticle(articlePojo);
+            if (articlePojo != null) {
+                insertArticle(articlePojo);
+            }
         }
 
     }

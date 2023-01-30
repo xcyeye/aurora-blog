@@ -3,6 +3,7 @@ import { request } from '@/service/request';
 import type { Condition, PageData } from '@/bean/core/bean';
 import type { Article } from '@/bean/pojo/article/Article';
 import type { ArticleVo } from '@/bean/vo/article/ArticleVo';
+import {EnumContentType} from "@/enum";
 
 /** 接口前缀 */
 const apiPrefix = '/blog/article/';
@@ -17,6 +18,14 @@ function _baseApi() {
   function insertData(data: beanType) {
     return request.post<string>(`${apiPrefix}insertArticle`, data, baseAxiosRequestConfig);
   }
+
+	function importArticle(data: beanType) {
+		return request.post<string>(`${apiPrefix}importArticle`, data, {
+			headers: {
+				'Content-Type': EnumContentType.formData
+			}
+		});
+	}
 
   /**
    * 插入多条数据
@@ -118,7 +127,8 @@ function _baseApi() {
     batchInsertData,
     updateArticleReadNum,
     updateArticleLikeNum,
-    queryListArticleByTagOrCategory
+    queryListArticleByTagOrCategory,
+		importArticle
   };
 }
 

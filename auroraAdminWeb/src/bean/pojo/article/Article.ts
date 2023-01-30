@@ -103,6 +103,14 @@ interface Article {
    * 是否删除 逻辑删除 1： 已删除
    */
   delete?: boolean | null;
+
+	reservedFrontMatter?: boolean | null;
+	frontmatterCategoryName?: string | null;
+	folderAsCategoryName?: boolean | null;
+	frontmatterTagName?: string | null;
+	useFileNameAsTitle?: boolean | null;
+
+	articleDataFileList?: Array<File> | []
 }
 
 export { Article };
