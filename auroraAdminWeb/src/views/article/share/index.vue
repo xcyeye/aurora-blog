@@ -37,7 +37,7 @@
 						</n-space>
 					</n-tab-pane>
 					<n-tab-pane name="picture" tab="照片">
-						<show-picture :picture-src-arr="pictureInfoArr" :show-drawer-operation="false"/>
+						<show-picture v-if="pictureInfoArr && pictureInfoArr.length > 0" :picture-src-arr="pictureInfoArr" :show-drawer-operation="false"/>
 						<upload-file
 							@handleFinishUploadFile="handleFinishUploadFile"
 							:accept-file-type-str="['.png','.jpg','.jpeg']"

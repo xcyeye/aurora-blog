@@ -73,6 +73,7 @@ const vditor = ref<Vditor>();
 const vditorRef = ref<HTMLElement>();
 const originContent = ref<string>('')
 const vditorRenderFinishFlag = ref(false)
+const vditorSetContentStatus = ref(false)
 let vditorOptionConfig: IOptions = {
 	theme: theme.darkMode ? 'dark' : 'classic',
 	minHeight: 500,
@@ -204,7 +205,10 @@ const setContent = () => {
 	const time = setInterval(() => {
 		if (vditorRenderFinishFlag.value) {
 			if (vditor.value) {
-				vditor.value.setValue(props.renderMdContent as string)
+				if (StringUtil.haveLength(props.renderMdContent)) {
+					vditor.value.setValue(props.renderMdContent as string)
+					vditorSetContentStatus.value = true
+				}
 				clearInterval(time)
 			}
 		}
@@ -218,9 +222,7 @@ const renderVditor = () => {
 	vditor.value = new Vditor(vditorRef.value, vditorOptionConfig);
 	setTimeout(() =>{
 		vditorRenderFinishFlag.value = true
-		if (StringUtil.haveLength(props.renderMdContent)) {
-			setContent()
-		}
+		setContent()
 	}, 10)
 }
 
@@ -247,7 +249,10 @@ const getAfterUploadFileContent = (fileVoInfoArr: FileVo[]): Promise<string> => 
 }
 
 watch(() => props.renderMdContent, () =>{
-	// setContent()
+	if (!vditorSetContentStatus.value) {
+		setContent()
+		vditorSetContentStatus.value = true
+	}
 })
 
 // 监听大纲
