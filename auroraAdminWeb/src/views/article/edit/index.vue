@@ -10,6 +10,9 @@
 							<n-descriptions-item label="保留frontmatter">
 								<n-switch size="small" v-model:value="importOrExportArticleInfo.reservedFrontMatter"/>
 							</n-descriptions-item>
+							<n-descriptions-item label="使用文章中第一张图片作为封面">
+								<n-switch size="small" v-model:value="importOrExportArticleInfo.useFirstArticlePictureAsCover"/>
+							</n-descriptions-item>
 							<n-descriptions-item label="将文件路径最后一级文件夹作为类别">
 								<n-switch size="small" v-model:value="importOrExportArticleInfo.folderAsCategoryName"/>
 							</n-descriptions-item>
@@ -347,7 +350,8 @@ const importOrExportArticleInfo = ref<Article>({
 	useFileNameAsTitle: true,
 	folderAsCategoryName: true,
 	reservedFrontMatter: false,
-	articleDataFileList: []
+	articleDataFileList: [],
+	useFirstArticlePictureAsCover: true
 })
 
 // computed
@@ -382,7 +386,8 @@ const handleImportOrExportArticle = () => {
 				useFileNameAsTitle: true,
 				folderAsCategoryName: true,
 				reservedFrontMatter: false,
-				articleDataFileList: []
+				articleDataFileList: [],
+				useFirstArticlePictureAsCover: true
 			}
 		}
 	})

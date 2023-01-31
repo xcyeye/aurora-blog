@@ -11,20 +11,24 @@ import java.util.regex.Pattern;
 
 public class Test {
     public static void main(String[] args) {
-        String content = "深刻的减肥\n # 4534塑料袋咖啡机3485离\n开家8902老师快递费sdkj" +
-                "看是两地分居森岛帆高345 435\n # 23i847lkjsd放阿斯拉达\n付款的双方各";
+        String content = "因此，互联网是“网络的网络(Network of Networks)\n" +
+                "\n" +
+                "![image-20220628125857609](https://picture.xcye.xyz/image-20220628125857609.png)\n" +
+                "\n" +
+                "因特网 (Internet)是世界上最大的互连网络（用户数以亿计，互连的网络数以百万计)\n" +
+                "\n" +
+                "![image-20220628130023668](https://picture.xcye.xyz/image-20220628130023668.png)";
 
-        String regStr = "# .+\n";
+        String regStr = "!\\[[0-9a-zA-Z-~!@#$%^&*()._+]*]\\(((https|http)://.*)";
 
         Pattern pattern = Pattern.compile(regStr);
 
         Matcher matcher = pattern.matcher(content);
-        boolean b = matcher.find();
-        if (b) {
-            System.out.println(matcher.group(1));
-        }
         while (matcher.find()) {
-            // System.out.println(matcher.group(0));
+            System.out.println(matcher.group(0));
+            String group = matcher.group(0);
+            group = group.replaceAll("!\\[[0-9a-zA-Z-~!@#$%^&*()._+]*]\\(", "");
+            System.out.println(group.substring(0, group.length() - 1));
         }
     }
 }

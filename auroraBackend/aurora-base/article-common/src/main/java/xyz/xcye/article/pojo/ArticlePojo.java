@@ -179,4 +179,9 @@ public class ArticlePojo {
      * 是否使用文件名作为标题
      */
     private Boolean useFileNameAsTitle;
+
+    /**
+     * 是否使用文章中的第一张图片作为封面
+     */
+    private Boolean useFirstArticlePictureAsCover;
 }

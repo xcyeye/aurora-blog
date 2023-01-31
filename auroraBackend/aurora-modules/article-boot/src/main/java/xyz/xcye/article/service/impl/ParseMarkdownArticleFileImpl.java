@@ -107,7 +107,8 @@ public class ParseMarkdownArticleFileImpl implements ParseArticleFile {
                                     String frontmatterCategoryName,
                                     boolean folderAsCategoryName,
                                     String frontmatterTagName,
-                                    boolean useFileNameAsTitle) throws IOException {
+                                    boolean useFileNameAsTitle,
+                                    boolean useFirstArticlePictureAsCover) throws IOException {
         String markdownArticleContent = StringFileUtils.getFileContent(this.articleFile.getInputStream());
         if (!StringUtils.hasLength(markdownArticleContent)) {
             LogUtils.logCommonInfo("在解析" + this.articleFile.getOriginalFilename() + "文件时，该文件不存在内容");
@@ -147,6 +148,9 @@ public class ParseMarkdownArticleFileImpl implements ParseArticleFile {
             summary = summary.substring(0, 200);
         }
         articlePojo.setSummary(summary);
+
+        // 设置文章封面
+        setArticleCoverPicture(articlePojo, useFirstArticlePictureAsCover);
         return articlePojo;
     }
 
@@ -237,6 +241,21 @@ public class ParseMarkdownArticleFileImpl implements ParseArticleFile {
                 builder.append("临时标题 - ").append(markdownArticleContentTemp);
             }
             return builder.toString();
+        }
+    }
+
+    private void setArticleCoverPicture(ArticlePojo articlePojo, boolean useFirstArticlePictureAsCover) {
+        if (useFirstArticlePictureAsCover) {
+            String content = articlePojo.getContent();
+            String regStr = "!\\[[0-9a-zA-Z-~!@#$%^&*()._+]*]\\(((https|http)://.*)";
+            Pattern pattern = Pattern.compile(regStr);
+            Matcher matcher = pattern.matcher(content);
+            if (matcher.find()) {
+                String firstPicture = matcher.group(0);
+                firstPicture = firstPicture.replaceAll("!\\[[0-9a-zA-Z-~!@#$%^&*()._+]*]\\(", "");
+                firstPicture = firstPicture.substring(0, firstPicture.length() - 1);
+                articlePojo.setCoverPictureUrl(firstPicture);
+            }
         }
     }
 }

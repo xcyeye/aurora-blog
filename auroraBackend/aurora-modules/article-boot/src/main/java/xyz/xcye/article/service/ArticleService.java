@@ -160,7 +160,12 @@ public class ArticleService {
                 // 使用markdown进行解析
                 ParseArticleFile parseArticleFile = new ParseMarkdownArticleFileImpl(articleFile);
                 try {
-                    articlePojo = parseArticleFile.parseArticle(pojo.getReservedFrontMatter(), pojo.getFrontmatterCategoryName(), pojo.getFolderAsCategoryName(), pojo.getFrontmatterTagName(), pojo.getUseFileNameAsTitle());
+                    articlePojo = parseArticleFile.parseArticle(pojo.getReservedFrontMatter(),
+                            pojo.getFrontmatterCategoryName(),
+                            pojo.getFolderAsCategoryName(),
+                            pojo.getFrontmatterTagName(),
+                            pojo.getUseFileNameAsTitle(),
+                            pojo.getUseFirstArticlePictureAsCover());
                 } catch (IOException e) {
                     LogUtils.logExceptionInfo(e);
                     continue;

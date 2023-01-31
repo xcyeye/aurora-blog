@@ -110,7 +110,9 @@ interface Article {
 	frontmatterTagName?: string | null;
 	useFileNameAsTitle?: boolean | null;
 
-	articleDataFileList?: Array<File> | []
+	articleDataFileList?: Array<File> | [];
+
+	useFirstArticlePictureAsCover?: boolean | null
 }
 
 export { Article };

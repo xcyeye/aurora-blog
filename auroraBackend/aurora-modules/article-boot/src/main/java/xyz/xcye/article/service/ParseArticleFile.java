@@ -12,5 +12,6 @@ public interface ParseArticleFile {
                              String frontmatterCategoryName,
                              boolean folderAsCategoryName,
                              String frontmatterTagName,
-                             boolean useFileNameAsTitle) throws IOException;
+                             boolean useFileNameAsTitle,
+                             boolean useFirstArticlePictureAsCover) throws IOException;
 }
