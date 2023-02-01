@@ -125,7 +125,8 @@ watch(() => props.userUid, (nv: string) => setLazyImg())
 </script>
 
 <style scoped lang="css">
-@import "@/styles/dyzj/dyzj-dark.css";
+/*@import "@/styles/dyzj/dyzj-dark.css";*/
 /*@import "@/styles/dyzj/darkcode.css";*/
 /*@import "@/styles/dyzj/dyzj.css";*/
+@import "@/styles/dyzj/dyzj-dark.css";
 </style>

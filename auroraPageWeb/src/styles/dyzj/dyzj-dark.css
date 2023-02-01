@@ -1,5 +1,5 @@
-@import url(./dyzj.css);
-@import url(./darkcode.css);
+@import url(./source/dyzj.css);
+@import url(./source/darkcode.css);
 
 :root {
     /* dy color */
@@ -60,10 +60,10 @@
     --yamlbg-color: #1a1a1a; /* 头部YAML背景色 */
     --yaml-color: #7f9bb7; /* 头部YAML字体颜色 */
     /* dy font */
-    --body-font: 'Source Sans Pro', '等距更纱黑体 SC', 'Helvetica Neue', Arial, sans-serif; /* 全局字体 */
-    --code-font: 'JetBrains Mono'; /* 代码块以及行内代码字体 */
+    --body-font: 'smiley-sans'; /* 全局字体 */
+    --code-font: 'smiley-sans'; /* 代码块以及行内代码字体 */
     /* bg image */
-    --bgimg-url: url(./bg-dark.gif);
+    --bgimg-url: url(./source/bg-dark.gif);
 }
 
 img {

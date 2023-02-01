@@ -6,7 +6,8 @@ const themeState: Theme.Setting = {
   borderRadius: 23,
   fontColor: '#2c3e50',
   fontSize: '1rem',
-  mobileOpenStatus: false
+  mobileOpenStatus: false,
+  fontFamily: 'smiley-sans'
 }
 export const useThemeStore = defineStore('bean-store', {
   state: () => {

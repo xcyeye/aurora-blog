@@ -1,10 +1,20 @@
+@font-face {
+    font-family: "smiley-sans"; /* Project id 2849934 */
+    src: url('https://gcore.jsdelivr.net/gh/xcyeye/cdn@main/font/smiley-sans/SmileySans-Oblique.ttf.woff2') format('woff2')
+}
+
+@font-face {
+    font-family: "mono"; /* Project id 2849934 */
+    src: url('https://gcore.jsdelivr.net/gh/xcyeye/cdn@main/font/JetBrainsMono-2.304/fonts/webfonts/JetBrainsMono-Bold.woff2') format('woff2')
+}
+
 :root {
     --backgroundImageUrl: url(https://www.baidu.com/);
     --poster-back-img: url(https://www.baidu.com/);
     --fitter-blue: 5px;
     --borderRadius: 20px;
     --opacity: 1;
-    --fontFamily: -apple-system;
+    --fontFamily: smiley-sans;
     --fontColor: #2c3e50;
     --fontSize: 2rem;
     --sidebarWidth: 80%;
@@ -123,9 +133,10 @@
     --code-ln-wrapper-width: 3.5rem;
 
     /*// font vars*/
-    --font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
-    Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
-    --font-family-code: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+    /*--font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,*/
+    /*Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;*/
+    /*--font-family-code: smiley-sans, mono;*/
+    --font-family-code: smiley-sans;
 
     /*// layout vars*/
     --navbar-height: 3.6rem;
@@ -163,7 +174,8 @@
 }
 
 #app {
-    font-family: Avenir, Helvetica, Arial, sans-serif;
+    font-family: var(--fontFamily);
+    font-style: normal;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     margin-top: 0
@@ -210,10 +222,10 @@ a {
 }
 
 .aurora-iconfont-common {
-    font-family: aurora-font;
-    font-style: normal;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale
+    /*font-family: aurora-font;*/
+    /*font-style: normal;*/
+    /*-webkit-font-smoothing: antialiased;*/
+    /*-moz-osx-font-smoothing: grayscale*/
 }
 
 /*.aurora-stick:before {*/
@@ -371,7 +383,6 @@ a {
 /*}*/
 
 .home-menu-ico:before {
-    font-family: aurora-font;
     content: var(--homeIcoCode);
     margin-right: 5px
 }
@@ -944,18 +955,18 @@ a {
     text-align: center
 }
 
-.theme-default-content h1:after {
-    text-align: center;
-    content: "";
-    display: block;
-    width: 20%;
-    height: 2px;
-    position: relative;
-    margin: 0 auto;
-    margin-bottom: 30px;
-    margin-top: 10px;
-    background-color: #8186d5
-}
+/*.theme-default-content h1:after {*/
+/*    text-align: center;*/
+/*    content: "";*/
+/*    display: block;*/
+/*    width: 20%;*/
+/*    height: 2px;*/
+/*    position: relative;*/
+/*    margin: 0 auto;*/
+/*    margin-bottom: 30px;*/
+/*    margin-top: 10px;*/
+/*    background-color: #8186d5*/
+/*}*/
 
 .theme-default-content h2,
 .theme-default-content h3 {
@@ -2411,7 +2422,7 @@ body::-webkit-scrollbar-thumb {
 }
 
 .blog-name span:nth-child(2) {
-    font-family: Lobster-Regular
+    font-family: var(--fontFamily);
 }
 
 .blog-desc {
@@ -4146,7 +4157,7 @@ body::-webkit-scrollbar-thumb {
 }
 
 .aurora-nav-font-common {
-    font-family: aurora-nav-font;
+    font-family: var(--fontFamily);
 }
 
 .dropdown-subitem:hover .dropdown-subitem a {
@@ -5676,7 +5687,7 @@ body::-webkit-scrollbar-thumb {
 .sidebar-time {
     width: 90%;
     margin: 0 auto;
-    font-family: aurora-time-font;
+    font-family: var(--fontFamily);
     height: 5rem;
 }
 
@@ -6154,7 +6165,7 @@ body::-webkit-scrollbar-thumb {
 }
 
 .bg-linear-gradient {
-    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    font-family: var(--fontFamily);
     overflow: auto;
     background: var(--linerGradient);
     /*animation: linearGradient 15s ease infinite;*/

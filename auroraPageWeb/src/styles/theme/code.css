@@ -347,3 +347,11 @@ div[class*='language-'].ext-yml:before {
         border-radius: 15px;
     }
 }
+
+
+code {
+    font-family: var(--fontFamily);
+    font-style: normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
