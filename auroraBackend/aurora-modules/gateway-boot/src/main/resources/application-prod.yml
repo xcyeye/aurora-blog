@@ -1,0 +1,39 @@
+server:
+  port: 7778
+spring:
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+  main:
+    allow-bean-definition-overriding: true
+  cloud:
+    inetutils:
+      ignored-interfaces:
+        - VirtualBox Host-Only Network
+        - VMware Network Adapter VMnet1
+        - VMware Network Adapter VMnet8
+    gateway:
+      # 设置跨域
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowedOriginPatterns:
+              - '*'
+            allowedHeaders: '*'
+            allowedMethods: '*'
+            allowCredentials: true
+    bootstrap:
+      enable: true
+    nacos:
+      discovery:
+        server-addr: 81.68.201.154:8848
+        service: aurora-gateway
+
+springdoc:
+  swagger-ui:
+    use-root-path: true
+#    urls:
+#      - name: aurora-article
+#        url: /v3/api-docs/aurora-article
+#      - name: aurora-file
+#        url: /v3/api-docs/aurora-file
