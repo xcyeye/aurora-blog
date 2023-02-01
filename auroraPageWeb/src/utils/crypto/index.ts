@@ -19,14 +19,14 @@ export function encrypto(data: any) {
 			num = num + 1
 			if (num === data.size) {
 				const newDataJson = JSON.stringify(obj);
-				// return CryptoJS.AES.encrypt(newData, CryptoSecret).toString();
-				return newDataJson
+				return CryptoJS.AES.encrypt(newDataJson, CryptoSecret).toString();
+				// return newDataJson
 			}
 		}
 	}else {
 		const newData = JSON.stringify(data);
-		// return CryptoJS.AES.encrypt(newData, CryptoSecret).toString();
-		return newData
+		return CryptoJS.AES.encrypt(newData, CryptoSecret).toString();
+		// return newData
 	}
 }
 
@@ -40,5 +40,5 @@ export function decrypto(cipherText: string) {
   if (originalText) {
     return JSON.parse(originalText);
   }
-  return null;
+  return {};
 }

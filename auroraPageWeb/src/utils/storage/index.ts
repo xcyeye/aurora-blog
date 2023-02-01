@@ -1,4 +1,4 @@
-import {encrypto} from "@/utils/crypto";
+import {decrypto, encrypto} from "@/utils/crypto";
 
 export const createLocalStorage = (key: string, value: any) => {
   // console.info(`存储值在本地 ${key} => ${valueStr}`);
@@ -12,11 +12,15 @@ export const cleanLocalStorage = (key: string) => {
 }
 
 export const getLocalStorage = (key: string) => {
-  let value = localStorage.getItem(key);
-  if (value) {
-    return JSON.parse(value);
+  let json = localStorage.getItem(key);
+  if (json) {
+    try {
+      return decrypto(json);
+    } catch {
+      // 防止解析失败
+      return {};
+    }
   }else {
-    // @ts-ignore
     return {}
   }
 }
