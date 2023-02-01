@@ -36,15 +36,14 @@ export default defineConfig(configEnv => {
     },
     optimizeDeps: {
       include: [
-        '@antv/data-set',
-        '@antv/g2',
         '@better-scroll/core',
         'echarts',
-        'swiper',
-        'swiper/vue',
         'vditor',
-        'wangeditor',
-        'xgplayer'
+      ],
+      exclude: [
+        'swiper',
+        "swiper/types",
+        'swiper/vue',
       ]
     },
     build: {
