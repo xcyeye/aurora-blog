@@ -131,6 +131,8 @@ import {useRouterPush} from "@/composables";
 import {UserVo} from "@/bean/vo/admin/UserVo";
 import blogConfig from '@/config/blogConfig.json';
 import RequestResult = Service.RequestResult;
+import {StringUtil} from "@/utils";
+import {setRandomInterface} from "@/utils/business";
 
 defineComponent({name: 'index'});
 
@@ -153,7 +155,11 @@ const footerSiteInfo: SiteSettingInfo = {
 
 const getArticleCover = computed(() => {
 	return (article: ArticleVo) => {
-		return `background-image: url("${article.coverPictureUrl}");`
+		if (StringUtil.haveLength(article.coverPictureUrl)) {
+			return `background-image: url("${article.coverPictureUrl}");`
+		}else {
+			return `background-image: url("${blogConfig.defaultRandomPicture}");`
+		}
 	}
 })
 

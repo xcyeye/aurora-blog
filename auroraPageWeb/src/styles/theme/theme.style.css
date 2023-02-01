@@ -1,6 +1,6 @@
 :root {
-    --backgroundImageUrl: url(https);
-    --poster-back-img: url(http://h2.ioliu.cn/bing/GiantManta_ZH-CN0594951444_640x480.jpg?imageslim);
+    --backgroundImageUrl: url(https://www.baidu.com/);
+    --poster-back-img: url(https://www.baidu.com/);
     --fitter-blue: 5px;
     --borderRadius: 20px;
     --opacity: 1;
@@ -216,159 +216,159 @@ a {
     -moz-osx-font-smoothing: grayscale
 }
 
-.aurora-stick:before {
-    content: "\e657";
-    margin-right: 5px;
-    color: red
-}
+/*.aurora-stick:before {*/
+/*    content: "\e657";*/
+/*    margin-right: 5px;*/
+/*    color: red*/
+/*}*/
 
-.aurora-home-tag:before {
-    content: "\e7b5"
-}
+/*.aurora-home-tag:before {*/
+/*    content: "\e7b5"*/
+/*}*/
 
-.aurora-home-time:before {
-    content: "\e662";
-    margin-right: 5px
-}
+/*.aurora-home-time:before {*/
+/*    content: "\e662";*/
+/*    margin-right: 5px*/
+/*}*/
 
-.aurora-stick-label {
-    color: red
-}
+/*.aurora-stick-label {*/
+/*    color: red*/
+/*}*/
 
-.aurora-home-read:before {
-    content: "\e62e";
-    margin-right: 5px
-}
+/*.aurora-home-read:before {*/
+/*    content: "\e62e";*/
+/*    margin-right: 5px*/
+/*}*/
 
-.aurora-sidebar-nav:before {
-    content: "\e60b";
-    margin-right: 5px
-}
+/*.aurora-sidebar-nav:before {*/
+/*    content: "\e60b";*/
+/*    margin-right: 5px*/
+/*}*/
 
-.aurora-sidebar-menu:before {
-    content: "\e60f";
-    margin-right: 5px
-}
+/*.aurora-sidebar-menu:before {*/
+/*    content: "\e60f";*/
+/*    margin-right: 5px*/
+/*}*/
 
-.aurora-sidebar-catalog:before {
-    content: "\e941"
-}
+/*.aurora-sidebar-catalog:before {*/
+/*    content: "\e941"*/
+/*}*/
 
-.aurora-sidebar-nav-home:before {
-    content: "\e68d"
-}
+/*.aurora-sidebar-nav-home:before {*/
+/*    content: "\e68d"*/
+/*}*/
 
-.aurora-sidebar-nav-other:before {
-    content: var(--aurora-sidebar-nav-other-ico)
-}
+/*.aurora-sidebar-nav-other:before {*/
+/*    content: var(--aurora-sidebar-nav-other-ico)*/
+/*}*/
 
-.aurora-sidebar-nav-link:before {
-    content: "\e63d"
-}
+/*.aurora-sidebar-nav-link:before {*/
+/*    content: "\e63d"*/
+/*}*/
 
-.aurora-sidebar-nav-tag:before {
-    content: "\e7b6"
-}
+/*.aurora-sidebar-nav-tag:before {*/
+/*    content: "\e7b6"*/
+/*}*/
 
-.aurora-sidebar-nav-mood:before {
-    content: "\e63b"
-}
+/*.aurora-sidebar-nav-mood:before {*/
+/*    content: "\e63b"*/
+/*}*/
 
-.aurora-sidebar-nav-photo:before {
-    content: "\e875"
-}
+/*.aurora-sidebar-nav-photo:before {*/
+/*    content: "\e875"*/
+/*}*/
 
-.aurora-sidebar-nav-about:before {
-    content: "\e618"
-}
+/*.aurora-sidebar-nav-about:before {*/
+/*    content: "\e618"*/
+/*}*/
 
-.aurora-sidebar-nav-github:before {
-    content: "\e885"
-}
+/*.aurora-sidebar-nav-github:before {*/
+/*    content: "\e885"*/
+/*}*/
 
-.aurora-sidebar-tag:before {
-    content: "\e7b5";
-    margin-right: 5px
-}
+/*.aurora-sidebar-tag:before {*/
+/*    content: "\e7b5";*/
+/*    margin-right: 5px*/
+/*}*/
 
-.aurora-sidebar-message:before {
-    content: "\e61c";
-    color: red;
-    margin-right: 5px
-}
+/*.aurora-sidebar-message:before {*/
+/*    content: "\e61c";*/
+/*    color: red;*/
+/*    margin-right: 5px*/
+/*}*/
 
-.aurora-sidebar-newest-page:before {
-    content: "\e636";
-    margin-right: 5px
-}
+/*.aurora-sidebar-newest-page:before {*/
+/*    content: "\e636";*/
+/*    margin-right: 5px*/
+/*}*/
 
-.aurora-sidebar-site:before {
-    content: "\e6f1";
-    margin-right: 5px
-}
+/*.aurora-sidebar-site:before {*/
+/*    content: "\e6f1";*/
+/*    margin-right: 5px*/
+/*}*/
 
-.aurora-sidebar-catalog-spread:before {
-    content: ""
-}
+/*.aurora-sidebar-catalog-spread:before {*/
+/*    content: ""*/
+/*}*/
 
-.aurora-sidebar-catalog-spread-open:before {
-    content: "\e631"
-}
+/*.aurora-sidebar-catalog-spread-open:before {*/
+/*    content: "\e631"*/
+/*}*/
 
-.aurora-sidebar-catalog-spread-off:before {
-    content: "\e630"
-}
+/*.aurora-sidebar-catalog-spread-off:before {*/
+/*    content: "\e630"*/
+/*}*/
 
-.aurora-page-word:before {
-    content: "\e716"
-}
+/*.aurora-page-word:before {*/
+/*    content: "\e716"*/
+/*}*/
 
-.aurora-page-time:before {
-    content: "\e682"
-}
+/*.aurora-page-time:before {*/
+/*    content: "\e682"*/
+/*}*/
 
-.aurora-page-comment:before {
-    content: "\ecb1"
-}
+/*.aurora-page-comment:before {*/
+/*    content: "\ecb1"*/
+/*}*/
 
-.aurora-page-read:before {
-    content: "\e7b9"
-}
+/*.aurora-page-read:before {*/
+/*    content: "\e7b9"*/
+/*}*/
 
-.aurora-page-tag:before {
-    content: "\e7b5"
-}
+/*.aurora-page-tag:before {*/
+/*    content: "\e7b5"*/
+/*}*/
 
-.aurora-poster-ico:before {
-    content: "\e93c";
-    margin-right: 5px
-}
+/*.aurora-poster-ico:before {*/
+/*    content: "\e93c";*/
+/*    margin-right: 5px*/
+/*}*/
 
-.aurora-tag-left:before {
-    content: "\e93d"
-}
+/*.aurora-tag-left:before {*/
+/*    content: "\e93d"*/
+/*}*/
 
-.aurora-tag-right:before {
-    content: "\e941"
-}
+/*.aurora-tag-right:before {*/
+/*    content: "\e941"*/
+/*}*/
 
-.aurora-style-img:before {
-    content: "\e61b"
-}
+/*.aurora-style-img:before {*/
+/*    content: "\e61b"*/
+/*}*/
 
-.aurora-style-blur:before {
-    content: "\e617"
-}
+/*.aurora-style-blur:before {*/
+/*    content: "\e617"*/
+/*}*/
 
-.aurora-style-cancel:before {
-    content: "\e68f";
-    padding-right: 2px;
-    padding-top: 2px
-}
+/*.aurora-style-cancel:before {*/
+/*    content: "\e68f";*/
+/*    padding-right: 2px;*/
+/*    padding-top: 2px*/
+/*}*/
 
-.aurora-poster-cancel:before {
-    content: "\e68f"
-}
+/*.aurora-poster-cancel:before {*/
+/*    content: "\e68f"*/
+/*}*/
 
 .home-menu-ico:before {
     font-family: aurora-font;
@@ -384,61 +384,61 @@ a {
     content: "\e923"
 }
 
-@font-face {
-    font-family: aurora-time-font;
-    src: url("../public/fonts/DS-DIGIT.TTF");
-}
+/*@font-face {*/
+/*    font-family: aurora-time-font;*/
+/*    src: url("../public/fonts/DS-DIGIT.TTF");*/
+/*}*/
 
-@font-face {
-    font-family: "aurora-font"; /* Project id 2849934 */
-    src: url('../public/fonts/aurora-iconfont.woff2?t=1633527892146') format('woff2'),
-    url('../public/fonts/aurora-iconfont.woff?t=1633527892146') format('woff'),
-    url('../public/fonts/aurora-iconfont.ttf?t=1633527892146') format('truetype');
-}
+/*@font-face {*/
+/*    font-family: "aurora-font"; !* Project id 2849934 *!*/
+/*    src: url('../public/fonts/aurora-iconfont.woff2?t=1633527892146') format('woff2'),*/
+/*    url('../public/fonts/aurora-iconfont.woff?t=1633527892146') format('woff'),*/
+/*    url('../public/fonts/aurora-iconfont.ttf?t=1633527892146') format('truetype');*/
+/*}*/
 
-/*google font*/
+/*!*google font*!*/
 
-@font-face {
-    font-family: Lobster-Regular;
-    src: url(../public/fonts/Lobster-Regular.ttf);
-}
+/*@font-face {*/
+/*    font-family: Lobster-Regular;*/
+/*    src: url(../public/fonts/Lobster-Regular.ttf);*/
+/*}*/
 
 
-@font-face {
-    font-family: lf;
-    src: url(../public/fonts/style-menu/lf.ttf);
-}
+/*@font-face {*/
+/*    font-family: lf;*/
+/*    src: url(../public/fonts/style-menu/lf.ttf);*/
+/*}*/
 
-@font-face {
-    font-family: cgt;
-    src: url(../public/fonts/style-menu/cgt.ttf);
+/*@font-face {*/
+/*    font-family: cgt;*/
+/*    src: url(../public/fonts/style-menu/cgt.ttf);*/
 
-}
+/*}*/
 
-@font-face {
-    font-family: xsf;
-    src: url(../public/fonts/style-menu/xsf.ttf);
-}
+/*@font-face {*/
+/*    font-family: xsf;*/
+/*    src: url(../public/fonts/style-menu/xsf.ttf);*/
+/*}*/
 
-@font-face {
-    font-family: lsf;
-    src: url(../public/fonts/style-menu/lsf.ttf);
-}
+/*@font-face {*/
+/*    font-family: lsf;*/
+/*    src: url(../public/fonts/style-menu/lsf.ttf);*/
+/*}*/
 
-@font-face {
-    font-family: sst;
-    src: url(../public/fonts/style-menu/sst.ttf);
-}
+/*@font-face {*/
+/*    font-family: sst;*/
+/*    src: url(../public/fonts/style-menu/sst.ttf);*/
+/*}*/
 
-@font-face {
-    font-family: tzt;
-    src: url(../public/fonts/style-menu/tzt.ttf);
-}
+/*@font-face {*/
+/*    font-family: tzt;*/
+/*    src: url(../public/fonts/style-menu/tzt.ttf);*/
+/*}*/
 
-@font-face {
-    font-family: hlt;
-    src: url(../public/fonts/style-menu/hlt.ttf);
-}
+/*@font-face {*/
+/*    font-family: hlt;*/
+/*    src: url(../public/fonts/style-menu/hlt.ttf);*/
+/*}*/
 
 #app a {
     text-decoration: none
@@ -6022,6 +6022,8 @@ body::-webkit-scrollbar-thumb {
 
 .home-main-top-right-info {
     width: 100%;
+    box-sizing: border-box;
+    padding: .5rem;
     /*height: 50%;*/
 }
 
