@@ -98,7 +98,7 @@
 				</div>
 			</div>
 			<div class="home-main-bottom">
-				<home-bottom :show-home-sidebar="false" :condition="{delete: false, status: true}" :query-article-data-method="queryDataMethod"/>
+				<home-bottom :page-cover-picture="blogConfig.defaultRandomPicture" :show-home-sidebar="false" :condition="{delete: false, status: true}" :query-article-data-method="queryDataMethod"/>
 			</div>
 			<div class="home-main-footer">
 				<Footer :current-site-info="footerSiteInfo"
@@ -109,7 +109,7 @@
 		</div>
 		<div>
 			<div id="set-bg" class="set-bg-fitter"
-					 style="background-image: url(https://api.paugram.com/bing)"
+					 :style="`background-image: url(${blogConfig.bingPictureInterface})`"
 			></div>
 			<!--TODO 临时改的-->
 			<!--<div id="posterShade" :class="{posterShade: true}">-->
@@ -129,7 +129,7 @@ import {articleApi, commentApi, talkApi, userApi} from "@/service";
 import {Condition, PageData} from "@/bean/core/bean";
 import {useRouterPush} from "@/composables";
 import {UserVo} from "@/bean/vo/admin/UserVo";
-import {sysSettingApi} from "@/service/api/admin/sysSettingApi";
+import blogConfig from '@/config/blogConfig.json';
 import RequestResult = Service.RequestResult;
 
 defineComponent({name: 'index'});

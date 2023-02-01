@@ -297,5 +297,7 @@
     "keywords": "博客 微服务"
   },
   "adminWebUrl": "http://localhost:3400/login",
-  "defaultRandomPicture": "https://cdn.seovx.com/ha/?mom=302"
+  "defaultRandomPicture": "https://cdn.seovx.com/ha/?mom=302",
+  "bingPictureInterface": "https://api.paugram.com/bing",
+  "defaultLazyImgSrc": ""
 }

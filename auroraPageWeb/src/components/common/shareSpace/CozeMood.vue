@@ -5,25 +5,25 @@
 			<aurora-card :id="item.uid" :key="item.uid" v-for="(item,index) in talkArr" class="coze-enter-animate">
 				<mood-item @mood-comment="moodComment" @mood-love="moodLove" @mood-poster="moodPoster"
 									 @mood-edit="moodEdit" :user-uid="userUid" :mood-item="item">
-					<slot name="coze-mood-content-par"></slot>
-					<template #coze-mood-content>
-						<slot name="coze-mood-content"></slot>
-					</template>
+					<!--<slot name="coze-mood-content-par"></slot>-->
+					<!--&lt;!&ndash;<template #coze-mood-content>&ndash;&gt;-->
+					<!--&lt;!&ndash;	<slot name="coze-mood-content"></slot>&ndash;&gt;-->
+					<!--&lt;!&ndash;</template>&ndash;&gt;-->
 					
-					<slot name="coze-img-par"></slot>
-					<template #coze-img>
-						<slot name="coze-img"></slot>
-					</template>
+					<!--<slot name="coze-img-par"></slot>-->
+					<!--<template #coze-img>-->
+					<!--	<slot name="coze-img"></slot>-->
+					<!--</template>-->
 					
-					<slot name="coze-mood-bottom-left-par"></slot>
-					<template #coze-mood-bottom-left>
-						<slot name="coze-mood-bottom-left"></slot>
-					</template>
+					<!--<slot name="coze-mood-bottom-left-par"></slot>-->
+					<!--<template #coze-mood-bottom-left>-->
+					<!--	<slot name="coze-mood-bottom-left"></slot>-->
+					<!--</template>-->
 					
-					<slot name="coze-mood-bottom-right-par"></slot>
-					<template #coze-mood-bottom-right>
-						<slot name="coze-mood-bottom-right"></slot>
-					</template>
+					<!--<slot name="coze-mood-bottom-right-par"></slot>-->
+					<!--<template #coze-mood-bottom-right>-->
+					<!--	<slot name="coze-mood-bottom-right"></slot>-->
+					<!--</template>-->
 				</mood-item>
 			</aurora-card>
     </div>

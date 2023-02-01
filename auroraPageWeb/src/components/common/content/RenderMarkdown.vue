@@ -3,25 +3,31 @@
 </template>
 
 <script lang="ts" setup>
-import {defineComponent, ref, watch} from "vue";
+import {defineComponent, onMounted, ref, watch} from "vue";
 import MarkdownIt from 'markdown-it';
 import hljs from 'highlight.js';
 import {RenderRule} from "markdown-it/lib/renderer";
 import smoothscroll from 'smoothscroll-polyfill';
+import {StringUtil} from "@/utils";
+import {useSiteInfo} from "@/stores";
+import blogConfig from '@/config/blogConfig.json'
 
 interface Props {
 	markdownContent: string,
 	scrollBehavior?: boolean,
-	scrollToElement?: Element
+	scrollToElement?: Element,
+	userUid: string
 }
 
 defineComponent({name: 'RenderMarkdown'});
 
 const props = withDefaults(defineProps<Props>(), {
-	scrollBehavior: false
+	scrollBehavior: false,
 })
 
 const renderMarkdownContent = ref<string>('')
+const currentSiteInfo = ref<SiteSettingInfo>({})
+const lazyImg = ref('')
 
 const emits = defineEmits(['finishRenderMarkdown'])
 
@@ -35,7 +41,7 @@ const wrap = (wrapped) => (...args) => {
 }
 
 const handleRenderMarkdownContent = (markdownContent: string) => {
-	if (markdownContent === null || markdownContent === undefined) return
+	if (!StringUtil.haveLength(markdownContent)) return
 	// 渲染markdown内容
 	const markdown = new MarkdownIt()
 	markdown.set({
@@ -62,8 +68,11 @@ const handleRenderMarkdownContent = (markdownContent: string) => {
 		let picSrc = token.attrs![picSrcIndex][1]
 		let picAltIndex = token.attrIndex('alt')
 		let picAlt = token.attrs![picAltIndex]
-		if (/\.(png|jpg|gif|jpeg|webp)$/.test(picSrc)) {
-			return `<div role="none" class="page-image-box n-image n-image--preview-disabled"><img src="${picSrc}" loading="eager" data-error="true" data-preview-src="${picSrc}" style="object-fit: fill;" data-group-id=""></div>`;
+		let pictureSplits = picSrc.split("?");
+		if (/\.(png|jpg|gif|jpeg|webp)$/.test(pictureSplits[0])) {
+			return `<div role="none" class="page-image-box n-image n-image--preview-disabled aurora-article-img-lazy-loading">
+<img src="${lazyImg.value}" loading="eager" data-src="${picSrc}" data-error="true" data-preview-src="${picSrc}" style="object-fit: fill;" data-group-id=""/>
+</div>`;
 		}
 		return defaultRender(tokens, idx, options, env, self)
 	}
@@ -79,7 +88,39 @@ const handleRenderMarkdownContent = (markdownContent: string) => {
 
 handleRenderMarkdownContent(props.markdownContent)
 
+const handleScroll = () => {
+	let clientHeight = document.documentElement.clientHeight
+	let articleLazyLoadingImg = document.querySelectorAll(".aurora-article-img-lazy-loading")
+	for (let i = 0; i < articleLazyLoadingImg.length; i++) {
+		let distance_top = articleLazyLoadingImg[i].getBoundingClientRect().top
+		if (distance_top < clientHeight) {
+			//加载图片
+			let elementsByTagName = articleLazyLoadingImg[i].getElementsByTagName("img");
+			let dataSrc = elementsByTagName[0].getAttribute("data-src") as string;
+			elementsByTagName[0].setAttribute("src",dataSrc)
+		}
+	}
+}
+
+const setLazyImg = () => {
+	if (StringUtil.haveLength(props.userUid)) {
+		currentSiteInfo.value = useSiteInfo().getSiteInfo(props.userUid)
+	}
+	if (StringUtil.haveLength(currentSiteInfo.value.homePageLazyLoadingImg)) {
+		lazyImg.value = currentSiteInfo.value.homePageLazyLoadingImg!
+	}else {
+		lazyImg.value = blogConfig.defaultLazyImgSrc
+	}
+}
+
+setLazyImg()
+
+onMounted(() => {
+	window.addEventListener('scroll', handleScroll, true)
+})
+
 watch(() => props.markdownContent, (nv: string) => handleRenderMarkdownContent(nv))
+watch(() => props.userUid, (nv: string) => setLazyImg())
 
 </script>
 

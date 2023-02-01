@@ -6,6 +6,7 @@
 			<div class="home-page-tag" id="home-page-tag">
 				<home-page-item :index="index"
 												:user-uid="userUid"
+												:page-cover-picture="pageCoverPicture"
 												:show-home-page-img="true"
 												:data="item.delete" :key="index"
 												v-for="(item,index) in articleArr" :page-item="item"/>
@@ -39,6 +40,7 @@ interface Props {
 	userUid?: string,
 	condition?: Condition,
 	showHomeSidebar?: boolean,
+	pageCoverPicture?: string,
 	queryArticleDataMethod: (condition: Condition) => Promise<RequestResult<PageData<ArticleVo>>>
 }
 

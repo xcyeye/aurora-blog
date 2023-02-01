@@ -45,7 +45,7 @@
 						</div>
 					</div>
 					
-					<render-markdown :markdown-content="articleInfo.content"/>
+					<render-markdown :user-uid="userUid" :markdown-content="articleInfo.content"/>
 				</div>
 				
 				<div class="aurora-article-like">

@@ -1,4 +1,4 @@
-import {StringUtil} from "@/utils";
+import {getRandomNum, StringUtil} from "@/utils";
 
 export async function setDefaultProperties<T>(originObj: T, defaultObj: T) {
   return new Promise((resolve, reject) => {
@@ -24,10 +24,13 @@ export const isNotEmptyObject = (obj: any): boolean => {
 
 export const setRandomInterface = (randomInterface: string | null | undefined, isCache: boolean = true): string => {
   if (!StringUtil.haveLength(randomInterface)) return ''
+  let time = 0;
+  time = getRandomNum(0, 1000000)
+  time = time + getRandomNum(0, new Date().getTime())
   if (/.*&.*=.*/.test(randomInterface!)) {
-    return `${randomInterface}&aurora_time=${new Date().getTime()});`
+    return `${randomInterface}&aurora_time=${time});`
   }else if (/.*?.*=.*/.test(randomInterface!)) {
-    return `${randomInterface}&aurora_time=${new Date().getTime()}`
+    return `${randomInterface}&aurora_time=${time}`
   }
   return randomInterface!
 }

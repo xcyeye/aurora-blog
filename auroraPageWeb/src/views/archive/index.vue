@@ -38,7 +38,7 @@ const getRouterParams = () => {
 	const userInfo = useUserInfo().getUserInfo(userUid.value)
 	
 	// 获取文章数据
-	articleApi.queryListDataByCondition({status: true, delete: false, otherUid: userUid.value}).then(result => {
+	articleApi.queryListDataByCondition({status: true, delete: false, otherUid: userUid.value, pageSize: 99999}).then(result => {
 		if (result.data && result.data.result) {
 			articleArr.value = result.data.result
 			setMetaTitle(`${userInfo.username} - 时间轴`)

@@ -1,50 +1,30 @@
 <template>
   <div>
 		<div class="coze-mood-item" id="coze-mood-item">
-			<!--<div class="mood-item-left mood-item-img-parent" id="mood-item-left">-->
-			<!--  <div class="mood-item-img" id="coze-mood-item-img">-->
-			<!--    &lt;!&ndash;<img :src="useUserInfo().getUserInfo(userUid).avatar" alt="">&ndash;&gt;-->
-			<!--    <n-avatar :src="useUserInfo().getUserInfo(userUid).avatar" :size="50" round/>-->
-			<!--  </div>-->
-			<!--</div>-->
 			<div class="mood-item-right" id="mood-item-right">
 				<div class="coze-mood-item-content">
-					<render-markdown :markdown-content="moodItem.content"/>
+					<render-markdown :user-uid="userUid" :markdown-content="moodItem.content"/>
 					<div class="coze-mood-time">
 						<span>@{{useUserInfo().getUserInfo(userUid).username}}</span>
 						<span :data="getUpdatedTime">&nbsp;&nbsp;发布于: {{cozeYear}}-{{cozeMonth}}-{{cozeDay}} {{cozeHourTemp}}:{{cozeMinuteTemp}}:{{cozeSecondTemp}}</span>
 					</div>
-					<slot name="coze-mood-content"></slot>
-					<!--<div id="mood-item-content" class="mood-item-content mood-item-right-common">-->
-					<!--  &lt;!&ndash;<span v-html="moodItem.content"></span>&ndash;&gt;-->
-					<!--	-->
-					<!--</div>-->
 				</div>
 			</div>
 		</div>
-		<div class="mood-img-right" v-if="moodItem.pictureSrcList.split(',')" id="mood-img-right">
-			<!--<div class="mood-li-control">-->
-			<!--  <li v-for="(item,index) in pictureArr" :data="item.path" :key="item.uid" id="mood-img-li">-->
-			<!--    &lt;!&ndash;<img @click="openImg" class="medium-zoom-image" id="mood-bottom-img" :src="item.path" :alt="item.fileName">&ndash;&gt;-->
-			<!--    <n-image :src="item.path" id="mood-bottom-img" />-->
-			<!--  </li>-->
-			<!--</div>-->
+		<div class="mood-img-right" v-if="getTalkPictureArr" id="mood-img-right">
 			<photo-waterfall
-				:picture-src-list="moodItem.pictureSrcList.split(',')"
+				:picture-src-list="getTalkPictureArr"
 				:mobile-waterfall-img-col="3"
 				:pc-waterfall-img-col="4"
 				:show-bg-color="false"/>
 		</div>
 		<div class="mood-edit">
-			<!--<div class="coze-mood-bottom-left">-->
-			<!--	<n-avatar :src="useUserInfo().getUserInfo(userUid).avatar" round/>-->
-			<!--</div>-->
 			<div class="mood-edit-right">
 				<div class="mood-edit-single-common">
 					<!--<span @click="moodComment($event,moodItem)" class="aurora-coze-font aurora-coze-custom-comment"></span>-->
 					<n-avatar :src="useUserInfo().getUserInfo(userUid).avatar" round/>
 				</div>
-				<slot name="coze-mood-bottom-left"></slot>
+				<!--<slot name="coze-mood-bottom-left"></slot>-->
 				<div class="mood-edit-single-common">
 					<!--<span @click="moodComment($event,moodItem)" class="aurora-coze-font aurora-coze-custom-comment"></span>-->
 					<talk-comment :talk-info="moodItem"/>
@@ -61,10 +41,6 @@
 					<!--<span :class="{'mood_like_love_active': moodLikeStatus}" @click="moodLove($event,moodItem)" class="aurora-coze-font aurora-coze-custom-love"></span>&nbsp;-->
 					<!--<span>{{getCozeMoodLink}}</span>-->
 				</div>
-				<!--<div class="mood-edit-single-common">-->
-				<!--  <span @click="moodEdit($event,moodItem)" class="aurora-coze-font aurora-coze-custom-edit"></span>-->
-				<!--</div>-->
-				<slot name="coze-mood-bottom-right"></slot>
 			</div>
 		</div>
 	</div>
@@ -142,6 +118,10 @@ export default {
     })
   },
   computed: {
+		getTalkPictureArr() {
+			if (!StringUtil.haveLength(this.moodItem?.pictureSrcList)) return undefined
+			return this.moodItem.pictureSrcList.split(',')
+		},
     getCozeMoodLink() {
       return this.cozeLikeTemp.toFixed(0)
     },

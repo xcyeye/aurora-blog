@@ -54,7 +54,8 @@ interface Props {
 	pageItem: ArticleVo,
 	showHomePageImg?: boolean,
 	index: number,
-	userUid: string
+	userUid: string,
+	pageCoverPicture?: string
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -88,7 +89,9 @@ const getCoverImg = computed(() => {
 	if (StringUtil.haveLength(props.pageItem.coverPictureUrl)) {
 		return props.pageItem.coverPictureUrl
 	}else if (StringUtil.haveLength(currentSiteInfo.value.defaultCoverRequestInterface)) {
-		return  currentSiteInfo.value.defaultCoverRequestInterface
+		return  setRandomInterface(currentSiteInfo.value.defaultCoverRequestInterface)
+	}else if (props.pageCoverPicture) {
+		return setRandomInterface(props.pageCoverPicture)
 	}else {
 		return currentSiteInfo.value.homePageLazyLoadingImg
 	}
