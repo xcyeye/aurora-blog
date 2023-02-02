@@ -4,9 +4,9 @@ spring:
   cloud:
     nacos:
       discovery:
-        server-addr: 81.68.201.154:8848
+        server-addr: 127.0.0.1:8848
       config:
-        server-addr: 81.68.201.154:8848
+        server-addr: 127.0.0.1:8848
         file-extension: yaml
         namespace: 84313f7a-0de5-4214-9f62-455859382e1a
         group: THEME-GROUP

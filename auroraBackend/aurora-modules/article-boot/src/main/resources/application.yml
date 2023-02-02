@@ -1,5 +1,4 @@
 server:
-  port: 9797
   compression:
     enabled: false
 

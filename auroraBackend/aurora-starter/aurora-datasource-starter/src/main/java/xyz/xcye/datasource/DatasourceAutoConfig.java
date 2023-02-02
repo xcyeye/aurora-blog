@@ -2,6 +2,7 @@ package xyz.xcye.datasource;
 
 import com.alibaba.druid.pool.DruidDataSource;
 import com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceAutoConfigure;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -19,6 +20,9 @@ import javax.sql.DataSource;
 @Configuration
 @AutoConfigureBefore(value = {DataSourceAutoConfiguration.class, DruidDataSourceAutoConfigure.class})
 public class DatasourceAutoConfig {
+
+    @Value(value = "${spring.datasource.url}")
+    private String url;
 
     @Bean(name = "dataSource")
     @ConfigurationProperties(prefix = "spring.datasource")

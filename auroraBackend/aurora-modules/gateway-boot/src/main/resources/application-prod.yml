@@ -24,10 +24,6 @@ spring:
             allowCredentials: true
     bootstrap:
       enable: true
-    nacos:
-      discovery:
-        server-addr: 81.68.201.154:8848
-        service: aurora-gateway
 
 springdoc:
   swagger-ui:
