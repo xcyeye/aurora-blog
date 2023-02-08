@@ -3,8 +3,9 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "dev": "vite",
+    "dev": "cross-env VITE_SERVICE_ENV=prod  vite",
     "build": "vite build",
+    "build-prod": "cross-env VITE_SERVICE_ENV=prod vite build",
     "build-ts": "npm run typecheck && cross-env VITE_SERVICE_ENV=dev vite build",
     "typecheck": "vue-tsc --noEmit --skipLibCheck",
     "preview": "vite preview",
@@ -46,6 +47,7 @@
     "@vitejs/plugin-vue": "^4.0.0",
     "@vue/test-utils": "^2.2.6",
     "@vue/tsconfig": "^0.1.3",
+    "cross-env": "^7.0.3",
     "jsdom": "^20.0.3",
     "naive-ui": "^2.34.3",
     "npm-run-all": "^4.1.5",
