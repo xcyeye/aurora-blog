@@ -1,6 +1,6 @@
 spring:
   application:
-    name: aurora-auth-server
+    name: aurora-article
   cloud:
     nacos:
       discovery:
@@ -11,6 +11,9 @@ spring:
         namespace: 227521b4-71f0-4088-a0e5-ad80b454e836
         group: THEME-GROUP
         shared-configs:
+          - data-id: share-seata-remote.yaml
+            group: THEME-GROUP
+            refresh: true
           - data-id: share-redis-remote.yaml
             group: THEME-GROUP
             refresh: true

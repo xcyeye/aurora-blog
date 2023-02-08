@@ -1,6 +1,6 @@
 spring:
   application:
-    name: aurora-auth-server
+    name: aurora-file
   cloud:
     nacos:
       discovery:
@@ -36,5 +36,8 @@ spring:
             group: THEME-GROUP
             refresh: true
           - data-id: share-swagger-remote.yaml
+            group: THEME-GROUP
+            refresh: true
+          - data-id: aurora-file-remote.yaml
             group: THEME-GROUP
             refresh: true

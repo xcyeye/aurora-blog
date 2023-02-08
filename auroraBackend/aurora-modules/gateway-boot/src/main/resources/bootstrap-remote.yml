@@ -1,10 +1,11 @@
 spring:
   application:
-    name: aurora-auth-server
+    name: aurora-gateway
   cloud:
     nacos:
       discovery:
         server-addr: 81.68.201.154:8848
+      #        service: aurora-gateway
       config:
         server-addr: 81.68.201.154:8848
         file-extension: yaml
