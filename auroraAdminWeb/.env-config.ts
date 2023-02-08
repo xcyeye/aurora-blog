@@ -16,9 +16,9 @@ const serviceEnv: ServiceEnv = {
     secondUrlPattern: '/second-aurora-api'
   },
   prod: {
-    url: 'http://localhost:8080',
+    url: 'http://localhost:7777',
     urlPattern: '/aurora-api',
-    secondUrl: 'http://localhost:8081',
+    secondUrl: 'http://localhost:7777',
     secondUrlPattern: '/second-aurora-api'
   }
 };
