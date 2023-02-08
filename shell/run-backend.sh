@@ -1,5 +1,5 @@
 # !/bin/bash
-cd /auroraBlogSystem/jar
+cd /opt/aurora-blog-system-web/backend
 
 java -jar article-boot-1.0-SNAPSHOT-run.jar -Xms200m -Xmx300m
 java -jar aurora-admin-1.0-SNAPSHOT-run.jar -Xms200m -Xmx300m

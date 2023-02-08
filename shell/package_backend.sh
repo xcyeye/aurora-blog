@@ -1,5 +1,5 @@
 # !/bin/bash
-cd ../aurora-modules/admin-boot
+cd ../auroraBackend/aurora-modules/admin-boot
 mvn clean package
 
 cd ../article-boot

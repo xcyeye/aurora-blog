@@ -1,5 +1,5 @@
 # !/bin/bash
-cd ../
+cd ../auroraBackend
 echo "正在打包aurora-theme模块"
 mvn clean install
 
