@@ -11,11 +11,11 @@ interface ServiceEnvConfig {
   /** 请求地址 */
   url: string;
   /** 匹配路径的正则字符串, 用于拦截地址转发代理(任意以 /开头 + 字符串, 单个/不起作用) */
-  urlPattern: '/url-pattern';
+  urlPattern: '/aurora-api';
   /** 另一个后端请求地址(有多个不同的后端服务时) */
   secondUrl: string;
   /** 匹配路径的正则字符串, 用于拦截地址转发代理(任意以 /开头 + 字符串, 单个/不起作用) */
-  secondUrlPattern: '/second-url-pattern';
+  secondUrlPattern: '/second-aurora-api';
 }
 
 interface ImportMetaEnv {

@@ -5,21 +5,21 @@ type ServiceEnv = Record<ServiceEnvType, ServiceEnvConfig>;
 const serviceEnv: ServiceEnv = {
   dev: {
     url: 'http://localhost:7777',
-    urlPattern: '/url-pattern',
+    urlPattern: '/aurora-api',
     secondUrl: 'http://localhost:7777',
-    secondUrlPattern: '/second-url-pattern'
+    secondUrlPattern: '/second-aurora-api'
   },
   test: {
     url: 'http://localhost:8080',
-    urlPattern: '/url-pattern',
+    urlPattern: '/aurora-api',
     secondUrl: 'http://localhost:8081',
-    secondUrlPattern: '/second-url-pattern'
+    secondUrlPattern: '/second-aurora-api'
   },
   prod: {
     url: 'http://localhost:8080',
-    urlPattern: '/url-pattern',
+    urlPattern: '/aurora-api',
     secondUrl: 'http://localhost:8081',
-    secondUrlPattern: '/second-url-pattern'
+    secondUrlPattern: '/second-aurora-api'
   }
 };
 
