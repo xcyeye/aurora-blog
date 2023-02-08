@@ -30,7 +30,7 @@ export function createRequest(axiosConfig: AxiosRequestConfig, backendConfig?: S
    * - axiosConfig: axios配置
    */
   async function asyncRequest<T>(param: RequestParam): Promise<Service.RequestResult<T>> {
-    const { url } = param;
+    let { url } = param;
     const method = param.method || 'get';
     const { instance } = customInstance;
     const res = (await getRequestResponse({
