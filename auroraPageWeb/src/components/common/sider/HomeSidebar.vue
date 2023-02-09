@@ -119,7 +119,7 @@
 				
 					<!--最新文章-->
 					<div v-show="changePageIndex === '2'">
-						<div v-for="item in articleArr" :key="item.uid" :data="item.uid" class="sidebar-page-item sidebar-hover-bg-common">
+						<div v-for="item in articleArr" :key="item.uid" class="sidebar-page-item sidebar-hover-bg-common">
 							<div class="sidebar-page-title">
 								<router-link :to="`/article/${item.userUid}/${item.uid}`">
 									<span @click="goRead($event,item)">{{item.title ? item.title :getRecommendNoTitle}}</span>
@@ -406,6 +406,13 @@ export default {
 		articleApi.queryTotalCount({userUid: this.userUid, delete: false}).then(result => {
 			if (result.data) {
 				this.articleNumber = result.data
+			}
+		})
+		
+		// 查询最新的5篇文章
+		articleApi.queryListDataByCondition({delete: false, status: true, pageSize: 5, otherUid: this.userUid, orderBy: 'create_time desc'}).then(result => {
+			if (result.data && result.data.result) {
+				this.articleArr = result.data.result
 			}
 		})
 		
