@@ -3,7 +3,7 @@
 		<aurora-snow/>
 		<div class="main-text">
 			<h1>Aurora.<br/>This page not found!</h1>
-			<span @click="goBack" style="cursor: pointer">Go Back</span>
+			<span class="aurora-error-go-back" @click="goBack">Go Back</span>
 		</div>
 		<div class="ground">
 			<div class="mound">
