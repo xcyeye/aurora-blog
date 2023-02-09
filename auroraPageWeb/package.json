@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "dev": "cross-env VITE_SERVICE_ENV=prod  vite",
+    "dev": "cross-env VITE_SERVICE_ENV=dev  vite",
+    "dev-test": "cross-env VITE_SERVICE_ENV=test  vite",
     "build": "vite build",
     "build-prod": "cross-env VITE_SERVICE_ENV=prod vite build",
     "build-ts": "npm run typecheck && cross-env VITE_SERVICE_ENV=dev vite build",

@@ -15,4 +15,16 @@ public class AuroraGateWayRun {
     public static void main(String[] args) {
         SpringApplication.run(AuroraGateWayRun.class, args);
     }
+
+    // @Bean
+    // public CorsWebFilter corsFilter() {
+    //     UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+    //     CorsConfiguration config = new CorsConfiguration();
+    //     config.addAllowedOrigin("*");
+    //     config.setAllowCredentials(false);
+    //     config.addAllowedHeader("*");
+    //     config.addAllowedMethod("*");
+    //     source.registerCorsConfiguration("/**", config);
+    //     return new CorsWebFilter(source);
+    // }
 }

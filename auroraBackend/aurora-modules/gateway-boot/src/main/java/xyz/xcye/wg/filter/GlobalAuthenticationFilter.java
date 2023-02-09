@@ -57,7 +57,6 @@ public class GlobalAuthenticationFilter implements GlobalFilter {
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
-
         // 获取请求方法
         String method = exchange.getRequest().getMethodValue();
         // 获取请求的uri
