@@ -58,6 +58,10 @@ public class AuroraReactiveAuthorizationManager implements ReactiveAuthorization
 
         ServerWebExchange exchange = authorizationContext.getExchange();
         ServerHttpRequest request = exchange.getRequest();
+        exchange.getResponse().getHeaders().add("Access-Control-Allow-Origin","*");
+        exchange.getResponse().getHeaders().add("Access-Control-Allow-Methods","GET, POST, PUT, OPTIONS");
+        exchange.getResponse().getHeaders().add("Access-Control-Allow-Credentials","true");
+        exchange.getResponse().getHeaders().add("Access-Control-Allow-Headers","Accept,Accept-Encoding,Authorization,aurora_page_web,Accept-Language,Connection,Content-Length,Content-Type,Host,Origin,Referer,User-Agent");
 
         // 获取请求方法
         String method = request.getMethodValue();

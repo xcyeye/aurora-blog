@@ -168,7 +168,7 @@ function createRouterGuard(router: Router) {
             }
           }else {
             // 用户不存在
-            console.log("此用户不存在");
+            console.error("此用户不存在");
             window.$message?.error('此用户不存在')
             next()
             router.push({

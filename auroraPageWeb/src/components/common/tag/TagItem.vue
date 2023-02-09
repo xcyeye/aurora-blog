@@ -85,7 +85,6 @@ export default {
   },
 
   created() {
-		console.log(this.tag);
     let bgColor = ''
 		bgColor = blogConfig.randomColor[getRandomNum(0,blogConfig.randomColor.length -1)]
     this.hexRgb = this.hexToRgb(bgColor)

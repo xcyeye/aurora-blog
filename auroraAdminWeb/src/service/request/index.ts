@@ -4,8 +4,6 @@ import {createRequest} from './request';
 const { url, urlPattern, secondUrl, secondUrlPattern } = getServiceEnvConfig(import.meta.env);
 
 const isHttpProxy = import.meta.env.VITE_HTTP_PROXY === 'Y';
-console.log("request");
-console.log(import.meta.env);
 export const request = createRequest({ baseURL: isHttpProxy ? urlPattern : url });
 
 export const secondRequest = createRequest({ baseURL: isHttpProxy ? secondUrlPattern : secondUrl });
