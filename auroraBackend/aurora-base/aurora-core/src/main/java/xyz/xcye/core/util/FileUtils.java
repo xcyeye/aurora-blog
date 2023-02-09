@@ -185,6 +185,7 @@ public class FileUtils {
         } catch (FileNotFoundException e) {
             throw new IOException(e.getMessage());
         }
+        inputStream.close();
         return inputStream;
     }
 
