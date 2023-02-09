@@ -3,8 +3,12 @@ import {createViteProxy, getRootPath, getSrcPath, setupVitePlugins, viteDefine} 
 import {getServiceEnvConfig} from './.env-config';
 
 export default defineConfig(configEnv => {
+	console.log("----------------");
+	console.log(configEnv.mode);
   const viteEnv = loadEnv(configEnv.mode, process.cwd()) as unknown as ImportMetaEnv;
-
+	console.log("vite.config");
+	console.log(viteEnv);
+	console.log("--------------");
   const rootPath = getRootPath();
   const srcPath = getSrcPath();
 

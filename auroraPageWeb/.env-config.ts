@@ -4,7 +4,8 @@ type ServiceEnv = Record<ServiceEnvType, ServiceEnvConfig>;
 /** 不同请求服务的环境配置 */
 const serviceEnv: ServiceEnv = {
   dev: {
-    url: 'http://localhost:7777',
+    // url: 'http://localhost:7777',
+    url: 'https://api.xcye.xyz',
     urlPattern: '/aurora-api',
     secondUrl: 'http://localhost:7777',
     secondUrlPattern: '/second-aurora-api'

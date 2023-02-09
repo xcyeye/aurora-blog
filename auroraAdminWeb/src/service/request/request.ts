@@ -196,7 +196,7 @@ export async function getRequestResponse(params: {
   config?: AxiosRequestConfig;
 }) {
   const { instance, method, url, data, config } = params;
-
+	console.log(url);
   let res: any;
   if (method === 'get' || method === 'delete') {
     res = await instance[method](url, config);
