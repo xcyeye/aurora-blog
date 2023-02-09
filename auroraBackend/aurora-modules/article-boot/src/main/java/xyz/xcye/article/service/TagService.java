@@ -3,12 +3,10 @@ package xyz.xcye.article.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
-import org.springframework.util.StringUtils;
 import xyz.xcye.article.po.Tag;
 import xyz.xcye.article.pojo.TagPojo;
 import xyz.xcye.article.vo.TagVO;
 import xyz.xcye.aurora.util.UserUtils;
-import xyz.xcye.core.dto.JwtUserInfo;
 import xyz.xcye.core.enums.ResponseStatusCodeEnum;
 import xyz.xcye.core.exception.article.ArticleException;
 import xyz.xcye.core.exception.user.UserException;
@@ -47,12 +45,13 @@ public class TagService {
 
     public void insertTag(TagPojo pojo) {
         Assert.notNull(pojo, "标签信息不能为null");
+        AssertUtils.stateThrow(pojo.getUserUid() != null, () -> new ArticleException("userUid不能为null"));
         judgeTag(pojo, true);
         Tag record = BeanUtils.copyProperties(pojo, Tag.class);
-        JwtUserInfo jwtUserInfo = UserUtils.getCurrentUser();
-        AssertUtils.stateThrow(jwtUserInfo != null,
-                () -> new UserException(ResponseStatusCodeEnum.PERMISSION_USER_NOT_LOGIN));
-        record.setUserUid(jwtUserInfo.getUserUid());
+        // JwtUserInfo jwtUserInfo = UserUtils.getCurrentUser();
+        // AssertUtils.stateThrow(jwtUserInfo != null,
+        //         () -> new UserException(ResponseStatusCodeEnum.PERMISSION_USER_NOT_LOGIN));
+        record.setUserUid(pojo.getUserUid());
         auroraTagService.insert(record);
     }
 
@@ -66,11 +65,8 @@ public class TagService {
         return BeanUtils.copyProperties(auroraTagService.queryById(uid), TagVO.class);
     }
 
-    public TagVO selectByTitle(String title) {
-        AssertUtils.stateThrow(StringUtils.hasLength(title), () -> new ArticleException("标签不能为null"));
-        Tag tag = new Tag();
-        tag.setTitle(title);
-        return BeanUtils.copyProperties(auroraTagService.queryOne(tag), TagVO.class);
+    public TagVO queryOneTag(TagPojo pojo) {
+        return BeanUtils.copyProperties(auroraTagService.queryOne(BeanUtils.copyProperties(pojo, Tag.class)), TagVO.class);
     }
 
     public int updateTag(TagPojo record) {

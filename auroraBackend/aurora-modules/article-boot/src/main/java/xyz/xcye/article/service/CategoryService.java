@@ -3,12 +3,10 @@ package xyz.xcye.article.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
-import org.springframework.util.StringUtils;
 import xyz.xcye.article.po.Category;
 import xyz.xcye.article.pojo.CategoryPojo;
 import xyz.xcye.article.vo.CategoryVO;
 import xyz.xcye.aurora.util.UserUtils;
-import xyz.xcye.core.dto.JwtUserInfo;
 import xyz.xcye.core.enums.ResponseStatusCodeEnum;
 import xyz.xcye.core.exception.article.ArticleException;
 import xyz.xcye.core.exception.user.UserException;
@@ -49,11 +47,12 @@ public class CategoryService {
     public void insertCategory(CategoryPojo record) {
         Assert.notNull(record, "类别不能为null");
         record.setDelete(false);
-        JwtUserInfo jwtUserInfo = UserUtils.getCurrentUser();
-        AssertUtils.stateThrow(jwtUserInfo != null,
-                () -> new UserException(ResponseStatusCodeEnum.PERMISSION_USER_NOT_LOGIN));
+        // JwtUserInfo jwtUserInfo = UserUtils.getCurrentUser();
+        // AssertUtils.stateThrow(jwtUserInfo != null,
+        //         () -> new UserException(ResponseStatusCodeEnum.PERMISSION_USER_NOT_LOGIN));
+        AssertUtils.stateThrow(record.getUserUid() != null, () -> new ArticleException("userUid不能为null"));
         judgeCategory(record, true);
-        record.setUserUid(jwtUserInfo.getUserUid());
+        record.setUserUid(record.getUserUid());
         auroraCategoryService.insert(BeanUtils.copyProperties(record, Category.class));
     }
 
@@ -67,11 +66,8 @@ public class CategoryService {
         return BeanUtils.copyProperties(auroraCategoryService.queryById(uid), CategoryVO.class);
     }
 
-    public CategoryVO selectByTitle(String title) {
-        AssertUtils.stateThrow(StringUtils.hasLength(title), () -> new ArticleException("类别不能为null"));
-        Category category = new Category();
-        category.setTitle(title);
-        return BeanUtils.copyProperties(auroraCategoryService.queryOne(category), CategoryVO.class);
+    public CategoryVO queryOneCategory(CategoryPojo pojo) {
+        return BeanUtils.copyProperties(auroraCategoryService.queryOne(BeanUtils.copyProperties(pojo, Category.class)), CategoryVO.class);
     }
 
     public int updateCategory(CategoryPojo record) {

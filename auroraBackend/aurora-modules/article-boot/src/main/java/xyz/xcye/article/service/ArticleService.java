@@ -197,7 +197,7 @@ public class ArticleService {
                     CategoryPojo categoryPojo = new CategoryPojo();
                     categoryPojo.setTitle(categoryName);
                     categoryPojo.setUserUid(article.getUserUid());
-                    if (categoryService.selectByTitle(categoryName) == null) {
+                    if (categoryService.queryOneCategory(categoryPojo) == null) {
                         // 不存在，添加
                         categoryService.insertCategory(categoryPojo);
                     }
@@ -224,7 +224,7 @@ public class ArticleService {
                     TagPojo tagPojo = new TagPojo();
                     tagPojo.setTitle(tagName);
                     tagPojo.setUserUid(article.getUserUid());
-                    if (tagService.selectByTitle(tagName) == null) {
+                    if (tagService.queryOneTag(tagPojo) == null) {
                         // 不存在，添加
                         tagService.insertTag(tagPojo);
                     }

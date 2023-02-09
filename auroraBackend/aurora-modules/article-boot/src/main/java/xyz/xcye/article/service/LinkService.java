@@ -196,7 +196,10 @@ public class LinkService {
         }
         // AssertUtils.stateThrow(StringUtils.hasLength(categoryName),
         //         () -> new LinkException(ResponseStatusCodeEnum.PARAM_NOT_COMPLETE.getMessage() + " categoryName"));
-        CategoryVO categoryVO = categoryService.selectByTitle(categoryName);
+        CategoryPojo categoryPojo = new CategoryPojo();
+        categoryPojo.setTitle(categoryName);
+        categoryPojo.setUserUid(link.getUserUid());
+        CategoryVO categoryVO = categoryService.queryOneCategory(categoryPojo);
         if (categoryVO == null) {
             // 插入
             CategoryPojo category = new CategoryPojo();
