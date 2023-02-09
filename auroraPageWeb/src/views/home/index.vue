@@ -61,7 +61,7 @@
 										</span>
 									</template>
 									<template #suffix>
-										<span class="home-main-top-right-info-color-common">{{articleArr.length}}</span>
+										<span class="home-main-top-right-info-color-common">{{totalArticleNumber}}</span>
 									</template>
 								</n-statistic>
 							</n-col>
@@ -140,6 +140,7 @@ const articleArr = ref<Array<ArticleVo>>([])
 
 const totalCommentNumber = ref(0)
 const totalTalkNumber = ref(0)
+const totalArticleNumber = ref(0)
 const userArr = ref<Array<UserVo>>([])
 const articleLatestArr = ref<Array<ArticleVo>>([])
 const routerPush = useRouterPush()
@@ -196,6 +197,12 @@ const loadAllArticle = () => {
 			}else {
 				articleLatestArr.value = result.data.result
 			}
+		}
+	})
+	
+	articleApi.queryTotalCount({delete: false, publish: true}).then(result => {
+		if (result.data) {
+			totalArticleNumber.value = result.data
 		}
 	})
 }
