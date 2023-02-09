@@ -260,7 +260,7 @@
 import {defineComponent, h, onBeforeMount, onMounted, ref, watch} from "vue";
 import {commentApi, emailApi, userApi} from "@/service";
 import {Comment} from "@/bean/pojo/comment/Comment";
-import {createLocalStorage, getLocalStorage, getLocalTime, StringUtil} from "@/utils";
+import {createLocalStorage, getHost, getLocalStorage, getLocalTime, StringUtil} from "@/utils";
 import {NButton, NGradientText, NText, UploadFileInfo} from "naive-ui";
 import {UserVo} from "@/bean/vo/admin/UserVo";
 import {useAuthStore, useSiteInfo, useUserInfo} from "@/stores";
@@ -581,6 +581,11 @@ const handleReplyCommentAction = () => {
 			replyCommentData.value.pageType = 'OTHER'
 		}else {
 			replyCommentData.value.pageType = props.replyPageType
+		}
+		
+		if (!StringUtil.haveLength(replyCommentData.value.site)) {
+			const authInfo: OauthVo = getLocalStorage('auth_info')
+			replyCommentData.value.site = `${getHost()}/user/${authInfo.userInfo?.user_uid}`
 		}
 		
 		commentApi.insertData(replyCommentData.value).then(result => {
