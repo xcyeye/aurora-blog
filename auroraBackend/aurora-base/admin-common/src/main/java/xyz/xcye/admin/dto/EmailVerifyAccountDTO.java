@@ -38,6 +38,8 @@ public class EmailVerifyAccountDTO {
     @NotNull
     private Long expirationTime;
 
+    private String expirationTimeStr;
+
     /**
      * 此userUid需要保证在数据库中存在验证账户的邮件发送模板，推荐填写管理员的userUid
      */

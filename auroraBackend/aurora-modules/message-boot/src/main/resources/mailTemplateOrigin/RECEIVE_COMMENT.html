@@ -54,7 +54,6 @@
       bottom: .5rem;
       width: 100%;
       text-align: center;
-      text-align: center;
       overflow: hidden;
       white-space: nowrap;
       text-overflow: ellipsis;
@@ -73,7 +72,6 @@
     .center {
       width: 100%;
       height: auto;
-      padding: 1rem;
     }
 
     .footer {
@@ -134,23 +132,50 @@
       color: #00000045;
     }
 
-    .verify-desc {
-      width: 50%;
-      margin: 0 auto;
+    .center {
+      padding: 1rem;
     }
 
-    .verify-button {
-      display: block;
-      width: 10rem;
-      height: 2rem;
-      margin: 0 auto;
-      text-align: center;
-      line-height: 2rem;
-      background-color: #3aaee0;
-      margin-top: 2rem;
-      border-radius: 10px;
+    .comment-box {
+      width: 100%;
+      height: auto;
+      display: flex;
     }
 
+    .comment-left {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-items: center;
+    }
+
+    .comment-left img {
+      height: 7rem;
+      width: 7rem;
+    }
+
+    .comment-right {
+      flex: 5;
+    }
+
+    .comment-top span {
+      margin-right: 1rem;
+    }
+
+    .comment-top, .comment-content {
+      padding-top: .5rem;
+      padding-bottom: .5rem;
+    }
+
+    .comment-bottom-bottom span {
+      margin-right: 1rem;
+    }
+
+    .comment-right {
+      padding-left: .5rem;
+    }
+  
+ 
 
     @media screen and (max-width:719px) {
       .box {
@@ -165,57 +190,84 @@
       .title span {
         font-size: 1rem;
       }
+      .comment-right {
+        flex: 6;
+      }
 
-      .verify-desc {
-        width: 100%;
-        margin: 0 auto;
+      .comment-left img {
+        height: 3.5rem;
+        width: 3.5rem;
+      }
+
+      .comment-bottom-bottom span {
+        font-size: 10px;
+        margin-right: 2px;
       }
     }
   </style>
 </head>
-<!-- VERIFY_ACCOUNT:receiverEmail -->
+
 <body>
-<div class="bg-color">
-  <div class="box">
-    <div class="header">
-      <div class="title">
-        <span>请验证您的账户信息 o(￣▽￣)ｄ </span>
+  <div class="bg-color">
+    <div class="box">
+      <div class="header">
+        <div class="title">
+          <span>您收到了一条新的评论 o(￣▽￣)ｄ</span>
+        </div>
       </div>
-    </div>
-
-    <div class="center">
-      <div class="verify-desc">
-          <span>
-            为了将此邮箱绑定到您的账户，您需要点击下方验证按钮，系统会自动将此邮箱绑定到您的账户，请您在 :auVERIFY_ACCOUNT:expirationTimeStrua: 时间内执行，如果您未在<a href="https://blog.xcye.xyz" target="_blank">Aurora博客系统</a>中进行账户邮箱的绑定操作，请忽略此邮件，给您带来的不便，尽请谅解！
-          </span>
-        <a class="verify-button" target="_blank" href=":auVERIFY_ACCOUNT:verifyAccountUrlua:">
-          验证
-        </a>
+  
+      <div class="center">
+        <div class="comment-box">
+          <div class="comment-left">
+            <a href=":auRECEIVE_COMMENT:siteua:">
+              <img src=":auRECEIVE_COMMENT:avatarua:" alt="">
+            </a>
+          </div>
+          <div class="comment-right">
+            <div class="comment-top">
+              <span>:auRECEIVE_COMMENT:usernameua:</span>
+              <span>:auRECEIVE_COMMENT:commentIpua:</span>
+            </div>
+            <div class="comment-bottom">
+              <div class="comment-content">:auRECEIVE_COMMENT:contentua:</div>
+              <div class="comment-bottom-bottom">
+                <span>:auRECEIVE_COMMENT:createTimeua:</span>
+                <span>
+                  <a href="mailto::auRECEIVE_COMMENT:emailua:">
+                    :auRECEIVE_COMMENT:emailua:
+                  </a>
+                </span>
+                <span>
+                  <a href=":auRECEIVE_COMMENT:pathua:">查看</a>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
-
-    <div class="footer">
-      <div class="icon">
-        <a href="https://github.com/xcyeye/aurora-blog-system" target="_blank">
-          <span class="github"></span>
-        </a>
-        <a href="https://blog.xcye.xyz/" target="_blank">
-          <span class="author"></span>
-        </a>
-        <a href="mailto:2291308094@qq.com" target="_blank">
-          <span class="mail"></span>
-        </a>
-        <a href="tencent://message/?uin=2291308094" target="_blank">
-          <span class="qq"></span>
-        </a>
-      </div>
-      <div class="desc">
-        <p>该邮件由系统自动发出，请勿回复</p>
-        <p>© <a href="https://blog.xcye.xyz/user/1623698852057456640" target="_blank">xcye</a> 2023 • All rights reserved.</p>
+  
+      <div class="footer">
+        <div class="icon">
+          <a href="https://github.com/xcyeye/aurora-blog-system" target="_blank">
+            <span class="github"></span>
+          </a>
+          <a href="https://blog.xcye.xyz/" target="_blank">
+            <span class="author"></span>
+          </a>
+          <a href="mailto:2291308094@qq.com" target="_blank">
+            <span class="mail"></span>
+          </a>
+          <a href="tencent://message/?uin=2291308094" target="_blank">
+            <span class="qq"></span>
+          </a>
+        </div>
+        <div class="desc">
+          <p>该邮件由系统自动发出，请勿回复</p>
+          <p>© <a href="https://blog.xcye.xyz/user/1623698852057456640" target="_blank">xcye</a> 2023 • All rights reserved.</p>
+        </div>
       </div>
     </div>
   </div>
-</div>
 </body>
 
 </html>

@@ -24,6 +24,7 @@ import xyz.xcye.comment.vo.ShowCommentVO;
 import xyz.xcye.core.enums.ResponseStatusCodeEnum;
 import xyz.xcye.core.exception.comment.CommentException;
 import xyz.xcye.core.util.BeanUtils;
+import xyz.xcye.core.util.DateUtils;
 import xyz.xcye.core.util.id.GenerateInfoUtils;
 import xyz.xcye.core.util.lambda.AssertUtils;
 import xyz.xcye.data.entity.Condition;
@@ -412,6 +413,9 @@ public class CommentService {
         // 使用rabbitmq发送邮件通知对方 因为使用rabbitmq发送消息到交换机的过程是同步的，并且我们已经开启了seata的全局事务功能
         // 所以如果在发送mq消息的过程中，出现异常，能够回滚，从而能够保证插入评论后，能够保证评论和mq发送到交换机的消息同时成功或者失败
         // 因为发布确认是异步的，如果能进入到发布确认代码中，那么前面插入评论和消息一定都成功保存到数据库中了
+        comment.setCreateTime(DateUtils.format(new Date()));
+        // TODO 后期需要使用配置文件
+        comment.setPath("https://blog.xcye.xyz" + comment.getPath());
         if (isReplyCommentFlag) {
             sendMQMessageService.sendReplyMail(comment, queriedRepliedCommentDO,
                     AmqpExchangeNameConstant.AURORA_SEND_MAIL_EXCHANGE,

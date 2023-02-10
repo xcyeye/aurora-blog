@@ -39,6 +39,7 @@ import xyz.xcye.core.exception.email.EmailException;
 import xyz.xcye.core.exception.user.UserException;
 import xyz.xcye.core.util.BeanUtils;
 import xyz.xcye.core.util.ConvertObjectUtils;
+import xyz.xcye.core.util.DateUtils;
 import xyz.xcye.core.util.JSONUtils;
 import xyz.xcye.core.util.id.GenerateInfoUtils;
 import xyz.xcye.core.util.lambda.AssertUtils;
@@ -365,10 +366,19 @@ public class UserService {
     private void sendVerifyEmail(UserVO userVO, EmailVO emailVO) throws BindException {
         String verifyAccountUrl = AccountInfoUtils.generateVerifyUrl(userVO.getUid(),
                 bindEmailKey, userVO.hashCode(), auroraAccountProperties.getMailVerifyAccountPrefixPath());
+        long time = new Date().getTime();
+        if (auroraAccountProperties.getMailVerifyAccountExpirationTime() != null) {
+            time = time + auroraAccountProperties.getMailVerifyAccountExpirationTime();
+        }else {
+            // TODO 系统并没有设置默认失效时间，则设置10分钟
+            time = time + (10 * 60 * 1000);
+        }
+        String expirationTimeStr = DateUtils.format(new Date(time));
         EmailVerifyAccountDTO verifyAccountInfo = EmailVerifyAccountDTO.builder()
                 .userUid(userVO.getUid())
                 .expirationTime(auroraAccountProperties.getMailVerifyAccountExpirationTime())
                 .verifyAccountUrl(verifyAccountUrl)
+                .expirationTimeStr(expirationTimeStr)
                 .receiverEmail(emailVO.getEmail()).subject(null).build();
 
         List<Map<SendHtmlMailTypeNameEnum, Object>> list = new ArrayList<>();

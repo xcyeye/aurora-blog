@@ -6,6 +6,6 @@ alter table au_category
 alter table au_tag
     drop key unique_title_index;
 
-# 2023-2-9 xcye 
+# 2023-2-9 xcye
 alter table au_login_info
     modify login_ip varchar(128) not null comment '登录ip地址';

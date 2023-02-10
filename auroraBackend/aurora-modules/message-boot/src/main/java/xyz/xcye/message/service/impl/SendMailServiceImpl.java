@@ -11,18 +11,21 @@ import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
 import xyz.xcye.api.mail.sendmail.entity.StorageSendMailInfo;
 import xyz.xcye.api.mail.sendmail.enums.SendHtmlMailTypeNameEnum;
+import xyz.xcye.api.mail.sendmail.util.StorageMailUtils;
+import xyz.xcye.aurora.util.UserUtils;
 import xyz.xcye.comment.po.Comment;
 import xyz.xcye.core.constant.FieldLengthConstant;
+import xyz.xcye.core.dto.JwtUserInfo;
 import xyz.xcye.core.enums.RegexEnum;
 import xyz.xcye.core.enums.ResponseStatusCodeEnum;
 import xyz.xcye.core.exception.email.EmailException;
 import xyz.xcye.core.exception.user.UserException;
 import xyz.xcye.core.util.ConvertObjectUtils;
+import xyz.xcye.core.util.DateUtils;
 import xyz.xcye.core.util.LogUtils;
 import xyz.xcye.core.util.lambda.AssertUtils;
 import xyz.xcye.message.enums.MailTemplateEnum;
 import xyz.xcye.message.mail.SendMailRealize;
-import xyz.xcye.message.po.EmailLog;
 import xyz.xcye.message.pojo.EmailLogPojo;
 import xyz.xcye.message.pojo.SendMailPojo;
 import xyz.xcye.message.service.EmailLogService;
@@ -35,6 +38,8 @@ import xyz.xcye.message.vo.EmailVO;
 
 import javax.mail.MessagingException;
 import java.io.IOException;
+import java.util.Date;
+import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
 
@@ -141,12 +146,12 @@ public class SendMailServiceImpl implements SendMailService {
     }
 
     @Override
-    public void sendCustomMail(SendMailPojo pojo) throws MessagingException {
-        sendEmail(pojo.getSubject(), pojo.getContent(), pojo.getReceiverEmail());
+    public void sendCustomMail(SendMailPojo pojo) throws MessagingException, IOException {
+        sendHtmlMail(generateCommonNotice(pojo.getSubject(), pojo.getContent(), pojo.getReceiverEmail()));
     }
 
     @Override
-    public void resendCustomMail(Long emailLogUid) throws MessagingException {
+    public void resendCustomMail(Long emailLogUid) throws MessagingException, IOException {
         Assert.notNull(emailLogUid, "uid不能为null");
         // 查询此emailLogUid对应的邮件信息
         EmailLogVO emailLogVO = emailLogService.queryByUid(emailLogUid);
@@ -263,5 +268,30 @@ public class SendMailServiceImpl implements SendMailService {
 
         JSONObject jsonObject = JSON.parseObject(ConvertObjectUtils.jsonToString(additionalData));
         return JSON.parseObject(jsonObject.getString(SendHtmlMailTypeNameEnum.ADDITIONAL_DATA.name()), Comment.class);
+    }
+
+    private StorageSendMailInfo generateCommonNotice(String subject,String sendContent,String receiverEmail) {
+        Long userUid = null;
+        JwtUserInfo currentUser = UserUtils.getCurrentUser();
+        if (currentUser != null) {
+            userUid = currentUser.getUserUid();
+        }else {
+            // TODO 可能是系统发出的信息
+            userUid = 0L;
+        }
+
+        EmailLogPojo emailLogPojo = new EmailLogPojo();
+        emailLogPojo.setContent(sendContent);
+        emailLogPojo.setCreateTime(DateUtils.format(new Date()));
+        List<Map<SendHtmlMailTypeNameEnum, Object>> maps = StorageMailUtils.generateReplacedMailObject(SendHtmlMailTypeNameEnum.COMMON_NOTICE, emailLogPojo);
+        Map<String, String> replacedMap = StorageMailUtils.createReplacedMap(maps);
+        return StorageSendMailInfo.builder()
+                .sendType(SendHtmlMailTypeNameEnum.COMMON_NOTICE)
+                .receiverEmail(receiverEmail)
+                .subject(subject)
+                .htmlContent(sendContent)
+                .replacedMap(replacedMap)
+                .userUid(userUid)
+                .build();
     }
 }

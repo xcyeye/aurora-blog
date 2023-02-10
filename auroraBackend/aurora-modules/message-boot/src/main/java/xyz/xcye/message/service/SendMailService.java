@@ -37,12 +37,12 @@ public interface SendMailService {
      * @return
      * @throws MessagingException
      */
-    void sendCustomMail(SendMailPojo pojo) throws MessagingException;
+    void sendCustomMail(SendMailPojo pojo) throws MessagingException, IOException;
 
     /**
      * 重新发送自定义的邮件
      * @param emailLogUid
      * @return
      */
-    void resendCustomMail(Long emailLogUid) throws MessagingException;
+    void resendCustomMail(Long emailLogUid) throws MessagingException, IOException;
 }

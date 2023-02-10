@@ -1,7 +1,7 @@
 {
   "projectInfo": {
     "projectUrl": "https://github.com/xcyeye/Aurora-blog-system",
-    "homePageUrl": "https://aurora.xcye.xyz",
+    "homePageUrl": "https://blog.xcye.xyz",
     "version": "1.0.0",
     "projectName": "auroraBlogSystem",
     "author": "xcye",
@@ -296,7 +296,7 @@
     "description": "这是默认的描述",
     "keywords": "博客 微服务"
   },
-  "adminWebUrl": "http://localhost:3400/login",
+  "adminWebUrl": "https://admin.xcye.xyz/login",
   "defaultRandomPicture": "https://cdn.seovx.com/ha/?mom=302",
   "bingPictureInterface": "https://api.paugram.com/bing",
   "defaultLazyImgSrc": ""

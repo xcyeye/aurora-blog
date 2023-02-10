@@ -55,7 +55,7 @@ public class StorageMailUtils {
      * @param replacedObjList
      * @return
      */
-    private static Map<String,String> createReplacedMap(List<Map<SendHtmlMailTypeNameEnum,Object>> replacedObjList) {
+    public static Map<String,String> createReplacedMap(List<Map<SendHtmlMailTypeNameEnum,Object>> replacedObjList) {
         Map<String,String> replacedMap = new HashMap<>();
 
         if (replacedObjList == null) {
@@ -74,6 +74,7 @@ public class StorageMailUtils {
                     String tempKey = key + SPACE_CHARACTER + nextTemp.getKey();
                     replacedMap.put(tempKey, nextTemp.getValue() + "");
                 }
+                System.out.println();
             }
         }
         return replacedMap;
