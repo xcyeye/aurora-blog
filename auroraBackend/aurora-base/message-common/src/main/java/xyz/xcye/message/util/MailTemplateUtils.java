@@ -1,7 +1,9 @@
 package xyz.xcye.message.util;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.util.StringUtils;
+import xyz.xcye.core.util.LogUtils;
 import xyz.xcye.core.util.lambda.AssertUtils;
 import xyz.xcye.message.enums.MailTemplateEnum;
 
@@ -12,6 +14,7 @@ import java.io.*;
  */
 
 
+@Slf4j
 public class MailTemplateUtils {
 
     /**
@@ -48,6 +51,7 @@ public class MailTemplateUtils {
      * @throws IOException
      */
     public static String readContentFromFile(String templatePath) throws IOException {
+        LogUtils.logCommonInfo("模板文件的位置" + templatePath);
         AssertUtils.stateThrow(templatePath != null, () -> new IOException("文件名不能为null"));
         File file = new File(templatePath);
         if (!file.exists()) {

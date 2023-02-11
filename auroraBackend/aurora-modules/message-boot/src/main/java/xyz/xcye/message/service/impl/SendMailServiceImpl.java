@@ -9,6 +9,7 @@ import org.springframework.mail.MailException;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
+import xyz.xcye.AuroraMessageRun;
 import xyz.xcye.api.mail.sendmail.entity.StorageSendMailInfo;
 import xyz.xcye.api.mail.sendmail.enums.SendHtmlMailTypeNameEnum;
 import xyz.xcye.api.mail.sendmail.util.StorageMailUtils;
@@ -31,13 +32,12 @@ import xyz.xcye.message.pojo.SendMailPojo;
 import xyz.xcye.message.service.EmailLogService;
 import xyz.xcye.message.service.EmailService;
 import xyz.xcye.message.service.SendMailService;
-import xyz.xcye.message.util.MailTemplateUtils;
 import xyz.xcye.message.util.ParseEmailTemplate;
 import xyz.xcye.message.vo.EmailLogVO;
 import xyz.xcye.message.vo.EmailVO;
 
 import javax.mail.MessagingException;
-import java.io.IOException;
+import java.io.*;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -98,8 +98,10 @@ public class SendMailServiceImpl implements SendMailService {
 
         String templateContent = null;
         try {
-            templateContent = MailTemplateUtils.readContentFromTemplateFile(storageSendMailInfo.getSendType().name(), "mailTemplate");
+            // templateContent = MailTemplateUtils.readContentFromTemplateFile(storageSendMailInfo.getSendType().name(), "mailTemplate");
+            templateContent = readContentFromTemplateFile(storageSendMailInfo.getSendType().name(), "mailTemplate");
         } catch (IOException e) {
+            LogUtils.logExceptionInfo(e);
             // 如果发生异常，也就是没有模板，那么则直接发送对象的toString字符
             templateContent = storageSendMailInfo.getReplacedMap().toString();
         }
@@ -293,5 +295,35 @@ public class SendMailServiceImpl implements SendMailService {
                 .replacedMap(replacedMap)
                 .userUid(userUid)
                 .build();
+    }
+
+    private String readContentFromTemplateFile(String templateName, String templateFolderPath) throws IOException {
+        if (!StringUtils.hasLength(templateName)) {
+            throw new IOException("模板文件名不能为空或者null");
+        }
+
+        // 因为模板文件是html，所以修改模板文件的名字
+        templateName = templateName + ".html";
+        String templatePath = "";
+        if (StringUtils.hasLength(templateFolderPath)) {
+            templatePath = "/" + templateFolderPath + "/" + templateName;
+        }else {
+            templatePath = File.separator + templateName;
+        }
+
+        InputStream templateStream = AuroraMessageRun.class.getResourceAsStream(templatePath);
+        if (templateStream == null) {
+            throw new IOException("不存在此文件" + templatePath);
+        }
+
+        BufferedReader reader = new BufferedReader(new InputStreamReader(templateStream));
+
+        StringBuilder builder = new StringBuilder();
+        String s = "";
+        while ((s = reader.readLine()) != null) {
+            builder.append(System.lineSeparator()).append(s);
+        }
+        reader.close();
+        return builder.toString();
     }
 }
