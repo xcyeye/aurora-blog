@@ -276,6 +276,8 @@ const handleApplyLinkAction = () => {
 						}
 					)
 			});
+			
+			applyForFriendLink.value = {}
 		}
 	});
 };

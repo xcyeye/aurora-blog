@@ -149,7 +149,8 @@ public class SendMailServiceImpl implements SendMailService {
 
     @Override
     public void sendCustomMail(SendMailPojo pojo) throws MessagingException, IOException {
-        sendHtmlMail(generateCommonNotice(pojo.getSubject(), pojo.getContent(), pojo.getReceiverEmail()));
+        sendHtmlMail(StorageMailUtils.generateCommonNotice(pojo.getSubject(), pojo.getContent(), pojo.getReceiverEmail(), null));
+        // sendHtmlMail(generateCommonNotice(pojo.getSubject(), pojo.getContent(), pojo.getReceiverEmail()));
     }
 
     @Override

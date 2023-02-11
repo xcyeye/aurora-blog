@@ -163,20 +163,17 @@ public class LinkService {
         }});
         UserVO userVO = JSONUtils.parseObjFromResult(r, "data", UserVO.class);
         if (updateNum == 1 && !publish) {
-            // 没有审核通过，则把message发送给该站长
-            String mailMessage = "<p>您在" + userVO.getUsername() + "用户处申请的友链未通过审核！┭┮﹏┭┮</p><p>原因:" + msg + "</p>";
-            StorageSendMailInfo mailInfo = getMailInfo(linkVO.getEmail(), "友链未通过",
-                    mailMessage, BeanUtils.copyProperties(linkVO, Link.class), SendHtmlMailTypeNameEnum.COMMON_NOTICE);
-            sendMail(mailInfo, StorageMailUtils.generateCommonNotice(mailMessage));
+            String mailMessage = "您在" + userVO.getUsername() + "用户处申请的友链未通过审核！┭┮﹏┭┮<p>原因:" + msg + "</p>";
+            StorageSendMailInfo sendMailInfo = StorageMailUtils.generateCommonNotice("友链未通过ε(┬┬﹏┬┬)3 ", mailMessage, linkVO.getEmail(), linkVO.getUserUid());
+            sendMail(sendMailInfo, null);
             return updateNum;
         }
 
         // 通过审核，发送消息通知对方
         if (updateNum == 1 && publish) {
-            String mailMessage = "<p>您在" + userVO.getUsername() + "用户处申请的友链已通过审核！O(∩_∩)O哈哈~</p><p>博主留言:" + msg + "</p>";
-            StorageSendMailInfo mailInfo = getMailInfo(linkVO.getEmail(), "友链通过",
-                    mailMessage, BeanUtils.copyProperties(linkVO, Link.class), SendHtmlMailTypeNameEnum.COMMON_NOTICE);
-            sendMail(mailInfo, StorageMailUtils.generateCommonNotice(mailMessage));
+            String mailMessage = "您在" + userVO.getUsername() + "用户处申请的友链已通过审核！o(￣▽￣)ｄ ~<p>博主留言:" + msg + "</p>";
+            StorageSendMailInfo sendMailInfo = StorageMailUtils.generateCommonNotice("友链审核通过 φ(゜▽゜*)♪ ", mailMessage, linkVO.getEmail(), linkVO.getUserUid());
+            sendMail(sendMailInfo, null);
         }
         return updateNum;
     }

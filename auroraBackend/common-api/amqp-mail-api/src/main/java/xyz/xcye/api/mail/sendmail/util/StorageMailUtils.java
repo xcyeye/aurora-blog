@@ -4,12 +4,11 @@ import com.alibaba.fastjson.JSON;
 import org.springframework.beans.BeanUtils;
 import xyz.xcye.api.mail.sendmail.entity.StorageSendMailInfo;
 import xyz.xcye.api.mail.sendmail.enums.SendHtmlMailTypeNameEnum;
+import xyz.xcye.core.util.DateUtils;
 import xyz.xcye.message.dto.CommonNoticeDTO;
+import xyz.xcye.message.pojo.EmailLogPojo;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static xyz.xcye.core.util.ConvertObjectUtils.jsonToString;
 
@@ -32,9 +31,13 @@ public class StorageMailUtils {
      */
     public static String generateMailJson(StorageSendMailInfo mailInfo, List<Map<SendHtmlMailTypeNameEnum,Object>> replacedObjList) {
         // replacedMap添加到mailInfo中
-        StorageSendMailInfo sendMailInfo = new StorageSendMailInfo(createReplacedMap(replacedObjList));
-        BeanUtils.copyProperties(mailInfo, sendMailInfo);
-        return jsonToString(sendMailInfo);
+        if (replacedObjList != null) {
+            StorageSendMailInfo sendMailInfo = new StorageSendMailInfo(createReplacedMap(replacedObjList));
+            BeanUtils.copyProperties(mailInfo, sendMailInfo);
+            return jsonToString(sendMailInfo);
+        }else {
+            return jsonToString(mailInfo);
+        }
     }
 
     /**
@@ -93,5 +96,25 @@ public class StorageMailUtils {
                 .sendMessage(sendMessage)
                 .build();
         return generateReplacedMailObject(SendHtmlMailTypeNameEnum.COMMON_NOTICE, commonNoticeDTO);
+    }
+
+    public static StorageSendMailInfo generateCommonNotice(String subject,String sendContent,String receiverEmail, Long userUid) {
+        if (userUid == null) {
+            userUid = 0L;
+        }
+
+        EmailLogPojo emailLogPojo = new EmailLogPojo();
+        emailLogPojo.setContent(sendContent);
+        emailLogPojo.setCreateTime(DateUtils.format(new Date()));
+        List<Map<SendHtmlMailTypeNameEnum, Object>> maps = StorageMailUtils.generateReplacedMailObject(SendHtmlMailTypeNameEnum.COMMON_NOTICE, emailLogPojo);
+        Map<String, String> replacedMap = StorageMailUtils.createReplacedMap(maps);
+        return StorageSendMailInfo.builder()
+                .sendType(SendHtmlMailTypeNameEnum.COMMON_NOTICE)
+                .receiverEmail(receiverEmail)
+                .subject(subject)
+                .htmlContent(sendContent)
+                .replacedMap(replacedMap)
+                .userUid(userUid)
+                .build();
     }
 }

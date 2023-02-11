@@ -14,3 +14,7 @@ alter table au_login_info
 alter table au_comment
     modify comment_ip varchar(128) null comment '评论者的ip地址';
 
+# 2023-2-10 xcye
+alter table au_link
+    modify category_name varchar(255) null comment '此条友情链接属于哪个分类';
+
