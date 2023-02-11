@@ -43,7 +43,7 @@ const wrap = (wrapped) => (...args) => {
 const handleRenderMarkdownContent = (markdownContent: string) => {
 	if (!StringUtil.haveLength(markdownContent)) return
 	// 渲染markdown内容
-	const markdown = new MarkdownIt()
+	const markdown = new MarkdownIt({html: true})
 	markdown.set({
 		highlight: function (str, lang) {
 			if (lang && hljs.getLanguage(lang)) {
