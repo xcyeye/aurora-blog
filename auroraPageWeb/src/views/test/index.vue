@@ -1,9 +1,10 @@
 <template>
-	<div class="test-parent">
-		<div class="son1">我是son1</div>
-		<span>我是son1和son2中间的元素</span>
-		<div class="son2">我是son2</div>
-	</div>
+	<!--<div class="test-parent">-->
+	<!--	<div class="son1">我是son1</div>-->
+	<!--	<span>我是son1和son2中间的元素</span>-->
+	<!--	<div class="son2">我是son2</div>-->
+	<!--</div>-->
+	<aurora-login :show-login-modal="true" user-uid="34856"/>
 </template>
 
 <script lang="ts" setup>
