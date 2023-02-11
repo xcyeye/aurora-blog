@@ -22,7 +22,6 @@ import xyz.xcye.aurora.util.AuroraRequestUtils;
 import xyz.xcye.auth.constant.AuthRedisConstant;
 import xyz.xcye.auth.constant.RequestConstant;
 import xyz.xcye.auth.model.SecurityUserDetails;
-import xyz.xcye.auth.po.LoginInfo;
 import xyz.xcye.auth.pojo.LoginInfoPojo;
 import xyz.xcye.auth.service.LoginInfoService;
 import xyz.xcye.auth.threadpoll.WriteLoginInfoExecutor;
@@ -89,7 +88,7 @@ public class LoginInfoAop {
         }
 
         // 判断用户名是否规范
-        legalUsernname(username);
+        legalUsername(username);
 
         // 生成唯一uid
         long uid = GenerateInfoUtils.generateUid(auroraProperties.getSnowFlakeWorkerId(),
@@ -278,7 +277,7 @@ public class LoginInfoAop {
      * 判断用户名是否合法
      * @param username
      */
-    private void legalUsernname(String username) {
+    private void legalUsername(String username) {
         // 判断用户名是否规范
         boolean matches = Pattern.matches(RegexEnum.USERNAME_REGEX.getRegex(), username);
         if (!matches) {

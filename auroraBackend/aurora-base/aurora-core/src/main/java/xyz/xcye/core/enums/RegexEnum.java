@@ -31,7 +31,7 @@ public enum RegexEnum {
     /**
      * 用户名 字母开头，允许5-16字节，允许字母数字下划线
      */
-    USERNAME_REGEX("^[a-zA-Z][a-zA-Z0-9_]{4,15}$"),
+    USERNAME_REGEX("^[\\w_]{5,15}$"),
 
     /**
      * 正整数

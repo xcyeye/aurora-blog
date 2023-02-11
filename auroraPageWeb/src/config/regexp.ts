@@ -20,7 +20,7 @@ export const REGEXP_URL =
   /(((^https?:(?:\/\/)?)(?:[-;:&=+$,\w]+@)?[A-Za-z0-9.-]+(?::\d+)?|(?:www.|[-;:&=+$,\w]+@)[A-Za-z0-9.-]+)((?:\/[+~%/.\w-_]*)?\??(?:[-+=&;%@.\w_]*)#?(?:[\w]*))?)$/;
 
 /** 用户名校验 */
-export const REGEXP_USERNAME = /^[\w-]{5,15}$/
+export const REGEXP_USERNAME = /^[\w_]{5,15}$/
 
 export const REGEXP_SWAGGER_CONFIG_INTERFACE = /^\/v3\/api-docs\/swagger-config/
 export const REGEXP_SWAGGER_INTERFACE_INFO = /^\/v3\/api-docs/

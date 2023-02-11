@@ -9,3 +9,8 @@ alter table au_tag
 # 2023-2-9 xcye
 alter table au_login_info
     modify login_ip varchar(128) not null comment '登录ip地址';
+
+# 2023-2-10 xcye
+alter table au_comment
+    modify comment_ip varchar(128) null comment '评论者的ip地址';
+
