@@ -30,6 +30,16 @@ public class AuroraProperties {
 
     private List<String> defaultRoleList;
 
+    /**
+     * 前台站点地址
+     */
+    private String pageWebUrl;
+
+    /**
+     * 后台站点地址
+     */
+    private String adminWebUrl;
+
     @Data
     @ConfigurationProperties(prefix = AuroraDefaultUserInfoProperties.AURORA_DEFAULT_USER_INFO_PREFIX)
     public static class AuroraDefaultUserInfoProperties {

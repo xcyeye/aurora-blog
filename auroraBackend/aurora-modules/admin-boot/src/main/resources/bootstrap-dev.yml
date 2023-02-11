@@ -41,3 +41,6 @@ spring:
           - data-id: share-swagger-dev.yaml
             group: THEME-GROUP
             refresh: true
+          - data-id: share-default-info-dev.yaml
+            group: THEME-GROUP
+            refresh: true

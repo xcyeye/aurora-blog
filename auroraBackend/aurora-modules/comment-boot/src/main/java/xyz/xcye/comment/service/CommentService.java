@@ -415,7 +415,14 @@ public class CommentService {
         // 因为发布确认是异步的，如果能进入到发布确认代码中，那么前面插入评论和消息一定都成功保存到数据库中了
         comment.setCreateTime(DateUtils.format(new Date()));
         // TODO 后期需要使用配置文件
-        comment.setPath("https://blog.xcye.xyz" + comment.getPath());
+        String pageWebUrl = auroraProperties.getPageWebUrl();
+        if (!StringUtils.hasLength(pageWebUrl)) {
+            pageWebUrl = "https://blog.xcye.xyz";
+        }
+        if (pageWebUrl.endsWith("/")) {
+            pageWebUrl = pageWebUrl.substring(0, pageWebUrl.length() - 1);
+        }
+        comment.setPath(pageWebUrl + comment.getPath());
         if (isReplyCommentFlag) {
             sendMQMessageService.sendReplyMail(comment, queriedRepliedCommentDO,
                     AmqpExchangeNameConstant.AURORA_SEND_MAIL_EXCHANGE,
