@@ -1,11 +1,15 @@
 <template>
 	<div class="aurora-card global-common-animate" :class="{'bg-linear-gradient': showLinearGradient}" :style="getCardStyle">
 		<div class="aurora-card-title" v-if="showHeader">
-			<div v-if="props.icon" class="aurora-card-title-icon">
-				<svg-icon :style="customTitleStyle" :icon="props.icon"/>
-			</div>
-			<span :style="customTitleStyle" v-if="props.title">{{props.title}}</span>
-			<slot name="header"/>
+			<n-space justify="space-between">
+				<div>
+					<div v-if="props.icon" class="aurora-card-title-icon">
+						<svg-icon :style="customTitleStyle" :icon="props.icon"/>
+					</div>
+					<span :style="customTitleStyle" v-if="props.title">{{props.title}}</span>
+				</div>
+				<slot name="header"/>
+			</n-space>
 		</div>
 		<div class="aurora-card-content">
 			<slot/>
