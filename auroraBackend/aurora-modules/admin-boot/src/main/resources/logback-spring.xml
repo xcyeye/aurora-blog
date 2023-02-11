@@ -11,7 +11,7 @@
     <!-- 文件中打印 -->
     <property name="log_note" value="%d{yyyy-MM-dd HH:mm:ss:SSS} %-5level ${PID:-} -- %t %logger{50}--%method  -%msg%n"/>
     <!-- 当前项目的日志存放在哪个文件夹中 -->
-    <property name="log_folder" value="aurora-article"/>
+    <property name="log_folder" value="aurora-admin"/>
     <!-- 控制台输出 -->
     <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
@@ -88,6 +88,11 @@
         <encoder>
             <pattern>${log_note}</pattern>
         </encoder>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
     </appender>
 
     <!-- 记录处理service的结果，增删改查操作  -->
@@ -100,16 +105,11 @@
         <appender-ref ref="user-processRequestTime"/>
     </logger>
 
-    <!--sys-exception-->
-    <!-- 全局异常处理里面的异常信息  -->
-    <logger name="xyz.xcye.aurora.exception.AuroraGlobalExceptionHandler" level="WARN" additivity="true">
-        <appender-ref ref="sys-exception"/>
-    </logger>
-
     <!--指定基础的日志输出级别-->
     <root level="info">
         <appender-ref ref="console"/>
         <appender-ref ref="operation-info"/>
+        <appender-ref ref="sys-exception"/>
     </root>
 
     <!--将控制台打印的信息，放入到文件中-->

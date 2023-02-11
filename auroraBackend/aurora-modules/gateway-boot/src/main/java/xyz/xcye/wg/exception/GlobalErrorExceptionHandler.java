@@ -28,12 +28,12 @@ public class GlobalErrorExceptionHandler implements ErrorWebExceptionHandler {
 
     @Override
     public Mono<Void> handle(ServerWebExchange exchange, Throwable ex) {
+        LogUtils.logExceptionInfo((Exception) ex);
         ServerHttpResponse response = exchange.getResponse();
         if (response.isCommitted()) {
             return Mono.error(ex);
         }
         ResponseStatusCodeEnum responseStatusCodeEnum = null;
-        LogUtils.logExceptionInfo((Exception) ex);
         if (ex instanceof NotFoundException) {
             // NotFoundException是服务实例未启动
             responseStatusCodeEnum = ResponseStatusCodeEnum.SERVICE_INSTANCE_NOT_FOUND;
