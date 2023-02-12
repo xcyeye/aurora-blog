@@ -1,18 +1,21 @@
 <template>
 	<n-scrollbar>
 		<div id="gallery" class="container-fluid" :style="`--pc-gallery-column: ${pcGalleryColumn};--mobile-gallery-column: ${mobileGalleryColumn};`">
-			<div @click="clickPicture(item)" v-for="(item) in pictureList" :key="item.uid" class="gallery-item">
+			<div @click="clickPicture(item)" v-for="(item) in pictureListTemp" :key="item.uid" class="gallery-item aurora-gallery-img-lazy-loading">
 				<n-image :src="getImageSrc(item)"/>
 				<div class="gallery-img-desc">
 					<slot/>
 				</div>
 			</div>
 		</div>
+		<div class="gallery-more">
+			<span @click="clickLoadMorePicture">More</span>
+		</div>
 	</n-scrollbar>
 </template>
 
 <script lang="ts" setup>
-import {computed, defineComponent} from "vue";
+import {computed, defineComponent, onMounted, ref, watch} from "vue";
 import {FileVo} from "@/bean/vo/file/fileVo";
 import {useSysSettingStore} from "@/stores";
 import {REGEXP_URL} from "@/config";
@@ -33,6 +36,11 @@ const props = withDefaults(defineProps<Props>(), {
 })
 
 const sysSettingStore = useSysSettingStore()
+const pictureListTemp = ref<Array<FileVo>>([])
+
+pictureListTemp.value = props.pictureList
+
+const emits = defineEmits(['clickLoadMorePicture'])
 
 const getImageSrc = computed(() => {
 	return (pictureFile: FileVo) => {
@@ -51,6 +59,37 @@ const getImageSrc = computed(() => {
 const clickPicture = (pictureFile: FileVo) => {
 	emitter.emit('galleryClickPicture', pictureFile)
 }
+
+const handleScroll = () => {
+	let clientHeight = document.documentElement.clientHeight
+	// console.log(document.getElementById('gallery')!.getBoundingClientRect().top);
+	console.log(document.getElementById('gallery')!.parentElement);
+	// let articleLazyLoadingImg = document.querySelectorAll(".aurora-gallery-img-lazy-loading")
+	// for (let i = 0; i < articleLazyLoadingImg.length; i++) {
+	// 	let distance_top = articleLazyLoadingImg[i].getBoundingClientRect().top
+	// 	if (distance_top < clientHeight) {
+	// 		//加载图片
+	// 		let elementsByTagName = articleLazyLoadingImg[i].getElementsByTagName("img");
+	// 		let dataSrc = elementsByTagName[0].getAttribute("data-src") as string;
+	// 		elementsByTagName[0].setAttribute("src",dataSrc)
+	// 	}
+	// }
+}
+
+const clickLoadMorePicture = () => {
+	emits('clickLoadMorePicture');
+}
+
+watch(() => props.pictureList, () => {
+	pictureListTemp.value = []
+	pictureListTemp.value = props.pictureList
+})
+
+onMounted(() => {
+	// window.addEventListener('scroll', handleScroll, true)
+})
+
+
 </script>
 
 <style scoped>

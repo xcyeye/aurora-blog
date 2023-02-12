@@ -6820,6 +6820,20 @@ body {
     transform: translateY(0);
 }
 
+.gallery-more {
+    height: 2rem;
+    width: 100%;
+    text-align: center;
+}
+
+.gallery-more span {
+    line-height: 2rem;
+    padding: 0 1rem;
+    display: inline-block;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
 @media (max-width: 719px) {
     #gallery {
         column-count: var(--mobile-gallery-column);

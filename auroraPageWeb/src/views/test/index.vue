@@ -6,7 +6,7 @@
 	<!--</div>-->
 	<!--<aurora-login :show-login-modal="true" user-uid="34856"/>-->
 	<div class="galaxy">
-		<aurora-gallery :picture-list="pictureArr" :mobile-gallery-column="2" :pc-gallery-column="3">
+		<aurora-gallery @clickLoadMorePicture="clickLoadMorePicture" :picture-list="pictureArr" :mobile-gallery-column="2" :pc-gallery-column="3">
 			<div>aksdjf</div>
 		</aurora-gallery>
 	</div>
@@ -38,6 +38,10 @@ onBeforeMount(() => {
 		console.log(e);
 	})
 })
+
+const clickLoadMorePicture = () => {
+	console.log("点击了");
+}
 </script>
 
 <style scoped lang="css">
@@ -69,9 +73,11 @@ onBeforeMount(() => {
 }
 
 .galaxy {
+	position: relative;
+	top: 234px;
 	width: 70%;
 	height: 20rem;
-	margin: 0 auto;
+	/*margin: 0 auto;*/
 	background-color: red;
 }
 </style>
