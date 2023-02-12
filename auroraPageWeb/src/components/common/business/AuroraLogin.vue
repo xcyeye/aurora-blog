@@ -154,6 +154,7 @@ const loginByPwd = (isInsertEmailInfo: boolean = false) => {
 				// 用户登录，如果账户已经验证了，则查询邮箱
 				loadUserEmailInfo(result.data)
 			}
+			window.location.reload()
 		}
 	})
 }

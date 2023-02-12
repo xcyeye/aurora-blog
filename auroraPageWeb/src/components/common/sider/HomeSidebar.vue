@@ -70,6 +70,10 @@
 					<div style="font-size: .3rem" class="sidebar-page-time">
 						<span>{{showTalkInfo.createTime}}</span>
 					</div>
+					<template #header>
+						<aurora-add-talk :user-uid="userUid" :show-talk-modal="showTalkModal"/>
+						<span style="cursor: pointer" @click="handleAddTalkAction">Add</span>
+					</template>
 				</aurora-card>
 			
 				<!--侧边栏友情链接-->
@@ -211,6 +215,7 @@ import {ArticleVo} from "@/bean/vo/article/ArticleVo";
 import {CategoryVo} from "@/bean/vo/article/CategoryVo";
 import {useRouterPush} from "@/composables";
 import {TalkVo} from "@/bean/vo/article/TalkVo";
+import AuroraAddTalk from "@/components/common/shareSpace/AuroraAddTalk.vue";
 
 const currentSiteInfo: SiteSettingInfo = {}
 const friendLinks: Array<LinkVo> = []
@@ -226,9 +231,11 @@ const routerPush = useRouterPush()
 export default {
   name: "HomeSidebar",
   components: {
-  },
+		AuroraAddTalk
+	},
   data() {
     return {
+			showTalkModal: false,
 			totalCommentNumber: 0,
 			articleNumber: 0,
 			tagNumber: 0,
@@ -512,6 +519,9 @@ export default {
     }
   },
   methods: {
+		handleAddTalkAction() {
+			this.showTalkModal = !this.showTalkModal
+		},
 		goComment() {
 			this.$router.push({
 				path: `/comment/${this.userUid}`
