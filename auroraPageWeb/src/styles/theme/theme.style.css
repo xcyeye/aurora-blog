@@ -6362,6 +6362,7 @@ body::-webkit-scrollbar-thumb {
 }
 
 .aurora-home-page-pagination {
+    width: 100%;
     margin-top: var(--globalMarginTop);
 }
 

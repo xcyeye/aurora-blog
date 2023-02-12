@@ -12,6 +12,7 @@
 												v-for="(item,index) in articleArr" :page-item="item"/>
 				<n-space justify="center" class="aurora-home-page-pagination">
 					<n-pagination v-model:page="currentPage"
+												:page-slot="6"
 												@update:page="handlePageChangeAction"
 												:page-size="currentSize"
 												:item-count="pageTotal"
