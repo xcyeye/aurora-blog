@@ -22,7 +22,8 @@
 						:show-upload-dragger="true"
 						:accept-file-type-str="['png','jpg','jpeg']"
 						:parameter-data="{userUid: userUid, storagePath: 0, summary: `${userUid}用户从前台上传的说说照片`}" />
-					<n-image v-for="(item, index) in getPictureList" :src="item" :key="index"/>
+					<!--<n-image v-for="(item, index) in getPictureList" :src="item" :key="index"/>-->
+					<aurora-gallery :show-load-more-but="false" :picture-list="getPictureList"/>
 				</n-space>
 				<template #header-extra>
 					<n-gradient-text type="success" style="cursor: pointer" @click="handleAddTalkAction">Send</n-gradient-text>
@@ -39,6 +40,7 @@ import {UploadFileInfo} from "naive-ui";
 import {StringUtil} from "@/utils";
 import {talkApi} from "@/service";
 import {useAuthStore} from "@/stores";
+import {FileVo} from "@/bean/vo/file/fileVo";
 
 interface Props {
 	showTalkModal: boolean,
@@ -60,7 +62,12 @@ showTalkModalTemp.value = props.showTalkModal
 
 const getPictureList = computed(() => {
 	if (!StringUtil.haveLength(talkInfo.value.pictureSrcList)) return []
-	return talkInfo.value.pictureSrcList?.split(",").concat()
+	return talkInfo.value.pictureSrcList?.split(",").map(v => {
+		const file: FileVo = {
+			path: v
+		}
+		return file
+	}).concat()
 })
 
 const setLoginStatus = () => {

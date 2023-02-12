@@ -80,7 +80,7 @@ const loadPhoto = () => {
   // TODO 目前只使用说说部分的图片
 	talkApi.queryListDataByCondition({otherUid: userUid.value, pageSize: currentPageSize.value}).then(result => {
 		if (result.data && result.data.result) {
-			totalTalkNumber.value = result.data.total
+			totalTalkNumber.value = result.data.total as number
 			result.data.result.filter(v => StringUtil.haveLength(v.pictureSrcList)).forEach(v => {
 				v.pictureSrcList?.split(",").forEach(f => {
 					photoFileArr.value.push({

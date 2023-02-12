@@ -8,7 +8,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="gallery-more">
+		<div v-if="showLoadMoreBut" class="gallery-more">
 			<span @click="clickLoadMorePicture">More</span>
 		</div>
 	</n-scrollbar>
@@ -26,13 +26,15 @@ interface Props {
 	pictureList: Array<FileVo>,
 	pcGalleryColumn: number,
 	mobileGalleryColumn: number,
+	showLoadMoreBut: boolean
 }
 
 defineComponent({name: 'AuroraGallery'});
 
 const props = withDefaults(defineProps<Props>(), {
-	pcGalleryColumn: 5,
-	mobileGalleryColumn: 3
+	pcGalleryColumn: 4,
+	mobileGalleryColumn: 2,
+	showLoadMoreBut: true
 })
 
 const sysSettingStore = useSysSettingStore()
