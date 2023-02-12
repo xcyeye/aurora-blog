@@ -60,7 +60,7 @@ export default class CustomAxiosInstance {
                 // @ts-ignore
                 handleConfig.headers.Authorization = `bearer ${authInfo.access_token}`;
                 // @ts-ignore
-                handleConfig.headers.set('aurora_page_web', new Date().getTime())
+                handleConfig.headers.set('Aurora-Page-Web', new Date().getTime())
               }
               return handleConfig;
             },

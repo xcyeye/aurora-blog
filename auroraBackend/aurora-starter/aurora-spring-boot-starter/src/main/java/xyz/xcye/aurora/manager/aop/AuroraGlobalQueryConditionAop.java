@@ -38,7 +38,7 @@ public class AuroraGlobalQueryConditionAop {
         }
         if (request != null) {
             // 如果不是从后端发起的请求，从前端发起的话，请求头中会携带aurora_page_web，直接放行
-            String auroraPageWeb = request.getHeader("aurora_page_web");
+            String auroraPageWeb = request.getHeader("Aurora-Page-Web");
             if (StringUtils.hasLength(auroraPageWeb)) {
                 return point.proceed();
             }
