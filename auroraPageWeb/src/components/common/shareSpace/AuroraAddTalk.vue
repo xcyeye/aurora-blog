@@ -70,8 +70,6 @@ const setLoginStatus = () => {
 	}
 }
 
-setLoginStatus()
-
 const handleFinishUploadFile = (file: UploadFileInfo) => {
 	if (StringUtil.haveLength(talkInfo.value.pictureSrcList)) {
 		talkInfo.value.pictureSrcList = talkInfo.value.pictureSrcList + "," + file.url
