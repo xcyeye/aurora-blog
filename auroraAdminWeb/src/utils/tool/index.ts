@@ -40,3 +40,12 @@ export const getFileSize = (size: number | null | undefined): string => {
 
 	return (size / 1024 / 1024).toFixed(2) + " MB"
 }
+
+export const isNotEmptyObject = (obj: any): boolean => {
+	if (typeof obj === "object") {
+		if (Object.keys(obj).length > 0) {
+			return true;
+		}
+	}
+	return false;
+}
