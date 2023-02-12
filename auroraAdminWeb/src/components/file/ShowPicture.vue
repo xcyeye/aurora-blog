@@ -76,7 +76,7 @@
 				</n-space>
 			</n-drawer-content>
 		</n-drawer>
-		<photo-waterfall class="aurora-all-picture-box" :picture-src-list="getWaterFallPictureArr">
+<!--		<photo-waterfall class="aurora-all-picture-box" :picture-src-list="getWaterFallPictureArr">
 			<div class="picture-description" v-if="showDrawerOperation">
 				<n-button text @click="handleShowFileDetails($event)">
 					<template #icon>
@@ -87,7 +87,8 @@
 					详情
 				</n-button>
 			</div>
-		</photo-waterfall>
+		</photo-waterfall>-->
+
 		<!--<n-grid-->
 		<!--	ref="picture-grid"-->
 		<!--	:collapsed="false"-->
@@ -127,7 +128,7 @@ interface PictureProperties {
 
 interface Props {
 	pictureSrcArr: Array<PictureProperties>,
-	showDrawerOperation?: boolean
+	showDrawerOperation?: boolean,
 }
 
 const props = withDefaults(defineProps<Props>(), {

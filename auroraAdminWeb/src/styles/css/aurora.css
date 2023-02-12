@@ -1,3 +1,9 @@
+:root {
+	/*画廊*/
+	--pc-gallery-column: 4;
+	--mobile-gallery-column: 2;
+}
+
 .wh-full {
 	width: 100%;
 	height: 100%;
@@ -17,4 +23,58 @@
 .dragArea .sortable-chosen {
 	border: 1px solid #9ca3af;
 	border-radius: 16px;
+}
+
+/*画廊*/
+#gallery {
+	line-height:0;
+	column-count: var(--pc-gallery-column);
+	column-gap: .5rem;
+	padding: .5rem;
+}
+
+#gallery img {
+	width: 100% !important;
+	height: auto !important;
+	margin-bottom: .5rem;
+	border-radius: 10px;
+}
+
+.gallery-item {
+	position: relative;
+	overflow: hidden;
+}
+
+.gallery-img-desc {
+	position: absolute;
+	right: 0;
+	bottom: 1rem;
+	height: auto;
+	width: 100%;
+	transition: all .5s;
+	transform: translateY(3rem);
+}
+
+.gallery-item:hover .gallery-img-desc {
+	transform: translateY(0);
+}
+
+.gallery-more {
+	height: 2rem;
+	width: 100%;
+	text-align: center;
+}
+
+.gallery-more span {
+	line-height: 2rem;
+	padding: 0 1rem;
+	display: inline-block;
+	font-size: 1rem;
+	cursor: pointer;
+}
+
+@media (max-width: 719px) {
+	#gallery {
+		column-count: var(--mobile-gallery-column);
+	}
 }
