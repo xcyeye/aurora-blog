@@ -42,6 +42,10 @@
     --aurora-pagination-bg: hsla(0, 0%, 100%, .8);
     --aurora-pagination-color: #555;
 
+    /*画廊*/
+    --pc-gallery-column: 4;
+    --mobile-gallery-column: 2;
+
     --aurora-page-top-bg: #00cfc8;
     --aurora-page-top-color: white;
 
@@ -6780,4 +6784,44 @@ body {
 
 .common {
     position: relative;
+}
+
+/*画廊*/
+#gallery {
+    line-height:0;
+    column-count: var(--pc-gallery-column);
+    column-gap: .5rem;
+    padding: .5rem;
+}
+
+#gallery img {
+    width: 100% !important;
+    height: auto !important;
+    margin-bottom: .5rem;
+    border-radius: 10px;
+}
+
+.gallery-item {
+    position: relative;
+    overflow: hidden;
+}
+
+.gallery-img-desc {
+    position: absolute;
+    right: 0;
+    bottom: 1rem;
+    height: auto;
+    width: 100%;
+    transition: all .5s;
+    transform: translateY(3rem);
+}
+
+.gallery-item:hover .gallery-img-desc {
+    transform: translateY(0);
+}
+
+@media (max-width: 719px) {
+    #gallery {
+        column-count: var(--mobile-gallery-column);
+    }
 }

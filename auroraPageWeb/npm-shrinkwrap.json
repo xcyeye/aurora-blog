@@ -20,6 +20,7 @@
         "jquery": "^3.6.3",
         "markdown-it": "^13.0.1",
         "medium-zoom": "^1.0.8",
+        "mitt": "^3.0.0",
         "pinia": "^2.0.28",
         "qs": "^6.11.0",
         "reading-time-estimator": "^1.7.2",
@@ -2352,6 +2353,11 @@
       "engines": {
         "node": "*"
       }
+    },
+    "node_modules/mitt": {
+      "version": "3.0.0",
+      "resolved": "https://registry.npmmirror.com/mitt/-/mitt-3.0.0.tgz",
+      "integrity": "sha512-7dX2/10ITVyqh4aOSVI9gdape+t9l2/8QxHrFmUXu4EEUpdlxl6RudZUPZoc+zuY2hk1j7XxVroIVIan/pD/SQ=="
     },
     "node_modules/ms": {
       "version": "2.1.2",
@@ -5399,6 +5405,11 @@
       "requires": {
         "brace-expansion": "^1.1.7"
       }
+    },
+    "mitt": {
+      "version": "3.0.0",
+      "resolved": "https://registry.npmmirror.com/mitt/-/mitt-3.0.0.tgz",
+      "integrity": "sha512-7dX2/10ITVyqh4aOSVI9gdape+t9l2/8QxHrFmUXu4EEUpdlxl6RudZUPZoc+zuY2hk1j7XxVroIVIan/pD/SQ=="
     },
     "ms": {
       "version": "2.1.2",

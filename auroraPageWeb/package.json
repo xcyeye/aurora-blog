@@ -27,6 +27,7 @@
     "jquery": "^3.6.3",
     "markdown-it": "^13.0.1",
     "medium-zoom": "^1.0.8",
+    "mitt": "^3.0.0",
     "pinia": "^2.0.28",
     "qs": "^6.11.0",
     "reading-time-estimator": "^1.7.2",
