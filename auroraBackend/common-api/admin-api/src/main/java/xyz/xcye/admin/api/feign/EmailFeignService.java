@@ -1,10 +1,9 @@
 package xyz.xcye.admin.api.feign;
 
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.cloud.openfeign.SpringQueryMap;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import xyz.xcye.core.entity.R;
-import xyz.xcye.message.po.Email;
 import xyz.xcye.message.pojo.EmailPojo;
 
 /**
@@ -17,6 +16,9 @@ public interface EmailFeignService {
     
     @PostMapping("/message/email/queryByEmailNumber")
     R queryByEmailNumber(@RequestBody EmailPojo pojo);
+
+    @PostMapping("/message/email/queryEmailByUid")
+    R queryEmailByUid(@RequestBody EmailPojo pojo);
 
     @PostMapping("/message/email/insertEmail")
     R insertEmail(@RequestBody EmailPojo pojo);

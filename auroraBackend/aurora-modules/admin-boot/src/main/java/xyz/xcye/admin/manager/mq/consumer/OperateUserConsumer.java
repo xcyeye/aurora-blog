@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.BindException;
+import xyz.xcye.admin.api.feign.EmailFeignService;
 import xyz.xcye.admin.manager.task.LoadRolePermissionInfo;
 import xyz.xcye.admin.manager.task.LoadWhiteUrlInfo;
 import xyz.xcye.admin.pojo.UserPojo;
@@ -18,16 +19,22 @@ import xyz.xcye.amqp.comstant.AmqpExchangeNameConstant;
 import xyz.xcye.amqp.comstant.AmqpQueueNameConstant;
 import xyz.xcye.amqp.config.service.MistakeMessageSendService;
 import xyz.xcye.api.mail.sendmail.entity.StorageSendMailInfo;
-import xyz.xcye.api.mail.sendmail.enums.SendHtmlMailTypeNameEnum;
 import xyz.xcye.api.mail.sendmail.service.SendMQMessageService;
 import xyz.xcye.api.mail.sendmail.util.AccountInfoUtils;
 import xyz.xcye.api.mail.sendmail.util.StorageEmailVerifyUrlUtil;
+import xyz.xcye.api.mail.sendmail.util.StorageMailUtils;
 import xyz.xcye.aurora.properties.AuroraProperties;
+import xyz.xcye.core.entity.R;
 import xyz.xcye.core.enums.ResponseStatusCodeEnum;
 import xyz.xcye.core.exception.email.EmailException;
+import xyz.xcye.core.exception.user.UserException;
+import xyz.xcye.core.util.ConvertObjectUtils;
+import xyz.xcye.core.util.JSONUtils;
 import xyz.xcye.core.util.lambda.AssertUtils;
 import xyz.xcye.data.entity.Condition;
 import xyz.xcye.feign.config.service.MessageLogFeignService;
+import xyz.xcye.message.pojo.EmailPojo;
+import xyz.xcye.message.vo.EmailVO;
 
 /**
  * 这是一个消费操作用户信息的mq消费者，比如绑定用户信息，向redis中，添加角色权限信息等缓存
@@ -61,6 +68,9 @@ public class OperateUserConsumer {
     @Autowired
     private PermissionRelationService permissionRelationService;
 
+    @Autowired
+    private EmailFeignService emailFeignService;
+
     /**
      * 当用户在认证服务中，登录次数达到最大值之后，认证服务会向mq中发送消息，禁用该用户
      * @param msgJson
@@ -85,6 +95,11 @@ public class OperateUserConsumer {
             return;
         }
 
+        if (userVO.getEmailUid() == null) {
+            channel.basicAck(message.getMessageProperties().getDeliveryTag(), false);
+            return;
+        }
+
         // 如果账户已经被锁住，则不处理
         if (userVO.getAccountLock()) {
             channel.basicAck(message.getMessageProperties().getDeliveryTag(), false);
@@ -95,7 +110,12 @@ public class OperateUserConsumer {
         UserPojo userPojo = new UserPojo();
         userPojo.setUid(userVO.getUid());
         userPojo.setAccountLock(true);
-        int updateUserNum = userService.updateUser(userPojo);
+        int updateUserNum = 0;
+        try {
+            updateUserNum = userService.updateUser(userPojo);
+        } catch (UserException e) {
+            throw new RuntimeException(e);
+        }
         if (updateUserNum == 1) {
             boolean sendStatus = sendEnableAccountEmail(userVO);
             AssertUtils.stateThrow(sendStatus,
@@ -154,13 +174,15 @@ public class OperateUserConsumer {
             return false;
         }
 
-        StorageSendMailInfo mailInfo = StorageSendMailInfo.builder()
-                .userUid(userVO.getUid())
-                .subject("点击此链接，解除账号锁定状态")
-                .htmlContent("<a>请点击此链接，重新启动账号" + verifyUrl + "</a>")
-                .sendType(SendHtmlMailTypeNameEnum.CUSTOM_HTML)
-                .build();
-        sendMQMessageService.sendCommonMail(mailInfo, AmqpExchangeNameConstant.AURORA_SEND_MAIL_EXCHANGE,
+        EmailPojo emailPojo = new EmailPojo();
+        emailPojo.setUid(userVO.getEmailUid());
+        R r = emailFeignService.queryEmailByUid(emailPojo);
+        EmailVO queriedEmailInfo = JSONUtils.parseObjFromResult(ConvertObjectUtils.jsonToString(r), "data", EmailVO.class);
+        if (queriedEmailInfo == null || queriedEmailInfo.getUid() == null) {
+            throw new UserException("查询邮箱失败");
+        }
+        StorageSendMailInfo sendMailInfo = StorageMailUtils.generateCommonNotice("您的账户已被锁住，需要重新激活", "<a target=\"_blank\" href=\""+ verifyUrl + "\">点击此链接，重新激活账户</a>", queriedEmailInfo.getEmail(), userVO.getUid());
+        sendMQMessageService.sendCommonMail(sendMailInfo, AmqpExchangeNameConstant.AURORA_SEND_MAIL_EXCHANGE,
                 "topic", AmqpQueueNameConstant.SEND_HTML_MAIL_ROUTING_KEY, null);
         return true;
     }

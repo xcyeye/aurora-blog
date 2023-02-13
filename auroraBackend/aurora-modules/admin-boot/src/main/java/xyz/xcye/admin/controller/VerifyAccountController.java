@@ -2,14 +2,13 @@ package xyz.xcye.admin.controller;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import xyz.xcye.admin.service.verify.CommonVerifyUrlService;
 import xyz.xcye.core.annotaion.controller.ResponseRealResult;
 import xyz.xcye.core.exception.user.UserException;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 
 
 /**
@@ -39,9 +38,9 @@ public class VerifyAccountController {
     @ResponseRealResult
     @GetMapping("/enable/enableAccount/{incomingSecretKey}")
     public String enableAccount(@PathVariable("incomingSecretKey") String incomingSecretKey) throws UserException {
-        boolean bindEmail = commonVerifyUrlService.bindEmail(incomingSecretKey);
+        boolean removeAccountDisable = commonVerifyUrlService.removeAccountDisable(incomingSecretKey);
 
-        if (bindEmail) {
+        if (removeAccountDisable) {
             return  "重新启用账户成功";
         }
         return "解除锁定失败";

@@ -3,7 +3,6 @@ package xyz.xcye.admin.service.verify.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import xyz.xcye.admin.po.User;
 import xyz.xcye.admin.pojo.UserPojo;
 import xyz.xcye.admin.service.UserService;
 import xyz.xcye.admin.service.verify.CommonVerifyUrlService;
@@ -47,6 +46,22 @@ public class CommonVerifyUrlServiceImpl implements CommonVerifyUrlService {
 
     @Override
     public boolean removeAccountDisable(String incomingSecretKey) {
-        return false;
+        boolean verifyUrl = StorageEmailVerifyUrlUtil.verifyUrl(incomingSecretKey);
+        if (!verifyUrl) {
+            return false;
+        }
+
+        // 验证成功，修改账户的锁定状态
+        long userUid = StorageEmailVerifyUrlUtil.getUserUidFromVerifyPath(incomingSecretKey);
+        UserPojo userPojo = new UserPojo();
+        userPojo.setUid(userUid);
+        userPojo.setAccountLock(false);
+        int updateUser = userService.updateUser(userPojo);
+        if (updateUser == 1) {
+            boolean deleteKey = StorageEmailVerifyUrlUtil.deleteKey(incomingSecretKey);
+            // 如果删除失败，则抛出异常，触发回滚
+            AssertUtils.stateThrow(deleteKey, () -> new UserException(ResponseStatusCodeEnum.EXCEPTION_EMAIL_FAIL_BINDING));
+        }
+        return updateUser == 1;
     }
 }

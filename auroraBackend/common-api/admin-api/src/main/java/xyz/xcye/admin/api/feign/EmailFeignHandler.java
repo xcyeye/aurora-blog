@@ -2,7 +2,6 @@ package xyz.xcye.admin.api.feign;
 
 import org.springframework.stereotype.Component;
 import xyz.xcye.core.entity.R;
-import xyz.xcye.message.po.Email;
 import xyz.xcye.message.pojo.EmailPojo;
 
 /**
@@ -15,6 +14,11 @@ public class EmailFeignHandler implements EmailFeignService {
 
     @Override
     public R queryByEmailNumber(EmailPojo pojo) {
+        return R.failure();
+    }
+
+    @Override
+    public R queryEmailByUid(EmailPojo pojo) {
         return R.failure();
     }
 

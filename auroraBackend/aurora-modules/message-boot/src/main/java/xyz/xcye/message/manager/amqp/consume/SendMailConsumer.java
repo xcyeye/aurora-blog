@@ -19,7 +19,6 @@ import xyz.xcye.comment.po.Comment;
 import xyz.xcye.core.exception.email.EmailException;
 import xyz.xcye.core.util.BeanUtils;
 import xyz.xcye.core.util.ConvertObjectUtils;
-import xyz.xcye.message.po.MessageLog;
 import xyz.xcye.message.pojo.MessageLogPojo;
 import xyz.xcye.message.pojo.SendMailPojo;
 import xyz.xcye.message.service.EmailService;
