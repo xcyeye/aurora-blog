@@ -42,10 +42,7 @@ import java.lang.reflect.Method;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.time.Duration;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.LinkedHashMap;
-import java.util.Objects;
+import java.util.*;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.regex.Pattern;
@@ -79,17 +76,23 @@ public class LoginInfoAop {
      * @return
      * @throws Throwable
      */
-    @Around("execution(public * xyz.xcye.auth.service.JwtTokenUserDetailsService.loadUserByUsername(..))" + "|| execution(public * xyz.xcye.auth.manager.cache.AuroraUserDetailsCache.getUserFromCache(..))")
+    @Around("execution(public * org.springframework.security.oauth2.provider.endpoint.TokenEndpoint.postAccessToken(..))")
     public Object loadUserByUsername(ProceedingJoinPoint point) throws Throwable {
-
+        // TokenEndpoint
         // 开始记录 获取当前请求对象
         HttpServletRequest request = AuroraRequestUtils.getCurrentRequest();
 
         // 获取用户名
         Object[] args = point.getArgs();
         String username = "";
-        if (args.length > 0) {
-            username = args[0].toString();
+        if (args.length >= 2) {
+            Object obj = args[1];
+            if (obj instanceof LinkedHashMap) {
+                Map<String, String> parameters = (LinkedHashMap) obj;
+                if (StringUtils.hasLength(parameters.get("username"))) {
+                    username = parameters.get("username");
+                }
+            }
         }
 
         // 判断用户名是否规范
@@ -117,16 +120,20 @@ public class LoginInfoAop {
         // 获取方法名
         String methodName = method.getName();
 
-        Object proceed = point.proceed();
-
-        if ("getUserFromCache".equals(methodName) && proceed == null) {
-            // 缓存中没有数据，那么退出
-            return proceed;
-        }
-
-
-        // 查看用户上次
         loginInfoService.insertLoginInfo(loginInfoPojo);
+
+        // if ("getUserFromCache".equals(methodName) && proceed == null) {
+        //     // 缓存中没有数据，那么退出
+        //     return proceed;
+        // }
+        Object proceed = null;
+        try {
+            proceed = point.proceed();
+        } catch (Throwable e) {
+            LogUtils.logExceptionInfo((Exception) e);
+            authFailure((Exception) e);
+            throw e;
+        }
 
         return proceed;
     }

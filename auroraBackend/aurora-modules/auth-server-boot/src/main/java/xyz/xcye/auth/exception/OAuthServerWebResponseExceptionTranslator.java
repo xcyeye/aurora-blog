@@ -7,7 +7,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.oauth2.common.exceptions.InvalidGrantException;
 import org.springframework.security.oauth2.common.exceptions.UnsupportedGrantTypeException;
 import org.springframework.security.oauth2.provider.error.WebResponseExceptionTranslator;
-import xyz.xcye.aurora.util.AuroraSpringUtils;
 import xyz.xcye.auth.manager.aop.LoginInfoAop;
 import xyz.xcye.core.entity.R;
 import xyz.xcye.core.enums.ResponseStatusCodeEnum;
@@ -31,8 +30,8 @@ public class OAuthServerWebResponseExceptionTranslator implements WebResponseExc
      */
     @Override
     public ResponseEntity<R> translate(Exception e){
-        loginInfoAop = AuroraSpringUtils.getBean(LoginInfoAop.class);
-        loginInfoAop.authFailure(e);
+        // loginInfoAop = AuroraSpringUtils.getBean(LoginInfoAop.class);
+        // loginInfoAop.authFailure(e);
         return new ResponseEntity<>(doTranslateHandler(e.getCause() == null ? e : e.getCause()), HttpStatus.UNAUTHORIZED);
     }
 
