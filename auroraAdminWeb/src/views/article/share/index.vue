@@ -37,7 +37,11 @@
 						</n-space>
 					</n-tab-pane>
 					<n-tab-pane name="picture" tab="照片">
-						<show-picture v-if="pictureInfoArr && pictureInfoArr.length > 0" :picture-src-arr="pictureInfoArr" :show-drawer-operation="false"/>
+						<aurora-gallery @clickPictureDesc="clickPictureDesc" :show-load-more-but="false" :picture-list="pictureFileArr">
+							<n-space justify="end">
+								<n-gradient-text type="success" style="cursor: pointer">移除</n-gradient-text>
+							</n-space>
+						</aurora-gallery>
 						<upload-file
 							@handleFinishUploadFile="handleFinishUploadFile"
 							:accept-file-type-str="['.png','.jpg','.jpeg']"
@@ -77,6 +81,7 @@ import {TalkVo} from "@/bean/vo/article/TalkVo";
 import {Talk} from "@/bean/pojo/article/Talk";
 import RequestResult = Service.RequestResult;
 import {useAuthStore} from "@/store";
+import {FileVo} from "@/bean/vo/file/fileVo";
 
 defineComponent({name: 'index'});
 
@@ -95,9 +100,10 @@ const batchDeleteTalkInfoUidArr = ref<Array<string>>([])
 const showDrawer = ref(false)
 const addStatus = ref(false)
 const currentTalkInfo = ref<Talk>({})
-const pictureInfoArr = ref<Array<PictureInfo>>([])
+const pictureFileArr = ref<Array<FileVo>>([])
 const authStore = useAuthStore()
 const currentTalkCommentUidArr = ref<Array<string>>([])
+const currentPictureFile = ref<FileVo>({})
 
 
 const queryDataMethod = (condition: Condition): Promise<RequestResult<PageData<TalkVo>>> => {
@@ -131,7 +137,7 @@ const handleDeleteAction = (data: TalkVo) => {
 }
 
 const handleShowTalkInfoAction = (data: TalkVo) => {
-	pictureInfoArr.value = []
+	pictureFileArr.value = []
 	currentTalkInfo.value = data
 	showDrawer.value = true
 	addStatus.value = false
@@ -143,15 +149,23 @@ const handleShowTalkInfoAction = (data: TalkVo) => {
 		//
 		// 	}
 		// })
-		pictureInfoArr.value.push({
-			uid: undefined,
-			src: v
+		pictureFileArr.value.push({
+			path: v
 		})
 	})
 
 	if (StringUtil.haveLength(currentTalkInfo.value.commentUids)) {
 		currentTalkCommentUidArr.value = currentTalkInfo.value.commentUids?.split(",")!
 	}
+}
+
+const clickPictureDesc = (pictureFile: FileVo) => {
+	pictureFileArr.value.splice(pictureFileArr.value.indexOf(pictureFile), 1);
+	currentTalkInfo.value.pictureSrcList = pictureFileArr.value.map(v => v.path).join(",")
+}
+
+const removeTalkPicture = () => {
+	// pictureFileArr.value.splice(pictureFileArr.value.indexOf(currentPictureFile.value))
 }
 
 const handleModifyOrAddAction = (row?: TalkVo | null) => {
@@ -164,10 +178,10 @@ const handleModifyOrAddAction = (row?: TalkVo | null) => {
 			}
 		})
 	}
-	if (!StringUtil.haveLength(currentTalkInfo.value.title)) {
-		window.$message?.error('需要输入一个标题(ノへ￣、) ')
-		return
-	}
+	// if (!StringUtil.haveLength(currentTalkInfo.value.title)) {
+	// 	window.$message?.error('需要输入一个标题(ノへ￣、) ')
+	// 	return
+	// }
 	if (!StringUtil.haveLength(currentTalkInfo.value.content)) {
 		window.$message?.error('需要输入一个内容(ノへ￣、) ')
 		return
@@ -351,9 +365,9 @@ const handleAddTalkInfo = () => {
 }
 
 const handleFinishUploadFile = (file: UploadFileInfo) => {
-	pictureInfoArr.value.push({
+	pictureFileArr.value.push({
 		uid: file.thumbnailUrl!,
-		src: file.url!
+		path: file.url!
 	})
 	if (!currentTalkInfo.value.pictureSrcList) {
 		currentTalkInfo.value.pictureSrcList = file.url

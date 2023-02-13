@@ -7,3 +7,4 @@ export * from './date';
 export * from './mitt';
 export * from './tool'
 export * from './string'
+export * from './business'

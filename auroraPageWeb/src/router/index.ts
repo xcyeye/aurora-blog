@@ -8,6 +8,7 @@ import {App} from "vue";
 import {siteSettingApi} from "@/service/api/admin/siteSettingApi";
 import {sysSettingApi} from "@/service/api/admin/sysSettingApi";
 
+const isPersonalBlog = import.meta.env.VITE_PERSONAL_BLOG === 'Y';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -18,7 +19,7 @@ const router = createRouter({
       component: () => import('../views/404/index.vue')
     },
     {
-      path: '/',
+      path: "/",
       name: 'home',
       component: () => import('../views/home/index.vue')
     },

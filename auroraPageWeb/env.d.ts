@@ -59,6 +59,8 @@ interface ImportMetaEnv {
     readonly VITE_HASH_ROUTE?: 'Y' | 'N';
     /** 是否是部署的vercel */
     readonly VITE_VERCEL?: 'Y' | 'N';
+    /** 博客是个人还是多人 Y是个人 */
+    readonly VITE_PERSONAL_BLOG?: 'Y' | 'N';
 }
 
 interface ImportMeta {

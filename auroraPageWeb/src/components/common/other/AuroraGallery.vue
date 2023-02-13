@@ -1,9 +1,9 @@
 <template>
-	<n-scrollbar>
+	<n-scrollbar :x-scrollable="false">
 		<div id="gallery" class="container-fluid" :style="`--pc-gallery-column: ${pcGalleryColumn};--mobile-gallery-column: ${mobileGalleryColumn};`">
-			<div @click="clickPicture(item)" v-for="(item) in pictureListTemp" :key="item.uid" class="gallery-item aurora-gallery-img-lazy-loading">
+			<div @click.stop="clickPicture(item)" v-for="(item) in pictureListTemp" :key="item.uid" class="gallery-item aurora-gallery-img-lazy-loading">
 				<n-image :src="getImageSrc(item)"/>
-				<div class="gallery-img-desc">
+				<div @click.stop="clickPictureDesc(item)" class="gallery-img-desc">
 					<slot/>
 				</div>
 			</div>
@@ -42,7 +42,7 @@ const pictureListTemp = ref<Array<FileVo>>([])
 
 pictureListTemp.value = props.pictureList
 
-const emits = defineEmits(['clickLoadMorePicture', 'clickPicture'])
+const emits = defineEmits(['clickLoadMorePicture', 'clickPicture', 'clickPictureDesc'])
 
 const getImageSrc = computed(() => {
 	return (pictureFile: FileVo) => {
@@ -61,6 +61,11 @@ const getImageSrc = computed(() => {
 const clickPicture = (pictureFile: FileVo) => {
 	emitter.emit('galleryClickPicture', pictureFile)
 	emits('clickPicture', pictureFile)
+}
+
+const clickPictureDesc = (pictureFile: FileVo) => {
+	emitter.emit('galleryClickPicture', pictureFile)
+	emits('clickPictureDesc', pictureFile)
 }
 
 const handleScroll = () => {
