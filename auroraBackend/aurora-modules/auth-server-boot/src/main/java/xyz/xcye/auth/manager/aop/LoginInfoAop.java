@@ -215,7 +215,7 @@ public class LoginInfoAop {
             // 计算剩余重新登录时间
             String reLoginTime = DateUtils.format(new Date(System.currentTimeMillis() + (expire * 1000)));
             lockAccount(username);
-            throw new LoginException("登录失败次数达到最大值,下次登录时间 " + reLoginTime);
+            throw new LoginException("登录失败次数达到最大值、该账户已被系统锁住，已向您的邮箱发送了激活链接，请点击链接激活，或者在" + reLoginTime + " 时间段后再进行登录");
         }
 
         // 没有达到最大值，不做处理
