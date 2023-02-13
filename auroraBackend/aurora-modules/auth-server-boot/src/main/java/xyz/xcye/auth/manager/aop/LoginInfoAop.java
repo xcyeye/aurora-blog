@@ -2,8 +2,11 @@ package xyz.xcye.auth.manager.aop;
 
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
+import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -25,6 +28,7 @@ import xyz.xcye.auth.model.SecurityUserDetails;
 import xyz.xcye.auth.pojo.LoginInfoPojo;
 import xyz.xcye.auth.service.LoginInfoService;
 import xyz.xcye.auth.threadpoll.WriteLoginInfoExecutor;
+import xyz.xcye.auth.util.Ip2RegionUtils;
 import xyz.xcye.core.enums.RegexEnum;
 import xyz.xcye.core.exception.login.LoginException;
 import xyz.xcye.core.util.DateUtils;
@@ -34,6 +38,7 @@ import xyz.xcye.core.util.id.GenerateInfoUtils;
 import xyz.xcye.oauth.api.service.UserFeignService;
 
 import javax.servlet.http.HttpServletRequest;
+import java.lang.reflect.Method;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.time.Duration;
@@ -74,8 +79,8 @@ public class LoginInfoAop {
      * @return
      * @throws Throwable
      */
-    @Before("execution(public * xyz.xcye.auth.service.JwtTokenUserDetailsService.loadUserByUsername(..))")
-    public void loadUserByUsername(JoinPoint point) throws BindException {
+    @Around("execution(public * xyz.xcye.auth.service.JwtTokenUserDetailsService.loadUserByUsername(..))" + "|| execution(public * xyz.xcye.auth.manager.cache.AuroraUserDetailsCache.getUserFromCache(..))")
+    public Object loadUserByUsername(ProceedingJoinPoint point) throws Throwable {
 
         // 开始记录 获取当前请求对象
         HttpServletRequest request = AuroraRequestUtils.getCurrentRequest();
@@ -107,8 +112,23 @@ public class LoginInfoAop {
         loginInfoPojo.setUid(uid);
         setDefaultProperties(loginInfoPojo);
 
+        MethodSignature signature = (MethodSignature)point.getSignature();
+        Method method = signature.getMethod();
+        // 获取方法名
+        String methodName = method.getName();
+
+        Object proceed = point.proceed();
+
+        if ("getUserFromCache".equals(methodName) && proceed == null) {
+            // 缓存中没有数据，那么退出
+            return proceed;
+        }
+
+
         // 查看用户上次
         loginInfoService.insertLoginInfo(loginInfoPojo);
+
+        return proceed;
     }
 
     @Before("execution(public * xyz.xcye.auth.handler.OauthServerAuthenticationFailureHandler.onAuthenticationFailure(..))")
@@ -270,7 +290,7 @@ public class LoginInfoAop {
             loginInfoService.insertLoginInfo(loginInfo);
         }
         loginInfoService.updateLoginInfo(loginInfo);
-        setLoginLocation(uid);
+        // setLoginLocation(uid);
     }
 
     /**
@@ -298,8 +318,16 @@ public class LoginInfoAop {
 
     private void setDefaultProperties(LoginInfoPojo loginInfo) {
         HttpServletRequest request = AuroraRequestUtils.getCurrentRequest();
-        loginInfo.setLoginIp(NetWorkUtils.getIpAddr(request));
-        loginInfo.setLoginLocation("保山");
+        String ipLocation = "";
+        loginInfo.setLoginIp(NetWorkUtils.getRemoteAddr(request));
+        try {
+            ipLocation = Ip2RegionUtils.getIpLocation(loginInfo.getLoginIp());
+        } catch (Exception e) {
+            LogUtils.logExceptionInfo(e);
+            ipLocation = "未知";
+        }
+        loginInfo.setLoginLocation(ipLocation);
+        loginInfo.setStatus(true);
         loginInfo.setOperationSystemInfo(NetWorkUtils.getOperationInfo(request));
     }
 

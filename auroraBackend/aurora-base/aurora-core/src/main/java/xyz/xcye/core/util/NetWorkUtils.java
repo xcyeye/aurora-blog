@@ -4,6 +4,7 @@ import eu.bitwalker.useragentutils.Browser;
 import eu.bitwalker.useragentutils.OperatingSystem;
 import eu.bitwalker.useragentutils.UserAgent;
 import eu.bitwalker.useragentutils.Version;
+import org.springframework.util.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import java.net.*;
@@ -136,5 +137,18 @@ public class NetWorkUtils {
             }
         }
         return "sdf";
+    }
+
+    public static String getRemoteAddr(HttpServletRequest request) {
+        String remoteAddr = request.getRemoteAddr();
+        String xRealIp = request.getHeader("X-real-ip");
+        String xForwardedFor = request.getHeader("X-Forwarded-For");
+        if (StringUtils.hasLength(xRealIp)) {
+            return xRealIp;
+        }
+        if (StringUtils.hasLength(xForwardedFor)) {
+            return xForwardedFor.split(",")[0];
+        }
+        return remoteAddr;
     }
 }

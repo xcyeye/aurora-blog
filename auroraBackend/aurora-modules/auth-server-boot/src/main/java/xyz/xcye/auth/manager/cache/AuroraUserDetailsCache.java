@@ -33,6 +33,7 @@ public class AuroraUserDetailsCache implements UserCache {
 
     @Override
     public UserDetails getUserFromCache(String username) {
+        // TokenEndpoint
         String json = (String) redisTemplate.opsForValue().get(AuthRedisConstant.USER_DETAILS_CACHE_PREFIX + username);
         SecurityUserDetails securityUserDetails = JSON.parseObject(json, SecurityUserDetails.class);
         ArrayList<JSONObject> grantedAuthorities = JSONUtils.parseObjFromResult(json, "grantedAuthorities", ArrayList.class);
