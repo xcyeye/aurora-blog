@@ -12,11 +12,12 @@
 			</div>
 		</div>
 		<div class="mood-img-right" v-if="getTalkPictureArr" id="mood-img-right">
-			<photo-waterfall
-				:picture-src-list="getTalkPictureArr"
-				:mobile-waterfall-img-col="3"
-				:pc-waterfall-img-col="4"
-				:show-bg-color="false"/>
+			<!--<photo-waterfall-->
+			<!--	:picture-src-list="getTalkPictureArr"-->
+			<!--	:mobile-waterfall-img-col="3"-->
+			<!--	:pc-waterfall-img-col="4"-->
+			<!--	:show-bg-color="false"/>-->
+			<aurora-gallery :show-load-more-but="false" :picture-list="getTalkPictureArr"/>
 		</div>
 		<div class="mood-edit">
 			<div class="mood-edit-right">
@@ -120,7 +121,12 @@ export default {
   computed: {
 		getTalkPictureArr() {
 			if (!StringUtil.haveLength(this.moodItem?.pictureSrcList)) return undefined
-			return this.moodItem.pictureSrcList.split(',')
+			return this.moodItem.pictureSrcList.split(',').map((v: string) => {
+				const file: FileVo = {
+					path: v
+				}
+				return file
+			}).concat()
 		},
     getCozeMoodLink() {
       return this.cozeLikeTemp.toFixed(0)

@@ -46,20 +46,12 @@
         </div>
 
         <div class="aurora-slide-item-photos" v-if="getPictureArr && isActive">
-					<photo-waterfall :show-bg-color="false"
-													 :pc-waterfall-img-col="4"
-													 :mobile-waterfall-img-col="2"
-													 @handleClickImage="setSlideBodyBg"
-													 :picture-src-list="getPictureArr"/>
-          <!--<ul class="aurora-coze-slide-photo-box">-->
-          <!--  <li class="aurora-coze-slide-photo-box-li" @click="setSlideBodyBg(item)"-->
-					<!--			v-for="(item,index) in getPictureArr"-->
-					<!--			:style="setBgUrl(item)" :key="index">-->
-          <!--    &lt;!&ndash;<img id="aurora-coze-slide-photo-img" :src="item.path" alt="">&ndash;&gt;-->
-					<!--		&lt;!&ndash;<n-image :src="item.path" id="aurora-coze-slide-photo-img"/>&ndash;&gt;-->
-					<!--		<n-image :src="item" :width="100"/>-->
-          <!--  </li>-->
-          <!--</ul>-->
+					<!--<photo-waterfall :show-bg-color="false"-->
+					<!--								 :pc-waterfall-img-col="4"-->
+					<!--								 :mobile-waterfall-img-col="2"-->
+					<!--								 @handleClickImage="setSlideBodyBg"-->
+					<!--								 :picture-src-list="getPictureArr"/>-->
+          <aurora-gallery @clickPicture="clickPicture" :show-load-more-but="false" :picture-list="getPictureArr"/>
         </div>
       </div>
     </div>
@@ -74,6 +66,7 @@ import {StringUtil} from "@/utils";
 import {ArticleVo} from "@/bean/vo/article/ArticleVo";
 import {articleApi, talkApi} from "@/service";
 import RequestResult = Service.RequestResult;
+import {FileVo} from "@/bean/vo/file/fileVo";
 
 export default {
   name: "MoodItem",
@@ -130,7 +123,12 @@ export default {
   computed: {
 		getPictureArr() {
 			if (!StringUtil.haveLength(this.moodItem.pictureSrcList)) return []
-			return this.moodItem.pictureSrcList.split(",")
+			return this.moodItem.pictureSrcList.split(",").map((v: string) => {
+				const file: FileVo = {
+					path: v
+				}
+				return file
+			}).concat()
 		},
 		StringUtil() {
 			return StringUtil
@@ -213,6 +211,11 @@ export default {
       gsap.to(this.$data, {duration: 2, cozeSecondTemp: seconds, ease: 'sine'})
       gsap.to(this.$data, {duration: 2, cozeHourTemp: hour, ease: 'sine'})
     },
+		clickPicture(pictureFile: FileVo) {
+			this.$emit("setSlideBodyBg",{
+				photoUrl: pictureFile.path
+			})
+		},
     setSlideBodyBg(photoInfo:{photoUrl: string}) {
       this.$emit("setSlideBodyBg",{
         photoUrl: photoInfo.photoUrl

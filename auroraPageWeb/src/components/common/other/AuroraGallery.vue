@@ -42,7 +42,7 @@ const pictureListTemp = ref<Array<FileVo>>([])
 
 pictureListTemp.value = props.pictureList
 
-const emits = defineEmits(['clickLoadMorePicture'])
+const emits = defineEmits(['clickLoadMorePicture', 'clickPicture'])
 
 const getImageSrc = computed(() => {
 	return (pictureFile: FileVo) => {
@@ -60,6 +60,7 @@ const getImageSrc = computed(() => {
 
 const clickPicture = (pictureFile: FileVo) => {
 	emitter.emit('galleryClickPicture', pictureFile)
+	emits('clickPicture', pictureFile)
 }
 
 const handleScroll = () => {
