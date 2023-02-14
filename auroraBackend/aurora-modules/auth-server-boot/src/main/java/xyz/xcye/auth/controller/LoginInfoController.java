@@ -3,12 +3,16 @@ package xyz.xcye.auth.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import xyz.xcye.auth.constant.OauthJwtConstant;
 import xyz.xcye.auth.pojo.LoginInfoPojo;
 import xyz.xcye.auth.service.LoginInfoService;
 import xyz.xcye.auth.vo.LoginInfoVO;
 import xyz.xcye.core.annotaion.FieldFilter;
+import xyz.xcye.core.annotaion.business.SetCondition;
 import xyz.xcye.core.annotaion.controller.ModifyOperation;
 import xyz.xcye.core.annotaion.controller.SelectOperation;
 import xyz.xcye.data.entity.Condition;
@@ -46,6 +50,7 @@ public class LoginInfoController {
     @SelectOperation
     @Operation(summary = "根据条件查询")
     @PostMapping("/queryListLoginInfoByCondition")
+    @SetCondition(keyword = "username")
     public PageData<LoginInfoVO> queryListLoginInfoByCondition(@RequestBody Condition<Long> condition) {
         return loginInfoService.queryListLoginInfoByCondition(condition);
     }

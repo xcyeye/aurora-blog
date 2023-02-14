@@ -20,4 +20,16 @@ public class ConvertObjectUtils {
 
         return json;
     }
+
+    public static  <T> T objConvertOther(Object obj, Class<T> target) {
+        String json = "";
+        try {
+            json = JSON.toJSONString(obj);
+        } catch (Exception e) {
+            LogUtils.logExceptionInfo(e);
+            return null;
+        }
+
+        return JSON.parseObject(json, target);
+    }
 }

@@ -4,17 +4,22 @@ import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 import xyz.xcye.aurora.util.UserUtils;
+import xyz.xcye.core.annotaion.business.SetCondition;
 import xyz.xcye.core.dto.JwtUserInfo;
+import xyz.xcye.core.util.ConvertObjectUtils;
 import xyz.xcye.core.util.LogUtils;
 import xyz.xcye.data.entity.Condition;
 
 import javax.servlet.http.HttpServletRequest;
+import java.lang.reflect.Method;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author xcye
@@ -44,6 +49,10 @@ public class AuroraGlobalQueryConditionAop {
             }
         }
         Object[] args = point.getArgs();
+
+        MethodSignature signature = (MethodSignature) point.getSignature();
+        Method method = signature.getMethod();
+
         for (Object arg : args) {
             if (arg instanceof Condition) {
                 Condition condition = (Condition) arg;
@@ -62,8 +71,45 @@ public class AuroraGlobalQueryConditionAop {
                     }
 
                     Long userUid = currentUser.getUserUid();
-                    if (userUid != null) {
-                        condition.setOtherUid(userUid);
+                    String username = currentUser.getUsername();
+                    if (method.isAnnotationPresent(SetCondition.class)) {
+                        SetCondition setCondition = method.getAnnotation(SetCondition.class);
+                        Map<String, Object> currentUserMap = ConvertObjectUtils.objConvertOther(currentUser, Map.class);
+                        Map<String, String> conditionAnnotationMap = ConvertObjectUtils.objConvertOther(setCondition, Map.class);
+                        Map<String, Object> originConditionMap = ConvertObjectUtils.objConvertOther(condition, Map.class);
+                        conditionAnnotationMap.forEach((k, v) -> {
+                            if (StringUtils.hasLength(v)) {
+                                if (currentUserMap.get(v) != null) {
+                                    if (currentUserMap.get(v) instanceof String && ((String) currentUserMap.get(v)).length() == 0) {
+                                        return;
+                                    }
+                                    String s = currentUserMap.get(v).toString();
+                                    originConditionMap.put(k, currentUserMap.get(v).toString());
+                                }
+                            }
+                        });
+                        Condition convertCondition = ConvertObjectUtils.objConvertOther(originConditionMap, Condition.class);
+                        condition.setUid(convertCondition.getUid());
+                        condition.setPageSize(convertCondition.getPageSize());
+                        if (StringUtils.hasLength(convertCondition.getEndTime())) {
+                            condition.setEndTime(convertCondition.getEndTime());
+                        }
+                        if (StringUtils.hasLength(convertCondition.getStartTime())) {
+                            condition.setStartTime(convertCondition.getStartTime());
+                        }
+                        condition.setOtherUid(convertCondition.getOtherUid());
+                        condition.setShow(convertCondition.getShow());
+                        condition.setStatus(convertCondition.getStatus());
+                        condition.setDelete(convertCondition.getDelete());
+                        condition.setKeyword(convertCondition.getKeyword());
+                        condition.setPageNum(convertCondition.getPageNum());
+                        condition.setPageSize(convertCondition.getPageSize());
+                        condition.setOrderBy(convertCondition.getOrderBy());
+                        condition.setOtherField(convertCondition.getOtherField());
+                    }else {
+                        if (userUid != null) {
+                            condition.setOtherUid(userUid);
+                        }
                     }
                 }
             }
