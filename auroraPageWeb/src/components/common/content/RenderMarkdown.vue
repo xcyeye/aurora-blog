@@ -70,8 +70,8 @@ const handleRenderMarkdownContent = (markdownContent: string) => {
 		let picAlt = token.attrs![picAltIndex]
 		let pictureSplits = picSrc.split("?");
 		if (/\.(png|jpg|gif|jpeg|webp)$/.test(pictureSplits[0])) {
-			return `<div role="none" class="page-image-box n-image n-image--preview-disabled aurora-article-img-lazy-loading">
-<img src="${lazyImg.value}" loading="eager" data-src="${picSrc}" data-error="true" data-preview-src="${picSrc}" style="object-fit: fill;" data-group-id=""/>
+			return `<div role="none" class="page-image-box aurora-article-img-lazy-loading">
+<img data-sizes="auto" class="lazyload" src="${lazyImg.value}" data-src="${picSrc}" style="object-fit: fill;"/>
 </div>`;
 		}
 		return defaultRender(tokens, idx, options, env, self)
@@ -116,7 +116,7 @@ const setLazyImg = () => {
 setLazyImg()
 
 onMounted(() => {
-	window.addEventListener('scroll', handleScroll, true)
+	// window.addEventListener('scroll', handleScroll, true)
 })
 
 watch(() => props.markdownContent, (nv: string) => handleRenderMarkdownContent(nv))

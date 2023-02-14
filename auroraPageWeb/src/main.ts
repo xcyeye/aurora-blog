@@ -8,6 +8,9 @@ import {setupStore} from "@/stores";
 import { createMetaManager, defaultConfig, deepestResolver } from 'vue-meta'
 import {setupRouter} from "@/router";
 import AppLoading from "@/components/common/other/AppLoading.vue";
+import 'lazysizes';
+// import a plugin
+import 'lazysizes/plugins/parent-fit/ls.parent-fit';
 
 /** 导入静态文件 css */
 // setupAssets();

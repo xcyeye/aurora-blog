@@ -25,6 +25,7 @@
     "gsap": "^3.11.4",
     "highlight.js": "^11.7.0",
     "jquery": "^3.6.3",
+    "lazysizes": "^5.3.2",
     "markdown-it": "^13.0.1",
     "medium-zoom": "^1.0.8",
     "mitt": "^3.0.0",
