@@ -1,9 +1,8 @@
 package xyz.xcye.message.pojo;
 
-import lombok.Data;
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import io.swagger.v3.oas.annotations.media.Schema;
 import org.hibernate.validator.constraints.Length;
 import xyz.xcye.core.constant.FieldLengthConstant;
 import xyz.xcye.core.valid.Delete;
@@ -31,6 +30,11 @@ public class EmailLogPojo {
      */
     @NotNull(groups = {Delete.class, Update.class})
     private Long uid;
+
+    /**
+     * 用户uid
+     */
+    private Long userUid;
 
     /**
      * 邮件发送的标题 不能为null

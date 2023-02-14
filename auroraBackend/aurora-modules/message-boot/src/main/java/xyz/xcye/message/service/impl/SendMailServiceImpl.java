@@ -92,7 +92,7 @@ public class SendMailServiceImpl implements SendMailService {
         // 如果是发送自定义html的话
         if (storageSendMailInfo.getSendType() == SendHtmlMailTypeNameEnum.CUSTOM_HTML) {
             sendEmail(storageSendMailInfo.getSubject(), storageSendMailInfo.getHtmlContent(),
-                    storageSendMailInfo.getReceiverEmail());
+                    storageSendMailInfo.getReceiverEmail(), storageSendMailInfo.getUserUid());
             return;
         }
 
@@ -121,7 +121,7 @@ public class SendMailServiceImpl implements SendMailService {
             sendContent = ConvertObjectUtils.jsonToString(storageSendMailInfo.getReplacedMap());
         }
 
-        sendEmail(subject, sendContent, storageSendMailInfo.getReceiverEmail());
+        sendEmail(subject, sendContent, storageSendMailInfo.getReceiverEmail(), storageSendMailInfo.getUserUid());
     }
 
     @Override
@@ -191,7 +191,8 @@ public class SendMailServiceImpl implements SendMailService {
      * @return
      * @throws MessagingException
      */
-    private void sendEmail(String subject,String sendContent,String receiverEmail) throws MessagingException {
+    private void sendEmail(String subject,String sendContent,String receiverEmail, Long userUid) throws MessagingException {
+        AssertUtils.stateThrow(userUid != null, () -> new EmailException("userUid不能为null"));
         // 设置标志点
         boolean sendFlag = false;
         //发送邮件
@@ -209,6 +210,7 @@ public class SendMailServiceImpl implements SendMailService {
         emailLogPojo.setReceiver(receiverEmail);
         emailLogPojo.setSender(senderEmail);
         emailLogPojo.setSend(sendFlag);
+        emailLogPojo.setUserUid(userUid);
         emailLogService.insertEmailLog(emailLogPojo);
     }
 

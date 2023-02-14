@@ -4,6 +4,7 @@
 
     <resultMap id="emailLogResultMap" type="xyz.xcye.message.po.EmailLog">
         <id column="uid" property="uid"/>
+        <result column="user_uid" property="userUid"/>
         <result column="sender" property="sender"/>
         <result column="subject" property="subject"/>
         <result column="content" property="content"/>
@@ -13,10 +14,13 @@
         <result column="update_time" property="updateTime"/>
     </resultMap>
 
-  	<sql id="Where_Condition">
+    <sql id="Where_Condition">
         <where>
             <if test="uid != null">
                 AND uid = #{uid}
+            </if>
+            <if test="userUid != null">
+                AND user_uid = #{userUid}
             </if>
             <if test="sender != null and sender != '' ">
                 AND sender = #{sender}
@@ -40,10 +44,11 @@
                 AND update_time = #{updateTime}
             </if>
         </where>
-  	</sql>
+    </sql>
 
     <sql id="Base_Column_List">
         uid,
+        user_uid,
         sender,
         subject,
         content,
@@ -53,146 +58,149 @@
         update_time
     </sql>
 
-	<!-- common methods start -->
+    <!-- common methods start -->
     <!-- 新增一条数据 -->
-	<insert id="insert" parameterType="xyz.xcye.message.po.EmailLog" useGeneratedKeys="true" keyProperty="uid">
+    <insert id="insert" parameterType="xyz.xcye.message.po.EmailLog" useGeneratedKeys="true" keyProperty="uid">
         INSERT INTO au_email_log (
-            <trim suffixOverrides=",">
-                <if test="uid != null">
-                    uid,
-                </if>
-                <if test="sender != null and sender != '' ">
-                    sender,
-                </if>
-                <if test="subject != null and subject != '' ">
-                    subject,
-                </if>
-                <if test="content != null and content != '' ">
-                    content,
-                </if>
-                <if test="receiver != null and receiver != '' ">
-                    receiver,
-                </if>
-                <if test="send != null">
-                    is_send,
-                </if>
-                <if test="createTime != null and createTime != '' ">
-                    create_time,
-                </if>
-                <if test="updateTime != null and updateTime != '' ">
-                    update_time,
-                </if>
-            </trim>
+        <trim suffixOverrides=",">
+            <if test="uid != null">
+                uid,
+            </if>
+            <if test="userUid != null">
+                user_uid,
+            </if>
+            <if test="sender != null">
+                sender,
+            </if>
+            <if test="subject != null">
+                subject,
+            </if>
+            <if test="content != null">
+                content,
+            </if>
+            <if test="receiver != null">
+                receiver,
+            </if>
+            <if test="send != null">
+                is_send,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+        </trim>
         ) VALUES (
-            <trim suffixOverrides=",">
-                <if test="uid != null">
-                 #{uid},
-                </if>
-                <if test="sender != null and sender != '' ">
-                 #{sender},
-                </if>
-                <if test="subject != null and subject != '' ">
-                 #{subject},
-                </if>
-                <if test="content != null and content != '' ">
-                 #{content},
-                </if>
-                <if test="receiver != null and receiver != '' ">
-                 #{receiver},
-                </if>
-                <if test="send != null">
-                 #{send},
-                </if>
-                <if test="createTime != null and createTime != '' ">
-                 #{createTime},
-                </if>
-                <if test="updateTime != null and updateTime != '' ">
-                 #{updateTime},
-                </if>
-            </trim>
+        <trim suffixOverrides=",">
+            <if test="uid != null">
+                #{uid},
+            </if>
+            <if test="userUid != null">
+                #{userUid},
+            </if>
+            <if test="sender != null">
+                #{sender},
+            </if>
+            <if test="subject != null">
+                #{subject},
+            </if>
+            <if test="content != null">
+                #{content},
+            </if>
+            <if test="receiver != null">
+                #{receiver},
+            </if>
+            <if test="send != null">
+                #{send},
+            </if>
+            <if test="createTime != null">
+                #{createTime},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime},
+            </if>
+        </trim>
         )
-	</insert>
+    </insert>
 
     <!-- 通过主键删除数据 -->
-	<delete id="deleteById" parameterType="Long">
+    <delete id="deleteById" parameterType="Long">
         DELETE FROM au_email_log
-        WHERE uid = #{uid} 
-	</delete>
-
-    <!-- 根据传入参数删除数据 -->
-	<delete id="deleteByWhere" parameterType="xyz.xcye.message.po.EmailLog">
-        DELETE FROM au_email_log
-        <include refid="Where_Condition" />
-	</delete>
+        WHERE uid = #{uid}
+    </delete>
 
     <!-- 根据id更新数据 -->
     <update id="updateById" parameterType="xyz.xcye.message.po.EmailLog">
-		UPDATE au_email_log
-		<set>
-			<if test="sender != null and sender != '' ">sender = #{sender},</if>
-			<if test="subject != null and subject != '' ">subject = #{subject},</if>
-			<if test="content != null and content != '' ">content = #{content},</if>
-			<if test="receiver != null and receiver != '' ">receiver = #{receiver},</if>
-			<if test="send != null">is_send = #{send},</if>
-			<if test="updateTime != null and updateTime != '' ">update_time = #{updateTime},</if>
-		</set>
-		WHERE
-		    uid = #{uid}
-	</update>
+        UPDATE au_email_log
+        <set>
+            <if test="userUid != null">user_uid = #{userUid},</if>
+            <if test="sender != null">sender = #{sender},</if>
+            <if test="subject != null">subject = #{subject},</if>
+            <if test="content != null">content = #{content},</if>
+            <if test="receiver != null">receiver = #{receiver},</if>
+            <if test="send != null">is_send = #{send},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+        </set>
+        WHERE
+        uid = #{uid}
+    </update>
 
-	<!-- 根据主键查询数据  -->
-	<select id="queryById" resultMap="emailLogResultMap" parameterType="Long">
+    <!-- 根据主键查询数据  -->
+    <select id="queryById" resultMap="emailLogResultMap" parameterType="Long">
         SELECT
         <include refid="Base_Column_List" />
-  	    FROM au_email_log
+        FROM au_email_log
         WHERE
-            uid = #{uid}
+        uid = #{uid}
     </select>
 
     <!-- 查询一条记录  -->
-	<select id="queryOne" resultMap="emailLogResultMap" parameterType="xyz.xcye.message.po.EmailLog">
-         SELECT
-         <include refid="Base_Column_List" />
-  	     FROM au_email_log
-         <include refid="Where_Condition" />
-         LIMIT 1
+    <select id="queryOne" resultMap="emailLogResultMap" parameterType="xyz.xcye.message.po.EmailLog">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM au_email_log
+        <include refid="Where_Condition" />
+        LIMIT 1
     </select>
 
-	<!-- 根据传入参数查询数据列表  -->
-	<select id="queryListByWhere" resultMap="emailLogResultMap" parameterType="xyz.xcye.message.po.EmailLog">
+    <!-- 根据传入参数查询数据列表  -->
+    <select id="queryListByWhere" resultMap="emailLogResultMap" parameterType="xyz.xcye.message.po.EmailLog">
         SELECT
         <include refid="Base_Column_List" />
         FROM au_email_log
         <include refid="Where_Condition" />
     </select>
 
-	<!-- 统计符合条件的数据数量 -->
-	<select id="countByWhere" resultType="int" parameterType="xyz.xcye.message.po.EmailLog">
-		SELECT COUNT(*) FROM au_email_log
-		<include refid="Where_Condition" />
-	</select>
+    <!-- 统计符合条件的数据数量 -->
+    <select id="countByWhere" resultType="int" parameterType="xyz.xcye.message.po.EmailLog">
+        SELECT COUNT(*) FROM au_email_log
+        <include refid="Where_Condition" />
+    </select>
 
     <!-- 批量插入多条数据 -->
-	<insert id="batchInsert" parameterType="java.util.List">
+    <insert id="batchInsert" parameterType="java.util.List">
         INSERT INTO au_email_log (
-        	<include refid="Base_Column_List" />
+        <include refid="Base_Column_List" />
         ) VALUES
         <foreach collection="list" item="item" index= "index" separator =",">
             (
             <trim suffixOverrides=",">
-				#{item.uid},
-				#{item.sender},
-				#{item.subject},
-				#{item.content},
-				#{item.receiver},
-				#{item.send},
-				#{item.createTime},
-				#{item.updateTime},
+                #{item.uid},
+                #{item.userUid},
+                #{item.sender},
+                #{item.subject},
+                #{item.content},
+                #{item.receiver},
+                #{item.send},
+                #{item.createTime},
+                #{item.updateTime},
             </trim>
             )
         </foreach>
     </insert>
-	<!-- common methods end -->
+    <!-- common methods end -->
 
 	<!-- 下面的是兼容旧版本 -->
 	<select id="queryListByCondition" resultMap="emailLogResultMap">
@@ -205,6 +213,9 @@
             </if>
             <if test="condition.keyword != null">
                 and receiver like concat(#{condition.keyword}, '%')
+            </if>
+            <if test="condition.otherUid != null">
+                and user_uid=#{condition.otherUid}
             </if>
             <if test="condition.startTime != null and condition.endTime != null">
                 and create_time between #{condition.startTime} and #{condition.endTime}

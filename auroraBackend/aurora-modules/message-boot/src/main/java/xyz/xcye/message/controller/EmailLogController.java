@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import xyz.xcye.core.annotaion.business.SetCondition;
 import xyz.xcye.core.annotaion.controller.ModifyOperation;
 import xyz.xcye.core.annotaion.controller.SelectOperation;
 import xyz.xcye.core.valid.Insert;
@@ -60,6 +61,7 @@ public class EmailLogController {
     @Operation(summary = "查询所有邮件发送日志")
     @SelectOperation
     @PostMapping("/queryListEmailLogByCondition")
+    @SetCondition(uid = "userUid")
     public PageData<EmailLogVO> queryListEmailLogByCondition(@RequestBody Condition<Long> condition) {
         return emailLogService.queryListEmailLogByCondition(condition);
     }

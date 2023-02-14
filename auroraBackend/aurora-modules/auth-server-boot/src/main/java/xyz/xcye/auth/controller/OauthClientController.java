@@ -2,35 +2,26 @@ package xyz.xcye.auth.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.oauth2.common.OAuth2AccessToken;
-import org.springframework.security.oauth2.provider.endpoint.TokenEndpoint;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.HttpRequestMethodNotSupportedException;
-import org.springframework.web.bind.annotation.*;
-import xyz.xcye.admin.pojo.UserPojo;
-import xyz.xcye.admin.vo.UserVO;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import xyz.xcye.auth.constant.OauthJwtConstant;
-import xyz.xcye.auth.pojo.LoginInfoPojo;
 import xyz.xcye.auth.pojo.OauthClientDetailsPojo;
-import xyz.xcye.auth.service.LoginInfoService;
 import xyz.xcye.auth.service.OauthClientDetailsService;
-import xyz.xcye.auth.vo.LoginInfoVO;
 import xyz.xcye.auth.vo.OauthClientDetailsVO;
 import xyz.xcye.core.annotaion.FieldFilter;
+import xyz.xcye.core.annotaion.business.SetCondition;
 import xyz.xcye.core.annotaion.controller.ModifyOperation;
 import xyz.xcye.core.annotaion.controller.SelectOperation;
-import xyz.xcye.core.exception.oauth.OauthException;
 import xyz.xcye.core.exception.user.UserException;
-import xyz.xcye.core.util.lambda.AssertUtils;
 import xyz.xcye.core.valid.Insert;
 import xyz.xcye.core.valid.Update;
 import xyz.xcye.data.entity.Condition;
 import xyz.xcye.data.entity.PageData;
 
 import javax.validation.groups.Default;
-import java.security.Principal;
-import java.util.Map;
 
 /**
  * @author xcye
@@ -56,6 +47,7 @@ public class OauthClientController {
     @SelectOperation
     @Operation(summary = "根据条件查询")
     @PostMapping("/queryListOauthClientByCondition")
+    @SetCondition(keyword = "username")
     public PageData<OauthClientDetailsVO> queryListOauthClientByCondition(@RequestBody Condition<Object> condition) {
         return oauthClientDetailsService.queryListOauthClientByCondition(condition);
     }

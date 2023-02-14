@@ -18,3 +18,7 @@ alter table au_comment
 alter table au_link
     modify category_name varchar(255) null comment '此条友情链接属于哪个分类';
 
+# 2023-2-14 xcye 邮件发送记录增加userUid
+alter table au_email_log
+    add user_uid bigint not null after uid;
+

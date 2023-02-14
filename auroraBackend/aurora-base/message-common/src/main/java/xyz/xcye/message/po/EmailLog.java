@@ -1,13 +1,14 @@
 package xyz.xcye.message.po;
 
-import lombok.Data;
-import lombok.Builder;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-import java.io.Serializable;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.io.Serializable;
 
 /**
  * @table email_log <br/>
@@ -31,6 +32,10 @@ private static final long serialVersionUID = 13247652346523L;
 	@JsonSerialize(using = ToStringSerializer.class)
 	@Schema(title = "唯一uid")
 	private Long uid;
+
+	@JsonSerialize(using = ToStringSerializer.class)
+	@Schema(title = "用户uid")
+	private Long userUid;
 
 	/**
 	 * 发送者的邮箱号
