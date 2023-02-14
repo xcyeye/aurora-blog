@@ -17,7 +17,7 @@
 			<!--	:mobile-waterfall-img-col="3"-->
 			<!--	:pc-waterfall-img-col="4"-->
 			<!--	:show-bg-color="false"/>-->
-			<aurora-gallery :show-load-more-but="false" :picture-list="getTalkPictureArr"/>
+			<aurora-gallery :user-uid="userUid" :show-load-more-but="false" :picture-list="getTalkPictureArr"/>
 		</div>
 		<div class="mood-edit">
 			<div class="mood-edit-right">

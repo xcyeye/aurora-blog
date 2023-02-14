@@ -6794,8 +6794,8 @@ body {
 }
 
 #gallery img {
-    width: 100% !important;
-    height: auto !important;
+    width: 100%;
+    height: auto;
     margin-bottom: .5rem;
     border-radius: 10px;
 }
@@ -6844,6 +6844,11 @@ body {
     #gallery {
         column-count: var(--mobile-gallery-column);
     }
+}
+
+#gallery-lazy-img {
+    width: 100%;
+    object-fit: fill;
 }
 
 /*.snow {*/

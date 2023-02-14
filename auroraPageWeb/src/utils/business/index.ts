@@ -1,4 +1,6 @@
 import {getRandomNum, StringUtil} from "@/utils";
+import {useSiteInfo} from "@/stores";
+import blogConfig from "@/config/blogConfig.json";
 
 export async function setDefaultProperties<T>(originObj: T, defaultObj: T) {
   return new Promise((resolve, reject) => {
@@ -40,4 +42,18 @@ export const getPaginationStartAndEnd = (currentPageNum: number, pageSize: numbe
   let end = start + pageSize
   if (isStart) return start
   return end
+}
+
+export const setLazyImg = (userUid: string | null | undefined) => {
+  let lazyImg = '';
+  let currentSiteInfo: SiteSettingInfo = {}
+  if (StringUtil.haveLength(userUid)) {
+    currentSiteInfo = useSiteInfo().getSiteInfo(userUid!)
+  }
+  if (StringUtil.haveLength(currentSiteInfo.homePageLazyLoadingImg)) {
+    lazyImg = currentSiteInfo.homePageLazyLoadingImg!
+  }else {
+    lazyImg = blogConfig.defaultLazyImgSrc
+  }
+  return lazyImg
 }

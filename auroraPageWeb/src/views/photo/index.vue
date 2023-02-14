@@ -20,7 +20,7 @@
 						<!--		&lt;!&ndash;<div style="height: 4rem;background-color: red"></div>&ndash;&gt;-->
 						<!--	</photo-waterfall>-->
 						<!--</n-scrollbar>-->
-						<aurora-gallery @clickLoadMorePicture="clickLoadMorePicture" :pc-gallery-column="4" :mobile-gallery-column="2" :picture-list="photoFileArr"></aurora-gallery>
+						<aurora-gallery :user-uid="userUid" @clickLoadMorePicture="clickLoadMorePicture" :pc-gallery-column="4" :mobile-gallery-column="2" :picture-list="photoFileArr"></aurora-gallery>
 					</div>
 				</aurora-card>
 			</template>

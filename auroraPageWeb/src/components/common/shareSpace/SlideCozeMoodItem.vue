@@ -51,7 +51,11 @@
 					<!--								 :mobile-waterfall-img-col="2"-->
 					<!--								 @handleClickImage="setSlideBodyBg"-->
 					<!--								 :picture-src-list="getPictureArr"/>-->
-					<aurora-gallery @clickPicture="clickPicture" :show-load-more-but="false" :picture-list="getPictureArr"></aurora-gallery>
+					<aurora-gallery
+						:user-uid="userUid"
+						@clickPicture="clickPicture"
+						:show-load-more-but="false"
+						:picture-list="getPictureArr"></aurora-gallery>
         </div>
       </div>
     </div>

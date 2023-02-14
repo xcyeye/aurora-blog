@@ -2,7 +2,11 @@
 	<n-scrollbar :x-scrollable="false">
 		<div id="gallery" class="container-fluid" :style="`--pc-gallery-column: ${pcGalleryColumn};--mobile-gallery-column: ${mobileGalleryColumn};`">
 			<div @click.stop="clickPicture(item)" v-for="(item) in pictureListTemp" :key="item.uid" class="gallery-item aurora-gallery-img-lazy-loading">
-				<n-image :src="getImageSrc(item)"/>
+				<n-image :src="getImageSrc(item)">
+					<template #placeholder>
+						<img id="gallery-lazy-img" :src="lazyImg" alt="">
+					</template>
+				</n-image>
 				<div @click.stop="clickPictureDesc(item)" class="gallery-img-desc">
 					<slot/>
 				</div>
@@ -19,14 +23,14 @@ import {computed, defineComponent, onMounted, ref, watch} from "vue";
 import {FileVo} from "@/bean/vo/file/fileVo";
 import {useSysSettingStore} from "@/store";
 import {REGEXP_URL} from "@/config";
-import {isNotEmptyObject} from "@/utils/business";
+import {isNotEmptyObject, setLazyImg} from "@/utils/business";
 import {emitter, StringUtil} from "@/utils";
 
 interface Props {
 	pictureList: Array<FileVo>,
-	pcGalleryColumn: number,
-	mobileGalleryColumn: number,
-	showLoadMoreBut: boolean
+	pcGalleryColumn?: number,
+	mobileGalleryColumn?: number,
+	showLoadMoreBut?: boolean
 }
 
 defineComponent({name: 'AuroraGallery'});
@@ -39,10 +43,13 @@ const props = withDefaults(defineProps<Props>(), {
 
 const sysSettingStore = useSysSettingStore()
 const pictureListTemp = ref<Array<FileVo>>([])
+const lazyImg = ref('')
 
 pictureListTemp.value = props.pictureList
 
 const emits = defineEmits(['clickLoadMorePicture', 'clickPicture', 'clickPictureDesc'])
+
+lazyImg.value = setLazyImg()!
 
 const getImageSrc = computed(() => {
 	return (pictureFile: FileVo) => {
