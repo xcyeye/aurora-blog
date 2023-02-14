@@ -160,7 +160,7 @@ public class SendMailServiceImpl implements SendMailService {
         // 查询此emailLogUid对应的邮件信息
         EmailLogVO emailLogVO = emailLogService.queryByUid(pojo.getEmailLogUid());
         AssertUtils.stateThrow(emailLogVO != null, () -> new EmailException("没有发送过此邮件"));
-        sendEmail(emailLogVO.getSubject(), emailLogVO.getContent(), emailLogVO.getReceiver(), emailLogVO.getUserUid());
+        sendEmail(emailLogVO.getSubject(), emailLogVO.getContent(), emailLogVO.getReceiver(), pojo.getUserUid());
     }
 
     /**
