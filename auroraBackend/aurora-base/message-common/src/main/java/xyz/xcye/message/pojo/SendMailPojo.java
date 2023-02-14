@@ -16,4 +16,6 @@ public class SendMailPojo {
     private String content;
 
     private Long emailLogUid;
+
+    private Long userUid;
 }

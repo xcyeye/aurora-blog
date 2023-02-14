@@ -41,8 +41,8 @@ public interface SendMailService {
 
     /**
      * 重新发送自定义的邮件
-     * @param emailLogUid
+     * @param pojo
      * @return
      */
-    void resendCustomMail(Long emailLogUid) throws MessagingException, IOException;
+    void resendCustomMail(SendMailPojo pojo) throws MessagingException, IOException;
 }

@@ -4,4 +4,6 @@ interface SendMailPojo {
 	content?: string | null;
 
 	emailLogUid?: string | null;
+
+	userUid?: string | null;
 }

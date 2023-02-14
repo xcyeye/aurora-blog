@@ -42,6 +42,7 @@ import {EmailLogVo} from "@/bean/vo/message/EmailLogVo";
 import {EmailLog} from "@/bean/pojo/message/EmailLog";
 import RequestResult = Service.RequestResult;
 import {useLoading} from "@/hooks";
+import {useAuthStore} from "@/store";
 
 defineComponent({name: 'index'});
 
@@ -92,7 +93,7 @@ const handleResendMail = () => {
 		negativeText: '(ノへ￣、)',
 		onPositiveClick: () => {
 			loadingBar.start()
-			sendMailApi.resendCustomMail({emailLogUid: currentEmailLogInfo.value.uid}).then(result => {
+			sendMailApi.resendCustomMail({emailLogUid: currentEmailLogInfo.value.uid, userUid: useAuthStore().userInfo.user_uid}).then(result => {
 				if (result.error) {
 					loadingBar.error()
 				}else {

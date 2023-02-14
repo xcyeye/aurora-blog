@@ -149,21 +149,18 @@ public class SendMailServiceImpl implements SendMailService {
 
     @Override
     public void sendCustomMail(SendMailPojo pojo) throws MessagingException, IOException {
-        sendHtmlMail(StorageMailUtils.generateCommonNotice(pojo.getSubject(), pojo.getContent(), pojo.getReceiverEmail(), null));
+        sendHtmlMail(StorageMailUtils.generateCommonNotice(pojo.getSubject(), pojo.getContent(), pojo.getReceiverEmail(), pojo.getUserUid()));
         // sendHtmlMail(generateCommonNotice(pojo.getSubject(), pojo.getContent(), pojo.getReceiverEmail()));
     }
 
     @Override
-    public void resendCustomMail(Long emailLogUid) throws MessagingException, IOException {
-        Assert.notNull(emailLogUid, "uid不能为null");
+    public void resendCustomMail(SendMailPojo pojo) throws MessagingException, IOException {
+        Assert.notNull(pojo.getEmailLogUid(), "uid不能为null");
+        Assert.notNull(pojo.getEmailLogUid(), "userUid不能为null");
         // 查询此emailLogUid对应的邮件信息
-        EmailLogVO emailLogVO = emailLogService.queryByUid(emailLogUid);
+        EmailLogVO emailLogVO = emailLogService.queryByUid(pojo.getEmailLogUid());
         AssertUtils.stateThrow(emailLogVO != null, () -> new EmailException("没有发送过此邮件"));
-        SendMailPojo sendMailPojo = new SendMailPojo();
-        sendMailPojo.setContent(emailLogVO.getContent());
-        sendMailPojo.setSubject(emailLogVO.getSubject());
-        sendMailPojo.setReceiverEmail(emailLogVO.getReceiver());
-        sendCustomMail(sendMailPojo);
+        sendEmail(emailLogVO.getSubject(), emailLogVO.getContent(), emailLogVO.getReceiver(), emailLogVO.getUserUid());
     }
 
     /**

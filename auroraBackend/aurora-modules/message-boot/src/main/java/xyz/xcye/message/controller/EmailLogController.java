@@ -61,7 +61,7 @@ public class EmailLogController {
     @Operation(summary = "查询所有邮件发送日志")
     @SelectOperation
     @PostMapping("/queryListEmailLogByCondition")
-    @SetCondition(uid = "userUid")
+    @SetCondition(otherUid = "userUid")
     public PageData<EmailLogVO> queryListEmailLogByCondition(@RequestBody Condition<Long> condition) {
         return emailLogService.queryListEmailLogByCondition(condition);
     }

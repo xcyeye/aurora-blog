@@ -99,12 +99,9 @@ public class StorageMailUtils {
     }
 
     public static StorageSendMailInfo generateCommonNotice(String subject,String sendContent,String receiverEmail, Long userUid) {
-        if (userUid == null) {
-            userUid = 0L;
-        }
-
         EmailLogPojo emailLogPojo = new EmailLogPojo();
         emailLogPojo.setContent(sendContent);
+        emailLogPojo.setUserUid(userUid);
         emailLogPojo.setCreateTime(DateUtils.format(new Date()));
         List<Map<SendHtmlMailTypeNameEnum, Object>> maps = StorageMailUtils.generateReplacedMailObject(SendHtmlMailTypeNameEnum.COMMON_NOTICE, emailLogPojo);
         Map<String, String> replacedMap = StorageMailUtils.createReplacedMap(maps);

@@ -51,6 +51,6 @@ public class SendMailController {
     @ModifyOperation
     @PostMapping("/resendCustomMail")
     public void resendCustomMail(@RequestBody SendMailPojo pojo) throws MessagingException, IOException {
-        sendMailService.resendCustomMail(pojo.getEmailLogUid());
+        sendMailService.resendCustomMail(pojo);
     }
 }

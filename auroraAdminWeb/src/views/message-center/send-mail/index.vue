@@ -90,6 +90,7 @@ const handleSendMail = () => {
 	if (!StringUtil.haveLength(sendMailInfo.value.subject)) {
 		sendMailInfo.value.subject = `${autoStore.userInfo.username} 给你发了一封邮件o(￣ε￣*) `
 	}
+	sendMailInfo.value.userUid = autoStore.userInfo.user_uid;
 	loadBar.start()
 	sendMailApi.customMail(sendMailInfo.value).then(result => {
 		if (!result.error) {
