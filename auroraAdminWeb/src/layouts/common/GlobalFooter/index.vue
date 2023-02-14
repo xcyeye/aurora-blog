@@ -1,6 +1,6 @@
 <template>
   <dark-mode-container class="flex-center h-full">
-    <span>Copyright ©2021 Soybean Admin</span>
+    <span>Copyright ©2021 Aurora Blog System</span>
   </dark-mode-container>
 </template>
 
