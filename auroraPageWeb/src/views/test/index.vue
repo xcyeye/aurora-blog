@@ -5,10 +5,8 @@
 	<!--	<div class="son2">我是son2</div>-->
 	<!--</div>-->
 	<!--<aurora-login :show-login-modal="true" user-uid="34856"/>-->
-	<div class="galaxy">
-		<aurora-gallery @clickLoadMorePicture="clickLoadMorePicture" :picture-list="pictureArr" :mobile-gallery-column="2" :pc-gallery-column="3">
-			<div>aksdjf</div>
-		</aurora-gallery>
+	<div class="test-video">
+		<aurora-video :video-source-list="[{src: '/欣小萌.mp4', poster: 'https://gcore.jsdelivr.net/gh/xcyeye/cdn@main/image/pc/10.jpg'}]"/>
 	</div>
 </template>
 
@@ -79,5 +77,12 @@ const clickLoadMorePicture = () => {
 	height: 20rem;
 	/*margin: 0 auto;*/
 	background-color: red;
+}
+
+.test-video {
+	width: 40rem;
+	height: 20rem;
+	/*background-color: red;*/
+	margin: 0 auto;
 }
 </style>

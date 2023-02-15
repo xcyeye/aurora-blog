@@ -23,6 +23,7 @@ public class OAuthServerAuthenticationEntryPoint implements AuthenticationEntryP
 
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
+        // AbstractUserDetailsAuthenticationProvider
         OauthServerUtils.failure(request, response, ResponseStatusCodeEnum.OAUTH_CLIENT_SECRET_MISTAKE.getMessage(),
                 ResponseStatusCodeEnum.OAUTH_CLIENT_SECRET_MISTAKE.getCode());
     }

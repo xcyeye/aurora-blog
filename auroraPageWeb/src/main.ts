@@ -12,6 +12,7 @@ import 'lazysizes';
 // import a plugin
 import 'lazysizes/plugins/parent-fit/ls.parent-fit';
 
+
 /** 导入静态文件 css */
 // setupAssets();
 
@@ -24,6 +25,7 @@ import 'lazysizes/plugins/parent-fit/ls.parent-fit';
 // setupStore(app);
 
 // app.mount('#app')
+// import VueVideoPlayer from '@videojs-player/vue'
 
 async function setupApp() {
 // import assets: js、css
@@ -38,6 +40,8 @@ async function setupApp() {
 
   // store plugin: pinia
   setupStore(app);
+
+  // app.use(VueVideoPlayer)
 
   // vue-meta
   app.use(createMetaManager(false , defaultConfig, deepestResolver))
