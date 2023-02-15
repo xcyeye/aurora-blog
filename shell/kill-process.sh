@@ -5,7 +5,7 @@ for element in ${boot_names[@]}
 do
   jar_name=${element}-${version_name}
   echo "正在杀死 ${jar_name} 进程"
-  process_pid=`ps -elf |grep message|grep -v grep |head -n 1 |awk '{printf $4}'`
+  process_pid=`ps -elf |grep ${jar_name}|grep -v grep |head -n 1 |awk '{printf $4}'`
   echo ${process_pid}
 
   if [[ -n $process_pid ]];
