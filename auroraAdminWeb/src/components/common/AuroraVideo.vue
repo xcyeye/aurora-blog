@@ -43,11 +43,12 @@ import {VideoPlayer} from "@videojs-player/vue";
 import {computed, defineComponent, ref} from "vue";
 import 'video.js/dist/video-js.css'
 import {StringUtil} from "@/utils";
+import {FileVo} from "@/bean/vo/file/fileVo";
 
 interface Props {
 	/** 是否容器全屏 播放的时候 */
-	fluid: boolean,
-	videoSourceList: Array<VideoSource>
+	fluid?: boolean,
+	videoSourceList: Array<VideoSource>,
 }
 
 defineComponent({name: 'AuroraVideo'});

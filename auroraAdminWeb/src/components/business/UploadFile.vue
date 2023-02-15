@@ -222,6 +222,9 @@ const generateFileInfo = (file: UploadFileInfo, fileVoArr: FileVo[]): Promise<Up
 	if (sysSettingStore.sysSettingMap.get('nginx_file_host')) {
 		if (StringUtil.haveLength(sysSettingStore.sysSettingMap.get('nginx_file_host')!.paramValue)) {
 			host = sysSettingStore.sysSettingMap.get('nginx_file_host')!.paramValue as string
+			if (host.endsWith("/")) {
+				host = host.substring(0, host.length - 1)
+			}
 		}
 	}
 	return new Promise((resolve, reject) => {

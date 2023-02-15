@@ -7,13 +7,13 @@
 					@handleFinishUploadFile="handleFinishUploadFile"
 					:show-upload-dragger="true"
 					:multiple-upload-file="true"
-					:accept-file-type-str="['png','jpg','jpeg']"
+					:accept-file-type-str="['.png','.jpg','.jpeg','.mp4','.wmv','.avi','.mov']"
 					:parameter-data="{
 					userUid: authStore.userInfo.user_uid,
 					summary: `${authStore.userInfo.username} 上传的文件`,
 					storageMode: EnumFileStorageModeConstant.LOCAL_STORAGE
 					}"
-				></upload-file>
+				/>
 			</n-drawer-content>
 		</n-drawer>
 		<n-card size="huge" class="h-full shadow-sm rounded-16px">
@@ -51,7 +51,7 @@ import PictureFileShow from './picture-file-show/index.vue'
 import {fileApi} from "@/service";
 import {useAuthStore} from "@/store";
 import {Condition} from "@/bean/core/bean";
-import {emitter, isImage} from "@/utils";
+import {emitter, isImage, isVideo} from "@/utils";
 import {EnumFileStorageModeConstant, EnumMittEventName} from "@/enum";
 
 defineComponent({name: 'index'});
@@ -95,7 +95,7 @@ const queryListFileFormat = () => {
 		if (result.data) {
 			fileFormatOptions.value = new Set<FileFormatSelectOption>()
 			result.data.forEach(v => {
-				if (isImage(`.${v}`)) {
+				if (isImage(`.${v}`) || isVideo(`.${v}`)) {
 					fileFormatOptions.value.add({
 						checked: true,
 						label: v

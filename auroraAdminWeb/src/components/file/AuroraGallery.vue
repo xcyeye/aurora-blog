@@ -2,11 +2,12 @@
 	<n-scrollbar :x-scrollable="false">
 		<div id="gallery" class="container-fluid" :style="`--pc-gallery-column: ${pcGalleryColumn};--mobile-gallery-column: ${mobileGalleryColumn};`">
 			<div @click.stop="clickPicture(item)" v-for="(item) in pictureListTemp" :key="item.uid" class="gallery-item aurora-gallery-img-lazy-loading">
-				<n-image :src="getImageSrc(item)">
+				<n-image v-if="assertIsImg(item)" :src="getImageSrc(item)">
 					<template #placeholder>
 						<img id="gallery-lazy-img" :src="lazyImg" alt="">
 					</template>
 				</n-image>
+				<aurora-video v-if="assertIsVideo(item)" :video-source-list="getVideoSource(item)"/>
 				<div @click.stop="clickPictureDesc(item)" class="gallery-img-desc">
 					<slot/>
 				</div>
@@ -24,7 +25,7 @@ import {FileVo} from "@/bean/vo/file/fileVo";
 import {useSysSettingStore} from "@/store";
 import {REGEXP_URL} from "@/config";
 import {isNotEmptyObject, setLazyImg} from "@/utils/business";
-import {emitter, StringUtil} from "@/utils";
+import {emitter, isImage, isVideo, StringUtil} from "@/utils";
 
 interface Props {
 	pictureList: Array<FileVo>,
@@ -62,6 +63,42 @@ const getImageSrc = computed(() => {
 			host = host.substring(0, host.length - 1)
 		}
 		return host + pictureFile.path
+	}
+})
+
+const assertIsImg = computed(() => {
+	return (file: FileVo) => {
+		return isImage(file.path!);
+
+	}
+})
+
+const assertIsVideo = computed(() => {
+	return (file: FileVo) => {
+		return isVideo(file.path!);
+
+	}
+})
+
+const getVideoSource = computed(() => {
+	return (file: FileVo): Array<VideoSource> => {
+		if (REGEXP_URL.test(file.path!)) return [{src: file.path!}]
+		let host = ""
+		if (isNotEmptyObject(sysSettingStore.sysSettingMap.get('nginx_file_host')) && StringUtil.haveLength(sysSettingStore.sysSettingMap.get('nginx_file_host')!.paramValue)) {
+			host = sysSettingStore.sysSettingMap.get('nginx_file_host')!.paramValue as string
+		}
+		if (host.endsWith("/")) {
+			host = host.substring(0, host.length - 1)
+		}
+		return [{src: host + file.path!}]
+	}
+})
+
+const getVideoStyle = computed(() => {
+	return (file: FileVo) => {
+		if (isVideo(file.path!)) {
+			return 'min-height: 7rem;'
+		}
 	}
 })
 

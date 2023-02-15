@@ -44,7 +44,7 @@
 						</aurora-gallery>
 						<upload-file
 							@handleFinishUploadFile="handleFinishUploadFile"
-							:accept-file-type-str="['.png','.jpg','.jpeg']"
+							:accept-file-type-str="['.png','.jpg','.jpeg','.mp4','.wmv','.avi','.mov']"
 							:show-upload-dragger="true"
 							:multiple-upload-file="true"
 							:parameter-data="{storageMode: 0, userUid: authStore.userInfo.user_uid, summary: `${authStore.userInfo.username} 从说说上传的图片`}"

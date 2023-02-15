@@ -20,7 +20,7 @@
 						:show-file-list="true"
 						:multiple-upload-file="true"
 						:show-upload-dragger="true"
-						:accept-file-type-str="['png','jpg','jpeg']"
+						:accept-file-type-str="['.png','.jpg','.jpeg','.mp4','.wmv','.avi','.mov']"
 						:parameter-data="{userUid: userUid, storagePath: 0, summary: `${userUid}用户从前台上传的说说照片`}" />
 					<!--<n-image v-for="(item, index) in getPictureList" :src="item" :key="index"/>-->
 					<aurora-gallery :show-load-more-but="false" :picture-list="getPictureList"/>

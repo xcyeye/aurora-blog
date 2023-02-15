@@ -6860,6 +6860,7 @@ body {
 /*}*/
 
 .aurora-video {
+    position: relative;
     width: 100%;
     height: 100%;
     padding: .5rem;
@@ -6870,7 +6871,7 @@ body {
 #auroraVideoPlayer {
     width: 100%;
     height: 100%;
-    padding-top: 0;
+    /*padding-top: 0;*/
     border-radius: 1rem;
 }
 .vjs-control-bar {
