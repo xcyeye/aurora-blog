@@ -4265,15 +4265,13 @@
       "version": "0.15.12",
       "resolved": "https://registry.npmmirror.com/@css-render/plugin-bem/-/plugin-bem-0.15.12.tgz",
       "integrity": "sha512-Lq2jSOZn+wYQtsyaFj6QRz2EzAnd3iW5fZeHO1WSXQdVYwvwGX0ZiH3X2JQgtgYLT1yeGtrwrqJdNdMEUD2xTw==",
-      "dev": true,
-      "requires": {}
+      "dev": true
     },
     "@css-render/vue3-ssr": {
       "version": "0.15.12",
       "resolved": "https://registry.npmmirror.com/@css-render/vue3-ssr/-/vue3-ssr-0.15.12.tgz",
       "integrity": "sha512-AQLGhhaE0F+rwybRCkKUdzBdTEM/5PZBYy+fSYe1T9z9+yxMuV/k7ZRqa4M69X+EI1W8pa4kc9Iq2VjQkZx4rg==",
-      "dev": true,
-      "requires": {}
+      "dev": true
     },
     "@emotion/hash": {
       "version": "0.8.0",
@@ -4619,8 +4617,7 @@
     "@videojs-player/vue": {
       "version": "1.0.0",
       "resolved": "https://registry.npmmirror.com/@videojs-player/vue/-/vue-1.0.0.tgz",
-      "integrity": "sha512-WonTezRfKu3fYdQLt/ta+nuKH6gMZUv8l40Jke/j4Lae7IqeO/+lLAmBnh3ni88bwR+vkFXIlZ2Ci7VKInIYJg==",
-      "requires": {}
+      "integrity": "sha512-WonTezRfKu3fYdQLt/ta+nuKH6gMZUv8l40Jke/j4Lae7IqeO/+lLAmBnh3ni88bwR+vkFXIlZ2Ci7VKInIYJg=="
     },
     "@videojs/http-streaming": {
       "version": "3.0.0",
@@ -4661,8 +4658,7 @@
       "version": "4.0.0",
       "resolved": "https://registry.npmmirror.com/@vitejs/plugin-vue/-/plugin-vue-4.0.0.tgz",
       "integrity": "sha512-e0X4jErIxAB5oLtDqbHvHpJe/uWNkdpYV83AOG2xo2tEVSzCzewgJMtREZM30wXnM5ls90hxiOtAuVU6H5JgbA==",
-      "dev": true,
-      "requires": {}
+      "dev": true
     },
     "@volar/language-core": {
       "version": "1.0.24",
@@ -4863,8 +4859,7 @@
       "version": "0.1.3",
       "resolved": "https://registry.npmmirror.com/@vue/tsconfig/-/tsconfig-0.1.3.tgz",
       "integrity": "sha512-kQVsh8yyWPvHpb8gIc9l/HIDiiVUy1amynLNpCy8p+FoCiZXCo6fQos5/097MmnNZc9AtseDsCrfkhqCrJ8Olg==",
-      "dev": true,
-      "requires": {}
+      "dev": true
     },
     "@vueuse/core": {
       "version": "9.12.0",
@@ -5240,8 +5235,7 @@
       "version": "1.3.8",
       "resolved": "https://registry.npmmirror.com/date-fns-tz/-/date-fns-tz-1.3.8.tgz",
       "integrity": "sha512-qwNXUFtMHTTU6CFSFjoJ80W8Fzzp24LntbjFFBgL/faqds4e5mo9mftoRLgr3Vi1trISsg4awSpYVsOQCRnapQ==",
-      "dev": true,
-      "requires": {}
+      "dev": true
     },
     "dayjs": {
       "version": "1.11.7",
@@ -7285,14 +7279,12 @@
     "vue-demi": {
       "version": "0.13.11",
       "resolved": "https://registry.npmmirror.com/vue-demi/-/vue-demi-0.13.11.tgz",
-      "integrity": "sha512-IR8HoEEGM65YY3ZJYAjMlKygDQn25D5ajNFNoKh9RSDMQtlzCxtfQjdQgv9jjK+m3377SsJXY8ysq8kLCZL25A==",
-      "requires": {}
+      "integrity": "sha512-IR8HoEEGM65YY3ZJYAjMlKygDQn25D5ajNFNoKh9RSDMQtlzCxtfQjdQgv9jjK+m3377SsJXY8ysq8kLCZL25A=="
     },
     "vue-meta": {
       "version": "3.0.0-alpha.8",
       "resolved": "https://registry.npmmirror.com/vue-meta/-/vue-meta-3.0.0-alpha.8.tgz",
-      "integrity": "sha512-jhlgRy/sGDpor8pkIhwWCGw5AMR7RtDM6xYqateAKBSy2/enelyrZFivOmo29PLs+zAS9Y57vYoZYB919Tnbug==",
-      "requires": {}
+      "integrity": "sha512-jhlgRy/sGDpor8pkIhwWCGw5AMR7RtDM6xYqateAKBSy2/enelyrZFivOmo29PLs+zAS9Y57vYoZYB919Tnbug=="
     },
     "vue-router": {
       "version": "4.1.6",
@@ -7441,8 +7433,7 @@
       "version": "8.12.1",
       "resolved": "https://registry.npmmirror.com/ws/-/ws-8.12.1.tgz",
       "integrity": "sha512-1qo+M9Ba+xNhPB+YTWUlK6M17brTut5EXbcBaMRN5pH5dFrXz7lzz1ChFSUq3bOUl8yEvSenhHmYUNJxFzdJew==",
-      "dev": true,
-      "requires": {}
+      "dev": true
     },
     "xml-name-validator": {
       "version": "4.0.0",
