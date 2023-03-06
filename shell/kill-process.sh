@@ -1,5 +1,5 @@
 # !/bin/bash
-boot_names=(article-boot admin-boot auth-server comment-boot file-boot gateway-boot)
+boot_names=(article-boot admin-boot auth-server-boot comment-boot file-boot gateway-boot message-boot)
 version_name=1.0-SNAPSHOT.jar
 for element in ${boot_names[@]}
 do
