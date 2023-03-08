@@ -1,0 +1,43 @@
+spring:
+  application:
+    name: aurora-admin
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 81.68.201.154:8848
+      config:
+        server-addr: 81.68.201.154:8848
+        file-extension: yaml
+        namespace: 227521b4-71f0-4088-a0e5-ad80b454e836
+        group: THEME-GROUP
+        shared-configs:
+          - data-id: share-seata-remote.yaml
+            group: THEME-GROUP
+            refresh: true
+          - data-id: share-redis-remote.yaml
+            group: THEME-GROUP
+            refresh: true
+          - data-id: share-sentinel-remote.yaml
+            group: THEME-GROUP
+            refresh: true
+          - data-id: share-actuator-remote.yaml
+            group: THEME-GROUP
+            refresh: true
+          - data-id: share-pagehelper-remote.yaml
+            group: THEME-GROUP
+            refresh: true
+          - data-id: share-mybatis-remote.yaml
+            group: THEME-GROUP
+            refresh: true
+          - data-id: share-feign-remote.yaml
+            group: THEME-GROUP
+            refresh: true
+          - data-id: share-aurora-oauth-remote.yaml
+            group: THEME-GROUP
+            refresh: true
+          - data-id: share-rabbitmq-remote.yaml
+            group: THEME-GROUP
+            refresh: true
+          - data-id: share-swagger-remote.yaml
+            group: THEME-GROUP
+            refresh: true
