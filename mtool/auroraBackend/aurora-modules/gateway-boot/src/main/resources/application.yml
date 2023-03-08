@@ -1,0 +1,25 @@
+spring:
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+  profiles:
+    active: dev
+  main:
+    allow-bean-definition-overriding: true
+  cloud:
+    inetutils:
+      ignored-interfaces:
+        - VirtualBox Host-Only Network
+        - VMware Network Adapter VMnet1
+        - VMware Network Adapter VMnet8
+    bootstrap:
+      enable: true
+
+springdoc:
+  swagger-ui:
+    use-root-path: true
+#    urls:
+#      - name: aurora-article
+#        url: /v3/api-docs/aurora-article
+#      - name: aurora-file
+#        url: /v3/api-docs/aurora-file

@@ -1,0 +1,13 @@
+<template>
+	<div></div>
+</template>
+
+<script lang="ts" setup>
+import {defineComponent} from "vue";
+
+defineComponent({name: 'VueMeta'});
+</script>
+
+<style scoped>
+
+</style>
