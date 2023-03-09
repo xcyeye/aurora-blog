@@ -6,7 +6,7 @@
 
 - [后台](https://admin.xcye.xyz/login?redirect=/dashboard/analysis)
 
-  演示账号：用户名: demo 密码:Aurora2023@*
+  演示账号：用户名: demoAurora 密码:Aurora2023@*
 
   
 
