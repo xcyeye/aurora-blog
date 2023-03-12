@@ -57,7 +57,7 @@
 ### 邮件通知
 ![](docs/cover/15.jpg)
 ![](docs/cover/16.jpg)
-![](docs/cover/17.jpg
+![](docs/cover/17.jpg)
 
 ### 后台
 
