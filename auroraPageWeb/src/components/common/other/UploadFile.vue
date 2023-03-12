@@ -214,6 +214,7 @@ const uploadFileChangeEven = (options: { file: UploadFileInfo,
 
 const generateFileInfo = (file: UploadFileInfo, fileVoArr: FileVo[]): Promise<UploadFileInfo[]> => {
 	let host = ''
+	console.log(sysSettingStore.sysSettingMap.get('nginx_file_host'));
 	if (sysSettingStore.sysSettingMap.get('nginx_file_host')) {
 		console.log(sysSettingStore.sysSettingMap.get('nginx_file_host'))
 		if (StringUtil.haveLength(sysSettingStore.sysSettingMap.get('nginx_file_host')!.paramValue)) {

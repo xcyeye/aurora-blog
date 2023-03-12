@@ -1,6 +1,7 @@
 package xyz.xcye.file.interfaces.impl;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -29,6 +30,7 @@ import java.util.concurrent.ThreadPoolExecutor;
  */
 
 @Component
+@RefreshScope
 public class LocalFileStorageServiceImpl implements FileStorageService {
 
     /**
