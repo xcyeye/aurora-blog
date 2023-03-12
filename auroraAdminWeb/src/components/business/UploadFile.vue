@@ -220,6 +220,7 @@ const uploadFileChangeEven = (options: { file: UploadFileInfo,
 const generateFileInfo = (file: UploadFileInfo, fileVoArr: FileVo[]): Promise<UploadFileInfo[]> => {
 	let host = ''
 	if (sysSettingStore.sysSettingMap.get('nginx_file_host')) {
+		console.log(sysSettingStore.sysSettingMap.get('nginx_file_host'))
 		if (StringUtil.haveLength(sysSettingStore.sysSettingMap.get('nginx_file_host')!.paramValue)) {
 			host = sysSettingStore.sysSettingMap.get('nginx_file_host')!.paramValue as string
 			if (host.endsWith("/")) {
@@ -229,6 +230,7 @@ const generateFileInfo = (file: UploadFileInfo, fileVoArr: FileVo[]): Promise<Up
 	}
 	return new Promise((resolve, reject) => {
 		const temp: UploadFileInfo[] = [];
+		console.log(`second: ${host}`);
 		fileVoArr.forEach(v => {
 			temp.push({
 				id: file.id,
