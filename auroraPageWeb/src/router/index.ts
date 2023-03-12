@@ -7,6 +7,7 @@ import {StringUtil} from "@/utils";
 import {App} from "vue";
 import {siteSettingApi} from "@/service/api/admin/siteSettingApi";
 import {sysSettingApi} from "@/service/api/admin/sysSettingApi";
+import {getSysSetting} from "@/stores/modules/sysSetting/helpers";
 
 const isPersonalBlog = import.meta.env.VITE_PERSONAL_BLOG === 'Y';
 
@@ -108,9 +109,10 @@ const setMobileOpenStatus = () => {
 const loadSysSetting = () => {
   const sysSettingStore = useSysSettingStore()
   // 获取系统配置
-  if (!sysSettingStore.sysSettingMap || sysSettingStore.sysSettingMap.size === 0) {
+  if (!getSysSetting() || getSysSetting().size === 0) {
     sysSettingApi.queryListDataByCondition({pageSize: 999}).then(result => {
       if (result.data && result.data.result) {
+        // TODO bug，需要刷新才会生效
         sysSettingStore.setSysSetting(result.data.result)
       }else {
         sysSettingStore.setSysSetting([])

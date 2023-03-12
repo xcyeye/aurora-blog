@@ -59,6 +59,7 @@ import {AuroraFile} from "@/bean/pojo/file/file";
 import {FileVo} from "@/bean/vo/file/fileVo";
 import {useSysSettingStore} from "@/stores";
 import {StringUtil} from "@/utils";
+import {getSysSetting} from "@/stores/modules/sysSetting/helpers";
 
 defineComponent({name: 'UploadFile'})
 
@@ -214,20 +215,31 @@ const uploadFileChangeEven = (options: { file: UploadFileInfo,
 
 const generateFileInfo = (file: UploadFileInfo, fileVoArr: FileVo[]): Promise<UploadFileInfo[]> => {
 	let host = ''
-	console.log(sysSettingStore.sysSettingMap.get('nginx_file_host'));
-	if (sysSettingStore.sysSettingMap.get('nginx_file_host')) {
-		console.log(sysSettingStore.sysSettingMap.get('nginx_file_host'))
-		if (StringUtil.haveLength(sysSettingStore.sysSettingMap.get('nginx_file_host')!.paramValue)) {
-			host = sysSettingStore.sysSettingMap.get('nginx_file_host')!.paramValue as string
+	// TODO 暂时修复，不优雅
+	if (getSysSetting().get('nginx_file_host')) {
+		if (StringUtil.haveLength(getSysSetting().get('nginx_file_host')!.paramValue)) {
+			host = getSysSetting().get('nginx_file_host')!.paramValue as string
+			return  returnFileInfo(file, fileVoArr, host)
+		}else {
+			console.error("配置nginx_file_host没有配置值，请配置，否则静态文件无法访问");
+			return  returnFileInfo(file, fileVoArr, null)
 		}
+	}else {
+		console.error("你尚未配置nginx_file_host，请配置，否则静态文件无法访问");
+		return  returnFileInfo(file, fileVoArr, null)
+	}
+}
+
+const returnFileInfo = (file: UploadFileInfo, fileVoArr: FileVo[], host: string | null): Promise<UploadFileInfo[]> => {
+	if (!StringUtil.haveLength(host)) {
+		host = ''
 	}
 	return new Promise((resolve, reject) => {
 		const temp: UploadFileInfo[] = [];
-		console.log(`second: ${host}`);
 		fileVoArr.forEach(v => {
 			temp.push({
 				id: file.id,
-				url: host + v.path,
+				url: host! + v.path,
 				fullPath: v.storagePath,
 				file: file.file,
 				type: file.type,
@@ -241,6 +253,8 @@ const generateFileInfo = (file: UploadFileInfo, fileVoArr: FileVo[]): Promise<Up
 		resolve(temp);
 	})
 }
+
+
 </script>
 
 <style scoped>
