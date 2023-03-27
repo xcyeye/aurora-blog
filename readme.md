@@ -12,6 +12,8 @@
 
 ## 介绍
 
+![](https://img1.imgtp.com/2023/03/27/mMvUAT0A.jpg)
+
 ### 后端使用到的技术栈有：
 
 - Java11
@@ -31,39 +33,39 @@
 ## 截图
 
 ### 首页
-![](docs/cover/1.png)
-![](docs/cover/2.png)
-![](docs/cover/3.png)
+![](https://img1.imgtp.com/2023/03/27/8izucK3o.png)
+![](https://img1.imgtp.com/2023/03/27/lxlE8Jrx.png)
+![](https://img1.imgtp.com/2023/03/27/elzrLUvf.png)
 ### 友情链接
-![](docs/cover/4.png)
-![](docs/cover/5.png)
+![](https://img1.imgtp.com/2023/03/27/pH6oiFnr.png)
+![](https://img1.imgtp.com/2023/03/27/4dIz84Jo.png)
 ### 相册
-![](docs/cover/6.png)
+![](https://img1.imgtp.com/2023/03/27/mNqTm95W.png)
 ### 说说
-![](docs/cover/8.png)
-![](docs/cover/7.png)
+![](https://img1.imgtp.com/2023/03/27/jHTkL682.png)
+![](https://img1.imgtp.com/2023/03/27/UfYjjJ7P.png)
 ### 时间轴
-![](docs/cover/10.png)
+![](https://img1.imgtp.com/2023/03/27/kjWGqIxq.png)
 ### 分类和类别
-![](docs/cover/9.png)
+![](https://img1.imgtp.com/2023/03/27/TpKqd21N.png)
 
 
 
 ### 文章页 
-![](docs/cover/11.png)
-![](docs/cover/14.png)
-![](docs/cover/12.png)
+![](https://img1.imgtp.com/2023/03/27/JXwHUyRZ.png)
+![](https://img1.imgtp.com/2023/03/27/88BBr1ip.png)
+![](https://img1.imgtp.com/2023/03/27/Tzt19hNH.png)
 
 ### 邮件通知
-![](docs/cover/15.jpg)
-![](docs/cover/16.jpg)
-![](docs/cover/17.jpg
+![](https://img1.imgtp.com/2023/03/27/i337Uzzj.jpg)
+![](https://img1.imgtp.com/2023/03/27/lReypSR1.jpg)
+![](https://img1.imgtp.com/2023/03/27/PLI8qj9L.jpg)
 
 ### 后台
 
-![](docs/cover/20.png)
-![](docs/cover/21.png)
-![](docs/cover/22.png)
+![](https://img1.imgtp.com/2023/03/27/qArF1pzY.png)
+![](https://img1.imgtp.com/2023/03/27/n3vbKGZq.png)
+![](https://img1.imgtp.com/2023/03/27/47uJRURJ.png)
 
 
 
