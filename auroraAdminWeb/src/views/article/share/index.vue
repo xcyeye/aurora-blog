@@ -53,7 +53,7 @@
 					<n-tab-pane name="comment" tab="评论">
 						<blog-comment
 							:page-uid="currentTalkInfo.uid"
-							:page-path="`https://xcyeye.xyz/${currentTalkInfo.title}`"
+							:page-path="`/showSpace/${currentTalkInfo.userUid}/${currentTalkInfo.uid}`"
 							:parent-comment-uid-arr="currentTalkCommentUidArr"
 							reply-page-type="TALK"/>
 					</n-tab-pane>
