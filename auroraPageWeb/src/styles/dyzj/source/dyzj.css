@@ -516,7 +516,7 @@ blockquote {
     /* border: 1px solid #d1f3ff; */
     border-left: 5px solid var(--blockquoteicon-color);
     padding: 10px 15px;
-    color: #3f3f3f;
+    color: #fff;
     background-color: var(--blockquotebg-color); /* white */
     border-radius: 3px;
     position:relative;
