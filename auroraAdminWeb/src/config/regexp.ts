@@ -17,7 +17,7 @@ export const REGEXP_CODE_FOUR = /^\d{4}$/;
 
 /** url链接正则 */
 export const REGEXP_URL =
-  /^((http:\/\/)|(https:\/\/))?([a-zA-Z0-9]([a-zA-Z0-9\-]{0,61}[a-zA-Z0-9])?\.)+[a-zA-Z]{2,6}(\/)/;
+  /^(http|https):\/\/([a-zA-Z0-9]+\.)*[a-zA-Z0-9][\-a-zA-Z0-9]{0,62}(\.[a-zA-Z0-9][\-a-zA-Z0-9]{0,62})+(:\d+)?(\/([a-zA-Z0-9_\-\.~%!$&'()*+,;=:@]|(\/[\da-fA-F]{2})*)*)*(\?[a-zA-Z0-9_\-\.~%!$&'()*+,;=:@\/?]*)?(#[a-zA-Z0-9_\-\.~%!$&'()*+,;=:@\/?]*)?$/;
 
 /** 用户名校验 */
 export const REGEXP_USERNAME = /^[\w_]{5,15}$/

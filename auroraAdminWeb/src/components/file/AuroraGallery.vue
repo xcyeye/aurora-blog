@@ -1,8 +1,8 @@
 <template>
 	<n-scrollbar :x-scrollable="false">
 		<div id="gallery" class="container-fluid" :style="`--pc-gallery-column: ${pcGalleryColumn};--mobile-gallery-column: ${mobileGalleryColumn};`">
-			<div @click.stop="clickPicture(item)" v-for="(item) in pictureListTemp" :key="item.uid" class="gallery-item aurora-gallery-img-lazy-loading">
-				<n-image v-if="assertIsImg(item)" :src="getImageSrc(item)">
+			<div @click.stop="clickPicture(item)" v-for="(item, index) in pictureListTemp" :key="item.uid" class="gallery-item aurora-gallery-img-lazy-loading">
+				<n-image v-if="assertIsImg(item)" :src="getImageSrc(item, index)">
 					<template #placeholder>
 						<img id="gallery-lazy-img" :src="lazyImg" alt="">
 					</template>
@@ -53,8 +53,8 @@ const emits = defineEmits(['clickLoadMorePicture', 'clickPicture', 'clickPicture
 lazyImg.value = setLazyImg()!
 
 const getImageSrc = computed(() => {
-	return (pictureFile: FileVo) => {
-		if (REGEXP_URL.test(pictureFile.path!)) return pictureFile.path
+	return (pictureFile: FileVo, index: number) => {
+		// if (REGEXP_URL.test(pictureFile.path!)) return pictureFile.path
 		let host = ""
 		if (isNotEmptyObject(sysSettingStore.sysSettingMap.get('nginx_file_host')) && StringUtil.haveLength(sysSettingStore.sysSettingMap.get('nginx_file_host')!.paramValue)) {
 			host = sysSettingStore.sysSettingMap.get('nginx_file_host')!.paramValue as string
@@ -62,6 +62,7 @@ const getImageSrc = computed(() => {
 		// if (host.endsWith("/")) {
 		// 	host = host.substring(0, host.length - 1)
 		// }
+		// console.log(index);
 		// return host + pictureFile.path
 		return getRealImageUrl(host, pictureFile.path)
 	}
