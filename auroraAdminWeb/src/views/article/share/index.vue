@@ -51,7 +51,7 @@
 							:parameter-data="{storageMode: 0, userUid: authStore.userInfo.user_uid, summary: `${authStore.userInfo.username} 从说说上传的图片`}"
 						/>
 					</n-tab-pane>
-					<n-tab-pane name="comment" tab="评论">
+					<n-tab-pane v-if="!addStatus" name="comment" tab="评论">
 						<blog-comment
 							:user-uid="currentTalkInfo.userUid"
 							:page-uid="currentTalkInfo.uid"
