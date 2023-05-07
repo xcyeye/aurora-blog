@@ -302,11 +302,16 @@ const setReplyUserInfo = () => {
 		return
 	}
 	if (isAdminUser.value) {
+		const adminWebUrlInfo = sysSettingStore.sysSettingMap.get('admin-web-url')
+		let adminWebUrl = ''
+		if (adminWebUrlInfo && StringUtil.haveLength(adminWebUrlInfo.paramValue)) {
+			adminWebUrl = adminWebUrlInfo.paramValue!
+		}
 		replyUserInfo.value = {
 			avatar: authStore.userInfo.userDetailInfo.avatar,
 			username: authStore.userInfo.userDetailInfo.username,
 			userUid: authStore.userInfo.user_uid,
-			site: `https://aurora.xcye.xyz/${authStore.userInfo.username}`
+			site: `${adminWebUrl}/${authStore.userInfo.user_uid}`
 		}
 		if (authStore.userInfo.verify_email) {
 			emailApi.queryEmailByUserUid({userUid: authStore.userInfo.user_uid}).then(result => {
@@ -345,6 +350,14 @@ const handleReplyCommentAction = () => {
 		replyCommentData.value.pageType = 'OTHER'
 	}else {
 		replyCommentData.value.pageType = props.replyPageType
+	}
+
+	if (!StringUtil.haveLength(replyCommentData.value.site)) {
+		replyCommentData.value.site = `/comment/${replyUserInfo.value.userUid}`
+	}
+
+	if (!StringUtil.haveLength(replyCommentData.value.path)) {
+		replyCommentData.value.path = `/comment/${replyUserInfo.value.userUid}`
 	}
 
 	if (!StringUtil.haveLength(replyCommentData.value.site)) {

@@ -12,8 +12,9 @@
 				</n-tab-pane>
 				<n-tab-pane name="commentDetail" tab="详情">
 					<blog-comment :page-path="currentCommentInfo.path"
-												:page-uid="currentCommentInfo.uid"
-												:parent-comment-uid-arr="[currentCommentInfo.uid]"/>
+												:page-uid="getPageUid(currentCommentInfo)"
+												:reply-page-type="currentCommentInfo.pageType"
+												:query-regexp="currentCommentInfo.path"/>
 				</n-tab-pane>
 				<template #suffix>
 					<n-button v-if="batchDeleteCommentInfoUidArr.length !== 0" strong secondary tertiary round type="error" @click="handleBatchDeleteComment">删除</n-button>
@@ -24,7 +25,7 @@
 </template>
 
 <script lang="ts" setup>
-import {defineComponent, h, onMounted, ref} from "vue";
+import {computed, defineComponent, h, onMounted, ref} from "vue";
 import {Condition, PageData} from "@/bean/core/bean";
 import {commentApi,} from "@/service";
 import {DataTableColumn, NA, NAvatar, NButton, NSpace, NSwitch, NTag, TabsInst} from "naive-ui";
@@ -104,6 +105,17 @@ const handleShowDetailAction = (data: CommentVo) => {
 const handleCheckedRowKeys = (keys: Array<string>) => {
 	batchDeleteCommentInfoUidArr.value = keys
 }
+
+const getPageUid = computed(() => {
+	return (commentInfo: CommentVo) => {
+		if (commentInfo && StringUtil.haveLength(commentInfo.path)) {
+			const pageUidArr: string[] = commentInfo.path!.split("/")!
+			return pageUidArr[pageUidArr.length - 1]
+		}else {
+			return autoStore.userInfo.user_uid
+		}
+	}
+})
 
 const handleBatchDeleteComment = () => {
   window.$dialog?.success({
