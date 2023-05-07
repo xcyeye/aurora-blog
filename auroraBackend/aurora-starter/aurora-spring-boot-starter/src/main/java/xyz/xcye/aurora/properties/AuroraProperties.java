@@ -73,6 +73,12 @@ public class AuroraProperties {
          * 将上传文件保存在哪个目录下，会自动在nginx的location/root对应的目录下，创建该文件夹
          */
         private String saveFileFolder;
+
+        private String qiniuOssAccessKey;
+        private String qiniuOssSecretKey;
+        private String qiniuOssBucketName;
+        private String qiniuOssDomain;
+        private Integer defaultStorageMode;
     }
 
     @ConfigurationProperties(prefix = AuroraPaginationProperties.AURORA_PAGINATION_PREFIX)

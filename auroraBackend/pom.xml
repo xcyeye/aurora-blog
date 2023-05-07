@@ -59,6 +59,7 @@
         <kryo-serializers.version>0.44</kryo-serializers.version>
         <blog.version>1.0-SNAPSHOT</blog.version>
         <swagger-annotations.version>1.5.20</swagger-annotations.version>
+        <qiniu-java-sdk.version>7.11.0</qiniu-java-sdk.version>
     </properties>
 
     <!--统一依赖管理-->
@@ -432,6 +433,14 @@
                 <artifactId>auth-server-service</artifactId>
                 <version>${blog.version}</version>
             </dependency>
+
+            <!--七牛云sdk-->
+            <dependency>
+                <groupId>com.qiniu</groupId>
+                <artifactId>qiniu-java-sdk</artifactId>
+                <version>${qiniu-java-sdk.version}</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 

@@ -22,6 +22,7 @@ import xyz.xcye.file.constant.FileStorageModeConstant;
 import xyz.xcye.file.dto.FileEntityDTO;
 import xyz.xcye.file.interfaces.FileStorageService;
 import xyz.xcye.file.interfaces.impl.LocalFileStorageServiceImpl;
+import xyz.xcye.file.interfaces.impl.QiniuFileStorageServiceImpl;
 import xyz.xcye.file.po.File;
 import xyz.xcye.file.pojo.FilePojo;
 import xyz.xcye.file.service.ext.FileExtService;
@@ -47,7 +48,12 @@ public class FileService {
     @Autowired
     private LocalFileStorageServiceImpl localStorageService;
     @Autowired
+    private QiniuFileStorageServiceImpl qiniuFileStorageService;
+    @Autowired
     private AuroraProperties auroraProperties;
+
+    @Autowired
+    private AuroraProperties.AuroraFileProperties auroraFileProperties;
     @Autowired
     private FileExtService fileExtService;
 
@@ -146,10 +152,24 @@ public class FileService {
         return BeanUtils.getSingleObjFromList(auroraFileService.queryListByCondition(Condition.instant(uid, true)).getResult(), FileVO.class);
     }
 
-    private FileStorageService getNeedFileStorageService(int storageMode) {
+    private FileStorageService getNeedFileStorageService(Integer storageMode) {
         FileStorageService fileStorageService = null;
+        if (storageMode == null) {
+            if (auroraFileProperties.getDefaultStorageMode() != null) {
+                storageMode = auroraFileProperties.getDefaultStorageMode();
+            }
+        }
         //查看文件的存储方式
-        if (storageMode == FileStorageModeConstant.LOCAL_STORAGE) {
+        if (storageMode == null) {
+            fileStorageService = localStorageService;
+        }else if (storageMode == FileStorageModeConstant.QINIU_OSS_STORAGE) {
+            // 七牛云
+            fileStorageService = qiniuFileStorageService;
+        }else if (storageMode == FileStorageModeConstant.ALIYUN_OSS_STORAGE) {
+            // 七牛云
+        }else if (storageMode == FileStorageModeConstant.UPYUN_OSS_STORAGE) {
+            // 七牛云
+        }else {
             //本地存储
             fileStorageService = localStorageService;
         }

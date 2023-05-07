@@ -46,6 +46,11 @@
             <groupId>xyz.xcye.starter</groupId>
             <artifactId>aurora-spring-boot-starter</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>com.qiniu</groupId>
+            <artifactId>qiniu-java-sdk</artifactId>
+        </dependency>
     </dependencies>
 
     <build>

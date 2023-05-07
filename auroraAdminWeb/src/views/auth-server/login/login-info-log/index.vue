@@ -84,9 +84,8 @@ onBeforeMount(() => {
 })
 
 watch(() => currentLoginInfo.value, (nv, ov) => {
-	console.log(currentLoginInfo.value);
 	// 如果登录信息改变，重新获取该用户的所有登录信息
-	loginInfoApi.queryListDataByCondition({keyword: currentLoginInfo.value?.username}).then(result => {
+	loginInfoApi.queryListDataByCondition({keyword: currentLoginInfo.value?.username, pageSize: 1000000}).then(result => {
 		if (result.data && result.data.result) {
 			userLoginInfoArr.value = result.data.result
 		}

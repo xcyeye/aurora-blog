@@ -14,4 +14,7 @@ public class FileStorageModeConstant {
 
     /** 又拍云存储 **/
     public final static int UPYUN_OSS_STORAGE = 2;
+
+    /** 又拍云存储 **/
+    public final static int QINIU_OSS_STORAGE = 3;
 }
