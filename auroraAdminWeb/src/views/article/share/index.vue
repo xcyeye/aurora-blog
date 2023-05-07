@@ -53,9 +53,10 @@
 					</n-tab-pane>
 					<n-tab-pane name="comment" tab="评论">
 						<blog-comment
+							:user-uid="currentTalkInfo.userUid"
 							:page-uid="currentTalkInfo.uid"
 							:page-path="`/showSpace/${currentTalkInfo.userUid}/${currentTalkInfo.uid}`"
-							:parent-comment-uid-arr="currentTalkCommentUidArr"
+							:query-regexp="`/showSpace/${currentTalkInfo.userUid}/${currentTalkInfo.uid}`"
 							reply-page-type="TALK"/>
 					</n-tab-pane>
 				</n-tabs>

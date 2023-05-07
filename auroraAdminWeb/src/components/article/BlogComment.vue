@@ -200,10 +200,14 @@ import {UploadFileInfo} from "naive-ui";
 defineComponent({name: 'BlogComment'});
 
 interface Props {
-	parentCommentUidArr: string[]
-	replyPageType: 'ARTICLE' | 'TALK',
+	parentCommentUidArr?: string[]
+	replyPageType: 'ARTICLE' | 'TALK' | 'FRIEND_LINK' | 'OTHER',
 	pagePath: string,
-	pageUid: string
+	pageUid: string,
+	userUid: string,
+	showCommentBut?: boolean,
+	queryRegexp?: string,
+	queryByUserUid?: boolean
 }
 
 interface ReplyCommentUserInfo {
@@ -218,7 +222,9 @@ interface ReplyCommentUserInfo {
 
 const props = withDefaults(defineProps<Props>(), {
 	parentCommentUidArr: () => [],
-	replyPageType: 'ARTICLE'
+	replyPageType: 'OTHER',
+	showCommentBut: true,
+	queryByUserUid: false
 })
 
 const currentClickCommentDto = ref<CommentDto>({})
@@ -226,6 +232,7 @@ const currentClickParentCommentDto = ref<CommentDto>({})
 const showCommentInfo = ref<ShowCommentVo>({})
 const replyCommentData = ref<Comment>({})
 const authStore = useAuthStore()
+const sysSettingStore = useSysSettingStore()
 const isAdminUser = ref(false)
 const replyUserInfo = ref<ReplyCommentUserInfo>({})
 const disableEditEmailStatus = ref(false)
@@ -251,15 +258,37 @@ const loadCommentInfo = () => {
 
 	showCommentInfo.value = {}
 	replyCommentData.value.content = ''
- 	if (props.parentCommentUidArr.length === 0) {
-		 window.$message?.error('没有需要加载的评论数据')
-		return
+ 	// if (props.parentCommentUidArr.length === 0) {
+	// 	 window.$message?.error('没有需要加载的评论数据')
+	// 	return
+	// }
+	//  commentApi.queryListCommentByUidArr({commentUidArr: props.parentCommentUidArr}).then(result => {
+	// 	 if (!result.error && result.data) {
+	// 		 showCommentInfo.value = result.data
+	// 	 }
+	//  })
+
+	if (props.queryByUserUid) {
+		commentApi.queryListCommentByUidArr({userUid: props.userUid}).then(result => {
+			if (!result.error && result.data) {
+				showCommentInfo.value = result.data
+			}
+		})
+	}else {
+		if (!StringUtil.haveLength(props.queryRegexp) && props.parentCommentUidArr.length === 0) return
+		showCommentInfo.value = {}
+		let queryRegexp = props.queryRegexp
+		if (!StringUtil.haveLength(queryRegexp)) {
+			if (!StringUtil.haveLength(props.pagePath) && props.parentCommentUidArr.length === 0) return
+			queryRegexp = props.pagePath
+		}
+		replyCommentData.value.content = ''
+		commentApi.queryListCommentByUidArr({commentUidArr: props.parentCommentUidArr, queryRegexp: queryRegexp}).then(result => {
+			if (!result.error && result.data) {
+				showCommentInfo.value = result.data
+			}
+		})
 	}
-	 commentApi.queryListCommentByUidArr({commentUidArr: props.parentCommentUidArr}).then(result => {
-		 if (!result.error && result.data) {
-			 showCommentInfo.value = result.data
-		 }
-	 })
 }
 
 const setReplyUserInfo = () => {
@@ -303,27 +332,59 @@ const handleReplyCommentAction = () => {
 		window.$message?.error('请输入评论信息')
 		return
 	}
+
 	replyCommentData.value.replyCommentUid = currentClickCommentDto.value.uid
 	replyCommentData.value.avatar = replyUserInfo.value.avatar
 	replyCommentData.value.userUid = replyUserInfo.value.userUid
 	replyCommentData.value.username = replyUserInfo.value.username
 	replyCommentData.value.site = replyUserInfo.value.site
 	replyCommentData.value.email = replyUserInfo.value.email
-	replyCommentData.value.path = replyUserInfo.value.pagePath
-	replyCommentData.value.pageUid = replyUserInfo.value.pageUid
+	replyCommentData.value.path = props.pagePath
+	replyCommentData.value.pageUid = props.pageUid
 	if (!StringUtil.haveLength(props.replyPageType)) {
-		replyCommentData.value.pageType = 'ARTICLE'
+		replyCommentData.value.pageType = 'OTHER'
 	}else {
 		replyCommentData.value.pageType = props.replyPageType
 	}
 
+	if (!StringUtil.haveLength(replyCommentData.value.site)) {
+		const pageWebUrlInfo = sysSettingStore.sysSettingMap.get('page-web-url')
+		let pageWebUrl = ''
+		if (pageWebUrlInfo && StringUtil.haveLength(pageWebUrlInfo.paramValue)) {
+			pageWebUrl = pageWebUrlInfo.paramValue!
+		}
+		replyCommentData.value.site = `${pageWebUrl}/user/${authStore.userInfo.user_uid}`
+	}
+
 	commentApi.insertData(replyCommentData.value).then(result => {
 		if (!result.error) {
-			window.$message?.success(`回复成功o(￣▽￣)ｄ `)
+			window.$message?.success(`新建评论成功o(￣▽￣)ｄ `)
 			replyCommentData.value.content = ''
 			loadCommentInfo()
 		}
 	})
+
+	// replyCommentData.value.replyCommentUid = currentClickCommentDto.value.uid
+	// replyCommentData.value.avatar = replyUserInfo.value.avatar
+	// replyCommentData.value.userUid = replyUserInfo.value.userUid
+	// replyCommentData.value.username = replyUserInfo.value.username
+	// replyCommentData.value.site = replyUserInfo.value.site
+	// replyCommentData.value.email = replyUserInfo.value.email
+	// replyCommentData.value.path = replyUserInfo.value.pagePath
+	// replyCommentData.value.pageUid = replyUserInfo.value.pageUid
+	// if (!StringUtil.haveLength(props.replyPageType)) {
+	// 	replyCommentData.value.pageType = 'ARTICLE'
+	// }else {
+	// 	replyCommentData.value.pageType = props.replyPageType
+	// }
+	//
+	// commentApi.insertData(replyCommentData.value).then(result => {
+	// 	if (!result.error) {
+	// 		window.$message?.success(`回复成功o(￣▽￣)ｄ `)
+	// 		replyCommentData.value.content = ''
+	// 		loadCommentInfo()
+	// 	}
+	// })
 }
 
 const handleFinishUploadFile = (file: UploadFileInfo) => {
