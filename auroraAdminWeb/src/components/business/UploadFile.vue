@@ -61,8 +61,9 @@ import {fileApi} from "@/service";
 import {AuroraFile} from "@/bean/pojo/file/file";
 import {FileVo} from "@/bean/vo/file/fileVo";
 import {useSysSettingStore} from "@/store";
-import {StringUtil} from "@/utils";
+import {getRealImageUrl, StringUtil} from "@/utils";
 import {getSysSetting} from "@/store/modules/sysSetting/helpers";
+import {REGEXP_URL} from "@/config";
 
 defineComponent({name: 'UploadFile'})
 
@@ -241,10 +242,10 @@ const returnFileInfo = (file: UploadFileInfo, fileVoArr: FileVo[], host: string 
 	}
 	return new Promise((resolve, reject) => {
 		const temp: UploadFileInfo[] = [];
-		fileVoArr.forEach(v => {
+		fileVoArr.forEach((v, index) => {
 			temp.push({
 				id: file.id,
-				url: host! + v.path,
+				url: getRealImageUrl(host, v.path),
 				fullPath: v.storagePath,
 				file: file.file,
 				type: file.type,
@@ -254,8 +255,10 @@ const returnFileInfo = (file: UploadFileInfo, fileVoArr: FileVo[], host: string 
 				name: v.fileName!,
 				thumbnailUrl: v.uid
 			});
+			if (index === fileVoArr.length - 1) {
+				resolve(temp);
+			}
 		})
-		resolve(temp);
 	})
 }
 </script>

@@ -1,3 +1,6 @@
+import {REGEXP_URL} from "@/config";
+import {StringUtil} from "@/utils";
+
 export const isImage = (fileName: string): boolean => {
 	return /\.(png|jpg|jpeg|gif|webp)$/.test(fileName);
 }
@@ -43,4 +46,13 @@ export const getFileSize = (size: number | null | undefined): string => {
 	}
 
 	return (size / 1024 / 1024).toFixed(2) + " MB"
+}
+
+export const getRealImageUrl = (host: string | null | undefined, filePath: string | null | undefined): string => {
+	if (REGEXP_URL.test(filePath!)) return filePath!
+	if (!StringUtil.haveLength(host)) return filePath!
+	if (host!.endsWith("/")) {
+		host = host!.substring(0, host!.length - 1)
+	}
+	return host + filePath!
 }

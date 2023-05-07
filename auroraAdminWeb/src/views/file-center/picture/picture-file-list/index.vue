@@ -21,11 +21,12 @@ import {Condition, PageData} from "@/bean/core/bean";
 import {fileApi, loginInfoApi} from "@/service";
 import {DataTableColumn, NAvatar, NButton, NSpace, NTag, NText} from "naive-ui";
 import {EnumMittEventName} from "@/enum";
-import {emitter, getFileFormat, getRandomTagType, isImage, StringUtil} from "@/utils";
+import {emitter, getFileFormat, getRandomTagType, getRealImageUrl, isImage, StringUtil} from "@/utils";
 import {FileVo} from "@/bean/vo/file/fileVo";
 import {copyContent} from "@/plugins";
 import RequestResult = Service.RequestResult;
 import {useSysSettingStore} from "@/store";
+import {REGEXP_URL} from "@/config";
 
 defineComponent({name: 'index'});
 
@@ -84,7 +85,7 @@ const createColumns = (): Array<DataTableColumn> => {
 						NAvatar,
 						{
 							size: 'small',
-							src: `${host}/${row.path}`
+							src: getRealImageUrl(host, row.path)
 						}
 					)
 				}else {
@@ -138,7 +139,7 @@ const createColumns = (): Array<DataTableColumn> => {
 						checkable: true,
 						bordered: false,
 						onUpdateChecked() {
-							copyContent(`${host}/${row.path}`, false)
+							copyContent(getRealImageUrl(host, row.path), false)
 						}
 					},
 					{

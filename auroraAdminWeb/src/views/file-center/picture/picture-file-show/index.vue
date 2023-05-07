@@ -38,8 +38,9 @@ const authStore = useAuthStore()
 const condition = ref<Condition>({
 	otherUid: authStore.userInfo.user_uid,
 	delete: false,
+	pageSize: 10
 })
-const totalTalkNumber = ref(0)
+const totalPictureNumber = ref(0)
 
 defineComponent({name: 'index'});
 
@@ -53,6 +54,7 @@ const loadFileInfo = () => {
   fileApi.queryListDataByCondition(condition.value).then(result => {
 		if (result.data && result.data.result) {
 			pictureFileList.value = result.data.result
+			totalPictureNumber.value = result.data.total!
 			pictureArr.value = result.data.result.map(v => {
 				const obj: PictureProperties = {
 					src: v.path!,
@@ -65,7 +67,7 @@ const loadFileInfo = () => {
 }
 
 const clickLoadMorePicture = () => {
-	if (condition.value.pageSize! > totalTalkNumber.value) {
+	if (condition.value.pageSize! > totalPictureNumber.value) {
 		window.$message?.success('没有更多啦')
 		return
 	}

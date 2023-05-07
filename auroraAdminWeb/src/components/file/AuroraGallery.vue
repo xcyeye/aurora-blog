@@ -25,7 +25,7 @@ import {FileVo} from "@/bean/vo/file/fileVo";
 import {useSysSettingStore} from "@/store";
 import {REGEXP_URL} from "@/config";
 import {isNotEmptyObject, setLazyImg} from "@/utils/business";
-import {emitter, isImage, isVideo, StringUtil} from "@/utils";
+import {emitter, getRealImageUrl, isImage, isVideo, StringUtil} from "@/utils";
 
 interface Props {
 	pictureList: Array<FileVo>,
@@ -59,10 +59,11 @@ const getImageSrc = computed(() => {
 		if (isNotEmptyObject(sysSettingStore.sysSettingMap.get('nginx_file_host')) && StringUtil.haveLength(sysSettingStore.sysSettingMap.get('nginx_file_host')!.paramValue)) {
 			host = sysSettingStore.sysSettingMap.get('nginx_file_host')!.paramValue as string
 		}
-		if (host.endsWith("/")) {
-			host = host.substring(0, host.length - 1)
-		}
-		return host + pictureFile.path
+		// if (host.endsWith("/")) {
+		// 	host = host.substring(0, host.length - 1)
+		// }
+		// return host + pictureFile.path
+		return getRealImageUrl(host, pictureFile.path)
 	}
 })
 

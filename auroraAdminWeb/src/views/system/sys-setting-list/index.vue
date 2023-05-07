@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<show-table-data
-			:data-table-info="{title: '白名单', rowKey: 'uid', striped: true}"
+			:data-table-info="{title: '系统设置', rowKey: 'uid', striped: true}"
 			:data-table-columns="columns"
 			:page-sizes="[10, 20, 30]"
 			:query-data-method="queryDataMethod">
