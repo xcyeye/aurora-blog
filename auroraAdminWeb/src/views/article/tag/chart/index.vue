@@ -16,7 +16,7 @@ import {Article} from "@/bean/pojo/article/Article";
 import {Condition} from "@/bean/core/bean";
 import {articleApi, tagApi} from "@/service";
 import {ECharts} from "echarts";
-import {ECBasicOption} from "echarts/types/dist/shared";
+// import {ECBasicOption} from "echarts/types/dist/shared";
 
 let myChart: ECharts;
 
@@ -186,7 +186,8 @@ async function rePackageGraph() {
 }
 
 const setOption = () => {
-	const option: ECBasicOption = {
+	// const option: ECBasicOption = {
+	const optio = {
 		title: {
 			text: '',
 			// subtext: 'Default layout',
@@ -230,6 +231,7 @@ const setOption = () => {
 			}
 		]
 	};
+	// @ts-ignore
 	myChart.setOption(option);
 };
 

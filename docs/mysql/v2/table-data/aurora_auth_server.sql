@@ -40,11 +40,11 @@ CREATE TABLE `au_login_info`  (
 -- ----------------------------
 -- Records of au_login_info
 -- ----------------------------
-INSERT INTO `au_login_info` VALUES (1634902515327836160, 'auroraDemo', '中国云南省保山市', '106.58.204.208', 'Windows 10;Chrome 10 version: 108.0.0.0', '2023-03-12 21:01:49', NULL, 1, NULL);
+INSERT INTO `au_login_info` VALUES (1634902515327836160, 'demoAurora', '中国云南省保山市', '106.58.204.208', 'Windows 10;Chrome 10 version: 108.0.0.0', '2023-03-12 21:01:49', NULL, 1, NULL);
 INSERT INTO `au_login_info` VALUES (1634902640246792192, 'xcyeye', '中国云南省保山市', '106.58.204.208', 'Windows 10;Chrome 10 version: 108.0.0.0', '2023-03-12 21:02:19', NULL, 1, NULL);
-INSERT INTO `au_login_info` VALUES (1634902767254511616, 'auroraDemo', '中国云南省保山市', '106.58.204.208', 'Windows 10;Chrome 10 version: 108.0.0.0', '2023-03-12 21:02:49', NULL, 1, NULL);
-INSERT INTO `au_login_info` VALUES (1634903071278637056, 'auroraDemo', '中国云南省保山市', '106.58.204.208', 'Windows 10;Chrome 10 version: 108.0.0.0', '2023-03-12 21:04:01', NULL, 1, NULL);
-INSERT INTO `au_login_info` VALUES (1634903363193806848, 'auroraDemo', '中国云南省保山市', '106.58.204.208', 'Windows 10;Chrome 10 version: 108.0.0.0', '2023-03-12 21:05:11', NULL, 1, NULL);
+INSERT INTO `au_login_info` VALUES (1634902767254511616, 'demoAurora', '中国云南省保山市', '106.58.204.208', 'Windows 10;Chrome 10 version: 108.0.0.0', '2023-03-12 21:02:49', NULL, 1, NULL);
+INSERT INTO `au_login_info` VALUES (1634903071278637056, 'demoAurora', '中国云南省保山市', '106.58.204.208', 'Windows 10;Chrome 10 version: 108.0.0.0', '2023-03-12 21:04:01', NULL, 1, NULL);
+INSERT INTO `au_login_info` VALUES (1634903363193806848, 'demoAurora', '中国云南省保山市', '106.58.204.208', 'Windows 10;Chrome 10 version: 108.0.0.0', '2023-03-12 21:05:11', NULL, 1, NULL);
 
 -- ----------------------------
 -- Table structure for oauth_client_details
@@ -70,7 +70,7 @@ CREATE TABLE `oauth_client_details`  (
 -- ----------------------------
 -- Records of oauth_client_details
 -- ----------------------------
-INSERT INTO `oauth_client_details` VALUES ('auroraDemo', NULL, '$2a$10$p8IfLT13u1sN8xt3/UKikO89mAg904PZ5XHEs2m42oyy/TNrHytpG', 'all', 'authorization_code,client_credentials,refresh_token,password', NULL, NULL, NULL, NULL, NULL, NULL, '2023-03-12 21:01:48', NULL);
+INSERT INTO `oauth_client_details` VALUES ('demoAurora', NULL, '$2a$10$p8IfLT13u1sN8xt3/UKikO89mAg904PZ5XHEs2m42oyy/TNrHytpG', 'all', 'authorization_code,client_credentials,refresh_token,password', NULL, NULL, NULL, NULL, NULL, NULL, '2023-03-12 21:01:48', NULL);
 INSERT INTO `oauth_client_details` VALUES ('xcyeye', NULL, '$2a$10$/PQyuzJHQaTRQnc8pG0XU.d7oEtwdg/cHDn36WfRUIp6m/rOfeECC', 'all', 'authorization_code,client_credentials,refresh_token,password', NULL, NULL, NULL, NULL, NULL, NULL, '2023-03-12 19:20:52', NULL);
 
 -- ----------------------------

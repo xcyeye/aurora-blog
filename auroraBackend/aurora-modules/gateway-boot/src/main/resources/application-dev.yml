@@ -29,7 +29,7 @@ spring:
       enable: true
     nacos:
       discovery:
-        server-addr: 192.168.158.120:8848
+        server-addr: 192.168.126.128:8848
         service: aurora-gateway
 
 springdoc:

@@ -14,7 +14,7 @@ import {rand} from '@vueuse/core';
 import {useAuthStore} from '@/store';
 import {Condition} from "@/bean/core/bean";
 import {articleApi, categoryApi, linkApi} from "@/service";
-import {ECBasicOption} from "echarts/types/dist/shared";
+// import {ECBasicOption} from "echarts/types/src/util/types";
 import {CategoryVo} from "@/bean/vo/article/CategoryVo";
 import {ArticleVo} from "@/bean/vo/article/ArticleVo";
 import {LinkVo} from "@/bean/vo/article/LinkVo";
@@ -246,7 +246,8 @@ async function rePackageGraph() {
 }
 
 const setOption = () => {
-	const option: ECBasicOption = {
+	// const option: ECBasicOption = {
+	const option = {
 		title: {
 			text: '',
 			// subtext: 'Default layout',
@@ -290,6 +291,7 @@ const setOption = () => {
 			}
 		]
 	};
+	// @ts-ignore
 	myChart.setOption(option);
 };
 
