@@ -75,12 +75,11 @@
 							</n-text>
 						</div>
 					</n-space>
-					<n-space>
-						<markdown-editor
-							@vditorInput="handleVditorInput"
-							:render-md-content="currentArticleContent? currentArticleContent : ''"
-						/>
-					</n-space>
+					<markdown-editor
+						@vditorInput="handleVditorInput"
+						:min-height="1000"
+						:render-md-content="currentArticleContent? currentArticleContent : ''"
+					/>
 				</n-space>
 			</n-layout-content>
 			<n-layout-sider

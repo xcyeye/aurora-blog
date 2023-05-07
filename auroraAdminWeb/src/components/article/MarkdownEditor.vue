@@ -1,6 +1,6 @@
 <template>
-	<div class="h-full">
-		<n-card :bordered="bordered" class="h-full shadow-sm rounded-16px">
+	<div class="h-full w-full">
+		<n-card :bordered="bordered" class="h-full w-full shadow-sm rounded-16px">
 			<div ref="vditorRef" id="vditor"/>
 		</n-card>
 	</div>
@@ -61,7 +61,7 @@ const props = withDefaults(defineProps<Props>(), {
 			position: 'left'
 		}
 	},
-	minHeight: 500,
+	minHeight: 200,
 	contentMaxNumber: 100000
 })
 
