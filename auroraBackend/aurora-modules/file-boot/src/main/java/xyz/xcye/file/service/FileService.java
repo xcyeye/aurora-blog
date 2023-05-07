@@ -116,7 +116,9 @@ public class FileService {
         //创建一个新对象File最为原始数据对象
         int updateFileNum = 0;
         try {
-            updateFileNum = updateFile(BeanUtils.copyProperties(deleteFileInfo, FilePojo.class));
+            // updateFileNum = updateFile(BeanUtils.copyProperties(deleteFileInfo, FilePojo.class));
+            // 直接删除
+            updateFileNum = auroraFileService.deleteById(deleteFileInfo.getUid());
         } catch (Exception e) {
             LogUtils.logExceptionInfo(e);
         }

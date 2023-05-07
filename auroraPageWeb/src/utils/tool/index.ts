@@ -1,4 +1,5 @@
 import {StringUtil} from "@/utils";
+import {REGEXP_URL} from "@/config";
 
 export const isImage = (fileName: string): boolean => {
 	return /\.(png|jpg|jpeg|gif|webp)$/.test(fileName);
@@ -84,4 +85,13 @@ export const hexToRgb = (hex: string): {r: number, g:number , b: number} | null 
 		g: parseInt(result[2], 16),
 		b: parseInt(result[3], 16)
 	} : null;
+}
+
+export const getRealImageUrl = (host: string | null | undefined, filePath: string | null | undefined): string => {
+	if (REGEXP_URL.test(filePath!)) return filePath!
+	if (!StringUtil.haveLength(host)) return filePath!
+	if (host!.endsWith("/")) {
+		host = host!.substring(0, host!.length - 1)
+	}
+	return host + filePath!
 }

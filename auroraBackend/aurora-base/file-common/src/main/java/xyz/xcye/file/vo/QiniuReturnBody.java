@@ -15,7 +15,7 @@ public class QiniuReturnBody {
 
     private String key;
 
-    private Long fileSize;
+    private Long fsize;
 
     private String mimeType;
 

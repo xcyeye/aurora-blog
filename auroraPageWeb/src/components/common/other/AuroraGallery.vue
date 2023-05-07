@@ -25,7 +25,7 @@ import {FileVo} from "@/bean/vo/file/fileVo";
 import {useSysSettingStore} from "@/stores";
 import {REGEXP_URL} from "@/config";
 import {isNotEmptyObject, setLazyImg} from "@/utils/business";
-import {emitter, isImage, isVideo, StringUtil} from "@/utils";
+import {emitter, getRealImageUrl, isImage, isVideo, StringUtil} from "@/utils";
 
 interface Props {
 	pictureList: Array<FileVo>,
@@ -63,7 +63,7 @@ const getImageSrc = computed(() => {
 		if (host.endsWith("/")) {
 			host = host.substring(0, host.length - 1)
 		}
-		return host + pictureFile.path
+		return getRealImageUrl(host, pictureFile.path)
 	}
 })
 

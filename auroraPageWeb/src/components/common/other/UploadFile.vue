@@ -58,7 +58,7 @@ import {fileApi} from "@/service";
 import {AuroraFile} from "@/bean/pojo/file/file";
 import {FileVo} from "@/bean/vo/file/fileVo";
 import {useSysSettingStore} from "@/stores";
-import {StringUtil} from "@/utils";
+import {getRealImageUrl, StringUtil} from "@/utils";
 import {getSysSetting} from "@/stores/modules/sysSetting/helpers";
 
 defineComponent({name: 'UploadFile'})
@@ -153,6 +153,13 @@ const handleCustomUploadFile = ({file, data, headers,
 	if (storageMode === null || storageMode === undefined) {
 		storageMode = 0;
 	}
+	
+	// TODO 存储模式目前使用配置的默认，不接受传递
+	let defaultFileStorageMode = getSysSetting().get("default_file_storageMode");
+	if (defaultFileStorageMode && StringUtil.haveLength(defaultFileStorageMode.paramValue)) {
+		storageMode = defaultFileStorageMode.paramValue;
+	}
+	
 	if (userUid === null || userUid === undefined) {
 		window.$message?.error("上传失败，请传入userUid值");
 		return;
@@ -239,7 +246,7 @@ const returnFileInfo = (file: UploadFileInfo, fileVoArr: FileVo[], host: string 
 		fileVoArr.forEach(v => {
 			temp.push({
 				id: file.id,
-				url: host! + v.path,
+				url:  getRealImageUrl(host, v.path),
 				fullPath: v.storagePath,
 				file: file.file,
 				type: file.type,

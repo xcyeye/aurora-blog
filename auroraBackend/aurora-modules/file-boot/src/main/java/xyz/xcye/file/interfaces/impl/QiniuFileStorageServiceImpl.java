@@ -62,7 +62,7 @@ public class QiniuFileStorageServiceImpl implements FileStorageService {
         Auth auth = Auth.create(auroraFileProperties.getQiniuOssAccessKey(), auroraFileProperties.getQiniuOssSecretKey());
 
         StringMap policy = new StringMap();
-        policy.put("returnBody", "{\"key\":\"$(key)\",\"bucket\":\"$(bucket)\",\"fileSize\":\"$(fsize)\",\"hash\":\"$(etag)\",\"mimeType\":\"$(mimeType)\"}");
+        policy.put("returnBody", "{\"key\":\"$(key)\",\"bucket\":\"$(bucket)\",\"fsize\":\"$(fsize)\",\"hash\":\"$(etag)\",\"mimeType\":\"$(mimeType)\"}");
         policy.put("scope", storagePath);
         String upToken = auth.uploadToken(auroraFileProperties.getQiniuOssBucketName(), storagePath, 3600, policy);
 
@@ -78,8 +78,9 @@ public class QiniuFileStorageServiceImpl implements FileStorageService {
         QiniuReturnBody qiniuReturnBody = JSON.parseObject(response.bodyString(), QiniuReturnBody.class);
         FileEntityDTO fileEntityDTO = new FileEntityDTO();
         fileEntityDTO.setName(qiniuReturnBody.getKey());
-        fileEntityDTO.setSize(qiniuReturnBody.getFileSize());
-        fileEntityDTO.setStoragePath(qiniuReturnBody.getHash());
+        fileEntityDTO.setSize(qiniuReturnBody.getFsize());
+        fileEntityDTO.setStoragePath(qiniuReturnBody.getKey());
+        fileEntityDTO.setFilePathUri(qiniuReturnBody.getHash());
         fileEntityDTO.setRemoteUrl(auroraFileProperties.getQiniuOssDomain() + "/" + storagePath);
         fileEntityDTO.setCreateTime(DateUtils.format());
         return fileEntityDTO;
@@ -103,8 +104,9 @@ public class QiniuFileStorageServiceImpl implements FileStorageService {
         fileEntity.setName(FileUtils.getFileName(objectName));
         fileEntity.setInputStream(response.bodyStream());
         fileEntity.setRemoteUrl(getDownloadUrl(auroraFileProperties.getQiniuOssDomain(), true, objectName));
-        fileEntity.setStoragePath(qiniuReturnBody.getHash());
-        fileEntity.setSize(qiniuReturnBody.getFileSize());
+        fileEntity.setStoragePath(qiniuReturnBody.getKey());
+        fileEntity.setFilePathUri(qiniuReturnBody.getHash());
+        fileEntity.setSize(qiniuReturnBody.getFsize());
         return fileEntity;
     }
 
@@ -166,7 +168,7 @@ public class QiniuFileStorageServiceImpl implements FileStorageService {
         if (auroraFileProperties.getQiniuOssDomain().startsWith("http://")) {
             domain = auroraFileProperties.getQiniuOssDomain().substring("http://".length());
         }
-        DownloadUrl downloadUrl = new DownloadUrl(domain, false, objectName);
+        DownloadUrl downloadUrl = new DownloadUrl(domain, useHttps, objectName);
         if (isAttname) {
             downloadUrl.setAttname(FileUtils.getFileName(objectName));
         }

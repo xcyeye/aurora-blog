@@ -167,6 +167,12 @@ const handleCustomUploadFile = ({file, data, headers,
 		summary = `用户 ${userUid} 上传的文件`;
 	}
 
+	// TODO 存储模式目前使用配置的默认，不接受传递
+	let defaultFileStorageMode = sysSettingStore.sysSettingMap.get("default_file_storageMode");
+	if (defaultFileStorageMode && StringUtil.haveLength(defaultFileStorageMode.paramValue)) {
+		storageMode = defaultFileStorageMode.paramValue;
+	}
+
 	if (props.uploadFileInterface === 'single') {
 		fileApi.singleUploadFile(file.file, storageMode, userUid, summary).then(result => {
 			// 上传成功，保存文件的信息

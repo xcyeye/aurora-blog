@@ -212,6 +212,8 @@ const createColumns = (): Array<DataTableColumn> => {
 						default: () => {
 							if (row.storageMode === 0) return 'LOCAL_STORAGE'
 							if (row.storageMode === 1) return 'ALIYUN_OSS_STORAGE'
+							if (row.storageMode === 2) return 'UPYUN_OSS_STORAGE'
+							if (row.storageMode === 3) return 'QINIU_OSS_STORAGE'
 							return 'LOCAL_STORAGE'
 						}
 					}
