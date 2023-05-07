@@ -233,6 +233,20 @@
 							</n-tabs>
 						</n-space>
 					</n-card>
+					<n-card v-if="!addArticleStatus" hoverable class="rounded-16px shadow-sm" :bordered="false" size="small">
+						<n-space vertical>
+							<n-text>文章评论</n-text>
+							<n-scrollbar>
+								<blog-comment
+									style="max-height: calc(30vh)"
+									:user-uid="currentArticle.userUid"
+									:page-uid="currentArticle.uid"
+									:page-path="`/article/${currentArticle.userUid}/${currentArticle.uid}`"
+									:query-regexp="`/article/${currentArticle.userUid}/${currentArticle.uid}`"
+									reply-page-type="ARTICLE"/>
+							</n-scrollbar>
+						</n-space>
+					</n-card>
 					<n-card hoverable class="rounded-16px shadow-sm" :bordered="false" size="small">
 						<n-space vertical>
 							<n-text>编辑器设置</n-text>
@@ -403,6 +417,7 @@ const loadCurrentArticleInfo = (uid: string) => {
 			if (result.data) {
 				addArticleStatus.value = false
 				currentArticle.value = result.data
+				console.log(currentArticle.value);
 				currentArticleContent.value = currentArticle.value.content!
 				if (StringUtil.haveLength(currentArticle.value.tagNames)) {
 					tagArr.value = currentArticle.value.tagNames!.split(",")
