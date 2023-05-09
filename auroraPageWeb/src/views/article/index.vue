@@ -105,6 +105,7 @@
 			</aurora-card>
 			
 			<blog-comment
+				v-if="articleInfo.showComment"
 				:user-uid="userUid"
 				:page-uid="articleUid"
 				:query-regexp="`/article/${userUid}/${articleUid}`"
