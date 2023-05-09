@@ -32,6 +32,10 @@ const showDrawer = ref(false)
 const style = ref<string>('')
 
 const handleClick = () => {
+	if (props.talkInfo && !props.talkInfo.showComment) {
+		window.$message?.error('此说说禁止评论┭┮﹏┭┮')
+		return
+	}
   showDrawer.value = !showDrawer.value
 }
 

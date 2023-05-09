@@ -12,22 +12,14 @@
 			</div>
 		</div>
 		<div class="mood-img-right" v-if="getTalkPictureArr" id="mood-img-right">
-			<!--<photo-waterfall-->
-			<!--	:picture-src-list="getTalkPictureArr"-->
-			<!--	:mobile-waterfall-img-col="3"-->
-			<!--	:pc-waterfall-img-col="4"-->
-			<!--	:show-bg-color="false"/>-->
 			<aurora-gallery :user-uid="userUid" :show-load-more-but="false" :picture-list="getTalkPictureArr"/>
 		</div>
 		<div class="mood-edit">
 			<div class="mood-edit-right">
 				<div class="mood-edit-single-common">
-					<!--<span @click="moodComment($event,moodItem)" class="aurora-coze-font aurora-coze-custom-comment"></span>-->
 					<n-avatar :src="useUserInfo().getUserInfo(userUid).avatar" round/>
 				</div>
-				<!--<slot name="coze-mood-bottom-left"></slot>-->
 				<div class="mood-edit-single-common">
-					<!--<span @click="moodComment($event,moodItem)" class="aurora-coze-font aurora-coze-custom-comment"></span>-->
 					<talk-comment :talk-info="moodItem"/>
 				</div>
 				<div :class="getMoodLike" class="mood-edit-single-common">
@@ -39,8 +31,6 @@
 										 :update-like-num-request-method="updateTalkNumMethod"
 										 :like-number="moodItem.likeNumber"
 										 :show-like-num="false"/>
-					<!--<span :class="{'mood_like_love_active': moodLikeStatus}" @click="moodLove($event,moodItem)" class="aurora-coze-font aurora-coze-custom-love"></span>&nbsp;-->
-					<!--<span>{{getCozeMoodLink}}</span>-->
 				</div>
 			</div>
 		</div>
