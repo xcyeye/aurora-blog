@@ -327,7 +327,7 @@ const createColumns = (): Array<DataTableColumn> => {
 			key: 'actions',
 			fixed: 'right',
 			width: 200,
-			render(row) {
+			render(row: ArticleVo) {
 				return h(
 					NSpace,
 					{
@@ -341,6 +341,7 @@ const createColumns = (): Array<DataTableColumn> => {
 									size: 'small',
 									type: 'warning',
 									ghost: true,
+									disabled: row.delete,
 									onClick: () => handleDeleteAction(row)
 								},
 								{ default: () => '删除' }

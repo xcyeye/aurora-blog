@@ -269,7 +269,7 @@ const updateReadNum = (article: ArticleVo) => {
 
 const loadArticleInfo = () => {
 	articleApi.queryOneDataByUid({uid: articleUid.value}).then(result => {
-		if (result.data && isNotEmptyObject(result.data)) {
+		if (result.data && isNotEmptyObject(result.data) && !result.data.delete && result.data.publish) {
 			articleInfo.value = result.data
 			renderMarkdownContent(result.data)
 			calculateReadTime()
