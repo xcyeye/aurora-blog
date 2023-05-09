@@ -63,7 +63,7 @@
 
 				<template #footer>
 					<n-space>
-						<n-button type="primary" ghost @click="handleModifyOrAddAction(null)" >{{addStatus ? '添加' : '修改'}}</n-button>
+						<n-button type="primary" ghost @click="handleModifyOrAddAction()" >{{addStatus ? '添加' : '修改'}}</n-button>
 					</n-space>
 				</template>
 			</n-drawer-content>
@@ -74,7 +74,7 @@
 <script lang="ts" setup>
 import {defineComponent, h, onMounted, ref} from "vue";
 import {Condition, PageData} from "@/bean/core/bean";
-import {bulletinApi, fileApi, talkApi} from "@/service";
+import {talkApi} from "@/service";
 import {DataTableColumn, NButton, NSpace, NSwitch, NTag, UploadFileInfo} from "naive-ui";
 import {EnumMittEventName} from "@/enum";
 import {emitter, StringUtil} from "@/utils";
@@ -170,16 +170,28 @@ const removeTalkPicture = () => {
 	// pictureFileArr.value.splice(pictureFileArr.value.indexOf(currentPictureFile.value))
 }
 
-const handleModifyOrAddAction = (row?: TalkVo | null) => {
+const handleSwitchStatus = (row: TalkVo, showComment: boolean, show: boolean, isChangeShowComment: boolean) => {
 	if (row) {
-		bulletinApi.updateData(row!).then(result => {
+		row.showComment = showComment
+		row.show = show
+		talkApi.updateData(row!).then(result => {
 			if (result.data && result.data === 1) {
 				window.$message?.success('修改成功 ○|￣|_')
 				emitter.emit(EnumMittEventName.reloadData)
 				showDrawer.value = false
+			}else {
+				window.$message?.error('修改失败 ○|￣|_')
+				if (isChangeShowComment) {
+					row.showComment = !row.showComment
+				}else {
+					row.show = !row.show
+				}
 			}
 		})
 	}
+}
+
+const handleModifyOrAddAction = () => {
 	// if (!StringUtil.haveLength(currentTalkInfo.value.title)) {
 	// 	window.$message?.error('需要输入一个标题(ノへ￣、) ')
 	// 	return
@@ -256,8 +268,7 @@ const createColumns = (): Array<DataTableColumn> => {
 					NSwitch, {
 						value: row.show,
 						onUpdateValue(value: boolean) {
-							row.show = value
-							handleModifyOrAddAction(row)
+							handleSwitchStatus(row, row.showComment!, value, false)
 						}
 					}
 				)
@@ -274,8 +285,7 @@ const createColumns = (): Array<DataTableColumn> => {
 					NSwitch, {
 						value: row.showComment,
 						onUpdateValue(value: boolean) {
-							row.showComment = value
-							handleModifyOrAddAction(row)
+							handleSwitchStatus(row, value, row.show!, false)
 						}
 					}
 				)
