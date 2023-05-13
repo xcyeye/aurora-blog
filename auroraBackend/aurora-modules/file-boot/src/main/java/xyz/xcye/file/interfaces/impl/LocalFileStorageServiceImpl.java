@@ -12,6 +12,8 @@ import xyz.xcye.core.util.FileUtils;
 import xyz.xcye.core.util.LogUtils;
 import xyz.xcye.file.dto.FileEntityDTO;
 import xyz.xcye.file.interfaces.FileStorageService;
+import xyz.xcye.file.pojo.FilePojo;
+import xyz.xcye.file.utils.FileStorageUtil;
 import xyz.xcye.file.utils.UploadFileExecutor;
 
 import java.io.File;
@@ -70,16 +72,8 @@ public class LocalFileStorageServiceImpl implements FileStorageService {
      * @throws IOException
      */
     @Override
-    public FileEntityDTO upload(InputStream inputStream, FileEntityDTO fileEntity) throws FileException, IOException, ExecutionException, InterruptedException {
+    public FileEntityDTO upload(InputStream inputStream, FileEntityDTO fileEntity, FilePojo pojo) throws FileException, IOException, ExecutionException, InterruptedException {
         ThreadPoolExecutor executor = UploadFileExecutor.getInstance();
-        //获取上传文件的扩展名
-        String extName = FileUtils.getExtName(fileEntity.getName());
-
-        String separator = File.separator;
-
-        //获取当前的年和月
-        int currentYear = DateUtils.getYear(new Date());
-        int currentMonth = DateUtils.getMonth(new Date());
 
         if (!nginxRootPath.endsWith(File.separator)) {
             nginxRootPath = nginxRootPath + File.separator;
@@ -89,7 +83,7 @@ public class LocalFileStorageServiceImpl implements FileStorageService {
         fileEntity.setName(fileEntity.getName().replaceAll(" ", ""));
 
         //判断文件夹是否存在aurora.file.nginx-root-path/aurora.file.upload-folder-name/extName/currentYear/currentMonth
-        String folderPath = nginxRootPath + uploadFolderName + separator + extName + separator + currentYear + separator + currentMonth;
+        String folderPath = nginxRootPath + uploadFolderName + File.separator + FileStorageUtil.getStoragePathDirByTimeAndFileName(fileEntity.getName(), false, pojo);
         String filePath = getFilePath(fileEntity, folderPath);
 
         // 1. 创建此path文件路径还有文件夹（如果不存在）
@@ -133,12 +127,12 @@ public class LocalFileStorageServiceImpl implements FileStorageService {
     }
 
     @Override
-    public FileEntityDTO download(String objectName) throws IOException {
-        return query(objectName);
+    public FileEntityDTO download(String objectName, FilePojo pojo) throws IOException {
+        return query(objectName, pojo);
     }
 
     @Override
-    public FileEntityDTO query(String objectName) throws IOException {
+    public FileEntityDTO query(String objectName, FilePojo pojo) throws IOException {
         InputStream inputStream = FileUtils.getInputStream(objectName);
         return FileEntityDTO.builder()
                 .inputStream(inputStream).name(FileUtils.getFileName(objectName))
@@ -153,7 +147,7 @@ public class LocalFileStorageServiceImpl implements FileStorageService {
      * @return 删除成功 true 失败 false
      */
     @Override
-    public boolean delete(String objectName) {
+    public boolean delete(String objectName, FilePojo pojo) {
         return FileUtils.deleteFile(objectName);
     }
 

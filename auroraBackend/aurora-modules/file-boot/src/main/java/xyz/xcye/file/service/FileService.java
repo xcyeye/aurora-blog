@@ -72,7 +72,7 @@ public class FileService {
 
         // 根据storageMode获取需要使用的文件存储方式
         FileStorageService fileStorageService = getNeedFileStorageService(filePojo.getStorageMode());
-        FileEntityDTO uploadFileEntity = fileStorageService.upload(fileEntity.getInputStream(), fileEntity);
+        FileEntityDTO uploadFileEntity = fileStorageService.upload(fileEntity.getInputStream(), fileEntity, filePojo);
 
         File newFile = File.builder()
                 .uid(uid).delete(false).fileName(uploadFileEntity.getName())
@@ -95,15 +95,16 @@ public class FileService {
     public int deleteFile(long uid) throws IOException, FileException, ExecutionException, InterruptedException {
         // 查询出此uid对应的文件的存储位置
         File deleteFileInfo = getFileDOByUid(uid);
+        FilePojo filePojo = BeanUtils.copyProperties(deleteFileInfo, FilePojo.class);
 
         //获取此文件的存储模式，然后删除文件
         FileStorageService fileStorageService = getNeedFileStorageService(deleteFileInfo.getStorageMode());
         Objects.requireNonNull(fileStorageService, "没有发现此文件存储对象");
         // 先获取原文件的数据流
-        FileEntityDTO originFileEntity = fileStorageService.query(deleteFileInfo.getStoragePath());
+        FileEntityDTO originFileEntity = fileStorageService.query(deleteFileInfo.getStoragePath(), filePojo);
 
         //从对应的存储模式中删除文件
-        if (!fileStorageService.delete(deleteFileInfo.getStoragePath())) {
+        if (!fileStorageService.delete(deleteFileInfo.getStoragePath(), filePojo)) {
             //没有删除成功，直接返回null
             throw new FileException (ResponseStatusCodeEnum.EXCEPTION_FILE_FAIL_DELETE.getMessage() + " 可能原因：文件不存在",
                     ResponseStatusCodeEnum.EXCEPTION_FILE_FAIL_DELETE.getCode());
@@ -124,7 +125,7 @@ public class FileService {
         }
         if (updateFileNum != 1) {
             // 修改失败，恢复原来的文件
-            fileStorageService.upload(originFileEntity.getInputStream(), originFileEntity);
+            fileStorageService.upload(originFileEntity.getInputStream(), originFileEntity, filePojo);
         }
         return updateFileNum;
     }
@@ -186,7 +187,7 @@ public class FileService {
         FileStorageService fileStorageService = getNeedFileStorageService(deleteFileInfo.getStorageMode());
 
         // 先获取原文件的数据流
-        return fileStorageService.query(deleteFileInfo.getStoragePath());
+        return fileStorageService.query(deleteFileInfo.getStoragePath(), BeanUtils.copyProperties(deleteFileInfo, FilePojo.class));
     }
 
     public PageData<FileVO> querySpecifyFormatFiles(Condition<Long> condition) {

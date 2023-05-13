@@ -21,12 +21,11 @@ import xyz.xcye.core.util.FileUtils;
 import xyz.xcye.core.util.LogUtils;
 import xyz.xcye.file.dto.FileEntityDTO;
 import xyz.xcye.file.interfaces.FileStorageService;
+import xyz.xcye.file.pojo.FilePojo;
 import xyz.xcye.file.utils.FileStorageUtil;
 import xyz.xcye.file.vo.QiniuReturnBody;
 
 import java.io.*;
-import java.net.URLEncoder;
-import java.util.Date;
 import java.util.concurrent.ExecutionException;
 
 /**
@@ -43,7 +42,7 @@ public class QiniuFileStorageServiceImpl implements FileStorageService {
     private AuroraProperties.AuroraFileProperties auroraFileProperties;
 
     @Override
-    public FileEntityDTO upload(InputStream inputStream, FileEntityDTO fileEntity) throws FileException, IOException, ExecutionException, InterruptedException {
+    public FileEntityDTO upload(InputStream inputStream, FileEntityDTO fileEntity, FilePojo pojo) throws FileException, IOException, ExecutionException, InterruptedException {
 
         if (!StringUtils.hasLength(auroraFileProperties.getQiniuOssAccessKey()) ||
                 !StringUtils.hasLength(auroraFileProperties.getQiniuOssSecretKey()) ||
@@ -58,7 +57,7 @@ public class QiniuFileStorageServiceImpl implements FileStorageService {
 
         UploadManager uploadManager = new UploadManager(cfg);
 
-        String storagePath = FileStorageUtil.getStoragePathDirByTimeAndFileName(fileEntity.getName(), true) + "/" + fileEntity.getName();
+        String storagePath = FileStorageUtil.getStoragePathDirByTimeAndFileName(fileEntity.getName(), true, pojo) + "/" + fileEntity.getName();
         Auth auth = Auth.create(auroraFileProperties.getQiniuOssAccessKey(), auroraFileProperties.getQiniuOssSecretKey());
 
         StringMap policy = new StringMap();
@@ -87,7 +86,7 @@ public class QiniuFileStorageServiceImpl implements FileStorageService {
     }
 
     @Override
-    public FileEntityDTO download(String objectName) throws IOException {
+    public FileEntityDTO download(String objectName, FilePojo pojo) throws IOException {
         BucketManager bucketManager = getBucketManager();
 
         Response response = null;
@@ -111,7 +110,7 @@ public class QiniuFileStorageServiceImpl implements FileStorageService {
     }
 
     @Override
-    public FileEntityDTO query(String objectName) throws IOException {
+    public FileEntityDTO query(String objectName, FilePojo pojo) throws IOException {
         // Auth auth = Auth.create(auroraFileProperties.getQiniuOssAccessKey(), auroraFileProperties.getQiniuOssSecretKey());
         //
         // Configuration cfg = new Configuration(Region.huadongZheJiang2());
@@ -131,12 +130,12 @@ public class QiniuFileStorageServiceImpl implements FileStorageService {
         // entity.setSize(fileInfo.fsize);
         // entity.setStoragePath(objectName);
         // entity.setRemoteUrl(auroraFileProperties.getQiniuOssDomain() + "/" + objectName);
-        FileEntityDTO fileEntityDTO = download(objectName);
+        FileEntityDTO fileEntityDTO = download(objectName, pojo);
         return fileEntityDTO;
     }
 
     @Override
-    public boolean delete(String objectName) {
+    public boolean delete(String objectName, FilePojo pojo) {
         BucketManager bucketManager = getBucketManager();
         Response deleteResponse = null;
         try {

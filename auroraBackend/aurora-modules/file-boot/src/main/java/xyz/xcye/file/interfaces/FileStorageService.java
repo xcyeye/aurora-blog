@@ -3,6 +3,7 @@ package xyz.xcye.file.interfaces;
 
 import xyz.xcye.core.exception.file.FileException;
 import xyz.xcye.file.dto.FileEntityDTO;
+import xyz.xcye.file.pojo.FilePojo;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -20,7 +21,7 @@ public interface FileStorageService {
      * @return 文件实体
      * @throws IOException 异常
      */
-    FileEntityDTO upload(InputStream inputStream, FileEntityDTO fileEntity) throws FileException, IOException, ExecutionException, InterruptedException;
+    FileEntityDTO upload(InputStream inputStream, FileEntityDTO fileEntity, FilePojo pojo) throws FileException, IOException, ExecutionException, InterruptedException;
 
     /**
      * 将文件从存储服务上下载下来
@@ -28,7 +29,7 @@ public interface FileStorageService {
      * @return 输出流
      * @throws IOException 异常
      */
-    FileEntityDTO download(String objectName) throws IOException;
+    FileEntityDTO download(String objectName, FilePojo pojo) throws IOException;
 
     /**
      * 根据objectName查询文件
@@ -36,7 +37,7 @@ public interface FileStorageService {
      * @return 文件实体
      * @throws IOException 异常
      */
-    FileEntityDTO query(String objectName) throws IOException;
+    FileEntityDTO query(String objectName, FilePojo pojo) throws IOException;
 
     /**
      * 根据objectName删除对应文件
@@ -44,5 +45,5 @@ public interface FileStorageService {
      * @return true表示删除成功，false表示删除失败
      * @throws IOException 异常
      */
-    boolean delete(String objectName);
+    boolean delete(String objectName, FilePojo pojo);
 }
