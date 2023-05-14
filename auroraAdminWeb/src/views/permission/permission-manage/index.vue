@@ -303,21 +303,38 @@ const loadUserRolePermissionInfo = () => {
 			result.data.result.forEach(v => {
 				rolePermissionRelApi.loadPermissionByRoleName({roleNameArr: [v.name!]}).then(roleResult => {
 					if (roleResult.data) {
+
 						// 数据封装
-						const userVos = roleResult.data.map(userInfo => {
+						const userVoMaps = new Map<string, UserVo>();
+						const permissionVoMaps = new Map<string, PermissionVo>();
+
+						roleResult.data.map(userInfo => {
 							const user: UserVo = {
 								username: userInfo.username,
 								uid: userInfo.userUid
 							}
-							return user
-						}).concat();
-
-						const permissionVos = roleResult.data.map(permissionInfo => {
-							const permission: PermissionVo = {
-								name: permissionInfo.permissionName
+							return user;
+						}).concat().forEach(v => {
+							if (!userVoMaps.get(v.username!)) {
+								userVoMaps.set(v.username!, v)
 							}
-							return permission
-						}).concat();
+						})
+						const userVos = new Array<UserVo>()
+						userVoMaps.forEach(v => {
+							userVos.push(v)
+						})
+
+						const permissionSet = new Set<string>()
+						roleResult.data.forEach(permissionInfo => {
+							permissionSet.add(`${permissionInfo.permissionName!} - ${permissionInfo.path}`)
+						})
+
+						const permissionVos = new Array<PermissionVo>()
+						permissionSet.forEach(v => {
+							permissionVos.push({
+								name: v
+							})
+						})
 
 						userRolePermissionInfoArr.value.push({
 							roleInfo: v,
