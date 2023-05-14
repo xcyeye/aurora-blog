@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<show-table-data
-			:data-table-info="{title: '用户管理', rowKey: 'uid', striped: true}"
+			:data-table-info="{title: '角色管理', rowKey: 'uid', striped: true}"
 			:data-table-columns="columns"
 			:query-data-method="queryDataMethod">
 			<template #cardHeader1>
