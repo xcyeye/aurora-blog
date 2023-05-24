@@ -28,7 +28,7 @@ const darkColor = computed(() => getColorPalette(props.themeColor, 6));
 
 <style scoped lang="css">
 #aurora-blog-login-bg {
-	background-image: url('/bg/login-bg.jpg');
+	/*background-image: url('/bg/login-bg.jpg');*/
 	background-position: center;
 	background-repeat: no-repeat;
 }
