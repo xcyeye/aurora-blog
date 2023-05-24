@@ -103,7 +103,7 @@ import type {UserVo} from '@/bean/vo/admin/UserVo';
 import {rolePermissionRelApi} from '@/service/api/admin/RolePermissionRelApi';
 import type {PermissionVo} from '@/bean/vo/admin/PermissionVo';
 import type {RoleVo} from '@/bean/vo/admin/RoleVo';
-import {getRandomTagType, removeDuplicateElement} from "@/utils";
+import {getRandomTagType, removeDuplicateElement, StringUtil} from "@/utils";
 import {interfaceInfoApi} from "@/service/api/auth/interfaceInfoApi";
 
 defineComponent({ name: 'Index' });
@@ -315,7 +315,7 @@ const loadUserRolePermissionInfo = () => {
 							}
 							return user;
 						}).concat().forEach(v => {
-							if (!userVoMaps.get(v.username!)) {
+							if (!userVoMaps.get(v.username!) && StringUtil.haveLength(v.username)) {
 								userVoMaps.set(v.username!, v)
 							}
 						})
