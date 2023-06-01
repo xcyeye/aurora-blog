@@ -47,13 +47,13 @@ const queryDataMethod = (condition: Condition): Promise<RequestResult<PageData<A
 // 定义方法
 const handleDeleteAction = (data: AdminRouterVo) => {
 	window.$dialog?.warning({
-		title: `删除 ${data.name} 路由◔ ‸◔?`,
+		title: `删除 ${data.name} 路由?`,
 		positiveText: '删除',
 		negativeText: '取消',
 		onPositiveClick: () => {
 			adminRouterApi.physicalDeleteData(data as AdminRouter).then(result => {
 				if (result.data === 1) {
-					window.$message?.success(`删除 ${data.name} 成功 ㄟ( ▔, ▔ )ㄏ `)
+					window.$message?.success(`删除 ${data.name} 成功`)
 					condition.value.delete = false
 					emitter.emit(EnumMittEventName.reloadData)
 				}

@@ -5,7 +5,7 @@
 				<n-card :bordered="false" hoverable class="shadow-sm rounded-16px">
 					<n-descriptions label-placement="left" :column="2" title="系统内置页面">
 						<n-descriptions-item :label="`${authStore.userInfo.username}的主页`">
-							<span @click="copyContent(`/article/${authStore.userInfo.user_uid}/${articleInfo.uid}`, false)">/article/{{authStore.userInfo.user_uid}}/{{articleInfo.uid}}</span>
+							<span @click="copyContent(`/user/${authStore.userInfo.user_uid}`, false)">/user/{{authStore.userInfo.user_uid}}</span>
 						</n-descriptions-item>
 						<n-descriptions-item label="友情链接">
 							<span @click="copyContent(`/friendLink/${authStore.userInfo.user_uid}`, false)">/friendLink/{{authStore.userInfo.user_uid}}</span>

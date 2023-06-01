@@ -99,7 +99,7 @@ const handleDeleteAction = (data: BulletinVo) => {
 		onPositiveClick: () => {
 			bulletinApi.logicDeleteData(data as Bulletin).then(result => {
 				if (result.data === 1) {
-					window.$message?.success(`删除 ${data.title} 公告成功 ○|￣|_`);
+					window.$message?.success(`删除 ${data.title} 公告成功`);
 					emitter.emit(EnumMittEventName.reloadData)
 				}
 			})
@@ -107,7 +107,7 @@ const handleDeleteAction = (data: BulletinVo) => {
 		onNegativeClick: () => {
 			bulletinApi.physicalDeleteData(data as Bulletin).then(result => {
 				if (result.data === 1) {
-					window.$message?.success(`删除 ${data.title} 公告成功 ○|￣|_`);
+					window.$message?.success(`删除 ${data.title} 公告成功`);
 					emitter.emit(EnumMittEventName.reloadData)
 				}
 			})
@@ -123,17 +123,17 @@ const handleShowBulletinInfoAction = (data: Bulletin) => {
 
 const handleModifyOrAddAction = () => {
   if (!StringUtil.haveLength(currentBulletinInfo.value.title)) {
-		window.$message?.error('需要输入一个标题(ノへ￣、) ')
+		window.$message?.error('需要输入一个标题')
 		return
 	}
 	if (!StringUtil.haveLength(currentBulletinInfo.value.content)) {
-		window.$message?.error('需要输入一个内容(ノへ￣、) ')
+		window.$message?.error('需要输入一个内容')
 		return
 	}
 	if (addStatus.value) {
 		bulletinApi.insertData(currentBulletinInfo.value).then(result => {
 			if (!result.error) {
-				window.$message?.success('添加成功 ○|￣|_')
+				window.$message?.success('添加成功')
 				emitter.emit(EnumMittEventName.reloadData)
 				showDrawer.value = false
 			}
@@ -141,7 +141,7 @@ const handleModifyOrAddAction = () => {
 	}else {
 		bulletinApi.updateData(currentBulletinInfo.value).then(result => {
 			if (result.data && result.data === 1) {
-				window.$message?.success('修改成功 ○|￣|_')
+				window.$message?.success('修改成功')
 				emitter.emit(EnumMittEventName.reloadData)
 				showDrawer.value = false
 			}
@@ -199,12 +199,12 @@ const createColumns = (): Array<DataTableColumn> => {
 						value: row.timing,
 						onUpdateValue(value: boolean) {
 							if (!StringUtil.haveLength(row.timingPublishTime)) {
-								window.$message?.error('需要设置定时时间(*￣︿￣) ')
+								window.$message?.error('需要设置定时时间')
 							}else {
 								row.timing = value
 								bulletinApi.updateData(row).then(result => {
 									if (result.data && result.data === 1) {
-										window.$message?.success(`修改成功o(￣▽￣)ｄ `)
+										window.$message?.success(`修改成功`)
 									}
 								})
 							}

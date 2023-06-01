@@ -141,35 +141,35 @@ const originPublishStatus = ref(false)
 // 定义方法
 const handleClickModifyAction = () => {
 	if (!REGEXP_URL.test(modifyLinkInfo.value.linkUrl!)) {
-		window.$message?.error('友情链接地址貌似不是一个URL(ノへ￣、)')
+		window.$message?.error('友情链接地址貌似不是一个URL')
 		return
 	}
 	if (!StringUtil.haveLength(modifyLinkInfo.value.linkTitle)) {
-		window.$message?.error('需要输入站点标题(ノへ￣、)')
+		window.$message?.error('需要输入站点标题')
 		return
 	}
 	if (!StringUtil.haveLength(modifyLinkInfo.value.linkLogo)) {
-		window.$message?.error('貌似你还没有上传站点Logo(ノへ￣、)')
+		window.$message?.error('貌似你还没有上传站点Logo')
 		return
 	}
 	if (!StringUtil.haveLength(modifyLinkInfo.value.categoryName)) {
-		window.$message?.error('必须要选择一个分类(ノへ￣、)')
+		window.$message?.error('必须要选择一个分类')
 		return
 	}
 	if (!REGEXP_EMAIL.test(modifyLinkInfo.value.email!)) {
-		window.$message?.error('貌似还没有添加对方邮箱号(ノへ￣、)')
+		window.$message?.error('貌似还没有添加对方邮箱号')
 		return
 	}
 	if (originPublishStatus.value !== modifyLinkInfo.value.publish) {
 		if (!modifyLinkInfo.value.publish) {
 			// 下架
 			if (!StringUtil.haveLength(modifyLinkInfo.value.replyMessage)) {
-				window.$message?.error(`需要在留言那里输入下架原因(ノへ￣、)`)
+				window.$message?.error(`需要在留言那里输入下架原因`)
 				return;
 			}
 		}else {
 			if (!StringUtil.haveLength(modifyLinkInfo.value.replyMessage)) {
-				window.$message?.error(`审核通过，留言提醒站长吧o(￣▽￣)ｄ`)
+				window.$message?.error(`审核通过，留言提醒站长吧`)
 				return;
 			}
 		}
@@ -178,7 +178,7 @@ const handleClickModifyAction = () => {
 		// 修改操作
 		linkApi.updateData(modifyLinkInfo.value).then(result => {
 			if (result.data === 1) {
-				window.$message?.success(`修改友情链接 ${modifyLinkInfo.value.linkUrl} 成功o(￣▽￣)ｄ`)
+				window.$message?.success(`修改友情链接 ${modifyLinkInfo.value.linkUrl} 成功`)
 				emitter.emit(EnumMittEventName.reloadData)
 			}
 		})
@@ -186,7 +186,7 @@ const handleClickModifyAction = () => {
 		modifyLinkInfo.value.userUid = authStore.userInfo.user_uid
 		linkApi.insertData(modifyLinkInfo.value).then(result => {
 			if (!result.error) {
-				window.$message?.success(`添加友情链接 ${modifyLinkInfo.value.linkUrl}成功 o(￣▽￣)ｄ`)
+				window.$message?.success(`添加友情链接 ${modifyLinkInfo.value.linkUrl}成功 `)
 				showDrawer.value = false
 				emitter.emit(EnumMittEventName.reloadData)
 			}

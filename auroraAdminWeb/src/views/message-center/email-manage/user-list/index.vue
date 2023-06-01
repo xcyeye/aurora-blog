@@ -51,7 +51,7 @@ const handleDeleteAction = (data: EmailVo) => {
 		onPositiveClick: () => {
 			emailApi.physicalDeleteData(data as Email).then(result => {
 				if (result.data === 1) {
-					window.$message?.success(`删除 ${data.email} 成功 ㄟ( ▔, ▔ )ㄏ `)
+					window.$message?.success(`删除 ${data.email} 成功 `)
 					condition.value.delete = false
 					emitter.emit(EnumMittEventName.reloadData)
 				}

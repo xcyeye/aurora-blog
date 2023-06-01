@@ -1,50 +1,108 @@
 <template>
 	<div>
 		<n-drawer :width="502" :native-scrollbar="true" v-model:show="showDrawer" placement="left">
-			<n-drawer-content :title="!addStatus ? `编辑 ${modifyEmailInfo.email}` : '新增邮箱'">
+			<n-drawer-content title="编辑评论">
 				<n-space vertical hoverable>
 					<n-card hoverable class="rounded-16px shadow-sm" size="small">
-						<n-form ref="addUserFormRef" :model="modifyEmailInfo">
-							<n-form-item path="email" label="邮箱">
-								<n-input v-if="addStatus" v-model:value="modifyEmailInfo.email" :round="true" @keydown.enter.prevent />
-								<n-p v-else>{{modifyEmailInfo.email}}</n-p>
-							</n-form-item>
-
-							<n-form-item path="password" label="授权码">
-								<n-input
-									:round="true"
-									v-model:value="modifyEmailInfo.emailPassword"
-									type="text"
-									@keydown.enter.prevent
+						<n-space vertical :size="0">
+							<n-space justify="center">
+								<n-avatar
+									v-if="computeAvatar"
+									round
+									:size="100"
+									:src="modifyCommentInfo.avatar"
 								/>
-							</n-form-item>
+								<n-avatar v-else :size="100" round>{{modifyCommentInfo.username}}</n-avatar>
+							</n-space>
+							<n-grid x-gap="12" :cols="2">
+								<n-gi>
+									<n-p>用户名</n-p>
+								</n-gi>
+								<n-gi>
+									<n-p>{{modifyCommentInfo.username}}</n-p>
+								</n-gi>
+							</n-grid>
+							<n-divider />
 
-							<n-form-item path="nickname" label="端口">
-								<n-input :round="true" type="number" v-model:value="modifyEmailInfo.port" />
-							</n-form-item>
+							<n-grid x-gap="12" :cols="2">
+								<n-gi>
+									<n-p>IP</n-p>
+								</n-gi>
+								<n-gi>
+									<n-p>{{modifyCommentInfo.commentIp}}</n-p>
+								</n-gi>
+							</n-grid>
+							<n-divider />
 
-							<n-form-item label="协议">
-								<n-input :round="true" type="text" v-model:value="modifyEmailInfo.protocol" />
-							</n-form-item>
-							<n-form-item label="拥有者">
-								<n-mention
-									:options="options"
-									prefix="@"
-									:loading="loading"
-									v-model:value="modifyEmailInfo.userUid"
-									@search="handleSearch"
-								/>
-							</n-form-item>
-						</n-form>
-						<n-row :gutter="[0, 24]">
-							<n-col :span="24">
-								<div style="display: flex; justify-content: flex-end">
-									<n-button round type="primary" @click="handleClickModifyAction">
-										{{ !addStatus ? '更新' : '添加' }}
-									</n-button>
-								</div>
-							</n-col>
-						</n-row>
+							<n-grid x-gap="12" :cols="2">
+								<n-gi>
+									<n-p>操作系统</n-p>
+								</n-gi>
+								<n-gi>
+									<n-p>{{modifyCommentInfo.operationSystemInfo}}</n-p>
+								</n-gi>
+							</n-grid>
+							<n-divider />
+
+							<n-grid x-gap="12" :cols="2">
+								<n-gi>
+									<n-p>创建时间</n-p>
+								</n-gi>
+								<n-gi>
+									<n-p>{{modifyCommentInfo.createTime}}</n-p>
+								</n-gi>
+							</n-grid>
+							<n-divider />
+						</n-space>
+					</n-card>
+
+					<n-card hoverable class="rounded-16px shadow-sm" size="small">
+						<n-space vertical :size="0">
+							<n-grid x-gap="12" :cols="2">
+								<n-gi>
+									<n-p>邮箱地址</n-p>
+								</n-gi>
+								<n-gi>
+									<n-input :round="true" v-model:value="modifyCommentInfo.email" />
+								</n-gi>
+							</n-grid>
+							<n-divider />
+
+							<n-grid x-gap="12" :cols="2">
+								<n-gi>
+									<n-p>评论地址</n-p>
+								</n-gi>
+								<n-gi>
+									<n-input :round="true" v-model:value="modifyCommentInfo.path" />
+								</n-gi>
+							</n-grid>
+							<n-divider />
+
+							<n-grid x-gap="12" :cols="2">
+								<n-gi>
+									<n-p>用户站点</n-p>
+								</n-gi>
+								<n-gi>
+									<n-input :round="true" v-model:value="modifyCommentInfo.site" />
+								</n-gi>
+							</n-grid>
+							<n-divider />
+
+
+						</n-space>
+					</n-card>
+
+					<n-card hoverable class="rounded-16px shadow-sm" size="small">
+						<n-space vertical>
+							<n-input type="textarea"
+											 v-model:value="modifyCommentInfo.content"
+											 :autosize="{minRows: 3}" maxlength="1000" show-count />
+
+							<n-space justify="end">
+								<n-button strong secondary tertiary round type="primary" @click="handleResentNotice">重新提醒</n-button>
+								<n-button strong secondary tertiary round type="success" @click="handleClickModifyAction">更新</n-button>
+							</n-space>
+						</n-space>
 					</n-card>
 				</n-space>
 			</n-drawer-content>
@@ -53,95 +111,81 @@
 </template>
 
 <script lang="ts" setup>
-import {defineComponent, onMounted, ref, watch} from "vue";
+import {computed, defineComponent, onMounted, ref, watch} from "vue";
 import {User} from "@/bean/pojo/admin/User";
 import {FormInst, FormItemRule, FormRules, MentionOption, UploadFileInfo} from "naive-ui";
-import {emailApi, userApi} from "@/service";
+import {commentApi, emailApi, userApi} from "@/service";
 import {EnumMittEventName} from "@/enum";
 import {emitter, StringUtil} from "@/utils";
 import {Email} from "@/bean/pojo/message/Email";
 import {EmailVo} from "@/bean/vo/message/EmailVo";
 import {REGEXP_EMAIL} from "@/config";
+import {CommentVo} from "@/bean/vo/comment/CommentVo";
+import {Comment} from "@/bean/pojo/comment/Comment";
+import {result} from "lodash-es";
 
 defineComponent({name: 'index'});
 
 // 定义data
 const showDrawer = ref<boolean>(false)
-const modifyEmailInfo = ref<Email>({})
+const modifyCommentInfo = ref<Comment>({})
 const addStatus = ref(false)
 const options = ref<Array<MentionOption>>([])
 const loading = ref(true)
 
+const computeAvatar = computed(() => {
+	return StringUtil.haveLength(modifyCommentInfo.value.avatar)
+})
+
 // 定义方法
-const handleClickModifyAction = () => {
-	if (addStatus.value) {
-		if (!StringUtil.haveLength(modifyEmailInfo.value.userUid)) {
-			window.$message?.error('该邮箱所有者不能为空，使用@触发搜索')
-			return
-		}else {
-			if (modifyEmailInfo.value.userUid?.indexOf("@") != -1) {
-				modifyEmailInfo.value.userUid = modifyEmailInfo.value.userUid?.substring(1)
-			}
-		}
-		if (!StringUtil.haveLength(modifyEmailInfo.value.email)) {
-			window.$message?.error('邮箱不能为空')
-			return
-		}else {
-			if (!REGEXP_EMAIL.test(modifyEmailInfo.value.email!)) {
-				window.$message?.error('邮箱不符合规范')
-				return;
-			}
-		}
-		emailApi.insertData(modifyEmailInfo.value).then(result => {
-			if (!result.error) {
-				window.$message?.success('插入邮箱成功')
-				emitter.emit(EnumMittEventName.reloadData)
-				showDrawer.value = false
-			}
-		})
-	}else {
-		if (StringUtil.haveLength(modifyEmailInfo.value.userUid)) {
-			if (modifyEmailInfo.value.userUid?.indexOf("@") != -1) {
-				modifyEmailInfo.value.userUid = modifyEmailInfo.value.userUid?.substring(1)
-			}
-		}
-		emailApi.updateData(modifyEmailInfo.value).then(result => {
-			if (result.data) {
-				window.$message?.success('操作成功')
-				showDrawer.value = false
-				emitter.emit(EnumMittEventName.reloadData)
-			}
-		})
+const handleResentNotice = () => {
+	if (!StringUtil.haveLength(modifyCommentInfo.value.uid)) {
+		window.$message?.error("没有commentUid")
+		return
 	}
+  commentApi.resendEmailNotice(modifyCommentInfo.value).then(result => {
+		if (result && result.data! > 0) {
+			window.$message?.success("重新提醒成功")
+		}
+	})
 }
 
-const handleSearch = () => {
-	options.value = []
-	userApi.queryListDataByCondition({}).then(result => {
-		if (result.data && result.data.result) {
-			result.data.result.forEach(v => {
-				options.value.push({
-					label: v.username!,
-					value: v.uid!
-				})
-			})
-			loading.value = false
+const handleClickModifyAction = () => {
+	if (!modifyCommentInfo.value) {
+		return
+	}
+	if (!StringUtil.haveLength(modifyCommentInfo.value.email)) {
+		window.$message?.error("邮箱号不能为空")
+		return;
+	}
+
+	if (!StringUtil.haveLength(modifyCommentInfo.value.path)) {
+		window.$message?.error("评论地址不能为空")
+		return;
+	}
+
+	if (!StringUtil.haveLength(modifyCommentInfo.value.content)) {
+		window.$message?.error("评论信息不能为空")
+		return;
+	}
+
+	commentApi.updateData(modifyCommentInfo.value).then(result => {
+		if (result && result.data! > 0) {
+			window.$message?.success("更新成功")
+			emitter.emit(EnumMittEventName.reloadData)
+		}else {
+			window.$message?.error("更新失败")
 		}
 	})
 }
 
 // 监听mitt
 onMounted(() => {
-	emitter.on('messageCenterManageAddEmailAction', e => {
-		modifyEmailInfo.value = {}
-		showDrawer.value = !showDrawer.value
-		addStatus.value = true
-	})
-	emitter.on('messageCenterManageModifyEmailAction', e => {
+	emitter.on('commentManageModifyCommentAction', e => {
 		showDrawer.value = !showDrawer.value
 		addStatus.value = false
 		if (e) {
-			modifyEmailInfo.value = e as Email
+			modifyCommentInfo.value = e as Comment
 		}
 	})
 })

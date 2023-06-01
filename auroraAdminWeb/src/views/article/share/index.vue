@@ -115,14 +115,14 @@ const queryDataMethod = (condition: Condition): Promise<RequestResult<PageData<T
 // 定义方法
 const handleDeleteAction = (data: TalkVo) => {
 	window.$dialog?.success({
-		title: `删除 ${data.title} ◔ ‸◔?`,
+		title: `删除 ${data.title} ?`,
 		content: '确定的话，就点删除',
 		positiveText: '删除',
 		negativeText: '永久删除',
 		onPositiveClick: () => {
 			talkApi.logicDeleteData(data as Talk).then(result => {
 				if (result.data === 1) {
-					window.$message?.success(`删除 ${data.title} 说说成功 ○|￣|_`);
+					window.$message?.success(`删除 ${data.title} 说说成功 `);
 					emitter.emit(EnumMittEventName.reloadData)
 				}
 			})
@@ -130,7 +130,7 @@ const handleDeleteAction = (data: TalkVo) => {
 		onNegativeClick: () => {
 			talkApi.physicalDeleteData(data as Talk).then(result => {
 				if (result.data === 1) {
-					window.$message?.success(`删除 ${data.title} 说说成功 ○|￣|_`);
+					window.$message?.success(`删除 ${data.title} 说说成功 `);
 					emitter.emit(EnumMittEventName.reloadData)
 				}
 			})
@@ -176,11 +176,11 @@ const handleSwitchStatus = (row: TalkVo, showComment: boolean, show: boolean, is
 		row.show = show
 		talkApi.updateData(row!).then(result => {
 			if (result.data && result.data === 1) {
-				window.$message?.success('修改成功 ○|￣|_')
+				window.$message?.success('修改成功 ')
 				emitter.emit(EnumMittEventName.reloadData)
 				showDrawer.value = false
 			}else {
-				window.$message?.error('修改失败 ○|￣|_')
+				window.$message?.error('修改失败 ')
 				if (isChangeShowComment) {
 					row.showComment = !row.showComment
 				}else {
@@ -197,13 +197,13 @@ const handleModifyOrAddAction = () => {
 	// 	return
 	// }
 	if (!StringUtil.haveLength(currentTalkInfo.value.content)) {
-		window.$message?.error('需要输入一个内容(ノへ￣、) ')
+		window.$message?.error('需要输入一个内容')
 		return
 	}
 	if (addStatus.value) {
 		talkApi.insertData(currentTalkInfo.value).then(result => {
 			if (!result.error) {
-				window.$message?.success('添加成功 ○|￣|_')
+				window.$message?.success('添加成功 ')
 				emitter.emit(EnumMittEventName.reloadData)
 				showDrawer.value = false
 			}
@@ -211,7 +211,7 @@ const handleModifyOrAddAction = () => {
 	}else {
 		talkApi.updateData(currentTalkInfo.value).then(result => {
 			if (result.data && result.data === 1) {
-				window.$message?.success('修改成功 ○|￣|_')
+				window.$message?.success('修改成功 ')
 				emitter.emit(EnumMittEventName.reloadData)
 				showDrawer.value = false
 			}

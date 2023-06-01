@@ -40,13 +40,13 @@ const queryDataMethod = (condition: Condition): Promise<RequestResult<PageData<S
 // 定义方法
 const handleDeleteAction = (data: SiteSettingVo) => {
 	window.$dialog?.warning({
-		title: `删除 ${data.paramName} ◔ ‸◔?`,
+		title: `删除 ${data.paramName}?`,
 		positiveText: '删除',
 		negativeText: '取消',
 		onPositiveClick: () => {
 			siteSettingApi.physicalDeleteData(data as SysSetting).then(result => {
 				if (result.data === 1) {
-					window.$message?.success(`删除 ${data.paramName} 成功 ㄟ( ▔, ▔ )ㄏ `)
+					window.$message?.success(`删除 ${data.paramName} 成功`)
 					condition.value.delete = false
 					emitter.emit(EnumMittEventName.reloadData)
 				}

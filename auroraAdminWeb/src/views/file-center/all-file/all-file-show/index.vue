@@ -50,14 +50,14 @@ const queryDataMethod = (condition: Condition): Promise<RequestResult<PageData<F
 // 定义方法
 const handleDeleteAction = (data: FileVo) => {
 	window.$dialog?.warning({
-		title: `删除 ${data.fileName} ◔ ‸◔?`,
+		title: `删除 ${data.fileName} ?`,
 		content: '文件不会被回收，是永久删除?',
 		positiveText: '删除',
 		negativeText: '取消',
 		onPositiveClick: () => {
 			fileApi.deleteFile({uid:data.uid}).then(result => {
 				if (result.data && result.data === 1) {
-					window.$message?.success(`${data.fileName} 已被删除 ○|￣|_`)
+					window.$message?.success(`${data.fileName} 已被删除 `)
 					emitter.emit(EnumMittEventName.reloadData)
 				}
 			})
@@ -285,13 +285,13 @@ const columns = ref<Array<DataTableColumn>>(createColumns())
 
 const handleBatchDeleteLoginInfo = () => {
 	window.$dialog?.info({
-		title: `删除 ${batchDeleteLoginInfoUidArr.value.length}条登录信息◔ ‸◔?`,
+		title: `删除 ${batchDeleteLoginInfoUidArr.value.length}条登录信息?`,
 		positiveText: '删除',
 		negativeText: '取消',
 		onPositiveClick: () => {
 			loginInfoApi.batchDeleteLoginInfoByUid({uids: batchDeleteLoginInfoUidArr.value}).then(result => {
 				if (result.data) {
-					window.$message?.success(`成功删除 ${result.data}条登录信息o(￣▽￣)ｄ`)
+					window.$message?.success(`成功删除 ${result.data}条登录信息`)
 					emitter.emit(EnumMittEventName.reloadData)
 				}
 			})

@@ -41,7 +41,7 @@ const queryDataMethod = (condition: Condition): Promise<RequestResult<PageData<U
 // 定义方法
 const handleDeleteAction = (data: UserVo) => {
 	window.$dialog?.warning({
-		title: `删除 ${data.username} ◔ ‸◔?`,
+		title: `删除 ${data.username}?`,
 		content: '用户删除被永久删除之后，此用户绑定的信息将会被取消',
 		positiveText: '删除',
 		negativeText: '永久删除',
@@ -49,7 +49,7 @@ const handleDeleteAction = (data: UserVo) => {
 			userApi.logicDeleteData(data as User).then(result => {
 				if (result.data === 1) {
 					condition.value.delete = false
-					window.$message?.success(`删除 ${data.username} 成功 ○|￣|_`);
+					window.$message?.success(`删除 ${data.username} 成功`);
 					emitter.emit(EnumMittEventName.reloadData)
 				}
 			})
@@ -57,7 +57,7 @@ const handleDeleteAction = (data: UserVo) => {
 		onNegativeClick: () => {
 			userApi.physicalDeleteData(data as User).then(result => {
 				if (result.data === 1) {
-					window.$message?.success(`永久删除 ${data.username} 成功 ㄟ( ▔, ▔ )ㄏ `)
+					window.$message?.success(`永久删除 ${data.username} 成功`)
 					condition.value.delete = false
 					emitter.emit(EnumMittEventName.reloadData)
 				}

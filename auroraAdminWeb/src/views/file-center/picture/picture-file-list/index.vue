@@ -50,7 +50,7 @@ const handleDeleteAction = (data: FileVo) => {
 		onPositiveClick: () => {
 			fileApi.deleteFile({uid:data.uid}).then(result => {
 				if (result.data && result.data === 1) {
-					window.$message?.success(`${data.fileName} 已被删除 ○|￣|_`)
+					window.$message?.success(`${data.fileName} 已被删除 `)
 					emitter.emit(EnumMittEventName.reloadData)
 				}
 			})

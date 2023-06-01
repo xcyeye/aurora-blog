@@ -191,9 +191,9 @@ const handleFinishUploadFile = (file: UploadFileInfo) => {
 	userApi.updateData({uid: currentUserInfo.value.uid, avatar: file.url}).then(result => {
 		if (result.data === 1) {
 			currentUserInfo.value.avatar = file.url
-			window.$message?.success('修改头像成功 ╰(￣▽￣)╭')
+			window.$message?.success('修改头像成功')
 		}else {
-			window.$message?.error('头像貌似上传失败了 ╮（╯＿╰）╭')
+			window.$message?.error('头像貌似上传失败了')
 		}
 	})
 }

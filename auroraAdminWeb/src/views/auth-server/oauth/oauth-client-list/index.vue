@@ -53,7 +53,7 @@ const handleDeleteAction = (data: UserVo) => {
 			userApi.logicDeleteData(data as User).then(result => {
 				if (result.data === 1) {
 					condition.value.delete = false
-					window.$message?.error(`删除 ${data.username} 成功 ○|￣|_`);
+					window.$message?.error(`删除 ${data.username} 成功 `);
 					emitter.emit(EnumMittEventName.reloadData)
 				}
 			})
@@ -61,7 +61,7 @@ const handleDeleteAction = (data: UserVo) => {
 		onNegativeClick: () => {
 			userApi.physicalDeleteData(data as User).then(result => {
 				if (result.data === 1) {
-					window.$message?.error(`永久删除 ${data.username} 成功 ㄟ( ▔, ▔ )ㄏ `)
+					window.$message?.error(`永久删除 ${data.username} 成功 `)
 					condition.value.delete = false
 					emitter.emit(EnumMittEventName.reloadData)
 				}

@@ -95,14 +95,14 @@ const coverUrl = ref<string>('')
 // 定义方法
 const handleClickModifyAction = () => {
 	if (!StringUtil.haveLength(modifyTagInfo.value.title)) {
-		window.$message?.error('需要输入标签名称ノへ￣、)')
+		window.$message?.error('需要输入标签名称')
 		return
 	}
 	if (!addStatus.value) {
 		// 修改操作
 		tagApi.updateData(modifyTagInfo.value).then(result => {
 			if (result.data === 1) {
-				window.$message?.success(`修改标签 ${modifyTagInfo.value.title} 成功o(￣▽￣)ｄ`)
+				window.$message?.success(`修改标签 ${modifyTagInfo.value.title} 成功`)
 				emitter.emit(EnumMittEventName.reloadData)
 				showDrawer.value = false
 			}
@@ -111,7 +111,7 @@ const handleClickModifyAction = () => {
 		modifyTagInfo.value.userUid = authStore.userInfo.user_uid
 		tagApi.insertData(modifyTagInfo.value).then(result => {
 			if (!result.error) {
-				window.$message?.success(`添加标签 ${modifyTagInfo.value.title}成功 o(￣▽￣)ｄ`)
+				window.$message?.success(`添加标签 ${modifyTagInfo.value.title}成功`)
 				showDrawer.value = false
 				emitter.emit(EnumMittEventName.reloadData)
 			}
@@ -135,7 +135,7 @@ const handleControlSettingCoverUrlAction = () => {
 		return
 	}
 	modifyTagInfo.value.coverUrl = coverUrl.value
-	window.$message?.success('设置成功o(￣▽￣)ｄ ')
+	window.$message?.success('设置成功 ')
 }
 
 // 监听mitt

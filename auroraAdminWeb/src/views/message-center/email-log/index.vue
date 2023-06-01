@@ -64,7 +64,7 @@ const queryDataMethod = (condition: Condition): Promise<RequestResult<PageData<E
 // 定义方法
 const handleDeleteAction = (data: EmailLogVo) => {
 	window.$dialog?.warning({
-		title: `删除 ${data.subject} ◔ ‸◔?`,
+		title: `删除 ${data.subject} ?`,
 		content: '确定的话，就点删除',
 		positiveText: '删除',
 		negativeText: '取消',
@@ -72,7 +72,7 @@ const handleDeleteAction = (data: EmailLogVo) => {
 			emailLogApi.physicalDeleteData(data as EmailLog).then(result => {
 				if (result.data === 1) {
 					condition.value.delete = false
-					window.$message?.error(`删除 ${data.subject} 邮件记录成功 ○|￣|_`);
+					window.$message?.error(`删除 ${data.subject} 邮件记录成功 `);
 					emitter.emit(EnumMittEventName.reloadData)
 				}
 			})
@@ -87,17 +87,17 @@ const handleShowEmailLogInfoAction = (data: LoginInfoVo) => {
 
 const handleResendMail = () => {
 	window.$dialog?.warning({
-		title: `重新发送 ${currentEmailLogInfo.value.subject} ◔ ‸◔?`,
+		title: `重新发送 ${currentEmailLogInfo.value.subject} ?`,
 		content: '部分包含连接的邮件内容，点击可能无效',
-		positiveText: 'o(￣▽￣)ｄ ',
-		negativeText: '(ノへ￣、)',
+		positiveText: '确定 ',
+		negativeText: '取消',
 		onPositiveClick: () => {
 			loadingBar.start()
 			sendMailApi.resendCustomMail({emailLogUid: currentEmailLogInfo.value.uid, userUid: useAuthStore().userInfo.user_uid}).then(result => {
 				if (result.error) {
 					loadingBar.error()
 				}else {
-					window.$message?.success(`已重新发送 记得提醒他接收 o(￣▽￣)ｄ`);
+					window.$message?.success(`已重新发送 记得提醒他接收 `);
 					emitter.emit(EnumMittEventName.reloadData)
 					loadingBar.finish()
 					showDrawer.value = false

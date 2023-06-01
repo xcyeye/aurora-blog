@@ -75,14 +75,14 @@ const queryDataMethod = (condition: Condition): Promise<RequestResult<PageData<M
 const handleDeleteAction = (data: MessageLogVo) => {
 	window.$dialog?.warning({
 		title: '删除RabbitMQ投递记录',
-		content: `删除 ${data.exchange}中的此条投递记录 ◔ ‸◔?`,
+		content: `删除 ${data.exchange}中的此条投递记录?`,
 		positiveText: '删除',
 		negativeText: '取消',
 		onPositiveClick: () => {
 			messageLogApi.physicalDeleteData(data as MessageLog).then(result => {
 				if (result.data === 1) {
 					condition.value.delete = false
-					window.$message?.success(`删除 ${data.exchange} 中间件消息成功 ○|￣|_`);
+					window.$message?.success(`删除 ${data.exchange} 中间件消息成功 `);
 					emitter.emit(EnumMittEventName.reloadData)
 				}
 			})
@@ -98,16 +98,16 @@ const handleShowEmailLogInfoAction = (data: MessageLogVo) => {
 const handleResendMqMessage = () => {
 	window.$dialog?.warning({
 		title: `重新投递`,
-		content: `重新投递${currentMessageLogInfo.value.exchange} 中的此条MQ消息 ◔ ‸◔?`,
-		positiveText: 'o(￣▽￣)ｄ ',
-		negativeText: '(ノへ￣、)',
+		content: `重新投递${currentMessageLogInfo.value.exchange} 中的此条MQ消息?`,
+		positiveText: '确定',
+		negativeText: '取消',
 		onPositiveClick: () => {
 			loadingBar.start()
 			messageLogApi.resendRabbitMqMessage({uid: currentMessageLogInfo.value.uid}).then(result => {
 				if (result.error) {
 					loadingBar.error()
 				}else {
-					window.$message?.success(`已重新投递 o(￣▽￣)ｄ`);
+					window.$message?.success(`已重新投递 `);
 					emitter.emit(EnumMittEventName.reloadData)
 					loadingBar.finish()
 					showDrawer.value = false
@@ -121,7 +121,7 @@ const handleAckMessage = () => {
 	currentMessageLogInfo.value.ackStatus = true
 	messageLogApi.updateData(currentMessageLogInfo.value).then(result => {
 		if (!result.error) {
-			window.$message?.success(`手动应答成功 o(￣▽￣)ｄ`);
+			window.$message?.success(`手动应答成功 `);
 		}
 		showDrawer.value = false
 		emitter.emit(EnumMittEventName.reloadData)
@@ -132,7 +132,7 @@ const handleConsumerMessage = () => {
 	currentMessageLogInfo.value.consumeStatus = true
 	messageLogApi.updateData(currentMessageLogInfo.value).then(result => {
 		if (!result.error) {
-			window.$message?.success(`手动消费成功 o(￣▽￣)ｄ`);
+			window.$message?.success(`手动消费成功 `);
 		}
 		showDrawer.value = false
 		emitter.emit(EnumMittEventName.reloadData)

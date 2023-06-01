@@ -81,7 +81,7 @@ public class FieldLengthConstant {
 
     //-----------------------------------其他
     /** ip地址长度 **/
-    public static final int IP = 12;
+    public static final int IP = 255;
     /** 记录操作系统长度 **/
     public static final int OPERATION_INFO = 255;
     public static final int LOGIN_LOCATION = 200;

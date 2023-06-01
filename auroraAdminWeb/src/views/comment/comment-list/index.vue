@@ -61,13 +61,13 @@ const queryDataMethod = (condition: Condition): Promise<RequestResult<PageData<C
 // 定义方法
 const handleDeleteAction = (data: CommentVo) => {
 	window.$dialog?.warning({
-		title: `删除 ${data.username}用户的评论 ◔ ‸◔?`,
+		title: `删除 ${data.username}用户的评论`,
 		positiveText: '删除',
 		negativeText: '取消',
 		onPositiveClick: () => {
 			commentApi.physicalDeleteData(data as Comment).then(result => {
 				if (result.data === 1) {
-					window.$message?.success(`删除 ${data.username} 用户的评论成功 ㄟ( ▔, ▔ )ㄏ `)
+					window.$message?.success(`删除 ${data.username} 用户的评论成功`)
 					condition.value.delete = false
 					emitter.emit(EnumMittEventName.reloadData)
 				}

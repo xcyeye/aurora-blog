@@ -80,22 +80,22 @@ const router = useRouter()
 
 const handleSendMail = () => {
   if (!REGEXP_EMAIL.test(sendMailInfo.value.receiverEmail!)) {
-		window.$message?.error('邮箱错啦 (ノへ￣、)')
+		window.$message?.error('邮箱错啦 ')
 		return
 	}
 	if (!StringUtil.haveLength(sendMailInfo.value.content)) {
-		window.$message?.error('没内容没意思 (ノへ￣、)')
+		window.$message?.error('没内容没意思 ')
 		return
 	}
 	if (!StringUtil.haveLength(sendMailInfo.value.subject)) {
-		sendMailInfo.value.subject = `${autoStore.userInfo.username} 给你发了一封邮件o(￣ε￣*) `
+		sendMailInfo.value.subject = `${autoStore.userInfo.username} 给你发了一封邮件`
 	}
 	sendMailInfo.value.userUid = autoStore.userInfo.user_uid;
 	loadBar.start()
 	sendMailApi.customMail(sendMailInfo.value).then(result => {
 		if (!result.error) {
 			loadBar.finish()
-			window.$message?.success(`邮件发送成功，记得提醒 ${sendMailInfo.value.receiverEmail}接收o(￣▽￣)ｄ `)
+			window.$message?.success(`邮件发送成功，记得提醒 ${sendMailInfo.value.receiverEmail}接收`)
 		}else {
 			loadBar.error()
 		}

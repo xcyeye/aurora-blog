@@ -142,11 +142,11 @@ const addUserFormRules: FormRules = {
 			trigger: 'blur',
 			validator(rule: FormItemRule, value: string) {
 				if (!value) {
-					return new Error('怎么会不需要名字呢(o_ _)ﾉ')
+					return new Error('请输入用户名')
 				}else if (value.length > 15) {
-					return new Error('长度为5-15(o_ _)ﾉ')
+					return new Error('用户名长度为5-15')
 				}else if (!REGEXP_USERNAME.test(value)) {
-					return new Error('只能包含数字字母和_(o_ _)ﾉ')
+					return new Error('只能包含数字和字母')
 				}
 				return true
 			}
@@ -159,11 +159,11 @@ const addUserFormRules: FormRules = {
 			validator(rule: FormItemRule, value: string) {
 				if (showPassword) {
 					if (!value) {
-						return new Error('没密码怎么登录〒▽〒')
+						return new Error('请输入密码')
 					}else if (value.length < 5) {
-						return new Error('被盗了别怪我ヾ(´∀`o)+')
+						return new Error('密码太弱了')
 					}else if (value.length > 20) {
-						return new Error('太长了记不住(⊙﹏⊙) ')
+						return new Error('密码太长了记不住')
 					}else if (!REGEXP_PWD.test(value)) {
 						return new Error('密码不符合规范')
 					}
@@ -213,7 +213,7 @@ const handleClickModifyAction = () => {
 	}else {
 		addUserFormRef.value!.validate(errors => {
 			if (errors) {
-				window.$message?.error("字段验证失败(* ￣︿￣)")
+				window.$message?.error("字段验证失败")
 				return
 			}
 		})

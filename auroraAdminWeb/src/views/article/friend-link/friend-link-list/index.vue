@@ -9,7 +9,7 @@
 			@positive-click="handleLinkPublishStatus"
 			@negative-click="handleLinkPublishStatus"
 		>
-			<n-input type="textarea" :placeholder="!currentLinkInfo.publish ? '审核通过后系统会发邮件通知该用户o(￣▽￣)ｄ ' : '可以告知对方下架原因 (ノへ￣、)'" :autosize="{minRows: 4}" v-model:value="currentLinkInfo.replyMessage"/>
+			<n-input type="textarea" :placeholder="!currentLinkInfo.publish ? '审核通过后系统会发邮件通知该用户' : '可以告知对方下架原因'" :autosize="{minRows: 4}" v-model:value="currentLinkInfo.replyMessage"/>
 		</n-modal>
 		<show-table-data
 			:data-table-info="{title: '友情链接', rowKey: 'uid', striped: true, scrollX: 1700}"
@@ -56,14 +56,14 @@ const queryDataMethod = (condition: Condition): Promise<RequestResult<PageData<L
 // 定义方法
 const handleDeleteAction = (data: LinkVo) => {
 	window.$dialog?.warning({
-		title: `删除 ${data.linkUrl} ◔ ‸◔?`,
-		content: '其实还有个下架选项(ノへ￣、)',
+		title: `删除 ${data.linkUrl} ?`,
+		content: '其实还有个下架选项',
 		positiveText: '删除',
 		negativeText: '取消',
 		onPositiveClick: () => {
 			linkApi.physicalDeleteData(data as Link).then(result => {
 				if (result.data === 1) {
-					window.$message?.success(`删除 ${data.linkUrl} 成功 ○|￣|_`);
+					window.$message?.success(`删除 ${data.linkUrl} 成功`);
 					emitter.emit(EnumMittEventName.reloadData)
 				}
 			})
@@ -89,7 +89,7 @@ const handleLinkPublishStatus = () => {
 		// 从未发布到发布
 		linkApi.updateLinkPublishStatus(currentLinkInfo.value).then(result => {
 			if (!result.error && result.data === 1) {
-				window.$message?.success('已修改状态为发布 o(￣▽￣)ｄ ')
+				window.$message?.success('已修改状态为发布')
 				showModal.value = false
 				emitter.emit(EnumMittEventName.reloadData)
 			}
@@ -98,7 +98,7 @@ const handleLinkPublishStatus = () => {
 		// 从发布到未发布
 		linkApi.updateLinkPublishStatus(currentLinkInfo.value).then(result => {
 			if (!result.error && result.data === 1) {
-				window.$message?.success('已下架该链接 (ノへ￣、)')
+				window.$message?.success('已下架该链接')
 				showModal.value = false
 				emitter.emit(EnumMittEventName.reloadData)
 			}

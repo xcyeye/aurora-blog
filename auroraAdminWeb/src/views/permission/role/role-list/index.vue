@@ -41,13 +41,13 @@ const queryDataMethod = (condition: Condition): Promise<RequestResult<PageData<R
 // 定义方法
 const handleDeleteAction = (data: RoleVo) => {
 	window.$dialog?.warning({
-		title: `删除 ${data.name} ◔ ‸◔?`,
+		title: `删除 ${data.name} ?`,
 		positiveText: '删除',
 		negativeText: '取消',
 		onPositiveClick: () => {
 			roleApi.physicalDeleteData(data as Role).then(result => {
 				if (result.data === 1) {
-					window.$message?.success(`删除 ${data.name} 成功 ㄟ( ▔, ▔ )ㄏ `)
+					window.$message?.success(`删除 ${data.name} 成功`)
 					condition.value.delete = false
 					emitter.emit(EnumMittEventName.reloadData)
 				}

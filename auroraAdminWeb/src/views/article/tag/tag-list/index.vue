@@ -61,7 +61,7 @@ const handleDeleteAction = (data: TagVo) => {
 		onPositiveClick: () => {
 			tagApi.logicDeleteData(data as Tag).then(result => {
 				if (result.data === 1) {
-					window.$message?.success(`删除 ${data.title} 成功 ○|￣|_`);
+					window.$message?.success(`删除 ${data.title} 成功 `);
 					emitter.emit(EnumMittEventName.reloadData)
 				}
 			})
@@ -69,7 +69,7 @@ const handleDeleteAction = (data: TagVo) => {
 		onNegativeClick: () => {
 			tagApi.physicalDeleteData(data as Tag).then(result => {
 				if (result.data === 1) {
-					window.$message?.success(`删除 ${data.title} 成功 ○|￣|_`);
+					window.$message?.success(`删除 ${data.title} 成功 `);
 					emitter.emit(EnumMittEventName.reloadData)
 				}
 			})

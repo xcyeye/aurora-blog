@@ -59,14 +59,14 @@ const queryDataMethod = (condition: Condition): Promise<RequestResult<PageData<A
 // 定义方法
 const handleDeleteAction = (data: ArticleVo) => {
 	window.$dialog?.warning({
-		title: `删除 ${data.title} ◔ ‸◔?`,
-		content: '写作不易，其实可以取消发布(ノへ￣、)',
+		title: `删除 ${data.title}?`,
+		content: '写作不易，其实可以取消发布',
 		positiveText: '临时删除',
 		negativeText: '永久删除',
 		onPositiveClick: () => {
 			articleApi.logicDeleteData(data as Article).then(result => {
 				if (result.data === 1) {
-					window.$message?.success(`临时删除 ${data.title} 成功 ○|￣|_`);
+					window.$message?.success(`临时删除 ${data.title} 成功 `);
 					emitter.emit(EnumMittEventName.reloadData)
 				}
 			})
@@ -74,7 +74,7 @@ const handleDeleteAction = (data: ArticleVo) => {
 		onNegativeClick: () => {
 			articleApi.physicalDeleteData(data as Article).then(result => {
 				if (result.data === 1) {
-					window.$message?.success(`永久删除 ${data.title} 成功 ○|￣|_`);
+					window.$message?.success(`永久删除 ${data.title} 成功`);
 					emitter.emit(EnumMittEventName.reloadData)
 				}
 			})
