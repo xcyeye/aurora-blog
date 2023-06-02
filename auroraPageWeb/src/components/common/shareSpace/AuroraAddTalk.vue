@@ -86,10 +86,12 @@ const handleFinishUploadFile = (file: UploadFileInfo) => {
 };
 
 const handleAddTalkAction = () => {
+	// 如果当前登录用户和该说说的用户不是同一个，那么这个说说属于该说说对应的用户
 	if (authStore.authInfo && authStore.authInfo.userInfo && authStore.authInfo.userInfo.user_uid !== props.userUid) {
 		window.$message?.error(`目前仅支持 ${props.userUid}用户发布说说`)
 		return;
 	}
+	talkInfo.value.userUid = props.userUid
   if (!StringUtil.haveLength(talkInfo.value.content)) {
 		window.$message?.error('需要有说说内容')
 		return

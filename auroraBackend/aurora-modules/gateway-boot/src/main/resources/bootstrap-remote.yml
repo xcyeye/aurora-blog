@@ -4,12 +4,12 @@ spring:
   cloud:
     nacos:
       discovery:
-        server-addr: 81.68.201.154:8848
+        server-addr: 182.44.32.182:8848
       #        service: aurora-gateway
       config:
-        server-addr: 81.68.201.154:8848
+        server-addr: 182.44.32.182:8848
         file-extension: yaml
-        namespace: 227521b4-71f0-4088-a0e5-ad80b454e836
+        namespace: 317d1f4f-7ecf-461f-8444-7030f4ee733c
         group: THEME-GROUP
         shared-configs:
           - data-id: share-redis-remote.yaml

@@ -26,6 +26,7 @@ import javax.validation.groups.Default;
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
@@ -55,7 +56,11 @@ public class FileController {
             throws IOException, FileException, ExecutionException, InterruptedException {
 
         FileEntityDTO fileEntity = new FileEntityDTO(file.getOriginalFilename(),file.getInputStream());
-        return fileService.insertFile(fileEntity, fileInfo);
+        List<FileVO> fileVOList = fileService.insertFile(List.of(fileEntity), fileInfo);
+        if (fileVOList != null && !fileVOList.isEmpty()) {
+            return fileVOList.get(0);
+        }
+        return null;
     }
 
     /**
@@ -69,13 +74,12 @@ public class FileController {
     public List<FileVO> multiUploadFile(
             @RequestParam(value = "files") MultipartFile[] files, FilePojo fileInfo)
             throws IOException, FileException, ExecutionException, InterruptedException {
-        List<FileVO> fileList = new ArrayList<>();
+        List<FileEntityDTO> fileEntityList = new ArrayList<>();
         for (MultipartFile file : files) {
             FileEntityDTO fileEntity = new FileEntityDTO(file.getOriginalFilename(), file.getInputStream());
-            FileVO fileVO = fileService.insertFile(fileEntity, fileInfo);
-            fileList.add(fileVO);
+            fileEntityList.add(fileEntity);
         }
-        return fileList;
+        return fileService.insertFile(fileEntityList, fileInfo);
     }
 
     /**
@@ -93,8 +97,11 @@ public class FileController {
         if (!StringUtils.hasLength(fileInfo.getSummary())) {
             fileInfo.setSummary("从typora上传的文件");
         }
-        FileVO fileVO = fileService.insertFile(fileEntity, fileInfo);
-        return fileVO.getPath();
+        List<FileVO> fileVOList = fileService.insertFile(List.of(fileEntity), fileInfo);
+        if (fileVOList != null && !fileVOList.isEmpty()) {
+            return fileVOList.get(0).getPath();
+        }
+        return null;
     }
 
     /**

@@ -10,10 +10,6 @@
 			
 				<!--头像信息-->
 				<aurora-card :show-linear-gradient="false" class="sidebar-aurora-card" :id="customId" v-if="showPersonInfo">
-					<!--<div class="home-sidebar-avatar">-->
-					<!--	&lt;!&ndash;<img id="home-sidebar-avatar-img" :src="useUserInfo().getUserInfo(userUid).avatar" alt="">&ndash;&gt;-->
-					<!--	<n-avatar :src="useUserInfo().getUserInfo(userUid).avatar" :size="60" round/>-->
-					<!--</div>-->
 					<aurora-random-picture :pc-height="10" :mobile-height="10" custom-picture-class="aurora-sidebar-random-picture" :user-uid="userUid">
 						<aurora-typing :typing-content="useUserInfo().getUserInfo(userUid).userSummary" class="aurora-sidebar-random-picture-summary"/>
 					</aurora-random-picture>

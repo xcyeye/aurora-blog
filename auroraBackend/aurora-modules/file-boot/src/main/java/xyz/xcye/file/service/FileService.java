@@ -29,10 +29,11 @@ import xyz.xcye.file.service.ext.FileExtService;
 import xyz.xcye.file.vo.FileVO;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.concurrent.ExecutionException;
+import java.util.concurrent.*;
 import java.util.stream.Collectors;
 
 /**
@@ -57,34 +58,36 @@ public class FileService {
     @Autowired
     private FileExtService fileExtService;
 
-    public FileVO insertFile(FileEntityDTO fileEntity, FilePojo filePojo) throws FileException, IOException, ExecutionException, InterruptedException {
-        String localhost = NetWorkUtils.getLocalhost();
-        Assert.notNull(fileEntity, "文件对象不能为null");
-        AssertUtils.stateThrow(filePojo.getUserUid() != 0, () -> new FileException("必须要传入UserUid"));
-        File file = BeanUtils.copyProperties(filePojo, File.class);
-        if (fileEntity.getName() == null || fileEntity.getInputStream() == null) {
-            throw new FileException(ResponseStatusCodeEnum.EXCEPTION_FILE_FAIL_UPLOAD.getMessage() + "原因: 文件名为null或者获取文件流失败",
-                    ResponseStatusCodeEnum.EXCEPTION_FILE_FAIL_UPLOAD.getCode());
+    /**
+     * 上传文件的线程池
+     */
+    private final ExecutorService uploadFileExecutorService = Executors.newFixedThreadPool(10);
+
+    public List<FileVO> insertFile(List<FileEntityDTO> fileEntityList, FilePojo filePojo) throws FileException, IOException, ExecutionException, InterruptedException {
+        int taskCount = 0;
+        CompletionService<FileVO> completionService = new ExecutorCompletionService<FileVO>(uploadFileExecutorService);
+        List<FileVO> fileVOList = new ArrayList<>();
+
+        // 提交任务
+        for (FileEntityDTO fileEntityDTO : fileEntityList) {
+            Future<FileVO> insertFileFuture = completionService.submit(() -> executeInsertFile(fileEntityDTO, filePojo));
+            taskCount++;
         }
 
-        // 生成一个uid
-        long uid = GenerateInfoUtils.generateUid(auroraProperties.getSnowFlakeWorkerId(),auroraProperties.getSnowFlakeDatacenterId());
-
-        // 根据storageMode获取需要使用的文件存储方式
-        FileStorageService fileStorageService = getNeedFileStorageService(filePojo.getStorageMode());
-        FileEntityDTO uploadFileEntity = fileStorageService.upload(fileEntity.getInputStream(), fileEntity, filePojo);
-
-        File newFile = File.builder()
-                .uid(uid).delete(false).fileName(uploadFileEntity.getName())
-                .size(uploadFileEntity.getSize()).summary(file.getSummary())
-                .path(uploadFileEntity.getRemoteUrl()).storageMode(filePojo.getStorageMode())
-                .storagePath(uploadFileEntity.getStoragePath())
-                .userUid(filePojo.getUserUid())
-                .build();
-        auroraFileService.insert(newFile);
-        FileVO fileVO = queryFileByUid(newFile.getUid());
-        fileVO.setFilePathUri(uploadFileEntity.getFilePathUri());
-        return fileVO;
+        for (int i = 0; i < taskCount; i++) {
+            FileVO fileVO = null;
+            try {
+                fileVO = completionService.take().get();
+                fileVOList.add(fileVO);
+            } catch (InterruptedException | ExecutionException e) {
+                // 发生异常，跳过
+                LogUtils.logExceptionInfo(e);
+                if (fileEntityList.size() < 2) {
+                    return new ArrayList<>();
+                }
+            }
+        }
+        return fileVOList;
     }
 
     public int updateFile(FilePojo file) {
@@ -198,6 +201,46 @@ public class FileService {
         pageData.setPages(1);
         pageData.setTotal((long) files.size());
         return pageData;
+    }
+
+    /**
+     * 执行文件插入
+     * @param fileEntity
+     * @param filePojo
+     * @return
+     * @throws FileException
+     * @throws IOException
+     * @throws ExecutionException
+     * @throws InterruptedException
+     */
+    private FileVO executeInsertFile(FileEntityDTO fileEntity, FilePojo filePojo) throws FileException, IOException, ExecutionException, InterruptedException {
+        String localhost = NetWorkUtils.getLocalhost();
+        Assert.notNull(fileEntity, "文件对象不能为null");
+        AssertUtils.stateThrow(filePojo.getUserUid() != 0, () -> new FileException("必须要传入UserUid"));
+        File file = BeanUtils.copyProperties(filePojo, File.class);
+        if (fileEntity.getName() == null || fileEntity.getInputStream() == null) {
+            throw new FileException(ResponseStatusCodeEnum.EXCEPTION_FILE_FAIL_UPLOAD.getMessage() + "原因: 文件名为null或者获取文件流失败",
+                    ResponseStatusCodeEnum.EXCEPTION_FILE_FAIL_UPLOAD.getCode());
+        }
+
+        // 生成一个uid
+        long uid = GenerateInfoUtils.generateUid(auroraProperties.getSnowFlakeWorkerId(),auroraProperties.getSnowFlakeDatacenterId());
+
+        // 根据storageMode获取需要使用的文件存储方式
+        FileStorageService fileStorageService = getNeedFileStorageService(filePojo.getStorageMode());
+        FileEntityDTO uploadFileEntity = fileStorageService.upload(fileEntity.getInputStream(), fileEntity, filePojo);
+
+        File newFile = File.builder()
+                .uid(uid).delete(false).fileName(uploadFileEntity.getName())
+                .size(uploadFileEntity.getSize()).summary(file.getSummary())
+                .path(uploadFileEntity.getRemoteUrl()).storageMode(filePojo.getStorageMode())
+                .storagePath(uploadFileEntity.getStoragePath())
+                .userUid(filePojo.getUserUid())
+                .build();
+        auroraFileService.insert(newFile);
+        FileVO fileVO = queryFileByUid(newFile.getUid());
+        fileVO.setFilePathUri(uploadFileEntity.getFilePathUri());
+        return fileVO;
     }
 
     public List<String> queryListFileFormat(long userUid) {
