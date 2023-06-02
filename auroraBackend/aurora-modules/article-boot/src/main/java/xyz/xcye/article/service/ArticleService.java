@@ -117,7 +117,7 @@ public class ArticleService {
     }
 
     public void updateArticleLikeNum(ArticlePojo pojo) {
-        Article article = auroraArticleService.queryById(pojo.getUid());
+        Article article = auroraArticleExtDao.queryById(pojo.getUid());
         AssertUtils.stateThrow(article != null, () -> new ArticleException("此文章不存在"));
         ArticlePojo articlePojo = BeanUtils.copyProperties(article, ArticlePojo.class);
         if (articlePojo.getLikeNumber() == null) {

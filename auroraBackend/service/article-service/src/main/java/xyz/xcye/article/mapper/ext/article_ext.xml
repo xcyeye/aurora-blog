@@ -138,5 +138,15 @@
         </where>
     </select>
 
+    <!-- 根据主键查询数据  -->
+    <select id="queryById" resultMap="articleResultMap" parameterType="Long">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM au_article
+        WHERE
+        uid = #{uid}
+        for update
+    </select>
+
 
 </mapper>

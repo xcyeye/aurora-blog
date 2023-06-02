@@ -9,4 +9,6 @@ import java.util.List;
 @Mapper
 public interface AuroraArticleExtDao {
     public List<Article> queryListArticleByTagOrCategory(ArticlePojo pojo);
+
+    Article queryById(Long id);
 }
