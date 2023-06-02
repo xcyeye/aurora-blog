@@ -10,5 +10,5 @@ import java.util.List;
 public interface AuroraArticleExtDao {
     public List<Article> queryListArticleByTagOrCategory(ArticlePojo pojo);
 
-    Article queryById(Long id);
+    public Article queryByIdForUpdate(Long id);
 }

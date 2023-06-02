@@ -139,7 +139,7 @@
     </select>
 
     <!-- 根据主键查询数据  -->
-    <select id="queryById" resultMap="articleResultMap" parameterType="Long">
+    <select id="queryByIdForUpdate" resultMap="articleResultMap" parameterType="Long">
         SELECT
         <include refid="Base_Column_List" />
         FROM au_article

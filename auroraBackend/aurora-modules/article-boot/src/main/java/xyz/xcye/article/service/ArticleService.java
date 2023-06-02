@@ -1,6 +1,7 @@
 package xyz.xcye.article.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
@@ -18,6 +19,7 @@ import xyz.xcye.article.vo.CategoryVO;
 import xyz.xcye.article.vo.TagVO;
 import xyz.xcye.aurora.properties.AuroraProperties;
 import xyz.xcye.aurora.util.UserUtils;
+import xyz.xcye.core.constant.RedisConstant;
 import xyz.xcye.core.enums.ResponseStatusCodeEnum;
 import xyz.xcye.core.exception.article.ArticleException;
 import xyz.xcye.core.exception.user.UserException;
@@ -54,6 +56,9 @@ public class ArticleService {
 
     @Autowired
     private AuroraArticleExtDao auroraArticleExtDao;
+
+    @Autowired
+    private RedisTemplate<String, Object> redisTemplate;
 
     public int logicDeleteArticle(Long uid) {
         Assert.notNull(uid, "uid不能为null");
@@ -117,13 +122,29 @@ public class ArticleService {
     }
 
     public void updateArticleLikeNum(ArticlePojo pojo) {
-        Article article = auroraArticleExtDao.queryById(pojo.getUid());
-        AssertUtils.stateThrow(article != null, () -> new ArticleException("此文章不存在"));
-        ArticlePojo articlePojo = BeanUtils.copyProperties(article, ArticlePojo.class);
-        if (articlePojo.getLikeNumber() == null) {
-            articlePojo.setLikeNumber(0);
+        String redisKey = RedisConstant.STORAGE_ARTICLE_LIKE_NUMBER + pojo.getUid();
+        Long incrementNum = redisTemplate.opsForValue().increment(redisKey);
+        Article article = null;
+        if (incrementNum == null) {
+            // redis中不存在，从db获取
+            synchronized (ArticleService.class) {
+                // article = auroraArticleExtDao.queryByIdForUpdate(pojo.getUid());
+                article = auroraArticleService.queryById(pojo.getUid());
+                AssertUtils.stateThrow(article != null, () -> new ArticleException("此文章不存在"));
+                if (article.getLikeNumber() == null) {
+                    article.setLikeNumber(0);
+                }
+                redisTemplate.opsForValue().set(redisKey, article.getLikeNumber() + 1);
+                article.setLikeNumber(article.getLikeNumber() + 1);
+            }
+        }else {
+            article = new Article();
+            article.setUid(pojo.getUid());
+            article.setLikeNumber(Math.toIntExact(incrementNum));
         }
-        articlePojo.setLikeNumber(articlePojo.getLikeNumber() + 1);
+
+        // 更新
+        ArticlePojo articlePojo = BeanUtils.copyProperties(article, ArticlePojo.class);
         auroraArticleService.updateById(BeanUtils.copyProperties(articlePojo, Article.class));
     }
 
