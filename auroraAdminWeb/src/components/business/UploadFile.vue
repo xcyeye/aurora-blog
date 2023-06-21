@@ -110,6 +110,8 @@ const uploadFileInfoArr = reactive<UploadFileInfo[]>([]);
 let uploadFileInfoTempArr = reactive<UploadFileInfo[]>([]);
 const uploadFileRef = ref<UploadInst | null>(null);
 const uploadFileLength = ref(0);
+const selectedFileList = ref<File[]>([])
+const uploadedFileList = ref<File[]>([])
 const sysSettingStore = useSysSettingStore()
 const acceptFileType = computed(() => {
 	if (props.acceptFileTypeStr.length === 0) {
@@ -149,7 +151,7 @@ const handleErrorUploadFile = (options: { file: UploadFileInfo, event?: Progress
 
 const handleCustomUploadFile = ({file, data, headers,
 																	withCredentials, action,
-																	onFinish, onError, onProgress}: UploadCustomRequestOptions) => {
+																	onFinish, onError, onProgress}: UploadCustomRequestOptions, fileList?: File[]) => {
 	if (file.file === null) {
 		window.$message?.error(`待上传的文件为null，已取消上传`);
 		return;
@@ -174,7 +176,7 @@ const handleCustomUploadFile = ({file, data, headers,
 	}
 
 	if (props.uploadFileInterface === 'single') {
-		fileApi.singleUploadFile(file.file, storageMode, userUid, summary).then(result => {
+		fileApi.singleUploadFile(file.file!, storageMode, userUid, summary).then(result => {
 			// 上传成功，保存文件的信息
 			generateFileInfo(file, Array.of(result.data!)).then(data => {
 				data.forEach(v => uploadFileInfoTempArr.push(v));
@@ -200,6 +202,10 @@ const handleCustomUploadFile = ({file, data, headers,
 				thumbnailUrl: file.thumbnailUrl
 			})
 		}).catch(e => onError());
+	}else {
+		fileApi.multiUploadFile(fileList!, storageMode, userUid, summary).then(result => {
+			console.log(result);
+		})
 	}
 }
 
@@ -217,12 +223,19 @@ const handleClearUploadFileList = () => {
 
 const handleSubmitUploadFile = () => {
 	uploadFileRef.value?.submit();
+	// console.log("------------");
+	// console.log(selectedFileList.value);
+	// if (selectedFileList.value.length > 0) {
+	// 	handleCustomUploadFile(null!, selectedFileList.value)
+	// }
 }
 
 const uploadFileChangeEven = (options: { file: UploadFileInfo,
 	fileList: Array<UploadFileInfo>, event?: Event }): void => {
 	uploadFileLength.value = options.fileList.length;
 	uploadFileInfoArr.push(options.file);
+	// @ts-ignore
+	selectedFileList.value = options.fileList.map((file) => file.file)
 }
 
 const generateFileInfo = (file: UploadFileInfo, fileVoArr: FileVo[]): Promise<UploadFileInfo[]> => {

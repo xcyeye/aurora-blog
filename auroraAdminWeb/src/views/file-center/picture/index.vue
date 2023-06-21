@@ -7,6 +7,7 @@
 					@handleFinishUploadFile="handleFinishUploadFile"
 					:show-upload-dragger="true"
 					:multiple-upload-file="true"
+					upload-file-interface="single"
 					:accept-file-type-str="['.png','.jpg','.jpeg','.mp4','.wmv','.avi','.mov']"
 					:parameter-data="{
 					userUid: authStore.userInfo.user_uid,

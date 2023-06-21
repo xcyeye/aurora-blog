@@ -43,7 +43,7 @@ const queryDataMethod = (condition: Condition): Promise<RequestResult<PageData<F
 // 定义方法
 const handleDeleteAction = (data: FileVo) => {
 	window.$dialog?.warning({
-		title: `删除 ${data.fileName} ◔ ‸◔?`,
+		title: `删除 ${data.fileName} ?`,
 		content: '文件不会被回收，是永久删除?',
 		positiveText: '删除',
 		negativeText: '取消',

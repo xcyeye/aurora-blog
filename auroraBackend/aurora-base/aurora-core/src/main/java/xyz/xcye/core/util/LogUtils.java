@@ -58,8 +58,7 @@ public class LogUtils {
         return  "查询条件=== " + generateObjStr(queryConditionObjs);
     }
 
-    private static
-    StringBuilder generateObjStr(Object[] insertObjs) {
+    public static StringBuilder generateObjStr(Object[] insertObjs) {
         if (insertObjs == null) {
             return new StringBuilder("");
         }

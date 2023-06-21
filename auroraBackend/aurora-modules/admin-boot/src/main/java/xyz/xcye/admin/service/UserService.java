@@ -92,8 +92,7 @@ public class UserService {
     private AuroraProperties.AuroraDefaultUserInfoProperties auroraDefaultUserInfoProperties;
 
     @Transactional(rollbackFor = Exception.class)
-    public void insertUser(UserPojo user)
-            throws UserException {
+    public void insertUser(UserPojo user) throws UserException {
         // 判断用户名是否存在
         AssertUtils.stateThrow(!existsUsername(user.getUsername()),
                 () -> new UserException(ResponseStatusCodeEnum.PERMISSION_USER_EXIST));

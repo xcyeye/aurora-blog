@@ -34,11 +34,18 @@ public class AuroraGlobalLogAop {
 
         // 方法的参数
         Object[] args = proceedingJoinPoint.getArgs();
+
         // 打印插入日志
         log.info(LogUtils.insert(0,0,false, false,args));
 
-        //记录时间
+        // 开始时间
+        long startTimeMillis = System.currentTimeMillis();
+
         Object result = proceedingJoinPoint.proceed();
+
+        // 结束时间
+        long endTimeMillis = System.currentTimeMillis();
+        logServiceOperateLog(proceedingJoinPoint, startTimeMillis, endTimeMillis);
 
         if (result instanceof ModifyResult) {
             ModifyResult modifyResult = (ModifyResult) result;
@@ -66,9 +73,14 @@ public class AuroraGlobalLogAop {
         Object[] args = proceedingJoinPoint.getArgs();
         // 打印插入日志
         log.info(LogUtils.update(0,0,false, true, args));
+        // 开始时间
+        long startTimeMillis = System.currentTimeMillis();
 
         Object result = proceedingJoinPoint.proceed();
 
+        // 结束时间
+        long endTimeMillis = System.currentTimeMillis();
+        logServiceOperateLog(proceedingJoinPoint, startTimeMillis, endTimeMillis);
         if (result instanceof ModifyResult) {
             ModifyResult modifyResult = (ModifyResult) result;
             if (modifyResult.isSuccess()) {
@@ -93,8 +105,16 @@ public class AuroraGlobalLogAop {
     public Object saveDeleteLog(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
         // 方法的参数
         Object[] args = proceedingJoinPoint.getArgs();
+
+        // 开始时间
+        long startTimeMillis = System.currentTimeMillis();
+
         // 打印插入日志
         Object result = proceedingJoinPoint.proceed();
+
+        // 结束时间
+        long endTimeMillis = System.currentTimeMillis();
+        logServiceOperateLog(proceedingJoinPoint, startTimeMillis, endTimeMillis);
 
         if (result instanceof ModifyResult) {
             ModifyResult modifyResult = (ModifyResult) result;
@@ -123,6 +143,25 @@ public class AuroraGlobalLogAop {
         Object[] args = proceedingJoinPoint.getArgs();
         // 打印插入日志
         log.info(LogUtils.query(args));
-        return proceedingJoinPoint.proceed();
+
+        // 开始时间
+        long startTimeMillis = System.currentTimeMillis();
+
+        Object result = proceedingJoinPoint.proceed();
+        // 结束时间
+        long endTimeMillis = System.currentTimeMillis();
+        logServiceOperateLog(proceedingJoinPoint, startTimeMillis, endTimeMillis);
+        return result;
+    }
+
+    private void logServiceOperateLog(ProceedingJoinPoint proceedingJoinPoint, long requestStartTime, long requestEndTime) {
+        // 方法的参数
+        Object[] args = proceedingJoinPoint.getArgs();
+        log.info("service层处理时间: 方法{}, 方法参数信息为{}, 处理完成花费 {}, ", getMethodName(proceedingJoinPoint), LogUtils.generateObjStr(args), (requestEndTime - requestStartTime));
+    }
+
+    private String getMethodName(ProceedingJoinPoint proceedingJoinPoint) {
+        MethodSignature signature = (MethodSignature) proceedingJoinPoint.getSignature();
+        return signature.getMethod().getName();
     }
 }
