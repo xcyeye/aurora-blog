@@ -116,7 +116,7 @@
 </template>
 
 <script lang="ts" setup>
-import {computed, onBeforeMount, onMounted, ref, watch} from 'vue';
+import {computed, onMounted, ref, watch} from 'vue';
 import {ArticleStoreBean, useArticleStore, useSiteInfo, useUserInfo} from "@/stores";
 import {
 	getHost,
@@ -143,6 +143,7 @@ import RenderMarkdown from "@/components/common/content/RenderMarkdown.vue";
 import {readingTime} from "reading-time-estimator";
 import gsap from "gsap";
 import {TagVo} from "@/bean/vo/article/TagVo";
+import {Article} from "@/bean/pojo/article/Article";
 
 const currentSiteInfo = ref<SiteSettingInfo>({})
 const useSite = useSiteInfo()
@@ -199,7 +200,8 @@ const getArticleCategory = computed((): Array<string> => {
 	return articleInfo.value.categoryNames!.split(",")
 })
 
-const updateLikeNumMethod = (article: ArticleVo): Promise<RequestResult<void>> => {
+const updateLikeNumMethod = (article: Article): Promise<RequestResult<void>> => {
+	article.likeStatus = 1
 	return articleApi.updateArticleLikeNum(article);
 }
 

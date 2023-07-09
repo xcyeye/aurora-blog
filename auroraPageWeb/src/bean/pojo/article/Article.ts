@@ -108,6 +108,8 @@ interface Article {
   tagTitleList?: Array<string> | [];
   categoryUidList?: Array<string> | [];
   categoryTitleList?: Array<string> | [];
+
+  likeStatus?: number | null;
 }
 
 export { Article };
