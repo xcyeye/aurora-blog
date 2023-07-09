@@ -35,6 +35,8 @@ import xyz.xcye.data.util.PageUtils;
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicStampedReference;
 import java.util.stream.Collectors;
 
 /**
@@ -59,6 +61,8 @@ public class ArticleService {
 
     @Autowired
     private RedisTemplate<String, Object> redisTemplate;
+
+    private final AtomicStampedReference<Article> atomicStampedArticleRef = new AtomicStampedReference<>(null, 1);
 
     public int logicDeleteArticle(Long uid) {
         Assert.notNull(uid, "uid不能为null");
@@ -123,29 +127,31 @@ public class ArticleService {
 
     public void updateArticleLikeNum(ArticlePojo pojo) {
         String redisKey = RedisConstant.STORAGE_ARTICLE_LIKE_NUMBER + pojo.getUid();
-        Long incrementNum = redisTemplate.opsForValue().increment(redisKey);
-        Article article = null;
-        if (incrementNum == null) {
-            // redis中不存在，从db获取
-            synchronized (ArticleService.class) {
-                // article = auroraArticleExtDao.queryByIdForUpdate(pojo.getUid());
-                article = auroraArticleService.queryById(pojo.getUid());
-                AssertUtils.stateThrow(article != null, () -> new ArticleException("此文章不存在"));
-                if (article.getLikeNumber() == null) {
-                    article.setLikeNumber(0);
-                }
-                redisTemplate.opsForValue().set(redisKey, article.getLikeNumber() + 1);
-                article.setLikeNumber(article.getLikeNumber() + 1);
+        Article article = new Article();
+        do {
+            // 从Redis中获取点赞信息
+            Integer redisLikeCount = (Integer) redisTemplate.opsForValue().get(redisKey);
+            if (redisLikeCount == null) {
+                // 使用分布式锁方式从db获取点赞信息
+                redisLikeCount = getLikeCountFromDb(pojo, redisKey);
             }
-        }else {
-            article = new Article();
+            AssertUtils.stateThrow(redisLikeCount != -1, () -> new ArticleException(pojo.getUid() + " 文章不存在"));
+            if (Objects.equals(pojo.getLikeStatus(), 1)) {
+                // 执行点赞
+                redisLikeCount++;
+            }else if (Objects.equals(pojo.getLikeStatus(), 2)) {
+                // 取消点赞
+                if ((redisLikeCount - 1) < 0) {
+                    redisLikeCount = 0;
+                }else {
+                    redisLikeCount--;
+                }
+            }else {
+                // TODO 执行其他的操作，暂时没有实现
+            }
+            article.setLikeNumber(redisLikeCount);
             article.setUid(pojo.getUid());
-            article.setLikeNumber(Math.toIntExact(incrementNum));
-        }
-
-        // 更新
-        ArticlePojo articlePojo = BeanUtils.copyProperties(article, ArticlePojo.class);
-        auroraArticleService.updateById(BeanUtils.copyProperties(articlePojo, Article.class));
+        }while (!updateLikeNum(redisKey, article));
     }
 
     public void updateArticleReadNum(ArticlePojo pojo) {
@@ -353,6 +359,51 @@ public class ArticleService {
             for (File listFile : file.listFiles()) {
                 manyFolderToSingleFile(fileList, listFile);
             }
+        }
+    }
+
+    private Integer getLikeCountFromDb(ArticlePojo articlePojo, String likeNumRedisKey) {
+
+        while (Boolean.FALSE.equals(redisTemplate.opsForValue().setIfAbsent(RedisConstant.LOCK_ARTICLE_LIKE_NUMBER, "lock", 30, TimeUnit.SECONDS))) {
+            try {
+                Thread.sleep(50);
+            } catch (InterruptedException e) {
+                throw new RuntimeException("点赞操作，睡眠异常");
+            }
+        }
+        // 执行到这里，说明该线程已经拿到分布式锁了 从数据库中获取点赞数量
+        Integer likeNumTemp = (Integer) redisTemplate.opsForValue().get(likeNumRedisKey);
+        if (likeNumTemp != null) {
+            return likeNumTemp;
+        }
+
+        // Redis中还没有
+        Article article = auroraArticleService.queryById(articlePojo.getUid());
+        int likeCount = 0;
+        if (article == null) {
+            // -1代表不存在
+            likeCount = -1;
+        }else {
+            likeCount = article.getLikeNumber() == null ? 0 : article.getLikeNumber();
+        }
+        redisTemplate.delete(RedisConstant.LOCK_ARTICLE_LIKE_NUMBER);
+        redisTemplate.opsForValue().set(likeNumRedisKey, likeCount);
+        return likeCount;
+    }
+
+    private boolean updateLikeNum(String redisKey, Article article) {
+        int currentArticleVersion = atomicStampedArticleRef.getStamp();
+        Article currentArticle = atomicStampedArticleRef.getReference();
+        if (atomicStampedArticleRef.compareAndSet(currentArticle, article, currentArticleVersion, currentArticleVersion + 1)) {
+            return false;
+        }else {
+            // 更新db
+            int i = auroraArticleService.updateById(atomicStampedArticleRef.getReference());
+            if (i == 0) {
+                return false;
+            }
+            redisTemplate.opsForValue().set(redisKey, atomicStampedArticleRef.getReference().getLikeNumber());
+            return true;
         }
     }
 }

@@ -2,6 +2,7 @@ package xyz.xcye.auth.manager.cache;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.core.authority.AuthorityUtils;
@@ -16,6 +17,7 @@ import xyz.xcye.core.util.JSONUtils;
 
 import java.time.Duration;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -25,6 +27,7 @@ import java.util.stream.Collectors;
  * @date Created in 2022/5/14 17:21
  */
 
+@Slf4j
 @Component
 public class AuroraUserDetailsCache implements UserCache {
 
@@ -33,6 +36,7 @@ public class AuroraUserDetailsCache implements UserCache {
 
     @Override
     public UserDetails getUserFromCache(String username) {
+        long time = new Date().getTime();
         // TokenEndpoint
         String json = (String) redisTemplate.opsForValue().get(AuthRedisConstant.USER_DETAILS_CACHE_PREFIX + username);
         SecurityUserDetails securityUserDetails = JSON.parseObject(json, SecurityUserDetails.class);
@@ -47,6 +51,8 @@ public class AuroraUserDetailsCache implements UserCache {
         String[] finalAuthorities = authorities;
         Optional.ofNullable(securityUserDetails)
                 .ifPresent(t -> t.setGrantedAuthorities(AuthorityUtils.createAuthorityList(finalAuthorities)));
+        long end = new Date().getTime();
+        log.info("登录从缓存中获取用户，耗时{}", (end - time));
         return securityUserDetails;
     }
 

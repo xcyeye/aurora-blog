@@ -20,5 +20,6 @@ public class RedisConstant {
     /** redis中存储所有白名单的key **/
     public static final String STORAGE_WHITE_URL_INFO = "role_white_url_info";
 
-    public static final String STORAGE_ARTICLE_LIKE_NUMBER = "article_like_num_";
+    public static final String STORAGE_ARTICLE_LIKE_NUMBER = "article_like_num:";
+    public static final String LOCK_ARTICLE_LIKE_NUMBER = "lock_like_num:";
 }

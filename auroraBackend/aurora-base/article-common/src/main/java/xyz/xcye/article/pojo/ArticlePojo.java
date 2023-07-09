@@ -184,4 +184,9 @@ public class ArticlePojo {
      * 是否使用文章中的第一张图片作为封面
      */
     private Boolean useFirstArticlePictureAsCover;
+
+    /**
+     * 点赞状态 1：点赞 2：取消点赞
+     */
+    private Integer likeStatus;
 }
