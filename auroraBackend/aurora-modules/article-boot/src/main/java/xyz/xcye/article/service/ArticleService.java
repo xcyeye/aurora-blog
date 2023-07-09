@@ -394,7 +394,7 @@ public class ArticleService {
     private boolean updateLikeNum(String redisKey, Article article) {
         int currentArticleVersion = atomicStampedArticleRef.getStamp();
         Article currentArticle = atomicStampedArticleRef.getReference();
-        if (atomicStampedArticleRef.compareAndSet(currentArticle, article, currentArticleVersion, currentArticleVersion + 1)) {
+        if (!atomicStampedArticleRef.compareAndSet(currentArticle, article, currentArticleVersion, currentArticleVersion + 1)) {
             return false;
         }else {
             // 更新db
