@@ -23,6 +23,7 @@ import xyz.xcye.data.entity.PageData;
 import javax.validation.groups.Default;
 import java.io.IOException;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * @author qsyyke
@@ -66,10 +67,13 @@ public class ArticleController {
         return articleService.updateArticle(article);
     }
 
+    private final AtomicInteger count = new AtomicInteger(0);
+
     @Operation(summary = "修改文章点赞数")
     @ModifyOperation
     @PostMapping("/updateArticleLikeNum")
     public void updateArticleLikeNum(@Validated({Update.class, Default.class}) @RequestBody ArticlePojo article) {
+        Thread.currentThread().setName("点赞线程");
         articleService.updateArticleLikeNum(article);
     }
 

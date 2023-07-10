@@ -1,5 +1,6 @@
 package xyz.xcye.article.service;
 
+import com.google.common.util.concurrent.AtomicLongMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
@@ -36,6 +37,9 @@ import java.io.File;
 import java.io.IOException;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicLong;
+import java.util.concurrent.atomic.AtomicMarkableReference;
 import java.util.concurrent.atomic.AtomicStampedReference;
 import java.util.stream.Collectors;
 
@@ -61,8 +65,8 @@ public class ArticleService {
 
     @Autowired
     private RedisTemplate<String, Object> redisTemplate;
-
-    private final AtomicStampedReference<Article> atomicStampedArticleRef = new AtomicStampedReference<>(null, 1);
+    private final AtomicBoolean atomicUpdateLikeStatus = new AtomicBoolean(false);
+    private final AtomicBoolean atomicOldLikeStatus = new AtomicBoolean(false);
 
     public int logicDeleteArticle(Long uid) {
         Assert.notNull(uid, "uid不能为null");
@@ -151,7 +155,7 @@ public class ArticleService {
             }
             article.setLikeNumber(redisLikeCount);
             article.setUid(pojo.getUid());
-        }while (!updateLikeNum(redisKey, article));
+        }while (!updateLikeNum(redisKey, article, pojo.getLikeStatus()));
     }
 
     public void updateArticleReadNum(ArticlePojo pojo) {
@@ -363,10 +367,10 @@ public class ArticleService {
     }
 
     private Integer getLikeCountFromDb(ArticlePojo articlePojo, String likeNumRedisKey) {
-
-        while (Boolean.FALSE.equals(redisTemplate.opsForValue().setIfAbsent(RedisConstant.LOCK_ARTICLE_LIKE_NUMBER, "lock", 30, TimeUnit.SECONDS))) {
+        String lockRedisKey = RedisConstant.LOCK_ARTICLE_LIKE_NUMBER + articlePojo.getUid();
+        while (Boolean.FALSE.equals(redisTemplate.opsForValue().setIfAbsent(lockRedisKey, "lock", 60 * 5, TimeUnit.SECONDS))) {
             try {
-                Thread.sleep(50);
+                Thread.sleep(5);
             } catch (InterruptedException e) {
                 throw new RuntimeException("点赞操作，睡眠异常");
             }
@@ -374,6 +378,8 @@ public class ArticleService {
         // 执行到这里，说明该线程已经拿到分布式锁了 从数据库中获取点赞数量
         Integer likeNumTemp = (Integer) redisTemplate.opsForValue().get(likeNumRedisKey);
         if (likeNumTemp != null) {
+            // 在高并发环境下，此线程已经获得了锁，如果不删除锁的话，会导致死锁
+            redisTemplate.delete(lockRedisKey);
             return likeNumTemp;
         }
 
@@ -386,23 +392,41 @@ public class ArticleService {
         }else {
             likeCount = article.getLikeNumber() == null ? 0 : article.getLikeNumber();
         }
-        redisTemplate.delete(RedisConstant.LOCK_ARTICLE_LIKE_NUMBER);
-        redisTemplate.opsForValue().set(likeNumRedisKey, likeCount);
+        redisTemplate.opsForValue().set(likeNumRedisKey, likeCount, 3, TimeUnit.DAYS);
+        redisTemplate.delete(lockRedisKey);
         return likeCount;
     }
 
-    private boolean updateLikeNum(String redisKey, Article article) {
-        int currentArticleVersion = atomicStampedArticleRef.getStamp();
-        Article currentArticle = atomicStampedArticleRef.getReference();
-        if (!atomicStampedArticleRef.compareAndSet(currentArticle, article, currentArticleVersion, currentArticleVersion + 1)) {
+    private boolean updateLikeNum(String redisKey, Article article, int likeStatus) {
+        if (!atomicUpdateLikeStatus.compareAndSet(false, true)) {
             return false;
         }else {
             // 更新db
-            int i = auroraArticleService.updateById(atomicStampedArticleRef.getReference());
+            // if (atomicOldLikeStatus.get()) {
+            //     atomicOldLikeStatus.set(false);
+            //     atomicUpdateLikeStatus.set(false);
+            //     return false;
+            // }
+            Integer redisLikeNum = (Integer) redisTemplate.opsForValue().get(redisKey);
+            if (redisLikeNum == null) {
+                atomicUpdateLikeStatus.set(false);
+                return false;
+            }else {
+                if (redisLikeNum.equals(article.getLikeNumber())) {
+                    atomicUpdateLikeStatus.set(false);
+                    return false;
+                }
+            }
+            int i = auroraArticleService.updateById(article);
             if (i == 0) {
+                atomicOldLikeStatus.set(false);
+                atomicUpdateLikeStatus.set(false);
                 return false;
             }
-            redisTemplate.opsForValue().set(redisKey, atomicStampedArticleRef.getReference().getLikeNumber());
+            redisTemplate.opsForValue().set(redisKey, article.getLikeNumber(), 3, TimeUnit.DAYS);
+            atomicOldLikeStatus.set(true);
+            atomicUpdateLikeStatus.set(false);
+
             return true;
         }
     }
