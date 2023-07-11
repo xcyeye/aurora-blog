@@ -37,10 +37,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.concurrent.atomic.AtomicLong;
-import java.util.concurrent.atomic.AtomicMarkableReference;
-import java.util.concurrent.atomic.AtomicStampedReference;
+import java.util.concurrent.atomic.*;
 import java.util.stream.Collectors;
 
 /**
@@ -67,6 +64,7 @@ public class ArticleService {
     private RedisTemplate<String, Object> redisTemplate;
     private final AtomicBoolean atomicUpdateLikeStatus = new AtomicBoolean(false);
     private final AtomicBoolean atomicOldLikeStatus = new AtomicBoolean(false);
+    private final AtomicInteger atomicLastLikeStatus = new AtomicInteger(0);
 
     public int logicDeleteArticle(Long uid) {
         Assert.notNull(uid, "uid不能为null");
@@ -155,7 +153,7 @@ public class ArticleService {
             }
             article.setLikeNumber(redisLikeCount);
             article.setUid(pojo.getUid());
-        }while (!updateLikeNum(redisKey, article, pojo.getLikeStatus()));
+        }while (!compareAndSetLikeNumber(redisKey, article, pojo.getLikeStatus()));
     }
 
     public void updateArticleReadNum(ArticlePojo pojo) {
@@ -397,26 +395,33 @@ public class ArticleService {
         return likeCount;
     }
 
-    private boolean updateLikeNum(String redisKey, Article article, int likeStatus) {
+    private boolean compareAndSetLikeNumber(String redisKey, Article article, int likeStatus) {
         if (!atomicUpdateLikeStatus.compareAndSet(false, true)) {
             return false;
         }else {
             // 更新db
-            // if (atomicOldLikeStatus.get()) {
-            //     atomicOldLikeStatus.set(false);
-            //     atomicUpdateLikeStatus.set(false);
-            //     return false;
-            // }
             Integer redisLikeNum = (Integer) redisTemplate.opsForValue().get(redisKey);
             if (redisLikeNum == null) {
                 atomicUpdateLikeStatus.set(false);
                 return false;
             }else {
-                if (redisLikeNum.equals(article.getLikeNumber())) {
-                    atomicUpdateLikeStatus.set(false);
-                    return false;
+                if (likeStatus == 1) {
+                    if (article.getLikeNumber() <= redisLikeNum || atomicLastLikeStatus.get() == 2 && redisLikeNum != article.getLikeNumber() - 1) {
+                        atomicUpdateLikeStatus.set(false);
+                        return false;
+                    }
+                }else if (likeStatus == 2) {
+                    if (article.getLikeNumber() >= redisLikeNum || atomicLastLikeStatus.get() == 1 && redisLikeNum != article.getLikeNumber() + 1) {
+                        atomicUpdateLikeStatus.set(false);
+                        return false;
+                    }
                 }
+                // if (redisLikeNum.equals(article.getLikeNumber())) {
+                //     atomicUpdateLikeStatus.set(false);
+                //     return false;
+                // }
             }
+            atomicLastLikeStatus.set(likeStatus);
             int i = auroraArticleService.updateById(article);
             if (i == 0) {
                 atomicOldLikeStatus.set(false);
