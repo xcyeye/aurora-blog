@@ -1,0 +1,38 @@
+services:
+  mysql:
+    hostname: mysql_host
+    env_file:
+      - ./mysql.env
+    container_name: mysql8_db
+    image: mysql:8.1.0
+    expose:
+      - "3306:3306"
+    command:
+      - "--character-set-server=utf8mb4"
+      - "--collation-server=utf8mb4_unicode_ci"
+    volumes:
+      - type: volume
+        source: mysql_data
+        target: /var/lib/mysql
+    ports:
+      - "0.0.0.0:3306:3306"
+    restart: always
+    networks:
+      - mysql_network
+      - micro_network
+volumes:
+  mysql_data:
+    name: mysql_data_volume
+    driver: local
+#    driver_opts:
+#      device: /opt/docker/project/mysql
+networks:
+  # mysql自己的网络
+  mysql_network:
+    name: mysql_network
+    driver: bridge
+  # 微服务环境网络
+  micro_network:
+    name: micro_network
+    driver: bridge
+    external: false
