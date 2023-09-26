@@ -22,7 +22,7 @@ spring:
 logging:
   config: classpath:logback-spring.xml
   file:
-    path: ${user.home}/logs/seata
+    path: ${log.home:${user.home}/logs/seata}
   extend:
     logstash-appender:
       destination: 127.0.0.1:4560
@@ -33,87 +33,34 @@ logging:
 seata:
   config:
     # support: nacos 、 consul 、 apollo 、 zk  、 etcd3
-    type: file
+    type: nacos
     nacos:
       server-addr: 127.0.0.1:8848
-      namespace:
+      namespace: 737a411a-74bb-40f3-84a4-07b157e7e7a5
       group: SEATA_GROUP
-      username:
-      password:
+      username: nacos
+      password: nacos
       context-path:
       ##if use MSE Nacos with auth, mutex with username/password attribute
       #access-key:
       #secret-key:
       data-id: seataServer.properties
-    consul:
-      server-addr: 127.0.0.1:8500
-      acl-token:
-      key: seata.properties
-    apollo:
-      appId: seata-server
-      apollo-meta: http://192.168.1.204:8801
-      apollo-config-service: http://192.168.1.204:8080
-      namespace: application
-      apollo-access-key-secret:
-      cluster: seata
-    zk:
-      server-addr: 127.0.0.1:2181
-      session-timeout: 6000
-      connect-timeout: 2000
-      username:
-      password:
-      node-path: /seata/seata.properties
-    etcd3:
-      server-addr: http://localhost:2379
-      key: seata.properties
   registry:
     # support: nacos 、 eureka 、 redis 、 zk  、 consul 、 etcd3 、 sofa
-    type: file
+    type: nacos
     preferred-networks: 30.240.*
     nacos:
       application: seata-server
       server-addr: 127.0.0.1:8848
       group: SEATA_GROUP
-      namespace:
+      namespace: 737a411a-74bb-40f3-84a4-07b157e7e7a5
       cluster: default
-      username:
-      password:
+      username: nacos
+      password: nacos
       context-path:
       ##if use MSE Nacos with auth, mutex with username/password attribute
       #access-key:
       #secret-key:
-    eureka:
-      service-url: http://localhost:8761/eureka
-      application: default
-      weight: 1
-    redis:
-      server-addr: localhost:6379
-      db: 0
-      password:
-      cluster: default
-      timeout: 0
-    zk:
-      cluster: default
-      server-addr: 127.0.0.1:2181
-      session-timeout: 6000
-      connect-timeout: 2000
-      username:
-      password:
-    consul:
-      cluster: default
-      server-addr: 127.0.0.1:8500
-      acl-token:
-    etcd3:
-      cluster: default
-      server-addr: http://localhost:2379
-    sofa:
-      server-addr: 127.0.0.1:9603
-      application: default
-      region: DEFAULT_ZONE
-      datacenter: DefaultDataCenter
-      cluster: default
-      group: SEATA_GROUP
-      address-wait-time: 3000
 
   server:
     service-port: 8091 #If not configured, the default is '${server.port} + 1000'
@@ -138,25 +85,18 @@ seata:
       enable-branch-async-remove: false #enable to asynchronous remove branchSession
   store:
     # support: file 、 db 、 redis
-    mode: file
+    mode: db
     session:
       mode: file
     lock:
       mode: file
-    file:
-      dir: sessionStore
-      max-branch-session-size: 16384
-      max-global-session-size: 512
-      file-write-buffer-cache-size: 16384
-      session-reload-read-size: 100
-      flush-disk-mode: async
     db:
       datasource: druid
       db-type: mysql
-      driver-class-name: com.mysql.jdbc.Driver
+      driver-class-name: com.mysql.cj.jdbc.Driver
       url: jdbc:mysql://127.0.0.1:3306/seata?rewriteBatchedStatements=true
-      user: mysql
-      password: mysql
+      user: root
+      password: Cqy19981202
       min-conn: 10
       max-conn: 100
       global-table: global_table
@@ -165,20 +105,6 @@ seata:
       distributed-lock-table: distributed_lock
       query-limit: 1000
       max-wait: 5000
-    redis:
-      mode: single
-      database: 0
-      min-conn: 10
-      max-conn: 100
-      password:
-      max-total: 100
-      query-limit: 1000
-      single:
-        host: 127.0.0.1
-        port: 6379
-      sentinel:
-        master-name:
-        sentinel-hosts:
   metrics:
     enabled: false
     registry-type: compact
