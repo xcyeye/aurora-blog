@@ -12,6 +12,11 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 
+console:
+  user:
+    username: admin
+    password: admin
+
 server:
   port: 7091
 
@@ -31,6 +36,11 @@ logging:
       topic: logback_to_logstash
 
 seata:
+  security:
+    secretKey: SeataSecretKey0c382ef121d778043159209298fd40bf3850a017
+    tokenValidityInMilliseconds: 1800000
+    ignore:
+      urls: /,/**/*.css,/**/*.js,/**/*.html,/**/*.map,/**/*.svg,/**/*.png,/**/*.ico,/console-fe/public/**,/api/v1/auth/login
   config:
     # support: nacos 、 consul 、 apollo 、 zk  、 etcd3
     type: nacos
@@ -87,9 +97,9 @@ seata:
     # support: file 、 db 、 redis
     mode: db
     session:
-      mode: file
+      mode: db
     lock:
-      mode: file
+      mode: db
     db:
       datasource: druid
       db-type: mysql
