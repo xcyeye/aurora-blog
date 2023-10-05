@@ -60,6 +60,16 @@
         <blog.version>1.0-SNAPSHOT</blog.version>
         <swagger-annotations.version>1.5.20</swagger-annotations.version>
         <qiniu-java-sdk.version>7.11.0</qiniu-java-sdk.version>
+        <docker-plugin.version>0.43.4</docker-plugin.version>
+        <maven-deploy.version>3.1.1</maven-deploy.version>
+
+
+        <!-- 配置信息 -->
+        <docker-host>https://hub.xcye.xyz</docker-host>
+        <docker-registry>hub.xcye.xyz</docker-registry>
+        <docker-username>aurora</docker-username>
+        <docker-password>Aurora123456</docker-password>
+        <docker-namespace>aurora-blog</docker-namespace>
     </properties>
 
     <!--统一依赖管理-->
@@ -471,6 +481,112 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
+
     </dependencies>
 
+    <build>
+        <!-- 插件统一配置 -->
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>io.fabric8</groupId>
+                    <artifactId>docker-maven-plugin</artifactId>
+                    <version>${docker-plugin.version}</version>
+
+                    <configuration>
+                        <useColor>true</useColor>
+                        <authConfig>
+                            <push>
+                                <username>${docker-username}</username>
+                                <password>${docker-password}</password>
+                            </push>
+                        </authConfig>
+
+                        <!-- 配置镜像 -->
+                        <images>
+                            <image>
+                                <name>${docker-namespace}/${project.name}</name>
+                                <registry>${docker-registry}</registry>
+                                <build>
+                                    <tags>
+                                        <tag>%T</tag>
+                                    </tags>
+                                    <dockerFile>${project.basedir}/DockerFile</dockerFile>
+                                </build>
+                            </image>
+                        </images>
+                    </configuration>
+
+                    <executions>
+                        <execution>
+                            <id>docker-push</id>
+                            <phase>deploy</phase>
+                            <goals>
+                                <goal>push</goal>
+                            </goals>
+                        </execution>
+
+                        <execution>
+                            <id>docker-build</id>
+                            <phase>install</phase>
+                            <goals>
+                                <goal>build</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+
+                <!-- 取消deploy插件的默认上传行为 -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-deploy-plugin</artifactId>
+                    <version>${maven-deploy.version}</version>
+
+                    <executions>
+                        <execution>
+                            <id>default-deploy</id>
+                            <phase>deploy</phase>
+                            <goals>
+                                <goal>deploy</goal>
+                            </goals>
+                            <configuration>
+                                <skip>true</skip>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+
+        <plugins>
+            <plugin>
+                <groupId>io.github.git-commit-id</groupId>
+                <artifactId>git-commit-id-maven-plugin</artifactId>
+                <version>5.0.0</version>
+                <executions>
+                    <execution>
+                        <id>get-the-git-infos</id>
+                        <goals>
+                            <goal>revision</goal>
+                        </goals>
+                        <phase>initialize</phase>
+                    </execution>
+                </executions>
+                <configuration>
+                    <generateGitPropertiesFile>true</generateGitPropertiesFile>
+                    <generateGitPropertiesFilename>${project.build.outputDirectory}/git.properties</generateGitPropertiesFilename>
+                    <includeOnlyProperties>
+                        <includeOnlyProperty>^git.build.(time|version)$</includeOnlyProperty>
+                        <includeOnlyProperty>^git.commit.id.(abbrev|full)$</includeOnlyProperty>
+                    </includeOnlyProperties>
+                    <commitIdGenerationMode>full</commitIdGenerationMode>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-deploy-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
 </project>
