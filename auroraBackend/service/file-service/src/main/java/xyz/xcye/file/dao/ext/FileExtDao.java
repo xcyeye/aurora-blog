@@ -2,7 +2,6 @@ package xyz.xcye.file.dao.ext;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.transaction.annotation.Transactional;
 import xyz.xcye.data.entity.Condition;
 import xyz.xcye.file.po.File;
 
@@ -14,6 +13,7 @@ public interface FileExtDao {
 
     /**
      * 查询此userUid对应的所有文件格式
+     *
      * @param userUid
      * @return
      */

@@ -1,9 +1,9 @@
 package xyz.xcye.file.pojo;
 
-import lombok.Data;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
 import xyz.xcye.core.constant.FieldLengthConstant;
 import xyz.xcye.core.valid.Delete;
@@ -14,9 +14,9 @@ import xyz.xcye.core.valid.validator.ValidateString;
 import javax.validation.constraints.NotNull;
 
 /**
+ * @author xcye <br/>
  * @description file数据表的POJO <br/>
  * @date 2022-12-14 22:31:22 <br/>
- * @author xcye <br/>
  */
 
 @Data
@@ -75,7 +75,7 @@ public class FilePojo {
     /**
      * 此文件的访问路径
      */
-    @Length(max = FieldLengthConstant.FILE_PATH,message = "文件的访问路径长度不能超过{max}")
+    @Length(max = FieldLengthConstant.FILE_PATH, message = "文件的访问路径长度不能超过{max}")
     private String path;
 
     /**
@@ -86,7 +86,7 @@ public class FilePojo {
     /**
      * 此文件的存储位置
      */
-    @Length(message = "文件存储路径长度不能超过{max}",max = FieldLengthConstant.FILE_PATH)
+    @Length(message = "文件存储路径长度不能超过{max}", max = FieldLengthConstant.FILE_PATH)
     private String storagePath;
 
 }

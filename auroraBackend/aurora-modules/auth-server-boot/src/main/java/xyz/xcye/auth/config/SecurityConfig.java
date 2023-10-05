@@ -47,6 +47,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     /**
      * 数据库中，存储密码使用的加密算法，需要使用这个进行密码的验证
+     *
      * @return
      */
     @Bean
@@ -66,6 +67,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     /**
      * 此AuthenticationManager对象在oauth中会使用到
+     *
      * @return
      * @throws Exception
      */

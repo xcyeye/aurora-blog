@@ -9,6 +9,7 @@ import java.io.IOException;
 
 /**
  * 邮件发送服务
+ *
  * @author qsyyke
  */
 
@@ -16,6 +17,7 @@ public interface SendMailService {
 
     /**
      * 发送html邮件
+     *
      * @param storageSendMailInfo 保存邮件发送的相关数据
      * @return
      * @throws MessagingException 发送失败
@@ -25,6 +27,7 @@ public interface SendMailService {
 
     /**
      * 发送简单的邮件
+     *
      * @param pojo 接收者邮箱
      * @return
      * @throws MessagingException
@@ -33,6 +36,7 @@ public interface SendMailService {
 
     /**
      * 发送自定义html邮件
+     *
      * @param pojo 接收者邮箱号
      * @return
      * @throws MessagingException
@@ -41,6 +45,7 @@ public interface SendMailService {
 
     /**
      * 重新发送自定义的邮件
+     *
      * @param pojo
      * @return
      */

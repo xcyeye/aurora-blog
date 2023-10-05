@@ -40,8 +40,8 @@ public class UserRoleRelationshipService {
     }
 
     private void relationshipIsFull(UserRoleRelationshipPojo relationship) {
-        Objects.requireNonNull(relationship,"用户角色关系信息不能为null");
-        Objects.requireNonNull(relationship.getRoleUid(),"用户角色的uid不能为null");
-        Objects.requireNonNull(relationship.getUserUid(),"用户角色的用户uid不能为null");
+        Objects.requireNonNull(relationship, "用户角色关系信息不能为null");
+        Objects.requireNonNull(relationship.getRoleUid(), "用户角色的uid不能为null");
+        Objects.requireNonNull(relationship.getUserUid(), "用户角色的用户uid不能为null");
     }
 }

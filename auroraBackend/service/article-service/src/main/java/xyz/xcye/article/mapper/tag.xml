@@ -13,7 +13,7 @@
         <result column="user_uid" property="userUid"/>
     </resultMap>
 
-  	<sql id="Where_Condition">
+    <sql id="Where_Condition">
         <where>
             <if test="uid != null">
                 AND uid = #{uid}
@@ -40,10 +40,11 @@
                 AND user_uid = #{userUid}
             </if>
         </where>
-  	</sql>
+    </sql>
 
     <sql id="Base_Column_List">
-        uid,
+        uid
+        ,
         title,
         summary,
         create_time,
@@ -53,153 +54,154 @@
         user_uid
     </sql>
 
-	<!-- common methods start -->
+    <!-- common methods start -->
     <!-- 新增一条数据 -->
-	<insert id="insert" parameterType="xyz.xcye.article.po.Tag" useGeneratedKeys="true" keyProperty="uid">
+    <insert id="insert" parameterType="xyz.xcye.article.po.Tag" useGeneratedKeys="true" keyProperty="uid">
         INSERT INTO au_tag (
-            <trim suffixOverrides=",">
-                <if test="uid != null">
-                    uid,
-                </if>
-                <if test="title != null and title != '' ">
-                    title,
-                </if>
-                <if test="summary != null and summary != '' ">
-                    summary,
-                </if>
-                <if test="createTime != null and createTime != '' ">
-                    create_time,
-                </if>
-                <if test="updateTime != null and updateTime != '' ">
-                    update_time,
-                </if>
-                <if test="coverUrl != null and coverUrl != '' ">
-                    cover_Url,
-                </if>
-                <if test="delete != null">
-                    is_delete,
-                </if>
-                <if test="userUid != null">
-                    user_uid,
-                </if>
-            </trim>
+        <trim suffixOverrides=",">
+            <if test="uid != null">
+                uid,
+            </if>
+            <if test="title != null and title != '' ">
+                title,
+            </if>
+            <if test="summary != null and summary != '' ">
+                summary,
+            </if>
+            <if test="createTime != null and createTime != '' ">
+                create_time,
+            </if>
+            <if test="updateTime != null and updateTime != '' ">
+                update_time,
+            </if>
+            <if test="coverUrl != null and coverUrl != '' ">
+                cover_Url,
+            </if>
+            <if test="delete != null">
+                is_delete,
+            </if>
+            <if test="userUid != null">
+                user_uid,
+            </if>
+        </trim>
         ) VALUES (
-            <trim suffixOverrides=",">
-                <if test="uid != null">
-                 #{uid},
-                </if>
-                <if test="title != null and title != '' ">
-                 #{title},
-                </if>
-                <if test="summary != null and summary != '' ">
-                 #{summary},
-                </if>
-                <if test="createTime != null and createTime != '' ">
-                 #{createTime},
-                </if>
-                <if test="updateTime != null and updateTime != '' ">
-                 #{updateTime},
-                </if>
-                <if test="coverUrl != null and coverUrl != '' ">
-                 #{coverUrl},
-                </if>
-                <if test="delete != null">
-                 #{delete},
-                </if>
-                <if test="userUid != null">
-                 #{userUid},
-                </if>
-            </trim>
+        <trim suffixOverrides=",">
+            <if test="uid != null">
+                #{uid},
+            </if>
+            <if test="title != null and title != '' ">
+                #{title},
+            </if>
+            <if test="summary != null and summary != '' ">
+                #{summary},
+            </if>
+            <if test="createTime != null and createTime != '' ">
+                #{createTime},
+            </if>
+            <if test="updateTime != null and updateTime != '' ">
+                #{updateTime},
+            </if>
+            <if test="coverUrl != null and coverUrl != '' ">
+                #{coverUrl},
+            </if>
+            <if test="delete != null">
+                #{delete},
+            </if>
+            <if test="userUid != null">
+                #{userUid},
+            </if>
+        </trim>
         )
-	</insert>
+    </insert>
 
     <!-- 通过主键删除数据 -->
-	<delete id="deleteById" parameterType="Long">
-        DELETE FROM au_tag
-        WHERE uid = #{uid} 
-	</delete>
+    <delete id="deleteById" parameterType="Long">
+        DELETE
+        FROM au_tag
+        WHERE uid = #{uid}
+    </delete>
 
     <!-- 根据传入参数删除数据 -->
-	<delete id="deleteByWhere" parameterType="xyz.xcye.article.po.Tag">
+    <delete id="deleteByWhere" parameterType="xyz.xcye.article.po.Tag">
         DELETE FROM au_tag
-        <include refid="Where_Condition" />
-	</delete>
+        <include refid="Where_Condition"/>
+    </delete>
 
     <!-- 根据id更新数据 -->
     <update id="updateById" parameterType="xyz.xcye.article.po.Tag">
-		UPDATE au_tag
-		<set>
-			<if test="title != null and title != '' ">title = #{title},</if>
-			<if test="summary != null and summary != '' ">summary = #{summary},</if>
-			<if test="createTime != null and createTime != '' ">create_time = #{createTime},</if>
-			<if test="updateTime != null and updateTime != '' ">update_time = #{updateTime},</if>
-			<if test="coverUrl != null and coverUrl != '' ">cover_Url = #{coverUrl},</if>
-			<if test="delete != null">is_delete = #{delete},</if>
-			<if test="userUid != null">user_uid = #{userUid},</if>
-		</set>
-		WHERE
-		    uid = #{uid}
-	</update>
-
-	<!-- 根据主键查询数据  -->
-	<select id="queryById" resultMap="tagResultMap" parameterType="Long">
-        SELECT
-        <include refid="Base_Column_List" />
-  	    FROM au_tag
+        UPDATE au_tag
+        <set>
+            <if test="title != null and title != '' ">title = #{title},</if>
+            <if test="summary != null and summary != '' ">summary = #{summary},</if>
+            <if test="createTime != null and createTime != '' ">create_time = #{createTime},</if>
+            <if test="updateTime != null and updateTime != '' ">update_time = #{updateTime},</if>
+            <if test="coverUrl != null and coverUrl != '' ">cover_Url = #{coverUrl},</if>
+            <if test="delete != null">is_delete = #{delete},</if>
+            <if test="userUid != null">user_uid = #{userUid},</if>
+        </set>
         WHERE
-            uid = #{uid}
+        uid = #{uid}
+    </update>
+
+    <!-- 根据主键查询数据  -->
+    <select id="queryById" resultMap="tagResultMap" parameterType="Long">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM au_tag
+        WHERE
+        uid = #{uid}
     </select>
 
     <!-- 查询一条记录  -->
-	<select id="queryOne" resultMap="tagResultMap" parameterType="xyz.xcye.article.po.Tag">
-         SELECT
-         <include refid="Base_Column_List" />
-  	     FROM au_tag
-         <include refid="Where_Condition" />
-         LIMIT 1
-    </select>
-
-	<!-- 根据传入参数查询数据列表  -->
-	<select id="queryListByWhere" resultMap="tagResultMap" parameterType="xyz.xcye.article.po.Tag">
+    <select id="queryOne" resultMap="tagResultMap" parameterType="xyz.xcye.article.po.Tag">
         SELECT
-        <include refid="Base_Column_List" />
+        <include refid="Base_Column_List"/>
         FROM au_tag
-        <include refid="Where_Condition" />
+        <include refid="Where_Condition"/>
+        LIMIT 1
     </select>
 
-	<!-- 统计符合条件的数据数量 -->
-	<select id="countByWhere" resultType="int" parameterType="xyz.xcye.article.po.Tag">
-		SELECT COUNT(*) FROM au_tag
-		<include refid="Where_Condition" />
-	</select>
+    <!-- 根据传入参数查询数据列表  -->
+    <select id="queryListByWhere" resultMap="tagResultMap" parameterType="xyz.xcye.article.po.Tag">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM au_tag
+        <include refid="Where_Condition"/>
+    </select>
+
+    <!-- 统计符合条件的数据数量 -->
+    <select id="countByWhere" resultType="int" parameterType="xyz.xcye.article.po.Tag">
+        SELECT COUNT(*) FROM au_tag
+        <include refid="Where_Condition"/>
+    </select>
 
     <!-- 批量插入多条数据 -->
-	<insert id="batchInsert" parameterType="java.util.List">
+    <insert id="batchInsert" parameterType="java.util.List">
         INSERT INTO au_tag (
-        	<include refid="Base_Column_List" />
+        <include refid="Base_Column_List"/>
         ) VALUES
-        <foreach collection="list" item="item" index= "index" separator =",">
+        <foreach collection="list" item="item" index="index" separator=",">
             (
             <trim suffixOverrides=",">
-				#{item.uid},
-				#{item.title},
-				#{item.summary},
-				#{item.createTime},
-				#{item.updateTime},
-				#{item.coverUrl},
-				#{item.delete},
-				#{item.userUid},
+                #{item.uid},
+                #{item.title},
+                #{item.summary},
+                #{item.createTime},
+                #{item.updateTime},
+                #{item.coverUrl},
+                #{item.delete},
+                #{item.userUid},
             </trim>
             )
         </foreach>
     </insert>
-	<!-- common methods end -->
+    <!-- common methods end -->
 
-	<!-- 下面的是兼容旧版本 -->
-	<select id="queryListByCondition" resultMap="tagResultMap">
-		select
-		<include refid="Base_Column_List" />
-		from au_tag
+    <!-- 下面的是兼容旧版本 -->
+    <select id="queryListByCondition" resultMap="tagResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from au_tag
         <where>
             <if test="condition.uid != null">
                 and uid=#{condition.uid}
@@ -217,5 +219,5 @@
                 and is_delete=#{condition.delete}
             </if>
         </where>
-	</select>
+    </select>
 </mapper>

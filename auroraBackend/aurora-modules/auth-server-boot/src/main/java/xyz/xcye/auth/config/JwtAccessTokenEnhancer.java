@@ -21,6 +21,7 @@ public class JwtAccessTokenEnhancer extends JwtAccessTokenConverter {
 
     /**
      * 增强jwt，需要在此方法中
+     *
      * @param accessToken
      * @param authentication
      * @return

@@ -72,6 +72,7 @@ public class LoginInfoAop {
 
     /**
      * 记录用户的登录信息，将登录情况记录到数据库中
+     *
      * @param point
      * @return
      * @throws Throwable
@@ -115,7 +116,7 @@ public class LoginInfoAop {
         loginInfoPojo.setUid(uid);
         setDefaultProperties(loginInfoPojo);
 
-        MethodSignature signature = (MethodSignature)point.getSignature();
+        MethodSignature signature = (MethodSignature) point.getSignature();
         Method method = signature.getMethod();
         // 获取方法名
         String methodName = method.getName();
@@ -192,6 +193,7 @@ public class LoginInfoAop {
 
     /**
      * 判断该用户的登录失败次数是否达到最大值，如果达到最大致，则锁住该用户的信息
+     *
      * @param username
      */
     private void isReachesMaxFailureNum(String username) throws BindException {
@@ -224,6 +226,7 @@ public class LoginInfoAop {
     /**
      * 把该用户名的登录成功/失败情况存入redis中,如果缓存中存在userDetails对象，那么不会进入loadUserByUsername，也就是请求头中没有
      * 用户名等信息，可能会导致，用户第一次登录失败，第二次登录成功，因为存在缓存，所以就不会删除第一次登录失败的信息
+     *
      * @param loginStatus
      */
     private void storageLoginSituationToRedis(boolean loginStatus, String cacheUsername) {
@@ -258,6 +261,7 @@ public class LoginInfoAop {
     /**
      * 处理登录的结果，也就是把该用户的登录成功，失败情况存入mysql中,因为会存在缓存，如果缓存中存在该用户名对应的user信息，则不会进入
      * loadUserByUsername()方法中进行处理，所以请求头中，会没有username信息
+     *
      * @param message
      * @param status
      */
@@ -302,6 +306,7 @@ public class LoginInfoAop {
 
     /**
      * 判断用户名是否合法
+     *
      * @param username
      */
     private void legalUsername(String username) {

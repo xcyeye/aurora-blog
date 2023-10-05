@@ -1,9 +1,6 @@
 package xyz.xcye.api.gateway;
 
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.cloud.openfeign.SpringQueryMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import xyz.xcye.admin.pojo.RolePermissionRelationshipPojo;
@@ -13,26 +10,29 @@ import xyz.xcye.data.entity.Condition;
 
 /**
  * 角色权限信息控制器
+ *
  * @author qsyyke
  * @date Created in 2022/5/4 22:43
  */
 
-@FeignClient(value = "aurora-admin",name = "aurora-admin",
+@FeignClient(value = "aurora-admin", name = "aurora-admin",
         contextId = "gatewayRolePermissionFeignService", fallback = GatewayRolePermissionFeignHandler.class)
 public interface GatewayRolePermissionFeignService {
 
 
     /**
      * 根据用户名，加载该用于所拥有的角色和角色对应的权限信息，如果此用户不存在，则返回空数组
+     *
      * @param pojo
      * @return
      */
     @PostMapping("/admin/permissionRelation/loadPermissionByUsername")
     R loadPermissionByUsername(@RequestBody RolePermissionRelationshipPojo pojo);
-    //Set<Map<String,String>> loadPermissionByUsername(@PathVariable("username") String username);
+    // Set<Map<String,String>> loadPermissionByUsername(@PathVariable("username") String username);
 
     /**
      * 根据用户名，加载该用于用户所拥有的所有角色
+     *
      * @param pojo
      * @return
      */
@@ -41,6 +41,7 @@ public interface GatewayRolePermissionFeignService {
 
     /**
      * 加载所有的角色和权限的关系
+     *
      * @param condition
      * @return
      */

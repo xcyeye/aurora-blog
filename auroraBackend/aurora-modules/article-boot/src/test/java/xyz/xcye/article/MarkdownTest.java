@@ -39,7 +39,7 @@ public class MarkdownTest {
         }
         if (!file.isDirectory()) {
             fileList.add(file);
-        }else {
+        } else {
             for (File listFile : file.listFiles()) {
                 manyFolderToSingleFile(fileList, listFile);
             }

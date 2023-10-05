@@ -8,7 +8,6 @@ import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.data.redis.connection.RedisConnection;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.connection.RedisPassword;
 import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
@@ -17,8 +16,6 @@ import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
-
-import java.time.Duration;
 
 /**
  * @author qsyyke
@@ -43,7 +40,7 @@ public class RedisAutoConfig {
         RedisStandaloneConfiguration redisStandaloneConfiguration = new RedisStandaloneConfiguration();
         redisStandaloneConfiguration.setHostName(host);
         redisStandaloneConfiguration.setPort(port);
-        //由于我们使用了动态配置库,所以此处省略
+        // 由于我们使用了动态配置库,所以此处省略
         // redisStandaloneConfiguration.setDatabase();
         redisStandaloneConfiguration.setPassword(RedisPassword.of(password));
         JedisClientConfiguration.JedisClientConfigurationBuilder jedisClientConfiguration = JedisClientConfiguration.builder();
@@ -52,7 +49,7 @@ public class RedisAutoConfig {
     }
 
     @Bean(name = "redisTemplate")
-    public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory redisConnectionFactory){
+    public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory redisConnectionFactory) {
         RedisTemplate<String, Object> redisTemplate = new RedisTemplate();
         redisTemplate.setConnectionFactory(redisConnectionFactory);
 
@@ -60,22 +57,22 @@ public class RedisAutoConfig {
 
         ObjectMapper mapper = new ObjectMapper();
 
-        //指定要序列化的域,ANY是包括public和private的
+        // 指定要序列化的域,ANY是包括public和private的
         mapper.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
 
-        //指定序列化输入的类型,类必须是非final类型的,否则会报错
+        // 指定序列化输入的类型,类必须是非final类型的,否则会报错
         mapper.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL);
         jackson2JsonRedisSerializer.setObjectMapper(mapper);
 
         StringRedisSerializer stringRedisSerializer = new StringRedisSerializer();
 
-        //设置key采用String的序列化方式
+        // 设置key采用String的序列化方式
         redisTemplate.setKeySerializer(stringRedisSerializer);
-        //设置hash的key采用String的序列化方式
+        // 设置hash的key采用String的序列化方式
         redisTemplate.setHashKeySerializer(stringRedisSerializer);
-        //设置value采用jackson2的序列化方式
+        // 设置value采用jackson2的序列化方式
         redisTemplate.setValueSerializer(jackson2JsonRedisSerializer);
-        //设置hash的value采用jackson2的序列化方式
+        // 设置hash的value采用jackson2的序列化方式
         redisTemplate.setHashValueSerializer(jackson2JsonRedisSerializer);
 
         redisTemplate.afterPropertiesSet();

@@ -1,4 +1,3 @@
-
 server:
   port: 7777
 spring:
@@ -8,19 +7,19 @@ spring:
   main:
     allow-bean-definition-overriding: true
   cloud:
-#    gateway:
-#      globalcors:
-#        corsConfigurations:
-#          '[/**]':
-#            allowedOrigins: "https://docs.spring.io"
-#            allowedMethods:
-#              - POST
-#    gateway:
-#      default-filters:
-#        - AddResponseHeader= Access-Control-Allow-Origin, *
-#        - AddResponseHeader= Access-Control-Allow-Methods, GET, POST, PUT, OPTIONS
-#        - AddResponseHeader= Access-Control-Allow-Credentials, true
-#        - AddResponseHeader= Access-Control-Allow-Headers, Accept,Accept-Encoding,Accept-Language,Connection,Content-Length,Content-Type,Host,Origin,Referer,User-Agent
+    #    gateway:
+    #      globalcors:
+    #        corsConfigurations:
+    #          '[/**]':
+    #            allowedOrigins: "https://docs.spring.io"
+    #            allowedMethods:
+    #              - POST
+    #    gateway:
+    #      default-filters:
+    #        - AddResponseHeader= Access-Control-Allow-Origin, *
+    #        - AddResponseHeader= Access-Control-Allow-Methods, GET, POST, PUT, OPTIONS
+    #        - AddResponseHeader= Access-Control-Allow-Credentials, true
+    #        - AddResponseHeader= Access-Control-Allow-Headers, Accept,Accept-Encoding,Accept-Language,Connection,Content-Length,Content-Type,Host,Origin,Referer,User-Agent
     inetutils:
       ignored-interfaces:
         - VirtualBox Host-Only Network

@@ -1,6 +1,5 @@
 package xyz.xcye.article.service;
 
-import com.google.common.util.concurrent.AtomicLongMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
@@ -37,7 +36,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.*;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 /**
@@ -141,19 +141,19 @@ public class ArticleService {
             if (Objects.equals(pojo.getLikeStatus(), 1)) {
                 // 执行点赞
                 redisLikeCount++;
-            }else if (Objects.equals(pojo.getLikeStatus(), 2)) {
+            } else if (Objects.equals(pojo.getLikeStatus(), 2)) {
                 // 取消点赞
                 if ((redisLikeCount - 1) < 0) {
                     redisLikeCount = 0;
-                }else {
+                } else {
                     redisLikeCount--;
                 }
-            }else {
+            } else {
                 // TODO 执行其他的操作，暂时没有实现
             }
             article.setLikeNumber(redisLikeCount);
             article.setUid(pojo.getUid());
-        }while (!compareAndSetLikeNumber(redisKey, article, pojo.getLikeStatus()));
+        } while (!compareAndSetLikeNumber(redisKey, article, pojo.getLikeStatus()));
     }
 
     public void updateArticleReadNum(ArticlePojo pojo) {
@@ -169,6 +169,7 @@ public class ArticleService {
 
     /**
      * 处理导入文章
+     *
      * @param pojo
      */
     @Transactional(rollbackFor = Exception.class)
@@ -199,7 +200,7 @@ public class ArticleService {
                     LogUtils.logExceptionInfo(e);
                     continue;
                 }
-            }else {
+            } else {
                 continue;
             }
             if (articlePojo != null) {
@@ -274,6 +275,7 @@ public class ArticleService {
 
     /**
      * 判断公告对象中的定时发布时间是否规范，如果不规范，则设置为null
+     *
      * @param article
      */
     private void setTimingPublishTime(ArticlePojo article) {
@@ -291,6 +293,7 @@ public class ArticleService {
 
     /**
      * 根据标签信息查询对应的文章
+     *
      * @param pojo
      * @return
      */
@@ -357,7 +360,7 @@ public class ArticleService {
         }
         if (!file.isDirectory()) {
             fileList.add(file);
-        }else {
+        } else {
             for (File listFile : file.listFiles()) {
                 manyFolderToSingleFile(fileList, listFile);
             }
@@ -387,7 +390,7 @@ public class ArticleService {
         if (article == null) {
             // -1代表不存在
             likeCount = -1;
-        }else {
+        } else {
             likeCount = article.getLikeNumber() == null ? 0 : article.getLikeNumber();
         }
         redisTemplate.opsForValue().set(likeNumRedisKey, likeCount, 3, TimeUnit.DAYS);
@@ -398,19 +401,19 @@ public class ArticleService {
     private boolean compareAndSetLikeNumber(String redisKey, Article article, int likeStatus) {
         if (!atomicUpdateLikeStatus.compareAndSet(false, true)) {
             return false;
-        }else {
+        } else {
             // 更新db
             Integer redisLikeNum = (Integer) redisTemplate.opsForValue().get(redisKey);
             if (redisLikeNum == null) {
                 atomicUpdateLikeStatus.set(false);
                 return false;
-            }else {
+            } else {
                 if (likeStatus == 1) {
                     if (article.getLikeNumber() <= redisLikeNum || atomicLastLikeStatus.get() == 2 && redisLikeNum != article.getLikeNumber() - 1) {
                         atomicUpdateLikeStatus.set(false);
                         return false;
                     }
-                }else if (likeStatus == 2) {
+                } else if (likeStatus == 2) {
                     if (article.getLikeNumber() >= redisLikeNum || atomicLastLikeStatus.get() == 1 && redisLikeNum != article.getLikeNumber() + 1) {
                         atomicUpdateLikeStatus.set(false);
                         return false;

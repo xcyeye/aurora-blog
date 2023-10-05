@@ -1,9 +1,8 @@
 package xyz.xcye.message.pojo;
 
-import lombok.Data;
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import io.swagger.v3.oas.annotations.media.Schema;
 import org.hibernate.validator.constraints.Length;
 import xyz.xcye.core.constant.FieldLengthConstant;
 import xyz.xcye.core.valid.Delete;
@@ -13,9 +12,9 @@ import xyz.xcye.core.valid.Update;
 import javax.validation.constraints.NotNull;
 
 /**
+ * @author xcye <br/>
  * @description email数据表的POJO <br/>
  * @date 2022-12-14 22:01:53 <br/>
- * @author xcye <br/>
  */
 
 @Data
@@ -39,21 +38,21 @@ public class EmailPojo {
      * 邮箱主机 可以为null
      * <p>length < 25</p>
      */
-    @Length(max = FieldLengthConstant.EMAIL_NUMBER,message = "邮箱-长度不能超过25")
+    @Length(max = FieldLengthConstant.EMAIL_NUMBER, message = "邮箱-长度不能超过25")
     private String emailHost;
 
     /**
      * 邮箱授权码 可以为null
      * <p>length < 50</p>
      */
-    @Length(max = FieldLengthConstant.EMAIL_PASSWORD,message = "邮箱-配置中的密码不能超过{max}")
+    @Length(max = FieldLengthConstant.EMAIL_PASSWORD, message = "邮箱-配置中的密码不能超过{max}")
     private String emailPassword;
 
     /**
      * 邮箱协议 可以为null
      * <p>length < 10</p>
      */
-    @Length(max = FieldLengthConstant.EMAIL_PROTOCOL,message = "邮箱-配置中的协议不能超过{max}")
+    @Length(max = FieldLengthConstant.EMAIL_PROTOCOL, message = "邮箱-配置中的协议不能超过{max}")
     private String protocol;
 
     /**

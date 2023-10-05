@@ -43,6 +43,7 @@ public class SiteSettingController {
 
     /**
      * 通过条件查询
+     *
      * @param condition
      * @return object by primary key
      */
@@ -55,6 +56,7 @@ public class SiteSettingController {
 
     /**
      * 通过userUid查询
+     *
      * @param pojo
      * @return
      */

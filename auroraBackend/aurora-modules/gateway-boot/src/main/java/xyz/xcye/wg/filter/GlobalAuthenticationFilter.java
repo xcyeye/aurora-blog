@@ -33,10 +33,10 @@ import java.util.concurrent.atomic.AtomicReference;
 /**
  * 全局过滤器，对token的拦截，解析token放入header中，便于下游微服务获取用户信息
  * 分为如下几步：
- *  1、白名单直接放行
- *  2、校验token
- *  3、读取token中存放的用户信息
- *  4、重新封装用户信息，加密成功json数据放入请求头中传递给下游微服务
+ * 1、白名单直接放行
+ * 2、校验token
+ * 3、读取token中存放的用户信息
+ * 4、重新封装用户信息，加密成功json数据放入请求头中传递给下游微服务
  */
 @Component
 @Slf4j
@@ -156,12 +156,13 @@ public class GlobalAuthenticationFilter implements GlobalFilter {
 
     /**
      * 判断token是否有效，true有效，反之
+     *
      * @param token
      * @return
      */
     private OAuth2AccessToken effectiveToken(String token) {
         OAuth2AccessToken oAuth2AccessToken;
-        //解析token，使用tokenStore
+        // 解析token，使用tokenStore
         try {
             oAuth2AccessToken = tokenStore.readAccessToken(token);
         } catch (Exception e) {
@@ -172,6 +173,7 @@ public class GlobalAuthenticationFilter implements GlobalFilter {
 
     /**
      * 检查白名单状态，如果为true，则表示是白名单
+     *
      * @param exchange 对象
      * @return true是白名单
      */
@@ -185,7 +187,8 @@ public class GlobalAuthenticationFilter implements GlobalFilter {
                 try {
                     storageUserJwtInfo(exchange, token, chain);
                     // 发生异常，不做处理
-                } catch (Exception e) {}
+                } catch (Exception e) {
+                }
             }
             return true;
         }
@@ -194,9 +197,10 @@ public class GlobalAuthenticationFilter implements GlobalFilter {
 
     /**
      * 存储用户信息
+     *
      * @param exchange 对象
-     * @param token jwt
-     * @param chain 对象
+     * @param token    jwt
+     * @param chain    对象
      * @return
      */
     private Mono<Void> storageUserJwtInfo(ServerWebExchange exchange, String token, GatewayFilterChain chain) {

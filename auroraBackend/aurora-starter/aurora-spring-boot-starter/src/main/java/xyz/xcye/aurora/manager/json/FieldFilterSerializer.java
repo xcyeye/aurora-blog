@@ -29,10 +29,12 @@ public class FieldFilterSerializer {
     private final ObjectMapper mapper = new ObjectMapper();
 
     @JsonFilter(DYNAMIC_EXCLUDE)
-    interface DynamicExclude {}
+    interface DynamicExclude {
+    }
 
     @JsonFilter(DYNAMIC_EXCLUDE)
-    interface DynamicInclude {}
+    interface DynamicInclude {
+    }
 
     public void filter(Class<?> clazz, String... propertyArray) {
         SimpleBeanPropertyFilter filter = SimpleBeanPropertyFilter.serializeAllExcept(propertyArray);
@@ -42,10 +44,10 @@ public class FieldFilterSerializer {
     }
 
     public String toJSONString(Object object) throws JsonProcessingException {
-        //解决jackson2无法反序列化LocalDateTime的问题
-        //这里要注意时间属性上要加入 @JsonFormat 注解 否则无法正常解析
+        // 解决jackson2无法反序列化LocalDateTime的问题
+        // 这里要注意时间属性上要加入 @JsonFormat 注解 否则无法正常解析
         mapper.registerModule(new JavaTimeModule());
-        //将类转换成json字符串返回
+        // 将类转换成json字符串返回
         String s = mapper.writeValueAsString(object);
         return mapper.writeValueAsString(object);
     }

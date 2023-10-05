@@ -24,8 +24,8 @@ import javax.sql.DataSource;
 
 @EnableTransactionManagement
 @EnableAspectJAutoProxy
-@AutoConfigureBefore(value = { MybatisAutoConfiguration.class} )
-@AutoConfigureAfter(value = { DataSourceAutoConfiguration.class} )
+@AutoConfigureBefore(value = {MybatisAutoConfiguration.class})
+@AutoConfigureAfter(value = {DataSourceAutoConfiguration.class})
 @Configuration
 public class MybatisAutoConfig {
     @Autowired
@@ -37,7 +37,7 @@ public class MybatisAutoConfig {
         sqlSessionFactoryBean.setDataSource(dataSource);
         sqlSessionFactoryBean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath*:/xyz/xcye/**/mapper/**/*.xml"));
         org.apache.ibatis.session.Configuration configuration = new org.apache.ibatis.session.Configuration();
-         //自动将数据库中的下划线转换为驼峰格式
+        // 自动将数据库中的下划线转换为驼峰格式
         configuration.setMapUnderscoreToCamelCase(true);
         configuration.setDefaultFetchSize(100);
         // 设置打印

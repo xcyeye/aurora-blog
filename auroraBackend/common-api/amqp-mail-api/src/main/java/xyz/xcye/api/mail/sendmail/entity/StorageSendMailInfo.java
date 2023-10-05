@@ -8,6 +8,7 @@ import java.util.Map;
 
 /**
  * 存储发送的邮件信息dto
+ *
  * @author qsyyke
  * @date Created in 2022/4/27 15:55
  */
@@ -20,13 +21,13 @@ public class StorageSendMailInfo {
     /**
      * 存放替换邮件模板中的key和value值，其中key不需要加上{{}},[[]]这些
      */
-    private Map<String,String> replacedMap;
+    private Map<String, String> replacedMap;
 
     /**
      * 额外的数据，比如回复评论，需要组装一个被回复的评论对象
      */
     @Setter
-    private Map<String,Object> additionalData;
+    private Map<String, Object> additionalData;
 
     /**
      * 使用哪个用户的模板，如果此模板不存在，则使用默认的

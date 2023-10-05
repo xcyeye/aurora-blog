@@ -26,7 +26,6 @@ import javax.validation.groups.Default;
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
@@ -45,17 +44,18 @@ public class FileController {
 
     /**
      * 上传单个文件
+     *
      * @param fileInfo
      * @param file
      * @return
      */
     @SelectOperation
-    @Operation(summary = "上传单个文件",description = "可以上传任何类型，最大不能操作30M，返回上传之后的文件信息")
+    @Operation(summary = "上传单个文件", description = "可以上传任何类型，最大不能操作30M，返回上传之后的文件信息")
     @PostMapping("/singleUploadFile")
     public FileVO singleUploadFile(FilePojo fileInfo, @RequestParam(value = "file") MultipartFile file)
             throws IOException, FileException, ExecutionException, InterruptedException {
 
-        FileEntityDTO fileEntity = new FileEntityDTO(file.getOriginalFilename(),file.getInputStream());
+        FileEntityDTO fileEntity = new FileEntityDTO(file.getOriginalFilename(), file.getInputStream());
         List<FileVO> fileVOList = fileService.insertFile(List.of(fileEntity), fileInfo);
         if (fileVOList != null && !fileVOList.isEmpty()) {
             return fileVOList.get(0);
@@ -65,12 +65,13 @@ public class FileController {
 
     /**
      * 上传多个文件
+     *
      * @param files
      * @return
      */
     @PostMapping("/multiUploadFile")
     @SelectOperation
-    @Operation(summary = "上传多个文件，返回集合",description = "不接收文件简介，默认本地存储")
+    @Operation(summary = "上传多个文件，返回集合", description = "不接收文件简介，默认本地存储")
     public List<FileVO> multiUploadFile(
             @RequestParam(value = "files") MultipartFile[] files, FilePojo fileInfo)
             throws IOException, FileException, ExecutionException, InterruptedException {
@@ -84,6 +85,7 @@ public class FileController {
 
     /**
      * 在typora中，将文件上传到自己服务器或者其他存储类型上
+     *
      * @return
      */
     @ResponseRealResult
@@ -93,7 +95,7 @@ public class FileController {
             @RequestParam(value = "file") MultipartFile file, FilePojo fileInfo)
             throws IOException, FileException, ExecutionException, InterruptedException {
 
-        FileEntityDTO fileEntity = new FileEntityDTO(file.getOriginalFilename(),file.getInputStream());
+        FileEntityDTO fileEntity = new FileEntityDTO(file.getOriginalFilename(), file.getInputStream());
         if (!StringUtils.hasLength(fileInfo.getSummary())) {
             fileInfo.setSummary("从typora上传的文件");
         }
@@ -106,6 +108,7 @@ public class FileController {
 
     /**
      * 根据传入的条件从数据库中查询文件记录
+     *
      * @return
      */
     @SelectOperation
@@ -138,6 +141,7 @@ public class FileController {
 
     /**
      * 根据传入的信息，修改数据库中文件的信息，一定要传入文件uid
+     *
      * @param fileInfo 需要修改的文件信息字段
      * @return
      */
@@ -150,6 +154,7 @@ public class FileController {
 
     /**
      * 删除指定文件
+     *
      * @param fileInfo 一定要传入uid
      * @return 文件的修改情况
      */
@@ -185,7 +190,7 @@ public class FileController {
 
         int i = bis.read(bytes);
         while (i != -1) {
-            outputStream.write(bytes,0,bytes.length);
+            outputStream.write(bytes, 0, bytes.length);
             outputStream.flush();
             i = bis.read(bytes);
         }

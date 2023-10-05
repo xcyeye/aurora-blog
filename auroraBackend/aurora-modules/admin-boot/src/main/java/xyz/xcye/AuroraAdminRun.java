@@ -22,7 +22,7 @@ public class AuroraAdminRun {
         Condition<Long> condition = new Condition<>();
         condition.setPageSize(10000);
         run.getBean(PermissionRelationService.class).loadAllRolePermission(condition);
-        run.getBean(WhiteUrlService.class).queryListWhiteUrlByCondition(new Condition<>(){{
+        run.getBean(WhiteUrlService.class).queryListWhiteUrlByCondition(new Condition<>() {{
             setPageSize(10000);
         }});
     }

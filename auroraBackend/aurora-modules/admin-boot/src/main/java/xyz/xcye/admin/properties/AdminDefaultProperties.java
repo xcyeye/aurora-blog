@@ -5,6 +5,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
  * 一些默认值，没有存放在数据库
+ *
  * @author qsyyke
  * @date Created in 2022/4/30 16:26
  */

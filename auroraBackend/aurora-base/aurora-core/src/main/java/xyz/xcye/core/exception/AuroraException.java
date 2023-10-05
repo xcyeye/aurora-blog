@@ -6,11 +6,14 @@ import xyz.xcye.core.enums.ResponseStatusCodeEnum;
 
 /**
  * 这是aurora全局异常父类 加入一些额外参数
+ *
  * @author qsyyke
  */
 
 public abstract class AuroraException extends RuntimeException {
-    /** 响应码 **/
+    /**
+     * 响应码
+     **/
     @Getter
     @Setter
     public Integer statusCode;

@@ -20,11 +20,14 @@ import xyz.xcye.core.util.LogUtils;
 import xyz.xcye.oauth.api.service.RolePermissionFeignService;
 import xyz.xcye.oauth.api.service.UserFeignService;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
  * 在此loadUserByUsername()方法中，用户用户名，远程调用admin服务，查询出用户的信息
+ *
  * @author qsyyke
  * @date Created in 2022/5/4 14:17
  */
@@ -65,7 +68,7 @@ public class JwtTokenUserDetailsService implements UserDetailsService {
         // 用户存在，获取用户的角色信息
         List<JSONObject> rolePermissionDTOList = null;
         try {
-            R r = rolePermissionFeignService.loadAllRoleByUsername(new RolePermissionRelationshipPojo(){{
+            R r = rolePermissionFeignService.loadAllRoleByUsername(new RolePermissionRelationshipPojo() {{
                 setUsernameArr(Collections.singletonList(username));
             }});
             rolePermissionDTOList = JSONUtils.parseObjFromResult(ConvertObjectUtils.jsonToString(r), "data", List.class);

@@ -7,7 +7,7 @@
         <result column="authentication" property="authentication"/>
     </resultMap>
 
-  	<sql id="Where_Condition">
+    <sql id="Where_Condition">
         <where>
             <if test="code != null and code != '' ">
                 AND code = #{code}
@@ -16,53 +16,54 @@
                 AND authentication = #{authentication}
             </if>
         </where>
-  	</sql>
+    </sql>
 
     <sql id="Base_Column_List">
-        code,
+        code
+        ,
         authentication
     </sql>
 
     <!-- 新增一条数据 -->
-	<insert id="insert" parameterType="xyz.xcye.auth.po.OauthCode" useGeneratedKeys="true" keyProperty="uid">
+    <insert id="insert" parameterType="xyz.xcye.auth.po.OauthCode" useGeneratedKeys="true" keyProperty="uid">
         INSERT INTO au_oauth_code (
-            <trim suffixOverrides=",">
-                <if test="code != null and code != '' ">
-                    code,
-                </if>
-                <if test="authentication != null">
-                    authentication,
-                </if>
-            </trim>
+        <trim suffixOverrides=",">
+            <if test="code != null and code != '' ">
+                code,
+            </if>
+            <if test="authentication != null">
+                authentication,
+            </if>
+        </trim>
         ) VALUES (
-            <trim suffixOverrides=",">
-                <if test="code != null and code != '' ">
-                 #{code},
-                </if>
-                <if test="authentication != null">
-                 #{authentication},
-                </if>
-            </trim>
+        <trim suffixOverrides=",">
+            <if test="code != null and code != '' ">
+                #{code},
+            </if>
+            <if test="authentication != null">
+                #{authentication},
+            </if>
+        </trim>
         )
-	</insert>
+    </insert>
 
     <!-- 根据传入参数删除数据 -->
-	<delete id="deleteByWhere" parameterType="xyz.xcye.auth.po.OauthCode">
+    <delete id="deleteByWhere" parameterType="xyz.xcye.auth.po.OauthCode">
         DELETE FROM au_oauth_code
-        <include refid="Where_Condition" />
-	</delete>
+        <include refid="Where_Condition"/>
+    </delete>
 
-	<!-- 根据传入参数查询数据列表  -->
-	<select id="queryListByWhere" resultMap="oauthCodeResultMap" parameterType="xyz.xcye.auth.po.OauthCode">
+    <!-- 根据传入参数查询数据列表  -->
+    <select id="queryListByWhere" resultMap="oauthCodeResultMap" parameterType="xyz.xcye.auth.po.OauthCode">
         SELECT
-        <include refid="Base_Column_List" />
+        <include refid="Base_Column_List"/>
         FROM au_oauth_code
-        <include refid="Where_Condition" />
+        <include refid="Where_Condition"/>
     </select>
 
-	<!-- 统计符合条件的数据数量 -->
-	<select id="countByWhere" resultType="int" parameterType="xyz.xcye.auth.po.OauthCode">
-		SELECT COUNT(*) FROM au_oauth_code
-		<include refid="Where_Condition" />
-	</select>
+    <!-- 统计符合条件的数据数量 -->
+    <select id="countByWhere" resultType="int" parameterType="xyz.xcye.auth.po.OauthCode">
+        SELECT COUNT(*) FROM au_oauth_code
+        <include refid="Where_Condition"/>
+    </select>
 </mapper>

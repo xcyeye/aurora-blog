@@ -5,7 +5,7 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-public class PageData<T>{
+public class PageData<T> {
     /**
      * 总数
      */
@@ -20,7 +20,7 @@ public class PageData<T>{
 
     private List<T> result;
 
-    public static <T> PageData<T> getInstance(List<T> res){
+    public static <T> PageData<T> getInstance(List<T> res) {
         PageData<T> data = new PageData<>();
         data.setTotal((long) res.size());
         data.setPages(1);

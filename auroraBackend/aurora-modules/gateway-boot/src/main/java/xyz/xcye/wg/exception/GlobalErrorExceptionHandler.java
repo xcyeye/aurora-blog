@@ -16,6 +16,7 @@ import xyz.xcye.wg.util.SecurityResultHandler;
 
 /**
  * 用于网关的全局异常处理
+ *
  * @Order(-1)：优先级一定要比ResponseStatusExceptionHandler低
  */
 @Slf4j
@@ -23,7 +24,6 @@ import xyz.xcye.wg.util.SecurityResultHandler;
 @Component
 @RequiredArgsConstructor
 public class GlobalErrorExceptionHandler implements ErrorWebExceptionHandler {
-
 
 
     @Override
@@ -37,7 +37,7 @@ public class GlobalErrorExceptionHandler implements ErrorWebExceptionHandler {
         if (ex instanceof NotFoundException) {
             // NotFoundException是服务实例未启动
             responseStatusCodeEnum = ResponseStatusCodeEnum.SERVICE_INSTANCE_NOT_FOUND;
-        }else if (ex instanceof InvalidTokenException) {
+        } else if (ex instanceof InvalidTokenException) {
             responseStatusCodeEnum = ResponseStatusCodeEnum.PERMISSION_TOKEN_EXPIRATION;
         } else {
             responseStatusCodeEnum = ResponseStatusCodeEnum.UNKNOWN;

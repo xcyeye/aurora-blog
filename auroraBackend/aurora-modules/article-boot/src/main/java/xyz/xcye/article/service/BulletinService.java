@@ -80,6 +80,7 @@ public class BulletinService {
 
     /**
      * 判断公告对象中的定时发布时间是否规范，如果不规范，则设置为null
+     *
      * @param bulletin
      */
     private void setTimingPublishTime(BulletinPojo bulletin) {

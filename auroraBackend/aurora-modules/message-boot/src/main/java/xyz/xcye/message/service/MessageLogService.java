@@ -2,7 +2,6 @@ package xyz.xcye.message.service;
 
 import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import org.springframework.validation.BindException;
@@ -61,20 +60,20 @@ public class MessageLogService {
                 throw new RabbitMQException("消费失败，此条MQ已被系统消费");
             }
         }
-        //如果修改成功，返回最新的数据
+        // 如果修改成功，返回最新的数据
         return auroraMessageLogService.updateById(BeanUtils.copyProperties(messageLog, MessageLog.class));
     }
 
     public PageData<MessageLogVO> queryListMessageLogByCondition(Condition<Long> condition) {
-        PageHelper.startPage(condition.getPageNum(),condition.getPageSize(),condition.getOrderBy());
-        return PageUtils.copyPageDataResult(auroraMessageLogService.queryListByCondition(condition),MessageLogVO.class);
+        PageHelper.startPage(condition.getPageNum(), condition.getPageSize(), condition.getOrderBy());
+        return PageUtils.copyPageDataResult(auroraMessageLogService.queryListByCondition(condition), MessageLogVO.class);
     }
 
     public MessageLogVO queryMessageLogByUid(long uid) {
         MessageLog messageLog = new MessageLog();
         messageLog.setUid(uid);
         messageLog.setConsumeStatus(null);
-        return BeanUtils.copyProperties(auroraMessageLogService.queryOne(messageLog),MessageLogVO.class);
+        return BeanUtils.copyProperties(auroraMessageLogService.queryOne(messageLog), MessageLogVO.class);
     }
 
     public void resendMqMessage(long uid) throws BindException {

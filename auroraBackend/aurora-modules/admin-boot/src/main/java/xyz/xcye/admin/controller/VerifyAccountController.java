@@ -13,6 +13,7 @@ import xyz.xcye.core.exception.user.UserException;
 
 /**
  * 用户验证账户信息的相关操作
+ *
  * @author qsyyke
  */
 
@@ -30,7 +31,7 @@ public class VerifyAccountController {
         boolean bindEmail = commonVerifyUrlService.bindEmail(incomingSecretKey);
 
         if (bindEmail) {
-            return  "绑定成功";
+            return "绑定成功";
         }
         return "绑定失败";
     }
@@ -41,7 +42,7 @@ public class VerifyAccountController {
         boolean removeAccountDisable = commonVerifyUrlService.removeAccountDisable(incomingSecretKey);
 
         if (removeAccountDisable) {
-            return  "重新启用账户成功";
+            return "重新启用账户成功";
         }
         return "解除锁定失败";
     }

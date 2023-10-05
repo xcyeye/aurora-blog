@@ -96,6 +96,7 @@ public class NavigationService {
      * 1. 如果是从一个父导航中，移除一个子导航，那么此被移出的子导航将成为一个一级导航
      * 2. 如果是修改该导航的父导航，如果该父导航不属于该子导航，那么不会成功，如果是属于该用户的，那么该导航连带着该导航下属的所有
      * 子导航都将成为该父导航的子导航
+     *
      * @param record
      * @return
      */
@@ -126,6 +127,7 @@ public class NavigationService {
 
     /**
      * 设置该导航对象中，有效的子导航或者父导航，如果传入一个不存在的导航uid，那么会将该导航对象的父/子导航uid设置为null
+     *
      * @param navigation
      * @param setParentNav
      */
@@ -156,6 +158,7 @@ public class NavigationService {
 
     /**
      * 获取一个导航中，有效的子导航字符串
+     *
      * @param navigation
      * @return
      */
@@ -197,6 +200,7 @@ public class NavigationService {
 
     /**
      * 获取该导航对象中的子导航字符串，不会验证该导航中的子导航uid是否有效
+     *
      * @param navigation
      * @return
      */
@@ -214,6 +218,7 @@ public class NavigationService {
     /**
      * 为parentNavUid对对象的父导航，增加一个新的子导航，newSonNavUid是一个有效的uid，不会验证该newSonNavUid是否有效，但是
      * 会验证parentNavUid是否有效
+     *
      * @param parentNavUid
      * @param newSonNavUid
      */

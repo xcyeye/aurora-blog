@@ -15,9 +15,9 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
+ * @author xcye <br/>
  * @description article数据表的POJO <br/>
  * @date 2022-12-14 20:46:02 <br/>
- * @author xcye <br/>
  */
 
 @Data

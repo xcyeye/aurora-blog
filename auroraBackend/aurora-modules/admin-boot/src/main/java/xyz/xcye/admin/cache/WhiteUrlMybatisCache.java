@@ -15,6 +15,7 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 /**
  * 这是角色权限部分的mybatis缓存
+ *
  * @author qsyyke
  * @date Created in 2022/5/10 18:31
  */
@@ -24,7 +25,7 @@ public class WhiteUrlMybatisCache implements Cache {
     // 读写锁
     private final ReadWriteLock readWriteLock = new ReentrantReadWriteLock(true);
 
-    //这里使用了redis缓存，使用springboot自动注入
+    // 这里使用了redis缓存，使用springboot自动注入
     private RedisTemplate<String, Object> redisTemplate;
 
     private LoadRolePermissionInfo loadRolePermissionInfo;
@@ -46,7 +47,7 @@ public class WhiteUrlMybatisCache implements Cache {
     @Override
     public void putObject(Object key, Object value) {
         if (redisTemplate == null) {
-            //由于启动期间注入失败，只能运行期间注入，这段代码可以删除
+            // 由于启动期间注入失败，只能运行期间注入，这段代码可以删除
             redisTemplate = (RedisTemplate<String, Object>) SpringUtil.getBean("redisTemplate");
         }
         if (value != null) {
@@ -60,7 +61,7 @@ public class WhiteUrlMybatisCache implements Cache {
     @Override
     public Object getObject(Object key) {
         if (redisTemplate == null) {
-            //由于启动期间注入失败，只能运行期间注入，这段代码可以删除
+            // 由于启动期间注入失败，只能运行期间注入，这段代码可以删除
             redisTemplate = (RedisTemplate<String, Object>) SpringUtil.getBean("redisTemplate");
         }
         try {
@@ -76,7 +77,7 @@ public class WhiteUrlMybatisCache implements Cache {
     @Override
     public Object removeObject(Object key) {
         if (redisTemplate == null) {
-            //由于启动期间注入失败，只能运行期间注入，这段代码可以删除
+            // 由于启动期间注入失败，只能运行期间注入，这段代码可以删除
             redisTemplate = (RedisTemplate<String, Object>) SpringUtil.getBean("redisTemplate");
         }
         if (key != null) {
@@ -103,7 +104,7 @@ public class WhiteUrlMybatisCache implements Cache {
     @Override
     public int getSize() {
         if (redisTemplate == null) {
-            //由于启动期间注入失败，只能运行期间注入，这段代码可以删除
+            // 由于启动期间注入失败，只能运行期间注入，这段代码可以删除
             redisTemplate = (RedisTemplate<String, Object>) SpringUtil.getBean("redisTemplate");
         }
         Long size = redisTemplate.execute((RedisCallback<Long>) RedisServerCommands::dbSize);

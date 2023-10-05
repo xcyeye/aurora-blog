@@ -1,14 +1,10 @@
 package xyz.xcye.article.api.service;
 
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.cloud.openfeign.SpringQueryMap;
-import org.springframework.validation.BindException;
-import org.springframework.web.bind.annotation.*;
-import xyz.xcye.admin.po.User;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import xyz.xcye.admin.pojo.UserPojo;
 import xyz.xcye.core.entity.R;
-import xyz.xcye.core.exception.user.UserException;
-import xyz.xcye.message.po.Email;
 
 /**
  * @author qsyyke

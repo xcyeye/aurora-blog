@@ -16,7 +16,7 @@
         <result column="update_time" property="updateTime"/>
     </resultMap>
 
-  	<sql id="Where_Condition">
+    <sql id="Where_Condition">
         <where>
             <if test="uid != null">
                 AND uid = #{uid}
@@ -52,10 +52,11 @@
                 AND update_time = #{updateTime}
             </if>
         </where>
-  	</sql>
+    </sql>
 
     <sql id="Base_Column_List">
-        uid,
+        uid
+        ,
         level,
         pre_sidebar_uid,
         title,
@@ -68,176 +69,177 @@
         update_time
     </sql>
 
-	<!-- common methods start -->
+    <!-- common methods start -->
     <!-- 新增一条数据 -->
-	<insert id="insert" parameterType="xyz.xcye.admin.po.AdminSidebar" useGeneratedKeys="true" keyProperty="uid">
+    <insert id="insert" parameterType="xyz.xcye.admin.po.AdminSidebar" useGeneratedKeys="true" keyProperty="uid">
         INSERT INTO au_admin_sidebar (
-            <trim suffixOverrides=",">
-                <if test="uid != null">
-                    uid,
-                </if>
-                <if test="level != null">
-                    level,
-                </if>
-                <if test="preSidebarUid != null">
-                    pre_sidebar_uid,
-                </if>
-                <if test="title != null and title != '' ">
-                    title,
-                </if>
-                <if test="path != null and path != '' ">
-                    path,
-                </if>
-                <if test="external != null">
-                    is_external,
-                </if>
-                <if test="iconClassName != null and iconClassName != '' ">
-                    icon_class_name,
-                </if>
-                <if test="sort != null">
-                    sort,
-                </if>
-                <if test="userUid != null">
-                    user_uid,
-                </if>
-                <if test="createTime != null and createTime != '' ">
-                    create_time,
-                </if>
-                <if test="updateTime != null and updateTime != '' ">
-                    update_time,
-                </if>
-            </trim>
+        <trim suffixOverrides=",">
+            <if test="uid != null">
+                uid,
+            </if>
+            <if test="level != null">
+                level,
+            </if>
+            <if test="preSidebarUid != null">
+                pre_sidebar_uid,
+            </if>
+            <if test="title != null and title != '' ">
+                title,
+            </if>
+            <if test="path != null and path != '' ">
+                path,
+            </if>
+            <if test="external != null">
+                is_external,
+            </if>
+            <if test="iconClassName != null and iconClassName != '' ">
+                icon_class_name,
+            </if>
+            <if test="sort != null">
+                sort,
+            </if>
+            <if test="userUid != null">
+                user_uid,
+            </if>
+            <if test="createTime != null and createTime != '' ">
+                create_time,
+            </if>
+            <if test="updateTime != null and updateTime != '' ">
+                update_time,
+            </if>
+        </trim>
         ) VALUES (
-            <trim suffixOverrides=",">
-                <if test="uid != null">
-                 #{uid},
-                </if>
-                <if test="level != null">
-                 #{level},
-                </if>
-                <if test="preSidebarUid != null">
-                 #{preSidebarUid},
-                </if>
-                <if test="title != null and title != '' ">
-                 #{title},
-                </if>
-                <if test="path != null and path != '' ">
-                 #{path},
-                </if>
-                <if test="external != null">
-                 #{external},
-                </if>
-                <if test="iconClassName != null and iconClassName != '' ">
-                 #{iconClassName},
-                </if>
-                <if test="sort != null">
-                 #{sort},
-                </if>
-                <if test="userUid != null">
-                 #{userUid},
-                </if>
-                <if test="createTime != null and createTime != '' ">
-                 #{createTime},
-                </if>
-                <if test="updateTime != null and updateTime != '' ">
-                 #{updateTime},
-                </if>
-            </trim>
+        <trim suffixOverrides=",">
+            <if test="uid != null">
+                #{uid},
+            </if>
+            <if test="level != null">
+                #{level},
+            </if>
+            <if test="preSidebarUid != null">
+                #{preSidebarUid},
+            </if>
+            <if test="title != null and title != '' ">
+                #{title},
+            </if>
+            <if test="path != null and path != '' ">
+                #{path},
+            </if>
+            <if test="external != null">
+                #{external},
+            </if>
+            <if test="iconClassName != null and iconClassName != '' ">
+                #{iconClassName},
+            </if>
+            <if test="sort != null">
+                #{sort},
+            </if>
+            <if test="userUid != null">
+                #{userUid},
+            </if>
+            <if test="createTime != null and createTime != '' ">
+                #{createTime},
+            </if>
+            <if test="updateTime != null and updateTime != '' ">
+                #{updateTime},
+            </if>
+        </trim>
         )
-	</insert>
+    </insert>
 
     <!-- 通过主键删除数据 -->
-	<delete id="deleteById" parameterType="Long">
-        DELETE FROM au_admin_sidebar
-        WHERE uid = #{uid} 
-	</delete>
+    <delete id="deleteById" parameterType="Long">
+        DELETE
+        FROM au_admin_sidebar
+        WHERE uid = #{uid}
+    </delete>
 
     <!-- 根据传入参数删除数据 -->
-	<delete id="deleteByWhere" parameterType="xyz.xcye.admin.po.AdminSidebar">
+    <delete id="deleteByWhere" parameterType="xyz.xcye.admin.po.AdminSidebar">
         DELETE FROM au_admin_sidebar
-        <include refid="Where_Condition" />
-	</delete>
+        <include refid="Where_Condition"/>
+    </delete>
 
     <!-- 根据id更新数据 -->
     <update id="updateById" parameterType="xyz.xcye.admin.po.AdminSidebar">
-		UPDATE au_admin_sidebar
-		<set>
-			<if test="level != null">level = #{level},</if>
-			<if test="preSidebarUid != null">pre_sidebar_uid = #{preSidebarUid},</if>
-			<if test="title != null and title != '' ">title = #{title},</if>
-			<if test="path != null and path != '' ">path = #{path},</if>
-			<if test="external != null">is_external = #{external},</if>
-			<if test="iconClassName != null and iconClassName != '' ">icon_class_name = #{iconClassName},</if>
-			<if test="sort != null">sort = #{sort},</if>
-			<if test="userUid != null">user_uid = #{userUid},</if>
-			<if test="updateTime != null and updateTime != '' ">update_time = #{updateTime},</if>
-		</set>
-		WHERE
-		    uid = #{uid}
-	</update>
-
-	<!-- 根据主键查询数据  -->
-	<select id="queryById" resultMap="adminSidebarResultMap" parameterType="Long">
-        SELECT
-        <include refid="Base_Column_List" />
-  	    FROM au_admin_sidebar
+        UPDATE au_admin_sidebar
+        <set>
+            <if test="level != null">level = #{level},</if>
+            <if test="preSidebarUid != null">pre_sidebar_uid = #{preSidebarUid},</if>
+            <if test="title != null and title != '' ">title = #{title},</if>
+            <if test="path != null and path != '' ">path = #{path},</if>
+            <if test="external != null">is_external = #{external},</if>
+            <if test="iconClassName != null and iconClassName != '' ">icon_class_name = #{iconClassName},</if>
+            <if test="sort != null">sort = #{sort},</if>
+            <if test="userUid != null">user_uid = #{userUid},</if>
+            <if test="updateTime != null and updateTime != '' ">update_time = #{updateTime},</if>
+        </set>
         WHERE
-            uid = #{uid}
+        uid = #{uid}
+    </update>
+
+    <!-- 根据主键查询数据  -->
+    <select id="queryById" resultMap="adminSidebarResultMap" parameterType="Long">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM au_admin_sidebar
+        WHERE
+        uid = #{uid}
     </select>
 
     <!-- 查询一条记录  -->
-	<select id="queryOne" resultMap="adminSidebarResultMap" parameterType="xyz.xcye.admin.po.AdminSidebar">
-         SELECT
-         <include refid="Base_Column_List" />
-  	     FROM au_admin_sidebar
-         <include refid="Where_Condition" />
-         LIMIT 1
-    </select>
-
-	<!-- 根据传入参数查询数据列表  -->
-	<select id="queryListByWhere" resultMap="adminSidebarResultMap" parameterType="xyz.xcye.admin.po.AdminSidebar">
+    <select id="queryOne" resultMap="adminSidebarResultMap" parameterType="xyz.xcye.admin.po.AdminSidebar">
         SELECT
-        <include refid="Base_Column_List" />
+        <include refid="Base_Column_List"/>
         FROM au_admin_sidebar
-        <include refid="Where_Condition" />
+        <include refid="Where_Condition"/>
+        LIMIT 1
     </select>
 
-	<!-- 统计符合条件的数据数量 -->
-	<select id="countByWhere" resultType="int" parameterType="xyz.xcye.admin.po.AdminSidebar">
-		SELECT COUNT(*) FROM au_admin_sidebar
-		<include refid="Where_Condition" />
-	</select>
+    <!-- 根据传入参数查询数据列表  -->
+    <select id="queryListByWhere" resultMap="adminSidebarResultMap" parameterType="xyz.xcye.admin.po.AdminSidebar">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM au_admin_sidebar
+        <include refid="Where_Condition"/>
+    </select>
+
+    <!-- 统计符合条件的数据数量 -->
+    <select id="countByWhere" resultType="int" parameterType="xyz.xcye.admin.po.AdminSidebar">
+        SELECT COUNT(*) FROM au_admin_sidebar
+        <include refid="Where_Condition"/>
+    </select>
 
     <!-- 批量插入多条数据 -->
-	<insert id="batchInsert" parameterType="java.util.List">
+    <insert id="batchInsert" parameterType="java.util.List">
         INSERT INTO au_admin_sidebar (
-        	<include refid="Base_Column_List" />
+        <include refid="Base_Column_List"/>
         ) VALUES
-        <foreach collection="list" item="item" index= "index" separator =",">
+        <foreach collection="list" item="item" index="index" separator=",">
             (
             <trim suffixOverrides=",">
-				#{item.uid},
-				#{item.level},
-				#{item.preSidebarUid},
-				#{item.title},
-				#{item.path},
-				#{item.external},
-				#{item.iconClassName},
-				#{item.sort},
-				#{item.userUid},
-				#{item.createTime},
-				#{item.updateTime},
+                #{item.uid},
+                #{item.level},
+                #{item.preSidebarUid},
+                #{item.title},
+                #{item.path},
+                #{item.external},
+                #{item.iconClassName},
+                #{item.sort},
+                #{item.userUid},
+                #{item.createTime},
+                #{item.updateTime},
             </trim>
             )
         </foreach>
     </insert>
-	<!-- common methods end -->
+    <!-- common methods end -->
 
-	<!-- 下面的是兼容旧版本 -->
-	<select id="queryListByCondition" resultMap="adminSidebarResultMap">
-		select
-		<include refid="Base_Column_List" />
-		from au_admin_sidebar
+    <!-- 下面的是兼容旧版本 -->
+    <select id="queryListByCondition" resultMap="adminSidebarResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from au_admin_sidebar
 
-	</select>
+    </select>
 </mapper>

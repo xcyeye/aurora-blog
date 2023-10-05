@@ -15,15 +15,15 @@ public class AuroraSpringUtils implements ApplicationContextAware {
         AuroraSpringUtils.applicationContext = applicationContext;
     }
 
-    public static Object getBean(String name){
+    public static Object getBean(String name) {
         return applicationContext.getBean(name);
     }
 
-    public static <T> T getBean(String name, Class<T> clazz){
+    public static <T> T getBean(String name, Class<T> clazz) {
         return applicationContext.getBean(name, clazz);
     }
 
-    public static <T> T getBean(Class<T> clazz){
+    public static <T> T getBean(Class<T> clazz) {
         return applicationContext.getBean(clazz);
     }
 }

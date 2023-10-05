@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 
 /**
  * 消费者
+ *
  * @author qsyyke
  */
 
@@ -13,24 +14,24 @@ import org.springframework.stereotype.Component;
 public class RabbitMQBindEmailConsumer {
 
     //@Resource
-    //private MessageLogFeignService messageLogFeignService;
+    // private MessageLogFeignService messageLogFeignService;
     //@Autowired
-    //private UserService userService;
+    // private UserService userService;
     //@Autowired
-    //private UserRedisService userRedisService;
+    // private UserRedisService userRedisService;
     //@Autowired
-    //private VerifyAccountSendService verifyAccountSendService;
+    // private VerifyAccountSendService verifyAccountSendService;
     //@Autowired
-    //private MistakeMessageSendService mistakeMessageSendService;
+    // private MistakeMessageSendService mistakeMessageSendService;
     //
     //@Value("${aurora.admin.verify.account.expiration-time}")
-    //private int emailVerifyAccountExpirationTime;
+    // private int emailVerifyAccountExpirationTime;
     //
     //@Value("${aurora.admin.verify.account.email-prefix-path}")
-    //private String emailVerifyAccountPrefixPath;
+    // private String emailVerifyAccountPrefixPath;
     //
     //@RabbitListener(queues = AmqpQueueNameConstant.OPERATE_USER_BINDING_EMAIL_QUEUE,ackMode = "MANUAL")
-    //public void bindingEmailConsumer(String msgJson, Channel channel, Message message) throws MessagingException, BindException, IOException, UserException {
+    // public void bindingEmailConsumer(String msgJson, Channel channel, Message message) throws MessagingException, BindException, IOException, UserException {
     //    log.info("绑定邮箱mq消费者执行，接收到的消息:{}",msgJson);
     //    // 获取唯一id
     //    String correlationDataId = null;
@@ -88,7 +89,7 @@ public class RabbitMQBindEmailConsumer {
     // * @param errorMessage
     // * @throws BindException
     // */
-    //private void updateMessageLogInfo(String correlationDataId, boolean ackStatus, boolean consumeStatus, String errorMessage) throws BindException {
+    // private void updateMessageLogInfo(String correlationDataId, boolean ackStatus, boolean consumeStatus, String errorMessage) throws BindException {
     //    MessageLogDO messageLogDO = null;
     //    messageLogFeignService.queryMessageLogByUid(Long.parseLong(correlationDataId));
     //

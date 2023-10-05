@@ -6,22 +6,22 @@ import org.springframework.amqp.rabbit.connection.CorrelationData;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindException;
+import xyz.xcye.core.util.BeanUtils;
 import xyz.xcye.core.util.ValidationUtils;
 import xyz.xcye.core.valid.Update;
 import xyz.xcye.message.po.MessageLog;
-import xyz.xcye.core.util.BeanUtils;
 import xyz.xcye.message.service.AuroraMessageLogService;
-import xyz.xcye.message.vo.MessageLogVO;
 import xyz.xcye.message.service.MessageLogService;
+import xyz.xcye.message.vo.MessageLogVO;
 
 import javax.annotation.PostConstruct;
 
 /**
  * 这是全局的rabbitmq的发布确认
- * */
+ */
 
 @Slf4j
-public class MessageRabbitMQConfirmConfig implements RabbitTemplate.ConfirmCallback,RabbitTemplate.ReturnsCallback {
+public class MessageRabbitMQConfirmConfig implements RabbitTemplate.ConfirmCallback, RabbitTemplate.ReturnsCallback {
 
     @Autowired
     private AuroraMessageLogService auroraMessageLogService;
@@ -34,6 +34,7 @@ public class MessageRabbitMQConfirmConfig implements RabbitTemplate.ConfirmCallb
 
     /**
      * 设置消息确认
+     *
      * @param correlationData
      * @param ack
      * @param cause
@@ -51,7 +52,7 @@ public class MessageRabbitMQConfirmConfig implements RabbitTemplate.ConfirmCallb
                 return;
             }
 
-            //更新消息投递状态
+            // 更新消息投递状态
             messageLog.setAckStatus(true);
             try {
                 ValidationUtils.valid(messageLog, Update.class);
@@ -76,9 +77,9 @@ public class MessageRabbitMQConfirmConfig implements RabbitTemplate.ConfirmCallb
                 return;
             }
 
-            //更新消息投递状态
+            // 更新消息投递状态
             messageLog.setAckStatus(false);
-            //设置错误消息
+            // 设置错误消息
             messageLog.setErrorMessage(cause);
             try {
                 ValidationUtils.valid(messageLog, Update.class);
@@ -109,15 +110,15 @@ public class MessageRabbitMQConfirmConfig implements RabbitTemplate.ConfirmCallb
 
     private MessageLog getMessageLogDO(CorrelationData correlationData) throws ReflectiveOperationException {
         if (correlationData == null) {
-            //生产者发送的消息不规范，不做任何处理
+            // 生产者发送的消息不规范，不做任何处理
             return null;
         }
 
         String correlationDataId = correlationData.getId();
-        //向au_message_log表中插入信息
+        // 向au_message_log表中插入信息
         MessageLog messageLog = getMessageLogFromDb(correlationDataId);
 
-        //如果messageLogDO为null，则可能是在生产消息的时候，出现什么错误，没有将数据添加到数据库中
+        // 如果messageLogDO为null，则可能是在生产消息的时候，出现什么错误，没有将数据添加到数据库中
         if (messageLog == null || messageLog.getUid() == null) {
             return null;
         }
@@ -127,6 +128,7 @@ public class MessageRabbitMQConfirmConfig implements RabbitTemplate.ConfirmCallb
 
     /**
      * 从数据库中获取mq消息
+     *
      * @param correlationDataId
      * @return
      * @throws InstantiationException

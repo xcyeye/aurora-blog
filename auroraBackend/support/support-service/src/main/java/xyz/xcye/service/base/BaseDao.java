@@ -10,6 +10,7 @@ import java.util.List;
 public interface BaseDao<T> {
     /**
      * 插入一条数据
+     *
      * @param t 实体
      * @return 影响的函数
      */
@@ -17,6 +18,7 @@ public interface BaseDao<T> {
 
     /**
      * 插入多条数据
+     *
      * @param list 多条实体
      * @return 影响的行数
      */
@@ -24,6 +26,7 @@ public interface BaseDao<T> {
 
     /**
      * 根据主键更新单条数据
+     *
      * @param t 待更新的实体
      * @return 影响行数
      */
@@ -31,6 +34,7 @@ public interface BaseDao<T> {
 
     /**
      * 根据主键删除数据
+     *
      * @param uid 主键
      * @return 影响行数
      */
@@ -38,6 +42,7 @@ public interface BaseDao<T> {
 
     /**
      * 批量删除
+     *
      * @param list uid集合
      * @return
      */
@@ -45,12 +50,14 @@ public interface BaseDao<T> {
 
     /**
      * 根据条件删除数据
+     *
      * @param t 条件实体
      */
     int deleteByWhere(T t);
 
     /**
      * 根据uid查询数据
+     *
      * @param uid 主键
      * @return 查询到的数据
      */
@@ -58,6 +65,7 @@ public interface BaseDao<T> {
 
     /**
      * 根据条件查询一条数据
+     *
      * @param t 条件
      * @return 查询到的数据
      */
@@ -65,6 +73,7 @@ public interface BaseDao<T> {
 
     /**
      * 根据条件查询多条数据
+     *
      * @param t 条件实体
      * @return 查询到的多条数据
      */
@@ -72,6 +81,7 @@ public interface BaseDao<T> {
 
     /**
      * 根据条件查询满足要求的数量
+     *
      * @param t 条件实体
      * @return 数量
      */
@@ -79,6 +89,7 @@ public interface BaseDao<T> {
 
     /**
      * 根据uids查询对应的数据
+     *
      * @param uids 根据多个uid查询
      * @return 多行数据
      */
@@ -86,6 +97,7 @@ public interface BaseDao<T> {
 
     /**
      * 这是一个兼容方法
+     *
      * @param condition 条件
      * @return 多行数据
      */

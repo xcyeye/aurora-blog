@@ -1,14 +1,14 @@
 package xyz.xcye.auth.vo;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import io.swagger.v3.oas.annotations.media.Schema;
 import xyz.xcye.auth.po.OauthClientDetails;
 
 /**
+ * @author xcye <br/>
  * @description TODO <br/>
  * @date 2022-12-14 23:53:19 <br/>
- * @author xcye <br/>
  */
 
 @Data

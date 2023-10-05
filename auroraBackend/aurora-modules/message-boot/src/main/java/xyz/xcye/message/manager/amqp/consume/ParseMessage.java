@@ -29,7 +29,7 @@ public class ParseMessage {
         try {
             storageSendMailInfo = JSON.parseObject(msgJson, StorageSendMailInfo.class);
         } catch (Exception e) {
-            log.error("消费邮件发送的mq消息时，获取到错误消息{}",e.getMessage(),e);
+            log.error("消费邮件发送的mq消息时，获取到错误消息{}", e.getMessage(), e);
             return null;
         }
         return storageSendMailInfo;

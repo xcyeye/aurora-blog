@@ -1,6 +1,9 @@
 package xyz.xcye.core.util;
 
-import org.springframework.validation.*;
+import org.springframework.validation.BeanPropertyBindingResult;
+import org.springframework.validation.BindException;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
@@ -17,21 +20,21 @@ public class ValidationUtils {
         validator = Validation.buildDefaultValidatorFactory().getValidator();
     }
 
-    public static boolean valid(Object validatingObject,Class<?>... groups) throws BindException {
+    public static boolean valid(Object validatingObject, Class<?>... groups) throws BindException {
         Set<ConstraintViolation<Object>> validates = validator.validate(validatingObject, groups);
 
         if (validates.size() > 0) {
             BindingResult bindingResult = new BeanPropertyBindingResult(validatingObject, validatingObject.getClass().getSimpleName());
             for (ConstraintViolation<Object> violation : validates) {
-                //验证失败的消息
+                // 验证失败的消息
                 String message = violation.getMessage();
-                //错误的字段名称
+                // 错误的字段名称
                 String field = violation.getPropertyPath().toString();
                 ConstraintDescriptor<?> cd = violation.getConstraintDescriptor();
-                //errorCode是由哪个验证器验证的
+                // errorCode是由哪个验证器验证的
                 String errorCode = determineErrorCode(cd);
 
-                FieldError error = new FieldError(validatingObject.getClass().getSimpleName(),field,message);
+                FieldError error = new FieldError(validatingObject.getClass().getSimpleName(), field, message);
                 bindingResult.addError(error);
 
             }

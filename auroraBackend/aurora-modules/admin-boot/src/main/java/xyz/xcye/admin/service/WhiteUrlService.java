@@ -52,7 +52,7 @@ public class WhiteUrlService {
         // 判断该白名单是否存在于数据库中
         AssertUtils.stateThrow(queryListWhiteUrlByCondition(Condition.instant(record.getUrl())).getResult().isEmpty(),
                 () -> new RuntimeException("该白名单已存在"));
-       auroraWhiteUrlService.insert(BeanUtils.copyProperties(record, WhiteUrl.class));
+        auroraWhiteUrlService.insert(BeanUtils.copyProperties(record, WhiteUrl.class));
     }
 
     @GetByRedis(key = RedisConstant.STORAGE_WHITE_URL_INFO, expriedSecond = 60 * 60 * 24)
@@ -66,6 +66,6 @@ public class WhiteUrlService {
     }
 
     private boolean matchesResourcePath(String resourcePath) {
-        return Pattern.matches(RegexEnum.REST_FUL_PATH.getRegex(),resourcePath);
+        return Pattern.matches(RegexEnum.REST_FUL_PATH.getRegex(), resourcePath);
     }
 }

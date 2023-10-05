@@ -17,7 +17,7 @@ import java.util.Map;
 
 @Component
 public class RequestUtils {
-    public Map<String,String> getRequestHeadsFromHolder() {
+    public Map<String, String> getRequestHeadsFromHolder() {
 
         ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         if (requestAttributes == null) {
@@ -25,7 +25,7 @@ public class RequestUtils {
         }
 
         HttpServletRequest request = requestAttributes.getRequest();
-        Map<String,String> headMaps = new HashMap<>();
+        Map<String, String> headMaps = new HashMap<>();
 
         Enumeration<String> requestHeaderNames = request.getHeaderNames();
         while (requestHeaderNames.hasMoreElements()) {
@@ -41,6 +41,7 @@ public class RequestUtils {
 
     /**
      * 获取需要的请求头，也就是必须要的，比如白名单标识等
+     *
      * @return
      */
     public Map<String, String> getAllNeedHeaders() {
@@ -51,7 +52,7 @@ public class RequestUtils {
 
         // 获取需要的请求头信息
         HttpServletRequest request = requestAttributes.getRequest();
-        Map<String,String> headMaps = new HashMap<>();
+        Map<String, String> headMaps = new HashMap<>();
         Enumeration<String> requestHeaderNames = request.getHeaderNames();
         while (requestHeaderNames.hasMoreElements()) {
             String headName = requestHeaderNames.nextElement();

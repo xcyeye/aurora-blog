@@ -45,7 +45,7 @@ public class LoginInfoController {
         return loginInfoService.batchDeleteLoginInfoByUid(pojo);
     }
 
-    @FieldFilter(value = LoginInfoVO.class, excludeFields = {"","",""},
+    @FieldFilter(value = LoginInfoVO.class, excludeFields = {"", "", ""},
             ignoreRole = {OauthJwtConstant.SUPER_ADMINISTRATOR_ROLE_NAME})
     @SelectOperation
     @Operation(summary = "根据条件查询")
@@ -55,7 +55,7 @@ public class LoginInfoController {
         return loginInfoService.queryListLoginInfoByCondition(condition);
     }
 
-    @FieldFilter(value = LoginInfoVO.class, excludeFields = {"loginIp","loginLocation","username"})
+    @FieldFilter(value = LoginInfoVO.class, excludeFields = {"loginIp", "loginLocation", "username"})
     @SelectOperation
     @Operation(summary = "根据用户名查询")
     @PostMapping("/queryLoginInfoByUsername")

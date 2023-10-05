@@ -13,6 +13,7 @@ import java.util.Optional;
 
 /**
  * 注册rabbitmq的交换机，队列，以及将交换机和队列绑定起来
+ *
  * @author qsyyke
  * @date Created in 2022/6/1 17:02
  */
@@ -101,7 +102,7 @@ public class AmqpRegister {
                             LogUtils.logExceptionInfo(e);
                         }
                     });
-        });
+                });
     }
 
     // 注册队列和交换机的绑定

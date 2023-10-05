@@ -9,6 +9,7 @@ import xyz.xcye.core.exception.user.UserException;
 
 /**
  * 这个类是通用的和用户相关的工具类
+ *
  * @author qsyyke
  * @date Created in 2022/5/11 19:46
  */
@@ -17,6 +18,7 @@ public class UserUtils {
 
     /**
      * 从RequestContextHolder中获取当前已验证的用户 因为发送
+     *
      * @return
      */
     public static JwtUserInfo getCurrentUser() {

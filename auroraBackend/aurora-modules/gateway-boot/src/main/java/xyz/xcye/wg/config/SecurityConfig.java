@@ -33,7 +33,7 @@ import java.util.stream.Collectors;
 public class SecurityConfig {
 
     @Autowired
-    private RedisTemplate<String,Object> redisTemplate;
+    private RedisTemplate<String, Object> redisTemplate;
 
     /**
      * JWT的鉴权管理器
@@ -47,17 +47,21 @@ public class SecurityConfig {
     @Autowired
     private ReactiveAuthenticationManager tokenAuthenticationManager;
 
-    /** 自定义未登录访问需要认证的资源时的处理类 **/
+    /**
+     * 自定义未登录访问需要认证的资源时的处理类
+     **/
     @Autowired
     private AuroraAuthenticationEntryPoint auroraAuthenticationEntryPoint;
 
-    /** 自定义访问被拒绝时处理类 **/
+    /**
+     * 自定义访问被拒绝时处理类
+     **/
     @Autowired
     private AuroraAccessDeniedHandler auroraAccessDeniedHandler;
 
     @Bean
     public SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity http) throws Exception {
-        //认证过滤器，放入认证管理器tokenAuthenticationManager
+        // 认证过滤器，放入认证管理器tokenAuthenticationManager
         AuthenticationWebFilter authenticationWebFilter = new AuthenticationWebFilter(tokenAuthenticationManager);
         authenticationWebFilter.setServerAuthenticationConverter(new ServerBearerTokenAuthenticationConverter());
 
@@ -68,11 +72,11 @@ public class SecurityConfig {
                 .httpBasic().disable()
                 .csrf().disable()
                 .authorizeExchange()
-                //白名单直接放行
+                // 白名单直接放行
                 .pathMatchers(whiteUrlArr).permitAll()
-                //其他的请求必须鉴权，使用鉴权管理器
+                // 其他的请求必须鉴权，使用鉴权管理器
                 .anyExchange().access(accessManager)
-                //鉴权的异常处理，权限不足，token失效
+                // 鉴权的异常处理，权限不足，token失效
                 .and().exceptionHandling()
                 // 未登录访问时处理
                 .authenticationEntryPoint(auroraAuthenticationEntryPoint)
@@ -81,7 +85,7 @@ public class SecurityConfig {
                 .and()
                 // 跨域过滤器
                 // .addFilterAt(corsWebFilter(), SecurityWebFiltersOrder.CORS)
-                //token的认证过滤器，用于校验token和认证
+                // token的认证过滤器，用于校验token和认证
                 .addFilterAt(authenticationWebFilter, SecurityWebFiltersOrder.AUTHENTICATION);
         return http.build();
     }

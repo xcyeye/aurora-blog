@@ -49,7 +49,7 @@ public class CommentController {
     @ModifyOperation
     @PostMapping("/insertComment")
     public void insertComment(@Validated({Default.class, Insert.class}) @RequestBody CommentPojo comment,
-                             HttpServletRequest request) throws Throwable {
+                              HttpServletRequest request) throws Throwable {
         comment.setCommentIp(NetWorkUtils.getIpAddr(request));
         comment.setOperationSystemInfo(NetWorkUtils.getOperationInfo(request));
         commentService.insertComment(comment);
@@ -71,6 +71,7 @@ public class CommentController {
 
     /**
      * 根据多个uid，返回这些uid所对应的记录以及他们的子评论数据 是所有，没有做分页操作，其中uid是在文章中获取的
+     *
      * @param comment
      * @return
      */

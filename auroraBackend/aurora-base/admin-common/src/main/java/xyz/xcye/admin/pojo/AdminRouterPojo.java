@@ -8,9 +8,9 @@ import lombok.NoArgsConstructor;
 import java.util.List;
 
 /**
+ * @author xcye <br/>
  * @description admin_router数据表的POJO <br/>
  * @date 2022-12-30 22:47:42 <br/>
- * @author xcye <br/>
  */
 
 @Data
@@ -85,13 +85,13 @@ public class AdminRouterPojo {
     private Boolean affix;
 
     /**
-     * 
+     *
      */
     @Schema(title = "")
     private String createTime;
 
     /**
-     * 
+     *
      */
     @Schema(title = "")
     private String updateTime;

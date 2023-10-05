@@ -5,6 +5,7 @@ import xyz.xcye.core.exception.AuroraException;
 
 /**
  * 和消息中间件相关的抽象异常类
+ *
  * @author qsyyke
  * @date Created in 2022/4/28 08:52
  */

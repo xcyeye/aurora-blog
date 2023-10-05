@@ -125,7 +125,7 @@ public class RedisCacheAop {
     }
 
     private String getDefaultRedisKey(ProceedingJoinPoint point) {
-        MethodSignature signature = (MethodSignature)point.getSignature();
+        MethodSignature signature = (MethodSignature) point.getSignature();
         Method method = signature.getMethod();
         // 获取该方法的类的全限定名称
         String className = method.getDeclaringClass().getName();
@@ -144,7 +144,7 @@ public class RedisCacheAop {
     }
 
     private String getPrefixRedisKey(ProceedingJoinPoint point) {
-        MethodSignature signature = (MethodSignature)point.getSignature();
+        MethodSignature signature = (MethodSignature) point.getSignature();
         Method method = signature.getMethod();
         // 获取该方法的类的全限定名称
         String className = method.getDeclaringClass().getName();

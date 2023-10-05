@@ -3,20 +3,16 @@ package xyz.xcye.admin.pojo;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.validator.constraints.Length;
-import xyz.xcye.core.constant.FieldLengthConstant;
 import xyz.xcye.core.valid.Delete;
-import xyz.xcye.core.valid.Insert;
 import xyz.xcye.core.valid.Update;
-import xyz.xcye.core.valid.validator.ValidateString;
 
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
+ * @author xcye <br/>
  * @description permission数据表的POJO <br/>
  * @date 2022-12-13 20:15:14 <br/>
- * @author xcye <br/>
  */
 
 @Data

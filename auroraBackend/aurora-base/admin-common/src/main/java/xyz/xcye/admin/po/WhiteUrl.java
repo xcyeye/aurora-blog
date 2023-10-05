@@ -9,10 +9,10 @@ import lombok.NoArgsConstructor;
 import java.io.Serializable;
 
 /**
+ * @author xcye <br/>
  * @table white_url <br/>
  * @description TODO <br/>
  * @date 2022-12-13 21:00:16 <br/>
- * @author xcye <br/>
  */
 
 @Data
@@ -22,30 +22,30 @@ import java.io.Serializable;
 @Schema(title = "white_url数据表的实体类")
 public class WhiteUrl implements Serializable {
 
-private static final long serialVersionUID = 13247652346523L;
+    private static final long serialVersionUID = 13247652346523L;
 
-	/**
-	 * 
-	 */
-	@Schema(title = "")
-	private Integer uid;
+    /**
+     *
+     */
+    @Schema(title = "")
+    private Integer uid;
 
-	/**
-	 * 白名单地址
-	 */
-	@Schema(title = "白名单地址")
-	private String url;
+    /**
+     * 白名单地址
+     */
+    @Schema(title = "白名单地址")
+    private String url;
 
-	/**
-	 * 
-	 */
-	@Schema(title = "")
-	private String createTime;
+    /**
+     *
+     */
+    @Schema(title = "")
+    private String createTime;
 
-	/**
-	 * 
-	 */
-	@Schema(title = "")
-	private String updateTime;
+    /**
+     *
+     */
+    @Schema(title = "")
+    private String updateTime;
 
 }

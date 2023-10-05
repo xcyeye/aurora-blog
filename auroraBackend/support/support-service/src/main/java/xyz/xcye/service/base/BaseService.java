@@ -73,7 +73,7 @@ public class BaseService<T> {
         String orderBy = "";
         if (StringUtils.hasLength(condition.getOrderBy())) {
             orderBy = condition.getOrderBy();
-        }else {
+        } else {
             // 默认采用创建时间降序
             orderBy = "create_time desc";
         }

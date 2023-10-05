@@ -7,6 +7,7 @@ import xyz.xcye.message.constant.VerifyUrlConstant;
 
 /**
  * 和用户相关的工具类
+ *
  * @author qsyyke
  */
 
@@ -29,6 +30,7 @@ public class AccountInfoUtils {
 
     /**
      * 获取正确的邮件验证的地址前缀，如果传入的不是一个http|https地址，会返回null
+     *
      * @param verifyPrefixPath
      * @return
      */
@@ -41,7 +43,7 @@ public class AccountInfoUtils {
 
         // 判断是否以/结尾
         if (verifyPrefixPath.endsWith("/")) {
-            verifyPrefixPath = verifyPrefixPath.substring(0,verifyPrefixPath.length() -1);
+            verifyPrefixPath = verifyPrefixPath.substring(0, verifyPrefixPath.length() - 1);
         }
         return verifyPrefixPath;
     }

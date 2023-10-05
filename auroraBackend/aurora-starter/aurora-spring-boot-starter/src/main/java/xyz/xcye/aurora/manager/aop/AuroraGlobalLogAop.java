@@ -13,6 +13,7 @@ import java.lang.reflect.Method;
 
 /**
  * 这是一个日志功能的aop
+ *
  * @author qsyyke
  */
 
@@ -23,6 +24,7 @@ public class AuroraGlobalLogAop {
 
     /**
      * 记录所有插入数据的日志
+     *
      * @param proceedingJoinPoint
      * @return
      * @throws Throwable
@@ -36,7 +38,7 @@ public class AuroraGlobalLogAop {
         Object[] args = proceedingJoinPoint.getArgs();
 
         // 打印插入日志
-        log.info(LogUtils.insert(0,0,false, false,args));
+        log.info(LogUtils.insert(0, 0, false, false, args));
 
         // 开始时间
         long startTimeMillis = System.currentTimeMillis();
@@ -50,19 +52,20 @@ public class AuroraGlobalLogAop {
         if (result instanceof ModifyResult) {
             ModifyResult modifyResult = (ModifyResult) result;
             if (modifyResult.isSuccess()) {
-                log.info(LogUtils.insert(modifyResult.getUid(),modifyResult.getAffectedRows(),true, true, args));
-            }else {
-                log.info(LogUtils.insert(modifyResult.getUid(),modifyResult.getAffectedRows(),true, false, modifyResult.getMessage()));
+                log.info(LogUtils.insert(modifyResult.getUid(), modifyResult.getAffectedRows(), true, true, args));
+            } else {
+                log.info(LogUtils.insert(modifyResult.getUid(), modifyResult.getAffectedRows(), true, false, modifyResult.getMessage()));
             }
-        }else {
+        } else {
             // 返回值不是ModifyResult类型
-            log.info(LogUtils.insert(0,0,true, true,result));
+            log.info(LogUtils.insert(0, 0, true, true, result));
         }
         return result;
     }
 
     /**
      * 记录所有更新数据的日志
+     *
      * @param proceedingJoinPoint
      * @return
      * @throws Throwable
@@ -72,7 +75,7 @@ public class AuroraGlobalLogAop {
         // 方法的参数
         Object[] args = proceedingJoinPoint.getArgs();
         // 打印插入日志
-        log.info(LogUtils.update(0,0,false, true, args));
+        log.info(LogUtils.update(0, 0, false, true, args));
         // 开始时间
         long startTimeMillis = System.currentTimeMillis();
 
@@ -84,19 +87,20 @@ public class AuroraGlobalLogAop {
         if (result instanceof ModifyResult) {
             ModifyResult modifyResult = (ModifyResult) result;
             if (modifyResult.isSuccess()) {
-                log.info(LogUtils.update(modifyResult.getUid(),modifyResult.getAffectedRows(),true, true,args));
-            }else {
-                log.info(LogUtils.update(modifyResult.getUid(),modifyResult.getAffectedRows(),true, false,modifyResult.getMessage()));
+                log.info(LogUtils.update(modifyResult.getUid(), modifyResult.getAffectedRows(), true, true, args));
+            } else {
+                log.info(LogUtils.update(modifyResult.getUid(), modifyResult.getAffectedRows(), true, false, modifyResult.getMessage()));
             }
-        }else {
+        } else {
             // 返回值不是ModifyResult类型
-            log.info(LogUtils.update(0,0,true, true, result));
+            log.info(LogUtils.update(0, 0, true, true, result));
         }
         return result;
     }
 
     /**
      * 记录所有删除数据的日志
+     *
      * @param proceedingJoinPoint
      * @return
      * @throws Throwable
@@ -119,19 +123,20 @@ public class AuroraGlobalLogAop {
         if (result instanceof ModifyResult) {
             ModifyResult modifyResult = (ModifyResult) result;
             if (modifyResult.isSuccess()) {
-                log.info(LogUtils.delete(0,true, true,modifyResult.getAffectedRows()));
-            }else {
-                log.info(LogUtils.delete(0,true, false, 0,modifyResult.getMessage()));
+                log.info(LogUtils.delete(0, true, true, modifyResult.getAffectedRows()));
+            } else {
+                log.info(LogUtils.delete(0, true, false, 0, modifyResult.getMessage()));
             }
-        }else {
+        } else {
             // 返回值不是ModifyResult类型
-            log.info(LogUtils.delete(0,true, true,1));
+            log.info(LogUtils.delete(0, true, true, 1));
         }
         return result;
     }
 
     /**
      * 记录所有更新数据的日志
+     *
      * @param proceedingJoinPoint
      * @return
      * @throws Throwable

@@ -42,7 +42,7 @@ public class OauthClientController {
         return oauthClientDetailsService.physicalDeleteOauthClient(pojo);
     }
 
-    @FieldFilter(value = OauthClientDetailsVO.class, excludeFields = {"","",""},
+    @FieldFilter(value = OauthClientDetailsVO.class, excludeFields = {"", "", ""},
             ignoreRole = {OauthJwtConstant.SUPER_ADMINISTRATOR_ROLE_NAME})
     @SelectOperation
     @Operation(summary = "根据条件查询")
@@ -70,7 +70,7 @@ public class OauthClientController {
     @SelectOperation
     @Operation(summary = "通过uid查询用户信息")
     public OauthClientDetailsVO queryOauthClientByClientId(@RequestBody OauthClientDetailsPojo pojo) {
-            return oauthClientDetailsService.queryOauthClientByClientId(pojo);
+        return oauthClientDetailsService.queryOauthClientByClientId(pojo);
     }
 
 }

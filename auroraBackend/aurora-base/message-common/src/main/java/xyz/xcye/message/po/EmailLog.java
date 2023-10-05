@@ -11,10 +11,10 @@ import lombok.NoArgsConstructor;
 import java.io.Serializable;
 
 /**
+ * @author xcye <br/>
  * @table email_log <br/>
  * @description TODO <br/>
  * @date 2022-12-14 22:01:53 <br/>
- * @author xcye <br/>
  */
 
 @Data
@@ -24,59 +24,59 @@ import java.io.Serializable;
 @Schema(title = "email_log数据表的实体类")
 public class EmailLog implements Serializable {
 
-private static final long serialVersionUID = 13247652346523L;
+    private static final long serialVersionUID = 13247652346523L;
 
-	/**
-	 * 唯一uid
-	 */
-	@JsonSerialize(using = ToStringSerializer.class)
-	@Schema(title = "唯一uid")
-	private Long uid;
+    /**
+     * 唯一uid
+     */
+    @JsonSerialize(using = ToStringSerializer.class)
+    @Schema(title = "唯一uid")
+    private Long uid;
 
-	@JsonSerialize(using = ToStringSerializer.class)
-	@Schema(title = "用户uid")
-	private Long userUid;
+    @JsonSerialize(using = ToStringSerializer.class)
+    @Schema(title = "用户uid")
+    private Long userUid;
 
-	/**
-	 * 发送者的邮箱号
-	 */
-	@Schema(title = "发送者的邮箱号")
-	private String sender;
+    /**
+     * 发送者的邮箱号
+     */
+    @Schema(title = "发送者的邮箱号")
+    private String sender;
 
-	/**
-	 * 标题
-	 */
-	@Schema(title = "标题")
-	private String subject;
+    /**
+     * 标题
+     */
+    @Schema(title = "标题")
+    private String subject;
 
-	/**
-	 * 内容
-	 */
-	@Schema(title = "内容")
-	private String content;
+    /**
+     * 内容
+     */
+    @Schema(title = "内容")
+    private String content;
 
-	/**
-	 * 接受者的邮箱号
-	 */
-	@Schema(title = "接受者的邮箱号")
-	private String receiver;
+    /**
+     * 接受者的邮箱号
+     */
+    @Schema(title = "接受者的邮箱号")
+    private String receiver;
 
-	/**
-	 * 1:发送成功0：没有发送成功
-	 */
-	@Schema(title = "1:发送成功0：没有发送成功")
-	private Boolean send;
+    /**
+     * 1:发送成功0：没有发送成功
+     */
+    @Schema(title = "1:发送成功0：没有发送成功")
+    private Boolean send;
 
-	/**
-	 * 
-	 */
-	@Schema(title = "")
-	private String createTime;
+    /**
+     *
+     */
+    @Schema(title = "")
+    private String createTime;
 
-	/**
-	 * 
-	 */
-	@Schema(title = "")
-	private String updateTime;
+    /**
+     *
+     */
+    @Schema(title = "")
+    private String updateTime;
 
 }

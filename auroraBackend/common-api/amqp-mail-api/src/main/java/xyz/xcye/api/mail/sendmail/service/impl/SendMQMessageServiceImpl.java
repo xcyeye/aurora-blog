@@ -48,9 +48,9 @@ public class SendMQMessageServiceImpl implements SendMQMessageService {
         mailInfo.setReceiverEmail(repliedCommentInfo.getEmail());
         mailInfo.setSendType(SendHtmlMailTypeNameEnum.REPLY_COMMENT);
 
-        List<Map<SendHtmlMailTypeNameEnum,Object>> list = new ArrayList<>();
+        List<Map<SendHtmlMailTypeNameEnum, Object>> list = new ArrayList<>();
         Map<SendHtmlMailTypeNameEnum, Object> map = new HashMap<>();
-        map.put(SendHtmlMailTypeNameEnum.RECEIVE_COMMENT,replyingCommentInfo);
+        map.put(SendHtmlMailTypeNameEnum.RECEIVE_COMMENT, replyingCommentInfo);
         map.put(SendHtmlMailTypeNameEnum.REPLY_COMMENT, repliedCommentInfo);
         list.add(map);
 
@@ -58,7 +58,7 @@ public class SendMQMessageServiceImpl implements SendMQMessageService {
         mailInfo = StorageMailUtils.generateMailInfo(mailInfo, list);
 
         // 组装一个存放被回复评论对象的数据
-        Map<String,Object> repliedMap = new HashMap<>();
+        Map<String, Object> repliedMap = new HashMap<>();
         repliedMap.put(SendHtmlMailTypeNameEnum.ADDITIONAL_DATA.name(), replyingCommentInfo);
         mailInfo.setAdditionalData(repliedMap);
         String msgJson = ConvertObjectUtils.jsonToString(mailInfo);
@@ -67,7 +67,7 @@ public class SendMQMessageServiceImpl implements SendMQMessageService {
 
     @Override
     public void sendCommonMail(StorageSendMailInfo sendMailInfo, String exchangeName, String exchangeType,
-                               String routingKey, List<Map<SendHtmlMailTypeNameEnum,Object>> replacedObjList) throws AuroraException, BindException {
+                               String routingKey, List<Map<SendHtmlMailTypeNameEnum, Object>> replacedObjList) throws AuroraException, BindException {
         sendMail(sendMailInfo, exchangeName, exchangeType, routingKey, replacedObjList);
     }
 
@@ -84,6 +84,7 @@ public class SendMQMessageServiceImpl implements SendMQMessageService {
 
     /**
      * 判断待发送的邮件对象中的数据，是否合法
+     *
      * @param mailInfo
      * @return
      */
@@ -101,7 +102,7 @@ public class SendMQMessageServiceImpl implements SendMQMessageService {
     }
 
     private void sendMail(StorageSendMailInfo sendMailInfo, String exchangeName, String exchangeType,
-                          String routingKey, List<Map<SendHtmlMailTypeNameEnum,Object>> replacedObjList) throws BindException {
+                          String routingKey, List<Map<SendHtmlMailTypeNameEnum, Object>> replacedObjList) throws BindException {
         isLegitimateReceiverEmail(sendMailInfo);
 
         // 将发送的回复评论数据组装成一个map集合

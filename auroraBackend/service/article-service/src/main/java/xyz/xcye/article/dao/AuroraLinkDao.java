@@ -5,10 +5,10 @@ import xyz.xcye.article.po.Link;
 import xyz.xcye.service.base.BaseDao;
 
 /**
+ * @author xcye <br/>
  * @table link <br/>
  * @description link 数据表DAO层 <br/>
  * @date 2022-12-14 20:46:02 <br/>
- * @author xcye <br/>
  */
 
 @Mapper

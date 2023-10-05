@@ -6,9 +6,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
+ * @author xcye <br/>
  * @description admin_sidebar数据表的POJO <br/>
  * @date 2022-12-13 20:15:14 <br/>
- * @author xcye <br/>
  */
 
 @Data
@@ -65,19 +65,19 @@ public class AdminSidebarPojo {
     private Integer sort;
 
     /**
-     * 
+     *
      */
     @Schema(title = "")
     private Long userUid;
 
     /**
-     * 
+     *
      */
     @Schema(title = "")
     private String createTime;
 
     /**
-     * 
+     *
      */
     @Schema(title = "")
     private String updateTime;

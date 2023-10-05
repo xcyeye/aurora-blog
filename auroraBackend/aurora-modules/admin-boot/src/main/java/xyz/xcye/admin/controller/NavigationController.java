@@ -4,7 +4,10 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import xyz.xcye.admin.dto.NavigationDTO;
 import xyz.xcye.admin.pojo.NavigationPojo;
 import xyz.xcye.admin.service.NavigationService;
@@ -63,6 +66,7 @@ public class NavigationController {
 
     /**
      * 根据用户名，获取该用户的所有导航信息
+     *
      * @param pojo
      * @return
      */

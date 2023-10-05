@@ -1,14 +1,14 @@
 package xyz.xcye.admin.vo;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import io.swagger.v3.oas.annotations.media.Schema;
 import xyz.xcye.admin.po.SiteSetting;
 
 /**
+ * @author xcye <br/>
  * @description TODO <br/>
  * @date 2023-01-04 20:42:58 <br/>
- * @author xcye <br/>
  */
 
 @Data

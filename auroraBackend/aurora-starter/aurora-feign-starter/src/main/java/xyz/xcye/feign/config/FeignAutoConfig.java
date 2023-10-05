@@ -17,9 +17,9 @@ import org.springframework.web.client.RestTemplate;
 public class FeignAutoConfig {
 
     @ConditionalOnMissingBean
-    @Profile(value = {"dev","test"})
+    @Profile(value = {"dev", "test"})
     @Bean
-    public Logger.Level level(){
+    public Logger.Level level() {
         return Logger.Level.FULL;
     }
 

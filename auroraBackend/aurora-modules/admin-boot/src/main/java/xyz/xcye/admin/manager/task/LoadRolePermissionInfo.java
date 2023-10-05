@@ -14,6 +14,7 @@ import java.util.List;
  * 加载角色和权限对应信息，程序应该在启动之初，就将角色和权限信息加载到redis中进行存储，并且该加载方法可以通过mq进行调用
  * 如果在认证服务中，查询到某个用户的角色没有在redis中找到该角色对应的关系，那么会通过mq发送消息，通知此方法更新缓存，并且
  * 应该使用定时器和更新角色权限操作所触发的动作调用该方法进行更新
+ *
  * @author qsyyke
  * @date Created in 2022/5/7 18:22
  */
@@ -37,6 +38,7 @@ public class LoadRolePermissionInfo {
 
     /**
      * 将角色权限信息放入redis中，随机生成一个ttl
+     *
      * @param template
      */
     private void storageData(RedisTemplate<String, Object> template) {

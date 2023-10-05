@@ -6,14 +6,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.validation.BindException;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import xyz.xcye.core.annotaion.controller.ModifyOperation;
 import xyz.xcye.core.annotaion.controller.SelectOperation;
 import xyz.xcye.core.valid.Insert;
 import xyz.xcye.core.valid.Update;
 import xyz.xcye.data.entity.Condition;
 import xyz.xcye.data.entity.PageData;
-import xyz.xcye.message.po.MessageLog;
 import xyz.xcye.message.pojo.MessageLogPojo;
 import xyz.xcye.message.service.MessageLogService;
 import xyz.xcye.message.vo.MessageLogVO;
@@ -38,7 +40,7 @@ public class MessageLogController {
     @Operation(summary = "插入新消费消息")
     @ModifyOperation
     @PostMapping("/insertMessageLog")
-    public void insertMessageLog(@Validated({Insert.class,Default.class}) @RequestBody MessageLogPojo messageLog)
+    public void insertMessageLog(@Validated({Insert.class, Default.class}) @RequestBody MessageLogPojo messageLog)
             throws BindException {
         messageLogService.insertMessageLog(messageLog);
     }

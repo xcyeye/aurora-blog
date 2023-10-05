@@ -15,5 +15,5 @@ import xyz.xcye.core.entity.R;
 public interface ArticleFeignService {
 
     @PostMapping("/blog/article/insertArticle")
-    R insertArticle (@RequestBody ArticlePojo pojo);
+    R insertArticle(@RequestBody ArticlePojo pojo);
 }

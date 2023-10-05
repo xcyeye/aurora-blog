@@ -5,6 +5,7 @@ import javax.validation.ConstraintValidatorContext;
 
 /**
  * Status注解的校验器 用于校验只有1和0这两个值得字段，是否存在多余的值
+ *
  * @author qsyyke
  */
 

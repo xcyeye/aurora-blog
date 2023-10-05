@@ -21,6 +21,7 @@ public class SpringDocConfig {
 
     /**
      * 使用springdoc聚合文档
+     *
      * @param swaggerUiConfigParameters
      * @param locator
      * @return

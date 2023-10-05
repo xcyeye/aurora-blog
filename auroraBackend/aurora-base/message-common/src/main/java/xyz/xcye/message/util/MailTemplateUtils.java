@@ -19,6 +19,7 @@ public class MailTemplateUtils {
 
     /**
      * 获取
+     *
      * @param templateName
      * @param templateFolderPath
      * @return
@@ -33,7 +34,7 @@ public class MailTemplateUtils {
         templateName = templateName + ".html";
         ClassPathResource classPathResource = new ClassPathResource(MailTemplateEnum.APPLICATION_MAIN_CONFIG.getTemplateName());
         String applicationFilePath = classPathResource.getFile().getAbsolutePath();
-        String classPathAbsolutePath = applicationFilePath.substring(0,applicationFilePath.length() -
+        String classPathAbsolutePath = applicationFilePath.substring(0, applicationFilePath.length() -
                 MailTemplateEnum.APPLICATION_MAIN_CONFIG.getTemplateName().length());
 
         // classPathAbsolutePath就是resource文件夹的绝对路径
@@ -46,6 +47,7 @@ public class MailTemplateUtils {
 
     /**
      * 读取邮件发送的html模板文件的内容
+     *
      * @param templatePath
      * @return
      * @throws IOException

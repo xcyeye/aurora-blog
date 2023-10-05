@@ -1,6 +1,5 @@
 package xyz.xcye.file.service.ext;
 
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import xyz.xcye.data.entity.Condition;
@@ -20,12 +19,14 @@ public class FileExtService {
 
     @Autowired
     private FileExtDao fileExtDao;
+
     public List<File> selectSpecifyFormatFiles(Condition<Long> condition) {
         return fileExtDao.selectSpecifyFormatFiles(condition);
     }
 
     /**
      * 查询此userUid对应的所有文件格式
+     *
      * @param userUid
      * @return
      */

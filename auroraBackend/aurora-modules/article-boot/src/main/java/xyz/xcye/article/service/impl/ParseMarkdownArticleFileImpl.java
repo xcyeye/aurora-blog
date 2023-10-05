@@ -125,7 +125,7 @@ public class ParseMarkdownArticleFileImpl implements ParseArticleFile {
         if (useFileNameAsTitle) {
             // 使用文件名作为标题
             articlePojo.setTitle(getTitleFromFileName(this.articleFile, markdownArticleContent));
-        }else {
+        } else {
             articlePojo.setTitle(getTitleFromContent(markdownArticleContent));
         }
         Map<String, Object> yamlMap = getFrontMatterInfo(markdownArticleContent, reservedFrontMatter);
@@ -133,12 +133,12 @@ public class ParseMarkdownArticleFileImpl implements ParseArticleFile {
         if (yamlMap == null || yamlMap.isEmpty()) {
             articlePojo.setContent(markdownArticleContent);
             summary = markdownArticleContent;
-        }else {
+        } else {
             String auroraFinalArticleContent = (String) yamlMap.get("auroraFinalArticleContent");
             if (StringUtils.hasLength(auroraFinalArticleContent)) {
                 articlePojo.setContent(auroraFinalArticleContent);
                 summary = auroraFinalArticleContent;
-            }else {
+            } else {
                 articlePojo.setContent(markdownArticleContent);
                 summary = markdownArticleContent;
             }
@@ -156,6 +156,7 @@ public class ParseMarkdownArticleFileImpl implements ParseArticleFile {
 
     /**
      * 从markdown内容中获取Frontmatter信息
+     *
      * @param markdownContent
      * @return Map or Null
      */
@@ -214,7 +215,7 @@ public class ParseMarkdownArticleFileImpl implements ParseArticleFile {
             String[] titleSplits = originalFilename.split("/");
             String fileName = titleSplits[titleSplits.length - 1];
             return fileName.substring(0, fileName.lastIndexOf("."));
-        }else {
+        } else {
             return getTitleFromContent(markdownArticleContent);
         }
     }
@@ -230,14 +231,14 @@ public class ParseMarkdownArticleFileImpl implements ParseArticleFile {
             title = title.replace("# ", "");
             title = title.replace("\n", "");
             return title;
-        }else {
+        } else {
             // 截取字符串的前10个字符
             StringBuilder builder = new StringBuilder();
             String markdownArticleContentTemp = markdownArticleContent;
             markdownArticleContentTemp = markdownArticleContentTemp.replaceAll("\n", "");
             if (markdownArticleContentTemp.length() > 10) {
                 builder.append("临时标题 - ").append(markdownArticleContentTemp, 0, 10);
-            }else {
+            } else {
                 builder.append("临时标题 - ").append(markdownArticleContentTemp);
             }
             return builder.toString();

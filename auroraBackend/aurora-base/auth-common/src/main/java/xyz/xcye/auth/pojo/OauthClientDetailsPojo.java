@@ -1,14 +1,14 @@
 package xyz.xcye.auth.pojo;
 
-import lombok.Data;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
+ * @author xcye <br/>
  * @description oauth_client_details数据表的POJO <br/>
  * @date 2022-12-14 23:53:19 <br/>
- * @author xcye <br/>
  */
 
 @Data
@@ -83,13 +83,13 @@ public class OauthClientDetailsPojo {
     private String autoapprove;
 
     /**
-     * 
+     *
      */
     @Schema(title = "")
     private String createTime;
 
     /**
-     * 
+     *
      */
     @Schema(title = "")
     private String updateTime;

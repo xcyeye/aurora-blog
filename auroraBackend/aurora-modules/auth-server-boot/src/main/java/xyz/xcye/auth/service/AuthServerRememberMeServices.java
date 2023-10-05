@@ -46,6 +46,7 @@ public class AuthServerRememberMeServices implements RememberMeServices {
 
     /**
      * 设置cookie
+     *
      * @param maxAge
      * @param request
      * @param response
@@ -70,6 +71,7 @@ public class AuthServerRememberMeServices implements RememberMeServices {
 
     /**
      * 计算cookie失效时间
+     *
      * @param maxAge
      * @return
      */
@@ -80,6 +82,7 @@ public class AuthServerRememberMeServices implements RememberMeServices {
 
     /**
      * 获取path
+     *
      * @param request
      * @return
      */
@@ -90,6 +93,7 @@ public class AuthServerRememberMeServices implements RememberMeServices {
 
     /**
      * 对失效时间和用户名进行一个编码
+     *
      * @param cookieExpiryTime
      * @param username
      * @return
@@ -101,6 +105,7 @@ public class AuthServerRememberMeServices implements RememberMeServices {
 
     /**
      * 获取用户名
+     *
      * @param authentication
      * @return
      */
@@ -113,6 +118,7 @@ public class AuthServerRememberMeServices implements RememberMeServices {
 
     /**
      * 获取密码
+     *
      * @param authentication
      * @return
      */
@@ -128,6 +134,7 @@ public class AuthServerRememberMeServices implements RememberMeServices {
 
     /**
      * 判断实例
+     *
      * @param authentication
      * @return
      */

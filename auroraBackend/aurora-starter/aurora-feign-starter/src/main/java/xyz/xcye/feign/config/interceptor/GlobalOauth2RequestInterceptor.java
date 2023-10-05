@@ -23,7 +23,7 @@ public class GlobalOauth2RequestInterceptor implements RequestInterceptor {
         // TODO 暂时解决从消息中间件中调用feign的时候，请求头没有携带的问题
         Map<String, String> requestHeads = requestUtils.getRequestHeadsFromHolder();
         if (requestHeads != null) {
-            requestHeads.forEach((key,value) -> {
+            requestHeads.forEach((key, value) -> {
                 if (!"host".equals(key)) {
                     template.header(key, value);
                 }

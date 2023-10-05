@@ -1,9 +1,12 @@
 package xyz.xcye.core.entity;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * 发生异常的时候，返回的实体
+ *
  * @author qsyyke
  */
 
@@ -32,7 +35,7 @@ public class ExceptionResultEntity {
      */
     private Object data;
 
-    public ExceptionResultEntity(String message, String errorUrl,int code) {
+    public ExceptionResultEntity(String message, String errorUrl, int code) {
         this.message = message;
         this.errorUrl = errorUrl;
         this.code = code;

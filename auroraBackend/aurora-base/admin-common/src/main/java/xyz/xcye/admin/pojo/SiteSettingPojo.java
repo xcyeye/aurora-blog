@@ -1,14 +1,14 @@
 package xyz.xcye.admin.pojo;
 
-import lombok.Data;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
+ * @author xcye <br/>
  * @description site_setting数据表的POJO <br/>
  * @date 2023-01-04 20:42:58 <br/>
- * @author xcye <br/>
  */
 
 @Data
@@ -17,7 +17,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 public class SiteSettingPojo {
 
     /**
-     * 
+     *
      */
     @Schema(title = "")
     private Long uid;

@@ -14,9 +14,9 @@ import xyz.xcye.core.valid.validator.ValidateString;
 import javax.validation.constraints.NotNull;
 
 /**
+ * @author xcye <br/>
  * @description user数据表的POJO <br/>
  * @date 2022-12-13 20:15:14 <br/>
- * @author xcye <br/>
  */
 
 @Data
@@ -33,7 +33,7 @@ public class UserPojo {
     /**
      * 用户简介
      */
-    @Length(max = FieldLengthConstant.SUMMARY,message = "用户-简介不能超过{max}")
+    @Length(max = FieldLengthConstant.SUMMARY, message = "用户-简介不能超过{max}")
     private String userSummary;
 
     /**
@@ -54,7 +54,7 @@ public class UserPojo {
     /**
      * 用户昵称
      */
-    @Length(max = FieldLengthConstant.NICKNAME,groups = {Insert.class})
+    @Length(max = FieldLengthConstant.NICKNAME, groups = {Insert.class})
     private String nickname;
 
     /**
@@ -76,19 +76,19 @@ public class UserPojo {
     /**
      * 密码，使用md5加密
      */
-    @ValidateString(value = "用户-密码",max = FieldLengthConstant.PASSWORD, groups = Insert.class)
+    @ValidateString(value = "用户-密码", max = FieldLengthConstant.PASSWORD, groups = Insert.class)
     private String password;
 
     /**
      * 用户名（和用户昵称不同，用户名唯一，昵称只要符合要求都行）
      */
-    @ValidateString(value = "用户-用户名",max = FieldLengthConstant.USERNAME, groups = Insert.class)
+    @ValidateString(value = "用户-用户名", max = FieldLengthConstant.USERNAME, groups = Insert.class)
     private String username;
 
     /**
      * 专业
      */
-    @Length(max = FieldLengthConstant.PROFESSION,message = "用户-专业不能超过{max}")
+    @Length(max = FieldLengthConstant.PROFESSION, message = "用户-专业不能超过{max}")
     private String profession;
 
     /**

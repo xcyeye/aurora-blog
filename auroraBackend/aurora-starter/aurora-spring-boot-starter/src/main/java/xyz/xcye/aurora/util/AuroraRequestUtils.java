@@ -33,14 +33,14 @@ import java.util.Map;
 
 public class AuroraRequestUtils {
 
-    public static Map<String,String> getRequestHeadsFromHolder() {
+    public static Map<String, String> getRequestHeadsFromHolder() {
         ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         if (requestAttributes == null) {
             return null;
         }
 
         HttpServletRequest request = requestAttributes.getRequest();
-        Map<String,String> headMaps = new HashMap<>();
+        Map<String, String> headMaps = new HashMap<>();
 
         Enumeration<String> requestHeaderNames = request.getHeaderNames();
         while (requestHeaderNames.hasMoreElements()) {
@@ -74,6 +74,7 @@ public class AuroraRequestUtils {
 
     /**
      * 获取当前的请求对象，如果不存在，则返回null
+     *
      * @return
      */
     public static HttpServletRequest getCurrentRequest() {
@@ -83,6 +84,7 @@ public class AuroraRequestUtils {
 
     /**
      * 获取当前的请求对象，如果不存在，则返回null
+     *
      * @return
      */
     public static HttpServletResponse getCurrentResponse() {
@@ -104,6 +106,7 @@ public class AuroraRequestUtils {
 
     /**
      * 判断传入的token是否过期，如果token已过期，或者无效，返回true，如果token没有过期，返回false
+     *
      * @param jwtToken
      * @return true过期，false没有过期
      * @throws IOException 没有传入token，抛出用户未登录
@@ -121,10 +124,10 @@ public class AuroraRequestUtils {
 
     public static boolean returnFailureAndResponseJsonText(HttpServletResponse response,
                                                            ResponseStatusCodeEnum statusCodeEnum) throws IOException {
-        //token过期
+        // token过期
         R failureResult = R.failure(statusCodeEnum.getCode(), statusCodeEnum.getMessage());
         String jsonToString = ConvertObjectUtils.jsonToString(failureResult);
-        //设置响应头
+        // 设置响应头
         response.setContentType("application/json;charset=UTF-8;");
         PrintWriter writer = response.getWriter();
         writer.write(jsonToString);

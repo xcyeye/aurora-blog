@@ -10,6 +10,7 @@ import java.util.Optional;
 
 /**
  * 这是查询的条件
+ *
  * @author qsyyke
  */
 
@@ -109,6 +110,7 @@ public class Condition<T> {
 
     /**
      * 根据uid，创建一个条件实例
+     *
      * @param uid
      * @param <T>
      * @param isUid true表示是uid字段，false表示是otherUid字段
@@ -118,7 +120,7 @@ public class Condition<T> {
         Condition<T> condition = new Condition<>();
         if (isUid) {
             condition.setUid(uid);
-        }else {
+        } else {
             condition.setOtherUid(uid);
         }
         condition.setDelete(delete);
@@ -140,7 +142,7 @@ public class Condition<T> {
         Condition<T> condition = new Condition<>();
         if (isUid) {
             condition.setUid(uid);
-        }else {
+        } else {
             condition.setOtherUid(uid);
         }
         return condition;
@@ -148,6 +150,7 @@ public class Condition<T> {
 
     /**
      * 根据keyword，创建一个条件实例
+     *
      * @param keyword
      * @param <T>
      * @return
@@ -190,8 +193,6 @@ public class Condition<T> {
 
         return format.format(parse);
     }
-
-
 
 
     public void setOrderBy(String orderBy) {

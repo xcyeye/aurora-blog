@@ -10,7 +10,6 @@ import xyz.xcye.core.util.BeanUtils;
 import xyz.xcye.core.util.JSONUtils;
 import xyz.xcye.core.util.LogUtils;
 import xyz.xcye.feign.config.service.MessageLogFeignService;
-import xyz.xcye.message.po.MessageLog;
 import xyz.xcye.message.pojo.MessageLogPojo;
 import xyz.xcye.message.vo.MessageLogVO;
 
@@ -47,7 +46,7 @@ public class ConfirmUpdateMessageAckStatus {
             return;
         }
 
-        //更新消息投递状态
+        // 更新消息投递状态
         messageLogPojo.setAckStatus(true);
         try {
             messageLogFeignService.updateMessageLog(messageLogPojo);
@@ -68,9 +67,9 @@ public class ConfirmUpdateMessageAckStatus {
             return;
         }
 
-        //更新消息投递状态
+        // 更新消息投递状态
         messageLogPojo.setAckStatus(false);
-        //设置错误消息
+        // 设置错误消息
         messageLogPojo.setErrorMessage(cause);
         try {
             messageLogFeignService.updateMessageLog(messageLogPojo);
@@ -82,9 +81,9 @@ public class ConfirmUpdateMessageAckStatus {
 
     private MessageLogPojo getMessageLog(CorrelationData correlationData) {
         String correlationDataId = correlationData.getId();
-        //向au_message_log表中插入信息
+        // 向au_message_log表中插入信息
         MessageLogVO messageLog = getMessageLogFromRemote(correlationDataId);
-        //如果messageLogDO为null，则可能是在生产消息的时候，出现什么错误，没有将数据添加到数据库中
+        // 如果messageLogDO为null，则可能是在生产消息的时候，出现什么错误，没有将数据添加到数据库中
         if (messageLog == null || messageLog.getUid() == null) {
             return null;
         }
@@ -93,6 +92,7 @@ public class ConfirmUpdateMessageAckStatus {
 
     /**
      * 从数据库中获取mq消息
+     *
      * @param correlationDataId
      * @return
      */

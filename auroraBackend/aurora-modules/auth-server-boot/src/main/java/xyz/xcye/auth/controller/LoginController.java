@@ -24,6 +24,7 @@ import java.time.Duration;
 
 /**
  * 退出登录控制器
+ *
  * @author qsyyke
  * @date Created in 2022/5/15 23:50
  */
@@ -75,6 +76,7 @@ public class LoginController {
 
     /**
      * 取消cookie的设置
+     *
      * @param request
      * @param response
      */
@@ -92,6 +94,7 @@ public class LoginController {
 
     /**
      * 获取path
+     *
      * @param request
      * @return
      */
@@ -102,6 +105,7 @@ public class LoginController {
 
     /**
      * 判断该jwt的jti是否存在于redis中，如果存在，返回true，否则返回false
+     *
      * @param jwtEntity 对象
      * @return true表示存在
      */

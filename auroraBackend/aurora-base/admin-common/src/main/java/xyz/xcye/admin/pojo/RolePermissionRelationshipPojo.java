@@ -8,13 +8,12 @@ import xyz.xcye.core.valid.Insert;
 import xyz.xcye.core.valid.Update;
 
 import javax.validation.constraints.NotNull;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * @author xcye <br/>
  * @description role_permission数据表的POJO <br/>
  * @date 2022-12-13 20:15:14 <br/>
- * @author xcye <br/>
  */
 
 @Data

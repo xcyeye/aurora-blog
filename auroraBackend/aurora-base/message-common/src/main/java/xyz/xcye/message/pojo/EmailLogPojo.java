@@ -15,9 +15,9 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
 /**
+ * @author xcye <br/>
  * @description email_log数据表的POJO <br/>
  * @date 2022-12-14 22:01:53 <br/>
- * @author xcye <br/>
  */
 
 @Data
@@ -55,7 +55,7 @@ public class EmailLogPojo {
      * 接收者的邮箱号 不能为null
      * <p>length < 32</p>
      */
-    @Pattern(regexp = "^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\\.[a-zA-Z0-9_-]+)+$",message = "必须是邮箱号")
+    @Pattern(regexp = "^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\\.[a-zA-Z0-9_-]+)+$", message = "必须是邮箱号")
     @NotBlank(groups = {Insert.class})
     @Length(max = FieldLengthConstant.EMAIL_NUMBER)
     private String receiver;
@@ -64,7 +64,7 @@ public class EmailLogPojo {
      * 发送者的邮箱号 不能为null
      * <p>length < 32</p>
      */
-    @Pattern(regexp = "^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\\.[a-zA-Z0-9_-]+)+$",message = "必须是邮箱号")
+    @Pattern(regexp = "^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\\.[a-zA-Z0-9_-]+)+$", message = "必须是邮箱号")
     @NotBlank(groups = {Insert.class})
     @Length(max = FieldLengthConstant.EMAIL_NUMBER)
     private String sender;
@@ -72,7 +72,7 @@ public class EmailLogPojo {
     /**
      * 邮件发送的状态 true：已成功发送 false：未发送成功
      */
-    @NotNull(groups = {Insert.class,Update.class})
+    @NotNull(groups = {Insert.class, Update.class})
     private Boolean send;
 
     /**
@@ -83,7 +83,7 @@ public class EmailLogPojo {
     /**
      * 更新时间
      */
-    @Length(max = FieldLengthConstant.TIME_FORMAT,message = "邮件日志-邮件发送时间长度不能超过{max}")
+    @Length(max = FieldLengthConstant.TIME_FORMAT, message = "邮件日志-邮件发送时间长度不能超过{max}")
     private String updateTime;
 
 }

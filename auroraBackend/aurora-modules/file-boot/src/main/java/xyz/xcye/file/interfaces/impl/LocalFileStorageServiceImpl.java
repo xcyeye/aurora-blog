@@ -7,7 +7,6 @@ import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 import xyz.xcye.core.enums.ResponseStatusCodeEnum;
 import xyz.xcye.core.exception.file.FileException;
-import xyz.xcye.core.util.DateUtils;
 import xyz.xcye.core.util.FileUtils;
 import xyz.xcye.core.util.LogUtils;
 import xyz.xcye.file.dto.FileEntityDTO;
@@ -19,7 +18,6 @@ import xyz.xcye.file.utils.UploadFileExecutor;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Date;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 import java.util.concurrent.ThreadPoolExecutor;
@@ -28,6 +26,7 @@ import java.util.concurrent.ThreadPoolExecutor;
  * TODO 部分功能未实现
  * 这是本地存储实现类
  * <p>目的是将上传的文件存放在本地(服务器上)</p>
+ *
  * @author qsyyke
  */
 
@@ -62,12 +61,14 @@ public class LocalFileStorageServiceImpl implements FileStorageService {
         this.fileOwner = fileOwner;
     }
 
-    public LocalFileStorageServiceImpl() {}
+    public LocalFileStorageServiceImpl() {
+    }
 
     /**
      * 将一个文件的输入流，在本地创建一个文件，并把输入流写入到这个文件中
+     *
      * @param inputStream 输入流
-     * @param fileEntity fileEntity对象只会使用到userUploadPath和name这两个属性
+     * @param fileEntity  fileEntity对象只会使用到userUploadPath和name这两个属性
      * @return
      * @throws IOException
      */
@@ -82,7 +83,7 @@ public class LocalFileStorageServiceImpl implements FileStorageService {
         // 如果文件名中包含空格，则去掉
         fileEntity.setName(fileEntity.getName().replaceAll(" ", ""));
 
-        //判断文件夹是否存在aurora.file.nginx-root-path/aurora.file.upload-folder-name/extName/currentYear/currentMonth
+        // 判断文件夹是否存在aurora.file.nginx-root-path/aurora.file.upload-folder-name/extName/currentYear/currentMonth
         String folderPath = nginxRootPath + uploadFolderName + File.separator + FileStorageUtil.getStoragePathDirByTimeAndFileName(fileEntity.getName(), false, pojo);
         String filePath = getFilePath(fileEntity, folderPath);
 
@@ -143,6 +144,7 @@ public class LocalFileStorageServiceImpl implements FileStorageService {
 
     /**
      * 从本地删除指定文件
+     *
      * @param objectName objectName
      * @return 删除成功 true 失败 false
      */
@@ -153,6 +155,7 @@ public class LocalFileStorageServiceImpl implements FileStorageService {
 
     /**
      * 根据绝对路径，获取文件的远程地址
+     *
      * @param absolutePath
      * @return
      */
@@ -163,11 +166,12 @@ public class LocalFileStorageServiceImpl implements FileStorageService {
 
         // TODO 只返回uri部分，准确的连接由前端控制
         // return host + FileUtils.getFileSplitPath(nginxRootPath,absolutePath);
-        return FileUtils.getFileSplitPath(nginxRootPath,absolutePath);
+        return FileUtils.getFileSplitPath(nginxRootPath, absolutePath);
     }
 
     /**
      * 为了保证多次上传同一个文件，都能够成功，所以会对文件名进行处理，处理规则，原名字(无后缀)+时间戳
+     *
      * @param fileEntity
      * @param folderPath
      * @return
@@ -186,12 +190,13 @@ public class LocalFileStorageServiceImpl implements FileStorageService {
 
     /**
      * 在指定目录中，创建指定文件
-     * @param filePath 指定文件
+     *
+     * @param filePath   指定文件
      * @param folderPath 指定目录
      * @return true创建成功，反之
      * @throws FileException
      */
-    private boolean createFile(String filePath,String folderPath) throws FileException {
+    private boolean createFile(String filePath, String folderPath) throws FileException {
         // 文件夹是否存在
         boolean folderExists = new File(folderPath).exists();
 

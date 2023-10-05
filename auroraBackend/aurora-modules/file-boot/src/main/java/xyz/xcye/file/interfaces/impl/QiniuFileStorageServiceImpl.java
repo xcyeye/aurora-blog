@@ -2,12 +2,8 @@ package xyz.xcye.file.interfaces.impl;
 
 import com.alibaba.fastjson.JSON;
 import com.qiniu.common.QiniuException;
-import com.qiniu.http.ProxyConfiguration;
 import com.qiniu.http.Response;
 import com.qiniu.storage.*;
-import com.qiniu.storage.model.DefaultPutRet;
-import com.qiniu.storage.model.FetchRet;
-import com.qiniu.storage.model.FileInfo;
 import com.qiniu.util.Auth;
 import com.qiniu.util.StringMap;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +21,8 @@ import xyz.xcye.file.pojo.FilePojo;
 import xyz.xcye.file.utils.FileStorageUtil;
 import xyz.xcye.file.vo.QiniuReturnBody;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.concurrent.ExecutionException;
 
 /**
@@ -46,11 +43,11 @@ public class QiniuFileStorageServiceImpl implements FileStorageService {
 
         if (!StringUtils.hasLength(auroraFileProperties.getQiniuOssAccessKey()) ||
                 !StringUtils.hasLength(auroraFileProperties.getQiniuOssSecretKey()) ||
-                        !StringUtils.hasLength(auroraFileProperties.getQiniuOssDomain()) ||
+                !StringUtils.hasLength(auroraFileProperties.getQiniuOssDomain()) ||
                 !StringUtils.hasLength(auroraFileProperties.getQiniuOssBucketName())) {
             throw new FileException("请配置七牛云相关信息");
         }
-        //构造一个带指定 Region 对象的配置类
+        // 构造一个带指定 Region 对象的配置类
         Configuration cfg = new Configuration(Region.huadongZheJiang2());
         // 指定分片上传版本
         cfg.resumableUploadAPIVersion = Configuration.ResumableUploadAPIVersion.V2;
@@ -73,7 +70,7 @@ public class QiniuFileStorageServiceImpl implements FileStorageService {
             LogUtils.logExceptionInfo(e);
             throw new FileException(e.getMessage());
         }
-        //解析上传成功的结果
+        // 解析上传成功的结果
         QiniuReturnBody qiniuReturnBody = JSON.parseObject(response.bodyString(), QiniuReturnBody.class);
         FileEntityDTO fileEntityDTO = new FileEntityDTO();
         fileEntityDTO.setName(qiniuReturnBody.getKey());
@@ -158,6 +155,7 @@ public class QiniuFileStorageServiceImpl implements FileStorageService {
         Auth auth = Auth.create(auroraFileProperties.getQiniuOssAccessKey(), auroraFileProperties.getQiniuOssSecretKey());
         return new BucketManager(auth, configuration);
     }
+
     private String getDownloadUrl(String domain, boolean isAttname, String objectName) throws QiniuException {
         boolean useHttps = domain.startsWith("https");
         if (auroraFileProperties.getQiniuOssDomain().startsWith("https://")) {

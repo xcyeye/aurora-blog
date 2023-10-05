@@ -12,11 +12,11 @@ import javax.annotation.PostConstruct;
 
 /**
  * 这是全局的rabbitmq的发布确认
- * */
+ */
 
 @Component
 @Slf4j
-public class ArticleRabbitMQConfirmConfig implements RabbitTemplate.ConfirmCallback,RabbitTemplate.ReturnsCallback {
+public class ArticleRabbitMQConfirmConfig implements RabbitTemplate.ConfirmCallback, RabbitTemplate.ReturnsCallback {
 
     @Autowired
     RabbitTemplate rabbitTemplate;
@@ -26,6 +26,7 @@ public class ArticleRabbitMQConfirmConfig implements RabbitTemplate.ConfirmCallb
 
     /**
      * 设置消息确认
+     *
      * @param correlationData
      * @param ack
      * @param cause

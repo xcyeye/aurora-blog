@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 /**
  * 这是一个发送普通通知的邮件dto
+ *
  * @author qsyyke
  * @date Created in 2022/5/19 09:11
  */

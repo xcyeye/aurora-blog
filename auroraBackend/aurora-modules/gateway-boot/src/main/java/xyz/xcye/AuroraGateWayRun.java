@@ -9,7 +9,7 @@ import org.springframework.context.annotation.FilterType;
  * @author qsyyke
  */
 
-@ComponentScan(excludeFilters = {@ComponentScan.Filter(type = FilterType.REGEX, pattern = {"xyz.xcye.aurora.exception.*", "xyz.xcye.aurora.interceptor.*","xyz.xcye.aurora.manager.advice.*"})})
+@ComponentScan(excludeFilters = {@ComponentScan.Filter(type = FilterType.REGEX, pattern = {"xyz.xcye.aurora.exception.*", "xyz.xcye.aurora.interceptor.*", "xyz.xcye.aurora.manager.advice.*"})})
 @SpringBootApplication
 public class AuroraGateWayRun {
     public static void main(String[] args) {

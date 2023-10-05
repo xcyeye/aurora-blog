@@ -3,7 +3,6 @@ package xyz.xcye.feign.config.service;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.BindException;
 import xyz.xcye.core.entity.R;
-import xyz.xcye.message.po.MessageLog;
 import xyz.xcye.message.pojo.MessageLogPojo;
 
 /**

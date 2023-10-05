@@ -20,33 +20,35 @@ import static xyz.xcye.core.util.ConvertObjectUtils.jsonToString;
 
 public class StorageMailUtils {
 
-    public static final String  SPACE_CHARACTER = ":";
+    public static final String SPACE_CHARACTER = ":";
 
     /**
      * 生成一个用户发送html的json字符串
-     * @param mailInfo 存储html发送信息的对象
+     *
+     * @param mailInfo        存储html发送信息的对象
      * @param replacedObjList 需要将此对象添加到replacedMap map集合中的对象,如果存在多个相同的对象，比如obj1,obj2，
-     * 在存储他们的key值(key就是属性名)的时候，会在obj1的所有key后面添加上存放此对象的map集合的键，obj2也是一样的道理
+     *                        在存储他们的key值(key就是属性名)的时候，会在obj1的所有key后面添加上存放此对象的map集合的键，obj2也是一样的道理
      * @return
      */
-    public static String generateMailJson(StorageSendMailInfo mailInfo, List<Map<SendHtmlMailTypeNameEnum,Object>> replacedObjList) {
+    public static String generateMailJson(StorageSendMailInfo mailInfo, List<Map<SendHtmlMailTypeNameEnum, Object>> replacedObjList) {
         // replacedMap添加到mailInfo中
         if (replacedObjList != null) {
             StorageSendMailInfo sendMailInfo = new StorageSendMailInfo(createReplacedMap(replacedObjList));
             BeanUtils.copyProperties(mailInfo, sendMailInfo);
             return jsonToString(sendMailInfo);
-        }else {
+        } else {
             return jsonToString(mailInfo);
         }
     }
 
     /**
      * 返回一个StorageSendMailInfo，并不是原来的对象
+     *
      * @param mailInfo
      * @param replacedObjList
      * @return
      */
-    public static StorageSendMailInfo generateMailInfo(StorageSendMailInfo mailInfo, List<Map<SendHtmlMailTypeNameEnum,Object>> replacedObjList) {
+    public static StorageSendMailInfo generateMailInfo(StorageSendMailInfo mailInfo, List<Map<SendHtmlMailTypeNameEnum, Object>> replacedObjList) {
         // replacedMap添加到mailInfo中
         StorageSendMailInfo sendMailInfo = new StorageSendMailInfo(createReplacedMap(replacedObjList));
         BeanUtils.copyProperties(mailInfo, sendMailInfo);
@@ -55,11 +57,12 @@ public class StorageMailUtils {
 
     /**
      * 生成一个存放所有需要替换的值的map集合
+     *
      * @param replacedObjList
      * @return
      */
-    public static Map<String,String> createReplacedMap(List<Map<SendHtmlMailTypeNameEnum,Object>> replacedObjList) {
-        Map<String,String> replacedMap = new HashMap<>();
+    public static Map<String, String> createReplacedMap(List<Map<SendHtmlMailTypeNameEnum, Object>> replacedObjList) {
+        Map<String, String> replacedMap = new HashMap<>();
 
         if (replacedObjList == null) {
             return replacedMap;
@@ -98,7 +101,7 @@ public class StorageMailUtils {
         return generateReplacedMailObject(SendHtmlMailTypeNameEnum.COMMON_NOTICE, commonNoticeDTO);
     }
 
-    public static StorageSendMailInfo generateCommonNotice(String subject,String sendContent,String receiverEmail, Long userUid) {
+    public static StorageSendMailInfo generateCommonNotice(String subject, String sendContent, String receiverEmail, Long userUid) {
         EmailLogPojo emailLogPojo = new EmailLogPojo();
         emailLogPojo.setContent(sendContent);
         emailLogPojo.setUserUid(userUid);

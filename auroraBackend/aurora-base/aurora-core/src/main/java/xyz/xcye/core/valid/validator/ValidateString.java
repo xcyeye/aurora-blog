@@ -10,6 +10,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 /**
  * 校验字符串类型的字段，该字段不能为null，不能为空字符串，并且有长度限制
+ *
  * @author qsyyke
  */
 
@@ -29,7 +30,7 @@ public @interface ValidateString {
      */
     String message() default "{value}不能是null和空值，并且长度必须在{min}到{max}之间";
 
-    Class<?>[] groups() default { };
+    Class<?>[] groups() default {};
 
-    Class<? extends Payload>[] payload() default { };
+    Class<? extends Payload>[] payload() default {};
 }

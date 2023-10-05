@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 
 /**
  * 日志打印工具类
+ *
  * @author qsyyke
  */
 
@@ -11,11 +12,12 @@ import lombok.extern.slf4j.Slf4j;
 public class LogUtils {
     /**
      * 打印插入数据的操作
-     * @param uid 生成的uid
+     *
+     * @param uid         生成的uid
      * @param affectedRow 影响行数
-     * @param finish 是否完成
-     * @param success 插入操作是否成功
-     * @param insertObjs 数据
+     * @param finish      是否完成
+     * @param success     插入操作是否成功
+     * @param insertObjs  数据
      * @return
      */
     public static String insert(long uid, int affectedRow, boolean finish, boolean success, Object... insertObjs) {
@@ -23,7 +25,7 @@ public class LogUtils {
             if (success) {
                 // 插入成功
                 return "插入成功=== 生成的uid:" + uid + "  影响行数:" + affectedRow + "  插入的数据:" + generateObjStr(insertObjs);
-            }else {
+            } else {
                 // 插入失败
                 return "插入失败=== 失败原因:" + generateObjStr(insertObjs);
             }
@@ -35,7 +37,7 @@ public class LogUtils {
         if (finish) {
             if (success) {
                 return "修改成功=== 被修改的uid:" + uid + "  影响行数:" + affectedRow + "  更新的数据:" + generateObjStr(updateObjs);
-            }else {
+            } else {
                 return "修改失败=== 被修改的uid:" + uid + "  失败原因:" + generateObjStr(updateObjs);
             }
         }
@@ -43,11 +45,11 @@ public class LogUtils {
         return "修改=== 待修改的uid:" + uid + "  待更新的数据:" + generateObjStr(updateObjs);
     }
 
-    public static String delete(long uid, boolean finish, boolean success,int affectedRow, Object... deleteObjs) {
+    public static String delete(long uid, boolean finish, boolean success, int affectedRow, Object... deleteObjs) {
         if (finish) {
             if (success) {
                 return "删除成功=== 被删除的uid:" + uid + "  影响行数:" + affectedRow;
-            }else {
+            } else {
                 return "删除失败=== 失败原因:" + generateObjStr(deleteObjs);
             }
         }
@@ -55,7 +57,7 @@ public class LogUtils {
     }
 
     public static String query(Object... queryConditionObjs) {
-        return  "查询条件=== " + generateObjStr(queryConditionObjs);
+        return "查询条件=== " + generateObjStr(queryConditionObjs);
     }
 
     public static StringBuilder generateObjStr(Object[] insertObjs) {
@@ -67,15 +69,15 @@ public class LogUtils {
             insertObjStr.append(insertObj).append(",");
         }
 
-        return insertObjStr.delete(insertObjStr.length() - 1,insertObjStr.length());
+        return insertObjStr.delete(insertObjStr.length() - 1, insertObjStr.length());
     }
 
     public static void logExceptionInfo(Exception e) {
-        log.error("错误消息: {}",e.getMessage(),e);
+        log.error("错误消息: {}", e.getMessage(), e);
     }
 
     public static void logMistakeMessage(String mistakeMsg) {
-        log.error("无法消费的消息: {}",mistakeMsg);
+        log.error("无法消费的消息: {}", mistakeMsg);
     }
 
     public static void logCommonInfo(String info) {

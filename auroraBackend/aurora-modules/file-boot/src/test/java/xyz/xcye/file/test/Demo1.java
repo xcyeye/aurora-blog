@@ -3,7 +3,6 @@ package xyz.xcye.file.test;
 import cn.hutool.core.io.FileUtil;
 
 import java.io.File;
-import java.io.FileInputStream;
 
 /**
  * @author qsyyke

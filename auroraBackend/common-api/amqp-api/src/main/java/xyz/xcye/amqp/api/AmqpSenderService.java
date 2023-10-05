@@ -20,7 +20,6 @@ import xyz.xcye.core.util.ValidationUtils;
 import xyz.xcye.core.util.id.GenerateInfoUtils;
 import xyz.xcye.core.valid.Insert;
 import xyz.xcye.feign.config.service.MessageLogFeignService;
-import xyz.xcye.message.po.MessageLog;
 import xyz.xcye.message.pojo.MessageLogPojo;
 
 import javax.annotation.Resource;
@@ -30,6 +29,7 @@ import java.util.Optional;
 
 /**
  * 这个是发送mq消息的类
+ *
  * @author qsyyke
  * @date Created in 2022/5/12 18:35
  */
@@ -51,6 +51,7 @@ public class AmqpSenderService {
 
     /**
      * 发送mq消息 因为目前把消息发送到交换机中，都是同步的，也就是RequestContextHolder中一定存在数据
+     *
      * @param msgJson
      * @param exchangeName
      * @param routingKey
@@ -67,7 +68,7 @@ public class AmqpSenderService {
         // 调用feign向数据库中插入mq消息
         insertMessageLogData(correlationDataId, msgJson, exchangeName, routingKey, exchangeType);
         JwtUserInfo currentUserInfo = UserUtils.getCurrentUser();
-        //if (!whiteUrlStatus && currentUserInfo == null) {
+        // if (!whiteUrlStatus && currentUserInfo == null) {
         //    throw new UserException(ResponseStatusCodeEnum.PERMISSION_USER_NOT_LOGIN);
         //}
 
@@ -93,6 +94,7 @@ public class AmqpSenderService {
 
     /**
      * mq消息入库
+     *
      * @param correlationDataId
      * @param msgJson
      * @param exchangeName
@@ -102,7 +104,7 @@ public class AmqpSenderService {
      */
     private void insertMessageLogData(String correlationDataId, String msgJson, String exchangeName,
                                       String routingKey, String exchangeType) throws BindException {
-        //向au_message_log表中插入生产信息
+        // 向au_message_log表中插入生产信息
         MessageLogPojo pojo = getMessageLog(msgJson, Long.parseLong(correlationDataId), exchangeName, "",
                 routingKey, false, 0, exchangeType, false, "");
         // 验证messageLogDO对象属性是否合法
@@ -115,6 +117,7 @@ public class AmqpSenderService {
 
     /**
      * 设置mq消息入库的对象
+     *
      * @param message
      * @param uid
      * @param exchange

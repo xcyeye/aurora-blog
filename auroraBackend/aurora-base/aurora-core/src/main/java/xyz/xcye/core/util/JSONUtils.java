@@ -11,13 +11,14 @@ import com.alibaba.fastjson.JSONObject;
 public class JSONUtils {
     /**
      * 从R返回对象中，解析出key对应的数据
+     *
      * @param json
      * @param key
      * @param target
      * @param <T>
      * @return
      */
-    public static  <T> T parseObjFromResult(String json, String key, Class<T> target) {
+    public static <T> T parseObjFromResult(String json, String key, Class<T> target) {
         if (json == null) {
             return null;
         }
@@ -31,7 +32,7 @@ public class JSONUtils {
         return t;
     }
 
-    public static  <T> T parseObjFromResult(Object obj, String key, Class<T> target) {
+    public static <T> T parseObjFromResult(Object obj, String key, Class<T> target) {
         String json = ConvertObjectUtils.jsonToString(obj);
         JSONObject jsonObject = JSON.parseObject(json);
         T t = null;

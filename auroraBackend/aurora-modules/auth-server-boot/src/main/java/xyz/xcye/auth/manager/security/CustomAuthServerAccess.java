@@ -17,6 +17,7 @@ import java.io.IOException;
 
 /**
  * 这是一个自定义的判断逻辑，用在security的access()方法中
+ *
  * @author qsyyke
  * @date Created in 2022/5/4 09:51
  */
@@ -64,6 +65,7 @@ public class CustomAuthServerAccess {
     /**
      * 解决springdoc访问时，不能返回接口信息，也就是判断，如果是springdoc的访问，则在RequestContextHolder中添加一个信息
      * 在AuroraResponseResultHandler中获取是否是springdoc的访问，如果是，则不对响应信息进行处理
+     *
      * @param request
      */
     private void configSpringDoc(HttpServletRequest request) {
@@ -73,7 +75,7 @@ public class CustomAuthServerAccess {
             RequestContextHolder.currentRequestAttributes()
                     .setAttribute(OpenApiConstant.CONTEXT_REQUEST_HEADER_OF_SPRING_DOC, true, 0);
         }
-        //if (OpenApiConstant.SPRING_DOC_REQUEST_PATH.equals(requestURI)) {
+        // if (OpenApiConstant.SPRING_DOC_REQUEST_PATH.equals(requestURI)) {
         //    RequestContextHolder.currentRequestAttributes()
         //            .setAttribute(OpenApiConstant.CONTEXT_REQUEST_HEADER_OF_SPRING_DOC, true, 1);
         //}

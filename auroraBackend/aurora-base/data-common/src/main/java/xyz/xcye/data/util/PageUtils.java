@@ -9,10 +9,10 @@ import xyz.xcye.data.entity.PageData;
 
 import java.util.List;
 import java.util.function.Consumer;
-import java.util.function.Function;
 
 /**
  * 这是和分页相关的工具类
+ *
  * @author qsyyke
  * @date Created in 2022/5/3 09:09
  */
@@ -28,7 +28,7 @@ public class PageUtils {
         return pageData;
     }
 
-    public static <T,I> PageData<I> copyPageDataResult(PageData<T> pageData, Class<I> cClass) {
+    public static <T, I> PageData<I> copyPageDataResult(PageData<T> pageData, Class<I> cClass) {
         List<T> result = pageData.getResult();
         List<I> list = BeanUtils.copyList(result, cClass);
         PageData<I> copyPageData = new PageData<>();
@@ -41,7 +41,7 @@ public class PageUtils {
     }
 
     @SafeVarargs
-    public static <T,I> PageData<T> pageList(Condition<I> condition, Consumer<Condition<I>> consumer, Class<T>... zClass) {
+    public static <T, I> PageData<T> pageList(Condition<I> condition, Consumer<Condition<I>> consumer, Class<T>... zClass) {
         Page<T> page = getPageInfo(condition, consumer);
         PageData<T> pageData = new PageData<>();
 
@@ -57,7 +57,7 @@ public class PageUtils {
         return pageData;
     }
 
-    private static <T,I> Page<T> getPageInfo(Condition<I> condition, Consumer<Condition<I>> consumer) {
+    private static <T, I> Page<T> getPageInfo(Condition<I> condition, Consumer<Condition<I>> consumer) {
         return PageHelper.startPage(condition.getPageNum(), condition.getPageSize(), condition.getOrderBy()).doSelectPage(() -> {
             consumer.accept(condition);
         });

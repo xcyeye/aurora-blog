@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
     <!-- 日志存放路径 -->
-    <property name="log_path" value="/tmp/aurora-log" />
+    <property name="log_path" value="/tmp/aurora-log"/>
     <!-- 控制台打印 -->
-    <property name="log_pattern" value="%d{yyyy-MM-dd HH:mm:ss:SSS}  %green(%-5level) %magenta(${PID:-}) --- [%t] %cyan(%logger{10}) : %msg%n" />
+    <property name="log_pattern"
+              value="%d{yyyy-MM-dd HH:mm:ss:SSS}  %green(%-5level) %magenta(${PID:-}) --- [%t] %cyan(%logger{10}) : %msg%n"/>
     <!-- 打印请求处理时间 -->
-    <property name="log_logRequestTime" value="%d{yyyy-MM-dd HH:mm:ss:SSS} ${PID:-} --- [%t] : %msg%n" />
+    <property name="log_logRequestTime" value="%d{yyyy-MM-dd HH:mm:ss:SSS} ${PID:-} --- [%t] : %msg%n"/>
     <!--记录service层处理数据的操作-->
-    <property name="service-process-data-pattern" value="%d{yyyy-MM-dd HH:mm:ss:SSS} ${PID:-} --- [%t] : %msg%n" />
+    <property name="service-process-data-pattern" value="%d{yyyy-MM-dd HH:mm:ss:SSS} ${PID:-} --- [%t] : %msg%n"/>
     <!-- 文件中打印 -->
-    <property name="log_note" value="%d{yyyy-MM-dd HH:mm:ss:SSS} %-5level ${PID:-} -- %t %logger{50}--%method  -%msg%n"/>
+    <property name="log_note"
+              value="%d{yyyy-MM-dd HH:mm:ss:SSS} %-5level ${PID:-} -- %t %logger{50}--%method  -%msg%n"/>
     <!-- 当前项目的日志存放在哪个文件夹中 -->
     <property name="log_folder" value="aurora-auth-server"/>
     <!-- 控制台输出 -->
@@ -39,12 +41,12 @@
             <pattern>${log_note}</pattern>
         </encoder>
         <filter class="ch.qos.logback.classic.filter.LevelFilter">
-           <!--  过滤的级别
-            <level>ERROR</level>
-            &lt;!&ndash; 匹配时的操作：接收（记录） &ndash;&gt;
-            <onMatch>ACCEPT</onMatch>
-            &lt;!&ndash; 不匹配时的操作：拒绝（不记录） &ndash;&gt;
-            <onMismatch>DENY</onMismatch>-->
+            <!--  过滤的级别
+             <level>ERROR</level>
+             &lt;!&ndash; 匹配时的操作：接收（记录） &ndash;&gt;
+             <onMatch>ACCEPT</onMatch>
+             &lt;!&ndash; 不匹配时的操作：拒绝（不记录） &ndash;&gt;
+             <onMismatch>DENY</onMismatch>-->
         </filter>
     </appender>
 
@@ -53,7 +55,9 @@
         <file>${log_path}/${log_folder}/service-process-data.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <!-- 按天回滚 daily -->
-            <fileNamePattern>${log_path}/${log_folder}/service-process-data-rolling/service-process-data-%d{yyyy-MM-dd}.log</fileNamePattern>
+            <fileNamePattern>
+                ${log_path}/${log_folder}/service-process-data-rolling/service-process-data-%d{yyyy-MM-dd}.log
+            </fileNamePattern>
             <!-- 日志最大的历史 60天 -->
             <maxHistory>0.01</maxHistory>
         </rollingPolicy>
@@ -67,7 +71,9 @@
         <file>${log_path}/${log_folder}/process-request-time.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <!-- 按天回滚 daily -->
-            <fileNamePattern>${log_path}/${log_folder}/process-request-time-rolling/process-request-time-%d{yyyy-MM-dd}.log</fileNamePattern>
+            <fileNamePattern>
+                ${log_path}/${log_folder}/process-request-time-rolling/process-request-time-%d{yyyy-MM-dd}.log
+            </fileNamePattern>
             <!-- 日志最大的历史 60天 -->
             <maxHistory>0.01</maxHistory>
         </rollingPolicy>
@@ -81,7 +87,8 @@
         <file>${log_path}/${log_folder}/sys-exception.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <!-- 按天回滚 daily -->
-            <fileNamePattern>${log_path}/${log_folder}/sys-exception-rolling/sys-exception-%d{yyyy-MM-dd}.log</fileNamePattern>
+            <fileNamePattern>${log_path}/${log_folder}/sys-exception-rolling/sys-exception-%d{yyyy-MM-dd}.log
+            </fileNamePattern>
             <!-- 日志最大的历史 60天 -->
             <maxHistory>0.01</maxHistory>
         </rollingPolicy>

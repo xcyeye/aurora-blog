@@ -38,6 +38,7 @@ import java.util.stream.Collectors;
 
 /**
  * 此类中不会存在对对象的属性判断
+ *
  * @author qsyyke
  */
 
@@ -100,24 +101,24 @@ public class FileService {
         File deleteFileInfo = getFileDOByUid(uid);
         FilePojo filePojo = BeanUtils.copyProperties(deleteFileInfo, FilePojo.class);
 
-        //获取此文件的存储模式，然后删除文件
+        // 获取此文件的存储模式，然后删除文件
         FileStorageService fileStorageService = getNeedFileStorageService(deleteFileInfo.getStorageMode());
         Objects.requireNonNull(fileStorageService, "没有发现此文件存储对象");
         // 先获取原文件的数据流
         FileEntityDTO originFileEntity = fileStorageService.query(deleteFileInfo.getStoragePath(), filePojo);
 
-        //从对应的存储模式中删除文件
+        // 从对应的存储模式中删除文件
         if (!fileStorageService.delete(deleteFileInfo.getStoragePath(), filePojo)) {
-            //没有删除成功，直接返回null
-            throw new FileException (ResponseStatusCodeEnum.EXCEPTION_FILE_FAIL_DELETE.getMessage() + " 可能原因：文件不存在",
+            // 没有删除成功，直接返回null
+            throw new FileException(ResponseStatusCodeEnum.EXCEPTION_FILE_FAIL_DELETE.getMessage() + " 可能原因：文件不存在",
                     ResponseStatusCodeEnum.EXCEPTION_FILE_FAIL_DELETE.getCode());
         }
 
-        //删除成功，修改数据表文件的状态
+        // 删除成功，修改数据表文件的状态
         deleteFileInfo.setDelete(true);
-        //这里使用deleteFileInfo对象的原因是：deleteFileInfo对象中存放的属性值比较完整，而file对象中，可能只存在一个uid
+        // 这里使用deleteFileInfo对象的原因是：deleteFileInfo对象中存放的属性值比较完整，而file对象中，可能只存在一个uid
 
-        //创建一个新对象File最为原始数据对象
+        // 创建一个新对象File最为原始数据对象
         int updateFileNum = 0;
         try {
             // updateFileNum = updateFile(BeanUtils.copyProperties(deleteFileInfo, FilePojo.class));
@@ -165,18 +166,18 @@ public class FileService {
                 storageMode = auroraFileProperties.getDefaultStorageMode();
             }
         }
-        //查看文件的存储方式
+        // 查看文件的存储方式
         if (storageMode == null) {
             fileStorageService = localStorageService;
-        }else if (storageMode == FileStorageModeConstant.QINIU_OSS_STORAGE) {
+        } else if (storageMode == FileStorageModeConstant.QINIU_OSS_STORAGE) {
             // 七牛云
             fileStorageService = qiniuFileStorageService;
-        }else if (storageMode == FileStorageModeConstant.ALIYUN_OSS_STORAGE) {
+        } else if (storageMode == FileStorageModeConstant.ALIYUN_OSS_STORAGE) {
             // 七牛云
-        }else if (storageMode == FileStorageModeConstant.UPYUN_OSS_STORAGE) {
+        } else if (storageMode == FileStorageModeConstant.UPYUN_OSS_STORAGE) {
             // 七牛云
-        }else {
-            //本地存储
+        } else {
+            // 本地存储
             fileStorageService = localStorageService;
         }
 
@@ -186,7 +187,7 @@ public class FileService {
     public FileEntityDTO downloadFile(long uid)
             throws FileException, IOException, ReflectiveOperationException {
         File deleteFileInfo = getFileDOByUid(uid);
-        //获取此文件的存储模式，然后删除文件
+        // 获取此文件的存储模式，然后删除文件
         FileStorageService fileStorageService = getNeedFileStorageService(deleteFileInfo.getStorageMode());
 
         // 先获取原文件的数据流
@@ -205,6 +206,7 @@ public class FileService {
 
     /**
      * 执行文件插入
+     *
      * @param fileEntity
      * @param filePojo
      * @return
@@ -224,7 +226,7 @@ public class FileService {
         }
 
         // 生成一个uid
-        long uid = GenerateInfoUtils.generateUid(auroraProperties.getSnowFlakeWorkerId(),auroraProperties.getSnowFlakeDatacenterId());
+        long uid = GenerateInfoUtils.generateUid(auroraProperties.getSnowFlakeWorkerId(), auroraProperties.getSnowFlakeDatacenterId());
 
         // 根据storageMode获取需要使用的文件存储方式
         FileStorageService fileStorageService = getNeedFileStorageService(filePojo.getStorageMode());
@@ -255,12 +257,13 @@ public class FileService {
 
     /**
      * 判断当前请求用户是否是超级管理员
+     *
      * @param jwtUserInfo
      * @return
      */
     private boolean isSuperRole(JwtUserInfo jwtUserInfo) {
         if (jwtUserInfo == null) {
-            return  false;
+            return false;
         }
         return jwtUserInfo.getRoleList().contains(OauthJwtConstant.SUPER_ADMINISTRATOR_ROLE_NAME);
     }
@@ -282,7 +285,7 @@ public class FileService {
                     ResponseStatusCodeEnum.EXCEPTION_FILE_NOT_FOUND.getCode());
         }
 
-        //如果已经删除，直接返回
+        // 如果已经删除，直接返回
         if (deleteFileInfo.getDelete()) {
             throw new FileException(ResponseStatusCodeEnum.EXCEPTION_FILE_FAIL_HAD_DELETED.getMessage(),
                     ResponseStatusCodeEnum.EXCEPTION_FILE_FAIL_HAD_DELETED.getCode());

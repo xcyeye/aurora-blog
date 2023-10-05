@@ -7,6 +7,7 @@ import java.util.Map;
 
 /**
  * 这是一个解析邮件模板的类
+ *
  * @author qsyyke
  */
 
@@ -15,11 +16,12 @@ public class ParseEmailTemplate {
 
     /**
      * 根据传入的map集合中的key和value值，解析模板，比如模板<span>{{key1}}<span/>，一个map集合中的key为key1，vlaue为v1，那么就将v1替换到{{key1}}中
-     * @param replacedKV 存放key和value的键值map
+     *
+     * @param replacedKV   存放key和value的键值map
      * @param mailTemplate 待替换的模板
      * @return
      */
-    public static String parseHtmlMailTemplate(Map<String,String> replacedKV, String mailTemplate) {
+    public static String parseHtmlMailTemplate(Map<String, String> replacedKV, String mailTemplate) {
 
         for (Map.Entry<String, String> replaceKVMap : replacedKV.entrySet()) {
             // 获取键值
@@ -33,7 +35,7 @@ public class ParseEmailTemplate {
             mailTemplate = mailTemplate.replaceAll(replacingRegex, value);
         }
         // 从迭代器中，获取每一个
-        //替换内容
+        // 替换内容
         return mailTemplate;
     }
 }

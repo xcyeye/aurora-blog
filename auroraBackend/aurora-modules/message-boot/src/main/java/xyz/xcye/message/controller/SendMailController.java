@@ -17,6 +17,7 @@ import java.io.IOException;
 
 /**
  * 使用发送请求的方式发送邮件
+ *
  * @author qsyyke
  */
 
@@ -31,6 +32,7 @@ public class SendMailController {
 
     /**
      * 发送简单的邮件
+     *
      * @return
      */
     @ModifyOperation
@@ -44,7 +46,7 @@ public class SendMailController {
     @ModifyOperation
     @PostMapping("/customMail")
     public void sendCustomMail(@RequestBody SendMailPojo pojo) throws MessagingException, IOException {
-       sendMailService.sendCustomMail(pojo);
+        sendMailService.sendCustomMail(pojo);
     }
 
     @Operation(summary = "重新发送自定义邮件")

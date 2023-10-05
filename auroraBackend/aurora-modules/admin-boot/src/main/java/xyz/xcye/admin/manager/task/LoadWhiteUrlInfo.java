@@ -10,6 +10,7 @@ import xyz.xcye.data.entity.Condition;
 
 /**
  * 将mysql中的白名单数据存入redis中
+ *
  * @author qsyyke
  * @date Created in 2022/5/7 18:22
  */
@@ -36,6 +37,7 @@ public class LoadWhiteUrlInfo {
 
     /**
      * 将白名单数据放入redis中，随机生成一个ttl
+     *
      * @param template
      */
     private void storageData(RedisTemplate<String, Object> template) {

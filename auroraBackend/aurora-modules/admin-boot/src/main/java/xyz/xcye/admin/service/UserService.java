@@ -169,7 +169,7 @@ public class UserService {
         Optional.ofNullable(user.getPassword()).ifPresent(t -> user.setPassword(null));
 
         if (StringUtils.hasLength(user.getUsername()) && existsUsername(user.getUsername())) {
-            //throw new UserException(ResponseStatusCodeEnum.PERMISSION_USER_EXIST);
+            // throw new UserException(ResponseStatusCodeEnum.PERMISSION_USER_EXIST);
             // 用户名存在，不修改用户名
             user.setUsername(null);
         }
@@ -184,6 +184,7 @@ public class UserService {
 
     /**
      * 更新密码，忘记密码也会进入此流程，如果是更新密码，那么username,originPwd,newPwd是必须的，如果是忘记密码，需要username，secretKey
+     *
      * @return
      */
     public int updatePassword(UserPojo userPojo) {
@@ -210,6 +211,7 @@ public class UserService {
     /**
      * 忘记密码，先验证此用户名是否存在，如果存在，远程调用，查看此用户是否绑定了email，如果没有email，则不支持找回，如果存在，则发送重置密码
      * 的html到该email中
+     *
      * @param userPojo
      * @return
      */
@@ -243,7 +245,7 @@ public class UserService {
     }
 
     public User queryByUsernameContainPassword(String username) {
-        return auroraUserService.queryOne(new User(){{
+        return auroraUserService.queryOne(new User() {{
             setUsername(username);
         }});
     }
@@ -264,6 +266,7 @@ public class UserService {
 
     /**
      * 绑定邮箱，必须得登录之后才能绑定
+     *
      * @param pojo
      * @return
      * @throws BindException
@@ -296,7 +299,7 @@ public class UserService {
                 // 插入成功
                 R r1 = emailFeignService.queryByEmailNumber(emailPojo);
                 queriedEmailInfo = JSONUtils.parseObjFromResult(ConvertObjectUtils.jsonToString(r1), "data", EmailVO.class);
-            }else {
+            } else {
                 throw new EmailException("添加邮箱失败");
             }
         }
@@ -330,6 +333,7 @@ public class UserService {
 
     /**
      * 判断传入的用户名是否已经存在
+     *
      * @param username
      * @return
      */
@@ -348,7 +352,7 @@ public class UserService {
         user.setVerifyEmail(false);
         user.setAccountLock(false);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setUid(GenerateInfoUtils.generateUid(auroraProperties.getSnowFlakeWorkerId(),auroraProperties.getSnowFlakeDatacenterId()));
+        user.setUid(GenerateInfoUtils.generateUid(auroraProperties.getSnowFlakeWorkerId(), auroraProperties.getSnowFlakeDatacenterId()));
 
         if (!StringUtils.hasLength(user.getNickname())) {
             user.setNickname(adminDefaultProperties.getNickname());
@@ -368,7 +372,7 @@ public class UserService {
         long time = new Date().getTime();
         if (auroraAccountProperties.getMailVerifyAccountExpirationTime() != null) {
             time = time + auroraAccountProperties.getMailVerifyAccountExpirationTime();
-        }else {
+        } else {
             // TODO 系统并没有设置默认失效时间，则设置10分钟
             time = time + (10 * 60 * 1000);
         }

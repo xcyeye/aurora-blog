@@ -57,7 +57,7 @@ public class CategoryService {
     }
 
     public PageData<CategoryVO> queryListCategoryByCondition(Condition<Long> condition) {
-        Assert.notNull(condition,"查询条件不能为null");
+        Assert.notNull(condition, "查询条件不能为null");
         return PageUtils.copyPageDataResult(auroraCategoryService.queryListByCondition(condition), CategoryVO.class);
     }
 

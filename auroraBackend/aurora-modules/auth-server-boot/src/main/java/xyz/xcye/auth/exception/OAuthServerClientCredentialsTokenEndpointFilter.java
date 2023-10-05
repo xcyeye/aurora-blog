@@ -20,12 +20,13 @@ public class OAuthServerClientCredentialsTokenEndpointFilter extends ClientCrede
 
     /**
      * 构造方法
-     * @param configurer AuthorizationServerSecurityConfigurer对昂
+     *
+     * @param configurer               AuthorizationServerSecurityConfigurer对昂
      * @param authenticationEntryPoint 自定义的AuthenticationEntryPoint
      */
     public OAuthServerClientCredentialsTokenEndpointFilter(AuthorizationServerSecurityConfigurer configurer, AuthenticationEntryPoint authenticationEntryPoint) {
         this.configurer = configurer;
-        this.authenticationEntryPoint=authenticationEntryPoint;
+        this.authenticationEntryPoint = authenticationEntryPoint;
     }
 
     @Override
@@ -53,7 +54,7 @@ public class OAuthServerClientCredentialsTokenEndpointFilter extends ClientCrede
             }
             authenticationEntryPoint.commence(request, response, exception);
         });
-        //成功处理器，和父类相同，为空即可。
+        // 成功处理器，和父类相同，为空即可。
         setAuthenticationSuccessHandler((request, response, authentication) -> {
         });
     }

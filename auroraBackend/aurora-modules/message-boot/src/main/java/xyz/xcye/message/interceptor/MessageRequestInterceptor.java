@@ -11,6 +11,7 @@ import xyz.xcye.core.constant.SeataConstant;
 /**
  * 在使用feign进行远程服务调用的时候，在这里将seata的xid增加到请求头中去，然后在目标服务中，获取到
  * 此xi，进行全局事务的绑定操作
+ *
  * @author qsyyke
  */
 
@@ -22,7 +23,7 @@ public class MessageRequestInterceptor implements RequestInterceptor {
 
         String xid = RootContext.getXID();
         if (StringUtils.hasLength(xid)) {
-            template.header(SeataConstant.GLOBAL_XID_REQUEST_HEADER_NAME,xid);
+            template.header(SeataConstant.GLOBAL_XID_REQUEST_HEADER_NAME, xid);
         }
     }
 }

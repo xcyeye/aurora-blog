@@ -27,6 +27,7 @@ import javax.sql.DataSource;
 
 /**
  * oauth2认证中心的配置
+ *
  * @author qsyyke
  * @date Created in 2022/5/4 09:50
  */
@@ -87,17 +88,17 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     @Bean
     public AuthorizationServerTokenServices tokenServices() {
         DefaultTokenServices services = new DefaultTokenServices();
-        //客户端端配置策略
+        // 客户端端配置策略
         services.setClientDetailsService(clientDetailsService);
-        //支持令牌的刷新
+        // 支持令牌的刷新
         services.setSupportRefreshToken(true);
-        //令牌存储服务
+        // 令牌存储服务
         services.setTokenStore(tokenStore);
-        //access_token的过期时间，后期可以通过nacos的配置中心进行控制
+        // access_token的过期时间，后期可以通过nacos的配置中心进行控制
         services.setAccessTokenValiditySeconds(auroraAuthProperties.getAccessTokenValiditySeconds());
-        //refresh_token的过期时间
+        // refresh_token的过期时间
         services.setRefreshTokenValiditySeconds(auroraAuthProperties.getRefreshTokenValiditySeconds());
-        //设置令牌增强，使用JwtAccessTokenConverter进行转换
+        // 设置令牌增强，使用JwtAccessTokenConverter进行转换
         services.setTokenEnhancer(jwtAccessTokenConverter);
         return services;
     }
@@ -107,24 +108,25 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
      */
     @Override
     public void configure(AuthorizationServerSecurityConfigurer security) {
-        //自定义ClientCredentialsTokenEndpointFilter，用于处理客户端id，密码错误的异常
+        // 自定义ClientCredentialsTokenEndpointFilter，用于处理客户端id，密码错误的异常
         OAuthServerClientCredentialsTokenEndpointFilter endpointFilter =
-                new OAuthServerClientCredentialsTokenEndpointFilter(security,authenticationEntryPoint);
+                new OAuthServerClientCredentialsTokenEndpointFilter(security, authenticationEntryPoint);
         endpointFilter.afterPropertiesSet();
         security.addTokenEndpointAuthenticationFilter(endpointFilter);
 
         security
                 //.authenticationEntryPoint(authenticationEntryPoint)
-                //开启/oauth/token_key验证端口权限访问
+                // 开启/oauth/token_key验证端口权限访问
                 .tokenKeyAccess("permitAll()")
-                //开启/oauth/check_token验证端口认证权限访问
+                // 开启/oauth/check_token验证端口认证权限访问
                 .checkTokenAccess("permitAll()");
-                //一定不要添加allowFormAuthenticationForClients，否则自定义的OAuthServerClientCredentialsTokenEndpointFilter不生效
+        // 一定不要添加allowFormAuthenticationForClients，否则自定义的OAuthServerClientCredentialsTokenEndpointFilter不生效
         //.allowFormAuthenticationForClients();
     }
 
     /**
      * 客户端详情配置，例如秘钥，唯一id
+     *
      * @param clients
      * @throws Exception
      */
@@ -156,15 +158,15 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     @SuppressWarnings("ALL")
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) {
         endpoints
-                //设置异常WebResponseExceptionTranslator，用于处理用户名，密码错误、授权类型不正确的异常
+                // 设置异常WebResponseExceptionTranslator，用于处理用户名，密码错误、授权类型不正确的异常
                 .exceptionTranslator(new OAuthServerWebResponseExceptionTranslator())
-                //授权码模式所需要的authorizationCodeServices
+                // 授权码模式所需要的authorizationCodeServices
                 .authorizationCodeServices(authorizationCodeServices())
-                //密码模式所需要的authenticationManager
+                // 密码模式所需要的authenticationManager
                 .authenticationManager(authenticationManager)
-                //令牌管理服务，无论哪种模式都需要
+                // 令牌管理服务，无论哪种模式都需要
                 .tokenServices(tokenServices())
-                //只允许POST提交访问令牌，uri：/oauth/token，可以添加多个
+                // 只允许POST提交访问令牌，uri：/oauth/token，可以添加多个
                 .allowedTokenEndpointRequestMethods(HttpMethod.POST);
     }
 }

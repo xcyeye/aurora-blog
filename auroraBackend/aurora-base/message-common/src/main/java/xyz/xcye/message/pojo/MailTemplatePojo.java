@@ -1,14 +1,14 @@
 package xyz.xcye.message.pojo;
 
-import lombok.Data;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
+ * @author xcye <br/>
  * @description mail_template数据表的POJO <br/>
  * @date 2022-12-14 22:01:53 <br/>
- * @author xcye <br/>
  */
 
 @Data

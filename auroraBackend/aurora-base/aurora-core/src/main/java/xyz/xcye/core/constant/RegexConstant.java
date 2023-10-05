@@ -1,7 +1,5 @@
 package xyz.xcye.core.constant;
 
-import javax.validation.constraints.Pattern;
-
 /**
  * @author qsyyke
  * @date Created in 2022/5/13 19:59

@@ -26,7 +26,7 @@
         <result column="is_delete" property="delete"/>
     </resultMap>
 
-  	<sql id="Where_Condition">
+    <sql id="Where_Condition">
         <where>
             <if test="uid != null">
                 AND uid = #{uid}
@@ -92,10 +92,11 @@
                 AND is_delete = #{delete}
             </if>
         </where>
-  	</sql>
+    </sql>
 
     <sql id="Base_Column_List">
-        uid,
+        uid
+        ,
         is_show_comment,
         accessory_uids,
         category_names,
@@ -119,7 +120,7 @@
     </sql>
     <select id="queryListArticleByTagOrCategory" resultMap="articleResultMap">
         SELECT
-        <include refid="Base_Column_List" />
+        <include refid="Base_Column_List"/>
         FROM au_article
         <where>
             <if test="userUid != null">
@@ -141,7 +142,7 @@
     <!-- 根据主键查询数据  -->
     <select id="queryByIdForUpdate" resultMap="articleResultMap" parameterType="Long">
         SELECT
-        <include refid="Base_Column_List" />
+        <include refid="Base_Column_List"/>
         FROM au_article
         WHERE
         uid = #{uid}

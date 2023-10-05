@@ -1,6 +1,5 @@
 package xyz.xcye.auth.model;
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -117,7 +116,6 @@ public class SecurityUserDetails implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
-
 
 
     /**

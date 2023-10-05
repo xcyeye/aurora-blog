@@ -12,6 +12,7 @@ import javax.validation.constraints.NotNull;
 
 /**
  * 邮箱验证账户实体
+ *
  * @author qsyyke
  */
 
@@ -23,13 +24,13 @@ public class EmailVerifyAccountDTO {
     /**
      * 验证邮箱的地址
      */
-    @ValidateString(value = "验证账户的地址",max = FieldLengthConstant.URL)
+    @ValidateString(value = "验证账户的地址", max = FieldLengthConstant.URL)
     private String verifyAccountUrl;
 
     /**
      * 接受者的邮箱
      */
-    @ValidateString(value = "验证账户的收件人邮箱地址",max = FieldLengthConstant.EMAIL_NUMBER)
+    @ValidateString(value = "验证账户的收件人邮箱地址", max = FieldLengthConstant.EMAIL_NUMBER)
     private String receiverEmail;
 
     /**

@@ -16,34 +16,35 @@ import java.util.Objects;
 
 /**
  * 这是与jwt相关的工具类
+ *
  * @author qsyyke
  */
 
 
 public class JwtUtils {
 
-    public static String generateToken(String subject,String issuer, long expirationSecond,
+    public static String generateToken(String subject, String issuer, long expirationSecond,
                                        String username, String secretKey) {
         Key key = getSecretKey(secretKey);
-        //当前时间
+        // 当前时间
         Date currentDate = new Date();
         if (expirationSecond == 0) {
-            //默认失效时间为30分钟
+            // 默认失效时间为30分钟
             expirationSecond = FieldLengthConstant.TOKEN_EXPIRATION_TIME;
         }
 
-        //将秒数转换成毫秒
+        // 将秒数转换成毫秒
         expirationSecond = expirationSecond * 1000;
 
-        //失效时间
+        // 失效时间
         Date expirationDate = new Date(currentDate.getTime() + expirationSecond);
         return Jwts.builder()
                 .setId(GenerateInfoUtils.generateUid(10, 10) + "")
-                //设置标题和签发者
+                // 设置标题和签发者
                 .setSubject(subject).setIssuer(issuer)
-                //设置发布时间和token失效时间
+                // 设置发布时间和token失效时间
                 .setIssuedAt(currentDate).setExpiration(expirationDate)
-                //声明用户名和密码
+                // 声明用户名和密码
                 .claim("username", username)
                 .signWith(key)
                 .compact();
@@ -51,7 +52,8 @@ public class JwtUtils {
 
     /**
      * 解析传入的token
-     * @param jwtToken 需要解析的token
+     *
+     * @param jwtToken  需要解析的token
      * @param secretKey 盐byte数组
      * @return 封装的jwt实体对象
      * @throws RuntimeException 如果token失效，会导致解析失败或者盐不匹配
@@ -77,14 +79,15 @@ public class JwtUtils {
                 .expirationAt(claims.getExpiration())
                 .jti((String) claims.get("jti"))
                 .build();
-        //解析用户名
-        jwtEntity.setUsername(claims.get("username",String.class));
+        // 解析用户名
+        jwtEntity.setUsername(claims.get("username", String.class));
         return jwtEntity;
     }
 
     /**
      * 根据传入的token和盐byte数组，判断token是否过期
-     * @param jwtToken token
+     *
+     * @param jwtToken  token
      * @param secretKey 盐
      * @return true为过期，false没有过期，就算token过期，或者解析失败，会直接返回true，并不会抛出异常
      */
@@ -102,7 +105,7 @@ public class JwtUtils {
             return true;
         }
 
-        //token失效时间
+        // token失效时间
         Date expiration = claims.getExpiration();
         return !expiration.after(new Date());
     }
@@ -114,6 +117,6 @@ public class JwtUtils {
         if (bytes.length * 8 <= 256) {
             throw new PermissionException("secret的长度太短，存英文不能少于32位，存中文不能少于10位");
         }
-       return Keys.hmacShaKeyFor(bytes);
+        return Keys.hmacShaKeyFor(bytes);
     }
 }

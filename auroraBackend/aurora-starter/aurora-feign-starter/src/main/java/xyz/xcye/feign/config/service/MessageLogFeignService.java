@@ -5,12 +5,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.BindException;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import xyz.xcye.core.entity.R;
 import xyz.xcye.core.util.BeanUtils;
 import xyz.xcye.core.util.JSONUtils;
 import xyz.xcye.core.util.LogUtils;
-import xyz.xcye.message.po.MessageLog;
 import xyz.xcye.message.pojo.MessageLogPojo;
 import xyz.xcye.message.vo.MessageLogVO;
 
@@ -38,6 +38,7 @@ public interface MessageLogFeignService {
 
         /**
          * 更新数据库中的mq消息的信息
+         *
          * @param correlationDataId
          * @param ackStatus
          * @param consumeStatus
@@ -45,10 +46,10 @@ public interface MessageLogFeignService {
          * @throws BindException
          */
         public void updateMessageLogInfo(String correlationDataId, boolean ackStatus,
-                                          boolean consumeStatus, String errorMessage, Message message) throws BindException {
+                                         boolean consumeStatus, String errorMessage, Message message) throws BindException {
             MessageLogVO messageLogVO = null;
             try {
-                R r = messageLogFeignService.queryMessageLogByUid(new MessageLogPojo(){{
+                R r = messageLogFeignService.queryMessageLogByUid(new MessageLogPojo() {{
                     setUid(Long.parseLong(correlationDataId));
                 }});
                 messageLogVO = JSONUtils.parseObjFromResult(r, "data", MessageLogVO.class);

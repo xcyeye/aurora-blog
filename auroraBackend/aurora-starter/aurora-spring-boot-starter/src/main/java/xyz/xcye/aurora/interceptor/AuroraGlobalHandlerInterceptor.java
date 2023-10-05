@@ -46,7 +46,8 @@ public class AuroraGlobalHandlerInterceptor implements HandlerInterceptor {
             JwtUserInfo jwtUserInfo = null;
             try {
                 jwtUserInfo = AuroraRequestUtils.getJwtUserInfo(request);
-            } catch (Exception ignored) {}
+            } catch (Exception ignored) {
+            }
             Optional.ofNullable(jwtUserInfo).ifPresent(this::storageAuthenticatedUserToAttributes);
             return true;
         }
@@ -84,6 +85,7 @@ public class AuroraGlobalHandlerInterceptor implements HandlerInterceptor {
 
     /**
      * 检查当前restFul风格的请求地址，是否是白名单
+     *
      * @param request 请求对象
      * @return true是白名单
      */
@@ -101,6 +103,7 @@ public class AuroraGlobalHandlerInterceptor implements HandlerInterceptor {
     /**
      * 判断该请求是否是从认证中心发出的，在认证中心，验证用户信息，需要发送请求查询密码，发送的是否，会向
      * 请求头中，添加一个标识，并不是所有从认证中心发出的请求都有这个请求头
+     *
      * @param request 请求
      * @return true是从认证中心发出的
      */
@@ -112,6 +115,7 @@ public class AuroraGlobalHandlerInterceptor implements HandlerInterceptor {
 
     /**
      * 将用户已认证的信息存储到RequestContextHolder
+     *
      * @param jwtUserInfo 已认证用户信息，包括jwt等
      */
     private void storageAuthenticatedUserToAttributes(JwtUserInfo jwtUserInfo) {
@@ -124,6 +128,7 @@ public class AuroraGlobalHandlerInterceptor implements HandlerInterceptor {
     /**
      * 解决springdoc访问时，不能返回接口信息，也就是判断，如果是springdoc的访问，则在RequestContextHolder中添加一个信息
      * 在AuroraResponseResultHandler中获取是否是springdoc的访问，如果是，则不对响应信息进行处理
+     *
      * @param request
      */
     private void configSpringDoc(HttpServletRequest request) {
@@ -133,7 +138,7 @@ public class AuroraGlobalHandlerInterceptor implements HandlerInterceptor {
             RequestContextHolder.currentRequestAttributes()
                     .setAttribute(OpenApiConstant.CONTEXT_REQUEST_HEADER_OF_SPRING_DOC, true, 0);
         }
-        //if (OpenApiConstant.SPRING_DOC_REQUEST_PATH.equals(requestURI)) {
+        // if (OpenApiConstant.SPRING_DOC_REQUEST_PATH.equals(requestURI)) {
         //    RequestContextHolder.currentRequestAttributes()
         //            .setAttribute(OpenApiConstant.CONTEXT_REQUEST_HEADER_OF_SPRING_DOC, true, 1);
         //}

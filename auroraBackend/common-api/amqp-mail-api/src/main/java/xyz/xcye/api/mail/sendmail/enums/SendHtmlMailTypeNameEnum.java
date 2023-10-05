@@ -4,6 +4,7 @@ import lombok.Getter;
 
 /**
  * 发送html邮件时的type值
+ *
  * @author qsyyke
  * @date Created in 2022/4/27 19:17
  */

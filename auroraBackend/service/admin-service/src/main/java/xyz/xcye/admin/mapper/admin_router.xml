@@ -23,7 +23,7 @@
         <result column="parent_router_uid" property="parentRouterUid"/>
     </resultMap>
 
-  	<sql id="Where_Condition">
+    <sql id="Where_Condition">
         <where>
             <if test="uid != null">
                 AND uid = #{uid}
@@ -80,10 +80,11 @@
                 AND parent_router_uid = #{parentRouterUid}
             </if>
         </where>
-  	</sql>
+    </sql>
 
     <sql id="Base_Column_List">
-        uid,
+        uid
+        ,
         title,
         singleLayout,
         requiresAuth,
@@ -103,226 +104,227 @@
         parent_router_uid
     </sql>
 
-	<!-- common methods start -->
+    <!-- common methods start -->
     <!-- 新增一条数据 -->
-	<insert id="insert" parameterType="xyz.xcye.admin.po.AdminRouter" useGeneratedKeys="true" keyProperty="uid">
+    <insert id="insert" parameterType="xyz.xcye.admin.po.AdminRouter" useGeneratedKeys="true" keyProperty="uid">
         INSERT INTO au_admin_router (
-            <trim suffixOverrides=",">
-                <if test="uid != null">
-                    uid,
-                </if>
-                <if test="title != null">
-                    title,
-                </if>
-                <if test="singleLayout != null">
-                    singleLayout,
-                </if>
-                <if test="requiresAuth != null">
-                    requiresAuth,
-                </if>
-                <if test="keepalive != null">
-                    keepAlive,
-                </if>
-                <if test="icon != null">
-                    icon,
-                </if>
-                <if test="localIcon != null">
-                    localIcon,
-                </if>
-                <if test="hide != null">
-                    hide,
-                </if>
-                <if test="href != null">
-                    href,
-                </if>
-                <if test="order != null">
-                    `order`,
-                </if>
-                <if test="affix != null">
-                    affix,
-                </if>
-                <if test="createTime != null">
-                    create_time,
-                </if>
-                <if test="updateTime != null">
-                    update_time,
-                </if>
-                <if test="name != null">
-                    `name`,
-                </if>
-                <if test="path != null">
-                    `path`,
-                </if>
-                <if test="component != null">
-                    component,
-                </if>
-                <if test="sonRouterUids != null">
-                    son_router_uids,
-                </if>
-                <if test="parentRouterUid != null">
-                    parent_router_uid,
-                </if>
-            </trim>
+        <trim suffixOverrides=",">
+            <if test="uid != null">
+                uid,
+            </if>
+            <if test="title != null">
+                title,
+            </if>
+            <if test="singleLayout != null">
+                singleLayout,
+            </if>
+            <if test="requiresAuth != null">
+                requiresAuth,
+            </if>
+            <if test="keepalive != null">
+                keepAlive,
+            </if>
+            <if test="icon != null">
+                icon,
+            </if>
+            <if test="localIcon != null">
+                localIcon,
+            </if>
+            <if test="hide != null">
+                hide,
+            </if>
+            <if test="href != null">
+                href,
+            </if>
+            <if test="order != null">
+                `order`,
+            </if>
+            <if test="affix != null">
+                affix,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="name != null">
+                `name`,
+            </if>
+            <if test="path != null">
+                `path`,
+            </if>
+            <if test="component != null">
+                component,
+            </if>
+            <if test="sonRouterUids != null">
+                son_router_uids,
+            </if>
+            <if test="parentRouterUid != null">
+                parent_router_uid,
+            </if>
+        </trim>
         ) VALUES (
-            <trim suffixOverrides=",">
-                <if test="uid != null">
-                 #{uid},
-                </if>
-                <if test="title != null">
-                 #{title},
-                </if>
-                <if test="singleLayout != null">
-                 #{singleLayout},
-                </if>
-                <if test="requiresAuth != null">
-                 #{requiresAuth},
-                </if>
-                <if test="keepalive != null">
-                 #{keepalive},
-                </if>
-                <if test="icon != null">
-                 #{icon},
-                </if>
-                <if test="localIcon != null">
-                 #{localIcon},
-                </if>
-                <if test="hide != null">
-                 #{hide},
-                </if>
-                <if test="href != null">
-                 #{href},
-                </if>
-                <if test="order != null">
-                 #{order},
-                </if>
-                <if test="affix != null">
-                 #{affix},
-                </if>
-                <if test="createTime != null">
-                 #{createTime},
-                </if>
-                <if test="updateTime != null">
-                 #{updateTime},
-                </if>
-                <if test="name != null">
-                 #{name},
-                </if>
-                <if test="path != null">
-                 #{path},
-                </if>
-                <if test="component != null">
-                 #{component},
-                </if>
-                <if test="sonRouterUids != null">
-                 #{sonRouterUids},
-                </if>
-                <if test="parentRouterUid != null">
-                 #{parentRouterUid},
-                </if>
-            </trim>
+        <trim suffixOverrides=",">
+            <if test="uid != null">
+                #{uid},
+            </if>
+            <if test="title != null">
+                #{title},
+            </if>
+            <if test="singleLayout != null">
+                #{singleLayout},
+            </if>
+            <if test="requiresAuth != null">
+                #{requiresAuth},
+            </if>
+            <if test="keepalive != null">
+                #{keepalive},
+            </if>
+            <if test="icon != null">
+                #{icon},
+            </if>
+            <if test="localIcon != null">
+                #{localIcon},
+            </if>
+            <if test="hide != null">
+                #{hide},
+            </if>
+            <if test="href != null">
+                #{href},
+            </if>
+            <if test="order != null">
+                #{order},
+            </if>
+            <if test="affix != null">
+                #{affix},
+            </if>
+            <if test="createTime != null">
+                #{createTime},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime},
+            </if>
+            <if test="name != null">
+                #{name},
+            </if>
+            <if test="path != null">
+                #{path},
+            </if>
+            <if test="component != null">
+                #{component},
+            </if>
+            <if test="sonRouterUids != null">
+                #{sonRouterUids},
+            </if>
+            <if test="parentRouterUid != null">
+                #{parentRouterUid},
+            </if>
+        </trim>
         )
-	</insert>
+    </insert>
 
     <!-- 通过主键删除数据 -->
-	<delete id="deleteById" parameterType="Long">
-        DELETE FROM au_admin_router
-        WHERE uid = #{uid} 
-	</delete>
+    <delete id="deleteById" parameterType="Long">
+        DELETE
+        FROM au_admin_router
+        WHERE uid = #{uid}
+    </delete>
 
     <!-- 根据id更新数据 -->
     <update id="updateById" parameterType="xyz.xcye.admin.po.AdminRouter">
-		UPDATE au_admin_router
-		<set>
-			<if test="title != null">title = #{title},</if>
-			<if test="singleLayout != null">singleLayout = #{singleLayout},</if>
-			<if test="requiresAuth != null">requiresAuth = #{requiresAuth},</if>
-			<if test="keepalive != null">keepAlive = #{keepalive},</if>
-			<if test="icon != null">icon = #{icon},</if>
-			<if test="localIcon != null">localIcon = #{localIcon},</if>
-			<if test="hide != null">hide = #{hide},</if>
-			<if test="href != null">href = #{href},</if>
-			<if test="order != null">`order` = #{order},</if>
-			<if test="affix != null">affix = #{affix},</if>
-			<if test="createTime != null">create_time = #{createTime},</if>
-			<if test="updateTime != null">update_time = #{updateTime},</if>
-			<if test="name != null">`name` = #{name},</if>
-			<if test="path != null">`path` = #{path},</if>
-			<if test="component != null">component = #{component},</if>
-			<if test="sonRouterUids != null">son_router_uids = #{sonRouterUids},</if>
-			<if test="parentRouterUid != null">parent_router_uid = #{parentRouterUid},</if>
-		</set>
-		WHERE
-		    uid = #{uid}
-	</update>
-
-	<!-- 根据主键查询数据  -->
-	<select id="queryById" resultMap="adminRouterResultMap" parameterType="Long">
-        SELECT
-        <include refid="Base_Column_List" />
-  	    FROM au_admin_router
+        UPDATE au_admin_router
+        <set>
+            <if test="title != null">title = #{title},</if>
+            <if test="singleLayout != null">singleLayout = #{singleLayout},</if>
+            <if test="requiresAuth != null">requiresAuth = #{requiresAuth},</if>
+            <if test="keepalive != null">keepAlive = #{keepalive},</if>
+            <if test="icon != null">icon = #{icon},</if>
+            <if test="localIcon != null">localIcon = #{localIcon},</if>
+            <if test="hide != null">hide = #{hide},</if>
+            <if test="href != null">href = #{href},</if>
+            <if test="order != null">`order` = #{order},</if>
+            <if test="affix != null">affix = #{affix},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="name != null">`name` = #{name},</if>
+            <if test="path != null">`path` = #{path},</if>
+            <if test="component != null">component = #{component},</if>
+            <if test="sonRouterUids != null">son_router_uids = #{sonRouterUids},</if>
+            <if test="parentRouterUid != null">parent_router_uid = #{parentRouterUid},</if>
+        </set>
         WHERE
-            uid = #{uid}
+        uid = #{uid}
+    </update>
+
+    <!-- 根据主键查询数据  -->
+    <select id="queryById" resultMap="adminRouterResultMap" parameterType="Long">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM au_admin_router
+        WHERE
+        uid = #{uid}
     </select>
 
     <!-- 查询一条记录  -->
-	<select id="queryOne" resultMap="adminRouterResultMap" parameterType="xyz.xcye.admin.po.AdminRouter">
-         SELECT
-         <include refid="Base_Column_List" />
-  	     FROM au_admin_router
-         <include refid="Where_Condition" />
-         LIMIT 1
-    </select>
-
-	<!-- 根据传入参数查询数据列表  -->
-	<select id="queryListByWhere" resultMap="adminRouterResultMap" parameterType="xyz.xcye.admin.po.AdminRouter">
+    <select id="queryOne" resultMap="adminRouterResultMap" parameterType="xyz.xcye.admin.po.AdminRouter">
         SELECT
-        <include refid="Base_Column_List" />
+        <include refid="Base_Column_List"/>
         FROM au_admin_router
-        <include refid="Where_Condition" />
+        <include refid="Where_Condition"/>
+        LIMIT 1
     </select>
 
-	<!-- 统计符合条件的数据数量 -->
-	<select id="countByWhere" resultType="int" parameterType="xyz.xcye.admin.po.AdminRouter">
-		SELECT COUNT(*) FROM au_admin_router
-		<include refid="Where_Condition" />
-	</select>
+    <!-- 根据传入参数查询数据列表  -->
+    <select id="queryListByWhere" resultMap="adminRouterResultMap" parameterType="xyz.xcye.admin.po.AdminRouter">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM au_admin_router
+        <include refid="Where_Condition"/>
+    </select>
+
+    <!-- 统计符合条件的数据数量 -->
+    <select id="countByWhere" resultType="int" parameterType="xyz.xcye.admin.po.AdminRouter">
+        SELECT COUNT(*) FROM au_admin_router
+        <include refid="Where_Condition"/>
+    </select>
 
     <!-- 批量插入多条数据 -->
-	<insert id="batchInsert" parameterType="java.util.List">
+    <insert id="batchInsert" parameterType="java.util.List">
         INSERT INTO au_admin_router (
-        	<include refid="Base_Column_List" />
+        <include refid="Base_Column_List"/>
         ) VALUES
-        <foreach collection="list" item="item" index= "index" separator =",">
+        <foreach collection="list" item="item" index="index" separator=",">
             (
             <trim suffixOverrides=",">
-				#{item.uid},
-				#{item.title},
-				#{item.singleLayout},
-				#{item.requiresAuth},
-				#{item.keepalive},
-				#{item.icon},
-				#{item.localIcon},
-				#{item.hide},
-				#{item.href},
-				#{item.order},
-				#{item.affix},
-				#{item.createTime},
-				#{item.updateTime},
-				#{item.name},
-				#{item.path},
-				#{item.component},
-				#{item.sonRouterUids},
-				#{item.parentRouterUid},
+                #{item.uid},
+                #{item.title},
+                #{item.singleLayout},
+                #{item.requiresAuth},
+                #{item.keepalive},
+                #{item.icon},
+                #{item.localIcon},
+                #{item.hide},
+                #{item.href},
+                #{item.order},
+                #{item.affix},
+                #{item.createTime},
+                #{item.updateTime},
+                #{item.name},
+                #{item.path},
+                #{item.component},
+                #{item.sonRouterUids},
+                #{item.parentRouterUid},
             </trim>
             )
         </foreach>
     </insert>
-	<!-- common methods end -->
+    <!-- common methods end -->
 
     <!-- 下面的是兼容旧版本 -->
     <select id="queryListByCondition" resultMap="adminRouterResultMap">
         select
-        <include refid="Base_Column_List" />
+        <include refid="Base_Column_List"/>
         from au_admin_router
         <where>
             <if test="condition.uid != null">

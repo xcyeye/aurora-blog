@@ -25,6 +25,7 @@ import javax.validation.groups.Default;
 
 /**
  * 操作au_email_log表的controller
+ *
  * @author qsyyke
  */
 
@@ -47,7 +48,7 @@ public class EmailLogController {
     @Operation(summary = "根据uid更新邮件发送日志")
     @ModifyOperation
     @PostMapping("/updateEmailLog")
-    public int updateEmailLog(@Validated({Update.class,Default.class}) @RequestBody EmailLogPojo emailLog) throws BindException {
+    public int updateEmailLog(@Validated({Update.class, Default.class}) @RequestBody EmailLogPojo emailLog) throws BindException {
         return emailLogService.updateEmailLog(emailLog);
     }
 

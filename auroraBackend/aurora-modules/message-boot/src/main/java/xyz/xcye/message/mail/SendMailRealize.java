@@ -27,12 +27,12 @@ public class SendMailRealize {
     @Value("${spring.mail.username}")
     private String senderEmail;
 
-    public void sendSimpleMail(String to,String subject, String content) throws MailException {
+    public void sendSimpleMail(String to, String subject, String content) throws MailException {
         SimpleMailMessage message = new SimpleMailMessage();
-        message.setTo(to);//收信人
-        message.setSubject(subject);//主题
-        message.setText(content);//内容
-        message.setFrom(senderEmail);//发信人
+        message.setTo(to);// 收信人
+        message.setSubject(subject);// 主题
+        message.setText(content);// 内容
+        message.setFrom(senderEmail);// 发信人
         try {
             mailSender.send(message);
         } catch (MailException e) {
@@ -40,19 +40,19 @@ public class SendMailRealize {
         }
     }
 
-    public void sendHtmlMail(String receiverEmail,String subject,String content) throws MessagingException {
+    public void sendHtmlMail(String receiverEmail, String subject, String content) throws MessagingException {
 
-        //使用MimeMessage，MIME协议
+        // 使用MimeMessage，MIME协议
         MimeMessage message = mailSender.createMimeMessage();
-        MimeMessageHelper helper = new MimeMessageHelper(message, true,"UTF-8");
+        MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
 
-        //设置发送的内容
+        // 设置发送的内容
         helper.setFrom(senderEmail);
-        //设置接收者
+        // 设置接收者
         helper.setTo(receiverEmail);
         helper.setSubject(subject);
 
-        helper.setText(content, true);//true代表支持html
+        helper.setText(content, true);// true代表支持html
         try {
             mailSender.send(message);
         } catch (MailException e) {

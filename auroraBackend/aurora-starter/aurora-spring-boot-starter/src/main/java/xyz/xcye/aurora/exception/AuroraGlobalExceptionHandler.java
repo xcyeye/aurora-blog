@@ -24,6 +24,7 @@ public class AuroraGlobalExceptionHandler {
 
     /**
      * 参数类型校验失败
+     *
      * @param e
      * @param request
      * @return
@@ -33,25 +34,25 @@ public class AuroraGlobalExceptionHandler {
                                       HttpServletRequest request,
                                       HttpServletResponse response) {
         String requestURI = request.getRequestURI();
-        //所有的字段验证错误信息
-        List<Map<String,Object>> errorsList = new ArrayList<>();
-        //错误集合
+        // 所有的字段验证错误信息
+        List<Map<String, Object>> errorsList = new ArrayList<>();
+        // 错误集合
         BindingResult bindingResult = e.getBindingResult();
 
-        //所有没有验证成功的字段集合
+        // 所有没有验证成功的字段集合
         List<FieldError> fieldErrors = bindingResult.getFieldErrors();
 
         fieldErrors.forEach(fieldError -> {
-            Map<String,Object> filedErrorMap = new HashMap<>();
-            //验证失败的消息
+            Map<String, Object> filedErrorMap = new HashMap<>();
+            // 验证失败的消息
             String message = fieldError.getDefaultMessage();
-            //没有验证成功的字段
+            // 没有验证成功的字段
             String field = fieldError.getField();
-            //此字段在哪个类对象中
+            // 此字段在哪个类对象中
             String objectName = fieldError.getObjectName();
-            filedErrorMap.put("message",message);
-            filedErrorMap.put("errorField",field);
-            filedErrorMap.put("objectName",objectName);
+            filedErrorMap.put("message", message);
+            filedErrorMap.put("errorField", field);
+            filedErrorMap.put("objectName", objectName);
             errorsList.add(filedErrorMap);
         });
 
@@ -60,11 +61,12 @@ public class AuroraGlobalExceptionHandler {
         return new ExceptionResultEntity(
                 ResponseStatusCodeEnum.PARAM_IS_INVALID.getMessage(),
                 ResponseStatusCodeEnum.PARAM_IS_INVALID.getCode(),
-                requestURI,errorsList);
+                requestURI, errorsList);
     }
 
     /**
      * spring的参数缺失处理
+     *
      * @param exception
      * @return
      */
@@ -81,7 +83,7 @@ public class AuroraGlobalExceptionHandler {
         String message = ResponseStatusCodeEnum.PARAM_NOT_COMPLETE.getMessage() +
                 " 缺失字段:" + parameterName + " 字段类型:" + parameterType;
 
-        return new ExceptionResultEntity(message,requestURI, ResponseStatusCodeEnum.PARAM_NOT_COMPLETE.getCode());
+        return new ExceptionResultEntity(message, requestURI, ResponseStatusCodeEnum.PARAM_NOT_COMPLETE.getCode());
     }
 
     @ExceptionHandler(NullPointerException.class)
@@ -115,6 +117,7 @@ public class AuroraGlobalExceptionHandler {
 
     /**
      * 不知道的异常名称
+     *
      * @param e
      * @param request
      * @return
@@ -130,7 +133,7 @@ public class AuroraGlobalExceptionHandler {
     }
 
     private void logExceptionInfo(Exception e) {
-        log.error("错误消息: {}",e.getMessage(),e);
+        log.error("错误消息: {}", e.getMessage(), e);
     }
 
     private void commonSetting(Exception e, HttpServletResponse response) {

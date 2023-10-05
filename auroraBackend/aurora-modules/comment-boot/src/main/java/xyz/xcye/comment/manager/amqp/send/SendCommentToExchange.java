@@ -14,6 +14,7 @@ import xyz.xcye.core.util.ConvertObjectUtils;
 
 /**
  * 将新评论发送到aurora.send.comment.exchange交换机中，文章服务消费
+ *
  * @author qsyyke
  * @date Created in 2022/5/12 15:26
  */

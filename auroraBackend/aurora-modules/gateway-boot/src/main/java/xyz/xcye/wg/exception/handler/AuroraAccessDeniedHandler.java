@@ -11,6 +11,7 @@ import xyz.xcye.wg.util.SecurityResultHandler;
 
 /**
  * 访问被拒绝时处理类
+ *
  * @author qsyyke
  */
 

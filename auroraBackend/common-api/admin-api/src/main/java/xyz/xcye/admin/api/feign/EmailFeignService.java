@@ -13,7 +13,7 @@ import xyz.xcye.message.pojo.EmailPojo;
 
 @FeignClient(value = "aurora-message", contextId = "admin-aurora-email", fallback = EmailFeignHandler.class)
 public interface EmailFeignService {
-    
+
     @PostMapping("/message/email/queryByEmailNumber")
     R queryByEmailNumber(@RequestBody EmailPojo pojo);
 

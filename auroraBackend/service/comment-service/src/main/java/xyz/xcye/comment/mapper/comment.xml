@@ -23,7 +23,7 @@
         <result column="page_type" property="pageType"/>
     </resultMap>
 
-  	<sql id="Where_Condition">
+    <sql id="Where_Condition">
         <where>
             <if test="uid != null">
                 AND uid = #{uid}
@@ -80,10 +80,11 @@
                 AND page_type = #{pageType}
             </if>
         </where>
-  	</sql>
+    </sql>
 
     <sql id="Base_Column_List">
-        uid,
+        uid
+        ,
         username,
         avatar,
         site,
@@ -103,232 +104,237 @@
         page_type
     </sql>
 
-	<!-- common methods start -->
+    <!-- common methods start -->
     <!-- 新增一条数据 -->
-	<insert id="insert" parameterType="xyz.xcye.comment.po.Comment" useGeneratedKeys="true" keyProperty="uid">
+    <insert id="insert" parameterType="xyz.xcye.comment.po.Comment" useGeneratedKeys="true" keyProperty="uid">
         INSERT INTO au_comment (
-            <trim suffixOverrides=",">
-                <if test="uid != null">
-                    uid,
-                </if>
-                <if test="username != null and username != '' ">
-                    username,
-                </if>
-                <if test="avatar != null and avatar != '' ">
-                    avatar,
-                </if>
-                <if test="site != null and site != '' ">
-                    site,
-                </if>
-                <if test="email != null and email != '' ">
-                    email,
-                </if>
-                <if test="createTime != null and createTime != '' ">
-                    create_time,
-                </if>
-                <if test="updateTime != null and updateTime != '' ">
-                    update_time,
-                </if>
-                <if test="commentIp != null and commentIp != '' ">
-                    comment_ip,
-                </if>
-                <if test="operationSystemInfo != null and operationSystemInfo != '' ">
-                    operation_system_info,
-                </if>
-                <if test="showComment != null">
-                    is_show_comment,
-                </if>
-                <if test="replyCommentUid != null">
-                    reply_comment_uid,
-                </if>
-                <if test="emailNotice != null">
-                    is_email_notice,
-                </if>
-                <if test="path != null and path != '' ">
-                    path,
-                </if>
-                <if test="nextCommentUidArray != null and nextCommentUidArray != '' ">
-                    next_comment_uid_array,
-                </if>
-                <if test="content != null and content != '' ">
-                    content,
-                </if>
-                <if test="userUid != null">
-                    user_uid,
-                </if>
-                <if test="delete != null">
-                    is_delete,
-                </if>
-                <if test="pageType != null and pageType != '' ">
-                    page_type,
-                </if>
-            </trim>
+        <trim suffixOverrides=",">
+            <if test="uid != null">
+                uid,
+            </if>
+            <if test="username != null and username != '' ">
+                username,
+            </if>
+            <if test="avatar != null and avatar != '' ">
+                avatar,
+            </if>
+            <if test="site != null and site != '' ">
+                site,
+            </if>
+            <if test="email != null and email != '' ">
+                email,
+            </if>
+            <if test="createTime != null and createTime != '' ">
+                create_time,
+            </if>
+            <if test="updateTime != null and updateTime != '' ">
+                update_time,
+            </if>
+            <if test="commentIp != null and commentIp != '' ">
+                comment_ip,
+            </if>
+            <if test="operationSystemInfo != null and operationSystemInfo != '' ">
+                operation_system_info,
+            </if>
+            <if test="showComment != null">
+                is_show_comment,
+            </if>
+            <if test="replyCommentUid != null">
+                reply_comment_uid,
+            </if>
+            <if test="emailNotice != null">
+                is_email_notice,
+            </if>
+            <if test="path != null and path != '' ">
+                path,
+            </if>
+            <if test="nextCommentUidArray != null and nextCommentUidArray != '' ">
+                next_comment_uid_array,
+            </if>
+            <if test="content != null and content != '' ">
+                content,
+            </if>
+            <if test="userUid != null">
+                user_uid,
+            </if>
+            <if test="delete != null">
+                is_delete,
+            </if>
+            <if test="pageType != null and pageType != '' ">
+                page_type,
+            </if>
+        </trim>
         ) VALUES (
-            <trim suffixOverrides=",">
-                <if test="uid != null">
-                 #{uid},
-                </if>
-                <if test="username != null and username != '' ">
-                 #{username},
-                </if>
-                <if test="avatar != null and avatar != '' ">
-                 #{avatar},
-                </if>
-                <if test="site != null and site != '' ">
-                 #{site},
-                </if>
-                <if test="email != null and email != '' ">
-                 #{email},
-                </if>
-                <if test="createTime != null and createTime != '' ">
-                 #{createTime},
-                </if>
-                <if test="updateTime != null and updateTime != '' ">
-                 #{updateTime},
-                </if>
-                <if test="commentIp != null and commentIp != '' ">
-                 #{commentIp},
-                </if>
-                <if test="operationSystemInfo != null and operationSystemInfo != '' ">
-                 #{operationSystemInfo},
-                </if>
-                <if test="showComment != null">
-                 #{showComment},
-                </if>
-                <if test="replyCommentUid != null">
-                 #{replyCommentUid},
-                </if>
-                <if test="emailNotice != null">
-                 #{emailNotice},
-                </if>
-                <if test="path != null and path != '' ">
-                 #{path},
-                </if>
-                <if test="nextCommentUidArray != null and nextCommentUidArray != '' ">
-                 #{nextCommentUidArray},
-                </if>
-                <if test="content != null and content != '' ">
-                 #{content},
-                </if>
-                <if test="userUid != null">
-                 #{userUid},
-                </if>
-                <if test="delete != null">
-                 #{delete},
-                </if>
-                <if test="pageType != null and pageType != '' ">
-                 #{pageType},
-                </if>
-            </trim>
+        <trim suffixOverrides=",">
+            <if test="uid != null">
+                #{uid},
+            </if>
+            <if test="username != null and username != '' ">
+                #{username},
+            </if>
+            <if test="avatar != null and avatar != '' ">
+                #{avatar},
+            </if>
+            <if test="site != null and site != '' ">
+                #{site},
+            </if>
+            <if test="email != null and email != '' ">
+                #{email},
+            </if>
+            <if test="createTime != null and createTime != '' ">
+                #{createTime},
+            </if>
+            <if test="updateTime != null and updateTime != '' ">
+                #{updateTime},
+            </if>
+            <if test="commentIp != null and commentIp != '' ">
+                #{commentIp},
+            </if>
+            <if test="operationSystemInfo != null and operationSystemInfo != '' ">
+                #{operationSystemInfo},
+            </if>
+            <if test="showComment != null">
+                #{showComment},
+            </if>
+            <if test="replyCommentUid != null">
+                #{replyCommentUid},
+            </if>
+            <if test="emailNotice != null">
+                #{emailNotice},
+            </if>
+            <if test="path != null and path != '' ">
+                #{path},
+            </if>
+            <if test="nextCommentUidArray != null and nextCommentUidArray != '' ">
+                #{nextCommentUidArray},
+            </if>
+            <if test="content != null and content != '' ">
+                #{content},
+            </if>
+            <if test="userUid != null">
+                #{userUid},
+            </if>
+            <if test="delete != null">
+                #{delete},
+            </if>
+            <if test="pageType != null and pageType != '' ">
+                #{pageType},
+            </if>
+        </trim>
         )
-	</insert>
+    </insert>
 
     <!-- 通过主键删除数据 -->
-	<delete id="deleteById" parameterType="Long">
-        DELETE FROM au_comment
-        WHERE uid = #{uid} 
-	</delete>
+    <delete id="deleteById" parameterType="Long">
+        DELETE
+        FROM au_comment
+        WHERE uid = #{uid}
+    </delete>
 
     <!-- 根据传入参数删除数据 -->
-	<delete id="deleteByWhere" parameterType="xyz.xcye.comment.po.Comment">
+    <delete id="deleteByWhere" parameterType="xyz.xcye.comment.po.Comment">
         DELETE FROM au_comment
-        <include refid="Where_Condition" />
-	</delete>
+        <include refid="Where_Condition"/>
+    </delete>
 
     <!-- 根据id更新数据 -->
     <update id="updateById" parameterType="xyz.xcye.comment.po.Comment">
-		UPDATE au_comment
-		<set>
-			<if test="username != null and username != '' ">username = #{username},</if>
-			<if test="avatar != null and avatar != '' ">avatar = #{avatar},</if>
-			<if test="site != null and site != '' ">site = #{site},</if>
-			<if test="email != null and email != '' ">email = #{email},</if>
-			<if test="updateTime != null and updateTime != '' ">update_time = #{updateTime},</if>
-			<if test="commentIp != null and commentIp != '' ">comment_ip = #{commentIp},</if>
-			<if test="operationSystemInfo != null and operationSystemInfo != '' ">operation_system_info = #{operationSystemInfo},</if>
-			<if test="showComment != null">is_show_comment = #{showComment},</if>
-			<if test="replyCommentUid != null">reply_comment_uid = #{replyCommentUid},</if>
-			<if test="emailNotice != null">is_email_notice = #{emailNotice},</if>
-			<if test="path != null and path != '' ">path = #{path},</if>
-			<if test="nextCommentUidArray != null and nextCommentUidArray != '' ">next_comment_uid_array = #{nextCommentUidArray},</if>
-			<if test="content != null and content != '' ">content = #{content},</if>
-			<if test="userUid != null">user_uid = #{userUid},</if>
-			<if test="delete != null">is_delete = #{delete},</if>
-			<if test="pageType != null and pageType != '' ">page_type = #{pageType},</if>
-		</set>
-		WHERE
-		    uid = #{uid}
-	</update>
-
-	<!-- 根据主键查询数据  -->
-	<select id="queryById" resultMap="commentResultMap" parameterType="Long">
-        SELECT
-        <include refid="Base_Column_List" />
-  	    FROM au_comment
+        UPDATE au_comment
+        <set>
+            <if test="username != null and username != '' ">username = #{username},</if>
+            <if test="avatar != null and avatar != '' ">avatar = #{avatar},</if>
+            <if test="site != null and site != '' ">site = #{site},</if>
+            <if test="email != null and email != '' ">email = #{email},</if>
+            <if test="updateTime != null and updateTime != '' ">update_time = #{updateTime},</if>
+            <if test="commentIp != null and commentIp != '' ">comment_ip = #{commentIp},</if>
+            <if test="operationSystemInfo != null and operationSystemInfo != '' ">operation_system_info =
+                #{operationSystemInfo},
+            </if>
+            <if test="showComment != null">is_show_comment = #{showComment},</if>
+            <if test="replyCommentUid != null">reply_comment_uid = #{replyCommentUid},</if>
+            <if test="emailNotice != null">is_email_notice = #{emailNotice},</if>
+            <if test="path != null and path != '' ">path = #{path},</if>
+            <if test="nextCommentUidArray != null and nextCommentUidArray != '' ">next_comment_uid_array =
+                #{nextCommentUidArray},
+            </if>
+            <if test="content != null and content != '' ">content = #{content},</if>
+            <if test="userUid != null">user_uid = #{userUid},</if>
+            <if test="delete != null">is_delete = #{delete},</if>
+            <if test="pageType != null and pageType != '' ">page_type = #{pageType},</if>
+        </set>
         WHERE
-            uid = #{uid}
+        uid = #{uid}
+    </update>
+
+    <!-- 根据主键查询数据  -->
+    <select id="queryById" resultMap="commentResultMap" parameterType="Long">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM au_comment
+        WHERE
+        uid = #{uid}
     </select>
 
     <!-- 查询一条记录  -->
-	<select id="queryOne" resultMap="commentResultMap" parameterType="xyz.xcye.comment.po.Comment">
-         SELECT
-         <include refid="Base_Column_List" />
-  	     FROM au_comment
-         <include refid="Where_Condition" />
-         LIMIT 1
-    </select>
-
-	<!-- 根据传入参数查询数据列表  -->
-	<select id="queryListByWhere" resultMap="commentResultMap" parameterType="xyz.xcye.comment.po.Comment">
+    <select id="queryOne" resultMap="commentResultMap" parameterType="xyz.xcye.comment.po.Comment">
         SELECT
-        <include refid="Base_Column_List" />
+        <include refid="Base_Column_List"/>
         FROM au_comment
-        <include refid="Where_Condition" />
+        <include refid="Where_Condition"/>
+        LIMIT 1
     </select>
 
-	<!-- 统计符合条件的数据数量 -->
-	<select id="countByWhere" resultType="int" parameterType="xyz.xcye.comment.po.Comment">
-		SELECT COUNT(*) FROM au_comment
-		<include refid="Where_Condition" />
-	</select>
+    <!-- 根据传入参数查询数据列表  -->
+    <select id="queryListByWhere" resultMap="commentResultMap" parameterType="xyz.xcye.comment.po.Comment">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM au_comment
+        <include refid="Where_Condition"/>
+    </select>
+
+    <!-- 统计符合条件的数据数量 -->
+    <select id="countByWhere" resultType="int" parameterType="xyz.xcye.comment.po.Comment">
+        SELECT COUNT(*) FROM au_comment
+        <include refid="Where_Condition"/>
+    </select>
 
     <!-- 批量插入多条数据 -->
-	<insert id="batchInsert" parameterType="java.util.List">
+    <insert id="batchInsert" parameterType="java.util.List">
         INSERT INTO au_comment (
-        	<include refid="Base_Column_List" />
+        <include refid="Base_Column_List"/>
         ) VALUES
-        <foreach collection="list" item="item" index= "index" separator =",">
+        <foreach collection="list" item="item" index="index" separator=",">
             (
             <trim suffixOverrides=",">
-				#{item.uid},
-				#{item.username},
-				#{item.avatar},
-				#{item.site},
-				#{item.email},
-				#{item.createTime},
-				#{item.updateTime},
-				#{item.commentIp},
-				#{item.operationSystemInfo},
-				#{item.showComment},
-				#{item.replyCommentUid},
-				#{item.emailNotice},
-				#{item.path},
-				#{item.nextCommentUidArray},
-				#{item.content},
-				#{item.userUid},
-				#{item.delete},
-				#{item.pageType},
+                #{item.uid},
+                #{item.username},
+                #{item.avatar},
+                #{item.site},
+                #{item.email},
+                #{item.createTime},
+                #{item.updateTime},
+                #{item.commentIp},
+                #{item.operationSystemInfo},
+                #{item.showComment},
+                #{item.replyCommentUid},
+                #{item.emailNotice},
+                #{item.path},
+                #{item.nextCommentUidArray},
+                #{item.content},
+                #{item.userUid},
+                #{item.delete},
+                #{item.pageType},
             </trim>
             )
         </foreach>
     </insert>
-	<!-- common methods end -->
+    <!-- common methods end -->
 
-	<!-- 下面的是兼容旧版本 -->
-	<select id="queryListByCondition" resultMap="commentResultMap">
-		select
-		<include refid="Base_Column_List" />
-		from au_comment
+    <!-- 下面的是兼容旧版本 -->
+    <select id="queryListByCondition" resultMap="commentResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from au_comment
         <where>
             <if test="condition.uid != null">
                 and uid=#{condition.uid}
@@ -349,5 +355,5 @@
                 and is_show_comment=#{condition.show}
             </if>
         </where>
-	</select>
+    </select>
 </mapper>

@@ -73,6 +73,7 @@ public class StorageEmailVerifyUrlUtil {
 
     /**
      * 获取原始的值，原始的值是一个hash值
+     *
      * @param decodeStr
      * @return
      */
@@ -96,7 +97,7 @@ public class StorageEmailVerifyUrlUtil {
     }
 
     private static boolean verify(String key, String originValue, RedisTemplate<String, Object> redisTemplate,
-                           AuroraProperties.AuroraAuthProperties auroraAuthProperties, long userUid) {
+                                  AuroraProperties.AuroraAuthProperties auroraAuthProperties, long userUid) {
         String digestHex = md5.digestHex(originValue, auroraAuthProperties.getVerifySecretKey());
         String redisStorageValue = (String) redisTemplate.opsForValue().get(generateRedisKey(userUid, key));
         return redisStorageValue != null && redisStorageValue.equals(digestHex);

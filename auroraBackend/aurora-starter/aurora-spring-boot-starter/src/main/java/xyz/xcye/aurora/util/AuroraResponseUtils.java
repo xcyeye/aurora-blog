@@ -16,10 +16,11 @@ public class AuroraResponseUtils {
 
     /**
      * 设置响应头
+     *
      * @param response
      */
     public static void setContentType(HttpServletResponse response) {
-        //设置响应头
+        // 设置响应头
         MediaType applicationJson = new MediaType(MediaType.TEXT_HTML_VALUE);
         response.setContentType(applicationJson.getType());
     }

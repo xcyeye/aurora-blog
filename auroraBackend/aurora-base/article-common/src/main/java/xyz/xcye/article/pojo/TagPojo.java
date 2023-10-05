@@ -1,9 +1,9 @@
 package xyz.xcye.article.pojo;
 
-import lombok.Data;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
 import xyz.xcye.core.constant.FieldLengthConstant;
 import xyz.xcye.core.valid.Delete;
@@ -15,9 +15,9 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
 
 /**
+ * @author xcye <br/>
  * @description tag数据表的POJO <br/>
  * @date 2022-12-14 20:46:02 <br/>
- * @author xcye <br/>
  */
 
 @Data

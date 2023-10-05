@@ -12,7 +12,6 @@ import xyz.xcye.core.util.BeanUtils;
 import xyz.xcye.core.util.lambda.AssertUtils;
 import xyz.xcye.data.entity.Condition;
 import xyz.xcye.data.entity.PageData;
-import xyz.xcye.data.util.PageUtils;
 
 import java.util.List;
 import java.util.Objects;
@@ -40,7 +39,7 @@ public class PermissionService {
     }
 
     public void insertPermission(PermissionPojo permission) {
-        Objects.requireNonNull(permission,"方法路径信息不能为null");
+        Objects.requireNonNull(permission, "方法路径信息不能为null");
         // 判断path是否符合规范，必须是GET:Path这种形式 不支持中文路径
         AssertUtils.stateThrow(matchesResourcePath(permission.getPath()), () -> new PermissionException(ResponseStatusCodeEnum.PERMISSION_RESOURCE_NOT_RIGHT));
         if (judgeSimilarPermissionPath(permission.getPath())) {
@@ -50,8 +49,8 @@ public class PermissionService {
     }
 
     public void batchInsertPermission(PermissionPojo permission) {
-        Objects.requireNonNull(permission,"方法路径信息不能为null");
-        Objects.requireNonNull(permission.getPermissionList(),"方法路径信息不能为null");
+        Objects.requireNonNull(permission, "方法路径信息不能为null");
+        Objects.requireNonNull(permission.getPermissionList(), "方法路径信息不能为null");
         List<PermissionPojo> permissionList = permission.getPermissionList();
         for (PermissionPojo pojo : permissionList) {
             if (!StringUtils.hasLength(pojo.getPath())) {
@@ -76,7 +75,7 @@ public class PermissionService {
         if (StringUtils.hasLength(permission.getPath())) {
             AssertUtils.stateThrow(matchesResourcePath(permission.getPath()),
                     () -> new PermissionException(ResponseStatusCodeEnum.PERMISSION_RESOURCE_NOT_RIGHT));
-        }else {
+        } else {
             // 没有path
             permission.setPath(null);
         }
@@ -88,7 +87,7 @@ public class PermissionService {
     }
 
     private boolean matchesResourcePath(String resourcePath) {
-        return Pattern.matches(RegexEnum.REST_FUL_PATH.getRegex(),resourcePath);
+        return Pattern.matches(RegexEnum.REST_FUL_PATH.getRegex(), resourcePath);
     }
 
     public Permission queryPermissionByUid(long uid) {

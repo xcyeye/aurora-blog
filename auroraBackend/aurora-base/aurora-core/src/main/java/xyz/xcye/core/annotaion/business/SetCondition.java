@@ -10,11 +10,18 @@ import java.lang.annotation.Target;
 public @interface SetCondition {
 
     String uid() default "";
+
     String otherField() default "";
+
     String otherUid() default "";
+
     String show() default "";
+
     String status() default "";
+
     String delete() default "";
+
     String orderBy() default "";
+
     String keyword() default "";
 }

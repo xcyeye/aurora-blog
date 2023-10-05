@@ -12,7 +12,7 @@
         <result column="type_name" property="typeName"/>
     </resultMap>
 
-  	<sql id="Where_Condition">
+    <sql id="Where_Condition">
         <where>
             <if test="uid != null">
                 AND uid = #{uid}
@@ -36,10 +36,11 @@
                 AND type_name = #{typeName}
             </if>
         </where>
-  	</sql>
+    </sql>
 
     <sql id="Base_Column_List">
-        uid,
+        uid
+        ,
         template,
         create_time,
         update_time,
@@ -48,144 +49,145 @@
         type_name
     </sql>
 
-	<!-- common methods start -->
+    <!-- common methods start -->
     <!-- 新增一条数据 -->
-	<insert id="insert" parameterType="xyz.xcye.message.po.MailTemplate" useGeneratedKeys="true" keyProperty="uid">
+    <insert id="insert" parameterType="xyz.xcye.message.po.MailTemplate" useGeneratedKeys="true" keyProperty="uid">
         INSERT INTO au_mail_template (
-            <trim suffixOverrides=",">
-                <if test="uid != null">
-                    uid,
-                </if>
-                <if test="template != null and template != '' ">
-                    template,
-                </if>
-                <if test="createTime != null and createTime != '' ">
-                    create_time,
-                </if>
-                <if test="updateTime != null and updateTime != '' ">
-                    update_time,
-                </if>
-                <if test="subject != null and subject != '' ">
-                    subject,
-                </if>
-                <if test="userUid != null">
-                    user_uid,
-                </if>
-                <if test="typeName != null and typeName != '' ">
-                    type_name,
-                </if>
-            </trim>
+        <trim suffixOverrides=",">
+            <if test="uid != null">
+                uid,
+            </if>
+            <if test="template != null and template != '' ">
+                template,
+            </if>
+            <if test="createTime != null and createTime != '' ">
+                create_time,
+            </if>
+            <if test="updateTime != null and updateTime != '' ">
+                update_time,
+            </if>
+            <if test="subject != null and subject != '' ">
+                subject,
+            </if>
+            <if test="userUid != null">
+                user_uid,
+            </if>
+            <if test="typeName != null and typeName != '' ">
+                type_name,
+            </if>
+        </trim>
         ) VALUES (
-            <trim suffixOverrides=",">
-                <if test="uid != null">
-                 #{uid},
-                </if>
-                <if test="template != null and template != '' ">
-                 #{template},
-                </if>
-                <if test="createTime != null and createTime != '' ">
-                 #{createTime},
-                </if>
-                <if test="updateTime != null and updateTime != '' ">
-                 #{updateTime},
-                </if>
-                <if test="subject != null and subject != '' ">
-                 #{subject},
-                </if>
-                <if test="userUid != null">
-                 #{userUid},
-                </if>
-                <if test="typeName != null and typeName != '' ">
-                 #{typeName},
-                </if>
-            </trim>
+        <trim suffixOverrides=",">
+            <if test="uid != null">
+                #{uid},
+            </if>
+            <if test="template != null and template != '' ">
+                #{template},
+            </if>
+            <if test="createTime != null and createTime != '' ">
+                #{createTime},
+            </if>
+            <if test="updateTime != null and updateTime != '' ">
+                #{updateTime},
+            </if>
+            <if test="subject != null and subject != '' ">
+                #{subject},
+            </if>
+            <if test="userUid != null">
+                #{userUid},
+            </if>
+            <if test="typeName != null and typeName != '' ">
+                #{typeName},
+            </if>
+        </trim>
         )
-	</insert>
+    </insert>
 
     <!-- 通过主键删除数据 -->
-	<delete id="deleteById" parameterType="Long">
-        DELETE FROM au_mail_template
-        WHERE uid = #{uid} 
-	</delete>
+    <delete id="deleteById" parameterType="Long">
+        DELETE
+        FROM au_mail_template
+        WHERE uid = #{uid}
+    </delete>
 
     <!-- 根据传入参数删除数据 -->
-	<delete id="deleteByWhere" parameterType="xyz.xcye.message.po.MailTemplate">
+    <delete id="deleteByWhere" parameterType="xyz.xcye.message.po.MailTemplate">
         DELETE FROM au_mail_template
-        <include refid="Where_Condition" />
-	</delete>
+        <include refid="Where_Condition"/>
+    </delete>
 
     <!-- 根据id更新数据 -->
     <update id="updateById" parameterType="xyz.xcye.message.po.MailTemplate">
-		UPDATE au_mail_template
-		<set>
-			<if test="template != null and template != '' ">template = #{template},</if>
-			<if test="updateTime != null and updateTime != '' ">update_time = #{updateTime},</if>
-			<if test="subject != null and subject != '' ">subject = #{subject},</if>
-			<if test="userUid != null">user_uid = #{userUid},</if>
-			<if test="typeName != null and typeName != '' ">type_name = #{typeName},</if>
-		</set>
-		WHERE
-		    uid = #{uid}
-	</update>
-
-	<!-- 根据主键查询数据  -->
-	<select id="queryById" resultMap="mailTemplateResultMap" parameterType="Long">
-        SELECT
-        <include refid="Base_Column_List" />
-  	    FROM au_mail_template
+        UPDATE au_mail_template
+        <set>
+            <if test="template != null and template != '' ">template = #{template},</if>
+            <if test="updateTime != null and updateTime != '' ">update_time = #{updateTime},</if>
+            <if test="subject != null and subject != '' ">subject = #{subject},</if>
+            <if test="userUid != null">user_uid = #{userUid},</if>
+            <if test="typeName != null and typeName != '' ">type_name = #{typeName},</if>
+        </set>
         WHERE
-            uid = #{uid}
+        uid = #{uid}
+    </update>
+
+    <!-- 根据主键查询数据  -->
+    <select id="queryById" resultMap="mailTemplateResultMap" parameterType="Long">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM au_mail_template
+        WHERE
+        uid = #{uid}
     </select>
 
     <!-- 查询一条记录  -->
-	<select id="queryOne" resultMap="mailTemplateResultMap" parameterType="xyz.xcye.message.po.MailTemplate">
-         SELECT
-         <include refid="Base_Column_List" />
-  	     FROM au_mail_template
-         <include refid="Where_Condition" />
-         LIMIT 1
-    </select>
-
-	<!-- 根据传入参数查询数据列表  -->
-	<select id="queryListByWhere" resultMap="mailTemplateResultMap" parameterType="xyz.xcye.message.po.MailTemplate">
+    <select id="queryOne" resultMap="mailTemplateResultMap" parameterType="xyz.xcye.message.po.MailTemplate">
         SELECT
-        <include refid="Base_Column_List" />
+        <include refid="Base_Column_List"/>
         FROM au_mail_template
-        <include refid="Where_Condition" />
+        <include refid="Where_Condition"/>
+        LIMIT 1
     </select>
 
-	<!-- 统计符合条件的数据数量 -->
-	<select id="countByWhere" resultType="int" parameterType="xyz.xcye.message.po.MailTemplate">
-		SELECT COUNT(*) FROM au_mail_template
-		<include refid="Where_Condition" />
-	</select>
+    <!-- 根据传入参数查询数据列表  -->
+    <select id="queryListByWhere" resultMap="mailTemplateResultMap" parameterType="xyz.xcye.message.po.MailTemplate">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM au_mail_template
+        <include refid="Where_Condition"/>
+    </select>
+
+    <!-- 统计符合条件的数据数量 -->
+    <select id="countByWhere" resultType="int" parameterType="xyz.xcye.message.po.MailTemplate">
+        SELECT COUNT(*) FROM au_mail_template
+        <include refid="Where_Condition"/>
+    </select>
 
     <!-- 批量插入多条数据 -->
-	<insert id="batchInsert" parameterType="java.util.List">
+    <insert id="batchInsert" parameterType="java.util.List">
         INSERT INTO au_mail_template (
-        	<include refid="Base_Column_List" />
+        <include refid="Base_Column_List"/>
         ) VALUES
-        <foreach collection="list" item="item" index= "index" separator =",">
+        <foreach collection="list" item="item" index="index" separator=",">
             (
             <trim suffixOverrides=",">
-				#{item.uid},
-				#{item.template},
-				#{item.createTime},
-				#{item.updateTime},
-				#{item.subject},
-				#{item.userUid},
-				#{item.typeName},
+                #{item.uid},
+                #{item.template},
+                #{item.createTime},
+                #{item.updateTime},
+                #{item.subject},
+                #{item.userUid},
+                #{item.typeName},
             </trim>
             )
         </foreach>
     </insert>
-	<!-- common methods end -->
+    <!-- common methods end -->
 
-	<!-- 下面的是兼容旧版本 -->
-	<select id="queryListByCondition" resultMap="mailTemplateResultMap">
-		select
-		<include refid="Base_Column_List" />
-		from au_mail_template
+    <!-- 下面的是兼容旧版本 -->
+    <select id="queryListByCondition" resultMap="mailTemplateResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from au_mail_template
 
-	</select>
+    </select>
 </mapper>

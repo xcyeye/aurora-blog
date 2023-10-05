@@ -16,6 +16,7 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 /**
  * 这是一个用于mybatis的redis二级缓存
+ *
  * @author qsyyke
  * @date Created in 2022/5/2 13:11
  */
@@ -36,7 +37,7 @@ public class MybatisFrequentCacheAutoConfig implements Cache {
      */
     private final int minExpiredMinute = 30;
 
-    //这里使用了redis缓存，使用springboot自动注入
+    // 这里使用了redis缓存，使用springboot自动注入
     private RedisTemplate<String, Object> redisTemplate;
 
     private final String id;
@@ -108,7 +109,7 @@ public class MybatisFrequentCacheAutoConfig implements Cache {
     }
 
     private RedisTemplate<String, Object> getRedisTemplate(RedisTemplate<String, Object> redisTemplate) {
-        //由于启动期间注入失败，只能运行期间注入，这段代码可以删除
+        // 由于启动期间注入失败，只能运行期间注入，这段代码可以删除
         return Objects.requireNonNullElseGet(redisTemplate, () -> (RedisTemplate<String, Object>) SpringUtil.getBean("redisTemplate"));
     }
 }

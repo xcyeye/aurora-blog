@@ -1,21 +1,24 @@
-  package xyz.xcye.admin.controller;
+package xyz.xcye.admin.controller;
 
-  import io.swagger.v3.oas.annotations.Operation;
-  import io.swagger.v3.oas.annotations.tags.Tag;
-  import org.springframework.beans.factory.annotation.Autowired;
-  import org.springframework.validation.annotation.Validated;
-  import org.springframework.web.bind.annotation.*;
-  import xyz.xcye.admin.po.Permission;
-  import xyz.xcye.admin.pojo.PermissionPojo;
-  import xyz.xcye.admin.service.PermissionService;
-  import xyz.xcye.core.annotaion.controller.ModifyOperation;
-  import xyz.xcye.core.annotaion.controller.SelectOperation;
-  import xyz.xcye.core.valid.Insert;
-  import xyz.xcye.core.valid.Update;
-  import xyz.xcye.data.entity.Condition;
-  import xyz.xcye.data.entity.PageData;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import xyz.xcye.admin.po.Permission;
+import xyz.xcye.admin.pojo.PermissionPojo;
+import xyz.xcye.admin.service.PermissionService;
+import xyz.xcye.core.annotaion.controller.ModifyOperation;
+import xyz.xcye.core.annotaion.controller.SelectOperation;
+import xyz.xcye.core.valid.Insert;
+import xyz.xcye.core.valid.Update;
+import xyz.xcye.data.entity.Condition;
+import xyz.xcye.data.entity.PageData;
 
-  import javax.validation.groups.Default;
+import javax.validation.groups.Default;
 
 /**
  * @author qsyyke

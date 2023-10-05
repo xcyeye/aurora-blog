@@ -31,7 +31,7 @@ public class OauthServerUtils {
     }
 
     public static void setHeader(HttpServletResponse response) {
-        //设置响应头
+        // 设置响应头
         MediaType applicationJson = new MediaType(MediaType.APPLICATION_JSON, StandardCharsets.UTF_8);
         response.setContentType(applicationJson.toString());
     }

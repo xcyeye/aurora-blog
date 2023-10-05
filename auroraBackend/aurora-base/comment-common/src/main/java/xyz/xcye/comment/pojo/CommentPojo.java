@@ -18,9 +18,9 @@ import javax.validation.constraints.Pattern;
 import java.util.List;
 
 /**
+ * @author xcye <br/>
  * @description comment数据表的POJO <br/>
  * @date 2022-12-14 21:35:45 <br/>
- * @author xcye <br/>
  */
 
 @Data
@@ -58,7 +58,7 @@ public class CommentPojo {
      * 头像地址 可以为null
      * <p>length < 255</p>
      */
-    @Length(max = FieldLengthConstant.URL,message = "评论-头像地址长度不能超过{max}",groups = {Insert.class})
+    @Length(max = FieldLengthConstant.URL, message = "评论-头像地址长度不能超过{max}", groups = {Insert.class})
     private String avatar;
 
     /**
@@ -95,14 +95,14 @@ public class CommentPojo {
      * 评论者的ip 可以为null
      * <p>length < 12</p>
      */
-    @Length(max = FieldLengthConstant.IP,message = "评论-ip地址最大长度为{max}", groups = Update.class)
+    @Length(max = FieldLengthConstant.IP, message = "评论-ip地址最大长度为{max}", groups = Update.class)
     private String commentIp;
 
     /**
      * 评论者的操作系统信息 可以为null
      * <p>length < 200</p>
      */
-    @Length(max = FieldLengthConstant.OPERATION_INFO,message = "评论-操作系统信息最大长度为{max}")
+    @Length(max = FieldLengthConstant.OPERATION_INFO, message = "评论-操作系统信息最大长度为{max}")
     private String operationSystemInfo;
 
     /**

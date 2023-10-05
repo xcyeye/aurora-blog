@@ -10,15 +10,12 @@ import org.springframework.util.StringUtils;
 import org.springframework.validation.BindException;
 import xyz.xcye.amqp.comstant.AmqpQueueNameConstant;
 import xyz.xcye.amqp.config.service.MistakeMessageSendService;
-import xyz.xcye.article.po.Article;
-import xyz.xcye.article.po.Talk;
 import xyz.xcye.article.pojo.ArticlePojo;
 import xyz.xcye.article.pojo.TalkPojo;
 import xyz.xcye.article.service.ArticleService;
 import xyz.xcye.article.service.TalkService;
 import xyz.xcye.article.vo.ArticleVO;
 import xyz.xcye.article.vo.TalkVO;
-import xyz.xcye.comment.po.Comment;
 import xyz.xcye.comment.pojo.CommentPojo;
 import xyz.xcye.core.util.BeanUtils;
 import xyz.xcye.feign.config.service.MessageLogFeignService;
@@ -30,6 +27,7 @@ import java.util.stream.Stream;
 
 /**
  * 这是一个消费从评论服务发送的评论消息，修改说说或者是文章的commentUidS值，根据PageUid的值，进行选择
+ *
  * @author qsyyke
  * @date Created in 2022/5/12 19:33
  */
@@ -48,13 +46,14 @@ public class ReceiveComment {
 
     /**
      * 当某篇文章收到评论时，会向mq中发送消息，文章服务更新该篇文章的评论信息
+     *
      * @param msgJson
      * @param channel
      * @param message
      * @throws IOException
      * @throws BindException
      */
-    @RabbitListener(queues = AmqpQueueNameConstant.PAGE_COMMENT_QUEUE,ackMode = "AUTO")
+    @RabbitListener(queues = AmqpQueueNameConstant.PAGE_COMMENT_QUEUE, ackMode = "AUTO")
     private void receiveCommentConsumer(String msgJson, Channel channel, Message message) throws IOException, BindException {
         CommentPojo comment = parseComment(msgJson, channel, message);
         if (comment == null || comment.getPageUid() == null) {
@@ -87,6 +86,7 @@ public class ReceiveComment {
 
     /**
      * 从mq发送的消息中，解析出需要评论数据
+     *
      * @param json
      * @param channel
      * @param message
@@ -98,7 +98,7 @@ public class ReceiveComment {
         try {
             commentPojo = JSON.parseObject(json, CommentPojo.class);
         } catch (Exception e) {
-            mistakeMessageSendService.sendMistakeMessageToExchange(json,channel,message);
+            mistakeMessageSendService.sendMistakeMessageToExchange(json, channel, message);
             return null;
         }
         return commentPojo;
@@ -106,6 +106,7 @@ public class ReceiveComment {
 
     /**
      * 设置文章评论的uid
+     *
      * @param commentUids
      * @param uid
      * @return

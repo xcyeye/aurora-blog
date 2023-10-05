@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
-import xyz.xcye.admin.vo.UserVO;
 import xyz.xcye.auth.constant.OauthClientConfigConstant;
 import xyz.xcye.auth.po.OauthClientDetails;
 import xyz.xcye.auth.pojo.OauthClientDetailsPojo;
@@ -76,7 +75,7 @@ public class OauthClientDetailsService {
             String authorizedGrantTypes = assertAuthorizedGrantTypes(pojo);
             if (StringUtils.hasLength(authorizedGrantTypes)) {
                 pojo.setAuthorizedGrantTypes(authorizedGrantTypes);
-            }else {
+            } else {
                 pojo.setAuthorizedGrantTypes(null);
             }
         }

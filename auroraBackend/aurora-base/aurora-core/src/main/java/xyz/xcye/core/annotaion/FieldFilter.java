@@ -8,11 +8,12 @@ import java.lang.annotation.Target;
 /**
  * 这个注解是一个自定义的字段过滤注解，在返回json数据的时候，如果你让对象中的某个属性，被返回
  * 则可以在Controller的方法上，使用该注解
+ *
  * @author qsyyke
  */
 
 @Retention(RetentionPolicy.RUNTIME)
-@Target(value = {ElementType.METHOD,ElementType.TYPE})
+@Target(value = {ElementType.METHOD, ElementType.TYPE})
 public @interface FieldFilter {
     /**
      * 过滤哪个类

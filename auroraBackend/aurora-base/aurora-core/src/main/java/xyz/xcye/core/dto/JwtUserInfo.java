@@ -53,5 +53,5 @@ public class JwtUserInfo {
      */
     private String jwtToken;
 
-    private Map<String,String> requestHeadMap;
+    private Map<String, String> requestHeadMap;
 }

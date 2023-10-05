@@ -10,6 +10,7 @@ import xyz.xcye.wg.util.SecurityResultHandler;
 
 /**
  * 未登录访问需要认证的资源时处理类
+ *
  * @author qsyyke
  */
 

@@ -48,7 +48,7 @@ public class SocialService {
         // uid是自增的
         record.setUserUid(UserUtils.getCurrentUserUid());
         record.setShow(true);
-       auroraSocialService.insert(BeanUtils.copyProperties(record, Social.class));
+        auroraSocialService.insert(BeanUtils.copyProperties(record, Social.class));
     }
 
     public PageData<SocialVO> queryListSocialByCondition(Condition<Long> condition) {

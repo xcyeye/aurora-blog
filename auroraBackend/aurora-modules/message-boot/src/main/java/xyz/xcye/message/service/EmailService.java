@@ -59,9 +59,9 @@ public class EmailService {
             throw new EmailException(ResponseStatusCodeEnum.EXCEPTION_EMAIL_HAD_BINDING);
         }*/
 
-        //生成一个uid
+        // 生成一个uid
         long uid = GenerateInfoUtils.generateUid(auroraProperties.getSnowFlakeWorkerId(), auroraProperties.getSnowFlakeDatacenterId());
-        //其中user_uid应该在调用的此方法的时候，就已经赋值在email对象里面
+        // 其中user_uid应该在调用的此方法的时候，就已经赋值在email对象里面
         email.setUid(uid);
         auroraEmailService.insert(email);
     }
@@ -85,7 +85,7 @@ public class EmailService {
     }
 
     public int updateEmail(EmailPojo email) {
-        Objects.requireNonNull(email,"修改操作需要传入数据");
+        Objects.requireNonNull(email, "修改操作需要传入数据");
         return auroraEmailService.updateById(BeanUtils.copyProperties(email, Email.class));
     }
 
@@ -96,7 +96,7 @@ public class EmailService {
     public EmailVO queryEmailByUid(long uid) {
         Condition<Long> condition = new Condition<>();
         condition.setUid(uid);
-        return BeanUtils.copyProperties(auroraEmailService.queryById(uid),EmailVO.class);
+        return BeanUtils.copyProperties(auroraEmailService.queryById(uid), EmailVO.class);
     }
 
     public EmailVO queryEmailByUserUid(long userUid) {

@@ -4,7 +4,10 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import xyz.xcye.admin.pojo.SitePojo;
 import xyz.xcye.admin.service.SiteService;
 import xyz.xcye.admin.vo.SiteVO;
@@ -47,6 +50,7 @@ public class SiteController {
 
     /**
      * 通过条件查询
+     *
      * @param condition 查询参数，keyword->logo_title(不是模糊查询)
      * @return object by primary key
      */
@@ -59,6 +63,7 @@ public class SiteController {
 
     /**
      * 通过userUid查询
+     *
      * @param record
      * @return
      */

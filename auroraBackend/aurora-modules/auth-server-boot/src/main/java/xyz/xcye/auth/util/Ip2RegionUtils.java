@@ -47,13 +47,13 @@ public class Ip2RegionUtils {
         StringBuilder builder = new StringBuilder();
         IpInfo ipLocationInfo = getIpLocationInfo(ip);
         if (!"0".equals(ipLocationInfo.getCountry())) {
-           builder.append( ipLocationInfo.getCountry());
+            builder.append(ipLocationInfo.getCountry());
         }
         if (!"0".equals(ipLocationInfo.getProvince())) {
-            builder.append( ipLocationInfo.getProvince());
+            builder.append(ipLocationInfo.getProvince());
         }
         if (!"0".equals(ipLocationInfo.getCity())) {
-            builder.append( ipLocationInfo.getCity());
+            builder.append(ipLocationInfo.getCity());
         }
         return builder.toString();
     }

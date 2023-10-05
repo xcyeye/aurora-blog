@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * 记录所有controller的执行时间
+ *
  * @author qsyyke
  */
 
@@ -23,6 +24,7 @@ public class AuroraGlobalLogRequestAop {
 
     /**
      * 打印处理请求耗时
+     *
      * @param point
      * @return
      */
@@ -39,7 +41,7 @@ public class AuroraGlobalLogRequestAop {
         String methodName = signature.getMethod().getName();
         // 获取请求地址和请求类型
         String uri = "";
-        String requestMethod= "";
+        String requestMethod = "";
         if (attributes != null) {
             HttpServletRequest request = attributes.getRequest();
             uri = request.getRequestURI();

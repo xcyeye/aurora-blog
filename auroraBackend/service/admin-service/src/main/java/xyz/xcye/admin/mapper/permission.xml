@@ -10,7 +10,7 @@
         <result column="update_time" property="updateTime"/>
     </resultMap>
 
-  	<sql id="Where_Condition">
+    <sql id="Where_Condition">
         <where>
             <if test="uid != null">
                 AND uid = #{uid}
@@ -28,145 +28,147 @@
                 AND update_time = #{updateTime}
             </if>
         </where>
-  	</sql>
+    </sql>
 
     <sql id="Base_Column_List">
-        uid,
+        uid
+        ,
         name,
         path,
         create_time,
         update_time
     </sql>
 
-	<!-- common methods start -->
+    <!-- common methods start -->
     <!-- 新增一条数据 -->
-	<insert id="insert" parameterType="xyz.xcye.admin.po.Permission" useGeneratedKeys="true" keyProperty="uid">
+    <insert id="insert" parameterType="xyz.xcye.admin.po.Permission" useGeneratedKeys="true" keyProperty="uid">
         INSERT INTO au_permission (
-            <trim suffixOverrides=",">
-                <if test="uid != null">
-                    uid,
-                </if>
-                <if test="name != null and name != '' ">
-                    name,
-                </if>
-                <if test="path != null and path != '' ">
-                    path,
-                </if>
-                <if test="createTime != null and createTime != '' ">
-                    create_time,
-                </if>
-                <if test="updateTime != null and updateTime != '' ">
-                    update_time,
-                </if>
-            </trim>
+        <trim suffixOverrides=",">
+            <if test="uid != null">
+                uid,
+            </if>
+            <if test="name != null and name != '' ">
+                name,
+            </if>
+            <if test="path != null and path != '' ">
+                path,
+            </if>
+            <if test="createTime != null and createTime != '' ">
+                create_time,
+            </if>
+            <if test="updateTime != null and updateTime != '' ">
+                update_time,
+            </if>
+        </trim>
         ) VALUES (
-            <trim suffixOverrides=",">
-                <if test="uid != null">
-                 #{uid},
-                </if>
-                <if test="name != null and name != '' ">
-                 #{name},
-                </if>
-                <if test="path != null and path != '' ">
-                 #{path},
-                </if>
-                <if test="createTime != null and createTime != '' ">
-                 #{createTime},
-                </if>
-                <if test="updateTime != null and updateTime != '' ">
-                 #{updateTime},
-                </if>
-            </trim>
+        <trim suffixOverrides=",">
+            <if test="uid != null">
+                #{uid},
+            </if>
+            <if test="name != null and name != '' ">
+                #{name},
+            </if>
+            <if test="path != null and path != '' ">
+                #{path},
+            </if>
+            <if test="createTime != null and createTime != '' ">
+                #{createTime},
+            </if>
+            <if test="updateTime != null and updateTime != '' ">
+                #{updateTime},
+            </if>
+        </trim>
         )
-	</insert>
+    </insert>
 
     <!-- 通过主键删除数据 -->
-	<delete id="deleteById" parameterType="Long">
-        DELETE FROM au_permission
-        WHERE uid = #{uid} 
-	</delete>
+    <delete id="deleteById" parameterType="Long">
+        DELETE
+        FROM au_permission
+        WHERE uid = #{uid}
+    </delete>
 
     <!-- 根据传入参数删除数据 -->
-	<delete id="deleteByWhere" parameterType="xyz.xcye.admin.po.Permission">
+    <delete id="deleteByWhere" parameterType="xyz.xcye.admin.po.Permission">
         DELETE FROM au_permission
-        <include refid="Where_Condition" />
-	</delete>
+        <include refid="Where_Condition"/>
+    </delete>
 
     <!-- 根据id更新数据 -->
     <update id="updateById" parameterType="xyz.xcye.admin.po.Permission">
-		UPDATE au_permission
-		<set>
-			<if test="name != null and name != '' ">name = #{name},</if>
-			<if test="path != null and path != '' ">path = #{path},</if>
-			<if test="updateTime != null and updateTime != '' ">update_time = #{updateTime},</if>
-		</set>
-		WHERE
-		    uid = #{uid}
-	</update>
-
-	<!-- 根据主键查询数据  -->
-	<select id="queryById" resultMap="permissionResultMap" parameterType="Long">
-        SELECT
-        <include refid="Base_Column_List" />
-  	    FROM au_permission
+        UPDATE au_permission
+        <set>
+            <if test="name != null and name != '' ">name = #{name},</if>
+            <if test="path != null and path != '' ">path = #{path},</if>
+            <if test="updateTime != null and updateTime != '' ">update_time = #{updateTime},</if>
+        </set>
         WHERE
-            uid = #{uid}
+        uid = #{uid}
+    </update>
+
+    <!-- 根据主键查询数据  -->
+    <select id="queryById" resultMap="permissionResultMap" parameterType="Long">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM au_permission
+        WHERE
+        uid = #{uid}
     </select>
 
     <!-- 查询一条记录  -->
-	<select id="queryOne" resultMap="permissionResultMap" parameterType="xyz.xcye.admin.po.Permission">
-         SELECT
-         <include refid="Base_Column_List" />
-  	     FROM au_permission
-         <include refid="Where_Condition" />
-         LIMIT 1
-    </select>
-
-	<!-- 根据传入参数查询数据列表  -->
-	<select id="queryListByWhere" resultMap="permissionResultMap" parameterType="xyz.xcye.admin.po.Permission">
+    <select id="queryOne" resultMap="permissionResultMap" parameterType="xyz.xcye.admin.po.Permission">
         SELECT
-        <include refid="Base_Column_List" />
+        <include refid="Base_Column_List"/>
         FROM au_permission
-        <include refid="Where_Condition" />
+        <include refid="Where_Condition"/>
+        LIMIT 1
     </select>
 
-	<!-- 统计符合条件的数据数量 -->
-	<select id="countByWhere" resultType="int" parameterType="xyz.xcye.admin.po.Permission">
-		SELECT COUNT(*) FROM au_permission
-		<include refid="Where_Condition" />
-	</select>
+    <!-- 根据传入参数查询数据列表  -->
+    <select id="queryListByWhere" resultMap="permissionResultMap" parameterType="xyz.xcye.admin.po.Permission">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM au_permission
+        <include refid="Where_Condition"/>
+    </select>
+
+    <!-- 统计符合条件的数据数量 -->
+    <select id="countByWhere" resultType="int" parameterType="xyz.xcye.admin.po.Permission">
+        SELECT COUNT(*) FROM au_permission
+        <include refid="Where_Condition"/>
+    </select>
 
     <!-- 批量插入多条数据 -->
-	<insert id="batchInsert" parameterType="java.util.List">
+    <insert id="batchInsert" parameterType="java.util.List">
         INSERT INTO au_permission (
-        	<include refid="Base_Column_List" />
+        <include refid="Base_Column_List"/>
         ) VALUES
-        <foreach collection="list" item="item" index= "index" separator =",">
+        <foreach collection="list" item="item" index="index" separator=",">
             (
             <trim suffixOverrides=",">
-				#{item.uid},
-				#{item.name},
-				#{item.path},
-				#{item.createTime},
-				#{item.updateTime},
+                #{item.uid},
+                #{item.name},
+                #{item.path},
+                #{item.createTime},
+                #{item.updateTime},
             </trim>
             )
         </foreach>
     </insert>
-	<!-- common methods end -->
+    <!-- common methods end -->
 
     <!-- 批量删除 -->
     <delete id="batchDelete" parameterType="java.util.List">
         delete from au_permission where uid in
-        <foreach collection="list" item="id"  separator="," open="(" close=")">
+        <foreach collection="list" item="id" separator="," open="(" close=")">
             #{id}
         </foreach>
     </delete>
 
-	<!-- 下面的是兼容旧版本 -->
+    <!-- 下面的是兼容旧版本 -->
     <select id="queryListByCondition" resultMap="permissionResultMap">
         select
-        <include refid="Base_Column_List" />
+        <include refid="Base_Column_List"/>
         from au_permission
         <where>
             <if test="condition.uid != null">

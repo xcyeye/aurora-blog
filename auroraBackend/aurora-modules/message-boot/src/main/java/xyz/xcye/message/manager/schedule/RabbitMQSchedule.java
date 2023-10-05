@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 
 /**
  * 定时向数据库中查询那些没有被消费的数据，重新发送
+ *
  * @author qsyyke
  */
 

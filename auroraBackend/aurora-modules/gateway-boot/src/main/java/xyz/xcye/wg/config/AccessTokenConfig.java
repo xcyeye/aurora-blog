@@ -30,7 +30,7 @@ public class AccessTokenConfig {
      */
     @Bean
     public TokenStore tokenStore() {
-        //使用JwtTokenStore生成JWT令牌
+        // 使用JwtTokenStore生成JWT令牌
         return new JwtTokenStore(jwtAccessTokenConverter());
     }
 
@@ -39,7 +39,7 @@ public class AccessTokenConfig {
      * TokenEnhancer的子类，在JWT编码的令牌值和OAuth身份验证信息之间进行转换。
      */
     @Bean
-    public JwtAccessTokenConverter jwtAccessTokenConverter(){
+    public JwtAccessTokenConverter jwtAccessTokenConverter() {
         JwtAccessTokenConverter converter = new JwtAccessTokenEnhancer();
         // 设置秘钥
         converter.setSigningKey(secretKey);

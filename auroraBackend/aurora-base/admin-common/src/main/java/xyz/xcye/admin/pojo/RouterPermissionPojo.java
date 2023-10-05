@@ -8,9 +8,9 @@ import lombok.NoArgsConstructor;
 import java.util.List;
 
 /**
+ * @author xcye <br/>
  * @description router_permission数据表的POJO <br/>
  * @date 2022-12-30 22:23:42 <br/>
- * @author xcye <br/>
  */
 
 @Data
@@ -19,19 +19,19 @@ import java.util.List;
 public class RouterPermissionPojo {
 
     /**
-     * 
+     *
      */
     @Schema(title = "")
     private Long uid;
 
     /**
-     * 
+     *
      */
     @Schema(title = "")
     private Long adminRouterUid;
 
     /**
-     * 
+     *
      */
     @Schema(title = "")
     private Long permissionUid;

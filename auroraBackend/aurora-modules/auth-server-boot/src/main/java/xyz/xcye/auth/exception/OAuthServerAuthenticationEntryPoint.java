@@ -14,6 +14,7 @@ import java.io.IOException;
 /**
  * 自定义AuthenticationEntryPoint，用于
  * clientId，账号，密码等出错处理类
+ *
  * @author qsyyke
  * @date Created in 2022/5/4 13:02
  */

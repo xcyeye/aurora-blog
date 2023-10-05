@@ -3,6 +3,7 @@ package xyz.xcye.core.enums;
 
 /**
  * 正则表达式的枚举，存放所有需要的正则表达式
+ *
  * @author qsyyke
  */
 

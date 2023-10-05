@@ -16,7 +16,7 @@
         <result column="delete_time" property="deleteTime"/>
     </resultMap>
 
-  	<sql id="Where_Condition">
+    <sql id="Where_Condition">
         <where>
             <if test="uid != null">
                 AND uid = #{uid}
@@ -52,10 +52,11 @@
                 AND delete_time = #{deleteTime}
             </if>
         </where>
-  	</sql>
+    </sql>
 
     <sql id="Base_Column_List">
-        uid,
+        uid
+        ,
         user_uid,
         file_name,
         size,
@@ -68,176 +69,177 @@
         delete_time
     </sql>
 
-	<!-- common methods start -->
+    <!-- common methods start -->
     <!-- 新增一条数据 -->
-	<insert id="insert" parameterType="xyz.xcye.file.po.File" useGeneratedKeys="true" keyProperty="uid">
+    <insert id="insert" parameterType="xyz.xcye.file.po.File" useGeneratedKeys="true" keyProperty="uid">
         INSERT INTO au_file (
-            <trim suffixOverrides=",">
-                <if test="uid != null">
-                    uid,
-                </if>
-                <if test="userUid != null">
-                    user_uid,
-                </if>
-                <if test="fileName != null and fileName != '' ">
-                    file_name,
-                </if>
-                <if test="size != null">
-                    size,
-                </if>
-                <if test="summary != null and summary != '' ">
-                    summary,
-                </if>
-                <if test="path != null and path != '' ">
-                    path,
-                </if>
-                <if test="storageMode != null">
-                    storage_mode,
-                </if>
-                <if test="storagePath != null and storagePath != '' ">
-                    storage_path,
-                </if>
-                <if test="delete != null">
-                    is_delete,
-                </if>
-                <if test="createTime != null and createTime != '' ">
-                    create_time,
-                </if>
-                <if test="deleteTime != null and deleteTime != '' ">
-                    delete_time,
-                </if>
-            </trim>
+        <trim suffixOverrides=",">
+            <if test="uid != null">
+                uid,
+            </if>
+            <if test="userUid != null">
+                user_uid,
+            </if>
+            <if test="fileName != null and fileName != '' ">
+                file_name,
+            </if>
+            <if test="size != null">
+                size,
+            </if>
+            <if test="summary != null and summary != '' ">
+                summary,
+            </if>
+            <if test="path != null and path != '' ">
+                path,
+            </if>
+            <if test="storageMode != null">
+                storage_mode,
+            </if>
+            <if test="storagePath != null and storagePath != '' ">
+                storage_path,
+            </if>
+            <if test="delete != null">
+                is_delete,
+            </if>
+            <if test="createTime != null and createTime != '' ">
+                create_time,
+            </if>
+            <if test="deleteTime != null and deleteTime != '' ">
+                delete_time,
+            </if>
+        </trim>
         ) VALUES (
-            <trim suffixOverrides=",">
-                <if test="uid != null">
-                 #{uid},
-                </if>
-                <if test="userUid != null">
-                 #{userUid},
-                </if>
-                <if test="fileName != null and fileName != '' ">
-                 #{fileName},
-                </if>
-                <if test="size != null">
-                 #{size},
-                </if>
-                <if test="summary != null and summary != '' ">
-                 #{summary},
-                </if>
-                <if test="path != null and path != '' ">
-                 #{path},
-                </if>
-                <if test="storageMode != null">
-                 #{storageMode},
-                </if>
-                <if test="storagePath != null and storagePath != '' ">
-                 #{storagePath},
-                </if>
-                <if test="delete != null">
-                 #{delete},
-                </if>
-                <if test="createTime != null and createTime != '' ">
-                 #{createTime},
-                </if>
-                <if test="deleteTime != null and deleteTime != '' ">
-                 #{deleteTime},
-                </if>
-            </trim>
+        <trim suffixOverrides=",">
+            <if test="uid != null">
+                #{uid},
+            </if>
+            <if test="userUid != null">
+                #{userUid},
+            </if>
+            <if test="fileName != null and fileName != '' ">
+                #{fileName},
+            </if>
+            <if test="size != null">
+                #{size},
+            </if>
+            <if test="summary != null and summary != '' ">
+                #{summary},
+            </if>
+            <if test="path != null and path != '' ">
+                #{path},
+            </if>
+            <if test="storageMode != null">
+                #{storageMode},
+            </if>
+            <if test="storagePath != null and storagePath != '' ">
+                #{storagePath},
+            </if>
+            <if test="delete != null">
+                #{delete},
+            </if>
+            <if test="createTime != null and createTime != '' ">
+                #{createTime},
+            </if>
+            <if test="deleteTime != null and deleteTime != '' ">
+                #{deleteTime},
+            </if>
+        </trim>
         )
-	</insert>
+    </insert>
 
     <!-- 通过主键删除数据 -->
-	<delete id="deleteById" parameterType="Long">
-        DELETE FROM au_file
-        WHERE uid = #{uid} 
-	</delete>
+    <delete id="deleteById" parameterType="Long">
+        DELETE
+        FROM au_file
+        WHERE uid = #{uid}
+    </delete>
 
     <!-- 根据传入参数删除数据 -->
-	<delete id="deleteByWhere" parameterType="xyz.xcye.file.po.File">
+    <delete id="deleteByWhere" parameterType="xyz.xcye.file.po.File">
         DELETE FROM au_file
-        <include refid="Where_Condition" />
-	</delete>
+        <include refid="Where_Condition"/>
+    </delete>
 
     <!-- 根据id更新数据 -->
     <update id="updateById" parameterType="xyz.xcye.file.po.File">
-		UPDATE au_file
-		<set>
-			<if test="userUid != null">user_uid = #{userUid},</if>
-			<if test="fileName != null and fileName != '' ">file_name = #{fileName},</if>
-			<if test="size != null">size = #{size},</if>
-			<if test="summary != null and summary != '' ">summary = #{summary},</if>
-			<if test="path != null and path != '' ">path = #{path},</if>
-			<if test="storageMode != null">storage_mode = #{storageMode},</if>
-			<if test="storagePath != null and storagePath != '' ">storage_path = #{storagePath},</if>
-			<if test="delete != null">is_delete = #{delete},</if>
-			<if test="deleteTime != null and deleteTime != '' ">delete_time = #{deleteTime},</if>
-		</set>
-		WHERE
-		    uid = #{uid}
-	</update>
-
-	<!-- 根据主键查询数据  -->
-	<select id="queryById" resultMap="fileResultMap" parameterType="Long">
-        SELECT
-        <include refid="Base_Column_List" />
-  	    FROM au_file
+        UPDATE au_file
+        <set>
+            <if test="userUid != null">user_uid = #{userUid},</if>
+            <if test="fileName != null and fileName != '' ">file_name = #{fileName},</if>
+            <if test="size != null">size = #{size},</if>
+            <if test="summary != null and summary != '' ">summary = #{summary},</if>
+            <if test="path != null and path != '' ">path = #{path},</if>
+            <if test="storageMode != null">storage_mode = #{storageMode},</if>
+            <if test="storagePath != null and storagePath != '' ">storage_path = #{storagePath},</if>
+            <if test="delete != null">is_delete = #{delete},</if>
+            <if test="deleteTime != null and deleteTime != '' ">delete_time = #{deleteTime},</if>
+        </set>
         WHERE
-            uid = #{uid}
+        uid = #{uid}
+    </update>
+
+    <!-- 根据主键查询数据  -->
+    <select id="queryById" resultMap="fileResultMap" parameterType="Long">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM au_file
+        WHERE
+        uid = #{uid}
     </select>
 
     <!-- 查询一条记录  -->
-	<select id="queryOne" resultMap="fileResultMap" parameterType="xyz.xcye.file.po.File">
-         SELECT
-         <include refid="Base_Column_List" />
-  	     FROM au_file
-         <include refid="Where_Condition" />
-         LIMIT 1
-    </select>
-
-	<!-- 根据传入参数查询数据列表  -->
-	<select id="queryListByWhere" resultMap="fileResultMap" parameterType="xyz.xcye.file.po.File">
+    <select id="queryOne" resultMap="fileResultMap" parameterType="xyz.xcye.file.po.File">
         SELECT
-        <include refid="Base_Column_List" />
+        <include refid="Base_Column_List"/>
         FROM au_file
-        <include refid="Where_Condition" />
+        <include refid="Where_Condition"/>
+        LIMIT 1
     </select>
 
-	<!-- 统计符合条件的数据数量 -->
-	<select id="countByWhere" resultType="int" parameterType="xyz.xcye.file.po.File">
-		SELECT COUNT(*) FROM au_file
-		<include refid="Where_Condition" />
-	</select>
+    <!-- 根据传入参数查询数据列表  -->
+    <select id="queryListByWhere" resultMap="fileResultMap" parameterType="xyz.xcye.file.po.File">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM au_file
+        <include refid="Where_Condition"/>
+    </select>
+
+    <!-- 统计符合条件的数据数量 -->
+    <select id="countByWhere" resultType="int" parameterType="xyz.xcye.file.po.File">
+        SELECT COUNT(*) FROM au_file
+        <include refid="Where_Condition"/>
+    </select>
 
     <!-- 批量插入多条数据 -->
-	<insert id="batchInsert" parameterType="java.util.List">
+    <insert id="batchInsert" parameterType="java.util.List">
         INSERT INTO au_file (
-        	<include refid="Base_Column_List" />
+        <include refid="Base_Column_List"/>
         ) VALUES
-        <foreach collection="list" item="item" index= "index" separator =",">
+        <foreach collection="list" item="item" index="index" separator=",">
             (
             <trim suffixOverrides=",">
-				#{item.uid},
-				#{item.userUid},
-				#{item.fileName},
-				#{item.size},
-				#{item.summary},
-				#{item.path},
-				#{item.storageMode},
-				#{item.storagePath},
-				#{item.delete},
-				#{item.createTime},
-				#{item.deleteTime},
+                #{item.uid},
+                #{item.userUid},
+                #{item.fileName},
+                #{item.size},
+                #{item.summary},
+                #{item.path},
+                #{item.storageMode},
+                #{item.storagePath},
+                #{item.delete},
+                #{item.createTime},
+                #{item.deleteTime},
             </trim>
             )
         </foreach>
     </insert>
-	<!-- common methods end -->
+    <!-- common methods end -->
 
-	<!-- 下面的是兼容旧版本 -->
-	<select id="queryListByCondition" resultMap="fileResultMap">
-		select
-		<include refid="Base_Column_List" />
-		from au_file
+    <!-- 下面的是兼容旧版本 -->
+    <select id="queryListByCondition" resultMap="fileResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from au_file
         <where>
             <if test="condition.uid != null">
                 and uid=#{condition.uid}
@@ -258,5 +260,5 @@
                 and is_delete=#{condition.delete}
             </if>
         </where>
-	</select>
+    </select>
 </mapper>

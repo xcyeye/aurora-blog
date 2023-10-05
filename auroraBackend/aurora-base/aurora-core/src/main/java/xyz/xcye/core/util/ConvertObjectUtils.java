@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 
 /**
  * 将一个对象转换成json格式的字符串工具类
+ *
  * @author qsyyke
  */
 
@@ -21,7 +22,7 @@ public class ConvertObjectUtils {
         return json;
     }
 
-    public static  <T> T objConvertOther(Object obj, Class<T> target) {
+    public static <T> T objConvertOther(Object obj, Class<T> target) {
         String json = "";
         try {
             json = JSON.toJSONString(obj);

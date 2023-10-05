@@ -27,12 +27,12 @@ public class EmailLogService {
     private AuroraEmailLogService auroraEmailLogService;
 
     public void insertEmailLog(EmailLogPojo emailLog) {
-        //因为au_email_log表中的uid是自增的，可以不用设置uid
+        // 因为au_email_log表中的uid是自增的，可以不用设置uid
         auroraEmailLogService.insert(BeanUtils.copyProperties(emailLog, EmailLog.class));
     }
 
     public int updateEmailLog(EmailLogPojo emailLog) throws BindException {
-        //参数验证
+        // 参数验证
         ValidationUtils.valid(emailLog, Update.class, Default.class);
         return auroraEmailLogService.updateById(BeanUtils.copyProperties(emailLog, EmailLog.class));
     }
@@ -42,8 +42,8 @@ public class EmailLogService {
     }
 
     public PageData<EmailLogVO> queryListEmailLogByCondition(Condition<Long> condition) {
-        PageHelper.startPage(condition.getPageNum(),condition.getPageSize(),condition.getOrderBy());
-        return PageUtils.copyPageDataResult(auroraEmailLogService.queryListByCondition(condition),EmailLogVO.class);
+        PageHelper.startPage(condition.getPageNum(), condition.getPageSize(), condition.getOrderBy());
+        return PageUtils.copyPageDataResult(auroraEmailLogService.queryListByCondition(condition), EmailLogVO.class);
     }
 
     public int queryTotalEmailLogCount(EmailLogPojo pojo) {

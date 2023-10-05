@@ -14,7 +14,7 @@
         <result column="update_time" property="updateTime"/>
     </resultMap>
 
-  	<sql id="Where_Condition">
+    <sql id="Where_Condition">
         <where>
             <if test="uid != null">
                 AND uid = #{uid}
@@ -44,10 +44,11 @@
                 AND update_time = #{updateTime}
             </if>
         </where>
-  	</sql>
+    </sql>
 
     <sql id="Base_Column_List">
-        uid,
+        uid
+        ,
         user_uid,
         email_host,
         email_password,
@@ -58,160 +59,161 @@
         update_time
     </sql>
 
-	<!-- common methods start -->
+    <!-- common methods start -->
     <!-- 新增一条数据 -->
-	<insert id="insert" parameterType="xyz.xcye.message.po.Email" useGeneratedKeys="true" keyProperty="uid">
+    <insert id="insert" parameterType="xyz.xcye.message.po.Email" useGeneratedKeys="true" keyProperty="uid">
         INSERT INTO au_email (
-            <trim suffixOverrides=",">
-                <if test="uid != null">
-                    uid,
-                </if>
-                <if test="userUid != null">
-                    user_uid,
-                </if>
-                <if test="emailHost != null and emailHost != '' ">
-                    email_host,
-                </if>
-                <if test="emailPassword != null and emailPassword != '' ">
-                    email_password,
-                </if>
-                <if test="protocol != null and protocol != '' ">
-                    protocol,
-                </if>
-                <if test="email != null and email != '' ">
-                    email,
-                </if>
-                <if test="port != null">
-                    port,
-                </if>
-                <if test="createTime != null and createTime != '' ">
-                    create_time,
-                </if>
-                <if test="updateTime != null and updateTime != '' ">
-                    update_time,
-                </if>
-            </trim>
+        <trim suffixOverrides=",">
+            <if test="uid != null">
+                uid,
+            </if>
+            <if test="userUid != null">
+                user_uid,
+            </if>
+            <if test="emailHost != null and emailHost != '' ">
+                email_host,
+            </if>
+            <if test="emailPassword != null and emailPassword != '' ">
+                email_password,
+            </if>
+            <if test="protocol != null and protocol != '' ">
+                protocol,
+            </if>
+            <if test="email != null and email != '' ">
+                email,
+            </if>
+            <if test="port != null">
+                port,
+            </if>
+            <if test="createTime != null and createTime != '' ">
+                create_time,
+            </if>
+            <if test="updateTime != null and updateTime != '' ">
+                update_time,
+            </if>
+        </trim>
         ) VALUES (
-            <trim suffixOverrides=",">
-                <if test="uid != null">
-                 #{uid},
-                </if>
-                <if test="userUid != null">
-                 #{userUid},
-                </if>
-                <if test="emailHost != null and emailHost != '' ">
-                 #{emailHost},
-                </if>
-                <if test="emailPassword != null and emailPassword != '' ">
-                 #{emailPassword},
-                </if>
-                <if test="protocol != null and protocol != '' ">
-                 #{protocol},
-                </if>
-                <if test="email != null and email != '' ">
-                 #{email},
-                </if>
-                <if test="port != null">
-                 #{port},
-                </if>
-                <if test="createTime != null and createTime != '' ">
-                 #{createTime},
-                </if>
-                <if test="updateTime != null and updateTime != '' ">
-                 #{updateTime},
-                </if>
-            </trim>
+        <trim suffixOverrides=",">
+            <if test="uid != null">
+                #{uid},
+            </if>
+            <if test="userUid != null">
+                #{userUid},
+            </if>
+            <if test="emailHost != null and emailHost != '' ">
+                #{emailHost},
+            </if>
+            <if test="emailPassword != null and emailPassword != '' ">
+                #{emailPassword},
+            </if>
+            <if test="protocol != null and protocol != '' ">
+                #{protocol},
+            </if>
+            <if test="email != null and email != '' ">
+                #{email},
+            </if>
+            <if test="port != null">
+                #{port},
+            </if>
+            <if test="createTime != null and createTime != '' ">
+                #{createTime},
+            </if>
+            <if test="updateTime != null and updateTime != '' ">
+                #{updateTime},
+            </if>
+        </trim>
         )
-	</insert>
+    </insert>
 
     <!-- 通过主键删除数据 -->
-	<delete id="deleteById" parameterType="Long">
-        DELETE FROM au_email
-        WHERE uid = #{uid} 
-	</delete>
+    <delete id="deleteById" parameterType="Long">
+        DELETE
+        FROM au_email
+        WHERE uid = #{uid}
+    </delete>
 
     <!-- 根据传入参数删除数据 -->
-	<delete id="deleteByWhere" parameterType="xyz.xcye.message.po.Email">
+    <delete id="deleteByWhere" parameterType="xyz.xcye.message.po.Email">
         DELETE FROM au_email
-        <include refid="Where_Condition" />
-	</delete>
+        <include refid="Where_Condition"/>
+    </delete>
 
     <!-- 根据id更新数据 -->
     <update id="updateById" parameterType="xyz.xcye.message.po.Email">
-		UPDATE au_email
-		<set>
-			<if test="userUid != null">user_uid = #{userUid},</if>
-			<if test="emailHost != null and emailHost != '' ">email_host = #{emailHost},</if>
-			<if test="emailPassword != null and emailPassword != '' ">email_password = #{emailPassword},</if>
-			<if test="protocol != null and protocol != '' ">protocol = #{protocol},</if>
-			<if test="email != null and email != '' ">email = #{email},</if>
-			<if test="port != null">port = #{port},</if>
-			<if test="updateTime != null and updateTime != '' ">update_time = #{updateTime},</if>
-		</set>
-		WHERE
-		    uid = #{uid}
-	</update>
-
-	<!-- 根据主键查询数据  -->
-	<select id="queryById" resultMap="emailResultMap" parameterType="Long">
-        SELECT
-        <include refid="Base_Column_List" />
-  	    FROM au_email
+        UPDATE au_email
+        <set>
+            <if test="userUid != null">user_uid = #{userUid},</if>
+            <if test="emailHost != null and emailHost != '' ">email_host = #{emailHost},</if>
+            <if test="emailPassword != null and emailPassword != '' ">email_password = #{emailPassword},</if>
+            <if test="protocol != null and protocol != '' ">protocol = #{protocol},</if>
+            <if test="email != null and email != '' ">email = #{email},</if>
+            <if test="port != null">port = #{port},</if>
+            <if test="updateTime != null and updateTime != '' ">update_time = #{updateTime},</if>
+        </set>
         WHERE
-            uid = #{uid}
+        uid = #{uid}
+    </update>
+
+    <!-- 根据主键查询数据  -->
+    <select id="queryById" resultMap="emailResultMap" parameterType="Long">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM au_email
+        WHERE
+        uid = #{uid}
     </select>
 
     <!-- 查询一条记录  -->
-	<select id="queryOne" resultMap="emailResultMap" parameterType="xyz.xcye.message.po.Email">
-         SELECT
-         <include refid="Base_Column_List" />
-  	     FROM au_email
-         <include refid="Where_Condition" />
-         LIMIT 1
-    </select>
-
-	<!-- 根据传入参数查询数据列表  -->
-	<select id="queryListByWhere" resultMap="emailResultMap" parameterType="xyz.xcye.message.po.Email">
+    <select id="queryOne" resultMap="emailResultMap" parameterType="xyz.xcye.message.po.Email">
         SELECT
-        <include refid="Base_Column_List" />
+        <include refid="Base_Column_List"/>
         FROM au_email
-        <include refid="Where_Condition" />
+        <include refid="Where_Condition"/>
+        LIMIT 1
     </select>
 
-	<!-- 统计符合条件的数据数量 -->
-	<select id="countByWhere" resultType="int" parameterType="xyz.xcye.message.po.Email">
-		SELECT COUNT(*) FROM au_email
-		<include refid="Where_Condition" />
-	</select>
+    <!-- 根据传入参数查询数据列表  -->
+    <select id="queryListByWhere" resultMap="emailResultMap" parameterType="xyz.xcye.message.po.Email">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM au_email
+        <include refid="Where_Condition"/>
+    </select>
+
+    <!-- 统计符合条件的数据数量 -->
+    <select id="countByWhere" resultType="int" parameterType="xyz.xcye.message.po.Email">
+        SELECT COUNT(*) FROM au_email
+        <include refid="Where_Condition"/>
+    </select>
 
     <!-- 批量插入多条数据 -->
-	<insert id="batchInsert" parameterType="java.util.List">
+    <insert id="batchInsert" parameterType="java.util.List">
         INSERT INTO au_email (
-        	<include refid="Base_Column_List" />
+        <include refid="Base_Column_List"/>
         ) VALUES
-        <foreach collection="list" item="item" index= "index" separator =",">
+        <foreach collection="list" item="item" index="index" separator=",">
             (
             <trim suffixOverrides=",">
-				#{item.uid},
-				#{item.userUid},
-				#{item.emailHost},
-				#{item.emailPassword},
-				#{item.protocol},
-				#{item.email},
-				#{item.port},
-				#{item.createTime},
-				#{item.updateTime},
+                #{item.uid},
+                #{item.userUid},
+                #{item.emailHost},
+                #{item.emailPassword},
+                #{item.protocol},
+                #{item.email},
+                #{item.port},
+                #{item.createTime},
+                #{item.updateTime},
             </trim>
             )
         </foreach>
     </insert>
-	<!-- common methods end -->
+    <!-- common methods end -->
 
-	<!-- 下面的是兼容旧版本 -->
-	<select id="queryListByCondition" resultMap="emailResultMap">
-		select
-		<include refid="Base_Column_List" />
-		from au_email
+    <!-- 下面的是兼容旧版本 -->
+    <select id="queryListByCondition" resultMap="emailResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from au_email
         <where>
             <if test="condition.uid != null">
                 and uid=#{condition.uid}
@@ -226,5 +228,5 @@
                 and email like concat('%', #{condition.keyword}, '%')
             </if>
         </where>
-	</select>
+    </select>
 </mapper>

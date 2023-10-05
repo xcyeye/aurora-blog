@@ -23,6 +23,7 @@ import java.util.stream.Collectors;
 
 /**
  * 加载UserDetails的一个缓存
+ *
  * @author qsyyke
  * @date Created in 2022/5/14 17:21
  */
@@ -44,9 +45,9 @@ public class AuroraUserDetailsCache implements UserCache {
         String[] authorities = null;
         if (grantedAuthorities != null) {
             authorities = grantedAuthorities.stream()
-                .map(obj -> (String) obj.get("authority"))
-                .collect(Collectors.joining(","))
-                .split(",");
+                    .map(obj -> (String) obj.get("authority"))
+                    .collect(Collectors.joining(","))
+                    .split(",");
         }
         String[] finalAuthorities = authorities;
         Optional.ofNullable(securityUserDetails)

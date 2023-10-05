@@ -38,6 +38,7 @@ import java.util.stream.Stream;
  * 自定义鉴权逻辑处理类 在这里判断用户的账户是否过期等等操作,这个类的执行，在登录的时候，不会执行，只有登录成功或者没有登录的时候，进行鉴权
  * <p>最终如果返回new AuthorizationDecision(true)，则鉴权成功</p>
  * <p>返回new AuthorizationDecision(false)，则鉴权失败</p>
+ *
  * @author qsyyke
  */
 
@@ -67,10 +68,10 @@ public class AuroraReactiveAuthorizationManager implements ReactiveAuthorization
         // 将当前的请求方法和uri组装成一个restFul风格的地址
         String restFulPath = method + ":" + uri.getPath();
 
-        exchange.getResponse().getHeaders().add("Access-Control-Allow-Origin","*");
-        exchange.getResponse().getHeaders().add("Access-Control-Allow-Methods","GET, POST, OPTIONS");
-        exchange.getResponse().getHeaders().add("Access-Control-Allow-Credentials","true");
-        exchange.getResponse().getHeaders().add("Access-Control-Allow-Headers","*");
+        exchange.getResponse().getHeaders().add("Access-Control-Allow-Origin", "*");
+        exchange.getResponse().getHeaders().add("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
+        exchange.getResponse().getHeaders().add("Access-Control-Allow-Credentials", "true");
+        exchange.getResponse().getHeaders().add("Access-Control-Allow-Headers", "*");
 
         // 白名单监测
         if (isWhiteUrl(restFulPath)) {
@@ -122,13 +123,13 @@ public class AuroraReactiveAuthorizationManager implements ReactiveAuthorization
                 // 获取认证后的全部权限
                 .flatMapIterable(Authentication::getAuthorities)
                 .map(GrantedAuthority::getAuthority)
-                //如果权限包含则判断为true
-                .any(authority->{
+                // 如果权限包含则判断为true
+                .any(authority -> {
                     // 超级管理员直接放行
                     if (OauthJwtConstant.SUPER_ADMINISTRATOR_ROLE_NAME.equals(authority)) {
                         return true;
                     }
-                    //其他必须要判断角色是否存在交集
+                    // 其他必须要判断角色是否存在交集
                     return CollectionUtil.isNotEmpty(roleList) && roleList.contains(authority);
                 })
                 .map(AuthorizationDecision::new)

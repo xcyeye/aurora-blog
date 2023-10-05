@@ -11,7 +11,7 @@ import java.util.List;
 
 @Slf4j
 public class BeanUtils {
-    public static <T,S> List<T> copyList(List<S> sourceList, Class<T> target) {
+    public static <T, S> List<T> copyList(List<S> sourceList, Class<T> target) {
         if (sourceList.isEmpty() || target == null) {
             return new ArrayList<>();
         }
@@ -20,30 +20,30 @@ public class BeanUtils {
             T t = null;
             try {
                 t = target.newInstance();
-                org.springframework.beans.BeanUtils.copyProperties(source,t);
+                org.springframework.beans.BeanUtils.copyProperties(source, t);
                 copyBeanList.add(t);
             } catch (InstantiationException | IllegalAccessException e) {
-                log.error("拷贝bean出现异常{}",e.getMessage(),e);
+                log.error("拷贝bean出现异常{}", e.getMessage(), e);
             }
         });
         return copyBeanList;
     }
 
-    public static <T> T copyProperties(Object source,Class<T> target) {
+    public static <T> T copyProperties(Object source, Class<T> target) {
         if (source == null) {
             return null;
         }
         T t = null;
         try {
             t = target.newInstance();
-            org.springframework.beans.BeanUtils.copyProperties(source,t);
+            org.springframework.beans.BeanUtils.copyProperties(source, t);
         } catch (InstantiationException | IllegalAccessException e) {
-            log.error("拷贝bean出现异常{}",e.getMessage(),e);
+            log.error("拷贝bean出现异常{}", e.getMessage(), e);
         }
         return t;
     }
 
-    public static <T,S> T getSingleObjFromList(List<S> objList, Class<T> target) {
+    public static <T, S> T getSingleObjFromList(List<S> objList, Class<T> target) {
         if (objList.isEmpty()) {
             return null;
         }

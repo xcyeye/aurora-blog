@@ -39,7 +39,7 @@ public class AuroraGlobalQueryConditionAop {
         RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
         HttpServletRequest request = null;
         if (requestAttributes != null) {
-         request = (HttpServletRequest) requestAttributes.resolveReference(RequestAttributes.REFERENCE_REQUEST);
+            request = (HttpServletRequest) requestAttributes.resolveReference(RequestAttributes.REFERENCE_REQUEST);
         }
         if (request != null) {
             // 如果不是从后端发起的请求，从前端发起的话，请求头中会携带aurora_page_web，直接放行
@@ -106,7 +106,7 @@ public class AuroraGlobalQueryConditionAop {
                         condition.setPageSize(convertCondition.getPageSize());
                         condition.setOrderBy(convertCondition.getOrderBy());
                         condition.setOtherField(convertCondition.getOtherField());
-                    }else {
+                    } else {
                         if (userUid != null) {
                             condition.setOtherUid(userUid);
                         }

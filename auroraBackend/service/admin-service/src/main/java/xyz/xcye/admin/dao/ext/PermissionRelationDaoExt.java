@@ -18,6 +18,7 @@ import java.util.List;
 public interface PermissionRelationDaoExt {
     /**
      * 根据用户uid，加载对应的角色-权限信息，map集合形式为[ROLE_admin,GET:http://aurora.xcye.xyz]
+     *
      * @param userUid
      * @return
      */
@@ -25,6 +26,7 @@ public interface PermissionRelationDaoExt {
 
     /**
      * 根据角色名称，加载对应的角色-权限信息，map集合形式为[ROLE_admin,GET:http://aurora.xcye.xyz]
+     *
      * @param roleName
      * @return
      */
@@ -34,6 +36,7 @@ public interface PermissionRelationDaoExt {
 
     /**
      * 加载所有的角色-权限关系信息
+     *
      * @return
      */
     List<RolePermissionDTO> loadAllRolePermission(@Param("condition") Condition condition);
@@ -42,6 +45,7 @@ public interface PermissionRelationDaoExt {
 
     /**
      * 根据permissionPath，查询哪些角色可以访问
+     *
      * @param permissionPath
      * @return
      */

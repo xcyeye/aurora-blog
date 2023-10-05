@@ -1,6 +1,5 @@
 package xyz.xcye.core.enums;
 
-import java.util.Arrays;
 import java.util.function.Function;
 
 /**
@@ -12,7 +11,7 @@ public enum SensitiveStrategyEnum {
     /**
      * 手机号码
      */
-    PHONE(s -> s.replaceAll("(\\d{3})\\d{4}(\\d{4})","$1****$2")),
+    PHONE(s -> s.replaceAll("(\\d{3})\\d{4}(\\d{4})", "$1****$2")),
     /**
      * 地址，将区后面的部分，使用******替换
      */
@@ -23,8 +22,7 @@ public enum SensitiveStrategyEnum {
      */
     ID_CARD(s -> s.replaceAll("(\\d){4}\\d{10}(\\w{4})", "$1******$2")),
 
-    IP(s -> s.replaceAll("(\\d{1,4})\\.(\\d{1,4})\\.(\\d{1,4})\\.(\\d{1,4})","$1****$4"));
-
+    IP(s -> s.replaceAll("(\\d{1,4})\\.(\\d{1,4})\\.(\\d{1,4})\\.(\\d{1,4})", "$1****$4"));
 
 
     private final Function<String, String> desensitizer;

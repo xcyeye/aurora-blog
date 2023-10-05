@@ -65,6 +65,7 @@ public class NetWorkUtils {
 
     /**
      * 获取浏览器的名称
+     *
      * @param request
      * @return
      */
@@ -81,9 +82,9 @@ public class NetWorkUtils {
     public static String getBrowserVersion(HttpServletRequest request) {
         String header = request.getHeader("User-Agent");
         UserAgent userAgent = UserAgent.parseUserAgentString(header);
-        //获取浏览器信息
+        // 获取浏览器信息
         Browser browser = userAgent.getBrowser();
-        //获取浏览器版本号
+        // 获取浏览器版本号
         Version version = browser.getVersion(header);
         String versionStr = null;
         try {

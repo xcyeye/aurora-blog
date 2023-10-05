@@ -270,6 +270,7 @@ public class PermissionRelationService {
 
     /**
      * 因为存放在数据库中的角色名没有加上前缀ROLE_，所以统一在这里，对返回结果的角色名，加上前缀
+     *
      * @param rolePermissionDTOList
      * @return
      */

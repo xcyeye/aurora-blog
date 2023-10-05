@@ -19,7 +19,7 @@
         <result column="is_show" property="show"/>
     </resultMap>
 
-  	<sql id="Where_Condition">
+    <sql id="Where_Condition">
         <where>
             <if test="uid != null">
                 AND uid = #{uid}
@@ -64,10 +64,11 @@
                 AND is_show = #{show}
             </if>
         </where>
-  	</sql>
+    </sql>
 
     <sql id="Base_Column_List">
-        uid,
+        uid
+        ,
         level,
         parent_nav_uid,
         son_nav_uids,
@@ -83,199 +84,200 @@
         is_show
     </sql>
 
-	<!-- common methods start -->
+    <!-- common methods start -->
     <!-- 新增一条数据 -->
-	<insert id="insert" parameterType="xyz.xcye.admin.po.Navigation" useGeneratedKeys="true" keyProperty="uid">
+    <insert id="insert" parameterType="xyz.xcye.admin.po.Navigation" useGeneratedKeys="true" keyProperty="uid">
         INSERT INTO au_navigation (
-            <trim suffixOverrides=",">
-                <if test="uid != null">
-                    uid,
-                </if>
-                <if test="level != null">
-                    level,
-                </if>
-                <if test="parentNavUid != null">
-                    parent_nav_uid,
-                </if>
-                <if test="sonNavUids != null and sonNavUids != '' ">
-                    son_nav_uids,
-                </if>
-                <if test="title != null and title != '' ">
-                    title,
-                </if>
-                <if test="path != null and path != '' ">
-                    path,
-                </if>
-                <if test="external != null">
-                    is_external,
-                </if>
-                <if test="iconClassName != null and iconClassName != '' ">
-                    icon_class_name,
-                </if>
-                <if test="sort != null">
-                    sort,
-                </if>
-                <if test="userUid != null">
-                    user_uid,
-                </if>
-                <if test="createTime != null and createTime != '' ">
-                    create_time,
-                </if>
-                <if test="updateTime != null and updateTime != '' ">
-                    update_time,
-                </if>
-                <if test="delete != null">
-                    is_delete,
-                </if>
-                <if test="show != null">
-                    is_show,
-                </if>
-            </trim>
+        <trim suffixOverrides=",">
+            <if test="uid != null">
+                uid,
+            </if>
+            <if test="level != null">
+                level,
+            </if>
+            <if test="parentNavUid != null">
+                parent_nav_uid,
+            </if>
+            <if test="sonNavUids != null and sonNavUids != '' ">
+                son_nav_uids,
+            </if>
+            <if test="title != null and title != '' ">
+                title,
+            </if>
+            <if test="path != null and path != '' ">
+                path,
+            </if>
+            <if test="external != null">
+                is_external,
+            </if>
+            <if test="iconClassName != null and iconClassName != '' ">
+                icon_class_name,
+            </if>
+            <if test="sort != null">
+                sort,
+            </if>
+            <if test="userUid != null">
+                user_uid,
+            </if>
+            <if test="createTime != null and createTime != '' ">
+                create_time,
+            </if>
+            <if test="updateTime != null and updateTime != '' ">
+                update_time,
+            </if>
+            <if test="delete != null">
+                is_delete,
+            </if>
+            <if test="show != null">
+                is_show,
+            </if>
+        </trim>
         ) VALUES (
-            <trim suffixOverrides=",">
-                <if test="uid != null">
-                 #{uid},
-                </if>
-                <if test="level != null">
-                 #{level},
-                </if>
-                <if test="parentNavUid != null">
-                 #{parentNavUid},
-                </if>
-                <if test="sonNavUids != null and sonNavUids != '' ">
-                 #{sonNavUids},
-                </if>
-                <if test="title != null and title != '' ">
-                 #{title},
-                </if>
-                <if test="path != null and path != '' ">
-                 #{path},
-                </if>
-                <if test="external != null">
-                 #{external},
-                </if>
-                <if test="iconClassName != null and iconClassName != '' ">
-                 #{iconClassName},
-                </if>
-                <if test="sort != null">
-                 #{sort},
-                </if>
-                <if test="userUid != null">
-                 #{userUid},
-                </if>
-                <if test="createTime != null and createTime != '' ">
-                 #{createTime},
-                </if>
-                <if test="updateTime != null and updateTime != '' ">
-                 #{updateTime},
-                </if>
-                <if test="delete != null">
-                 #{delete},
-                </if>
-                <if test="show != null">
-                 #{show},
-                </if>
-            </trim>
+        <trim suffixOverrides=",">
+            <if test="uid != null">
+                #{uid},
+            </if>
+            <if test="level != null">
+                #{level},
+            </if>
+            <if test="parentNavUid != null">
+                #{parentNavUid},
+            </if>
+            <if test="sonNavUids != null and sonNavUids != '' ">
+                #{sonNavUids},
+            </if>
+            <if test="title != null and title != '' ">
+                #{title},
+            </if>
+            <if test="path != null and path != '' ">
+                #{path},
+            </if>
+            <if test="external != null">
+                #{external},
+            </if>
+            <if test="iconClassName != null and iconClassName != '' ">
+                #{iconClassName},
+            </if>
+            <if test="sort != null">
+                #{sort},
+            </if>
+            <if test="userUid != null">
+                #{userUid},
+            </if>
+            <if test="createTime != null and createTime != '' ">
+                #{createTime},
+            </if>
+            <if test="updateTime != null and updateTime != '' ">
+                #{updateTime},
+            </if>
+            <if test="delete != null">
+                #{delete},
+            </if>
+            <if test="show != null">
+                #{show},
+            </if>
+        </trim>
         )
-	</insert>
+    </insert>
 
     <!-- 通过主键删除数据 -->
-	<delete id="deleteById" parameterType="Long">
-        DELETE FROM au_navigation
-        WHERE uid = #{uid} 
-	</delete>
+    <delete id="deleteById" parameterType="Long">
+        DELETE
+        FROM au_navigation
+        WHERE uid = #{uid}
+    </delete>
 
     <!-- 根据传入参数删除数据 -->
-	<delete id="deleteByWhere" parameterType="xyz.xcye.admin.po.Navigation">
+    <delete id="deleteByWhere" parameterType="xyz.xcye.admin.po.Navigation">
         DELETE FROM au_navigation
-        <include refid="Where_Condition" />
-	</delete>
+        <include refid="Where_Condition"/>
+    </delete>
 
     <!-- 根据id更新数据 -->
     <update id="updateById" parameterType="xyz.xcye.admin.po.Navigation">
-		UPDATE au_navigation
-		<set>
-			<if test="level != null">level = #{level},</if>
-			<if test="parentNavUid != null">parent_nav_uid = #{parentNavUid},</if>
-			<if test="sonNavUids != null and sonNavUids != '' ">son_nav_uids = #{sonNavUids},</if>
-			<if test="title != null and title != '' ">title = #{title},</if>
-			<if test="path != null and path != '' ">path = #{path},</if>
-			<if test="external != null">is_external = #{external},</if>
-			<if test="iconClassName != null and iconClassName != '' ">icon_class_name = #{iconClassName},</if>
-			<if test="sort != null">sort = #{sort},</if>
-			<if test="userUid != null">user_uid = #{userUid},</if>
-			<if test="updateTime != null and updateTime != '' ">update_time = #{updateTime},</if>
-			<if test="delete != null">is_delete = #{delete},</if>
-			<if test="show != null">is_show = #{show},</if>
-		</set>
-		WHERE
-		    uid = #{uid}
-	</update>
-
-	<!-- 根据主键查询数据  -->
-	<select id="queryById" resultMap="navigationResultMap" parameterType="Long">
-        SELECT
-        <include refid="Base_Column_List" />
-  	    FROM au_navigation
+        UPDATE au_navigation
+        <set>
+            <if test="level != null">level = #{level},</if>
+            <if test="parentNavUid != null">parent_nav_uid = #{parentNavUid},</if>
+            <if test="sonNavUids != null and sonNavUids != '' ">son_nav_uids = #{sonNavUids},</if>
+            <if test="title != null and title != '' ">title = #{title},</if>
+            <if test="path != null and path != '' ">path = #{path},</if>
+            <if test="external != null">is_external = #{external},</if>
+            <if test="iconClassName != null and iconClassName != '' ">icon_class_name = #{iconClassName},</if>
+            <if test="sort != null">sort = #{sort},</if>
+            <if test="userUid != null">user_uid = #{userUid},</if>
+            <if test="updateTime != null and updateTime != '' ">update_time = #{updateTime},</if>
+            <if test="delete != null">is_delete = #{delete},</if>
+            <if test="show != null">is_show = #{show},</if>
+        </set>
         WHERE
-            uid = #{uid}
+        uid = #{uid}
+    </update>
+
+    <!-- 根据主键查询数据  -->
+    <select id="queryById" resultMap="navigationResultMap" parameterType="Long">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM au_navigation
+        WHERE
+        uid = #{uid}
     </select>
 
     <!-- 查询一条记录  -->
-	<select id="queryOne" resultMap="navigationResultMap" parameterType="xyz.xcye.admin.po.Navigation">
-         SELECT
-         <include refid="Base_Column_List" />
-  	     FROM au_navigation
-         <include refid="Where_Condition" />
-         LIMIT 1
-    </select>
-
-	<!-- 根据传入参数查询数据列表  -->
-	<select id="queryListByWhere" resultMap="navigationResultMap" parameterType="xyz.xcye.admin.po.Navigation">
+    <select id="queryOne" resultMap="navigationResultMap" parameterType="xyz.xcye.admin.po.Navigation">
         SELECT
-        <include refid="Base_Column_List" />
+        <include refid="Base_Column_List"/>
         FROM au_navigation
-        <include refid="Where_Condition" />
+        <include refid="Where_Condition"/>
+        LIMIT 1
     </select>
 
-	<!-- 统计符合条件的数据数量 -->
-	<select id="countByWhere" resultType="int" parameterType="xyz.xcye.admin.po.Navigation">
-		SELECT COUNT(*) FROM au_navigation
-		<include refid="Where_Condition" />
-	</select>
+    <!-- 根据传入参数查询数据列表  -->
+    <select id="queryListByWhere" resultMap="navigationResultMap" parameterType="xyz.xcye.admin.po.Navigation">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM au_navigation
+        <include refid="Where_Condition"/>
+    </select>
+
+    <!-- 统计符合条件的数据数量 -->
+    <select id="countByWhere" resultType="int" parameterType="xyz.xcye.admin.po.Navigation">
+        SELECT COUNT(*) FROM au_navigation
+        <include refid="Where_Condition"/>
+    </select>
 
     <!-- 批量插入多条数据 -->
-	<insert id="batchInsert" parameterType="java.util.List">
+    <insert id="batchInsert" parameterType="java.util.List">
         INSERT INTO au_navigation (
-        	<include refid="Base_Column_List" />
+        <include refid="Base_Column_List"/>
         ) VALUES
-        <foreach collection="list" item="item" index= "index" separator =",">
+        <foreach collection="list" item="item" index="index" separator=",">
             (
             <trim suffixOverrides=",">
-				#{item.uid},
-				#{item.level},
-				#{item.parentNavUid},
-				#{item.sonNavUids},
-				#{item.title},
-				#{item.path},
-				#{item.external},
-				#{item.iconClassName},
-				#{item.sort},
-				#{item.userUid},
-				#{item.createTime},
-				#{item.updateTime},
-				#{item.delete},
-				#{item.show},
+                #{item.uid},
+                #{item.level},
+                #{item.parentNavUid},
+                #{item.sonNavUids},
+                #{item.title},
+                #{item.path},
+                #{item.external},
+                #{item.iconClassName},
+                #{item.sort},
+                #{item.userUid},
+                #{item.createTime},
+                #{item.updateTime},
+                #{item.delete},
+                #{item.show},
             </trim>
             )
         </foreach>
     </insert>
-	<!-- common methods end -->
+    <!-- common methods end -->
 
-	<!-- 下面的是兼容旧版本 -->
+    <!-- 下面的是兼容旧版本 -->
     <select id="queryListByCondition" resultMap="navigationResultMap">
         select
-        <include refid="Base_Column_List" />
+        <include refid="Base_Column_List"/>
         from au_navigation
         <where>
             <if test="condition.startTime != null and condition.endTime != null">

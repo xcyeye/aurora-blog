@@ -54,7 +54,7 @@ public class CommentService {
 
     @GlobalTransactional(rollbackFor = Exception.class)
     public void insertComment(CommentPojo pojo) throws Throwable {
-        Assert.notNull(pojo,"评论不能为null");
+        Assert.notNull(pojo, "评论不能为null");
         AssertUtils.stateThrow(pojo.getPageUid() != null, () -> new CommentException("文章uid不能为null"));
         Comment comment = BeanUtils.copyProperties(pojo, Comment.class);
         setDefaultProperty(comment);
@@ -71,12 +71,12 @@ public class CommentService {
         // 使用mq通知邮件服务，发送评论的邮件通知
         if (isReplyCommentFlag) {
             sendCommentEmail(true, comment, queriedRepliedCommentDO);
-        }else {
+        } else {
             sendCommentEmail(false, comment, null);
             comment.setReplyCommentUid(null);
         }
 
-        //如果运行到这里，不能确保邮件发送成功，但还是修改一下邮件发送状态
+        // 如果运行到这里，不能确保邮件发送成功，但还是修改一下邮件发送状态
         comment.setEmailNotice(true);
         updateComment(BeanUtils.copyProperties(comment, CommentPojo.class));
 
@@ -85,7 +85,7 @@ public class CommentService {
 
         // 如果插入成功，并且是回复某条评论，则修改此被回复的评论的nextCommentUidArray值
         if (isReplyCommentFlag) {
-            queriedRepliedCommentDO.setNextCommentUidArray(getNextCommentUidArrayStr(queriedRepliedCommentDO,comment.getUid()));
+            queriedRepliedCommentDO.setNextCommentUidArray(getNextCommentUidArrayStr(queriedRepliedCommentDO, comment.getUid()));
             updateComment(BeanUtils.copyProperties(queriedRepliedCommentDO, CommentPojo.class));
         }
     }
@@ -105,7 +105,7 @@ public class CommentService {
         if (repliedCommentInfo != null) {
             // 回复评论
             sendCommentEmail(true, comment, repliedCommentInfo);
-        }else {
+        } else {
             sendCommentEmail(false, comment, null);
         }
 
@@ -147,6 +147,7 @@ public class CommentService {
 
     /**
      * 根据条件查询，目前只支持uid，path，如果前两个为null，并且存在userUid的话，则通过userUid查询
+     *
      * @param pojo
      * @return
      */
@@ -199,11 +200,11 @@ public class CommentService {
         List<CommentDTO> allCommentDTOList = new ArrayList<>();
         for (Long uid : effectiveCommentUidList) {
             Comment comment = getCommentByUid(uid);
-            //没有发布或者已经删除的，也不展示
+            // 没有发布或者已经删除的，也不展示
             if (comment == null || !comment.getShowComment()) {
                 continue;
             }
-            CommentDTO parentCommentDto = BeanUtils.copyProperties(comment,CommentDTO.class);
+            CommentDTO parentCommentDto = BeanUtils.copyProperties(comment, CommentDTO.class);
             CommentDTO sonNode = getAllSingleParentNodeList(parentCommentDto, parentCommentDto);
             allCommentDTOList.add(sonNode);
         }
@@ -221,7 +222,7 @@ public class CommentService {
 
     public CommentDTO queryCommentByUid(long uid) {
         return xyz.xcye.core.util.BeanUtils.copyProperties(
-                auroraCommentService.queryById(uid),CommentDTO.class);
+                auroraCommentService.queryById(uid), CommentDTO.class);
     }
 
     public int queryTotalCommentCount(CommentPojo pojo) {
@@ -230,7 +231,7 @@ public class CommentService {
 
     private void setDefaultProperty(Comment comment) {
         // 初始化值
-        comment.setUid(GenerateInfoUtils.generateUid(auroraProperties.getSnowFlakeWorkerId(),auroraProperties.getSnowFlakeDatacenterId()));
+        comment.setUid(GenerateInfoUtils.generateUid(auroraProperties.getSnowFlakeWorkerId(), auroraProperties.getSnowFlakeDatacenterId()));
         comment.setShowComment(true);
         // 设置email的发送状态，这里目前只能保证消息是否成功投递到rabbitmq交换机中，不能保证email是否发送成功
         comment.setEmailNotice(false);
@@ -239,6 +240,7 @@ public class CommentService {
 
     /**
      * 设置此评论是在哪种类型的页面上发布的，有文章，说说
+     *
      * @param comment
      */
     private void setPageType(Comment comment, boolean isUpdate) {
@@ -264,34 +266,37 @@ public class CommentService {
     /**
      * 判断此commentDO中的ReplyCommentUid是不是回复某条评论
      * <p>如果此ReplyCommentUid在数据库中不存在，也标识单独新建的一条评论</p>
+     *
      * @param comment
      * @return true是回复评论
      */
     private boolean isReplyComment(Comment comment) throws ReflectiveOperationException {
-        //此评论就是单独新建的一条评论
+        // 此评论就是单独新建的一条评论
         if (comment.getReplyCommentUid() == 0) {
             return false;
         }
-        //判断是否存在
+        // 判断是否存在
         return queryCommentByUid(comment.getReplyCommentUid()) != null;
     }
 
     /**
      * 从数据库中查询uid所对应的评论数据，如果没有，返回null
+     *
      * @param commentUid
      * @return
      */
     private Comment getCommentByUid(Long commentUid) {
-        //此评论就是单独新建的一条评论
+        // 此评论就是单独新建的一条评论
         if (commentUid == null || commentUid == 0) {
             return null;
         }
-        //判断是否存在
+        // 判断是否存在
         return auroraCommentService.queryById(commentUid);
     }
 
     /**
      * 判断此uid在数据库中是否存在
+     *
      * @param uid
      * @return
      */
@@ -301,6 +306,7 @@ public class CommentService {
 
     /**
      * 获取arrayUid中有效的uid
+     *
      * @param arrayUid
      * @return
      */
@@ -315,18 +321,17 @@ public class CommentService {
     }
 
     /**
-     *
      * @param parentCommentDto
      * @return
      */
     private CommentDTO getAllSingleParentNodeList(CommentDTO parentCommentDto, CommentDTO copyCommentDto) {
         List<Long> uidList = parseUidArray(copyCommentDto.getNextCommentUidArray());
         if (uidList.isEmpty()) {
-            //commentDTO下没有任何的子评论，直接返回
+            // commentDTO下没有任何的子评论，直接返回
             return parentCommentDto;
         }
 
-        //存在子评论，循环获取
+        // 存在子评论，循环获取
         for (Long uid : uidList) {
             // 当前的uid对应评论数据
             Comment comment = getCommentByUid(uid);
@@ -334,7 +339,7 @@ public class CommentService {
                 continue;
             }
 
-            //将此commentDO添加到singleParentCommentDTOList中
+            // 将此commentDO添加到singleParentCommentDTOList中
             CommentDTO sonCopyCommentDto = BeanUtils.copyProperties(comment, CommentDTO.class);
             if (parentCommentDto.getSonCommentList() == null) {
                 parentCommentDto.setSonCommentList(new ArrayList<>());
@@ -350,6 +355,7 @@ public class CommentService {
 
     /**
      * 根据传入的字符串返回按,分割后的List<Long>集合
+     *
      * @param nextCommentUidArray
      * @return
      */
@@ -371,20 +377,22 @@ public class CommentService {
 
     /**
      * 获取被回复的repliedCommonDO的NextCommentUid
+     *
      * @param repliedCommonDO
      * @param replyingUid
      * @return
      */
-    private String getNextCommentUidArrayStr(Comment repliedCommonDO,Long replyingUid) {
+    private String getNextCommentUidArrayStr(Comment repliedCommonDO, Long replyingUid) {
         if ("".equals(repliedCommonDO.getNextCommentUidArray()) || repliedCommonDO.getNextCommentUidArray() == null) {
             return replyingUid + "";
-        }else {
+        } else {
             return repliedCommonDO.getNextCommentUidArray() + "," + replyingUid;
         }
     }
 
     /**
      * 创建一个发送邮件的对象
+     *
      * @param comment
      * @return
      */
@@ -397,14 +405,13 @@ public class CommentService {
     }
 
     /**
-     *
      * @param comment
      * @return
      */
-    private List<Map<SendHtmlMailTypeNameEnum,Object>> createReceiveList(Comment comment) {
-        List<Map<SendHtmlMailTypeNameEnum,Object>> list = new ArrayList<>();
-        Map<SendHtmlMailTypeNameEnum,Object> map = new HashMap<>();
-        map.put(SendHtmlMailTypeNameEnum.RECEIVE_COMMENT,comment);
+    private List<Map<SendHtmlMailTypeNameEnum, Object>> createReceiveList(Comment comment) {
+        List<Map<SendHtmlMailTypeNameEnum, Object>> list = new ArrayList<>();
+        Map<SendHtmlMailTypeNameEnum, Object> map = new HashMap<>();
+        map.put(SendHtmlMailTypeNameEnum.RECEIVE_COMMENT, comment);
         list.add(map);
         return list;
     }
@@ -427,10 +434,10 @@ public class CommentService {
             sendMQMessageService.sendReplyMail(comment, queriedRepliedCommentDO,
                     AmqpExchangeNameConstant.AURORA_SEND_MAIL_EXCHANGE,
                     "topic", AmqpQueueNameConstant.SEND_HTML_MAIL_ROUTING_KEY);
-        }else {
-            //不是回复评论 设置ReplyCommentUid标识
+        } else {
+            // 不是回复评论 设置ReplyCommentUid标识
             comment.setReplyCommentUid(0L);
-            //交换机发送消息 如果此commentDO.getUserUid()用户在au_email中不存在记录的话，会使用默认的模板进行邮件通知
+            // 交换机发送消息 如果此commentDO.getUserUid()用户在au_email中不存在记录的话，会使用默认的模板进行邮件通知
             StorageSendMailInfo mailInfo = createReceiveCommentMailInfo(comment);
             sendMQMessageService.sendCommonMail(mailInfo, AmqpExchangeNameConstant.AURORA_SEND_MAIL_EXCHANGE,
                     "topic", AmqpQueueNameConstant.SEND_HTML_MAIL_ROUTING_KEY, createReceiveList(comment));
@@ -443,7 +450,7 @@ public class CommentService {
             return queriedCommentInfo.getUid();
         } else if (queriedCommentInfo == null || queriedCommentInfo.getReplyCommentUid() == 0L) {
             return commentUid;
-        }else {
+        } else {
             return queryParentCommentUid(queriedCommentInfo.getReplyCommentUid());
         }
     }

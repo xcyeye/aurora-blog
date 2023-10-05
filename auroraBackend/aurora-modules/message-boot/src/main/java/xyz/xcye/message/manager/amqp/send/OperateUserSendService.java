@@ -40,6 +40,7 @@ public class OperateUserSendService {
      * 在aurora-admin模块中，和此OPERATE_USER_BINDING_EMAIL_ROUTING_KEY绑定的队列的消费和能够更新数据库中，此userUid所对应的记录，然后
      * ，当更新成功之后，再从aurora-admin模块发送验证账户的信息到AURORA_SEND_EMAIL_COMMON_EXCHANGE交换机
      * <p>因为是跨服务进行操作，所以需要绑定seata的xid，以确保数据的一致性</p>
+     *
      * @param email
      * @throws BindException
      */
@@ -48,22 +49,22 @@ public class OperateUserSendService {
         long uid = GenerateInfoUtils.generateUid(auroraProperties.getSnowFlakeWorkerId(), auroraProperties.getSnowFlakeDatacenterId());
         CorrelationData correlationData = new CorrelationData(uid + "");
 
-        Map<String,Object> messageMap = new HashMap<>();
-        messageMap.put("xid",xid);
-        messageMap.put("correlationDataId",correlationData.getId());
+        Map<String, Object> messageMap = new HashMap<>();
+        messageMap.put("xid", xid);
+        messageMap.put("correlationDataId", correlationData.getId());
         messageMap.put("emailDO", email);
 
-        //将发送的回复评论数据组装成一个map集合
+        // 将发送的回复评论数据组装成一个map集合
         String jsonToString = ConvertObjectUtils.jsonToString(messageMap);
         log.error("sendBindingEmail恢复全局事务{}", RootContext.getXID());
         RootContext.bind(xid);
-        insertMessageLog(jsonToString,uid);
+        insertMessageLog(jsonToString, uid);
         log.error("sendBindingEmail挂起全局事务{}", RootContext.getXID());
         RootContext.unbind();
         // 存储验证信息
         rabbitTemplate.send(AmqpExchangeNameConstant.AURORA_SEND_OPERATE_USER_EXCHANGE,
                 AmqpQueueNameConstant.OPERATE_USER_BINDING_EMAIL_ROUTING_KEY,
-                new Message(jsonToString.getBytes(StandardCharsets.UTF_8)),correlationData);
+                new Message(jsonToString.getBytes(StandardCharsets.UTF_8)), correlationData);
     }
 
     private void insertMessageLog(String jsonToString, long uid) throws BindException {

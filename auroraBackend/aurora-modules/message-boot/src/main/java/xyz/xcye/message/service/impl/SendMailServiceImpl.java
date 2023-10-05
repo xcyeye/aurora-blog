@@ -68,7 +68,7 @@ public class SendMailServiceImpl implements SendMailService {
     @Autowired
     private EmailService emailService;
     //@Autowired
-    //private FileFeignService fileFeignService;
+    // private FileFeignService fileFeignService;
 
     @Override
     public void sendHtmlMail(StorageSendMailInfo storageSendMailInfo)
@@ -112,7 +112,7 @@ public class SendMailServiceImpl implements SendMailService {
         // 判断传入的subject是否为null或者空
         String subject = getRightSubject(storageSendMailInfo.getSubject(), mailSubject);
 
-        //解析邮件发送内容
+        // 解析邮件发送内容
         String sendContent = null;
         try {
             sendContent = ParseEmailTemplate.parseHtmlMailTemplate(storageSendMailInfo.getReplacedMap(), templateContent);
@@ -165,34 +165,36 @@ public class SendMailServiceImpl implements SendMailService {
 
     /**
      * 判断自定义的subject是否为空或者null，如果为null或者空，返回数据库中的subject
+     *
      * @param customSubject
      * @param dbSubject
      * @return
      */
-    private String getRightSubject(String customSubject,String dbSubject) {
+    private String getRightSubject(String customSubject, String dbSubject) {
         if (!StringUtils.hasLength(customSubject)) {
             return dbSubject;
         }
 
         if (customSubject.length() > FieldLengthConstant.EMAIL_SUBJECT) {
-            return customSubject.substring(0,FieldLengthConstant.EMAIL_SUBJECT);
+            return customSubject.substring(0, FieldLengthConstant.EMAIL_SUBJECT);
         }
         return customSubject;
     }
 
     /**
      * 发送html邮件
-     * @param subject 最终发送的邮件标题
-     * @param sendContent 最终经过解析之后邮件内容(html)
+     *
+     * @param subject       最终发送的邮件标题
+     * @param sendContent   最终经过解析之后邮件内容(html)
      * @param receiverEmail 接收者的邮箱号
      * @return
      * @throws MessagingException
      */
-    private void sendEmail(String subject,String sendContent,String receiverEmail, Long userUid) throws MessagingException {
+    private void sendEmail(String subject, String sendContent, String receiverEmail, Long userUid) throws MessagingException {
         AssertUtils.stateThrow(userUid != null, () -> new EmailException("userUid不能为null"));
         // 设置标志点
         boolean sendFlag = false;
-        //发送邮件
+        // 发送邮件
         try {
             sendMailRealize.sendHtmlMail(receiverEmail, subject, sendContent);
             sendFlag = true;
@@ -200,7 +202,7 @@ public class SendMailServiceImpl implements SendMailService {
             LogUtils.logExceptionInfo(e);
         }
 
-        //如果运行到这里，说说邮件发送成功 向数据库中插入数据
+        // 如果运行到这里，说说邮件发送成功 向数据库中插入数据
         EmailLogPojo emailLogPojo = new EmailLogPojo();
         emailLogPojo.setSubject(subject);
         emailLogPojo.setContent(sendContent);
@@ -233,6 +235,7 @@ public class SendMailServiceImpl implements SendMailService {
     /**
      * 为storageSendMailInfo对象中的收件人邮箱设置一个有效合法的邮箱号
      * 发送邮件的邮箱号优先级 直接存在receiverEmail>通过userUid查询到的email
+     *
      * @param storageSendMailInfo
      * @return
      * @throws ReflectiveOperationException
@@ -251,7 +254,7 @@ public class SendMailServiceImpl implements SendMailService {
         }
 
         // 验证邮箱号是否正确
-        if(!Pattern.matches(RegexEnum.MAIL_REGEX.getRegex(), storageSendMailInfo.getReceiverEmail())) {
+        if (!Pattern.matches(RegexEnum.MAIL_REGEX.getRegex(), storageSendMailInfo.getReceiverEmail())) {
             throw new EmailException(ResponseStatusCodeEnum.EXCEPTION_EMAIL_MISTAKE);
         }
     }
@@ -272,12 +275,12 @@ public class SendMailServiceImpl implements SendMailService {
         return JSON.parseObject(jsonObject.getString(SendHtmlMailTypeNameEnum.ADDITIONAL_DATA.name()), Comment.class);
     }
 
-    private StorageSendMailInfo generateCommonNotice(String subject,String sendContent,String receiverEmail) {
+    private StorageSendMailInfo generateCommonNotice(String subject, String sendContent, String receiverEmail) {
         Long userUid = null;
         JwtUserInfo currentUser = UserUtils.getCurrentUser();
         if (currentUser != null) {
             userUid = currentUser.getUserUid();
-        }else {
+        } else {
             // TODO 可能是系统发出的信息
             userUid = 0L;
         }
@@ -307,7 +310,7 @@ public class SendMailServiceImpl implements SendMailService {
         String templatePath = "";
         if (StringUtils.hasLength(templateFolderPath)) {
             templatePath = "/" + templateFolderPath + "/" + templateName;
-        }else {
+        } else {
             templatePath = File.separator + templateName;
         }
 

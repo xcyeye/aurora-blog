@@ -15,7 +15,7 @@ import java.util.Date;
 
 public class FileStorageUtil {
     public static String getStoragePathDirByTimeAndFileName(String fileName, boolean isRemoteStorage, FilePojo pojo) {
-        //获取上传文件的扩展名
+        // 获取上传文件的扩展名
         String extName = FileUtils.getExtName(fileName);
 
         String separator = File.separator;
@@ -24,7 +24,7 @@ public class FileStorageUtil {
             separator = "/";
         }
 
-        //获取当前的年和月
+        // 获取当前的年和月
         int currentYear = DateUtils.getYear(new Date());
         int currentMonth = DateUtils.getMonth(new Date());
 

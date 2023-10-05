@@ -47,7 +47,8 @@
     </sql>
 
     <sql id="Base_Column_List">
-        uid,
+        uid
+        ,
         user_uid,
         sender,
         subject,
@@ -126,7 +127,8 @@
 
     <!-- 通过主键删除数据 -->
     <delete id="deleteById" parameterType="Long">
-        DELETE FROM au_email_log
+        DELETE
+        FROM au_email_log
         WHERE uid = #{uid}
     </delete>
 
@@ -150,7 +152,7 @@
     <!-- 根据主键查询数据  -->
     <select id="queryById" resultMap="emailLogResultMap" parameterType="Long">
         SELECT
-        <include refid="Base_Column_List" />
+        <include refid="Base_Column_List"/>
         FROM au_email_log
         WHERE
         uid = #{uid}
@@ -159,32 +161,32 @@
     <!-- 查询一条记录  -->
     <select id="queryOne" resultMap="emailLogResultMap" parameterType="xyz.xcye.message.po.EmailLog">
         SELECT
-        <include refid="Base_Column_List" />
+        <include refid="Base_Column_List"/>
         FROM au_email_log
-        <include refid="Where_Condition" />
+        <include refid="Where_Condition"/>
         LIMIT 1
     </select>
 
     <!-- 根据传入参数查询数据列表  -->
     <select id="queryListByWhere" resultMap="emailLogResultMap" parameterType="xyz.xcye.message.po.EmailLog">
         SELECT
-        <include refid="Base_Column_List" />
+        <include refid="Base_Column_List"/>
         FROM au_email_log
-        <include refid="Where_Condition" />
+        <include refid="Where_Condition"/>
     </select>
 
     <!-- 统计符合条件的数据数量 -->
     <select id="countByWhere" resultType="int" parameterType="xyz.xcye.message.po.EmailLog">
         SELECT COUNT(*) FROM au_email_log
-        <include refid="Where_Condition" />
+        <include refid="Where_Condition"/>
     </select>
 
     <!-- 批量插入多条数据 -->
     <insert id="batchInsert" parameterType="java.util.List">
         INSERT INTO au_email_log (
-        <include refid="Base_Column_List" />
+        <include refid="Base_Column_List"/>
         ) VALUES
-        <foreach collection="list" item="item" index= "index" separator =",">
+        <foreach collection="list" item="item" index="index" separator=",">
             (
             <trim suffixOverrides=",">
                 #{item.uid},
@@ -202,11 +204,11 @@
     </insert>
     <!-- common methods end -->
 
-	<!-- 下面的是兼容旧版本 -->
-	<select id="queryListByCondition" resultMap="emailLogResultMap">
-		select
-		<include refid="Base_Column_List" />
-		from au_email_log
+    <!-- 下面的是兼容旧版本 -->
+    <select id="queryListByCondition" resultMap="emailLogResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from au_email_log
         <where>
             <if test="condition.uid != null">
                 and uid=#{condition.uid}
@@ -224,5 +226,5 @@
                 and is_send=#{condition.status}
             </if>
         </where>
-	</select>
+    </select>
 </mapper>

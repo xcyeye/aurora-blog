@@ -32,6 +32,7 @@ import java.util.stream.Collectors;
 
 /**
  * 对所有响应的数据进行包装处理
+ *
  * @author qsyyke
  */
 
@@ -43,7 +44,7 @@ public class AuroraResponseResultHandler implements ResponseBodyAdvice<Object> {
     public boolean supports(MethodParameter returnType, Class<? extends HttpMessageConverter<?>> converterType) {
         // 查看是否是springdoc的请求
         return !isSpringDocRequest();
-        //return false;
+        // return false;
     }
 
     @Override
@@ -60,12 +61,12 @@ public class AuroraResponseResultHandler implements ResponseBodyAdvice<Object> {
             return responseBody;
         }
 
-        //response.getHeaders().setContentType(MediaType.APPLICATION_JSON);
-        //执行的方法
+        // response.getHeaders().setContentType(MediaType.APPLICATION_JSON);
+        // 执行的方法
         Method method = methodParameter.getMethod();
 
         assert method != null;
-        //判断是否存在SelectOperation注解，也就是查询操作
+        // 判断是否存在SelectOperation注解，也就是查询操作
         boolean hasSelectOperationAnnotation = method.isAnnotationPresent(SelectOperation.class);
         boolean hasModifyOperationAnnotation = method.isAnnotationPresent(ModifyOperation.class);
         boolean hasResponseRealResultAnnotation = method.isAnnotationPresent(ResponseRealResult.class);
@@ -93,15 +94,15 @@ public class AuroraResponseResultHandler implements ResponseBodyAdvice<Object> {
         }
 
         if (responseBody instanceof ExceptionResultEntity) {
-            //发生了异常，对结果进行封装
+            // 发生了异常，对结果进行封装
             ExceptionResultEntity exceptionResultEntity = (ExceptionResultEntity) responseBody;
 
-            Map<String,Object> errorMap = new HashMap<>();
-            errorMap.put("errorUrl",exceptionResultEntity.getErrorUrl());
+            Map<String, Object> errorMap = new HashMap<>();
+            errorMap.put("errorUrl", exceptionResultEntity.getErrorUrl());
             if (exceptionResultEntity.getData() != null) {
-                errorMap.put("additionalData",exceptionResultEntity.getData());
+                errorMap.put("additionalData", exceptionResultEntity.getData());
             }
-            return R.failure(exceptionResultEntity.getCode(), exceptionResultEntity.getMessage(),errorMap);
+            return R.failure(exceptionResultEntity.getCode(), exceptionResultEntity.getMessage(), errorMap);
         }
 
         if (hasResponseRealResultAnnotation) {
@@ -112,16 +113,17 @@ public class AuroraResponseResultHandler implements ResponseBodyAdvice<Object> {
         R r = R.success(ResponseStatusCodeEnum.SUCCESS.getCode(), ResponseStatusCodeEnum.SUCCESS.getMessage(), responseBody, true);
         if (responseBody instanceof String) {
             responseBody = ConvertObjectUtils.jsonToString(r);
-        }else {
+        } else {
             responseBody = r;
         }
-        return fieldFilter(responseBody,method);
+        return fieldFilter(responseBody, method);
     }
 
     /**
      * 进行字段过滤，对于返回值是ModifyResult的对象，不做任何处理，因为没有需要过滤的字段，对于查询操作，因为返回的是一个
      * VO层实体，会存在敏感字段，这里根据当前登录用户的权限进行判断，如果拥有查看敏感字段的权限，或者是管理员，那么不做脱敏处理
      * 返回过滤该字段
+     *
      * @param responseBody
      * @param method
      * @return
@@ -144,7 +146,7 @@ public class AuroraResponseResultHandler implements ResponseBodyAdvice<Object> {
 
             // 过滤字段
             FieldFilterSerializer filterSerializer = new FieldFilterSerializer();
-            filterSerializer.filter(serializerClass,excludeFields);
+            filterSerializer.filter(serializerClass, excludeFields);
             try {
                 String json = filterSerializer.toJSONString(responseBody);
                 responseBody = JSON.parse(json);
@@ -155,13 +157,14 @@ public class AuroraResponseResultHandler implements ResponseBodyAdvice<Object> {
 
         if (responseBody == null) {
             return R.success();
-        }else {
+        } else {
             return responseBody;
         }
     }
 
     /**
      * 判断当前的用户是否具有查看完整字段的权利 true具有，false会对需要过滤的字段进行处理
+     *
      * @param ignoreRoleArray
      * @return
      */
@@ -181,7 +184,7 @@ public class AuroraResponseResultHandler implements ResponseBodyAdvice<Object> {
         List<String> roleList = null;
         if (jwtUserInfo == null || jwtUserInfo.getRoleList() == null) {
             roleList = new ArrayList<>();
-        }else {
+        } else {
             roleList = jwtUserInfo.getRoleList();
         }
         return roleList;
