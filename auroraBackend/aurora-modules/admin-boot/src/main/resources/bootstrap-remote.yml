@@ -4,40 +4,43 @@ spring:
   cloud:
     nacos:
       discovery:
-        server-addr: 182.44.32.182:8848
+        server-addr: @nacos.server.addr@
       config:
-        server-addr: 182.44.32.182:8848
+        server-addr: @nacos.server.addr@
         file-extension: yaml
-        namespace: 317d1f4f-7ecf-461f-8444-7030f4ee733c
+        namespace: @nacos.namespace@
         group: THEME-GROUP
         shared-configs:
-          - data-id: share-seata-remote.yaml
+          - data-id: share-seata-@spring.profiles.active@.yaml
             group: THEME-GROUP
             refresh: true
-          - data-id: share-redis-remote.yaml
+          - data-id: share-redis-@spring.profiles.active@.yaml
             group: THEME-GROUP
             refresh: true
-          - data-id: share-sentinel-remote.yaml
+          - data-id: share-sentinel-@spring.profiles.active@.yaml
             group: THEME-GROUP
             refresh: true
-          - data-id: share-actuator-remote.yaml
+          - data-id: share-actuator-@spring.profiles.active@.yaml
             group: THEME-GROUP
             refresh: true
-          - data-id: share-pagehelper-remote.yaml
+          - data-id: share-pagehelper-@spring.profiles.active@.yaml
             group: THEME-GROUP
             refresh: true
-          - data-id: share-mybatis-remote.yaml
+          - data-id: share-mybatis-@spring.profiles.active@.yaml
             group: THEME-GROUP
             refresh: true
-          - data-id: share-feign-remote.yaml
+          - data-id: share-feign-@spring.profiles.active@.yaml
             group: THEME-GROUP
             refresh: true
-          - data-id: share-aurora-oauth-remote.yaml
+          - data-id: share-aurora-oauth-@spring.profiles.active@.yaml
             group: THEME-GROUP
             refresh: true
-          - data-id: share-rabbitmq-remote.yaml
+          - data-id: share-rabbitmq-@spring.profiles.active@.yaml
             group: THEME-GROUP
             refresh: true
-          - data-id: share-swagger-remote.yaml
+          - data-id: share-swagger-@spring.profiles.active@.yaml
+            group: THEME-GROUP
+            refresh: true
+          - data-id: share-default-info-@spring.profiles.active@.yaml
             group: THEME-GROUP
             refresh: true

@@ -1,4 +1,0 @@
-services:
-  centos:
-    build:
-      context: .

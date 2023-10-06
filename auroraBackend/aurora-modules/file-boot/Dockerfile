@@ -4,7 +4,7 @@ LABEL maintainer="Aurora-Blog"
 
 ARG RUN_DIR=/home/aurora-blog
 
-RUN mkdir -p $RUN_DIR}
+RUN mkdir -p $RUN_DIR
 
 EXPOSE 8088
 EXPOSE 50001

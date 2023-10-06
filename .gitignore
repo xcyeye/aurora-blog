@@ -1,6 +1,4 @@
 ### sql-generator ###
-/auroraBackend/sql-generator
-/auroraBackend/sql-generator-ts
 /typescript-bean
 /auroraBackend/runJarDirectory
 /test
@@ -92,3 +90,6 @@ coverage
 *.njsproj
 *.sln
 *.sw?
+
+# 排除自己的
+auroraBackend/aurora-modules/spring-test

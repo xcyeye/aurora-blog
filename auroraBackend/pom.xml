@@ -62,6 +62,7 @@
         <qiniu-java-sdk.version>7.11.0</qiniu-java-sdk.version>
         <docker-plugin.version>0.43.4</docker-plugin.version>
         <maven-deploy.version>3.1.1</maven-deploy.version>
+        <maven-resource.version>3.3.1</maven-resource.version>
 
 
         <!-- 配置信息 -->
@@ -71,6 +72,53 @@
         <docker-password>Aurora123456</docker-password>
         <docker-namespace>aurora-blog</docker-namespace>
     </properties>
+
+    <!-- 管理多环境的profiles -->
+    <profiles>
+        <profile>
+            <id>dev</id>
+            <activation>
+                <!-- 默认使用dev环境 -->
+                <activeByDefault>true</activeByDefault>
+            </activation>
+
+            <properties>
+                <server.port>8080</server.port>
+                <spring.profiles.active>dev</spring.profiles.active>
+                <nacos.username>nacos</nacos.username>
+                <nacos.password>nacos</nacos.password>
+                <nacos.server.addr>192.168.126.128:8848</nacos.server.addr>
+                <nacos.discovery.ip>192.168.0.95</nacos.discovery.ip>
+                <nacos.namespace>a6b1905f-d8c6-4a43-8f21-fe662f62bdae</nacos.namespace>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>test</id>
+            <properties>
+                <spring.profiles.active>test</spring.profiles.active>
+                <server.port>8080</server.port>
+                <nacos.username>nacos</nacos.username>
+                <nacos.password>nacos</nacos.password>
+                <nacos.server.addr>192.168.126.128:8848</nacos.server.addr>
+                <nacos.discovery.ip>192.168.0.95</nacos.discovery.ip>
+                <nacos.namespace>a6b1905f-d8c6-4a43-8f21-fe662f62bdae</nacos.namespace>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>prod</id>
+            <properties>
+                <spring.profiles.active>prod</spring.profiles.active>
+                <server.port>8080</server.port>
+                <nacos.username>nacos</nacos.username>
+                <nacos.password>nacos</nacos.password>
+                <nacos.server.addr>192.168.126.128:8848</nacos.server.addr>
+                <nacos.discovery.ip>192.168.0.95</nacos.discovery.ip>
+                <nacos.namespace>a6b1905f-d8c6-4a43-8f21-fe662f62bdae</nacos.namespace>
+            </properties>
+        </profile>
+    </profiles>
 
     <!--统一依赖管理-->
     <dependencyManagement>
@@ -509,7 +557,7 @@
                                 <registry>${docker-registry}</registry>
                                 <build>
                                     <tags>
-                                        <tag>%T</tag>
+                                        <tag>${project.version}</tag>
                                     </tags>
                                     <dockerFile>${project.basedir}/DockerFile</dockerFile>
                                 </build>
@@ -589,5 +637,13 @@
                 <artifactId>maven-deploy-plugin</artifactId>
             </plugin>
         </plugins>
+
+        <resources>
+            <!-- 配置默认的filtering -->
+            <resource>
+                <!-- <directory>src/main/resource</directory> -->
+                <filtering>true</filtering>
+            </resource>
+        </resources>
     </build>
 </project>
