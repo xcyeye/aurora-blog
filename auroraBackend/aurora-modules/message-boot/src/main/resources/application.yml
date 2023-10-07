@@ -6,7 +6,7 @@ spring:
   bootstrap:
     enable: true
   profiles:
-    active: dev
+    active: @spring.profiles.active@
   main:
     allow-circular-references: true
   mvc:

@@ -1,6 +1,6 @@
 spring:
   application:
-    name: aurora-message
+    name: aurora-file
   cloud:
     nacos:
       username: ${NACOS_USERNAME:nacos}
@@ -16,9 +16,6 @@ spring:
         namespace: ${NACOS_NAMESPACE}
         group: ${NACOS_GROUP:DEFAULT_GROUP}
         shared-configs:
-          - data-id: share-seata-@spring.profiles.active@.yaml
-            group: ${NACOS_GROUP:DEFAULT_GROUP}
-            refresh: true
           - data-id: share-redis-@spring.profiles.active@.yaml
             group: ${NACOS_GROUP:DEFAULT_GROUP}
             refresh: true
@@ -44,5 +41,8 @@ spring:
             group: ${NACOS_GROUP:DEFAULT_GROUP}
             refresh: true
           - data-id: share-swagger-@spring.profiles.active@.yaml
+            group: ${NACOS_GROUP:DEFAULT_GROUP}
+            refresh: true
+          - data-id: aurora-file-@spring.profiles.active@.yaml
             group: ${NACOS_GROUP:DEFAULT_GROUP}
             refresh: true

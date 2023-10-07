@@ -1,6 +1,7 @@
 server:
   compression:
     enabled: false
+  port: 8888
 spring:
   profiles:
     active: dev

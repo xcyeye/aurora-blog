@@ -1,9 +1,11 @@
 services:
   aurora_admin:
-    image: ${DOCKER_REGISTRY:-hub.xcye.xyz}/${DOCKER_NAMESPACE:-aurora-blog}/admin-boot:latest
+    image: ${DOCKER_REGISTRY:-hub.xcye.xyz}${DOCKER_NAMESPACE:-aurora-blog}/${ACTIVE_ENV:?error}/admin-boot:${ACTIVE_VERSION:-latest}
     container_name: aurora_admin
     hostname: aurora_admin_host
     restart: ${COMPOSE_SERVICE_RESTART:-no}
+    env_file:
+      - .env.dev
     volumes:
       - type: bind
         source: ${PROJECT_LOG_STORAGE_PATH:-/tmp/aurora-log}
@@ -15,10 +17,12 @@ services:
       - ${AURORA_ADMIN_SERVER_ADDR:-127.0.0.1:30100}:8088
       - ${AURORA_ADMIN_SERVER_DEBUG_ADDR:-0.0.0.0:30150}:50001
   aurora_article:
-    image: ${DOCKER_REGISTRY:-hub.xcye.xyz}/${DOCKER_NAMESPACE:-aurora-blog}/article-boot:latest
+    image: ${DOCKER_REGISTRY:-hub.xcye.xyz}${DOCKER_NAMESPACE:-aurora-blog}/${ACTIVE_ENV:?error}/article-boot:${ACTIVE_VERSION:-latest}
     container_name: aurora_article
     hostname: aurora_article
     restart: ${COMPOSE_SERVICE_RESTART:-no}
+    env_file:
+      - .env.dev
     volumes:
       - type: bind
         source: ${PROJECT_LOG_STORAGE_PATH:-/tmp/aurora-log}
@@ -30,10 +34,12 @@ services:
       - ${AURORA_ARTICLE_SERVER_ADDR:-127.0.0.1:30200}:8088
       - ${AURORA_ARTICLE_SERVER_DEBUG_ADDR:-0.0.0.0:30250}:50001
   aurora_auth:
-    image: ${DOCKER_REGISTRY:-hub.xcye.xyz}/${DOCKER_NAMESPACE:-aurora-blog}/auth-server-boot:latest
+    image: ${DOCKER_REGISTRY:-hub.xcye.xyz}${DOCKER_NAMESPACE:-aurora-blog}/${ACTIVE_ENV:?error}/auth-server-boot:${ACTIVE_VERSION:-latest}
     container_name: aurora_auth
     hostname: aurora_auth
     restart: ${COMPOSE_SERVICE_RESTART:-no}
+    env_file:
+      - .env.dev
     volumes:
       - type: bind
         source: ${PROJECT_LOG_STORAGE_PATH:-/tmp/aurora-log}
@@ -45,10 +51,12 @@ services:
       - ${AURORA_AUTH_SERVER_ADDR:-127.0.0.1:30300}:8088
       - ${AURORA_AUTH_SERVER_DEBUG_ADDR:-0.0.0.0:30350}:50001
   aurora_comment:
-    image: ${DOCKER_REGISTRY:-hub.xcye.xyz}/${DOCKER_NAMESPACE:-aurora-blog}/comment-boot:latest
+    image: ${DOCKER_REGISTRY:-hub.xcye.xyz}${DOCKER_NAMESPACE:-aurora-blog}/${ACTIVE_ENV:?error}/comment-boot:${ACTIVE_VERSION:-latest}
     container_name: aurora_comment
     hostname: aurora_comment
     restart: ${COMPOSE_SERVICE_RESTART:-no}
+    env_file:
+      - .env.dev
     volumes:
       - type: bind
         source: ${PROJECT_LOG_STORAGE_PATH:-/tmp/aurora-log}
@@ -60,10 +68,12 @@ services:
       - ${AURORA_COMMENT_SERVER_ADDR:-127.0.0.1:30400}:8088
       - ${AURORA_COMMENT_SERVER_DEBUG_ADDR:-0.0.0.0:30450}:50001
   aurora_file:
-    image: ${DOCKER_REGISTRY:-hub.xcye.xyz}/${DOCKER_NAMESPACE:-aurora-blog}/file-boot:latest
+    image: ${DOCKER_REGISTRY:-hub.xcye.xyz}${DOCKER_NAMESPACE:-aurora-blog}/${ACTIVE_ENV:?error}/file-boot:${ACTIVE_VERSION:-latest}
     container_name: aurora_file
     hostname: aurora_file
     restart: ${COMPOSE_SERVICE_RESTART:-no}
+    env_file:
+      - .env.dev
     volumes:
       - type: bind
         source: ${PROJECT_LOG_STORAGE_PATH:-/tmp/aurora-log}
@@ -75,10 +85,12 @@ services:
       - ${AURORA_FILE_SERVER_ADDR:-127.0.0.1:30500}:8088
       - ${AURORA_FILE_SERVER_DEBUG_ADDR:-0.0.0.0:30550}:50001
   aurora_gateway:
-    image: ${DOCKER_REGISTRY:-hub.xcye.xyz}/${DOCKER_NAMESPACE:-aurora-blog}/gateway-boot:latest
+    image: ${DOCKER_REGISTRY:-hub.xcye.xyz}${DOCKER_NAMESPACE:-aurora-blog}/${ACTIVE_ENV:?error}/gateway-boot:${ACTIVE_VERSION:-latest}
     container_name: aurora_gateway
     hostname: aurora_gateway
     restart: ${COMPOSE_SERVICE_RESTART:-no}
+    env_file:
+      - .env.dev
     volumes:
       - type: bind
         source: ${PROJECT_LOG_STORAGE_PATH:-/tmp/aurora-log}
@@ -90,10 +102,12 @@ services:
       - ${AURORA_GATEWAY_SERVER_ADDR:-127.0.0.1:30600}:8088
       - ${AURORA_GATEWAY_SERVER_DEBUG_ADDR:-0.0.0.0:30650}:50001
   aurora_message:
-    image: ${DOCKER_REGISTRY:-hub.xcye.xyz}/${DOCKER_NAMESPACE:-aurora-blog}/message-boot:latest
+    image: ${DOCKER_REGISTRY:-hub.xcye.xyz}${DOCKER_NAMESPACE:-aurora-blog}/${ACTIVE_ENV:?error}/message-boot:${ACTIVE_VERSION:-latest}
     container_name: aurora_message
     hostname: aurora_message
     restart: ${COMPOSE_SERVICE_RESTART:-no}
+    env_file:
+      - .env.dev
     volumes:
       - type: bind
         source: ${PROJECT_LOG_STORAGE_PATH:-/tmp/aurora-log}

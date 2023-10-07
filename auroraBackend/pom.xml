@@ -83,13 +83,7 @@
             </activation>
 
             <properties>
-                <server.port>8080</server.port>
                 <spring.profiles.active>dev</spring.profiles.active>
-                <nacos.username>nacos</nacos.username>
-                <nacos.password>nacos</nacos.password>
-                <nacos.server.addr>192.168.126.128:8848</nacos.server.addr>
-                <nacos.discovery.ip>192.168.0.95</nacos.discovery.ip>
-                <nacos.namespace>a6b1905f-d8c6-4a43-8f21-fe662f62bdae</nacos.namespace>
             </properties>
         </profile>
 
@@ -97,12 +91,6 @@
             <id>test</id>
             <properties>
                 <spring.profiles.active>test</spring.profiles.active>
-                <server.port>8080</server.port>
-                <nacos.username>nacos</nacos.username>
-                <nacos.password>nacos</nacos.password>
-                <nacos.server.addr>192.168.126.128:8848</nacos.server.addr>
-                <nacos.discovery.ip>192.168.0.95</nacos.discovery.ip>
-                <nacos.namespace>a6b1905f-d8c6-4a43-8f21-fe662f62bdae</nacos.namespace>
             </properties>
         </profile>
 
@@ -110,12 +98,6 @@
             <id>prod</id>
             <properties>
                 <spring.profiles.active>prod</spring.profiles.active>
-                <server.port>8080</server.port>
-                <nacos.username>nacos</nacos.username>
-                <nacos.password>nacos</nacos.password>
-                <nacos.server.addr>192.168.126.128:8848</nacos.server.addr>
-                <nacos.discovery.ip>192.168.0.95</nacos.discovery.ip>
-                <nacos.namespace>a6b1905f-d8c6-4a43-8f21-fe662f62bdae</nacos.namespace>
             </properties>
         </profile>
     </profiles>
@@ -553,7 +535,7 @@
                         <!-- 配置镜像 -->
                         <images>
                             <image>
-                                <name>${docker-namespace}/${project.name}</name>
+                                <name>${docker-namespace}/${spring.profiles.active}/${project.name}</name>
                                 <registry>${docker-registry}</registry>
                                 <build>
                                     <tags>
