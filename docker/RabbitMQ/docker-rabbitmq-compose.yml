@@ -1,0 +1,33 @@
+services:
+  rabbitmq:
+    container_name: rabbitMq_host
+    hostname: docker_rabbitmq
+    image: rabbitmq:3.12.4-management
+    environment:
+      RABBITMQ_DEFAULT_USER: root
+      RABBITMQ_DEFAULT_PASS: Cqy19981202
+    volumes:
+      - /opt/docker/project/rabbitmq/log:/var/log/rabbitmq:rw
+      #- /opt/docker/project/rabbitmq/conf:/etc/rabbitmq:rw
+      - type: volume
+        source: rabbitmq_data
+        target: /var/lib/rabbitmq
+    ports:
+      - "0.0.0.0:5672:5672"
+      - "0.0.0.0:15672:15672"
+    restart: always
+    networks:
+      - rabbitmq_network
+      - micro_network
+volumes:
+  rabbitmq_data:
+    name: rabbitmq_data_volume
+    driver: local
+networks:
+  rabbitmq_network:
+    driver: bridge
+    name: rabbitmq_network
+  micro_network:
+    external: false
+    driver: bridge
+    name: micro_network

@@ -7,17 +7,13 @@ services:
     image: mysql:8.1.0
     expose:
       - "${PROJECT_MYSQL_PORT:-3306}:3306"
-    command:
-      - "--character-set-server=utf8mb4"
-      - "--collation-server=utf8mb4_unicode_ci"
+    #    command:
+    #      - "--character-set-server=utf8mb4"
+    #      - "--collation-server=utf8mb4_unicode_ci"
     volumes:
       - type: volume
         source: mysql_data
         target: /var/lib/mysql
-      - type: bind
-        source: ./config/mysql/conf.d
-        target: /etc/mysql/conf.d
-        read_only: true
       - type: bind
         source: ../../docs/mysql/v2/table-data
         target: /docker-entrypoint-initdb.d
