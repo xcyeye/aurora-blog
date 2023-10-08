@@ -17,8 +17,7 @@ DROP
 DATABASE IF EXISTS `aurora_email`;
 CREATE
 DATABASE `aurora_email` CHARACTER SET 'utf8mb4' COLLATE 'utf8mb4_general_ci';
-USE
-aurora_email;
+USE aurora_email;
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
 

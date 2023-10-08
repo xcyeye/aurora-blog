@@ -17,8 +17,7 @@ DROP
 DATABASE IF EXISTS `nacos_config`;
 CREATE
 DATABASE `nacos_config` CHARACTER SET 'utf8mb4' COLLATE 'utf8mb4_general_ci';
-USE
-nacos_config;
+USE nacos_config;
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
 

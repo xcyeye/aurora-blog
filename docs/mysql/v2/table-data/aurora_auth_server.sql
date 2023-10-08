@@ -17,8 +17,7 @@ DROP
 DATABASE IF EXISTS `aurora_auth_server`;
 CREATE
 DATABASE `aurora_auth_server` CHARACTER SET 'utf8mb4' COLLATE 'utf8mb4_general_ci';
-USE
-aurora_auth_server;
+USE aurora_auth_server;
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
 

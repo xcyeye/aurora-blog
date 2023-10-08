@@ -17,8 +17,7 @@ DROP
 DATABASE IF EXISTS `aurora_comment`;
 CREATE
 DATABASE `aurora_comment` CHARACTER SET 'utf8mb4' COLLATE 'utf8mb4_general_ci';
-USE
-aurora_comment;
+USE aurora_comment;
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
 
