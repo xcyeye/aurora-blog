@@ -13,7 +13,12 @@
 
  Date: 12/03/2023 21:09:16
 */
-
+DROP
+DATABASE IF EXISTS `aurora_article`;
+CREATE
+DATABASE `aurora_article` CHARACTER SET 'utf8mb4' COLLATE 'utf8mb4_general_ci';
+USE
+aurora_article;
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
 
