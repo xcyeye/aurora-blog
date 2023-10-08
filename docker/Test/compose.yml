@@ -1,3 +1,0 @@
-services:
-  aurora_test:
-    image: hub.xcye.xyz/aurora-blog/message-boot:latest
