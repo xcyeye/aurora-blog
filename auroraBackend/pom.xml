@@ -13,7 +13,6 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>2.6.4</version>
-        <relativePath/>
     </parent>
 
     <modules>
@@ -30,6 +29,7 @@
         <maven.compiler.target>11</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <!-- <resource.delimiter>@</resource.delimiter> -->
 
         <mysql.version>8.0.27</mysql.version>
         <jjwt.version>0.11.5</jjwt.version>
@@ -622,10 +622,24 @@
 
         <resources>
             <!-- 配置默认的filtering -->
-            <resource>
-                <!-- <directory>src/main/resource</directory> -->
-                <filtering>true</filtering>
-            </resource>
+
+            <!-- <resource> -->
+            <!--     <directory>${basedir}/src/main/resources</directory> -->
+            <!--     <filtering>true</filtering> -->
+            <!--     <includes> -->
+            <!--         <include>**/application*.yml</include> -->
+            <!--         <include>**/application*.yaml</include> -->
+            <!--         <include>**/application*.properties</include> -->
+            <!--     </includes> -->
+            <!-- </resource> -->
+            <!-- <resource> -->
+            <!--     <directory>${basedir}/src/main/resources</directory> -->
+            <!--     <excludes> -->
+            <!--         <exclude>**/application*.yml</exclude> -->
+            <!--         <exclude>**/application*.yaml</exclude> -->
+            <!--         <exclude>**/application*.properties</exclude> -->
+            <!--     </excludes> -->
+            <!-- </resource> -->
         </resources>
     </build>
 </project>

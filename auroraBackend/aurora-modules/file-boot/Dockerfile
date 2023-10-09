@@ -6,14 +6,15 @@ ARG RUN_DIR=/home/aurora-blog
 
 RUN mkdir -p $RUN_DIR
 
-EXPOSE 8088
+EXPOSE $AURORA_FILE_SERVER_PORT
 EXPOSE 50001
 
 ENV TZ=Asia/Shanghai
+ENV AURORA_FILE_SERVER_PORT=8088
 ENV JAVA_OPTS="-Xms128m -Xmx256m -Dfile.encoding=UTF-8 -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:50001"
 
 COPY target/file-boot-1.0-SNAPSHOT.jar ${RUN_DIR}/app.jar
 
 WORKDIR ${RUN_DIR}
 
-CMD sleep 60;java ${JAVA_OPTS} -jar app.jar --server.port=8088
+CMD sleep 60;java ${JAVA_OPTS} -jar app.jar --server.port=$AURORA_FILE_SERVER_PORT
