@@ -9,12 +9,6 @@
     <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
 
-    <parent>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.6.4</version>
-    </parent>
-
     <modules>
         <module>aurora-starter</module>
         <module>aurora-base</module>
@@ -29,7 +23,7 @@
         <maven.compiler.target>11</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <!-- <resource.delimiter>@</resource.delimiter> -->
+        <resource.delimiter>@</resource.delimiter>
 
         <mysql.version>8.0.27</mysql.version>
         <jjwt.version>0.11.5</jjwt.version>
@@ -39,6 +33,7 @@
         <spring-cloud.version>2021.0.1</spring-cloud.version>
         <spring-cloud-bootstrap.version>3.1.1</spring-cloud-bootstrap.version>
         <spring-alibaba-cloud.version>2021.0.1.0</spring-alibaba-cloud.version>
+        <spring-boot-dependencies.version>2.6.4</spring-boot-dependencies.version>
         <oauth2.version>2.2.4.RELEASE</oauth2.version>
         <oauth2-resource.version>5.2.2.RELEASE</oauth2-resource.version>
         <hutool.version>5.7.22</hutool.version>
@@ -54,7 +49,6 @@
         <pagehelper.version>5.3.0</pagehelper.version>
         <userAgentUtils.version>1.20</userAgentUtils.version>
         <seata.version>1.4.2</seata.version>
-        <nacos-client.version>2.0.4</nacos-client.version>
         <kryo.version>4.0.2</kryo.version>
         <kryo-serializers.version>0.44</kryo-serializers.version>
         <blog.version>1.0-SNAPSHOT</blog.version>
@@ -124,6 +118,14 @@
             </dependency>
 
             <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring-boot-dependencies.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <dependency>
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-starter-bootstrap</artifactId>
                 <version>${spring-cloud-bootstrap.version}</version>
@@ -139,6 +141,12 @@
                 <groupId>org.springframework.security</groupId>
                 <artifactId>spring-security-oauth2-resource-server</artifactId>
                 <version>${oauth2-resource.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.alibaba.nacos</groupId>
+                <artifactId>nacos-client</artifactId>
+                <version>2.2.3</version>
             </dependency>
 
             <dependency>
@@ -585,6 +593,23 @@
                         </execution>
                     </executions>
                 </plugin>
+
+                <plugin>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-maven-plugin</artifactId>
+                    <version>${spring-boot-dependencies.version}</version>
+                    <executions>
+                        <execution>
+                            <id>repackage</id>
+                            <goals>
+                                <goal>repackage</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                    <configuration>
+                        <mainClass>${start-class}</mainClass>
+                    </configuration>
+                </plugin>
             </plugins>
         </pluginManagement>
 
@@ -621,25 +646,27 @@
         </plugins>
 
         <resources>
-            <!-- 配置默认的filtering -->
+            <resource>
+                <directory>${basedir}/src/main/resources</directory>
+                <filtering>true</filtering>
+                <includes>
+                    <include>**/application*.yml</include>
+                    <include>**/application*.yaml</include>
+                    <include>**/application*.properties</include>
 
-            <!-- <resource> -->
-            <!--     <directory>${basedir}/src/main/resources</directory> -->
-            <!--     <filtering>true</filtering> -->
-            <!--     <includes> -->
-            <!--         <include>**/application*.yml</include> -->
-            <!--         <include>**/application*.yaml</include> -->
-            <!--         <include>**/application*.properties</include> -->
-            <!--     </includes> -->
-            <!-- </resource> -->
-            <!-- <resource> -->
-            <!--     <directory>${basedir}/src/main/resources</directory> -->
-            <!--     <excludes> -->
-            <!--         <exclude>**/application*.yml</exclude> -->
-            <!--         <exclude>**/application*.yaml</exclude> -->
-            <!--         <exclude>**/application*.properties</exclude> -->
-            <!--     </excludes> -->
-            <!-- </resource> -->
+                    <include>**/bootstrap*.yml</include>
+                    <include>**/bootstrap*.yaml</include>
+                    <include>**/bootstrap*.properties</include>
+                </includes>
+            </resource>
+            <resource>
+                <directory>${basedir}/src/main/resources</directory>
+                <excludes>
+                    <exclude>**/application*.yml</exclude>
+                    <exclude>**/application*.yaml</exclude>
+                    <exclude>**/application*.properties</exclude>
+                </excludes>
+            </resource>
         </resources>
     </build>
 </project>

@@ -17,4 +17,4 @@ COPY target/admin-boot-1.0-SNAPSHOT.jar ${RUN_DIR}/app.jar
 
 WORKDIR ${RUN_DIR}
 
-CMD sleep 60;java ${JAVA_OPTS} -jar app.jar --server.port=$AURORA_ADMIN_SERVER_PORT
+CMD echo server_port $AURORA_ADMIN_SERVER_PORT; echo nacos_username: $NACOS_USERNAME; echo nacos_host $NACOS_HOST; echo nacos_port $NACOS_PORT; echo nacos_group $NACOS_GROUP; echo nacos_namespace $NACOS_NAMESPACE; java ${JAVA_OPTS} -jar app.jar --server.port=$AURORA_ADMIN_SERVER_PORT
