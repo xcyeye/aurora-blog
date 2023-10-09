@@ -34,6 +34,7 @@ services:
     hostname: nacos_standalone_host
     container_name: nacos_standalone
     restart: ${RESTART_OPTION:-no}
+    #    command: sh -c "echo 'doing exec a chmod shell' && chmod 777 /home/nacos/check-shell/wait-for && /home/nacos/check-shell/wait-for www.eficode.com:80 -- echo 'Eficode site is up' "
     depends_on:
       - mysql
     ports:
@@ -51,6 +52,7 @@ services:
       - ${WORK_DIR}/nacos/logs:/home/nacos/logs
       - ./config/nacos:/home/nacos/conf:ro
       - ${WORK_DIR}/nacos/init.d:/home/nacos/init.d
+      - ./shell:/home/nacos/check-shell
   rabbitmq:
     container_name: rabbitMq_host
     hostname: docker_rabbitmq
