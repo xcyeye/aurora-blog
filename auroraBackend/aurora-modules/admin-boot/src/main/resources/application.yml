@@ -1,5 +1,5 @@
 server:
-  port: 8088
+  port: 8888
   compression:
     enabled: false
 spring:

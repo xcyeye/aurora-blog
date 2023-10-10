@@ -27,6 +27,5 @@
         <module>message-boot</module>
         <module>auth-server-boot</module>
         <module>article-boot</module>
-        <module>spring-test</module>
     </modules>
 </project>

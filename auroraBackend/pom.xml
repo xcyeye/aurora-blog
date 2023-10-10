@@ -657,6 +657,13 @@
                     <include>**/bootstrap*.yml</include>
                     <include>**/bootstrap*.yaml</include>
                     <include>**/bootstrap*.properties</include>
+                    <include>banner.txt</include>
+                </includes>
+            </resource>
+            <resource>
+                <directory>src/main/java</directory>
+                <includes>
+                    <include>**/*.xml</include>
                 </includes>
             </resource>
             <resource>
