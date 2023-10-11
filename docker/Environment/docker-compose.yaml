@@ -59,7 +59,7 @@ services:
     image: rabbitmq:3.12.4-management
     environment:
       RABBITMQ_DEFAULT_USER: root
-      RABBITMQ_DEFAULT_PASS: Cqy19981202
+      RABBITMQ_DEFAULT_PASS: Aurora2023@*
     volumes:
       - ${WORK_DIR}/rabbitmq/log:/var/log/rabbitmq:rw
       #- /opt/docker/project/rabbitmq/conf:/etc/rabbitmq:rw
