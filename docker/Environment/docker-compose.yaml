@@ -1,6 +1,6 @@
 services:
   mysql:
-    hostname: mysql_host
+    hostname: mysqlHost
     env_file:
       - ./.env.mysql
     container_name: mysql8_db
@@ -25,13 +25,13 @@ services:
       - "0.0.0.0:${PROJECT_MYSQL_PORT:-3306}:3306"
     restart: ${RESTART_OPTION:-no}
     networks:
-      - mysql_network
-      - micro_network
+      - mysqlNetwork
+      - microNetwork
   nacos_standalone:
     env_file:
       - ./.env.nacos
     image: nacos/nacos-server:${NACOS_VERSION}
-    hostname: nacos_standalone_host
+    hostname: nacosStandaloneHost
     container_name: nacos_standalone
     restart: ${RESTART_OPTION:-no}
     #    command: sh -c "echo 'doing exec a chmod shell' && chmod 777 /home/nacos/check-shell/wait-for && /home/nacos/check-shell/wait-for www.eficode.com:80 -- echo 'Eficode site is up' "
@@ -43,8 +43,8 @@ services:
       - "0.0.0.0:9848:9848"
       - "0.0.0.0:7848:7848"
     networks:
-      - nacos_network
-      - micro_network
+      - nacosNetwork
+      - microNetwork
     volumes:
       - type: volume
         source: nacos_standalone_data
@@ -55,7 +55,7 @@ services:
       - ./shell:/home/nacos/check-shell
   rabbitmq:
     container_name: rabbitMq_host
-    hostname: docker_rabbitmq
+    hostname: dockerRabbitmq
     image: rabbitmq:3.12.4-management
     environment:
       RABBITMQ_DEFAULT_USER: root
@@ -71,14 +71,14 @@ services:
       - "0.0.0.0:15672:15672"
     restart: ${RESTART_OPTION:-no}
     networks:
-      - rabbitmq_network
-      - micro_network
+      - rabbitmqNetwork
+      - microNetwork
   redis:
-    hostname: redis_host
-    container_name: redis_db
+    hostname: redisHost
+    container_name: redisDb
     image: redis:7.2.1
     expose:
-      - "35680:35680"
+      - "35680:3306"
     volumes:
       - type: volume
         source: redis_data
@@ -86,11 +86,11 @@ services:
       - ./config/redis:/usr/local/etc/redis:ro
     command: redis-server /usr/local/etc/redis/redis.conf
     ports:
-      - "0.0.0.0:35680:35680"
+      - "0.0.0.0:35680:3306"
     restart: ${RESTART_OPTION:-no}
     networks:
-      - redis_network
-      - micro_network
+      - redisNetwork
+      - microNetwork
 volumes:
   mysql_data:
     name: mysql_data_volume
@@ -106,24 +106,24 @@ volumes:
     driver: local
 networks:
   # mysql自己的网络
-  mysql_network:
-    name: mysql_network
+  mysqlNetwork:
+    name: mysqlNetwork
     driver: bridge
     external: false
-  nacos_network:
-    name: nacos_network
+  nacosNetwork:
+    name: nacosNetwork
     driver: bridge
     external: false
-  rabbitmq_network:
+  rabbitmqNetwork:
     driver: bridge
-    name: rabbitmq_network
+    name: rabbitmqNetwork
     external: false
-  redis_network:
-    name: redis_network
+  redisNetwork:
+    name: redisNetwork
     driver: bridge
     external: false
   # 微服务环境网络
-  micro_network:
-    name: micro_network
+  microNetwork:
+    name: microNetwork
     driver: bridge
     external: false

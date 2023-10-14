@@ -2,7 +2,7 @@ services:
   aurora_admin:
     image: ${DOCKER_REGISTRY}${DOCKER_NAMESPACE:-aurora-blog}/${ACTIVE_ENV:?error}/admin-boot:${ACTIVE_VERSION:-latest}
     container_name: aurora_admin
-    hostname: aurora_admin_host
+    hostname: auroraAdminHost
     restart: ${COMPOSE_SERVICE_RESTART:-no}
     env_file:
       - .env.dev
@@ -11,147 +11,147 @@ services:
         source: ${PROJECT_LOG_STORAGE_PATH:-/tmp/aurora-log}
         target: /tmp/aurora-log
     networks:
-      - micro_network
-      - admin_network
+      - microNetwork
+      - adminNetwork
     ports:
       - "${AURORA_ADMIN_SERVER_IP}:${AURORA_ADMIN_SERVER_PORT}:${AURORA_ADMIN_SERVER_PORT}"
       - ${AURORA_ADMIN_SERVER_DEBUG_IP:-0.0.0.0:30150}:50001
-#  aurora_article:
-#    image: ${DOCKER_REGISTRY:-hub.xcye.xyz}${DOCKER_NAMESPACE:-aurora-blog}/${ACTIVE_ENV:?error}/article-boot:${ACTIVE_VERSION:-latest}
-#    container_name: aurora_article
-#    hostname: aurora_article
-#    restart: ${COMPOSE_SERVICE_RESTART:-no}
-#    env_file:
-#      - .env.dev
-#    volumes:
-#      - type: bind
-#        source: ${PROJECT_LOG_STORAGE_PATH:-/tmp/aurora-log}
-#        target: /tmp/aurora-log
-#    networks:
-#      - micro_network
-#      - admin_network
-#    ports:
-#      - ${AURORA_ARTICLE_SERVER_IP:-127.0.0.1:30200}:8088
-#      - ${AURORA_ARTICLE_SERVER_DEBUG_IP:-0.0.0.0:30250}:50001
-#  aurora_auth:
-#    image: ${DOCKER_REGISTRY:-hub.xcye.xyz}${DOCKER_NAMESPACE:-aurora-blog}/${ACTIVE_ENV:?error}/auth-server-boot:${ACTIVE_VERSION:-latest}
-#    container_name: aurora_auth
-#    hostname: aurora_auth
-#    restart: ${COMPOSE_SERVICE_RESTART:-no}
-#    env_file:
-#      - .env.dev
-#    volumes:
-#      - type: bind
-#        source: ${PROJECT_LOG_STORAGE_PATH:-/tmp/aurora-log}
-#        target: /tmp/aurora-log
-#    networks:
-#      - auth_server_network
-#      - micro_network
-#    ports:
-#      - ${AURORA_AUTH_SERVER_IP:-127.0.0.1:30300}:8088
-#      - ${AURORA_AUTH_SERVER_DEBUG_IP:-0.0.0.0:30350}:50001
-#  aurora_comment:
-#    image: ${DOCKER_REGISTRY:-hub.xcye.xyz}${DOCKER_NAMESPACE:-aurora-blog}/${ACTIVE_ENV:?error}/comment-boot:${ACTIVE_VERSION:-latest}
-#    container_name: aurora_comment
-#    hostname: aurora_comment
-#    restart: ${COMPOSE_SERVICE_RESTART:-no}
-#    env_file:
-#      - .env.dev
-#    volumes:
-#      - type: bind
-#        source: ${PROJECT_LOG_STORAGE_PATH:-/tmp/aurora-log}
-#        target: /tmp/aurora-log
-#    networks:
-#      - comment_network
-#      - micro_network
-#    ports:
-#      - ${AURORA_COMMENT_SERVER_IP:-127.0.0.1:30400}:8088
-#      - ${AURORA_COMMENT_SERVER_DEBUG_IP:-0.0.0.0:30450}:50001
-#  aurora_file:
-#    image: ${DOCKER_REGISTRY:-hub.xcye.xyz}${DOCKER_NAMESPACE:-aurora-blog}/${ACTIVE_ENV:?error}/file-boot:${ACTIVE_VERSION:-latest}
-#    container_name: aurora_file
-#    hostname: aurora_file
-#    restart: ${COMPOSE_SERVICE_RESTART:-no}
-#    env_file:
-#      - .env.dev
-#    volumes:
-#      - type: bind
-#        source: ${PROJECT_LOG_STORAGE_PATH:-/tmp/aurora-log}
-#        target: /tmp/aurora-log
-#    networks:
-#      - file_network
-#      - micro_network
-#    ports:
-#      - ${AURORA_FILE_SERVER_IP:-127.0.0.1:30500}:8088
-#      - ${AURORA_FILE_SERVER_DEBUG_IP:-0.0.0.0:30550}:50001
-#  aurora_gateway:
-#    image: ${DOCKER_REGISTRY:-hub.xcye.xyz}${DOCKER_NAMESPACE:-aurora-blog}/${ACTIVE_ENV:?error}/gateway-boot:${ACTIVE_VERSION:-latest}
-#    container_name: aurora_gateway
-#    hostname: aurora_gateway
-#    restart: ${COMPOSE_SERVICE_RESTART:-no}
-#    env_file:
-#      - .env.dev
-#    volumes:
-#      - type: bind
-#        source: ${PROJECT_LOG_STORAGE_PATH:-/tmp/aurora-log}
-#        target: /tmp/aurora-log
-#    networks:
-#      - gateway_network
-#      - micro_network
-#    ports:
-#      - ${AURORA_GATEWAY_SERVER_IP:-127.0.0.1:30600}:8088
-#      - ${AURORA_GATEWAY_SERVER_DEBUG_IP:-0.0.0.0:30650}:50001
-#  aurora_message:
-#    image: ${DOCKER_REGISTRY:-hub.xcye.xyz}${DOCKER_NAMESPACE:-aurora-blog}/${ACTIVE_ENV:?error}/message-boot:${ACTIVE_VERSION:-latest}
-#    container_name: aurora_message
-#    hostname: aurora_message
-#    restart: ${COMPOSE_SERVICE_RESTART:-no}
-#    env_file:
-#      - .env.dev
-#    volumes:
-#      - type: bind
-#        source: ${PROJECT_LOG_STORAGE_PATH:-/tmp/aurora-log}
-#        target: /tmp/aurora-log
-#    networks:
-#      - message_network
-#      - micro_network
-#    ports:
-#      - ${AURORA_MESSAGE_SERVER_IP:-127.0.0.1:30700}:8088
-#      - ${AURORA_MESSAGE_SERVER_DEBUG_IP:-0.0.0.0:30750}:50001
+  aurora_article:
+    image: ${DOCKER_REGISTRY}${DOCKER_NAMESPACE:-aurora-blog}/${ACTIVE_ENV:?error}/article-boot:${ACTIVE_VERSION:-latest}
+    container_name: aurora_article
+    hostname: auroraArticleHost
+    restart: ${COMPOSE_SERVICE_RESTART:-no}
+    env_file:
+      - .env.dev
+    volumes:
+      - type: bind
+        source: ${PROJECT_LOG_STORAGE_PATH:-/tmp/aurora-log}
+        target: /tmp/aurora-log
+    networks:
+      - microNetwork
+      - articleNetwork
+    ports:
+      - "${AURORA_ARTICLE_SERVER_IP}:${AURORA_ARTICLE_SERVER_PORT}:${AURORA_ARTICLE_SERVER_PORT}"
+      - ${AURORA_ARTICLE_SERVER_DEBUG_IP:-0.0.0.0:30150}:50001
+  aurora_auth:
+    image: ${DOCKER_REGISTRY}${DOCKER_NAMESPACE:-aurora-blog}/${ACTIVE_ENV:?error}/auth-server-boot:${ACTIVE_VERSION:-latest}
+    container_name: aurora_auth
+    hostname: auroraAuthHost
+    restart: ${COMPOSE_SERVICE_RESTART:-no}
+    env_file:
+      - .env.dev
+    volumes:
+      - type: bind
+        source: ${PROJECT_LOG_STORAGE_PATH:-/tmp/aurora-log}
+        target: /tmp/aurora-log
+    networks:
+      - microNetwork
+      - authServerNetwork
+    ports:
+      - "${AURORA_AUTH_SERVER_IP}:${AURORA_AUTH_SERVER_PORT}:${AURORA_AUTH_SERVER_PORT}"
+      - ${AURORA_AUTH_SERVER_DEBUG_IP:-0.0.0.0:30150}:50001
+  aurora_comment:
+    image: ${DOCKER_REGISTRY}${DOCKER_NAMESPACE:-aurora-blog}/${ACTIVE_ENV:?error}/comment-boot:${ACTIVE_VERSION:-latest}
+    container_name: aurora_comment
+    hostname: auroraCommentHost
+    restart: ${COMPOSE_SERVICE_RESTART:-no}
+    env_file:
+      - .env.dev
+    volumes:
+      - type: bind
+        source: ${PROJECT_LOG_STORAGE_PATH:-/tmp/aurora-log}
+        target: /tmp/aurora-log
+    networks:
+      - microNetwork
+      - adminNetwork
+    ports:
+      - "${AURORA_COMMENT_SERVER_IP}:${AURORA_COMMENT_SERVER_PORT}:${AURORA_COMMENT_SERVER_PORT}"
+      - ${AURORA_COMMENT_SERVER_DEBUG_IP:-0.0.0.0:30150}:50001
+  aurora_file:
+    image: ${DOCKER_REGISTRY}${DOCKER_NAMESPACE:-aurora-blog}/${ACTIVE_ENV:?error}/file-boot:${ACTIVE_VERSION:-latest}
+    container_name: aurora_file
+    hostname: auroraFileHost
+    restart: ${COMPOSE_SERVICE_RESTART:-no}
+    env_file:
+      - .env.dev
+    volumes:
+      - type: bind
+        source: ${PROJECT_LOG_STORAGE_PATH:-/tmp/aurora-log}
+        target: /tmp/aurora-log
+    networks:
+      - microNetwork
+      - fileNetwork
+    ports:
+      - "${AURORA_FILE_SERVER_IP}:${AURORA_FILE_SERVER_PORT}:${AURORA_FILE_SERVER_PORT}"
+      - ${AURORA_FILE_SERVER_DEBUG_IP:-0.0.0.0:30150}:50001
+  aurora_gateway:
+    image: ${DOCKER_REGISTRY}${DOCKER_NAMESPACE:-aurora-blog}/${ACTIVE_ENV:?error}/gateway-boot:${ACTIVE_VERSION:-latest}
+    container_name: aurora_gateway
+    hostname: auroraGatewayHost
+    restart: ${COMPOSE_SERVICE_RESTART:-no}
+    env_file:
+      - .env.dev
+    volumes:
+      - type: bind
+        source: ${PROJECT_LOG_STORAGE_PATH:-/tmp/aurora-log}
+        target: /tmp/aurora-log
+    networks:
+      - microNetwork
+      - gatewayNetwork
+    ports:
+      - "${AURORA_GATEWAY_SERVER_IP}:${AURORA_GATEWAY_SERVER_PORT}:${AURORA_GATEWAY_SERVER_PORT}"
+      - ${AURORA_GATEWAY_SERVER_DEBUG_IP:-0.0.0.0:30150}:50001
+  aurora_message:
+    image: ${DOCKER_REGISTRY}${DOCKER_NAMESPACE:-aurora-blog}/${ACTIVE_ENV:?error}/message-boot:${ACTIVE_VERSION:-latest}
+    container_name: aurora_message
+    hostname: auroraMessageHost
+    restart: ${COMPOSE_SERVICE_RESTART:-no}
+    env_file:
+      - .env.dev
+    volumes:
+      - type: bind
+        source: ${PROJECT_LOG_STORAGE_PATH:-/tmp/aurora-log}
+        target: /tmp/aurora-log
+    networks:
+      - microNetwork
+      - messageNetwork
+    ports:
+      - "${AURORA_MESSAGE_SERVER_IP}:${AURORA_MESSAGE_SERVER_PORT}:${AURORA_MESSAGE_SERVER_PORT}"
+      - ${AURORA_MESSAGE_SERVER_DEBUG_IP:-0.0.0.0:30150}:50001
 
 # 定义网络
 networks:
   # 定义微服务网络，所有服务都加入到该网络中
-  micro_network:
+  microNetwork:
     external: true
-    name: micro_network
+    name: microNetwork
     driver: bridge
   # 定义各服务网络
-  admin_network:
+  adminNetwork:
     external: false
-    name: admin_network
+    name: adminNetwork
     driver: bridge
-  article_network:
+  articleNetwork:
     external: false
-    name: article_network
+    name: articleNetwork
     driver: bridge
-  file_network:
+  fileNetwork:
     external: false
-    name: file_network
+    name: fileNetwork
     driver: bridge
-  comment_network:
+  commentNetwork:
     external: false
-    name: comment_network
+    name: commentNetwork
     driver: bridge
-  auth_server_network:
+  authServerNetwork:
     external: false
-    name: auth_server_network
+    name: authServerNetwork
     driver: bridge
-  gateway_network:
+  gatewayNetwork:
     external: false
-    name: gateway_network
+    name: gatewayNetwork
     driver: bridge
-  message_network:
+  messageNetwork:
     external: false
-    name: message_network
+    name: messageNetwork
     driver: bridge

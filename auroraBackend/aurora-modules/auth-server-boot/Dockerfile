@@ -10,11 +10,14 @@ EXPOSE $AURORA_AUTH_SERVER_PORT
 EXPOSE 50001
 
 ENV TZ=Asia/Shanghai
-ENV AURORA_ADMIN_SERVER_PORT=8088
+ENV AURORA_AUTH_SERVER_PORT=8088
 ENV JAVA_OPTS="-Xms128m -Xmx256m -Dfile.encoding=UTF-8 -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:50001"
 
 COPY target/auth-server-boot-1.0-SNAPSHOT.jar ${RUN_DIR}/app.jar
+COPY target/env.sh ${RUN_DIR}/env.sh
+
+RUN chmod +x ${RUN_DIR}/env.sh
 
 WORKDIR ${RUN_DIR}
-
-CMD sleep 60;java ${JAVA_OPTS} -jar app.jar --server.port=$AURORA_AUTH_SERVER_PORT
+#CMD tail -f /dev/null
+CMD ./env.sh;java ${JAVA_OPTS} -jar app.jar --server.port=$AURORA_AUTH_SERVER_PORT

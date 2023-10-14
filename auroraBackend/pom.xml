@@ -549,7 +549,7 @@
                                     <tags>
                                         <tag>${project.version}</tag>
                                     </tags>
-                                    <dockerFile>${project.basedir}/DockerFile</dockerFile>
+                                    <dockerFile>${project.basedir}/Dockerfile</dockerFile>
                                 </build>
                             </image>
                         </images>
@@ -610,6 +610,32 @@
                         <mainClass>${start-class}</mainClass>
                     </configuration>
                 </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-resources-plugin</artifactId>
+                    <version>3.3.1</version>
+                    <executions>
+                        <execution>
+                            <id>copy-resources</id>
+                            <phase>process-resources</phase>
+                            <goals>
+                                <goal>copy-resources</goal>
+                            </goals>
+                            <configuration>
+                                <outputDirectory>${basedir}/target</outputDirectory>
+                                <resources>
+                                    <resource>
+                                        <directory>../</directory>
+                                        <includes>
+                                            <include>*.sh</include>
+                                        </includes>
+                                    </resource>
+                                </resources>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
             </plugins>
         </pluginManagement>
 
@@ -642,6 +668,11 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-deploy-plugin</artifactId>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
             </plugin>
         </plugins>
 
