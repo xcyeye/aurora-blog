@@ -73,6 +73,26 @@ services:
     networks:
       - rabbitmqNetwork
       - microNetwork
+  seata-server:
+    container_name: seata-server
+    image: xcyeye/seata:1.7.0
+    hostname: seataServer
+    restart: ${RESTART_OPTION:-no}
+    depends_on:
+      - nacos_standalone
+    env_file:
+      - ./.env.seata
+    ports:
+      - "0.0.0.0:18091:8091"
+      - "0.0.0.0:17091:7091"
+    networks:
+      - seataNetwork
+      - microNetwork
+    volumes:
+      - ${WORK_DIR}/seata/logs:/seata-server/logs
+      - type: bind
+        source: ./config/seata
+        target: /seata-server/conf
   redis:
     hostname: redisHost
     container_name: redisDb
@@ -120,6 +140,10 @@ networks:
     external: false
   redisNetwork:
     name: redisNetwork
+    driver: bridge
+    external: false
+  seataNetwork:
+    name: seataNetwork
     driver: bridge
     external: false
   # 微服务环境网络

@@ -1,5 +1,7 @@
 #!/bin/bash
 
+echo "Starting Run Aurora Blog Project ..."
+sleep 30
 echo "Log file save path:  $PROJECT_LOG_STORAGE_PATH"
 echo "Active ENV: $ACTIVE_ENV"
 echo "Executing Jar Version $ACTIVE_VERSION"

@@ -680,6 +680,14 @@
                     <exclude>**/application*.properties</exclude>
                 </excludes>
             </resource>
+
+            <resource>
+                <directory>../</directory>
+                <targetPath>${project.build.directory}</targetPath>
+                <includes>
+                    <include>env.sh</include>
+                </includes>
+            </resource>
         </resources>
     </build>
 </project>

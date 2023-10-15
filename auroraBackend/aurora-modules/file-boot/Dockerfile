@@ -14,9 +14,6 @@ ENV AURORA_FILE_SERVER_PORT=8088
 ENV JAVA_OPTS="-Xms128m -Xmx256m -Dfile.encoding=UTF-8 -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:50001"
 
 COPY target/file-boot-1.0-SNAPSHOT.jar ${RUN_DIR}/app.jar
-COPY target/env.sh ${RUN_DIR}/env.sh
-
-RUN chmod +x ${RUN_DIR}/env.sh
 
 WORKDIR ${RUN_DIR}
 #CMD tail -f /dev/null
