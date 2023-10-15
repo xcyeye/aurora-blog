@@ -1,4 +1,20 @@
 services:
+  aurora-nginx:
+    container_name: aurora_nginx
+    hostname: nginxHost
+    image: nginx:latest
+    networks:
+      - nginxNetwork
+      - microNetwork
+    ports:
+      - "0.0.0.0:80:80"
+      - "0.0.0.0:443:443"
+    volumes:
+      - ./config/nginx:/etc/nginx/conf.d
+      - ${WORK_DIR}/nginx/logs:/var/log/nginx
+      - type: volume
+        source: nginx_data
+        target: /nginx-data
   mysql:
     hostname: mysqlHost
     env_file:
@@ -19,7 +35,7 @@ services:
         target: /etc/mysql/conf.d
         read_only: true
       - type: bind
-        source: ../../docs/mysql/v2/table-data
+        source: ../../docs/mysql/v3
         target: /docker-entrypoint-initdb.d
     ports:
       - "0.0.0.0:${PROJECT_MYSQL_PORT:-3306}:3306"
@@ -124,6 +140,9 @@ volumes:
   redis_data:
     name: redis_data_volume
     driver: local
+  nginx_data:
+    name: nginx_data_volume
+    driver: local
 networks:
   # mysql自己的网络
   mysqlNetwork:
@@ -144,6 +163,10 @@ networks:
     external: false
   seataNetwork:
     name: seataNetwork
+    driver: bridge
+    external: false
+  nginxNetwork:
+    name: nginxNetwork
     driver: bridge
     external: false
   # 微服务环境网络
