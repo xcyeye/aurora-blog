@@ -16,6 +16,8 @@ ENV JAVA_OPTS="-Xms128m -Xmx256m -Dfile.encoding=UTF-8 -agentlib:jdwp=transport=
 COPY target/admin-boot-1.0-SNAPSHOT.jar ${RUN_DIR}/app.jar
 COPY target/env.sh ${RUN_DIR}
 
+RUN chmod +x env.sh
+
 WORKDIR ${RUN_DIR}
 
 CMD ./env.sh; java ${JAVA_OPTS} -jar app.jar --server.port=$AURORA_ADMIN_SERVER_PORT
