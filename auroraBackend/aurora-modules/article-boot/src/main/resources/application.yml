@@ -1,7 +1,7 @@
 server:
   compression:
     enabled: false
-  port: 9797
+  port: 9798
 
 spring:
   profiles:

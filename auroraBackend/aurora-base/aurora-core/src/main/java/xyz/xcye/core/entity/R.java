@@ -1,7 +1,9 @@
 package xyz.xcye.core.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import xyz.xcye.core.enums.ResponseStatusCodeEnum;
 
 import java.util.HashMap;
@@ -13,7 +15,8 @@ import java.util.HashMap;
  * @author qsyyke
  */
 
-@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Data
 public class R {
 
@@ -74,10 +77,7 @@ public class R {
         if (data == null) {
             data = new HashMap<>();
         }
-        return R.builder()
-                .code(code).message(message)
-                .data(data).success(success)
-                .build();
+        return new R(code, message, success, data);
     }
 
     /**
@@ -113,10 +113,10 @@ public class R {
         if (data == null) {
             data = new HashMap<>();
         }
-        return R.builder().code(code).message(message).data(data).success(false).build();
+        return new R(code, message, false, data);
     }
 
     public static R result(Integer code, String message, Object data, boolean success) {
-        return R.builder().code(code).message(message).data(data).success(success).build();
+        return new R(code, message, success, data);
     }
 }

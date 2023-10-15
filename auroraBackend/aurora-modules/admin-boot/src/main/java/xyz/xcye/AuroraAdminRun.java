@@ -7,6 +7,7 @@ import org.springframework.context.ConfigurableApplicationContext;
 import xyz.xcye.admin.service.PermissionRelationService;
 import xyz.xcye.admin.service.WhiteUrlService;
 import xyz.xcye.data.entity.Condition;
+import xyz.xcye.feign.config.service.MessageLogFeignService;
 
 /**
  * @author qsyyke
@@ -17,6 +18,7 @@ import xyz.xcye.data.entity.Condition;
 public class AuroraAdminRun {
     public static void main(String[] args) {
         ConfigurableApplicationContext run = SpringApplication.run(AuroraAdminRun.class, args);
+
 
         // 将角色权限信息和白名单存入redis
         Condition<Long> condition = new Condition<>();

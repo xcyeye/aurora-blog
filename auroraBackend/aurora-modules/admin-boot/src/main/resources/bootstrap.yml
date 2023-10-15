@@ -50,3 +50,9 @@ spring:
           - data-id: share-default-info-@spring.profiles.active@.yaml
             group: ${NACOS_GROUP:THEME-GROUP}
             refresh: true
+          - data-id: aurora-file-@spring.profiles.active@.yaml
+            group: ${NACOS_GROUP:THEME-GROUP}
+            refresh: true
+          - data-id: aurora-auth-server-@spring.profiles.active@.yaml
+            group: ${NACOS_GROUP:THEME-GROUP}
+            refresh: true

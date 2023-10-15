@@ -2,6 +2,7 @@ package xyz.xcye.feign.config.service;
 
 import org.springframework.amqp.core.Message;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.BindException;
@@ -19,7 +20,7 @@ import xyz.xcye.message.vo.MessageLogVO;
  * @date Created in 2022/5/2 17:56
  */
 
-@FeignClient(value = "aurora-message", name = "aurora-message", fallback = MessageLogFeignHandler.class)
+@FeignClient(value = "aurora-message", name = "aurora-message", contextId = "aurora-feign-starter-message", fallback = MessageLogFeignHandler.class)
 public interface MessageLogFeignService {
     @PostMapping("/message/messageLog/insertMessageLog")
     R insertMessageLog(@RequestBody MessageLogPojo messageLog) throws BindException;

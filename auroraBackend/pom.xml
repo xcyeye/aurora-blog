@@ -48,7 +48,7 @@
         <pagehelper-starter.version>1.4.0</pagehelper-starter.version>
         <pagehelper.version>5.3.0</pagehelper.version>
         <userAgentUtils.version>1.20</userAgentUtils.version>
-        <seata.version>1.4.2</seata.version>
+        <seata.version>1.7.0</seata.version>
         <kryo.version>4.0.2</kryo.version>
         <kryo-serializers.version>0.44</kryo-serializers.version>
         <blog.version>1.0-SNAPSHOT</blog.version>
@@ -489,6 +489,12 @@
                 <version>${qiniu-java-sdk.version}</version>
             </dependency>
 
+            <dependency>
+                <groupId>io.seata</groupId>
+                <artifactId>seata-spring-boot-starter</artifactId>
+                <version>${seata.version}</version>
+                <scope>compile</scope>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -610,32 +616,6 @@
                         <mainClass>${start-class}</mainClass>
                     </configuration>
                 </plugin>
-
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-resources-plugin</artifactId>
-                    <version>3.3.1</version>
-                    <executions>
-                        <execution>
-                            <id>copy-resources</id>
-                            <phase>process-resources</phase>
-                            <goals>
-                                <goal>copy-resources</goal>
-                            </goals>
-                            <configuration>
-                                <outputDirectory>${basedir}/target</outputDirectory>
-                                <resources>
-                                    <resource>
-                                        <directory>../</directory>
-                                        <includes>
-                                            <include>*.sh</include>
-                                        </includes>
-                                    </resource>
-                                </resources>
-                            </configuration>
-                        </execution>
-                    </executions>
-                </plugin>
             </plugins>
         </pluginManagement>
 
@@ -668,11 +648,6 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-deploy-plugin</artifactId>
-            </plugin>
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-resources-plugin</artifactId>
             </plugin>
         </plugins>
 

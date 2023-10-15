@@ -8,10 +8,10 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
  * @author qsyyke
  */
 
-@SpringBootApplication
-@EnableFeignClients
+// @SpringBootApplication
+// @EnableFeignClients
 public class AuroraCommentRun {
-    public static void main(String[] args) {
-        SpringApplication.run(AuroraCommentRun.class, args);
-    }
+    // public static void main(String[] args) {
+    //     SpringApplication.run(AuroraCommentRun.class, args);
+    // }
 }

@@ -73,6 +73,12 @@
             <groupId>xyz.xcye.base</groupId>
             <artifactId>amqp-common</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>xyz.xcye.modules</groupId>
+            <artifactId>comment-boot</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
     </dependencies>
 
     <build>

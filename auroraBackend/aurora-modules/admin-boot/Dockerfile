@@ -20,4 +20,4 @@ RUN chmod +x ${RUN_DIR}/env.sh
 
 WORKDIR ${RUN_DIR}
 #CMD tail -f /dev/null
-CMD ./env.sh;java ${JAVA_OPTS} -jar app.jar --server.port=$AURORA_ADMIN_SERVER_PORT
+CMD java ${JAVA_OPTS} -jar app.jar --server.port=$AURORA_ADMIN_SERVER_PORT

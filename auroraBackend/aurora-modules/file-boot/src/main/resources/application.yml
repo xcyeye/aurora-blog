@@ -1,13 +1,13 @@
-server:
-  port: 6768
-spring:
-  main:
-    allow-circular-references: true
-  mvc:
-    pathmatch:
-      matching-strategy: ant_path_matcher
-  profiles:
-    active: dev
+#server:
+#  port: 6769
+#spring:
+#  main:
+#    allow-circular-references: true
+#  mvc:
+#    pathmatch:
+#      matching-strategy: ant_path_matcher
+#  profiles:
+#    active: dev
 
 # swagger-ui custom path
 
