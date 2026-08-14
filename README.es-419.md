@@ -49,29 +49,7 @@ Estas colecciones te ayudan a encontrar una dirección antes de elegir una plant
 
 <!-- GIFT_IDEAS:START -->
 
-### Aniversario
 
-[Explorar ideas de Aniversario](https://miyogift.com/es/gift-ideas/anniversary-80)
-
-### Cumpleaños
-
-[Explorar ideas de Cumpleaños](https://miyogift.com/es/gift-ideas/birthday-56)
-
-### Relación a distancia
-
-[Explorar ideas de Relación a distancia](https://miyogift.com/es/gift-ideas/long-distance-relationship-68)
-
-### Disculpa
-
-[Explorar ideas de Disculpa](https://miyogift.com/es/gift-ideas/apology-92)
-
-### Graduación
-
-[Explorar ideas de Graduación](https://miyogift.com/es/gift-ideas/graduation-104)
-
-### Día de San Valentín
-
-[Explorar ideas de Día de San Valentín](https://miyogift.com/es/gift-ideas/valentines-day-115)
 
 <!-- GIFT_IDEAS:END -->
 
@@ -83,47 +61,7 @@ Elige una plantilla como punto de partida y personaliza el contenido para la per
 
 <!-- TEMPLATES:START -->
 
-### Sorpresa Cumpleanos En Linea
 
-<a href="https://miyogift.com/es/sorpresa-cumpleanos-en-linea-b7k2m-1182"><img src="https://cdn.miyogift.com/uploads/PUBLIC/2026/07/28/gift/template/covers/29ca8db4-9f4d-4600-aa3e-58e51bb58dc0_birthday-4-cover.webp" alt="Sorpresa Cumpleanos En Linea" width="240"></a>
-
-[Ver Sorpresa Cumpleanos En Linea](https://miyogift.com/es/sorpresa-cumpleanos-en-linea-b7k2m-1182)
-
-### Carta de recuerdos de aniversario con línea de tiempo
-
-<a href="https://miyogift.com/es/carta-recuerdos-aniversario-q7n4m-1134"><img src="https://cdn.miyogift.com/uploads/PUBLIC/2026/07/04/gift/template/covers/8c17f028-26ee-4269-b6ac-6e46e3c08fab_timelessyou-cover-1080x1920.webp" alt="Carta de recuerdos de aniversario con línea de tiempo" width="240"></a>
-
-[Ver Carta de recuerdos de aniversario con línea de tiempo](https://miyogift.com/es/carta-recuerdos-aniversario-q7n4m-1134)
-
-### Carta de recuerdos de aniversario con sorpresa final
-
-<a href="https://miyogift.com/es/carta-recuerdos-aniversario-v8r2s-1122"><img src="https://cdn.miyogift.com/uploads/PUBLIC/2026/07/02/gift/template/covers/10bd36a8-16db-4d18-b2ab-2de4c0fbd5c3_letters-of-us-cover.webp" alt="Carta de recuerdos de aniversario con sorpresa final" width="240"></a>
-
-[Ver Carta de recuerdos de aniversario con sorpresa final](https://miyogift.com/es/carta-recuerdos-aniversario-v8r2s-1122)
-
-### Página de regalo de cumpleaños con recuerdos
-
-<a href="https://miyogift.com/es/regalo-cumpleanos-fotos-deseos-z3p9k-1158"><img src="https://cdn.miyogift.com/uploads/PUBLIC/2026/07/05/gift/template/covers/712b69b2-f198-47cf-9e6e-b1e6b3bbfe8e_6wSEoC60xs-cover.webp" alt="Página de regalo de cumpleaños con recuerdos" width="240"></a>
-
-[Ver Página de regalo de cumpleaños con recuerdos](https://miyogift.com/es/regalo-cumpleanos-fotos-deseos-z3p9k-1158)
-
-### Página de deseos de cumpleaños con recuerdos
-
-<a href="https://miyogift.com/es/pagina-mensaje-cumpleanos-recuerdos-m8r4t-1146"><img src="https://cdn.miyogift.com/uploads/PUBLIC/2026/07/05/gift/template/covers/d288300f-98d6-4141-81cd-804c6f4bff51_O0CZ1kTkb1-cover.webp" alt="Página de deseos de cumpleaños con recuerdos" width="240"></a>
-
-[Ver Página de deseos de cumpleaños con recuerdos](https://miyogift.com/es/pagina-mensaje-cumpleanos-recuerdos-m8r4t-1146)
-
-### Página interactiva de sorpresa de cumpleaños
-
-<a href="https://miyogift.com/es/pagina-sorpresa-cumpleanos-interactiva-q6n2v-1170"><img src="https://cdn.miyogift.com/uploads/PUBLIC/2026/07/05/gift/template/covers/3ca41ef2-93ec-48c6-8f10-04028fbab224_eI3ZOAELuS-cover.webp" alt="Página interactiva de sorpresa de cumpleaños" width="240"></a>
-
-[Ver Página interactiva de sorpresa de cumpleaños](https://miyogift.com/es/pagina-sorpresa-cumpleanos-interactiva-q6n2v-1170)
-
-### Galaxia de notas de amor
-
-<a href="https://miyogift.com/es/love-note-galaxy-asdfl-1112"><img src="https://cdn.miyogift.com/uploads/PUBLIC/2026/06/21/gift/template/covers/3ebef018-38d9-4900-bef6-d97d7443389c_love-note-galaxy-cover-9x16.webp" alt="Galaxia de notas de amor" width="240"></a>
-
-[Ver Galaxia de notas de amor](https://miyogift.com/es/love-note-galaxy-asdfl-1112)
 
 <!-- TEMPLATES:END -->
 
