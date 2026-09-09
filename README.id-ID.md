@@ -83,6 +83,34 @@ Pilih template sebagai titik awal, lalu personalisasi kontennya untuk orang yang
 
 <!-- TEMPLATES:START -->
 
+### Generator Janji Pernikahan
+
+[Lihat Generator Janji Pernikahan](https://miyogift.com/id/tools/generator-janji-pernikahan)
+
+### Generator Ucapan Terima Kasih
+
+[Lihat Generator Ucapan Terima Kasih](https://miyogift.com/id/tools/generator-ucapan-terima-kasih)
+
+### Pembuat Surat Cinta
+
+[Lihat Pembuat Surat Cinta](https://miyogift.com/id/tools/pembuat-surat-cinta)
+
+### Generator Puisi Cinta
+
+[Lihat Generator Puisi Cinta](https://miyogift.com/id/tools/generator-puisi-cinta)
+
+### Pembuat Ucapan Pesan Ulang Tahun
+
+[Lihat Pembuat Ucapan Pesan Ulang Tahun](https://miyogift.com/id/tools/pembuat-ucapan-pesan-ulang-tahun)
+
+### Generator Permintaan Maaf
+
+[Lihat Generator Permintaan Maaf](https://miyogift.com/id/tools/generator-permintaan-maaf)
+
+### Pembuat Pidato Pernikahan
+
+[Lihat Pembuat Pidato Pernikahan](https://miyogift.com/id/tools/pembuat-pidato-pernikahan)
+
 ### Kejutan Ulang Tahun Online
 
 <a href="https://miyogift.com/id/kejutan-ulang-tahun-online-b7k2m-1184"><img src="https://cdn.miyogift.com/uploads/PUBLIC/2026/07/28/gift/template/covers/29ca8db4-9f4d-4600-aa3e-58e51bb58dc0_birthday-4-cover.webp" alt="Kejutan Ulang Tahun Online" width="240"></a>

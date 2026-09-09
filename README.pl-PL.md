@@ -83,6 +83,34 @@ Wybierz szablon jako punkt wyjścia, a następnie spersonalizuj treść dla osob
 
 <!-- TEMPLATES:START -->
 
+### Generator Przysiegi Malzenskiej
+
+[Zobacz Generator Przysiegi Malzenskiej](https://miyogift.com/pl/tools/generator-przysiegi-malzenskiej)
+
+### Generator Podziekowan
+
+[Zobacz Generator Podziekowan](https://miyogift.com/pl/tools/generator-podziekowan)
+
+### Generator Listow Milosnych
+
+[Zobacz Generator Listow Milosnych](https://miyogift.com/pl/tools/generator-listow-milosnych)
+
+### Generator Wierszy Milosnych
+
+[Zobacz Generator Wierszy Milosnych](https://miyogift.com/pl/tools/generator-wierszy-milosnych)
+
+### Generator Zyczen Urodzinowych
+
+[Zobacz Generator Zyczen Urodzinowych](https://miyogift.com/pl/tools/generator-zyczen-urodzinowych)
+
+### Apology Generator
+
+[Zobacz Apology Generator](https://miyogift.com/pl/tools/apology-generator)
+
+### Generator Przemowien Weselnych
+
+[Zobacz Generator Przemowien Weselnych](https://miyogift.com/pl/tools/generator-przemowien-weselnych)
+
 ### Internetowa Niespodzianka Urodzinowa
 
 <a href="https://miyogift.com/pl/internetowa-niespodzianka-urodzinowa-b7k2m-1187"><img src="https://cdn.miyogift.com/uploads/PUBLIC/2026/07/28/gift/template/covers/29ca8db4-9f4d-4600-aa3e-58e51bb58dc0_birthday-4-cover.webp" alt="Internetowa Niespodzianka Urodzinowa" width="240"></a>

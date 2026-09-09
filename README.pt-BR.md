@@ -83,6 +83,34 @@ Escolha um modelo como ponto de partida e personalize o conteúdo para a pessoa 
 
 <!-- TEMPLATES:START -->
 
+### Gerador Cartas De Amor
+
+[Ver Gerador Cartas De Amor](https://miyogift.com/pt/tools/gerador-cartas-de-amor)
+
+### Gerador De Votos De Casamento
+
+[Ver Gerador De Votos De Casamento](https://miyogift.com/pt/tools/gerador-de-votos-de-casamento)
+
+### Gerador Mensagem Agradecimento
+
+[Ver Gerador Mensagem Agradecimento](https://miyogift.com/pt/tools/gerador-mensagem-agradecimento)
+
+### Gerador Mensagem Aniversario
+
+[Ver Gerador Mensagem Aniversario](https://miyogift.com/pt/tools/gerador-mensagem-aniversario)
+
+### Gerador De Poema De Amor
+
+[Ver Gerador De Poema De Amor](https://miyogift.com/pt/tools/gerador-de-poema-de-amor)
+
+### Gerador Pedido Desculpas
+
+[Ver Gerador Pedido Desculpas](https://miyogift.com/pt/tools/gerador-pedido-desculpas)
+
+### Gerador Discurso Casamento
+
+[Ver Gerador Discurso Casamento](https://miyogift.com/pt/tools/gerador-discurso-casamento)
+
 ### Surpresa Aniversario Online
 
 <a href="https://miyogift.com/pt/surpresa-aniversario-online-b7k2m-1188"><img src="https://cdn.miyogift.com/uploads/PUBLIC/2026/07/28/gift/template/covers/29ca8db4-9f4d-4600-aa3e-58e51bb58dc0_birthday-4-cover.webp" alt="Surpresa Aniversario Online" width="240"></a>

@@ -83,6 +83,34 @@ Choose a template as the starting point, then personalize the content for the pe
 
 <!-- TEMPLATES:START -->
 
+### Wedding Vow Generator
+
+[View Wedding Vow Generator](https://miyogift.com/tools/wedding-vow-generator)
+
+### Thank You Note Generator
+
+[View Thank You Note Generator](https://miyogift.com/tools/thank-you-note-generator)
+
+### Love Letter Generator
+
+[View Love Letter Generator](https://miyogift.com/tools/love-letter-generator)
+
+### Birthday Wish Message Generator
+
+[View Birthday Wish Message Generator](https://miyogift.com/tools/birthday-wish-message-generator)
+
+### Love Poem Generator
+
+[View Love Poem Generator](https://miyogift.com/tools/love-poem-generator)
+
+### Apology Generator
+
+[View Apology Generator](https://miyogift.com/tools/apology-generator)
+
+### Wedding Speech Generator
+
+[View Wedding Speech Generator](https://miyogift.com/tools/wedding-speech-generator)
+
 ### Happy Birthday Surprise Website
 
 <a href="https://miyogift.com/happy-birthday-surprise-website-b7k2m-1181"><img src="https://cdn.miyogift.com/uploads/PUBLIC/2026/07/28/gift/template/covers/29ca8db4-9f4d-4600-aa3e-58e51bb58dc0_birthday-4-cover.webp" alt="Happy Birthday Surprise Website" width="240"></a>

@@ -83,6 +83,34 @@ MiYo Gift 适合生日、纪念日、异地恋、道歉、毕业、浪漫节日�
 
 <!-- TEMPLATES:START -->
 
+### Hunli Shici Shengcheng
+
+[查看Hunli Shici Shengcheng](https://miyogift.com/zh/tools/hunli-shici-shengcheng)
+
+### Ganxie Duanjian Shengchengqi
+
+[查看Ganxie Duanjian Shengchengqi](https://miyogift.com/zh/tools/ganxie-duanjian-shengchengqi)
+
+### Qing Shu Sheng Cheng Qi
+
+[查看Qing Shu Sheng Cheng Qi](https://miyogift.com/zh/tools/qing-shu-sheng-cheng-qi)
+
+### Love Poem Generator
+
+[查看Love Poem Generator](https://miyogift.com/zh/tools/love-poem-generator)
+
+### Shengri Zhufu Xiaoxi Shengchengqi
+
+[查看Shengri Zhufu Xiaoxi Shengchengqi](https://miyogift.com/zh/tools/shengri-zhufu-xiaoxi-shengchengqi)
+
+### Daoqianxin Shengchengqi
+
+[查看Daoqianxin Shengchengqi](https://miyogift.com/zh/tools/daoqianxin-shengchengqi)
+
+### Hunli Fayangao Shengchengqi
+
+[查看Hunli Fayangao Shengchengqi](https://miyogift.com/zh/tools/hunli-fayangao-shengchengqi)
+
 ### Birthday Surprise Page
 
 <a href="https://miyogift.com/zh/birthday-surprise-page-b7k2m-1189"><img src="https://cdn.miyogift.com/uploads/PUBLIC/2026/07/28/gift/template/covers/29ca8db4-9f4d-4600-aa3e-58e51bb58dc0_birthday-4-cover.webp" alt="Birthday Surprise Page" width="240"></a>

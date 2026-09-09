@@ -83,6 +83,34 @@ Wähle eine Vorlage als Ausgangspunkt und personalisiere den Inhalt für die Per
 
 <!-- TEMPLATES:START -->
 
+### Dankesbrief Generator
+
+[Dankesbrief Generator ansehen](https://miyogift.com/de/tools/dankesbrief-generator)
+
+### Liebesbrief Generator
+
+[Liebesbrief Generator ansehen](https://miyogift.com/de/tools/liebesbrief-generator)
+
+### Ehegeluebde Generator
+
+[Ehegeluebde Generator ansehen](https://miyogift.com/de/tools/ehegeluebde-generator)
+
+### Geburtstagswuensche Generator
+
+[Geburtstagswuensche Generator ansehen](https://miyogift.com/de/tools/geburtstagswuensche-generator)
+
+### Liebesgedicht Generator
+
+[Liebesgedicht Generator ansehen](https://miyogift.com/de/tools/liebesgedicht-generator)
+
+### Entschuldigungs Generator
+
+[Entschuldigungs Generator ansehen](https://miyogift.com/de/tools/entschuldigungs-generator)
+
+### Hochzeitsrede Generator
+
+[Hochzeitsrede Generator ansehen](https://miyogift.com/de/tools/hochzeitsrede-generator)
+
 ### Geburtstagsueberraschung Online
 
 <a href="https://miyogift.com/de/geburtstagsueberraschung-online-b7k2m-1180"><img src="https://cdn.miyogift.com/uploads/PUBLIC/2026/07/28/gift/template/covers/29ca8db4-9f4d-4600-aa3e-58e51bb58dc0_birthday-4-cover.webp" alt="Geburtstagsueberraschung Online" width="240"></a>

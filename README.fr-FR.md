@@ -83,6 +83,34 @@ Choisissez un modèle comme point de départ, puis personnalisez le contenu pour
 
 <!-- TEMPLATES:START -->
 
+### Generateur Voeux Mariage
+
+[Voir Generateur Voeux Mariage](https://miyogift.com/fr/tools/generateur-voeux-mariage)
+
+### Generateur Message Remerciement
+
+[Voir Generateur Message Remerciement](https://miyogift.com/fr/tools/generateur-message-remerciement)
+
+### Generateur Lettre Amour
+
+[Voir Generateur Lettre Amour](https://miyogift.com/fr/tools/generateur-lettre-amour)
+
+### Generateur Message Anniversaire
+
+[Voir Generateur Message Anniversaire](https://miyogift.com/fr/tools/generateur-message-anniversaire)
+
+### Generateur Poeme Amour
+
+[Voir Generateur Poeme Amour](https://miyogift.com/fr/tools/generateur-poeme-amour)
+
+### Generateur Lettres Excuses
+
+[Voir Generateur Lettres Excuses](https://miyogift.com/fr/tools/generateur-lettres-excuses)
+
+### Generateur Discours Mariage
+
+[Voir Generateur Discours Mariage](https://miyogift.com/fr/tools/generateur-discours-mariage)
+
 ### Site Surprise Anniversaire
 
 <a href="https://miyogift.com/fr/site-surprise-anniversaire-b7k2m-1183"><img src="https://cdn.miyogift.com/uploads/PUBLIC/2026/07/28/gift/template/covers/29ca8db4-9f4d-4600-aa3e-58e51bb58dc0_birthday-4-cover.webp" alt="Site Surprise Anniversaire" width="240"></a>

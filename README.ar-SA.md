@@ -83,6 +83,34 @@
 
 <!-- TEMPLATES:START -->
 
+### Kitabat Uhud Al Zawaj
+
+[عرض Kitabat Uhud Al Zawaj](https://miyogift.com/ar/tools/kitabat-uhud-al-zawaj)
+
+### Kitabat Risalat Shukr
+
+[عرض Kitabat Risalat Shukr](https://miyogift.com/ar/tools/kitabat-risalat-shukr)
+
+### Muwallid Rasail Hub
+
+[عرض Muwallid Rasail Hub](https://miyogift.com/ar/tools/muwallid-rasail-hub)
+
+### Birthday Message Generator
+
+[عرض Birthday Message Generator](https://miyogift.com/ar/tools/birthday-message-generator)
+
+### Muwallid Qasida Hob
+
+[عرض Muwallid Qasida Hob](https://miyogift.com/ar/tools/muwallid-qasida-hob)
+
+### Apology Generator
+
+[عرض Apology Generator](https://miyogift.com/ar/tools/apology-generator)
+
+### Muwallid Kalimat Zifaf
+
+[عرض Muwallid Kalimat Zifaf](https://miyogift.com/ar/tools/muwallid-kalimat-zifaf)
+
 ### Online Birthday Surprise
 
 <a href="https://miyogift.com/ar/online-birthday-surprise-b7k2m-1179"><img src="https://cdn.miyogift.com/uploads/PUBLIC/2026/07/28/gift/template/covers/29ca8db4-9f4d-4600-aa3e-58e51bb58dc0_birthday-4-cover.webp" alt="Online Birthday Surprise" width="240"></a>

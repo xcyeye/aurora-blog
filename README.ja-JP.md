@@ -83,6 +83,34 @@ MiYo Gift は誕生日、記念日、遠距離恋愛、謝罪、卒業、ロマ�
 
 <!-- TEMPLATES:START -->
 
+### Chikai No Kotoba Sakusei
+
+[Chikai No Kotoba Sakuseiを見る](https://miyogift.com/ja/tools/chikai-no-kotoba-sakusei)
+
+### Orei Message Generator
+
+[Orei Message Generatorを見る](https://miyogift.com/ja/tools/orei-message-generator)
+
+### Love Letter Generator
+
+[Love Letter Generatorを見る](https://miyogift.com/ja/tools/love-letter-generator)
+
+### Tanjoubi Message Generator
+
+[Tanjoubi Message Generatorを見る](https://miyogift.com/ja/tools/tanjoubi-message-generator)
+
+### Love Poem Generator
+
+[Love Poem Generatorを見る](https://miyogift.com/ja/tools/love-poem-generator)
+
+### Apology Generator
+
+[Apology Generatorを見る](https://miyogift.com/ja/tools/apology-generator)
+
+### Kekkonshiki Speech Sakusei
+
+[Kekkonshiki Speech Sakuseiを見る](https://miyogift.com/ja/tools/kekkonshiki-speech-sakusei)
+
 ### Online Birthday Surprise
 
 <a href="https://miyogift.com/ja/online-birthday-surprise-b7k2m-1185"><img src="https://cdn.miyogift.com/uploads/PUBLIC/2026/07/28/gift/template/covers/29ca8db4-9f4d-4600-aa3e-58e51bb58dc0_birthday-4-cover.webp" alt="Online Birthday Surprise" width="240"></a>

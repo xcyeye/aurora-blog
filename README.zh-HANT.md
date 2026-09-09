@@ -83,6 +83,34 @@ MiYo Gift 適合生日、紀念日、遠距離戀愛、道歉、畢業、浪漫�
 
 <!-- TEMPLATES:START -->
 
+### Hun Li Shi Ci Chan Sheng Qi
+
+[查看Hun Li Shi Ci Chan Sheng Qi](https://miyogift.com/zh-hant/tools/hun-li-shi-ci-chan-sheng-qi)
+
+### Ganxie Xunxi Generator
+
+[查看Ganxie Xunxi Generator](https://miyogift.com/zh-hant/tools/ganxie-xunxi-generator)
+
+### Ai Love Letter Generator
+
+[查看Ai Love Letter Generator](https://miyogift.com/zh-hant/tools/ai-love-letter-generator)
+
+### Love Poem Generator
+
+[查看Love Poem Generator](https://miyogift.com/zh-hant/tools/love-poem-generator)
+
+### Shengri Zhufu Xunxi Chanshengqi
+
+[查看Shengri Zhufu Xunxi Chanshengqi](https://miyogift.com/zh-hant/tools/shengri-zhufu-xunxi-chanshengqi)
+
+### Apology Generator
+
+[查看Apology Generator](https://miyogift.com/zh-hant/tools/apology-generator)
+
+### Hunli Zhici Chanshengqi
+
+[查看Hunli Zhici Chanshengqi](https://miyogift.com/zh-hant/tools/hunli-zhici-chanshengqi)
+
 ### Birthday Surprise Page
 
 <a href="https://miyogift.com/zh-hant/birthday-surprise-page-b7k2m-1190"><img src="https://cdn.miyogift.com/uploads/PUBLIC/2026/07/28/gift/template/covers/29ca8db4-9f4d-4600-aa3e-58e51bb58dc0_birthday-4-cover.webp" alt="Birthday Surprise Page" width="240"></a>
