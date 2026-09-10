@@ -49,6 +49,10 @@ MiYo Gift 适合生日、纪念日、异地恋、道歉、毕业、浪漫节日�
 
 <!-- GIFT_IDEAS:START -->
 
+### Qingshu
+
+[查看Qingshu礼物灵感](https://miyogift.com/zh/gift-ideas/qingshu-133)
+
 ### 纪念日
 
 [查看纪念日礼物灵感](https://miyogift.com/zh/gift-ideas/anniversary-87)

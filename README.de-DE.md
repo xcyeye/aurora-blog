@@ -49,6 +49,14 @@ Diese Sammlungen helfen dir, eine passende Richtung zu finden, bevor du eine kon
 
 <!-- GIFT_IDEAS:START -->
 
+### Persoenlicher Liebesbrief
+
+[Persoenlicher Liebesbrief-Geschenkideen ansehen](https://miyogift.com/de/gift-ideas/persoenlicher-liebesbrief-digital-127)
+
+### Freundschaft
+
+[Freundschaft-Geschenkideen ansehen](https://miyogift.com/de/gift-ideas/freundschaft-136)
+
 ### Jahrestag
 
 [Jahrestag-Geschenkideen ansehen](https://miyogift.com/de/gift-ideas/anniversary-79)

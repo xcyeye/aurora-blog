@@ -49,6 +49,14 @@ Te kolekcje pomagają znaleźć właściwy kierunek przed wyborem konkretnego sz
 
 <!-- GIFT_IDEAS:START -->
 
+### List Milosny Cyfrowy
+
+[Zobacz pomysły List Milosny Cyfrowy](https://miyogift.com/pl/gift-ideas/list-milosny-cyfrowy-prezent-129)
+
+### Cyfrowy Prezent O
+
+[Zobacz pomysły Cyfrowy Prezent O](https://miyogift.com/pl/gift-ideas/cyfrowy-prezent-o-przyjazni-141)
+
 ### Rocznica
 
 [Zobacz pomysły Rocznica](https://miyogift.com/pl/gift-ideas/anniversary-85)

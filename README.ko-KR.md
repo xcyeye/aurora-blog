@@ -49,6 +49,14 @@ MiYo Gift는 생일, 기념일, 장거리 연애, 사과, 졸업, 로맨틱한 �
 
 <!-- GIFT_IDEAS:START -->
 
+### Reobeureteo
+
+[Reobeureteo 선물 아이디어 보기](https://miyogift.com/ko/gift-ideas/reobeureteo-134)
+
+### Ujeong
+
+[Ujeong 선물 아이디어 보기](https://miyogift.com/ko/gift-ideas/ujeong-seonmul-143)
+
 ### 기념일
 
 [기념일 선물 아이디어 보기](https://miyogift.com/ko/gift-ideas/anniversary-84)

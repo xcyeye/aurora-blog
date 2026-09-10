@@ -49,6 +49,14 @@ These collections help you find a suitable direction before choosing a specific 
 
 <!-- GIFT_IDEAS:START -->
 
+### Love
+
+[Explore Love gift ideas](https://miyogift.com/gift-ideas/love-letter-126)
+
+### Friendship
+
+[Explore Friendship gift ideas](https://miyogift.com/gift-ideas/friendship-gift-135)
+
 ### Anniversary
 
 [Explore Anniversary gift ideas](https://miyogift.com/gift-ideas/anniversary-78)

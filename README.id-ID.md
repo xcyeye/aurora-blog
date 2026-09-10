@@ -49,6 +49,14 @@ Koleksi ini membantu Anda menemukan arah sebelum memilih template hadiah digital
 
 <!-- GIFT_IDEAS:START -->
 
+### Surat Cinta Digital
+
+[Jelajahi ide Surat Cinta Digital](https://miyogift.com/id/gift-ideas/surat-cinta-digital-bermakna-130)
+
+### Persahabatan
+
+[Jelajahi ide Persahabatan](https://miyogift.com/id/gift-ideas/persahabatan-142)
+
 ### Hari jadi
 
 [Jelajahi ide Hari jadi](https://miyogift.com/id/gift-ideas/anniversary-82)

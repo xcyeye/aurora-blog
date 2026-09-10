@@ -49,6 +49,14 @@ Ces collections vous aident à trouver une direction avant de choisir un modèle
 
 <!-- GIFT_IDEAS:START -->
 
+### Lettre Amour
+
+[Explorer les idées Lettre Amour](https://miyogift.com/fr/gift-ideas/lettre-amour-numerique-128)
+
+### Amitie
+
+[Explorer les idées Amitie](https://miyogift.com/fr/gift-ideas/amitie-138)
+
 ### Anniversaire de couple
 
 [Explorer les idées Anniversaire de couple](https://miyogift.com/fr/gift-ideas/anniversary-81)

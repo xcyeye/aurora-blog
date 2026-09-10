@@ -49,6 +49,14 @@ MiYo Gift 適合生日、紀念日、遠距離戀愛、道歉、畢業、浪漫�
 
 <!-- GIFT_IDEAS:START -->
 
+### Qingshu
+
+[查看Qingshu礼物灵感](https://miyogift.com/zh-hant/gift-ideas/qingshu-137)
+
+### Youyi
+
+[查看Youyi礼物灵感](https://miyogift.com/zh-hant/gift-ideas/youyi-liwu-144)
+
 ### 紀念日
 
 [查看紀念日礼物灵感](https://miyogift.com/zh-hant/gift-ideas/anniversary-88)

@@ -49,6 +49,14 @@
 
 <!-- GIFT_IDEAS:START -->
 
+### Risalat
+
+[استكشف أفكار Risalat](https://miyogift.com/ar/gift-ideas/risalat-hubb-132)
+
+### Hadiyat
+
+[استكشف أفكار Hadiyat](https://miyogift.com/ar/gift-ideas/hadiyat-sadaqa-145)
+
 ### الذكرى السنوية
 
 [استكشف أفكار الذكرى السنوية](https://miyogift.com/ar/gift-ideas/anniversary-89)

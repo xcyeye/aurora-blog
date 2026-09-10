@@ -49,6 +49,10 @@ Estas coleções ajudam você a encontrar uma direção antes de escolher um mod
 
 <!-- GIFT_IDEAS:START -->
 
+### Presente De
+
+[Explorar ideias de Presente De](https://miyogift.com/pt/gift-ideas/presente-de-amizade-140)
+
 ### Aniversário de relacionamento
 
 [Explorar ideias de Aniversário de relacionamento](https://miyogift.com/pt/gift-ideas/anniversary-86)
